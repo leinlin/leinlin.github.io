@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#33363b">
+    <meta name="msapplication-TileColor" content="#33363b">
+    
+    
+    
+    
+    <meta name="keywords" content="leinlin, ARIA, Hexo">
+    
+    
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png">
+    
+    
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicons/android-chrome-192x192.png">
+    
+    
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png">
+    
+    
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png">
+    
+    
+    <link rel="mask-icon" href="/favicons/safari-pinned-tab.svg" color="#33363b">
+    
+    
+    <link rel="manifest" href="/favicons/site.webmanifest">
+    
+    
+    <meta name="msapplication-config" content="/favicons/browserconfig.xml">
+    
+    
+    <link rel="alternate" href="/atom.xml" title="leinlin的小笔记" type="application/atom+xml" />
+    
+    
+    <link rel="shortcut icon" type="image/x-icon" href="/favicons/favicon.ico">
+    
+    
+    <link rel="stylesheet" type="text/css" href="/css/normalize.css">
+    <link rel="stylesheet" type="text/css" href="/css/index.css">
+    
+    <link rel="stylesheet" type="text/css" href="/css/sidebar.css">
+    
+    
+<link rel="stylesheet" type="text/css" href="/css/page.css">
+<link rel="stylesheet" type="text/css" href="/css/post.css">
+
+    <link rel="stylesheet" type="text/css" href="/css/custom.css">
+    <link rel="stylesheet" type="text/css" href="/css/atom-one-light.css">
+    <link rel="stylesheet" type="text/css" href="/css/lightgallery.min.css">
+    <script type="text/javascript" src="/js/jquery.min.js"></script>
+    <script defer type="text/javascript" src="/js/util.js"></script>
+    <script defer type="text/javascript" src="/js/clipboard.min.js"></script>
+    <script defer type="text/javascript" src="/js/scrollspy.js"></script>
+    <script defer type="text/javascript" src="/js/fontawesome-all.min.js"></script>
+    <script defer type="text/javascript" src="/js/lightgallery.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-fullscreen.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-hash.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-pager.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-thumbnail.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-zoom.min.js"></script>
+    
+    <script defer src="/js/busuanzi.pure.mini.js"></script>
+    
+    
+    <script defer type="text/javascript" src="/js/search.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function () {
+      var searchPath = "search.xml";
+      if (searchPath.length === 0) {
+        searchPath = "search.xml";
+      }
+      var path = "/" + searchPath;
+      searchFunc(path, "search-input", "search-result");
+    });
+    </script>
+    
+    
+    <script defer type="text/javascript" src="/js/index.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function () {
+      var cb = null;
+      var els = $(".post figure.highlight");
+      if (els.length) {
+        // Enabled Hexo highlight line number.
+        $(els).each(function (i, e) {
+          // $(e).before("<button class=\"copy button\">复制</button>");
+          $(e).before([
+            "<div class=\"code-titlebar\">",
+              "<div class=\"titlebar-left\">",
+                "<button class=\"copy\">复制</button>",
+              "</div>",
+            "</div>"
+          ].join(""));
+        });
+        cb = new ClipboardJS("button.copy", {
+          "target": function (trigger) {
+              // Get target element by DOM API.
+              return trigger.parentNode.parentNode.nextElementSibling.firstChild.firstChild.firstChild.lastChild.firstChild.firstChild;
+          }
+        });
+      } else {
+        // Disabled Hexo highlight line number.
+        els = $(".post pre code");
+        $(els).each(function (i, e) {
+          // Add button before pre, not code.
+          // $(e).parent().before("<button class=\"copy button\">复制</button>");
+          $(e).before([
+            "<div class=\"code-titlebar\">",
+              "<div class=\"titlebar-left\">",
+                "<button class=\"copy\" >复制</button>",
+              "</div>",
+              "<div class=\"titlebar-right\">",
+                "<button class=\"button-dot dot-minimize\" aria-label=\"Decoration\"></button>",
+                "<button class=\"button-dot dot-maximize\" aria-label=\"Decoration\"></button>",
+                "<button class=\"button-dot dot-close\" aria-label=\"Decoration\"></button>",
+              "</div>",
+            "</div>"
+          ].join(""));
+        });
+        cb = new ClipboardJS("button.copy", {
+          "target": function (trigger) {
+              // Get target element by DOM API.
+              return trigger.parentNode.parentNode.nextElementSibling;
+          }
+        });
+      }
+      cb.on("success", function (e) {
+        e.clearSelection();
+        var trigger = e.trigger;
+        // Change button text as a user tip.
+        trigger.innerHTML = "已复制";
+        $(trigger).addClass("copied");
+        // Change button text back;
+        setTimeout(function () {
+          trigger.innerHTML = "复制";
+          $(trigger).removeClass("copied");
+        }, 1500);
+      });
+    });
+    </script>
+    
+    <script defer type="text/javascript" src="/js/custom.js"></script>
+    <title>PS颜色风格 | leinlin的小笔记</title>
+  <meta name="generator" content="Hexo 6.2.0"></head>
+  <body itemscope itemtype="http://schema.org/WebPage" lang="zh_CN"  data-spy="scroll" data-target=".list-group">
+    
+<header id="header" class="header" style="background: #33363b;">
+  <div class="container">
+    <div class="header-container">
+      <div class="header-title">
+        <h1 class="title"><a href="/">leinlin的小笔记</a></h1>
+        <h2 class="subtitle"></h2>
+      </div>
+      
+    </div>
+    <nav id="nav" class="nav">
+      <a id="nav-toggle" class="nav-toggle" aria-hidden="true"><i class="fas fa-bars" aria-label="切换导航栏"></i></a>
+      <ul id="menu" role="menubar" aria-hidden="false">
+        
+        <li role="menuitem"><a href="/"><i class="fas fa-home"></i><span class="menu-text">首页</span></a></li>
+        
+        <li role="menuitem"><a href="/archives/"><i class="fas fa-archive"></i><span class="menu-text">归档</span></a></li>
+        
+        <li role="menuitem"><a href="/categories/"><i class="fas fa-th-list"></i><span class="menu-text">分类</span></a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</header>
+
+
+    <main id="main" class="main">
+      <div class="container">
+        <div class="main-container">
+          <div class="content">
+            
+<div id="post" class="page">
+  
+  <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
+    <div class="post-block">
+      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/07/09/Art/%E9%A2%9C%E8%89%B2%E9%A3%8E%E6%A0%BC/">
+      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+       <meta itemprop="name" content="leinlin">
+       <meta itemprop="description" content="">
+       <meta itemprop="image" content="/images/avatar.jpg">
+      </span>
+      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+       <meta itemprop="name" content="leinlin的小笔记">
+      </span>
+    </div>
+    <header class="post-header">
+      <h1 class="post-title" itemprop="name headline">PS颜色风格</h1>
+      <div class="post-meta">
+        
+        <span class="post-date">
+          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2022-07-09T12:00:14+08:00">2022-07-09 12:00:14</time></span>
+        </span>
+        
+        
+        
+        <span class="post-meta-divider divider">|</span>
+        
+        <span class="post-categories">
+          
+          <i class="far fa-folder-open"></i><span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Art/" itemprop="url" rel="index"><span itemprop="name">Art</span></a></span>
+        </span>
+        
+        
+        
+        
+      </div>
+    </header>
+    <main class="post-main" itemprop="articleBody">
+      <h1 id="PS颜色风格"><a href="#PS颜色风格" class="headerlink" title="PS颜色风格"></a>PS颜色风格</h1><h2 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h2><p>日系，ins风格，低饱和度，平和。</p>
+<p>欧美系，高饱和，有侵略性。</p>
+<p>明度，轻盈舒适。</p>
+<p>低明度，压抑称重，有质感，金属—&gt; 铁和铝箔的IBL。</p>
+<p>同类色-&gt; 15%的色相环，-&gt;靠明度和饱和度达到设计和层次感。–&gt;ToneMapping。</p>
+<p><img src="/../../images/%E9%A2%9C%E8%89%B2%E9%A3%8E%E6%A0%BC/1592918191766.png" alt="1592918191766"></p>
+<h2 id="Camera-Raw"><a href="#Camera-Raw" class="headerlink" title="Camera Raw"></a>Camera Raw</h2><p>Ctrl + Shift + A进入PS的Camera Raw风格。</p>
+<p> 主要用来编辑Raw文件的。</p>
+<p><img src="/../../images/%E9%A2%9C%E8%89%B2%E9%A3%8E%E6%A0%BC/1592918699887.png" alt="1592918699887"></p>
+<p>自动白平衡和手动白平衡。</p>
+<p>下面的图像有没有色偏？可以有也可以没有，但是自动白平衡会去掉。</p>
+<p><img src="/../../images/%E9%A2%9C%E8%89%B2%E9%A3%8E%E6%A0%BC/1592919134345.png" alt="1592919134345"></p>
+<p>渲染当中白色光就没有色偏！！怎么做。</p>
+<span id="more"></span>
+
+
+<h3 id="曝光工具"><a href="#曝光工具" class="headerlink" title="曝光工具"></a>曝光工具</h3><p>暗部不实，亮部不实，不通透。</p>
+<p>过渡饱和，——&gt;细节丢失。</p>
+<h2 id="日系风格"><a href="#日系风格" class="headerlink" title="日系风格"></a>日系风格</h2><p>主要特点：明度高 + 冷色调 + 饱和度低 + 大光圈（背景虚化）+ 有光线感觉 + 有点缀的暖色。</p>
+<h2 id="欧美蓝调（胶片风）"><a href="#欧美蓝调（胶片风）" class="headerlink" title="欧美蓝调（胶片风）"></a>欧美蓝调（胶片风）</h2><p>欧美风格主要特点：色彩对比高 + 明暗对立感强 + 饱和度高 + 亮度低（画面的质感）+ 比较多的利用胶片感、湿润感 + 亮部暗部都不实（高光柔和）+ 使用暖色。</p>
+<p>高光不刺眼： 湿润感。</p>
+<p>阴影提亮、灰蒙蒙：光线感、空气感。</p>
+<p>蓝调：阴影加入颜色。</p>
+<p><strong>色彩曲线</strong></p>
+<h2 id="欧美暗调"><a href="#欧美暗调" class="headerlink" title="欧美暗调"></a>欧美暗调</h2><p>色相统一 + 蓝色调为主 + 画面元素简单</p>
+<p><strong>混合模式法</strong>：</p>
+<p>柔光：</p>
+<p>正片叠底：</p>
+<p>滤色：</p>
+<p>颜色、色相、饱和度、明度：使用原图层的信息和新图层的信息结合。</p>
+<p><strong>色温法：</strong></p>
+<p>对于中性色为主才有效。</p>
+<p><strong>色调分离法：</strong></p>
+<p>先去掉饱和度，然后通过高光和阴影加入颜色。</p>
+<h2 id="赛博朋克"><a href="#赛博朋克" class="headerlink" title="赛博朋克"></a>赛博朋克</h2><p>色相统一 （洋红色 + 青色 的对比色）+ 整体饱和度高 + 未来感、科幻感 + 以夜景照片为主。</p>
+<p><strong>色相饱和度工具：</strong></p>
+<p>色相可以任意转换的。色彩变化范围比HSL工具更加广泛，可以同时调整多种颜色。</p>
+<h2 id="浓郁胶片风"><a href="#浓郁胶片风" class="headerlink" title="浓郁胶片风"></a>浓郁胶片风</h2><p>饱和度高 +油润感 + 明暗对比反差大 + 没有大面积死黑 + 用阴影压暗 + 高光亮不过量、没有高光 + 高光偏灰色 + 空气感（左端点没有凸起，没有纯黑色） + 整体暖色调，有冷色调互补。+ 照片颗粒感 + 暗角。</p>
+<p>黑色白色：画面通透度。</p>
+<p>色调感：混合模式。</p>
+<p>空气感（蒙上灰尘的感觉）：看看画面中是否有重元素（大面积黑色）</p>
+<h2 id="青橙色调"><a href="#青橙色调" class="headerlink" title="青橙色调"></a>青橙色调</h2><p>橙色作为人物肤色的色相 + 人物颜色的反差色 得到了青橙色调的选择。</p>
+<p>色相统一（青色橙色） + 整体亮度比较低（直方图靠左）+ 对比度高（明暗反差大） 。</p>
+<p>核心特点就是色彩<strong>转化</strong> ，将其他颜色饱和度<strong>降低</strong>。</p>
+<p><strong>可选颜色工具：</strong> </p>
+<p>一个颜色受什么颜色控制：<strong>最大值</strong>和<strong>最大值和中间值的混合色</strong>，一种颜色最多受到两种颜色的控制。</p>
+<h2 id="港风色调"><a href="#港风色调" class="headerlink" title="港风色调"></a>港风色调</h2><p>主要特点：对比度高 + 亮暗反差大 + 青色（冷色只有青色）、橙色、换色、红色为主，暗部红橙色，亮部青色 + 整体饱和度比较强。</p>
+<p><strong>色彩感受：</strong></p>
+<p><strong>基调颜色</strong>：-&gt;修改色温，得到基色 -&gt; 对基色进行HSL或者是可选颜色工具进行调整。</p>
+<h2 id="Ins温暖风"><a href="#Ins温暖风" class="headerlink" title="Ins温暖风"></a>Ins温暖风</h2><p>色调统一（橙色调，有低饱和青色作为点缀）+ 饱和度偏高 + 空气感 </p>
+
+    </main>
+    <footer class="post-footer">
+      
+    </footer>
+  </article>
+  
+  
+  <nav class="page-nav">
+    <div class="page-nav-next page-nav-item">
+      
+      <a href="/2022/07/09/Art/BRDF%E4%B8%8E%E8%89%B2%E5%BD%A9%E4%B8%8E%E6%98%8E%E6%9A%97/" rel="next" title="BRDF与色彩与明暗"><i class="fas fa-angle-left"></i><span class="nav-title">BRDF与色彩与明暗</span></a>
+      
+    </div>
+    <div class="page-nav-prev page-nav-item">
+      
+      <a href="/2022/07/09/Art/ColorGrading%E4%B8%ADLUT%E7%9A%84%E7%94%9F%E6%88%90%E4%B8%8E%E4%BD%BF%E7%94%A8/" rel="prev" title="ColorGrading中LUT的生成与使用"><span class="nav-title">ColorGrading中LUT的生成与使用</span><i class="fas fa-angle-right"></i></a>
+      
+    </div>
+  </nav>
+  
+  
+  
+
+<div class="comments" id="comments">
+  
+</div>
+
+
+
+  
+</div>
+
+          </div>
+          
+          
+          
+<aside class="sidebar" id="sidebar" style="background: url(/images/background.png);">
+  
+  <div class="search">
+    <div class="form-group">
+      <i class="fas fa-search"></i><input type="search" id="search-input" name="q" results="0" placeholder="搜索" class="form-control"/>
+    </div>
+  </div>
+  <div class="search-result-box" id="search-result"></div>
+  
+  
+<div class="info sidebar-item" id="info">
+  
+  <img class="author-avatar" src="/images/avatar.jpg" alt="leinlin">
+  
+  <h1 class="author-name">leinlin</h1>
+  <h2 class="author-description"></h2>
+  <div class="site-count">
+    
+    
+    
+    
+    <div class="archives-count count-block">
+      <div class="site-count-title">归档</div>
+      <div><a href="/archives/">27</a></div>
+    </div>
+    
+    
+    
+    <div class="categories-count count-block">
+      <div class="site-count-title">分类</div>
+      <div><a href="/categories/">5</a></div>
+    </div>
+    
+    
+  </div>
+  
+  <div class="rss">
+    <a class="rss-link button sidebar-item" href="/atom.xml"><i class="fas fa-rss"></i>RSS</a>
+  </div>
+  
+</div>
+
+
+  <div class="sidebar-sticky">
+    
+    
+    
+    
+    
+    <hr>
+    <div class="post-toc sidebar-item" id="toc-div">
+      <div><i class="fas fa-list-ol"></i>文章目录</div>
+      <div class="post-toc-content"><ol class="list-group toc"><li class="toc-item toc-level-1"><a class="list-group-item toc-link" href="#PS%E9%A2%9C%E8%89%B2%E9%A3%8E%E6%A0%BC"><span class="toc-text">PS颜色风格</span></a><ol class="list-group toc-child"><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#%E5%9F%BA%E7%A1%80"><span class="toc-text">基础</span></a></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#Camera-Raw"><span class="toc-text">Camera Raw</span></a><ol class="list-group toc-child"><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#%E6%9B%9D%E5%85%89%E5%B7%A5%E5%85%B7"><span class="toc-text">曝光工具</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#%E6%97%A5%E7%B3%BB%E9%A3%8E%E6%A0%BC"><span class="toc-text">日系风格</span></a></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#%E6%AC%A7%E7%BE%8E%E8%93%9D%E8%B0%83%EF%BC%88%E8%83%B6%E7%89%87%E9%A3%8E%EF%BC%89"><span class="toc-text">欧美蓝调（胶片风）</span></a></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#%E6%AC%A7%E7%BE%8E%E6%9A%97%E8%B0%83"><span class="toc-text">欧美暗调</span></a></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#%E8%B5%9B%E5%8D%9A%E6%9C%8B%E5%85%8B"><span class="toc-text">赛博朋克</span></a></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#%E6%B5%93%E9%83%81%E8%83%B6%E7%89%87%E9%A3%8E"><span class="toc-text">浓郁胶片风</span></a></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#%E9%9D%92%E6%A9%99%E8%89%B2%E8%B0%83"><span class="toc-text">青橙色调</span></a></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#%E6%B8%AF%E9%A3%8E%E8%89%B2%E8%B0%83"><span class="toc-text">港风色调</span></a></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#Ins%E6%B8%A9%E6%9A%96%E9%A3%8E"><span class="toc-text">Ins温暖风</span></a></li></ol></li></ol></div>
+    </div>
+    
+    
+    
+    <hr>
+    <div class="social-link sidebar-item">
+      <div><i class="far fa-address-card"></i>社交链接</p></div>
+      <ul>
+        
+        <li><i class="fab fa-github"></i><a href="https://leinlin.github.com/" target="_blank">GitHub</a></li>
+        
+      </ul>
+    </div>
+    
+    
+  </div>
+</aside>
+
+
+          
+        </div>
+      </div>
+    </main>
+    
+<footer id="footer" class="footer" style="background: #33363b;">
+  <div class="container">
+    <div class="back-to-top">
+      <button id="back-to-top"><i class="fas fa-angle-double-up" aria-label="回到顶部"></i></button>
+    </div>
+    <div class="footer-container">
+      <div class="footer-left">
+        <div class="copyright">
+          <span class="author">leinlin</span><span class="year"><i class="far fa-copyright"></i>2022</span>
+        </div>
+        
+        <div class="busuanzi">
+          <span id="busuanzi_container_site_pv"><i class="fas fa-eye" aria-label="站点点击量" aria-hidden="false"></i><span id="busuanzi_value_site_pv"></span></span><span id="busuanzi_container_site_uv"><i class="fas fa-user" aria-label="站点用户数" aria-hidden="false"></i><span id="busuanzi_value_site_uv"></span></span><span id="busuanzi_container_page_pv"><i class="far fa-file-alt"></i><span id="busuanzi_value_page_pv" aria-label="页面点击量" aria-hidden="false"></span></span>
+        </div>
+        
+      </div>
+      <div class="footer-right">
+        <div class="custom-info">
+          
+          托管于<i class="fab fa-github-alt"></i><a href="https://pages.github.com/" target="_blank">GitHub Pages</a>
+          
+        </div>
+        <div class="powered-by">
+          由 <a href="https://hexo.io/" target="_blank">Hexo</a> 强力驱动 | 主题 <a href="https://github.com/AlynxZhou/hexo-theme-aria/" target="_blank">ARIA</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+  <script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

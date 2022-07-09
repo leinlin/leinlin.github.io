@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#33363b">
+    <meta name="msapplication-TileColor" content="#33363b">
+    
+    
+    
+    
+    <meta name="keywords" content="leinlin, ARIA, Hexo">
+    
+    
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png">
+    
+    
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicons/android-chrome-192x192.png">
+    
+    
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png">
+    
+    
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png">
+    
+    
+    <link rel="mask-icon" href="/favicons/safari-pinned-tab.svg" color="#33363b">
+    
+    
+    <link rel="manifest" href="/favicons/site.webmanifest">
+    
+    
+    <meta name="msapplication-config" content="/favicons/browserconfig.xml">
+    
+    
+    <link rel="alternate" href="/atom.xml" title="leinlin的小笔记" type="application/atom+xml" />
+    
+    
+    <link rel="shortcut icon" type="image/x-icon" href="/favicons/favicon.ico">
+    
+    
+    <link rel="stylesheet" type="text/css" href="/css/normalize.css">
+    <link rel="stylesheet" type="text/css" href="/css/index.css">
+    
+    <link rel="stylesheet" type="text/css" href="/css/sidebar.css">
+    
+    
+<link rel="stylesheet" type="text/css" href="/css/page.css">
+<link rel="stylesheet" type="text/css" href="/css/post.css">
+
+    <link rel="stylesheet" type="text/css" href="/css/custom.css">
+    <link rel="stylesheet" type="text/css" href="/css/atom-one-light.css">
+    <link rel="stylesheet" type="text/css" href="/css/lightgallery.min.css">
+    <script type="text/javascript" src="/js/jquery.min.js"></script>
+    <script defer type="text/javascript" src="/js/util.js"></script>
+    <script defer type="text/javascript" src="/js/clipboard.min.js"></script>
+    <script defer type="text/javascript" src="/js/scrollspy.js"></script>
+    <script defer type="text/javascript" src="/js/fontawesome-all.min.js"></script>
+    <script defer type="text/javascript" src="/js/lightgallery.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-fullscreen.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-hash.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-pager.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-thumbnail.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-zoom.min.js"></script>
+    
+    <script defer src="/js/busuanzi.pure.mini.js"></script>
+    
+    
+    <script defer type="text/javascript" src="/js/search.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function () {
+      var searchPath = "search.xml";
+      if (searchPath.length === 0) {
+        searchPath = "search.xml";
+      }
+      var path = "/" + searchPath;
+      searchFunc(path, "search-input", "search-result");
+    });
+    </script>
+    
+    
+    <script defer type="text/javascript" src="/js/index.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function () {
+      var cb = null;
+      var els = $(".post figure.highlight");
+      if (els.length) {
+        // Enabled Hexo highlight line number.
+        $(els).each(function (i, e) {
+          // $(e).before("<button class=\"copy button\">复制</button>");
+          $(e).before([
+            "<div class=\"code-titlebar\">",
+              "<div class=\"titlebar-left\">",
+                "<button class=\"copy\">复制</button>",
+              "</div>",
+            "</div>"
+          ].join(""));
+        });
+        cb = new ClipboardJS("button.copy", {
+          "target": function (trigger) {
+              // Get target element by DOM API.
+              return trigger.parentNode.parentNode.nextElementSibling.firstChild.firstChild.firstChild.lastChild.firstChild.firstChild;
+          }
+        });
+      } else {
+        // Disabled Hexo highlight line number.
+        els = $(".post pre code");
+        $(els).each(function (i, e) {
+          // Add button before pre, not code.
+          // $(e).parent().before("<button class=\"copy button\">复制</button>");
+          $(e).before([
+            "<div class=\"code-titlebar\">",
+              "<div class=\"titlebar-left\">",
+                "<button class=\"copy\" >复制</button>",
+              "</div>",
+              "<div class=\"titlebar-right\">",
+                "<button class=\"button-dot dot-minimize\" aria-label=\"Decoration\"></button>",
+                "<button class=\"button-dot dot-maximize\" aria-label=\"Decoration\"></button>",
+                "<button class=\"button-dot dot-close\" aria-label=\"Decoration\"></button>",
+              "</div>",
+            "</div>"
+          ].join(""));
+        });
+        cb = new ClipboardJS("button.copy", {
+          "target": function (trigger) {
+              // Get target element by DOM API.
+              return trigger.parentNode.parentNode.nextElementSibling;
+          }
+        });
+      }
+      cb.on("success", function (e) {
+        e.clearSelection();
+        var trigger = e.trigger;
+        // Change button text as a user tip.
+        trigger.innerHTML = "已复制";
+        $(trigger).addClass("copied");
+        // Change button text back;
+        setTimeout(function () {
+          trigger.innerHTML = "复制";
+          $(trigger).removeClass("copied");
+        }, 1500);
+      });
+    });
+    </script>
+    
+    <script defer type="text/javascript" src="/js/custom.js"></script>
+    <title>后处理ColorGrading | leinlin的小笔记</title>
+  <meta name="generator" content="Hexo 6.2.0"></head>
+  <body itemscope itemtype="http://schema.org/WebPage" lang="zh_CN"  data-spy="scroll" data-target=".list-group">
+    
+<header id="header" class="header" style="background: #33363b;">
+  <div class="container">
+    <div class="header-container">
+      <div class="header-title">
+        <h1 class="title"><a href="/">leinlin的小笔记</a></h1>
+        <h2 class="subtitle"></h2>
+      </div>
+      
+    </div>
+    <nav id="nav" class="nav">
+      <a id="nav-toggle" class="nav-toggle" aria-hidden="true"><i class="fas fa-bars" aria-label="切换导航栏"></i></a>
+      <ul id="menu" role="menubar" aria-hidden="false">
+        
+        <li role="menuitem"><a href="/"><i class="fas fa-home"></i><span class="menu-text">首页</span></a></li>
+        
+        <li role="menuitem"><a href="/archives/"><i class="fas fa-archive"></i><span class="menu-text">归档</span></a></li>
+        
+        <li role="menuitem"><a href="/categories/"><i class="fas fa-th-list"></i><span class="menu-text">分类</span></a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</header>
+
+
+    <main id="main" class="main">
+      <div class="container">
+        <div class="main-container">
+          <div class="content">
+            
+<div id="post" class="page">
+  
+  <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
+    <div class="post-block">
+      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/07/09/Art/%E5%90%8E%E5%A4%84%E7%90%86ColorGrading/">
+      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+       <meta itemprop="name" content="leinlin">
+       <meta itemprop="description" content="">
+       <meta itemprop="image" content="/images/avatar.jpg">
+      </span>
+      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+       <meta itemprop="name" content="leinlin的小笔记">
+      </span>
+    </div>
+    <header class="post-header">
+      <h1 class="post-title" itemprop="name headline">后处理ColorGrading</h1>
+      <div class="post-meta">
+        
+        <span class="post-date">
+          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2022-07-09T12:00:14+08:00">2022-07-09 12:00:14</time></span>
+        </span>
+        
+        
+        
+        <span class="post-meta-divider divider">|</span>
+        
+        <span class="post-categories">
+          
+          <i class="far fa-folder-open"></i><span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Art/" itemprop="url" rel="index"><span itemprop="name">Art</span></a></span>
+        </span>
+        
+        
+        
+        
+      </div>
+    </header>
+    <main class="post-main" itemprop="articleBody">
+      <h1 id="Why-Color-Grading"><a href="#Why-Color-Grading" class="headerlink" title="Why Color Grading"></a>Why Color Grading</h1><p>Color Grading（或者Color Correction）几乎是每一个游戏、视频必定会涉及的话题。但是我们的工作重点总是<strong>如何迁移一个算法</strong>，图程和TA的工作停留在算法层面就无法理解他在美术、设计中真正起到的作用。</p>
+<p>这篇笔记主要来自于DaVinci的用户文档，解释了我们为什么需要这样的技术、不同的工具解决的问题是什么。</p>
+<h2 id="Color-Correction的作用"><a href="#Color-Correction的作用" class="headerlink" title="Color Correction的作用"></a>Color Correction的作用</h2><p>Color Correction的作用是要保证每一个视频看起来是最佳的状态。</p>
+<p>视频编辑人员的目的是通过艺术的风格呈现图像，以实现艺术化的效果，手段就是需要调整图片的色彩和对比度，最终的结果是尽可能接近导演和摄影师的想法。</p>
+<ol>
+<li>在处理的过程当中需要<strong>解决曝光异常、白平衡等问题</strong>，这些是在视频拍摄过程中不可避免的问题。此外，你可以做一些<strong>细微的调整来增加温暖感或对比度</strong>，这在拍摄过程中是没有的，但摄影师会喜欢的效果。</li>
+<li>新一代的数字电影摄像机能够拍摄原始的色彩空间图像数据，或带有L指数曝光的RGB图像数据，以便在色彩校正过程中保留最大数量的图像数据以供操作。然而，当你以这种方式获取图像数据时，<strong>它必须通过颜色校正转换成可视图像</strong>，就像底片必须先冲洗并打印成正片一样。</li>
+<li>色彩校正过程中另一个重要的方面是<strong>对视频内的特定元素进行强调或弱化的能力</strong>。它在概念上类似于音频混合中的均衡，因为您可以使用多种技术来选择要增强或抑制哪些颜色值。例如用一个Power窗口包围图像的特定部分，这可以引导观看者的视线。<span id="more"></span></li>
+</ol>
+<h2 id="工具"><a href="#工具" class="headerlink" title="工具"></a>工具</h2><p>Color Corection的目的主要是调节色相、饱和度和对比度。我们有很多方式。</p>
+<p>Color balance wheels能够通过调节三个颜色通道，在特定范围内改变场景的色温： lift, gamma, 和 gain。</p>
+<p>这里简单的介绍一下Color Grading的使用方式。</p>
+<p>在Nuke、DaVinCi之类的软件中经常会用到这些操作。</p>
+<h2 id="色彩区域与操作"><a href="#色彩区域与操作" class="headerlink" title="色彩区域与操作"></a>色彩区域与操作</h2><p>high light：高亮度区域</p>
+<p>mid tone: 中等亮度区域</p>
+<p>shadow：暗部</p>
+<p>DaVinCi软件的解释：</p>
+<p><img src="/../../images/%E5%90%8E%E5%A4%84%E7%90%86ColorGrading/1584523933324.png" alt="1584523933324"></p>
+<p>操作影响的强度曲线：</p>
+<p><img src="/../../images/%E5%90%8E%E5%A4%84%E7%90%86ColorGrading/1584524629621.png" alt="1584524629621"></p>
+<p>Lift操作主要用来定位图像的阴影区域。</p>
+<p>Gamma操作主要用来定位图像的中灰度区域。</p>
+<p>Gain操作主要用来定位图像的高亮区域。</p>
+<p>下面操作的强度曲线：</p>
+<p><img src="/../../images/%E5%90%8E%E5%A4%84%E7%90%86ColorGrading/1584524661341.png" alt="1584524661341"></p>
+<p>Shadows 调节暗部的亮度分布。</p>
+<p>Midtone 调节中灰度的亮度分布。</p>
+<p>Highlights  调节高亮部分的亮度分布。</p>
+<h2 id="操作的数学解释"><a href="#操作的数学解释" class="headerlink" title="操作的数学解释"></a>操作的数学解释</h2><p>下图是图示说明：</p>
+<p><img src="/../../images/%E5%90%8E%E5%A4%84%E7%90%86ColorGrading/nuke_lift_gamma_gain.jpg" alt="img"></p>
+<p>在软件当中的控制方式：</p>
+<p><img src="/../../images/%E5%90%8E%E5%A4%84%E7%90%86ColorGrading/davinci_color_wheel.jpg" alt="img"></p>
+<p>Gain:这个操作影响白点，而保持黑点不变。</p>
+<p>$$ Output &#x3D; input * gain $$</p>
+<p>Lift: 这个操作影响黑点，而保持白点不变。</p>
+<p>$$ Output &#x3D; ( input * ( 1 – lift ) ) + lift $$</p>
+<p>不同的处理实际上就是对颜色整体亮度或者单个通道进行数学操作。</p>
+<p>Offset: 亮度整体偏移：</p>
+<p>$$ Output &#x3D; input + offset  $$</p>
+<p>Lift and Gain together：</p>
+<p>$$ Output &#x3D; ( input * ( gain – lift ) ) + lift $$</p>
+<p>Gamma：</p>
+<p>$$ Output &#x3D; input^{(1&#x2F;gamma)} $$ </p>
+<p>Contrast：</p>
+<p>$$ Output &#x3D; – ( input * (1 + contrast ) ) – (contrast &#x2F; 2 ) $$</p>
+<p>Greyscale :</p>
+<p>$$ (R<em>0.299 + G</em>0.587 + B*0.114). $$</p>
+<p>饱和度调整：</p>
+<p>$$ Output &#x3D; Saturation * input + (1 – Saturation ) * Greyscale $$</p>
+
+    </main>
+    <footer class="post-footer">
+      
+    </footer>
+  </article>
+  
+  
+  <nav class="page-nav">
+    <div class="page-nav-next page-nav-item">
+      
+      <a href="/2022/07/09/Vulkan_Shader/" rel="next" title="Vulkan Shader编译与加载过程"><i class="fas fa-angle-left"></i><span class="nav-title">Vulkan Shader编译与加载过程</span></a>
+      
+    </div>
+    <div class="page-nav-prev page-nav-item">
+      
+      <a href="/2022/07/09/Art/%E8%89%B2%E5%BD%A9%E8%A1%A8%E7%A4%BA%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/" rel="prev" title="色彩表示的前世今生"><span class="nav-title">色彩表示的前世今生</span><i class="fas fa-angle-right"></i></a>
+      
+    </div>
+  </nav>
+  
+  
+  
+
+<div class="comments" id="comments">
+  
+</div>
+
+
+
+  
+</div>
+
+          </div>
+          
+          
+          
+<aside class="sidebar" id="sidebar" style="background: url(/images/background.png);">
+  
+  <div class="search">
+    <div class="form-group">
+      <i class="fas fa-search"></i><input type="search" id="search-input" name="q" results="0" placeholder="搜索" class="form-control"/>
+    </div>
+  </div>
+  <div class="search-result-box" id="search-result"></div>
+  
+  
+<div class="info sidebar-item" id="info">
+  
+  <img class="author-avatar" src="/images/avatar.jpg" alt="leinlin">
+  
+  <h1 class="author-name">leinlin</h1>
+  <h2 class="author-description"></h2>
+  <div class="site-count">
+    
+    
+    
+    
+    <div class="archives-count count-block">
+      <div class="site-count-title">归档</div>
+      <div><a href="/archives/">27</a></div>
+    </div>
+    
+    
+    
+    <div class="categories-count count-block">
+      <div class="site-count-title">分类</div>
+      <div><a href="/categories/">5</a></div>
+    </div>
+    
+    
+  </div>
+  
+  <div class="rss">
+    <a class="rss-link button sidebar-item" href="/atom.xml"><i class="fas fa-rss"></i>RSS</a>
+  </div>
+  
+</div>
+
+
+  <div class="sidebar-sticky">
+    
+    
+    
+    
+    
+    <hr>
+    <div class="post-toc sidebar-item" id="toc-div">
+      <div><i class="fas fa-list-ol"></i>文章目录</div>
+      <div class="post-toc-content"><ol class="list-group toc"><li class="toc-item toc-level-1"><a class="list-group-item toc-link" href="#Why-Color-Grading"><span class="toc-text">Why Color Grading</span></a><ol class="list-group toc-child"><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#Color-Correction%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="toc-text">Color Correction的作用</span></a></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#%E5%B7%A5%E5%85%B7"><span class="toc-text">工具</span></a></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#%E8%89%B2%E5%BD%A9%E5%8C%BA%E5%9F%9F%E4%B8%8E%E6%93%8D%E4%BD%9C"><span class="toc-text">色彩区域与操作</span></a></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#%E6%93%8D%E4%BD%9C%E7%9A%84%E6%95%B0%E5%AD%A6%E8%A7%A3%E9%87%8A"><span class="toc-text">操作的数学解释</span></a></li></ol></li></ol></div>
+    </div>
+    
+    
+    
+    <hr>
+    <div class="social-link sidebar-item">
+      <div><i class="far fa-address-card"></i>社交链接</p></div>
+      <ul>
+        
+        <li><i class="fab fa-github"></i><a href="https://leinlin.github.com/" target="_blank">GitHub</a></li>
+        
+      </ul>
+    </div>
+    
+    
+  </div>
+</aside>
+
+
+          
+        </div>
+      </div>
+    </main>
+    
+<footer id="footer" class="footer" style="background: #33363b;">
+  <div class="container">
+    <div class="back-to-top">
+      <button id="back-to-top"><i class="fas fa-angle-double-up" aria-label="回到顶部"></i></button>
+    </div>
+    <div class="footer-container">
+      <div class="footer-left">
+        <div class="copyright">
+          <span class="author">leinlin</span><span class="year"><i class="far fa-copyright"></i>2022</span>
+        </div>
+        
+        <div class="busuanzi">
+          <span id="busuanzi_container_site_pv"><i class="fas fa-eye" aria-label="站点点击量" aria-hidden="false"></i><span id="busuanzi_value_site_pv"></span></span><span id="busuanzi_container_site_uv"><i class="fas fa-user" aria-label="站点用户数" aria-hidden="false"></i><span id="busuanzi_value_site_uv"></span></span><span id="busuanzi_container_page_pv"><i class="far fa-file-alt"></i><span id="busuanzi_value_page_pv" aria-label="页面点击量" aria-hidden="false"></span></span>
+        </div>
+        
+      </div>
+      <div class="footer-right">
+        <div class="custom-info">
+          
+          托管于<i class="fab fa-github-alt"></i><a href="https://pages.github.com/" target="_blank">GitHub Pages</a>
+          
+        </div>
+        <div class="powered-by">
+          由 <a href="https://hexo.io/" target="_blank">Hexo</a> 强力驱动 | 主题 <a href="https://github.com/AlynxZhou/hexo-theme-aria/" target="_blank">ARIA</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+  <script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#33363b">
+    <meta name="msapplication-TileColor" content="#33363b">
+    
+    
+    
+    
+    <meta name="keywords" content="leinlin, ARIA, Hexo">
+    
+    
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png">
+    
+    
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicons/android-chrome-192x192.png">
+    
+    
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png">
+    
+    
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png">
+    
+    
+    <link rel="mask-icon" href="/favicons/safari-pinned-tab.svg" color="#33363b">
+    
+    
+    <link rel="manifest" href="/favicons/site.webmanifest">
+    
+    
+    <meta name="msapplication-config" content="/favicons/browserconfig.xml">
+    
+    
+    <link rel="alternate" href="/atom.xml" title="leinlin的小笔记" type="application/atom+xml" />
+    
+    
+    <link rel="shortcut icon" type="image/x-icon" href="/favicons/favicon.ico">
+    
+    
+    <link rel="stylesheet" type="text/css" href="/css/normalize.css">
+    <link rel="stylesheet" type="text/css" href="/css/index.css">
+    
+    <link rel="stylesheet" type="text/css" href="/css/sidebar.css">
+    
+    
+<link rel="stylesheet" type="text/css" href="/css/page.css">
+<link rel="stylesheet" type="text/css" href="/css/post.css">
+
+    <link rel="stylesheet" type="text/css" href="/css/custom.css">
+    <link rel="stylesheet" type="text/css" href="/css/atom-one-light.css">
+    <link rel="stylesheet" type="text/css" href="/css/lightgallery.min.css">
+    <script type="text/javascript" src="/js/jquery.min.js"></script>
+    <script defer type="text/javascript" src="/js/util.js"></script>
+    <script defer type="text/javascript" src="/js/clipboard.min.js"></script>
+    <script defer type="text/javascript" src="/js/scrollspy.js"></script>
+    <script defer type="text/javascript" src="/js/fontawesome-all.min.js"></script>
+    <script defer type="text/javascript" src="/js/lightgallery.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-fullscreen.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-hash.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-pager.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-thumbnail.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-zoom.min.js"></script>
+    
+    <script defer src="/js/busuanzi.pure.mini.js"></script>
+    
+    
+    <script defer type="text/javascript" src="/js/search.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function () {
+      var searchPath = "search.xml";
+      if (searchPath.length === 0) {
+        searchPath = "search.xml";
+      }
+      var path = "/" + searchPath;
+      searchFunc(path, "search-input", "search-result");
+    });
+    </script>
+    
+    
+    <script defer type="text/javascript" src="/js/index.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function () {
+      var cb = null;
+      var els = $(".post figure.highlight");
+      if (els.length) {
+        // Enabled Hexo highlight line number.
+        $(els).each(function (i, e) {
+          // $(e).before("<button class=\"copy button\">复制</button>");
+          $(e).before([
+            "<div class=\"code-titlebar\">",
+              "<div class=\"titlebar-left\">",
+                "<button class=\"copy\">复制</button>",
+              "</div>",
+            "</div>"
+          ].join(""));
+        });
+        cb = new ClipboardJS("button.copy", {
+          "target": function (trigger) {
+              // Get target element by DOM API.
+              return trigger.parentNode.parentNode.nextElementSibling.firstChild.firstChild.firstChild.lastChild.firstChild.firstChild;
+          }
+        });
+      } else {
+        // Disabled Hexo highlight line number.
+        els = $(".post pre code");
+        $(els).each(function (i, e) {
+          // Add button before pre, not code.
+          // $(e).parent().before("<button class=\"copy button\">复制</button>");
+          $(e).before([
+            "<div class=\"code-titlebar\">",
+              "<div class=\"titlebar-left\">",
+                "<button class=\"copy\" >复制</button>",
+              "</div>",
+              "<div class=\"titlebar-right\">",
+                "<button class=\"button-dot dot-minimize\" aria-label=\"Decoration\"></button>",
+                "<button class=\"button-dot dot-maximize\" aria-label=\"Decoration\"></button>",
+                "<button class=\"button-dot dot-close\" aria-label=\"Decoration\"></button>",
+              "</div>",
+            "</div>"
+          ].join(""));
+        });
+        cb = new ClipboardJS("button.copy", {
+          "target": function (trigger) {
+              // Get target element by DOM API.
+              return trigger.parentNode.parentNode.nextElementSibling;
+          }
+        });
+      }
+      cb.on("success", function (e) {
+        e.clearSelection();
+        var trigger = e.trigger;
+        // Change button text as a user tip.
+        trigger.innerHTML = "已复制";
+        $(trigger).addClass("copied");
+        // Change button text back;
+        setTimeout(function () {
+          trigger.innerHTML = "复制";
+          $(trigger).removeClass("copied");
+        }, 1500);
+      });
+    });
+    </script>
+    
+    <script defer type="text/javascript" src="/js/custom.js"></script>
+    <title> | leinlin的小笔记</title>
+  <meta name="generator" content="Hexo 6.2.0"></head>
+  <body itemscope itemtype="http://schema.org/WebPage" lang="zh_CN"  data-spy="scroll" data-target=".list-group">
+    
+<header id="header" class="header" style="background: #33363b;">
+  <div class="container">
+    <div class="header-container">
+      <div class="header-title">
+        <h1 class="title"><a href="/">leinlin的小笔记</a></h1>
+        <h2 class="subtitle"></h2>
+      </div>
+      
+    </div>
+    <nav id="nav" class="nav">
+      <a id="nav-toggle" class="nav-toggle" aria-hidden="true"><i class="fas fa-bars" aria-label="切换导航栏"></i></a>
+      <ul id="menu" role="menubar" aria-hidden="false">
+        
+        <li role="menuitem"><a href="/"><i class="fas fa-home"></i><span class="menu-text">首页</span></a></li>
+        
+        <li role="menuitem"><a href="/archives/"><i class="fas fa-archive"></i><span class="menu-text">归档</span></a></li>
+        
+        <li role="menuitem"><a href="/categories/"><i class="fas fa-th-list"></i><span class="menu-text">分类</span></a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</header>
+
+
+    <main id="main" class="main">
+      <div class="container">
+        <div class="main-container">
+          <div class="content">
+            
+<div id="post" class="page">
+  
+  <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
+    <div class="post-block">
+      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/07/09/GPUAartch/GPU%E6%9E%B6%E6%9E%84/">
+      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+       <meta itemprop="name" content="leinlin">
+       <meta itemprop="description" content="">
+       <meta itemprop="image" content="/images/avatar.jpg">
+      </span>
+      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+       <meta itemprop="name" content="leinlin的小笔记">
+      </span>
+    </div>
+    <header class="post-header">
+      <h1 class="post-title" itemprop="name headline"></h1>
+      <div class="post-meta">
+        
+        <span class="post-date">
+          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2022-07-09T19:34:20+08:00">2022-07-09 19:34:20</time></span>
+        </span>
+        
+        
+        
+        
+        
+      </div>
+    </header>
+    <main class="post-main" itemprop="articleBody">
+      <h1 id="GPU架构"><a href="#GPU架构" class="headerlink" title="GPU架构"></a>GPU架构</h1><p>参考资料:</p>
+<p><a target="_blank" rel="noopener" href="http://haifux.org/lectures/267/Introduction-to-GPUs.pdf">Introduction to GPU Architecture</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.amd.com/Documents/GCN_Architecture_whitepaper.pdf">GCN_Architecture</a></p>
+<p><a target="_blank" rel="noopener" href="https://anteru.net/blog/2018/intro-to-compute-shaders/index.html">Compute Shader</a></p>
+<h2 id="概要"><a href="#概要" class="headerlink" title="概要"></a>概要</h2><p>主要简单介绍GPU架构，已经架构带来的性能优化代码编写问题。</p>
+<h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><p>同过总结上面的资料，大概梳理了相关内容。</p>
+<span id="more"></span>
+<h3 id="Domain"><a href="#Domain" class="headerlink" title="Domain"></a>Domain</h3><p> 一个完整的任务，可以理解为一次渲染程序的提交（包括一次vertex或者fragment）</p>
+<p>下面是一个片段着色器的编译结果。</p>
+<p><img src="/../../images/img/Shader.jpg"></p>
+<p>下面是来自Unity内部的一段编译代码。</p>
+<p><strong>查看Unity的CompiledShader可以看一个Pass的一个vertex或者一个fragment可以算作一个Domain。</strong></p>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><code class="hljs c">Shader Disassembly:<br><span class="hljs-comment">//</span><br><span class="hljs-comment">// Generated by Microsoft (R) D3D Shader Disassembler</span><br><span class="hljs-comment">// Input signature:</span><br><span class="hljs-comment">// Name   Index   Mask Register SysValue  Format   Used</span><br><span class="hljs-comment">// -------------------- ----- ------ -------- -------- ------- </span><br><span class="hljs-comment">// POSITION   0   xyz         0     NONE   float   xyz </span><br><span class="hljs-comment">// Output signature:</span><br><span class="hljs-comment">// Name        Index   Mask Register SysValue  Format   Used</span><br><span class="hljs-comment">// -------------------- ----- ------ -------- -------- ------- </span><br><span class="hljs-comment">// SV_Position       0   xyzw        0      POS   float   xyzw</span><br>      vs_5_0<br>      dcl_globalFlags refactoringAllowed<br>      dcl_constantbuffer CB0[<span class="hljs-number">4</span>], immediateIndexed<br>      dcl_constantbuffer CB1[<span class="hljs-number">51</span>], immediateIndexed<br>      dcl_input v0.xyz<br>      dcl_output_siv o0.xyzw, position<br>      dcl_temps <span class="hljs-number">4</span><br>   <span class="hljs-number">0</span>: mov r0.x, cb0[<span class="hljs-number">0</span>].y<br>   <span class="hljs-number">1</span>: mov r0.y, cb0[<span class="hljs-number">1</span>].y<br>   <span class="hljs-number">2</span>: mov r0.z, cb0[<span class="hljs-number">2</span>].y<br>   <span class="hljs-number">3</span>: add r1.xyw, cb0[<span class="hljs-number">3</span>].xyxz, -cb1[<span class="hljs-number">50</span>].xyxz<br>   <span class="hljs-number">4</span>: mov r0.w, r1.y<br>   <span class="hljs-number">5</span>: mov r2.xyz, v0.xyzx<br>   <span class="hljs-number">6</span>: mov r2.w, l(<span class="hljs-number">1.000000</span>)<br>   <span class="hljs-number">7</span>: dp4 r0.x, r0.xyzw, r2.xyzw<br>   <span class="hljs-number">8</span>: mul r0.xyzw, r0.xxxx, cb1[<span class="hljs-number">34</span>].xyzw<br>   <span class="hljs-number">9</span>: mov r3.w, r1.x<br>  <span class="hljs-number">10</span>: mov r3.x, cb0[<span class="hljs-number">0</span>].x<br>  <span class="hljs-number">11</span>: mov r3.y, cb0[<span class="hljs-number">1</span>].x<br>  <span class="hljs-number">12</span>: mov r3.z, cb0[<span class="hljs-number">2</span>].x<br>  <span class="hljs-number">13</span>: dp4 r3.x, r3.xyzw, r2.xyzw<br>  <span class="hljs-number">14</span>: mad r0.xyzw, cb1[<span class="hljs-number">33</span>].xyzw, r3.xxxx, r0.xyzw<br>  <span class="hljs-number">15</span>: mov r1.x, cb0[<span class="hljs-number">0</span>].z<br>  <span class="hljs-number">16</span>: mov r1.y, cb0[<span class="hljs-number">1</span>].z<br>  <span class="hljs-number">17</span>: mov r1.z, cb0[<span class="hljs-number">2</span>].z<br>  <span class="hljs-number">18</span>: dp4 r1.x, r1.xyzw, r2.xyzw<br>  <span class="hljs-number">19</span>: mad r0.xyzw, cb1[<span class="hljs-number">35</span>].xyzw, r1.xxxx, r0.xyzw<br>  <span class="hljs-number">20</span>: add o0.xyzw, r0.xyzw, cb1[<span class="hljs-number">36</span>].xyzw<br>  <span class="hljs-number">21</span>: ret <br><span class="hljs-comment">// Approximately 0 instruction slots used</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="Domain的执行"><a href="#Domain的执行" class="headerlink" title="Domain的执行"></a>Domain的执行</h3><p>要执行一个Domain需要一个类似CPU的处理器。</p>
+<p><img src="/../../images/img/ShaderExe.jpg"></p>
+<p><strong>然后就可以逐行执行右侧的Domain。Execution Context是存储单元，ALU是计算单元，Fetch&#x2F;Decode可以理解指令寄存器。</strong></p>
+<h3 id="Workgroup"><a href="#Workgroup" class="headerlink" title="Workgroup"></a>Workgroup</h3><p>一个Domain可以划分成多个WorkGroup。WorkGroup之间独立互不依赖（有可能会产生依赖），放入同一个计算单元的多条指令可以理解为一个WorkGroup。</p>
+<p><img src="/../../images/img/ShaderExe2.jpg"></p>
+<h3 id="Workitem"><a href="#Workitem" class="headerlink" title="Workitem"></a>Workitem</h3><p><strong>Workgroup的一条指令我理解就是Workitem。</strong></p>
+<p>例如一个加法指令。</p>
+<p>这些指令操作的是一个运算单元的不同部件。</p>
+<p>而且在一个指令操作寄存器的时候，别的微指令可以操作累加器，这样的特点可以让运算单元进行<strong>指令流水</strong>。</p>
+<h3 id="SIMD-units"><a href="#SIMD-units" class="headerlink" title="SIMD units"></a>SIMD units</h3><p>如果我在不同的时间重复执行同一个指令四次（<strong>由四个16位宽的SIMD执行</strong>），那么就可以错开对寄存器的使用。如下图所示（图片来自上面的链接，暂时不看文字描述），这就算是<strong>指令流水</strong>。<strong>GPU当中主要是访问寄存器带来的指令流水</strong></p>
+<p><img src="/../../images/img%5CSIMD.jpg"></p>
+<p>也就是单指令多数据 SIMD。</p>
+<p><strong>这时我们发现，我提交一条指令以后，虽然所有的部件都在进行运算，但是指令寄存器停滞了</strong>，也就是图中表示的<strong>wait</strong>。</p>
+<p>为了让指令寄存器也提高利用率，GPU用了下面的方案：</p>
+<p><img src="/../../images/img%5CSIMD_multi.jpg"></p>
+<p>也就是一个指令寄存器（我猜的，可以能不是指的指令寄存器，但是就是上面的Issue Instruction）同时控制四组SIMD。<strong>上面的Issue Instruction是同一个，只不过控制了不同的SIMD。</strong></p>
+<p>上面是从执行时间上看的，我们从物理架构上看应该长这样：</p>
+<p><img src="/../../images/img/Structure.jpg"></p>
+<p>因为要用同一个指令寄存器所以还要变成：</p>
+<p><img src="/../../images/img/Structure2.jpg"></p>
+<p>这是参考链接拿来的示意图，ALU和Ctx数量没有对上。</p>
+<h3 id="Compute-units"><a href="#Compute-units" class="headerlink" title="Compute units"></a>Compute units</h3><p><strong>总结来说：GPU的一个CU（计算单元），就是一个指令寄存器控制的多组SIMD单元。</strong></p>
+<p>每个CU内部的SIMD必须同时执行，所以<strong>一次指令会提交给四个SIMD</strong>，<strong>每个SIMD会通过类似指令流水执行四次</strong>，SIMD是16宽的，<strong>也就是一次同时处理16个数据。</strong></p>
+<h3 id="Wavefront-or-Wave"><a href="#Wavefront-or-Wave" class="headerlink" title="Wavefront or Wave"></a>Wavefront or Wave</h3><p>一次完整的指令流水：16 * 4 * 4 &#x2F; 4 ，一个CU的吞吐量就是64（一个指令对应一个时钟周期，一个时钟周期同时处理了64个数据）。看图的话实际上也是一个指令同时处理64个数据（这是最小的处理单元），这个叫做<strong>Wavefront 或者Wave</strong></p>
+<h3 id="并行"><a href="#并行" class="headerlink" title="并行"></a>并行</h3><p>下面是参考链接的一个并行架构示意图。</p>
+<p><img src="/../../images/img/parallel.jpg"></p>
+<p>下面是执行的示意图。</p>
+<p><img src="/../../images/img/parallel2.jpg"></p>
+<p>在参考资料中有提到，一个向量寄存器和标量寄存器的使用比较。</p>
+<p>在一个ALU当中，原本的指令会变成向量指令。</p>
+<p><img src="/../../images/img/I.jpg"></p>
+<p>把指令向量化：</p>
+<p><img src="/../../images/img/I2.jpg"></p>
+<p>所以一个非uniform的vector变量类型，为了提高利用率，在一个CU当中需要占用16（float大小）*3（向量维度）*8（并行数）大小的寄存器。</p>
+<p>所以一个ALU可以对应多组数据。</p>
+<p><img src="/../../images/img/Structure3.jpg"></p>
+<p>这个物理结构就和前面的寄存器流水结合起来了，一个ALU每次处理8组数据，分别切换1,2,3,4四组寄存器</p>
+<h3 id="分支"><a href="#分支" class="headerlink" title="分支"></a>分支</h3><p>如果并行程序中遇到分支：一个Wave的总耗时是不变的，只是通过遮盖的方式来不执行。</p>
+<p>如下图如果遇到分支，首先会生成一个Mask，<strong>是针对每个ALU的（ALU逻辑运算单元，也是上面说的CU(Compute Unit) 而非CPU中的Control Unit）。</strong></p>
+<p><img src="/../../images/img/branch.jpg"></p>
+<p>通过遮盖来切换分支，并没有节省时间。</p>
+<p><img src="/../../images/img/branch2.jpg"></p>
+
+    </main>
+    <footer class="post-footer">
+      
+    </footer>
+  </article>
+  
+  
+  <nav class="page-nav">
+    <div class="page-nav-next page-nav-item">
+      
+      <a href="/2022/07/09/GPUAartch/GPU%E5%88%86%E6%94%AF%E8%AF%AD%E5%8F%A5%E6%80%A7%E8%83%BD/" rel="next" title=""><i class="fas fa-angle-left"></i><span class="nav-title"></span></a>
+      
+    </div>
+    <div class="page-nav-prev page-nav-item">
+      
+      <a href="/2022/07/09/GPUAartch/GPU%E6%9E%B6%E6%9E%84%E7%B1%BB%E5%9E%8B%E6%95%B4%E5%90%88/" rel="prev" title=""><span class="nav-title"></span><i class="fas fa-angle-right"></i></a>
+      
+    </div>
+  </nav>
+  
+  
+  
+
+<div class="comments" id="comments">
+  
+</div>
+
+
+
+  
+</div>
+
+          </div>
+          
+          
+          
+<aside class="sidebar" id="sidebar" style="background: url(/images/background.png);">
+  
+  <div class="search">
+    <div class="form-group">
+      <i class="fas fa-search"></i><input type="search" id="search-input" name="q" results="0" placeholder="搜索" class="form-control"/>
+    </div>
+  </div>
+  <div class="search-result-box" id="search-result"></div>
+  
+  
+<div class="info sidebar-item" id="info">
+  
+  <img class="author-avatar" src="/images/avatar.jpg" alt="leinlin">
+  
+  <h1 class="author-name">leinlin</h1>
+  <h2 class="author-description"></h2>
+  <div class="site-count">
+    
+    
+    
+    
+    <div class="archives-count count-block">
+      <div class="site-count-title">归档</div>
+      <div><a href="/archives/">27</a></div>
+    </div>
+    
+    
+    
+    <div class="categories-count count-block">
+      <div class="site-count-title">分类</div>
+      <div><a href="/categories/">5</a></div>
+    </div>
+    
+    
+  </div>
+  
+  <div class="rss">
+    <a class="rss-link button sidebar-item" href="/atom.xml"><i class="fas fa-rss"></i>RSS</a>
+  </div>
+  
+</div>
+
+
+  <div class="sidebar-sticky">
+    
+    
+    
+    
+    
+    <hr>
+    <div class="post-toc sidebar-item" id="toc-div">
+      <div><i class="fas fa-list-ol"></i>文章目录</div>
+      <div class="post-toc-content"><ol class="list-group toc"><li class="toc-item toc-level-1"><a class="list-group-item toc-link" href="#GPU%E6%9E%B6%E6%9E%84"><span class="toc-text">GPU架构</span></a><ol class="list-group toc-child"><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#%E6%A6%82%E8%A6%81"><span class="toc-text">概要</span></a></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#%E6%A6%82%E5%BF%B5"><span class="toc-text">概念</span></a><ol class="list-group toc-child"><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#Domain"><span class="toc-text">Domain</span></a></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#Domain%E7%9A%84%E6%89%A7%E8%A1%8C"><span class="toc-text">Domain的执行</span></a></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#Workgroup"><span class="toc-text">Workgroup</span></a></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#Workitem"><span class="toc-text">Workitem</span></a></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#SIMD-units"><span class="toc-text">SIMD units</span></a></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#Compute-units"><span class="toc-text">Compute units</span></a></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#Wavefront-or-Wave"><span class="toc-text">Wavefront or Wave</span></a></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#%E5%B9%B6%E8%A1%8C"><span class="toc-text">并行</span></a></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#%E5%88%86%E6%94%AF"><span class="toc-text">分支</span></a></li></ol></li></ol></li></ol></div>
+    </div>
+    
+    
+    
+    <hr>
+    <div class="social-link sidebar-item">
+      <div><i class="far fa-address-card"></i>社交链接</p></div>
+      <ul>
+        
+        <li><i class="fab fa-github"></i><a href="https://leinlin.github.com/" target="_blank">GitHub</a></li>
+        
+      </ul>
+    </div>
+    
+    
+  </div>
+</aside>
+
+
+          
+        </div>
+      </div>
+    </main>
+    
+<footer id="footer" class="footer" style="background: #33363b;">
+  <div class="container">
+    <div class="back-to-top">
+      <button id="back-to-top"><i class="fas fa-angle-double-up" aria-label="回到顶部"></i></button>
+    </div>
+    <div class="footer-container">
+      <div class="footer-left">
+        <div class="copyright">
+          <span class="author">leinlin</span><span class="year"><i class="far fa-copyright"></i>2022</span>
+        </div>
+        
+        <div class="busuanzi">
+          <span id="busuanzi_container_site_pv"><i class="fas fa-eye" aria-label="站点点击量" aria-hidden="false"></i><span id="busuanzi_value_site_pv"></span></span><span id="busuanzi_container_site_uv"><i class="fas fa-user" aria-label="站点用户数" aria-hidden="false"></i><span id="busuanzi_value_site_uv"></span></span><span id="busuanzi_container_page_pv"><i class="far fa-file-alt"></i><span id="busuanzi_value_page_pv" aria-label="页面点击量" aria-hidden="false"></span></span>
+        </div>
+        
+      </div>
+      <div class="footer-right">
+        <div class="custom-info">
+          
+          托管于<i class="fab fa-github-alt"></i><a href="https://pages.github.com/" target="_blank">GitHub Pages</a>
+          
+        </div>
+        <div class="powered-by">
+          由 <a href="https://hexo.io/" target="_blank">Hexo</a> 强力驱动 | 主题 <a href="https://github.com/AlynxZhou/hexo-theme-aria/" target="_blank">ARIA</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+  <script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

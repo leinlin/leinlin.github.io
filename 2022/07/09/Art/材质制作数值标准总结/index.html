@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#33363b">
+    <meta name="msapplication-TileColor" content="#33363b">
+    
+    
+    
+    
+    <meta name="keywords" content="leinlin, ARIA, Hexo">
+    
+    
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png">
+    
+    
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicons/android-chrome-192x192.png">
+    
+    
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png">
+    
+    
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png">
+    
+    
+    <link rel="mask-icon" href="/favicons/safari-pinned-tab.svg" color="#33363b">
+    
+    
+    <link rel="manifest" href="/favicons/site.webmanifest">
+    
+    
+    <meta name="msapplication-config" content="/favicons/browserconfig.xml">
+    
+    
+    <link rel="alternate" href="/atom.xml" title="leinlin的小笔记" type="application/atom+xml" />
+    
+    
+    <link rel="shortcut icon" type="image/x-icon" href="/favicons/favicon.ico">
+    
+    
+    <link rel="stylesheet" type="text/css" href="/css/normalize.css">
+    <link rel="stylesheet" type="text/css" href="/css/index.css">
+    
+    <link rel="stylesheet" type="text/css" href="/css/sidebar.css">
+    
+    
+<link rel="stylesheet" type="text/css" href="/css/page.css">
+<link rel="stylesheet" type="text/css" href="/css/post.css">
+
+    <link rel="stylesheet" type="text/css" href="/css/custom.css">
+    <link rel="stylesheet" type="text/css" href="/css/atom-one-light.css">
+    <link rel="stylesheet" type="text/css" href="/css/lightgallery.min.css">
+    <script type="text/javascript" src="/js/jquery.min.js"></script>
+    <script defer type="text/javascript" src="/js/util.js"></script>
+    <script defer type="text/javascript" src="/js/clipboard.min.js"></script>
+    <script defer type="text/javascript" src="/js/scrollspy.js"></script>
+    <script defer type="text/javascript" src="/js/fontawesome-all.min.js"></script>
+    <script defer type="text/javascript" src="/js/lightgallery.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-fullscreen.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-hash.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-pager.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-thumbnail.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-zoom.min.js"></script>
+    
+    <script defer src="/js/busuanzi.pure.mini.js"></script>
+    
+    
+    <script defer type="text/javascript" src="/js/search.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function () {
+      var searchPath = "search.xml";
+      if (searchPath.length === 0) {
+        searchPath = "search.xml";
+      }
+      var path = "/" + searchPath;
+      searchFunc(path, "search-input", "search-result");
+    });
+    </script>
+    
+    
+    <script defer type="text/javascript" src="/js/index.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function () {
+      var cb = null;
+      var els = $(".post figure.highlight");
+      if (els.length) {
+        // Enabled Hexo highlight line number.
+        $(els).each(function (i, e) {
+          // $(e).before("<button class=\"copy button\">复制</button>");
+          $(e).before([
+            "<div class=\"code-titlebar\">",
+              "<div class=\"titlebar-left\">",
+                "<button class=\"copy\">复制</button>",
+              "</div>",
+            "</div>"
+          ].join(""));
+        });
+        cb = new ClipboardJS("button.copy", {
+          "target": function (trigger) {
+              // Get target element by DOM API.
+              return trigger.parentNode.parentNode.nextElementSibling.firstChild.firstChild.firstChild.lastChild.firstChild.firstChild;
+          }
+        });
+      } else {
+        // Disabled Hexo highlight line number.
+        els = $(".post pre code");
+        $(els).each(function (i, e) {
+          // Add button before pre, not code.
+          // $(e).parent().before("<button class=\"copy button\">复制</button>");
+          $(e).before([
+            "<div class=\"code-titlebar\">",
+              "<div class=\"titlebar-left\">",
+                "<button class=\"copy\" >复制</button>",
+              "</div>",
+              "<div class=\"titlebar-right\">",
+                "<button class=\"button-dot dot-minimize\" aria-label=\"Decoration\"></button>",
+                "<button class=\"button-dot dot-maximize\" aria-label=\"Decoration\"></button>",
+                "<button class=\"button-dot dot-close\" aria-label=\"Decoration\"></button>",
+              "</div>",
+            "</div>"
+          ].join(""));
+        });
+        cb = new ClipboardJS("button.copy", {
+          "target": function (trigger) {
+              // Get target element by DOM API.
+              return trigger.parentNode.parentNode.nextElementSibling;
+          }
+        });
+      }
+      cb.on("success", function (e) {
+        e.clearSelection();
+        var trigger = e.trigger;
+        // Change button text as a user tip.
+        trigger.innerHTML = "已复制";
+        $(trigger).addClass("copied");
+        // Change button text back;
+        setTimeout(function () {
+          trigger.innerHTML = "复制";
+          $(trigger).removeClass("copied");
+        }, 1500);
+      });
+    });
+    </script>
+    
+    <script defer type="text/javascript" src="/js/custom.js"></script>
+    <title>材质制作数值标准总结 | leinlin的小笔记</title>
+  <meta name="generator" content="Hexo 6.2.0"></head>
+  <body itemscope itemtype="http://schema.org/WebPage" lang="zh_CN"  data-spy="scroll" data-target=".list-group">
+    
+<header id="header" class="header" style="background: #33363b;">
+  <div class="container">
+    <div class="header-container">
+      <div class="header-title">
+        <h1 class="title"><a href="/">leinlin的小笔记</a></h1>
+        <h2 class="subtitle"></h2>
+      </div>
+      
+    </div>
+    <nav id="nav" class="nav">
+      <a id="nav-toggle" class="nav-toggle" aria-hidden="true"><i class="fas fa-bars" aria-label="切换导航栏"></i></a>
+      <ul id="menu" role="menubar" aria-hidden="false">
+        
+        <li role="menuitem"><a href="/"><i class="fas fa-home"></i><span class="menu-text">首页</span></a></li>
+        
+        <li role="menuitem"><a href="/archives/"><i class="fas fa-archive"></i><span class="menu-text">归档</span></a></li>
+        
+        <li role="menuitem"><a href="/categories/"><i class="fas fa-th-list"></i><span class="menu-text">分类</span></a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</header>
+
+
+    <main id="main" class="main">
+      <div class="container">
+        <div class="main-container">
+          <div class="content">
+            
+<div id="post" class="page">
+  
+  <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
+    <div class="post-block">
+      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/07/09/Art/%E6%9D%90%E8%B4%A8%E5%88%B6%E4%BD%9C%E6%95%B0%E5%80%BC%E6%A0%87%E5%87%86%E6%80%BB%E7%BB%93/">
+      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+       <meta itemprop="name" content="leinlin">
+       <meta itemprop="description" content="">
+       <meta itemprop="image" content="/images/avatar.jpg">
+      </span>
+      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+       <meta itemprop="name" content="leinlin的小笔记">
+      </span>
+    </div>
+    <header class="post-header">
+      <h1 class="post-title" itemprop="name headline">材质制作数值标准总结</h1>
+      <div class="post-meta">
+        
+        <span class="post-date">
+          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2022-07-09T12:00:14+08:00">2022-07-09 12:00:14</time></span>
+        </span>
+        
+        
+        
+        <span class="post-meta-divider divider">|</span>
+        
+        <span class="post-categories">
+          
+          <i class="far fa-folder-open"></i><span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Art/" itemprop="url" rel="index"><span itemprop="name">Art</span></a></span>
+        </span>
+        
+        
+        
+        
+      </div>
+    </header>
+    <main class="post-main" itemprop="articleBody">
+      <!-- TOC -->
+
+
+
+<p>- <a href="#%E6%9D%90%E8%B4%A8%E5%88%B6%E4%BD%9C%E6%95%B0%E5%80%BC%E6%A0%87%E5%87%86%E6%80%BB%E7%BB%93">材质制作数值标准总结</a></p>
+<p>​    - <a href="#%E6%9D%90%E8%B4%A8%E5%8F%82%E6%95%B0%E8%8C%83%E5%9B%B4">材质参数范围</a></p>
+<p>​        - <a href="#basecolorrgb-srgb">BaseColor（RGB-sRGB）</a></p>
+<p>​            - <a href="#guidelines">Guidelines</a></p>
+<p>​        - <a href="#metallic">Metallic</a></p>
+<p>​            - <a href="#f0">F0</a></p>
+<p>​            - <a href="#%E9%87%91%E5%B1%9E">金属</a></p>
+<p>​            - <a href="#%E9%9D%9E%E9%87%91%E5%B1%9E">非金属</a></p>
+<p>​            - <a href="#guideline">Guideline</a></p>
+<p>​        - <a href="#roughness">Roughness</a></p>
+<p>​            - <a href="#guideline">GuideLine</a></p>
+<p>​        - <a href="#ao">AO</a></p>
+<p>​            - <a href="#guidline">Guidline</a></p>
+<p>​        - <a href="#%E6%80%BB%E7%BB%93">总结</a></p>
+<p>​    - <a href="#gamma%E7%A9%BA%E9%97%B4">Gamma空间</a></p>
+<p>​    - <a href="#%E9%AA%8C%E8%AF%81">验证</a></p>
+<span id="more"></span>
+
+<!-- /TOC -->
+
+<h1 id="材质制作数值标准总结"><a href="#材质制作数值标准总结" class="headerlink" title="材质制作数值标准总结"></a>材质制作数值标准总结</h1><h2 id="材质参数范围"><a href="#材质参数范围" class="headerlink" title="材质参数范围"></a>材质参数范围</h2><h3 id="BaseColor（RGB-sRGB）"><a href="#BaseColor（RGB-sRGB）" class="headerlink" title="BaseColor（RGB-sRGB）"></a>BaseColor（RGB-sRGB）</h3><p>在metal&#x2F;roughness工作流中，非金属的反射颜色和金属的反射率（F0）保存在Abledo贴图中。</p>
+<h4 id="Guidelines"><a href="#Guidelines" class="headerlink" title="Guidelines"></a>Guidelines</h4><ol>
+<li><p>BaseColor是物体的固有色，没有色调的变化。所以对比度要比一般的DiffuseMap（画出光影的颜色贴图）低。</p>
+</li>
+<li><p>物体的色调往往比印象中的浅，过暗的色调无法被照亮:安全的颜色范围： 50 - 240 sRGB 或者（50-243. ）。控制得当可以使用更广的范围:  30 - 240 sRGB。（最黑的是煤炭，最亮的是雪）下面是参考范围:</p>
+<p><img src="/../../images/%E6%9D%90%E8%B4%A8%E5%88%B6%E4%BD%9C%E6%95%B0%E5%80%BC%E6%A0%87%E5%87%86%E6%80%BB%E7%BB%93/1574848708374.png" alt="1574848708374"></p>
+</li>
+<li><p>BaseColor当中保存了非金属反射信息，所以不能包括光线本身的信息，比如：AO。但是可以添加微小的遮挡，但是当添加了微小遮挡之后，也必须在规定的亮度范围之内。</p>
+</li>
+</ol>
+<p><img src="/../../images/%E6%9D%90%E8%B4%A8%E5%88%B6%E4%BD%9C%E6%95%B0%E5%80%BC%E6%A0%87%E5%87%86%E6%80%BB%E7%BB%93/1574843302369.png" alt="1574843302369"></p>
+<ol start="4">
+<li><p>金属的折射率(就是Color)应该从实际测量中获得，通常的范围是：<strong>sRGB range of 180-255</strong>.下面是一部分金属颜色：下图是一部分可以参考的颜色：</p>
+<p><img src="/../../images/%E6%9D%90%E8%B4%A8%E5%88%B6%E4%BD%9C%E6%95%B0%E5%80%BC%E6%A0%87%E5%87%86%E6%80%BB%E7%BB%93/1574839815423.png" alt="1574839815423"></p>
+</li>
+<li><p>如果金属出现了氧化和污渍不能被当做金属，尤其是当BaseColor当中加入了这种颜色，那么金属度也必须发生变化。</p>
+</li>
+</ol>
+<h3 id="Metallic"><a href="#Metallic" class="headerlink" title="Metallic"></a>Metallic</h3><p>通常用于区分金属与非金属。通常当做Mask使用,非金属的F0通常不是手动创建的，如果一个位置的金属度是0，会把这个位置的F0当做0.04处理。</p>
+<h4 id="F0"><a href="#F0" class="headerlink" title="F0"></a>F0</h4><p>F0&#x3D;Fresnel Reflectance at 0 Degrees</p>
+<ol>
+<li><p>电介质(dielectrics)  :  0.02-0.05  如果不确定可以设置成0.04</p>
+</li>
+<li><p>导体(conductors) :  0.5-1.0</p>
+</li>
+</ol>
+<p>表面的反射率由折射率决定：</p>
+<p>$$ F0 &#x3D;( \frac{n-1}{n+1})^2 $$</p>
+<p>非金属（电介质&#x2F;绝缘体）应该是灰色值，金属（导体）应该是RGB值。对于光滑的表面电介质F0应该在 2%和5% of 之间,斜略角100%  他的F0变化不大。金属变化比较明显。</p>
+<p>通常F0和导体和绝缘体相关，宝石是例外。</p>
+<h4 id="金属"><a href="#金属" class="headerlink" title="金属"></a>金属</h4><p>我们通过折射率算出的折射光线是被吸收的光线。对于金属来说部分光线反射，折射光线直接被吸收。金属的颜色来自于折射的光线也就是F0,也就是说金属的F0就是金属的颜色。</p>
+<p>虽然金属度为1通常是剖光金属，通常金属可以在 <strong>235-255 sRGB</strong> 之间，这个区间的材质反射率需要满足： 70-100%（Base ColorMap <strong>180-255 sRGB</strong> ）。</p>
+<p><img src="/../../images/%E6%9D%90%E8%B4%A8%E5%88%B6%E4%BD%9C%E6%95%B0%E5%80%BC%E6%A0%87%E5%87%86%E6%80%BB%E7%BB%93/1574840422730.png" alt="1574840422730"></p>
+<p>腐蚀金属在金属度贴图上是黑色，当做电介质处理。</p>
+<p>涂漆金属被当做电介质。</p>
+<p>污渍同样被当做非金属。</p>
+<p>例子：</p>
+<p><img src="/../../images/%E6%9D%90%E8%B4%A8%E5%88%B6%E4%BD%9C%E6%95%B0%E5%80%BC%E6%A0%87%E5%87%86%E6%80%BB%E7%BB%93/1574840762049.png" alt="1574840762049"></p>
+<h4 id="非金属"><a href="#非金属" class="headerlink" title="非金属"></a>非金属</h4><p>非金属没有导电性，折射的光线、被散射或者被吸收（大部分会再次从表面发散出去）所以被散射和被吸收后再次发射的光线构成了Albedo颜色。但是他的折射率很低比金属底，所以颜色更低贴图中的颜色要暗。</p>
+<p>被反射的颜色为F0，为0.02-0.05.（ 0.017-0.067 (40-75 sRGB) ），这些值通常会被硬编码成固定的0.04，特殊的：宝石会大于0.4。</p>
+<h4 id="Guideline"><a href="#Guideline" class="headerlink" title="Guideline"></a>Guideline</h4><ol>
+<li>腐蚀、氧化、污渍的金属不是金属,黑色的金属度，和灰色的非金属程度。</li>
+<li>金属度应该被当做一个Mask，用来告诉Shader如何解释Albedo贴图中的颜色信息。（金属：反射率，非金属：反射颜色）</li>
+<li>金属度不能总是0-1，在0-1之间应该有很窄的过渡灰。</li>
+<li>金属度为0.85-1（ <strong>235-255 sRGB</strong> ）的区域需要有高于70-100%（180-255 sRGB 或者 186-255）的反射率。</li>
+<li>如果金属度低于235 sRGB 那么需要降低对应BaseColor当中的颜色。降低程度可以根据氧化层、污渍层、腐蚀层的程度来决定。</li>
+</ol>
+<p><img src="/../../images/%E6%9D%90%E8%B4%A8%E5%88%B6%E4%BD%9C%E6%95%B0%E5%80%BC%E6%A0%87%E5%87%86%E6%80%BB%E7%BB%93/1574844210517.png" alt="1574844210517"></p>
+<h3 id="Roughness"><a href="#Roughness" class="headerlink" title="Roughness"></a>Roughness</h3><p>描述表面不规则情况，和光线的散射程度。粗糙&#x3D;更大更黯淡的高光。</p>
+<p>粗糙度用来描述同一种材质上的变化。磨损、折旧、风化、磨光。</p>
+<p>粗糙度需要和法线贴图相关联。</p>
+<h4 id="GuideLine"><a href="#GuideLine" class="headerlink" title="GuideLine"></a>GuideLine</h4><p>可以灵活的使用。</p>
+<h3 id="AO"><a href="#AO" class="headerlink" title="AO"></a>AO</h3><p>描述环境光被遮挡。通常AO影响的是由环境贴图产生的环境光（amibient lighting）IBL。而不应该影响高光和直接光，所以不能放置在Albedo当中。尤其是对于金属，如果加到了Aldedo当中，对IBL和高光的影响会更加明显。</p>
+<h4 id="Guidline"><a href="#Guidline" class="headerlink" title="Guidline"></a>Guidline</h4><p>从高度图或者根据模型烘焙生成。</p>
+<h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p><img src="/../../images/%E6%9D%90%E8%B4%A8%E5%88%B6%E4%BD%9C%E6%95%B0%E5%80%BC%E6%A0%87%E5%87%86%E6%80%BB%E7%BB%93/79369760-f4dd-4823-b2de-64a54e85ff8e.png" alt="img"></p>
+<h2 id="Gamma空间"><a href="#Gamma空间" class="headerlink" title="Gamma空间"></a>Gamma空间</h2><p>需要被标记为Gamma的贴图：base color, diffuse, specular 和emissive. </p>
+<p>需要被标记为线性空间的： roughness, ambient occlusion, normal, metallic, and height.</p>
+<h2 id="验证"><a href="#验证" class="headerlink" title="验证"></a>验证</h2><p>SD:</p>
+<p><em>PBR Metal&#x2F;Roughness Validate</em> ：</p>
+<p><strong>Material Filters &gt; PBR Utilities</strong>. 可以进行材质颜色、金属度的验证。</p>
+<p>错-》对 ： 红&gt; 黄&gt; 绿</p>
+<p>SP:</p>
+<p><em>PBR Metal&#x2F;Roughness Validate (filter)</em> <a target="_blank" rel="noopener" href="https://share.allegorithmic.com/libraries/824The">下载链接</a></p>
+
+    </main>
+    <footer class="post-footer">
+      
+    </footer>
+  </article>
+  
+  
+  <nav class="page-nav">
+    <div class="page-nav-next page-nav-item">
+      
+      <a href="/2022/07/09/Art/HDRColorGrading%E6%8A%80%E6%9C%AF%E6%96%B9%E6%A1%88/" rel="next" title="HDRColorGrading技术方案"><i class="fas fa-angle-left"></i><span class="nav-title">HDRColorGrading技术方案</span></a>
+      
+    </div>
+    <div class="page-nav-prev page-nav-item">
+      
+      <a href="/2022/07/09/Art/%E6%9D%90%E8%B4%A8%E5%88%B6%E4%BD%9C%E5%8F%82%E6%95%B0F0/" rel="prev" title="材质制作参数F0"><span class="nav-title">材质制作参数F0</span><i class="fas fa-angle-right"></i></a>
+      
+    </div>
+  </nav>
+  
+  
+  
+
+<div class="comments" id="comments">
+  
+</div>
+
+
+
+  
+</div>
+
+          </div>
+          
+          
+          
+<aside class="sidebar" id="sidebar" style="background: url(/images/background.png);">
+  
+  <div class="search">
+    <div class="form-group">
+      <i class="fas fa-search"></i><input type="search" id="search-input" name="q" results="0" placeholder="搜索" class="form-control"/>
+    </div>
+  </div>
+  <div class="search-result-box" id="search-result"></div>
+  
+  
+<div class="info sidebar-item" id="info">
+  
+  <img class="author-avatar" src="/images/avatar.jpg" alt="leinlin">
+  
+  <h1 class="author-name">leinlin</h1>
+  <h2 class="author-description"></h2>
+  <div class="site-count">
+    
+    
+    
+    
+    <div class="archives-count count-block">
+      <div class="site-count-title">归档</div>
+      <div><a href="/archives/">27</a></div>
+    </div>
+    
+    
+    
+    <div class="categories-count count-block">
+      <div class="site-count-title">分类</div>
+      <div><a href="/categories/">5</a></div>
+    </div>
+    
+    
+  </div>
+  
+  <div class="rss">
+    <a class="rss-link button sidebar-item" href="/atom.xml"><i class="fas fa-rss"></i>RSS</a>
+  </div>
+  
+</div>
+
+
+  <div class="sidebar-sticky">
+    
+    
+    
+    
+    
+    <hr>
+    <div class="post-toc sidebar-item" id="toc-div">
+      <div><i class="fas fa-list-ol"></i>文章目录</div>
+      <div class="post-toc-content"><ol class="list-group toc"><li class="toc-item toc-level-1"><a class="list-group-item toc-link" href="#%E6%9D%90%E8%B4%A8%E5%88%B6%E4%BD%9C%E6%95%B0%E5%80%BC%E6%A0%87%E5%87%86%E6%80%BB%E7%BB%93"><span class="toc-text">材质制作数值标准总结</span></a><ol class="list-group toc-child"><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#%E6%9D%90%E8%B4%A8%E5%8F%82%E6%95%B0%E8%8C%83%E5%9B%B4"><span class="toc-text">材质参数范围</span></a><ol class="list-group toc-child"><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#BaseColor%EF%BC%88RGB-sRGB%EF%BC%89"><span class="toc-text">BaseColor（RGB-sRGB）</span></a><ol class="list-group toc-child"><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#Guidelines"><span class="toc-text">Guidelines</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#Metallic"><span class="toc-text">Metallic</span></a><ol class="list-group toc-child"><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#F0"><span class="toc-text">F0</span></a></li><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#%E9%87%91%E5%B1%9E"><span class="toc-text">金属</span></a></li><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#%E9%9D%9E%E9%87%91%E5%B1%9E"><span class="toc-text">非金属</span></a></li><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#Guideline"><span class="toc-text">Guideline</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#Roughness"><span class="toc-text">Roughness</span></a><ol class="list-group toc-child"><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#GuideLine"><span class="toc-text">GuideLine</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#AO"><span class="toc-text">AO</span></a><ol class="list-group toc-child"><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#Guidline"><span class="toc-text">Guidline</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-text">总结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#Gamma%E7%A9%BA%E9%97%B4"><span class="toc-text">Gamma空间</span></a></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#%E9%AA%8C%E8%AF%81"><span class="toc-text">验证</span></a></li></ol></li></ol></div>
+    </div>
+    
+    
+    
+    <hr>
+    <div class="social-link sidebar-item">
+      <div><i class="far fa-address-card"></i>社交链接</p></div>
+      <ul>
+        
+        <li><i class="fab fa-github"></i><a href="https://leinlin.github.com/" target="_blank">GitHub</a></li>
+        
+      </ul>
+    </div>
+    
+    
+  </div>
+</aside>
+
+
+          
+        </div>
+      </div>
+    </main>
+    
+<footer id="footer" class="footer" style="background: #33363b;">
+  <div class="container">
+    <div class="back-to-top">
+      <button id="back-to-top"><i class="fas fa-angle-double-up" aria-label="回到顶部"></i></button>
+    </div>
+    <div class="footer-container">
+      <div class="footer-left">
+        <div class="copyright">
+          <span class="author">leinlin</span><span class="year"><i class="far fa-copyright"></i>2022</span>
+        </div>
+        
+        <div class="busuanzi">
+          <span id="busuanzi_container_site_pv"><i class="fas fa-eye" aria-label="站点点击量" aria-hidden="false"></i><span id="busuanzi_value_site_pv"></span></span><span id="busuanzi_container_site_uv"><i class="fas fa-user" aria-label="站点用户数" aria-hidden="false"></i><span id="busuanzi_value_site_uv"></span></span><span id="busuanzi_container_page_pv"><i class="far fa-file-alt"></i><span id="busuanzi_value_page_pv" aria-label="页面点击量" aria-hidden="false"></span></span>
+        </div>
+        
+      </div>
+      <div class="footer-right">
+        <div class="custom-info">
+          
+          托管于<i class="fab fa-github-alt"></i><a href="https://pages.github.com/" target="_blank">GitHub Pages</a>
+          
+        </div>
+        <div class="powered-by">
+          由 <a href="https://hexo.io/" target="_blank">Hexo</a> 强力驱动 | 主题 <a href="https://github.com/AlynxZhou/hexo-theme-aria/" target="_blank">ARIA</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+  <script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

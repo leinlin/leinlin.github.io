@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#33363b">
+    <meta name="msapplication-TileColor" content="#33363b">
+    
+    
+    
+    
+    <meta name="keywords" content="leinlin, ARIA, Hexo">
+    
+    
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png">
+    
+    
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicons/android-chrome-192x192.png">
+    
+    
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png">
+    
+    
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png">
+    
+    
+    <link rel="mask-icon" href="/favicons/safari-pinned-tab.svg" color="#33363b">
+    
+    
+    <link rel="manifest" href="/favicons/site.webmanifest">
+    
+    
+    <meta name="msapplication-config" content="/favicons/browserconfig.xml">
+    
+    
+    <link rel="alternate" href="/atom.xml" title="leinlin的小笔记" type="application/atom+xml" />
+    
+    
+    <link rel="shortcut icon" type="image/x-icon" href="/favicons/favicon.ico">
+    
+    
+    <link rel="stylesheet" type="text/css" href="/css/normalize.css">
+    <link rel="stylesheet" type="text/css" href="/css/index.css">
+    
+    <link rel="stylesheet" type="text/css" href="/css/sidebar.css">
+    
+    
+<link rel="stylesheet" type="text/css" href="/css/page.css">
+<link rel="stylesheet" type="text/css" href="/css/post.css">
+
+    <link rel="stylesheet" type="text/css" href="/css/custom.css">
+    <link rel="stylesheet" type="text/css" href="/css/atom-one-light.css">
+    <link rel="stylesheet" type="text/css" href="/css/lightgallery.min.css">
+    <script type="text/javascript" src="/js/jquery.min.js"></script>
+    <script defer type="text/javascript" src="/js/util.js"></script>
+    <script defer type="text/javascript" src="/js/clipboard.min.js"></script>
+    <script defer type="text/javascript" src="/js/scrollspy.js"></script>
+    <script defer type="text/javascript" src="/js/fontawesome-all.min.js"></script>
+    <script defer type="text/javascript" src="/js/lightgallery.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-fullscreen.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-hash.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-pager.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-thumbnail.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-zoom.min.js"></script>
+    
+    <script defer src="/js/busuanzi.pure.mini.js"></script>
+    
+    
+    <script defer type="text/javascript" src="/js/search.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function () {
+      var searchPath = "search.xml";
+      if (searchPath.length === 0) {
+        searchPath = "search.xml";
+      }
+      var path = "/" + searchPath;
+      searchFunc(path, "search-input", "search-result");
+    });
+    </script>
+    
+    
+    <script defer type="text/javascript" src="/js/index.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function () {
+      var cb = null;
+      var els = $(".post figure.highlight");
+      if (els.length) {
+        // Enabled Hexo highlight line number.
+        $(els).each(function (i, e) {
+          // $(e).before("<button class=\"copy button\">复制</button>");
+          $(e).before([
+            "<div class=\"code-titlebar\">",
+              "<div class=\"titlebar-left\">",
+                "<button class=\"copy\">复制</button>",
+              "</div>",
+            "</div>"
+          ].join(""));
+        });
+        cb = new ClipboardJS("button.copy", {
+          "target": function (trigger) {
+              // Get target element by DOM API.
+              return trigger.parentNode.parentNode.nextElementSibling.firstChild.firstChild.firstChild.lastChild.firstChild.firstChild;
+          }
+        });
+      } else {
+        // Disabled Hexo highlight line number.
+        els = $(".post pre code");
+        $(els).each(function (i, e) {
+          // Add button before pre, not code.
+          // $(e).parent().before("<button class=\"copy button\">复制</button>");
+          $(e).before([
+            "<div class=\"code-titlebar\">",
+              "<div class=\"titlebar-left\">",
+                "<button class=\"copy\" >复制</button>",
+              "</div>",
+              "<div class=\"titlebar-right\">",
+                "<button class=\"button-dot dot-minimize\" aria-label=\"Decoration\"></button>",
+                "<button class=\"button-dot dot-maximize\" aria-label=\"Decoration\"></button>",
+                "<button class=\"button-dot dot-close\" aria-label=\"Decoration\"></button>",
+              "</div>",
+            "</div>"
+          ].join(""));
+        });
+        cb = new ClipboardJS("button.copy", {
+          "target": function (trigger) {
+              // Get target element by DOM API.
+              return trigger.parentNode.parentNode.nextElementSibling;
+          }
+        });
+      }
+      cb.on("success", function (e) {
+        e.clearSelection();
+        var trigger = e.trigger;
+        // Change button text as a user tip.
+        trigger.innerHTML = "已复制";
+        $(trigger).addClass("copied");
+        // Change button text back;
+        setTimeout(function () {
+          trigger.innerHTML = "复制";
+          $(trigger).removeClass("copied");
+        }, 1500);
+      });
+    });
+    </script>
+    
+    <script defer type="text/javascript" src="/js/custom.js"></script>
+    <title> | leinlin的小笔记</title>
+  <meta name="generator" content="Hexo 6.2.0"></head>
+  <body itemscope itemtype="http://schema.org/WebPage" lang="zh_CN"  data-spy="scroll" data-target=".list-group">
+    
+<header id="header" class="header" style="background: #33363b;">
+  <div class="container">
+    <div class="header-container">
+      <div class="header-title">
+        <h1 class="title"><a href="/">leinlin的小笔记</a></h1>
+        <h2 class="subtitle"></h2>
+      </div>
+      
+    </div>
+    <nav id="nav" class="nav">
+      <a id="nav-toggle" class="nav-toggle" aria-hidden="true"><i class="fas fa-bars" aria-label="切换导航栏"></i></a>
+      <ul id="menu" role="menubar" aria-hidden="false">
+        
+        <li role="menuitem"><a href="/"><i class="fas fa-home"></i><span class="menu-text">首页</span></a></li>
+        
+        <li role="menuitem"><a href="/archives/"><i class="fas fa-archive"></i><span class="menu-text">归档</span></a></li>
+        
+        <li role="menuitem"><a href="/categories/"><i class="fas fa-th-list"></i><span class="menu-text">分类</span></a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</header>
+
+
+    <main id="main" class="main">
+      <div class="container">
+        <div class="main-container">
+          <div class="content">
+            
+<div id="post" class="page">
+  
+  <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
+    <div class="post-block">
+      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/07/09/GPUAartch/%E4%B8%80%E4%B8%AA%E4%B8%89%E8%A7%92%E5%BD%A2%E5%9C%A8GPU%E4%B8%AD%E7%9A%84%E4%B8%80%E7%94%9F/">
+      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+       <meta itemprop="name" content="leinlin">
+       <meta itemprop="description" content="">
+       <meta itemprop="image" content="/images/avatar.jpg">
+      </span>
+      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+       <meta itemprop="name" content="leinlin的小笔记">
+      </span>
+    </div>
+    <header class="post-header">
+      <h1 class="post-title" itemprop="name headline"></h1>
+      <div class="post-meta">
+        
+        <span class="post-date">
+          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2022-07-09T19:34:20+08:00">2022-07-09 19:34:20</time></span>
+        </span>
+        
+        
+        
+        
+        
+      </div>
+    </header>
+    <main class="post-main" itemprop="articleBody">
+      <h1 id="一个三角形在GPU中的一生"><a href="#一个三角形在GPU中的一生" class="headerlink" title="一个三角形在GPU中的一生"></a>一个三角形在GPU中的一生</h1><p>这篇笔记总结自<a target="_blank" rel="noopener" href="https://developer.nvidia.com/content/life-triangle-nvidias-logical-pipeline">Life of a triangle - NVIDIA’s logical pipeline</a> 和知乎文章<a target="_blank" rel="noopener" href="https://blog.uwa4d.com/archives/USparkle_GPU.html">渲染优化-从GPU的结构谈起</a>。</p>
+<p>主要记录了GPU硬件是如何详细的工作的。另外附加了一些笔记和自己的理解。</p>
+<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>先进的Fermi架构已经发布十年了（2010年左右发布），现在是时候更新它的基础图形架构了。</p>
+<p>Fermi是Nvidia的第一个实现了完全可扩展的图形引擎（fully scalable graphics engine的概念请查阅wiki，有说明），在Kepler和Maxwell架构当中也能找到他的影子。</p>
+<p>下面的文章，特别是下面的“精简的管道知识”图片，应该作为各种学习材料的。这篇文章主要从图形的角度讨论GPU是如何工作的，尤其是一些原则，比如：着色程序代码是如何执行的，对于计算来说是一样的。</p>
+<h2 id="GPU管线架构"><a href="#GPU管线架构" class="headerlink" title="GPU管线架构"></a>GPU管线架构</h2><p>下面是一张涵盖了整个GPU架构的图片，后面会详细分开讲解。</p>
+<p><img src="/../../images/%E4%B8%80%E4%B8%AA%E4%B8%89%E8%A7%92%E5%BD%A2%E5%9C%A8GPU%E4%B8%AD%E7%9A%84%E4%B8%80%E7%94%9F/fermipipeline.png" alt="NVIDIA&#39;s logical pipeline"></p>
+<span id="more"></span>
+<h2 id="gpu是超级并行工作分发器"><a href="#gpu是超级并行工作分发器" class="headerlink" title="gpu是超级并行工作分发器"></a>gpu是超级并行工作分发器</h2><p>在图形中，我们必须处理数据放大（很少的数据提交会产生很大的变化的工作负载：指的是整个图形流水线处理一个很少的渲染模型）。他的复杂性来源于：</p>
+<blockquote>
+<ul>
+<li>每个drawcall可以生成不同数量的三角形。</li>
+<li>裁剪后的顶点数量与三角形发生变化。</li>
+<li>经过背面和深度剔除后，并不是所有的三角形都需要屏幕上的像素。</li>
+<li>一个屏幕尺寸大小的三角形的意味着它需要数百万像素或者根本不需要（被挡住不渲染）。</li>
+</ul>
+</blockquote>
+<p>因此，现代gpu让它们的基本类型(三角形、线、点)遵循<strong>逻辑管道</strong>，而不是<strong>物理管道</strong>。在G80的统一架构(DX9、ps3、xbox360)之前的日子里，流水线在芯片上表现为不同的<strong>硬件模块</strong>，工作一个接一个地通过这些硬件模块串行执行。（<strong>不同的物理硬件处理不同的数据</strong>）。G80能够让顶点和片段着色器重用一些硬件单元，但是它仍然有很多用于图元&#x2F;栅格化等阶段的硬件，是串行执行的。有了Fermi，管道变得完全并行化了，这意味着通过重用芯片上的多个引擎（不同的功能组件）实现了<strong>逻辑管道</strong>(我们后面要讲的三角形处理步骤)。</p>
+<p>假设我们有两个三角形：A 和B。他们的不同部分可能在不同的逻辑阶段。A已经完成了空间转换操作需要进行光栅化。那么，A的一部分可能已经完成了Pixel-shader的执行，一部分可能被z-cull剪裁掉了，还有一部分可已经写入到了frame buffer，还有一部分可能在等待执行。除此之外，我们可以拉取三角形B的顶点数据。因此，虽然每个三角形都必须经过所有的逻辑步骤，但它们可能处在其生命周期的不同步骤中。这些工作会被划分成任务甚至子任务，然后并行执行。每个任务都被调度到可用的资源中，这并不局限于特定类型的任务。</p>
+<h2 id="GPU-architecture：基础硬件结构"><a href="#GPU-architecture：基础硬件结构" class="headerlink" title="GPU architecture：基础硬件结构"></a>GPU architecture：基础硬件结构</h2><p>下图是Maxwell GPU架构，他和Fermi架构基本类似。</p>
+<ul>
+<li><strong>Giga Thread Engine</strong> ：有一个Giga线程引擎（<strong>Giga Thread Engine</strong> ）来管理所有正在进行的工作。</li>
+<li><strong>Graphics Processing Cluster</strong>:GPU被划分为多个GPCs(图形处理集群：<strong>Graphics Processing Cluster</strong>)</li>
+<li>每个都有多个SMs(流多处理器：<strong>Streaming Multiprocessor</strong>)和一个栅格引擎（<strong>Raster Engine</strong>）。</li>
+<li><strong>Crossbar</strong>:在这个过程中有很多的互连，最明显的是一个<strong>Crossbar</strong> ，它允许各种任务在GPCs或其他功能单元(例如：ROP(<strong>render output unit</strong>))之间迁移。</li>
+<li><strong>Shader</strong>是在SMs上完成的。SMs它包含许多核心<strong>Cores</strong> ，为线程执行数学操作（<strong>核心之间以SIMD的方式运行</strong>）。一个线程既可以是vertex shader 也可以是fragment shader.</li>
+<li>这些核心和其他单元由<strong>Warp Schedulers</strong>驱动，<strong>Warp Schedulers</strong>以32个线程为一组进行管理，并将执行的指令交给<strong>Dispatch Units</strong>。</li>
+<li><strong>代码逻辑</strong>由调度器<strong>Warp Schedulers</strong>处理，而不是在核心<strong>Cores</strong> 内部。<strong>Cores</strong> 只会看到调度程序中的类似“<strong>用寄存器4235和寄存器4234求和，并存储在4230中</strong>”的内容。（也就是说<strong>Cores</strong>一次只能执行一条Shader指令）。</li>
+<li><strong>一个核心本身是相当愚蠢的，相比之下，一个CPU的核心是相当聪明的。</strong>GPU将智能提升到更高的层次，它可以执行一个整体(或者多个)的工作。(SIMD)</li>
+<li>在GPU上，这些单元中的数量(每个GPC有多少 SMs，有多少GPC ..)取决于芯片配置本身。</li>
+<li>SMs的设计本身(cores的数量，指令单元，schedulers…)也随着时间一代一代的变化(见第一张图片)，并保证芯片高效运行，它们可以从高端台式电脑扩展到笔记本电脑和移动设备。</li>
+</ul>
+<p><img src="/../../images/%E4%B8%80%E4%B8%AA%E4%B8%89%E8%A7%92%E5%BD%A2%E5%9C%A8GPU%E4%B8%AD%E7%9A%84%E4%B8%80%E7%94%9F/fermipipeline_maxwell_gpu.png" alt="fermipipeline_maxwell_gpu"></p>
+<h2 id="The-logical-pipeline-逻辑管线"><a href="#The-logical-pipeline-逻辑管线" class="headerlink" title="The logical pipeline 逻辑管线"></a>The logical pipeline 逻辑管线</h2><p>这里开始介绍上面的物理硬件是如何通过逻辑管线配合起来的。</p>
+<p>说明：假设<strong>drawcall</strong>引用了<strong>index buffer</strong>和<strong>vertex buffer</strong>，这些<strong>index buffer</strong>和<strong>vertex buffer</strong>已经被数据填满了，并且位于<strong>GPU</strong>的<strong>DRAM</strong>中，并且只使用了<strong>vertexshader</strong> 和 <strong>pixelshader</strong>。</p>
+<ol>
+<li><p>程序在图形api(DX or GL).中进行提交一个drawcall。这个drawcall将会在随后到达驱动程序（<strong>driver</strong>）。驱动程序会执行一系列验证确保操作合法，然后将指令<strong>以GPU可以读取的编码方式</strong>插入<strong>pushbuffer</strong>。在此时可能产生CPU端瓶颈，这就是为什么程序员需要合理的利用api和技术来利用gpu。（通过GPU功能降低drawcall）。</p>
+</li>
+<li><p>经过一段时间或显式的调用”flush” 指令后，驱动程序（<strong>driver</strong>）已在<strong>push buffer</strong>中缓冲了足够的任务并且发送给GPU进行处理（有操作系统的参与）。</p>
+</li>
+</ol>
+
+    </main>
+    <footer class="post-footer">
+      
+    </footer>
+  </article>
+  
+  
+  <nav class="page-nav">
+    <div class="page-nav-next page-nav-item">
+      
+      <a href="/2022/07/09/GPUAartch/%E7%BA%B9%E7%90%86%E7%BC%93%E5%AD%98/" rel="next" title=""><i class="fas fa-angle-left"></i><span class="nav-title"></span></a>
+      
+    </div>
+    <div class="page-nav-prev page-nav-item">
+      
+    </div>
+  </nav>
+  
+  
+  
+
+<div class="comments" id="comments">
+  
+</div>
+
+
+
+  
+</div>
+
+          </div>
+          
+          
+          
+<aside class="sidebar" id="sidebar" style="background: url(/images/background.png);">
+  
+  <div class="search">
+    <div class="form-group">
+      <i class="fas fa-search"></i><input type="search" id="search-input" name="q" results="0" placeholder="搜索" class="form-control"/>
+    </div>
+  </div>
+  <div class="search-result-box" id="search-result"></div>
+  
+  
+<div class="info sidebar-item" id="info">
+  
+  <img class="author-avatar" src="/images/avatar.jpg" alt="leinlin">
+  
+  <h1 class="author-name">leinlin</h1>
+  <h2 class="author-description"></h2>
+  <div class="site-count">
+    
+    
+    
+    
+    <div class="archives-count count-block">
+      <div class="site-count-title">归档</div>
+      <div><a href="/archives/">27</a></div>
+    </div>
+    
+    
+    
+    <div class="categories-count count-block">
+      <div class="site-count-title">分类</div>
+      <div><a href="/categories/">5</a></div>
+    </div>
+    
+    
+  </div>
+  
+  <div class="rss">
+    <a class="rss-link button sidebar-item" href="/atom.xml"><i class="fas fa-rss"></i>RSS</a>
+  </div>
+  
+</div>
+
+
+  <div class="sidebar-sticky">
+    
+    
+    
+    
+    
+    <hr>
+    <div class="post-toc sidebar-item" id="toc-div">
+      <div><i class="fas fa-list-ol"></i>文章目录</div>
+      <div class="post-toc-content"><ol class="list-group toc"><li class="toc-item toc-level-1"><a class="list-group-item toc-link" href="#%E4%B8%80%E4%B8%AA%E4%B8%89%E8%A7%92%E5%BD%A2%E5%9C%A8GPU%E4%B8%AD%E7%9A%84%E4%B8%80%E7%94%9F"><span class="toc-text">一个三角形在GPU中的一生</span></a><ol class="list-group toc-child"><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-text">前言</span></a></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#GPU%E7%AE%A1%E7%BA%BF%E6%9E%B6%E6%9E%84"><span class="toc-text">GPU管线架构</span></a></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#gpu%E6%98%AF%E8%B6%85%E7%BA%A7%E5%B9%B6%E8%A1%8C%E5%B7%A5%E4%BD%9C%E5%88%86%E5%8F%91%E5%99%A8"><span class="toc-text">gpu是超级并行工作分发器</span></a></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#GPU-architecture%EF%BC%9A%E5%9F%BA%E7%A1%80%E7%A1%AC%E4%BB%B6%E7%BB%93%E6%9E%84"><span class="toc-text">GPU architecture：基础硬件结构</span></a></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#The-logical-pipeline-%E9%80%BB%E8%BE%91%E7%AE%A1%E7%BA%BF"><span class="toc-text">The logical pipeline 逻辑管线</span></a></li></ol></li></ol></div>
+    </div>
+    
+    
+    
+    <hr>
+    <div class="social-link sidebar-item">
+      <div><i class="far fa-address-card"></i>社交链接</p></div>
+      <ul>
+        
+        <li><i class="fab fa-github"></i><a href="https://leinlin.github.com/" target="_blank">GitHub</a></li>
+        
+      </ul>
+    </div>
+    
+    
+  </div>
+</aside>
+
+
+          
+        </div>
+      </div>
+    </main>
+    
+<footer id="footer" class="footer" style="background: #33363b;">
+  <div class="container">
+    <div class="back-to-top">
+      <button id="back-to-top"><i class="fas fa-angle-double-up" aria-label="回到顶部"></i></button>
+    </div>
+    <div class="footer-container">
+      <div class="footer-left">
+        <div class="copyright">
+          <span class="author">leinlin</span><span class="year"><i class="far fa-copyright"></i>2022</span>
+        </div>
+        
+        <div class="busuanzi">
+          <span id="busuanzi_container_site_pv"><i class="fas fa-eye" aria-label="站点点击量" aria-hidden="false"></i><span id="busuanzi_value_site_pv"></span></span><span id="busuanzi_container_site_uv"><i class="fas fa-user" aria-label="站点用户数" aria-hidden="false"></i><span id="busuanzi_value_site_uv"></span></span><span id="busuanzi_container_page_pv"><i class="far fa-file-alt"></i><span id="busuanzi_value_page_pv" aria-label="页面点击量" aria-hidden="false"></span></span>
+        </div>
+        
+      </div>
+      <div class="footer-right">
+        <div class="custom-info">
+          
+          托管于<i class="fab fa-github-alt"></i><a href="https://pages.github.com/" target="_blank">GitHub Pages</a>
+          
+        </div>
+        <div class="powered-by">
+          由 <a href="https://hexo.io/" target="_blank">Hexo</a> 强力驱动 | 主题 <a href="https://github.com/AlynxZhou/hexo-theme-aria/" target="_blank">ARIA</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+  <script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

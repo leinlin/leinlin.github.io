@@ -1,0 +1,920 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#33363b">
+    <meta name="msapplication-TileColor" content="#33363b">
+    
+    
+    
+    
+    <meta name="keywords" content="leinlin, ARIA, Hexo">
+    
+    
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png">
+    
+    
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicons/android-chrome-192x192.png">
+    
+    
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png">
+    
+    
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png">
+    
+    
+    <link rel="mask-icon" href="/favicons/safari-pinned-tab.svg" color="#33363b">
+    
+    
+    <link rel="manifest" href="/favicons/site.webmanifest">
+    
+    
+    <meta name="msapplication-config" content="/favicons/browserconfig.xml">
+    
+    
+    <link rel="alternate" href="/atom.xml" title="leinlin的小笔记" type="application/atom+xml" />
+    
+    
+    <link rel="shortcut icon" type="image/x-icon" href="/favicons/favicon.ico">
+    
+    
+    <link rel="stylesheet" type="text/css" href="/css/normalize.css">
+    <link rel="stylesheet" type="text/css" href="/css/index.css">
+    
+    <link rel="stylesheet" type="text/css" href="/css/sidebar.css">
+    
+    
+<link rel="stylesheet" type="text/css" href="/css/page.css">
+<link rel="stylesheet" type="text/css" href="/css/post.css">
+
+    <link rel="stylesheet" type="text/css" href="/css/custom.css">
+    <link rel="stylesheet" type="text/css" href="/css/atom-one-light.css">
+    <link rel="stylesheet" type="text/css" href="/css/lightgallery.min.css">
+    <script type="text/javascript" src="/js/jquery.min.js"></script>
+    <script defer type="text/javascript" src="/js/util.js"></script>
+    <script defer type="text/javascript" src="/js/clipboard.min.js"></script>
+    <script defer type="text/javascript" src="/js/scrollspy.js"></script>
+    <script defer type="text/javascript" src="/js/fontawesome-all.min.js"></script>
+    <script defer type="text/javascript" src="/js/lightgallery.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-fullscreen.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-hash.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-pager.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-thumbnail.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-zoom.min.js"></script>
+    
+    <script defer src="/js/busuanzi.pure.mini.js"></script>
+    
+    
+    <script defer type="text/javascript" src="/js/search.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function () {
+      var searchPath = "search.xml";
+      if (searchPath.length === 0) {
+        searchPath = "search.xml";
+      }
+      var path = "/" + searchPath;
+      searchFunc(path, "search-input", "search-result");
+    });
+    </script>
+    
+    
+    <script defer type="text/javascript" src="/js/index.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function () {
+      var cb = null;
+      var els = $(".post figure.highlight");
+      if (els.length) {
+        // Enabled Hexo highlight line number.
+        $(els).each(function (i, e) {
+          // $(e).before("<button class=\"copy button\">复制</button>");
+          $(e).before([
+            "<div class=\"code-titlebar\">",
+              "<div class=\"titlebar-left\">",
+                "<button class=\"copy\">复制</button>",
+              "</div>",
+            "</div>"
+          ].join(""));
+        });
+        cb = new ClipboardJS("button.copy", {
+          "target": function (trigger) {
+              // Get target element by DOM API.
+              return trigger.parentNode.parentNode.nextElementSibling.firstChild.firstChild.firstChild.lastChild.firstChild.firstChild;
+          }
+        });
+      } else {
+        // Disabled Hexo highlight line number.
+        els = $(".post pre code");
+        $(els).each(function (i, e) {
+          // Add button before pre, not code.
+          // $(e).parent().before("<button class=\"copy button\">复制</button>");
+          $(e).before([
+            "<div class=\"code-titlebar\">",
+              "<div class=\"titlebar-left\">",
+                "<button class=\"copy\" >复制</button>",
+              "</div>",
+              "<div class=\"titlebar-right\">",
+                "<button class=\"button-dot dot-minimize\" aria-label=\"Decoration\"></button>",
+                "<button class=\"button-dot dot-maximize\" aria-label=\"Decoration\"></button>",
+                "<button class=\"button-dot dot-close\" aria-label=\"Decoration\"></button>",
+              "</div>",
+            "</div>"
+          ].join(""));
+        });
+        cb = new ClipboardJS("button.copy", {
+          "target": function (trigger) {
+              // Get target element by DOM API.
+              return trigger.parentNode.parentNode.nextElementSibling;
+          }
+        });
+      }
+      cb.on("success", function (e) {
+        e.clearSelection();
+        var trigger = e.trigger;
+        // Change button text as a user tip.
+        trigger.innerHTML = "已复制";
+        $(trigger).addClass("copied");
+        // Change button text back;
+        setTimeout(function () {
+          trigger.innerHTML = "复制";
+          $(trigger).removeClass("copied");
+        }, 1500);
+      });
+    });
+    </script>
+    
+    <script defer type="text/javascript" src="/js/custom.js"></script>
+    <title>色彩表示的前世今生 | leinlin的小笔记</title>
+  <meta name="generator" content="Hexo 6.2.0"></head>
+  <body itemscope itemtype="http://schema.org/WebPage" lang="zh_CN"  data-spy="scroll" data-target=".list-group">
+    
+<header id="header" class="header" style="background: #33363b;">
+  <div class="container">
+    <div class="header-container">
+      <div class="header-title">
+        <h1 class="title"><a href="/">leinlin的小笔记</a></h1>
+        <h2 class="subtitle"></h2>
+      </div>
+      
+    </div>
+    <nav id="nav" class="nav">
+      <a id="nav-toggle" class="nav-toggle" aria-hidden="true"><i class="fas fa-bars" aria-label="切换导航栏"></i></a>
+      <ul id="menu" role="menubar" aria-hidden="false">
+        
+        <li role="menuitem"><a href="/"><i class="fas fa-home"></i><span class="menu-text">首页</span></a></li>
+        
+        <li role="menuitem"><a href="/archives/"><i class="fas fa-archive"></i><span class="menu-text">归档</span></a></li>
+        
+        <li role="menuitem"><a href="/categories/"><i class="fas fa-th-list"></i><span class="menu-text">分类</span></a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</header>
+
+
+    <main id="main" class="main">
+      <div class="container">
+        <div class="main-container">
+          <div class="content">
+            
+<div id="post" class="page">
+  
+  <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
+    <div class="post-block">
+      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/07/09/Art/%E8%89%B2%E5%BD%A9%E8%A1%A8%E7%A4%BA%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/">
+      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+       <meta itemprop="name" content="leinlin">
+       <meta itemprop="description" content="">
+       <meta itemprop="image" content="/images/avatar.jpg">
+      </span>
+      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+       <meta itemprop="name" content="leinlin的小笔记">
+      </span>
+    </div>
+    <header class="post-header">
+      <h1 class="post-title" itemprop="name headline">色彩表示的前世今生</h1>
+      <div class="post-meta">
+        
+        <span class="post-date">
+          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2022-07-09T12:00:14+08:00">2022-07-09 12:00:14</time></span>
+        </span>
+        
+        
+        
+        <span class="post-meta-divider divider">|</span>
+        
+        <span class="post-categories">
+          
+          <i class="far fa-folder-open"></i><span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Art/" itemprop="url" rel="index"><span itemprop="name">Art</span></a></span>
+        </span>
+        
+        
+        
+        
+      </div>
+    </header>
+    <main class="post-main" itemprop="articleBody">
+      <h1 id="色彩表示的前世今生"><a href="#色彩表示的前世今生" class="headerlink" title="色彩表示的前世今生"></a>色彩表示的前世今生</h1><h2 id="眼睛"><a href="#眼睛" class="headerlink" title="眼睛"></a>眼睛</h2><p>因此，彩色光的表观亮度的变化是由于棒效应的叠加造成的，在视杆细胞上只刺激光感</p>
+<p>眼睛的亮度感受： 10000:1<br>眼睛的色彩接收器：Rods and Cones<br>因此，光敏感曲线和暗敏感曲线基本上是单独作用于视锥细胞和视杆细胞的<br>猫的眼睛受视杆细胞支配。</p>
+<h2 id="首先是从波长到颜色感知-CIE-1931-color-space来源-wiki"><a href="#首先是从波长到颜色感知-CIE-1931-color-space来源-wiki" class="headerlink" title="首先是从波长到颜色感知-CIE 1931 color space来源 wiki"></a><strong>首先是从波长到颜色感知</strong>-CIE 1931 color space来源 <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/CIE_1931_color_space">wiki</a></h2><p>CIE是国际照明委员会（ <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/International_Commission_on_Illumination">International Commission on Illumination</a>）的缩写。制定了与光和颜色相关的国际标准。</p>
+<p>CIE 1931颜色空间是第一个在<strong>电磁可见光谱中波长分布</strong>（波长）和人类色觉中生理感知的颜色（颜色）之间的定量联系。</p>
+<p>定义这些颜色空间的数学关系是颜色管理的基本工具，在处理彩色油墨、发光显示器和数字相机等记录设备时非常重要。</p>
+<span id="more"></span>
+<h2 id="从色彩感知要色彩表示"><a href="#从色彩感知要色彩表示" class="headerlink" title="从色彩感知要色彩表示"></a>从色彩感知要色彩表示</h2><p>CIE与1931年提出了 <strong>CIE 1931 RGB color space</strong> 和 <strong>CIE 1931 XYZ color space</strong>。从实验得出的标准。</p>
+<p>将实验结果结合到CIE RGB颜色空间，又推到得到了CIE XYZ颜色空间。</p>
+<h2 id="三色表示"><a href="#三色表示" class="headerlink" title="三色表示"></a>三色表示</h2><h3 id="LMS-color-space"><a href="#LMS-color-space" class="headerlink" title="LMS color space"></a>LMS color space</h3><p>LMS(长、中、短)是一个颜色空间，它代表了人眼三种视锥细胞的反应，以它们在长、中、短波长的响应(灵敏度)峰值命名。</p>
+<p><strong>数值范围通常不指定，只是下端通常以0为界。</strong>在进行颜色适应(估计样品在不同光源下的外观)时，通常使用LMS颜色空间。它在色盲的研究中也很有用，当一个或多个锥体类型有缺陷时。</p>
+<p><strong>视力正常的人眼有三种感知光的视锥细胞。</strong>（简而言之，具有光谱灵敏度的峰值 (“S”, 420 nm – 440 nm), middle (“M”, 530 nm – 540 nm), and long (“L”, 560 nm – 580 nm) ）</p>
+<p><strong>下图是波长和感知能力的对应和亮度没有关系。</strong></p>
+<p><img src="/../../images/%E8%89%B2%E5%BD%A9%E8%A1%A8%E7%A4%BA%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/1280px-Cones_SMJ2_E.svg.png" alt="1280px-Cones_SMJ2_E.svg"></p>
+<p>这些视锥细胞构建了对中、高亮度感知的基本能力。在很暗的环境下色觉减弱。</p>
+<p>对于低亮度、单色的夜视感知器叫做视杆细胞.</p>
+<p>三个颜色的强度对应三种视锥细胞的刺激水平，原则上描述任何人类的颜色感觉。根据三种视锥细胞的光谱灵敏度对总光功率谱进行加权，得到三种刺激的有效值。显示器就的制造就是来分别刺激三个颜色视锥细胞。这三个值构成了光谱客观颜色的三刺激规范。</p>
+<p>这三个参数分别表示为“S”、“M”和“L”，并使用一个名为“LMS颜色空间”的三维空间表示，LMS颜色空间是用来量化人类颜色视觉的众多颜色空间之一</p>
+<h3 id="颜色空间"><a href="#颜色空间" class="headerlink" title="颜色空间"></a>颜色空间</h3><p>与颜色空间相关的三色刺激值可以在三色加色的颜色模型中被概念化为三原色的数量。</p>
+<p>颜色空间将物理的混合光线映射到一个人眼的客观感觉范围，但并不是在LMS空间（视锥细胞感知铭感度）与颜色空间相关的三色刺激值可以在三色加色的颜色模型中被概念化为三原色的数量。</p>
+<p><strong>在某些颜色空间中，包括LMS和XYZ空间，使用的原色不是真正的颜色，因为它们不能在任何光谱中生成。</strong></p>
+<p><strong>因为：LMS描述了三个分量，但是在光谱上他们是重合的。因此，某些三刺激值在物理上是不可能的，例如LMS三刺激值对于M分量为非零，对于L和S分量都为零。</strong></p>
+<h2 id="XYZ颜色空间"><a href="#XYZ颜色空间" class="headerlink" title="XYZ颜色空间"></a>XYZ颜色空间</h2><p>CIE XYZ颜色空间包含了对视力一般的人可见的所有颜色感觉。它是定义许多其他颜色空间的标准参考。他的三坐标位置，例如主位置[1,0,0]、[0,1,0]和[0,0,1]，对应于可能的LMS坐标空间之外的假想颜色。假想的颜色不符合任何波长的光谱分布，因此没有物理现实。</p>
+<h2 id="颜色三角形"><a href="#颜色三角形" class="headerlink" title="颜色三角形"></a>颜色三角形</h2><p>对于加法模型来说，描述了颜色的分布，三原色位于三个顶点。颜色可能超过这个范围。出现某个通道的负数，色品范围不是三角形，无法覆盖。</p>
+<p><img src="/../../images/%E8%89%B2%E5%BD%A9%E8%A1%A8%E7%A4%BA%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/CIExy1931_srgb_gamut.png" alt="CIExy1931_srgb_gamut"></p>
+<h3 id="光度函数"><a href="#光度函数" class="headerlink" title="光度函数"></a>光度函数</h3><p>人类倾向于认为光谱中绿色部分的光比同等功率的红色或蓝色光更亮,因此，描述不同波长感知亮度的光度函数与M锥的光谱灵敏度大致类似。</p>
+<h3 id="XYZ推到"><a href="#XYZ推到" class="headerlink" title="XYZ推到"></a>XYZ推到</h3><p>CIE模型利用了这一事实，将Y设为亮度。Z等于蓝色，或者说S锥响应，X是非负响应曲线的组合。将Y设为亮度，得到的有用结果是，对于任何给定的Y值，XZ平面将包含该亮度下所有可能的色度</p>
+<p><strong>三刺激值的单位X、Y和Z通常是任意选择的，因此Y &#x3D; 1或Y &#x3D; 100是彩色显示器所支持的最亮的白色。</strong></p>
+<h2 id="CIE-xy-chromaticity-diagram-and-the-CIE-xyY-color-space"><a href="#CIE-xy-chromaticity-diagram-and-the-CIE-xyY-color-space" class="headerlink" title="CIE xy chromaticity diagram and the CIE xyY color space"></a>CIE xy chromaticity diagram and the CIE xyY color space</h2><p>将色品和亮度分离，下面的图片是色度图</p>
+<p><img src="/../../images/%E8%89%B2%E5%BD%A9%E8%A1%A8%E7%A4%BA%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/300px-CIE-1931_diagram_in_LAB_space.svg-1582861390979.png" alt="300px-CIE-1931_diagram_in_LAB_space.svg"></p>
+<ul>
+<li>该图代表了普通人可见的所有色度，色域的弯曲边缘称为光谱轨迹，对应于单色光（每个点代表一个单一波长的纯色调）。色域下半部分的直线称为紫色线，这些颜色虽然处于色域的边缘，但在单色光中没有对应的颜色。较不饱和的颜色出现在图的内部，白色在中间</li>
+<li></li>
+</ul>
+<h2 id="亮度"><a href="#亮度" class="headerlink" title="亮度"></a>亮度</h2><h2 id="颜色标准"><a href="#颜色标准" class="headerlink" title="颜色标准"></a>颜色标准</h2><p> IEC 61966-2-2  scRGB</p>
+<h2 id="显示器"><a href="#显示器" class="headerlink" title="显示器"></a>显示器</h2><p>色域都是 100% SRGB<br>对比度 1000:1&#x2F;3000:1&#x2F;1000:1&#x2F;1000:1 </p>
+<h1 id="Illuminant-D65"><a href="#Illuminant-D65" class="headerlink" title="Illuminant D65"></a>Illuminant D65</h1><p>D65大致相当于西欧&#x2F;北欧的平均正午光(包括直射光和晴空散射光)，因此它也被称为日光发光体。</p>
+<p><strong>D65是一个表格式的SPD，从300nm到830nm递增5 nm的光谱分布。</strong></p>
+<p><img src="/../../images/%E8%89%B2%E5%BD%A9%E8%A1%A8%E7%A4%BA%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/SPD_D65.png" alt="SPD_D65"></p>
+<h2 id="色温"><a href="#色温" class="headerlink" title="色温"></a>色温</h2><p>黑体辐射</p>
+<p><strong>黑体辐射</strong>指处于热力学平衡态的<strong>黑体</strong>发出的电磁<strong>辐射</strong>。 <strong>黑体辐射</strong>的电磁波谱只取决于<strong>黑体</strong>的温度。 另一方面，所謂<strong>黑體輻射</strong>其實就是光和物質達到平衡所表現出的現象。</p>
+<p>在<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E7%89%A9%E7%90%86%E5%AD%A6">物理学</a>中，<strong>普朗克黑体辐射定律</strong>（也简称作<strong>普朗克定律</strong>或**<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E9%BB%91%E4%BD%93%E8%BE%90%E5%B0%84">黑体辐射</a>定律<strong>，英文：</strong>Planck’s law**, <strong>Blackbody radiation law</strong>）。</p>
+<h3 id="黑体-wiki"><a href="#黑体-wiki" class="headerlink" title="黑体 wiki"></a>黑体 <a href="%5Bhttps://zh.wikipedia.org/wiki/%E9%BB%91%E4%BD%93_(%E7%89%A9%E7%90%86%E5%AD%A6)%5D(https://zh.wikipedia.org/wiki/%E9%BB%91%E4%BD%93_(%E7%89%A9%E7%90%86%E5%AD%A6)">wiki</a></h3><p>​	黑体对于任何<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E6%B3%A2%E9%95%BF">波长</a>的<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E7%94%B5%E7%A3%81%E6%B3%A2">电磁波</a>的吸收系数为1，<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E9%80%8F%E5%B0%84%E4%BF%82%E6%95%B8">透射系数</a>为0。但黑体未必是黑色的，即使不反射任何的电磁波，它也可以放出电磁波，而这些电磁波的波长和能量则全取决于黑体的<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E6%BA%AB%E5%BA%A6">温度</a>，不因其他因素而改变。</p>
+<p>​	对于人的视觉而言，黑体在700<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E7%B5%95%E5%B0%8D%E6%BA%AB%E6%A8%99">K</a>以下时看起来是黑色的，这是由于在700K之下的黑体所放出来的辐射能量很小且辐射波长在<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E5%8F%AF%E8%A6%8B%E5%85%89">可见光</a>范围之外。若黑体的温度高过上述的温度的话，黑体则不会再是黑色的了，它会开始变成红色，并且随着温度的升高，而分别有橘色、黄色、白色等颜色出现，即黑体吸收和放出电磁波的过程遵循了<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E5%85%89%E8%AD%9C">光谱</a>，其<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E8%BD%A8%E8%BF%B9">轨迹</a>为普朗克轨迹（或称为黑体轨迹）。<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E9%BB%91%E9%AB%94%E8%BC%BB%E5%B0%84">黑体辐射</a>实际上是黑体的<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E7%86%B1%E8%BC%BB%E5%B0%84">热辐射</a>。在黑体的光谱中，<strong>由于高温引起高频率即短波长</strong>，因此较高温度的黑体靠近光谱结尾的蓝色区域而较低温度的黑体靠近红色区域。</p>
+<h2 id="色温-1"><a href="#色温-1" class="headerlink" title="色温"></a>色温</h2><p>从理想黑体发射出的电磁辐射的<strong>色温定义为其表面温度</strong>，单位为开尔文或微观倒数度(深陷于)。<strong>这样就可以定义一个比较光源的标准。</strong></p>
+<h2 id="色彩平衡"><a href="#色彩平衡" class="headerlink" title="色彩平衡"></a>色彩平衡</h2><h2 id="显示器的色域、色数、对比度"><a href="#显示器的色域、色数、对比度" class="headerlink" title="显示器的色域、色数、对比度"></a>显示器的色域、色数、对比度</h2><p>2.显示器是彩色的，显示器的彩色是由红绿蓝三色混合而成，刚才计算出每个颜色可以有256级的灰阶变化，那三种颜色可以有多少变化呢？就是256的3次方，256^3&#x3D;16777216，也就是1670万。</p>
+<p>同样的方法，计算6bit&#x2F;10bit，结果分别是26万&#x2F;10亿。</p>
+<p>色域 sRGB 100%   sRGB124%   Adobe RGB≥99.5%</p>
+<p>色数 16.7M   1.07B  </p>
+<p>可视角度 IPS 178°&#x2F;178°(CR&gt;10)</p>
+<p>对比度   1000:1    3000:1    4000:1  20000000：1（动态）</p>
+<p>基本定义：对比度简单些的定义是显示器的白色亮度与黑色亮度的比值。比如一台显示器在显示全白画面（255）时实测亮度值为200cd&#x2F;㎡，全黑画面实测亮度为0.5cd&#x2F;㎡，那么它的对比度就是400：1。</p>
+<p>亮度 220 cd&#x2F;m2  300cd&#x2F;m2   450nits, 350nits, 280nits  720 cd &#x2F;m?（标准），1000 cd &#x2F;m?（峰值） 4000 nits</p>
+<h2 id="Nivida对HDR的定义："><a href="#Nivida对HDR的定义：" class="headerlink" title="Nivida对HDR的定义："></a>Nivida对HDR的定义：</h2><ul>
+<li><p>Deep blacks: Contrast of 50k:1 or better ：More contrast and detail in shadows</p>
+</li>
+<li><p>4K or higher resolution</p>
+</li>
+<li><p>Wide color gamut  ：Richer colors</p>
+</li>
+<li><p>Bright display: 750 cm&#x2F;m  minimum, 1000-10,000 cd&#x2F;m 2 highlights ：Realistic highlights</p>
+</li>
+</ul>
+<p><strong>HDR isn’t simply about making brighter images</strong></p>
+<p>亮度的增加 会带来：</p>
+<p>色彩饱和度的感知提升。</p>
+<p>空间分辨能力提升。</p>
+<h1 id="Tonemapping"><a href="#Tonemapping" class="headerlink" title="Tonemapping"></a>Tonemapping</h1><p><strong>No one true tone mapper, choice depends on the desired aesthetics</strong></p>
+<p><strong>For best results in HDR the tone mapper must understand the output luminance range of the display.</strong></p>
+<h2 id="亮度和HDR的关系"><a href="#亮度和HDR的关系" class="headerlink" title="亮度和HDR的关系"></a>亮度和HDR的关系</h2><p><a target="_blank" rel="noopener" href="https://developer.nvidia.com/displaying-hdr-nuts-and-bolts">https://developer.nvidia.com/displaying-hdr-nuts-and-bolts</a></p>
+<p>First, as has been the case since Windows Vista, fp16 swap chains are expected to have linear color data. By this I mean that there is no gamma encoding. Secondly, with traditional displays, 1.0 always just meant the brightest intensity. With HDR, things have moved to a color space based on scRGB and a scheme where the value represents an absolute output level rather than a relative one. </p>
+<p>Now, 1.0 is interpreted as the level of 80 nit white. This is the standard white level set by the sRGB standard for displays, and it is probably a white at or slightly dimmer compared to the white for the monitor you are reading this on. 12.5 represents the 1000 nit white that is the practical limit for most HDR displays you can buy today. </p>
+<h1 id="摄像设备色彩压缩"><a href="#摄像设备色彩压缩" class="headerlink" title="摄像设备色彩压缩"></a>摄像设备色彩压缩</h1><p><a target="_blank" rel="noopener" href="https://www.rocketstock.com/blog/tips-for-log-color-space-compositing/">https://www.rocketstock.com/blog/tips-for-log-color-space-compositing/</a></p>
+<p>现在，几乎所有的相机制造商都提供自己的对数曲线(或多个)，摄像设备通常保存数据，使用了对数空间，厂商常用的空间包括 <strong>S-Log 2&amp;3</strong> (Sony), <strong>LogC</strong> (Arri), <strong>Canon Log</strong>, <strong>V-Log</strong> (panasonic), <strong>Red Logfilm</strong>, <strong>Blackmagic Log</strong>,。，这条曲线通常会根据传感器信息定制曲线，它们每一个都是不同的，通常是为特定制造商的产品的颜色科学定制的。<strong>目的就是:就能够保存尽可能多的传感器信息（并非为人眼保存，而是为了保存更多的原始数据）。</strong>它对摄像机看到的东西进行对数编码.</p>
+<p>线性色彩空间具有恒定不变的亮度值，与场景中的精确数学值一致。在人眼看来，这将看起来非常黑暗和泥泞的某些地区和过度暴露的其他，<strong>因为我们的眼睛(和监视器的问题)看到的颜色不同于他们的确切亮度值</strong>,可以看到更多的细节在光明和黑暗的领域。.因此，我们必须应用一个不同的颜色空间，以更美观的方式看到颜色信息</p>
+<ol>
+<li><p>就像我们看到了，这个曲线向上推，以保留更多的阴影数据。</p>
+</li>
+<li><p>Rec. 709并不是一个完全线性的颜色空间，但它更接近于线性而不是对数。</p>
+</li>
+<li><p><strong>convert your CGI element from Rec. 709 to Log</strong>.</p>
+</li>
+</ol>
+<p><img src="/../../images/%E8%89%B2%E5%BD%A9%E8%A1%A8%E7%A4%BA%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/Log-Curve.jpg" alt="Understanding LOG and Color Space In Compositing — LOG vs Linear"></p>
+<p><strong>在特效合成领域</strong> ，例如：AE软件。我们的VFX特效数据通常是。</p>
+<p>我们的拍摄素材是log空间的，这样各种素材才能保证尽可能多的数据，和准确度。但是我们的素材、特效通常是在Gamma空间的（接近线性空间），所以我们需要将素材转换到log空间。通常我们使用LUT表。可以执行颜色空间转换。可以将我们的素材转换到log空间。为了看到正确的结果，我们在把整个图像从log空间转换回sRGB空间。</p>
+<p>影视大量的使用了Rec709颜色的特效和Log的背景。</p>
+<p><img src="https://i1.wp.com/www.xdcam-user.com/wp-content/uploads/2014/10/Slide12.jpg?resize=474,356" alt="Slide12 Using S-log2 and S-Log3 from the A7S (色彩表示的前世今生/Slide12.jpg) in post production."></p>
+<p>wiki的资料</p>
+<p><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Log_profile">https://en.wikipedia.org/wiki/Log_profile</a></p>
+<h1 id="Gamma"><a href="#Gamma" class="headerlink" title="Gamma"></a>Gamma</h1><p>Gamma编码：</p>
+<p>A gamma value &lt; 1 is sometimes called an <strong>encoding gamma</strong>{会让颜色变亮}, and the process of encoding with this compressive power-law nonlinearity is called <strong>gamma compression</strong>; </p>
+<p>conversely a gamma value &gt; 1 is called a <strong>decoding gamma</strong> and the application of the expansive power-law nonlinearity is called <strong>gamma expansion</strong>.</p>
+<p>图像Gamma编码的作用：</p>
+<p>Gamma encoding of images is used to <strong>optimize the usage of bits</strong> when encoding an image, or bandwidth used to transport an image, by taking <strong>advantage of the non-linear manner in which humans perceive light and color。</strong></p>
+<p>The human perception of brightness, under common illumination conditions (<strong>neither pitch black nor blindingly bright</strong>), follows an approximate <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Power_function">power function</a> <strong>(note: no relation to the <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Gamma_function">gamma function</a>),</strong> with greater sensitivity to relative differences between darker tones than between lighter tones, consistent with the <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Stevens_power_law">Stevens power law</a> for brightness perception.</p>
+<p>计算机显示器的Gamma：</p>
+<p>In most computer display systems, images are encoded with a gamma of about 0.45 and decoded with the reciprocal gamma of 2.2. </p>
+<p>CRT中Gamma作用：</p>
+<p>Output to CRT-based television receivers and monitors does not usually require further gamma correction, since the standard video signals that are transmitted or stored in image files incorporate gamma compression that provides a pleasant image after the gamma expansion of the CRT</p>
+<p>Although gamma encoding was developed originally to compensate for the input–output characteristic of <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Cathode_ray_tube">cathode ray tube</a> (CRT) displays, that is not its main purpose or advantage in modern systems. In CRT displays, the light intensity varies nonlinearly with the electron-gun voltage. **Altering the input signal by gamma compression can cancel this nonlinearity, such that the output picture has the intended luminance. **。</p>
+<p>文件保存机制</p>
+<p>The pixel’s intensity values in a given image file; that is, the binary pixel values are stored in the file in such way that they <strong>represent the light intensity via gamma-compressed values instead of a linear encoding</strong>. This is done systematically with digital video files (as those in a <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/DVD">DVD</a> movie), in order to <strong>minimize the gamma-decoding step while playing, and maximize image quality for the given storage.</strong> </p>
+<h1 id="显示器测试"><a href="#显示器测试" class="headerlink" title="显示器测试"></a>显示器测试</h1><p>一个HDR显示器支持的SwapChain格式：</p>
+<p><img src="/../../images/%E8%89%B2%E5%BD%A9%E8%A1%A8%E7%A4%BA%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/1583807985870.png" alt="1583807985870"></p>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-keyword">typedef</span> <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">VkSurfaceFormatKHR</span> &#123;</span><br>    VkFormat           format;<br>    VkColorSpaceKHR    colorSpace;<br>&#125; VkSurfaceFormatKHR;<br><br><span class="hljs-comment">// Format进入swapchain的自动转码、读取的自动解码。</span><br>VK_FORMAT_B8G8R8A8_UNORM  +  VK_COLOR_SPACE_SRGB_NONLINEAR_KHR<br>VK_FORMAT_B8G8R8A8_SRGB  +  VK_COLOR_SPACE_SRGB_NONLINEAR_KHR<br>VK_FORMAT_R16G16B16A16_SFLOAT + VK_COLOR_SPACE_HDR10_ST2084_EXT<br><br></code></pre></td></tr></table></figure>
+
+<p>VK_FORMAT_B8G8R8A8_SRGB ： specifies a four-component, 32-bit unsigned normalized format that has an 8-bit B component stored with sRGB nonlinear encoding in byte 0, an 8-bit G component stored with sRGB nonlinear encoding in byte 1, an 8-bit R component stored with sRGB nonlinear encoding in byte 2, and an 8-bit A component in byte 3.<br>A通道是线性的。</p>
+<p>VK_FORMAT_B8G8R8A8_SRGB：specifies a four-component, 32-bit unsigned normalized format that has an 8-bit B component in byte 0, an 8-bit G component in byte 1, an 8-bit R component in byte 2, and an 8-bit A component in byte 3</p>
+<p><strong>format 的作用</strong>：While the format of a presentable image refers to the encoding of each pixel, </p>
+<p><strong>color space 的作用</strong>： the colorSpace determines how the presentation engine interprets the pixel values. 显示器。A color space in this document refers to a specific color space (defined by the chromaticities of its primaries and a white point in CIE Lab), and a transfer function that is applied before storing or transmitting color data in the given color space. 读取和写入的时候执行转换操作。</p>
+<p>On the other hand, <strong>non-*_SRGB formats</strong> will be very likely exposed in pair with a <strong>SRGB color space.</strong> <strong>This means, the hardware will not apply any transfer function when reading from or writing to such images, yet they will still be presented on a device with sRGB display characteristics</strong></p>
+<p><strong>normalized :表示0-1</strong></p>
+<h3 id="测试1-输入线性数据-sRGB纹理-sRGB-EOTF"><a href="#测试1-输入线性数据-sRGB纹理-sRGB-EOTF" class="headerlink" title="测试1:输入线性数据+sRGB纹理 + sRGB EOTF"></a>测试1:输入线性数据+sRGB纹理 + sRGB EOTF</h3><p>如果使用Format格式为sRGB。</p>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c">VK_FORMAT_B8G8R8A8_SRGB +  VK_COLOR_SPACE_SRGB_NONLINEAR_KHR（暗示了EOTF的类型）<br></code></pre></td></tr></table></figure>
+
+<p>Shader当中直接方式输出颜色：</p>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// SwapChain格式Format</span><br><br><span class="hljs-comment">//CPU端</span><br><span class="hljs-type">const</span> <span class="hljs-built_in">std</span>::<span class="hljs-built_in">vector</span>&lt;Vertex&gt; vertices = &#123;<br>	&#123;&#123;<span class="hljs-number">-0.5f</span>, <span class="hljs-number">-0.5f</span>,<span class="hljs-number">0</span>&#125;, &#123;<span class="hljs-number">1.0f</span>, <span class="hljs-number">0.0f</span>, <span class="hljs-number">0.0f</span>&#125;,&#123;<span class="hljs-number">0</span>,<span class="hljs-number">0</span>&#125;&#125;,<br>	&#123;&#123;<span class="hljs-number">0.5f</span>, <span class="hljs-number">-0.5f</span>,<span class="hljs-number">0</span>&#125;, &#123;<span class="hljs-number">0.0f</span>, <span class="hljs-number">1.0f</span>, <span class="hljs-number">0.0f</span>&#125;,&#123;<span class="hljs-number">0</span>,<span class="hljs-number">0</span>&#125;&#125;,<br>	&#123;&#123;<span class="hljs-number">0.5f</span>, <span class="hljs-number">0.5f</span>,<span class="hljs-number">0</span>&#125;, &#123;<span class="hljs-number">0.0f</span>, <span class="hljs-number">0.0f</span>, <span class="hljs-number">1.0f</span>&#125;,&#123;<span class="hljs-number">0</span>,<span class="hljs-number">0</span>&#125;&#125;,<br>	&#123;&#123;<span class="hljs-number">-0.5f</span>, <span class="hljs-number">0.5f</span>,<span class="hljs-number">0</span>&#125;, &#123;<span class="hljs-number">1.0f</span>, <span class="hljs-number">1.0f</span>, <span class="hljs-number">1.0f</span>&#125;,&#123;<span class="hljs-number">0</span>,<span class="hljs-number">0</span>&#125;&#125;<br>&#125;;<br><span class="hljs-comment">// Shader PS程序</span><br><span class="hljs-type">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">()</span> &#123;<br>    <span class="hljs-comment">//outColor = vec4(fragColor, 1.0);</span><br>    outColor = vec4(fragColor, <span class="hljs-number">1.0</span>);<br>    <span class="hljs-comment">//outColor = texture(texSampler, fragTexCoord);</span><br>    <span class="hljs-comment">//outColor = outColor*outColor;</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>输出这个颜色的原因是，写入时执行了sRGB的编码（颜色变亮）。然后将buffer当中的内容当做sRGB空间颜色进行显示。<strong>下面这个效果就是线性颜色！！</strong></p>
+<p><img src="/../../images/%E8%89%B2%E5%BD%A9%E8%A1%A8%E7%A4%BA%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/1583818583086.png" alt="1583818583086"></p>
+<h3 id="测试2-输入Gamma解码数据-sRGB纹理-sRGB-EOTF"><a href="#测试2-输入Gamma解码数据-sRGB纹理-sRGB-EOTF" class="headerlink" title="测试2:输入Gamma解码数据+sRGB纹理 + sRGB EOTF"></a>测试2:输入Gamma解码数据+sRGB纹理 + sRGB EOTF</h3><figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c">...<br>  	 <span class="hljs-comment">// 设备会在写入时进行sRGB编码，然后数据当做sRGB内容在显示器进行显示。</span><br>    outColor = vec4(fragColor * fragColor, <span class="hljs-number">1.0</span>); <br>...<br></code></pre></td></tr></table></figure>
+
+
+
+<p><img src="/../../images/%E8%89%B2%E5%BD%A9%E8%A1%A8%E7%A4%BA%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/1583818522774.png" alt="1583818522774"></p>
+<h3 id="测试3-输入线性数据-UNORM纹理-sRGB-EOTF"><a href="#测试3-输入线性数据-UNORM纹理-sRGB-EOTF" class="headerlink" title="测试3:输入线性数据+UNORM纹理 + sRGB EOTF"></a>测试3:输入线性数据+UNORM纹理 + sRGB EOTF</h3><figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c">VK_FORMAT_B8G8R8A8_UNORM  +  VK_COLOR_SPACE_SRGB_NONLINEAR_KHR<br></code></pre></td></tr></table></figure>
+
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c">...<br>    <span class="hljs-comment">// </span><br>    outColor = vec4( fragColor, <span class="hljs-number">1.0</span>); <br>...<br></code></pre></td></tr></table></figure>
+
+<p>同样是正常的：</p>
+<p><img src="/../../images/%E8%89%B2%E5%BD%A9%E8%A1%A8%E7%A4%BA%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/1583818684976.png" alt="1583818684976"></p>
+<h3 id="测试4-输入线性数据-Float16纹理-hdr-EOTF"><a href="#测试4-输入线性数据-Float16纹理-hdr-EOTF" class="headerlink" title="测试4:输入线性数据+Float16纹理 + hdr EOTF."></a>测试4:输入线性数据+Float16纹理 + hdr EOTF.</h3><figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs c">VK_FORMAT_R16G16B16A16_SFLOAT  VK_COLOR_SPACE_HDR10_ST2084_EXT<br>VK_COLOR_SPACE_HDR10_ST2084_EXT :specifies support <span class="hljs-keyword">for</span> the <span class="hljs-title function_">HDR10</span> <span class="hljs-params">(BT2020 color)</span> space to be displayed using the SMPTE ST2084 Perceptual <span class="hljs-title function_">Quantizer</span> <span class="hljs-params">(PQ)</span> EOTF.<br></code></pre></td></tr></table></figure>
+
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c">...<br>    <span class="hljs-comment">// </span><br>    outColor = vec4( fragColor, <span class="hljs-number">1.0</span>); <br>...<br></code></pre></td></tr></table></figure>
+
+<p>同样是线性响应函数：得到的和第一组测试一模一样。</p>
+<p><img src="/../../images/%E8%89%B2%E5%BD%A9%E8%A1%A8%E7%A4%BA%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/1583820889870.png" alt="1583820889870"></p>
+<h2 id="电信号转换-：电阻发热导致的能量损失。"><a href="#电信号转换-：电阻发热导致的能量损失。" class="headerlink" title="电信号转换 ：电阻发热导致的能量损失。"></a>电信号转换 ：电阻发热导致的能量损失。</h2><h1 id="显示器如何还原颜色"><a href="#显示器如何还原颜色" class="headerlink" title="显示器如何还原颜色"></a>显示器如何还原颜色</h1><p>参考资料：<a target="_blank" rel="noopener" href="https://www.tftcentral.co.uk/articles/pointers_gamut.htm">https://www.tftcentral.co.uk/articles/pointers_gamut.htm</a></p>
+<p>颜色可以被分成亮度和色品。</p>
+<p>亮度就是亮度。</p>
+<p>色品就是构成光的不同波长的波的比例。</p>
+<p>有两种定义色品的方式：</p>
+<ol>
+<li>the CIE 1931 xy chromaticity diagram。</li>
+<li>the CIE 1976 u’v’ chromaticity diagram.</li>
+</ol>
+<h2 id="CIE-1931-xy-chromaticity-diagram"><a href="#CIE-1931-xy-chromaticity-diagram" class="headerlink" title="CIE 1931 xy chromaticity diagram"></a>CIE 1931 xy chromaticity diagram</h2><p>​	完整来源和推导，暂时搁置。</p>
+<p>简而言之，就是针对人眼的感受实验，CIE创造了两个标准：</p>
+<ol>
+<li>CIE 1931 XYZ </li>
+<li>CIE 1931 RGB color spaces.</li>
+</ol>
+<p>从这两个颜色标准中，推导出了 CIE 1931 xyY 颜色空间。</p>
+<p>xy就是色品分量，而Y就是亮度分量。	</p>
+<p>CIE1931色品图就是所有xyY色彩空间中不同人眼可见色品的可视化结果。它是一种手段来描述不同色域的颜色空间或显示的色度三原色。</p>
+<p><img src="https://www.tftcentral.co.uk/images/pointers_gamut/large%20versions%20(wider%20than%20720px)/figure1_cie1931_small.jpg" alt="img"></p>
+<h2 id="光谱轨迹"><a href="#光谱轨迹" class="headerlink" title="光谱轨迹"></a>光谱轨迹</h2><p>光谱轨迹是上图舌型去向。描述了所有的单色，波形范围在380和700nm之间。</p>
+<h2 id="紫色线"><a href="#紫色线" class="headerlink" title="紫色线"></a>紫色线</h2><p>紫色线的颜色是波长380和700的混合，所有这些颜色都是完全饱和的</p>
+<h2 id="普朗克黑体轨迹"><a href="#普朗克黑体轨迹" class="headerlink" title="普朗克黑体轨迹"></a>普朗克黑体轨迹</h2><p>舌形区域内的曲线称为普朗克轨迹。组成普朗克轨迹的点是由具有一定开尔文温度的黑体辐射体发出的光的色度坐标。横过普朗克轨迹的线就是等温线。</p>
+<h2 id="CIE-1976-u’v’-chromaticity-diagram"><a href="#CIE-1976-u’v’-chromaticity-diagram" class="headerlink" title="CIE 1976 u’v’ chromaticity diagram"></a>CIE 1976 u’v’ chromaticity diagram</h2><p><img src="https://www.tftcentral.co.uk/images/pointers_gamut/large%20versions%20(wider%20than%20720px)/figure3_MacAdam%20ellipses%20CIE1931_small.jpg" alt="img"></p>
+<p>变化成</p>
+<p><img src="https://www.tftcentral.co.uk/images/pointers_gamut/large%20versions%20(wider%20than%20720px)/figure4_cie1976_small.jpg" alt="img"></p>
+<h2 id="Pointer’s-gamut"><a href="#Pointer’s-gamut" class="headerlink" title="Pointer’s gamut"></a>Pointer’s gamut</h2><p>Michael R. Pointer (1980)的研究表示，所有可以被人眼看见的颜色，来自反射，反射是<strong>减法模型</strong>。</p>
+<p>前面讨论的两个色度图是使用加性混色的一组颜色的可视化。</p>
+<h3 id="Additive-color-mixing"><a href="#Additive-color-mixing" class="headerlink" title="Additive color mixing"></a>Additive color mixing</h3><p>通过添加颜色混合，您可以通过混合不同波长的光和改变亮度来创建一个新的颜色。</p>
+<p>例如，如果你取一个波长为585 nm的光源(琥珀黄色)和另一个波长为485 nm的光源(明亮的天蓝色)，你可以在585 nm和485 nm之间复制任何颜色，通过改变两个光源的亮度。</p>
+<p>这也意味着，如果一对色度单体之间的那条线与另一对色度单体之间的那条线相交，那么这两对色度单体就可以创造出一种对两对来说都是相同的颜色，但光谱分布不同。<strong>这种效应被称为异色现象，是彩色显示的基础:在不同的系统中使用不同的三原色来描述或再现被认为相同但光谱分布不同的颜色。</strong></p>
+<h3 id="Subtractive-color-mixing"><a href="#Subtractive-color-mixing" class="headerlink" title="Subtractive color mixing"></a>Subtractive color mixing</h3><p>在减色法混色中，光不是由“光源”发出的，而是被反射回来的。我们所感知到的任何物体的颜色都是光源(通常是太阳，但也有人造光源)反射的物体的波长的组合。光源的所有其他波长都被物体吸收。</p>
+<h2 id="Diffuse-reflection-vs-specular-reflection"><a href="#Diffuse-reflection-vs-specular-reflection" class="headerlink" title="Diffuse reflection vs. specular reflection"></a>Diffuse reflection vs. specular reflection</h2><p>不同的反射器，漫反射是反射颜色的，高光反射会反射光源颜色。减色法混色也对表面平滑度高度敏感。Pointer针对的是漫反射。高光反射会超过Pointer的颜色范围。</p>
+<p><strong>金属工作流当中的PBR计算。</strong></p>
+<h2 id="Pointer’s-gamut-in-CIE-1931-xy-chromaticity-diagram"><a href="#Pointer’s-gamut-in-CIE-1931-xy-chromaticity-diagram" class="headerlink" title="Pointer’s gamut in CIE 1931 xy chromaticity diagram"></a>Pointer’s gamut in CIE 1931 xy chromaticity diagram</h2><p><img src="https://www.tftcentral.co.uk/images/pointers_gamut/figure6_Pointer%20in%20CIE1931.jpg" alt="img"></p>
+<h2 id="RGB-Color-spaces"><a href="#RGB-Color-spaces" class="headerlink" title="RGB Color spaces"></a>RGB Color spaces</h2><p>现在几乎所有的捕获或显示设备都使用RGB颜色模型来描述每个像素的颜色。</p>
+<p><strong>每个通道8位颜色深度的像素，RGB值[255;0;0]显然是红色的。但是，如果没有指定的颜色空间，就无法知道红色的色度应该是多少。</strong>如果捕获设备的色域与显示设备的色域相同，并且两者是直接连接的，那么这就不是问题。不幸的是，事实并非如此。</p>
+<h3 id="Rec-709-x2F-sRGB"><a href="#Rec-709-x2F-sRGB" class="headerlink" title="Rec. 709 &#x2F; sRGB"></a>Rec. 709 &#x2F; sRGB</h3><p>The ITU-R Recommendation BT. 709, or simply Rec. 709, 在1990年将高端显示器的格式标准化了。它指定了<strong>图像显示</strong>的许多方面，但我们感兴趣的是主色度。</p>
+<table>
+<thead>
+<tr>
+<th>Primary</th>
+<th>CIE 1931 xy chromaticity diagram</th>
+<th></th>
+<th>CIE 1976 u’v’ chromaticity diagram</th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>x</td>
+<td>y</td>
+<td>u’</td>
+<td>v’</td>
+<td></td>
+</tr>
+<tr>
+<td>Red</td>
+<td>0.640</td>
+<td>0.330</td>
+<td>0.451</td>
+<td>0.523</td>
+</tr>
+<tr>
+<td>Green</td>
+<td>0.300</td>
+<td>0.600</td>
+<td>0.125</td>
+<td>0.563</td>
+</tr>
+<tr>
+<td>Blue</td>
+<td>0.150</td>
+<td>0.060</td>
+<td>0.175</td>
+<td>0.158</td>
+</tr>
+</tbody></table>
+<p>当在CIE 1931年的xy或CIE 1976年的u ‘ v色度图中绘制时，很明显，这是一个相当小的颜色空间。在CIE 1931年的xy色度图中，它只涵盖了33.5%的色度和69.4%的指针色域。在CIE 1976 u ‘ v中，这些值分别为33.2%和70.2%。</p>
+<p><img src="https://www.tftcentral.co.uk/images/pointers_gamut/figure8_sRGB%20and%20pointer%20CIE1931.jpg" alt="img"></p>
+<h3 id="BT-2020"><a href="#BT-2020" class="headerlink" title="BT .2020"></a>BT .2020</h3><p>Rec. 2020 defines a bit depth of either 10 bits per sample or 12 bits per sample.</p>
+<h4 id="Resolution-edit-分辨率"><a href="#Resolution-edit-分辨率" class="headerlink" title="Resolution[edit] 分辨率"></a>Resolution[<a target="_blank" rel="noopener" href="https://en.wikipedia.org/w/index.php?title=Rec._2020&action=edit&section=2">edit</a>] 分辨率</h4><p>Rec. 2020 defines two resolutions of <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/4K_resolution#Ultra_HD">3840 × 2160</a> (“4K”) and <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/8K_resolution#Resolutions">7680 × 4320</a> (“8K”).[<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Rec._2020#cite_note-Recommendation2020-1">1]</a> These resolutions have an <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Aspect_ratio_(image)">aspect ratio</a> of <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/16:9">16:9</a> and use square <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Pixels">pixels</a>.[<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Rec._2020#cite_note-Recommendation2020-1">1]</a></p>
+<h4 id="Frame-rate-edit-帧率"><a href="#Frame-rate-edit-帧率" class="headerlink" title="Frame rate[edit] 帧率"></a>Frame rate[<a target="_blank" rel="noopener" href="https://en.wikipedia.org/w/index.php?title=Rec._2020&action=edit&section=3">edit</a>] 帧率</h4><p>Rec. 2020 specifies the following frame rates: 120p, 119.88p, 100p, 60p, 59.94p, 50p, 30p, 29.97p, 25p, 24p, 23.976p.[<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Rec._2020#cite_note-Recommendation2020-1">1]</a> Only <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Progressive_scan">progressive scan</a> frame rates are allowed.[<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Rec._2020#cite_note-Recommendation2020-1">1]</a></p>
+<h4 id="Digital-representation-数据表示"><a href="#Digital-representation-数据表示" class="headerlink" title="Digital representation 数据表示"></a>Digital representation 数据表示</h4><p>10-bits per sample Rec. 2020 uses video levels where the <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Black_level">black level</a> is defined as code 64 and the nominal peak is defined as code 940.[<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Rec._2020#cite_note-Recommendation2020-1">1]</a> Codes 0–3 and 1,020–1,023 are used for the timing reference.[<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Rec._2020#cite_note-Recommendation2020-1">1]</a> Codes 4 through 63 provide video data below the black level while codes 941 through 1,019 provide video data above the nominal peak.[<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Rec._2020#cite_note-Recommendation2020-1">1]</a></p>
+<p>12-bits per sample Rec. 2020 uses video levels where the black level is defined as code 256 and the nominal peak is defined as code 3760.[<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Rec._2020#cite_note-Recommendation2020-1">1]</a> Codes 0–15 and 4,080–4,095 are used for the timing reference.[<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Rec._2020#cite_note-Recommendation2020-1">1]</a> Codes 16 through 255 provide video data below the black level while codes 3,761 through 4,079 provide video data above the nominal peak.[<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Rec._2020#cite_note-Recommendation2020-1">1]</a></p>
+<p><img src="/../../images/%E8%89%B2%E5%BD%A9%E8%A1%A8%E7%A4%BA%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/300px-CIExy1931_Rec_2020.svg.png" alt="img"></p>
+<table>
+<thead>
+<tr>
+<th align="center"><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Color_space">Color space</a></th>
+<th align="center"><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/White_point">White point</a></th>
+<th align="center"><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Primary_color">Primary colors</a></th>
+<th align="center"></th>
+<th align="center"></th>
+<th align="center"></th>
+<th align="center"></th>
+<th align="center"></th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">xW</td>
+<td align="center">yW</td>
+<td align="center">xR</td>
+<td align="center">yR</td>
+<td align="center">xG</td>
+<td align="center">yG</td>
+<td align="center">xB</td>
+<td align="center">yB</td>
+<td></td>
+</tr>
+<tr>
+<td align="center">ITU-R BT.2020</td>
+<td align="center">0.3127</td>
+<td align="center">0.3290</td>
+<td align="center">0.708</td>
+<td align="center">0.292</td>
+<td align="center">0.17</td>
+<td align="center">0.797</td>
+<td align="center">0.131</td>
+<td>0.046</td>
+</tr>
+</tbody></table>
+<h3 id="sRGB"><a href="#sRGB" class="headerlink" title="sRGB"></a><strong>sRGB</strong></h3><p>sRGB是由惠普和微软在1996年创建的RGB彩色空间，用于显示器、打印机和互联网。sRGB颜色空间使用与Rec. 709相同的三原色和白点。这两者之间最大的区别是sRGB只是一个绝对的颜色空间，只指定基色和白点的色度和伽玛校正曲线。</p>
+<h3 id="Adobe-Wide-Gamut-RGB（Wide-gamut-RGB-color-space）宽色域"><a href="#Adobe-Wide-Gamut-RGB（Wide-gamut-RGB-color-space）宽色域" class="headerlink" title="Adobe Wide Gamut RGB（Wide-gamut RGB color space）宽色域"></a>Adobe Wide Gamut RGB（Wide-gamut RGB color space）宽色域</h3><p>这就引出了下一个问题:这样大小的颜色空间需要高颜色深度来避免色调分离效果(颜色带)。</p>
+<p><strong>大多数被指定为具有10位颜色深度的显示器实际上是常规的8位颜色深度面板，在显示电子设备中实现了frc模块。</strong></p>
+<table>
+<thead>
+<tr>
+<th align="center">Color</th>
+<th align="center">CIE x</th>
+<th align="center">CIE y</th>
+<th align="center">Wavelength</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">Red</td>
+<td align="center">0.7347</td>
+<td align="center">0.2653</td>
+<td align="center">700 nm</td>
+</tr>
+<tr>
+<td align="center">Green</td>
+<td align="center">0.1152</td>
+<td align="center">0.8264</td>
+<td align="center">525 nm</td>
+</tr>
+<tr>
+<td align="center">Blue</td>
+<td align="center">0.1566</td>
+<td align="center">0.0177</td>
+<td align="center">450 nm</td>
+</tr>
+<tr>
+<td align="center">White point</td>
+<td align="center"></td>
+<td align="center"></td>
+<td align="center"></td>
+</tr>
+</tbody></table>
+<p><img src="/../../images/%E8%89%B2%E5%BD%A9%E8%A1%A8%E7%A4%BA%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/325px-CIExy1931_AdobeWGRGB.png" alt="img"></p>
+<h2 id="量子点显示器"><a href="#量子点显示器" class="headerlink" title="量子点显示器"></a>量子点显示器</h2><h2 id="接口规范"><a href="#接口规范" class="headerlink" title="接口规范"></a>接口规范</h2><p>接口规范：SMPTE 292M, SMPTE 372M, HDMI、没有说明EOTF、OETF和颜色的任何信息。</p>
+<h2 id="TransferSystem"><a href="#TransferSystem" class="headerlink" title="TransferSystem"></a>TransferSystem</h2><p><a target="_blank" rel="noopener" href="https://www.displaydaily.com/article/display-daily/hlg-vs-pq-systems-for-hdr-television">https://www.displaydaily.com/article/display-daily/hlg-vs-pq-systems-for-hdr-television</a></p>
+<p><strong>One thing that must be understood is that both PQ and HLG are <em>Systems</em>, not simply transfer curves.</strong><br>Finally, there are three terms that must be used in trying to explain the difference between the PQ and HLG systems:</p>
+<ul>
+<li>OETF: Opto-Electronic Transfer Function. This is the <strong>non-linear relationship between</strong> the light falling on the camera sensor and the digital electronic signal generated by the camera.对于渲染来说没有这一部分。</li>
+<li>EOTF: Electro-Optical Transfer Function. This is the non-linear relationship between the digital electronic signal received by the display and the light emitted by the display. </li>
+<li>OOTF:  Optical-Optical Transfer Function. This is the overall relationship between the light falling on the image sensor and the light coming out of the display.</li>
+</ul>
+<p>The OOTF relationship is not normally linear in a camera-to-display signal chain and is often characterized by a Gamma value. One key to understanding the PQ vs HGL issue is the <strong>OOTF gamma value preferred by viewers and content creators varies with viewing conditions, which include both display brightness and the ambient surround light when the display is being viewed.</strong></p>
+<p><img src="/../../images/%E8%89%B2%E5%BD%A9%E8%A1%A8%E7%A4%BA%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/BBC_Generic_End-to-end_resize.jpg" alt="BBC Generic End to end resize"></p>
+<p> The goal of this accommodation is to preserve the artistic intent of the content creators even when the content is seen by <strong>the viewer under different conditions than used by the content creators.</strong></p>
+<p><img src="/../../images/%E8%89%B2%E5%BD%A9%E8%A1%A8%E7%A4%BA%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/BBC_HLG_PQ_End-to-end_Labeled_2_resize.jpg" alt="BBC HLG PQ End to end Labeled 2 resize"></p>
+<p>When a PQ signal is shown on a display where the display and display environment does not match the mastering display, the OOTF is adjusted using metadata from the mastering environment.</p>
+<p><img src="/../../images/%E8%89%B2%E5%BD%A9%E8%A1%A8%E7%A4%BA%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/BBC_OOTF_PQ_resize.jpg" alt="BBC OOTF PQ resize"></p>
+<h2 id="OETF"><a href="#OETF" class="headerlink" title="OETF"></a>OETF</h2><p>图像捕捉OETF标准：ITU-R Rec. BT.601, 709, 2020。</p>
+<p>他只是一个相对设置。在拍摄过程中，相机曲线会根据个人喜好进行调整。</p>
+<p>教科书中的Rec709函数几乎从未在实践中使用过。</p>
+<h2 id="EOTF"><a href="#EOTF" class="headerlink" title="EOTF"></a>EOTF</h2><p><strong>但是图像的显示标准并不是图像捕捉标准的翻转（But image display ≠ inverse of image capture ）</strong> 因为：</p>
+<ol>
+<li>特殊渲染意图。</li>
+<li>捕捉环境和渲染环境亮度不匹配。</li>
+</ol>
+<p>EOTF的意义：</p>
+<ol>
+<li>参考显示器上的图像才是真正定义信号的东西</li>
+<li>描述了如何将数字代码转换成亮度信息。</li>
+<li>在查看参考显示时，艺术家会对内容的外观做出创造性的决定.</li>
+<li>所有的显示必须使用同一个标准。</li>
+</ol>
+<p>随着crt几乎绝迹，官方开始努力记录它们的响应曲线。</p>
+<p>OETF函数(如Rec.709和类似的函数中所使用的)派生自display EOTF，而不是反过来：</p>
+<ol>
+<li>早起的EOTF是由于CRT物理硬件决定的。</li>
+<li>OETF就是将EOTF反过来然后<strong>根据渲染环境进行调整。</strong></li>
+</ol>
+<p>目前的EOTF只针对了CRT显示器的亮度范围，但是目前我们有HDR所以需要更大的亮度和动态范围的EOTF曲线。</p>
+<h3 id="构建EOTF曲线"><a href="#构建EOTF曲线" class="headerlink" title="构建EOTF曲线"></a>构建EOTF曲线</h3><ol>
+<li>最大化利用数据。</li>
+<li>符合人眼习惯。</li>
+</ol>
+<p>下面这张图是根据实际人眼感知的实验结论，他表示随着亮度变化。人眼对于亮度对比度的分辨能力，注意下图是指数坐标单位。</p>
+<p><img src="/../../images/%E8%89%B2%E5%BD%A9%E8%A1%A8%E7%A4%BA%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/1584929902806.png" alt="1584929902806"></p>
+<p>常见的曲线：</p>
+<h4 id="OpenEXR"><a href="#OpenEXR" class="headerlink" title="OpenEXR"></a>OpenEXR</h4><p><img src="/../../images/%E8%89%B2%E5%BD%A9%E8%A1%A8%E7%A4%BA%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/1584930032370.png" alt="1584930032370"></p>
+<h4 id="Log"><a href="#Log" class="headerlink" title="Log"></a>Log</h4><p><img src="/../../images/%E8%89%B2%E5%BD%A9%E8%A1%A8%E7%A4%BA%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/1589776195725.png" alt="1589776195725"></p>
+<h4 id="Gamma（Rec1886）"><a href="#Gamma（Rec1886）" class="headerlink" title="Gamma（Rec1886）"></a>Gamma（Rec1886）</h4><p><img src="/../../images/%E8%89%B2%E5%BD%A9%E8%A1%A8%E7%A4%BA%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/1584930055803.png" alt="1584930055803"></p>
+<p><img src="/../../images/%E8%89%B2%E5%BD%A9%E8%A1%A8%E7%A4%BA%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/1584931609084.png" alt="1584931609084"></p>
+<h4 id="PQ曲线"><a href="#PQ曲线" class="headerlink" title="PQ曲线"></a>PQ曲线</h4><p><img src="/../../images/%E8%89%B2%E5%BD%A9%E8%A1%A8%E7%A4%BA%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/1584931714881.png" alt="1584931714881"></p>
+<p><img src="/../../images/%E8%89%B2%E5%BD%A9%E8%A1%A8%E7%A4%BA%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/1584931744448.png" alt="1584931744448"></p>
+<h2 id="OOTF"><a href="#OOTF" class="headerlink" title="OOTF"></a>OOTF</h2><h2 id="CSF"><a href="#CSF" class="headerlink" title="CSF"></a>CSF</h2><p><img src="/../../images/%E8%89%B2%E5%BD%A9%E8%A1%A8%E7%A4%BA%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/1589776858973.png" alt="1589776858973"></p>
+<h1 id="色彩处理技术"><a href="#色彩处理技术" class="headerlink" title="色彩处理技术"></a>色彩处理技术</h1><h2 id="ToneMapping"><a href="#ToneMapping" class="headerlink" title="ToneMapping"></a>ToneMapping</h2><ol>
+<li>Lut严重依赖于ToneMapping的效果。</li>
+<li>原始的管线中，无法对高光部分进行精确ToneMapping。</li>
+<li>这是一个固定的分布，不同的光照标准-&gt;不同的ToneMapping-&gt;不同的LUT</li>
+<li>在luma&#x2F;chroma空间进行计算（hue preserving）：只在亮度空间附加shoulder，根据shoulder部位逐步降低饱和度。</li>
+<li>tonemapping的hue preserving也会有问题 ：通过LUT模拟黑体颜色。</li>
+</ol>
+<p>For pixel values above the peak luminance of the display, a reference monitor should “clip” those values back to the maximum capabilities of the display. ，Tone mapping changes the luminance of the pixel to the maximum value of the display, but not the chromaticity of the pixel. Such a change just in luminance may change our perception of the pixel (a bright yellow pixel looks yellow but a dim yellow pixel looks brown). </p>
+<p>Clipping can also mean adjusting the chromaticity of the pixel.  </p>
+<p><img src="/../../images/%E8%89%B2%E5%BD%A9%E8%A1%A8%E7%A4%BA%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/1589968162850.png" alt="1589968162850"></p>
+<h2 id="Gamut-mapping"><a href="#Gamut-mapping" class="headerlink" title="Gamut mapping"></a>Gamut mapping</h2><p>refers to the remapping of color values that exceed the capabilities of the display to the native gamut of the display.</p>
+<p>​	色彩学家讨论的问题之一是——在特定的电脑屏幕上可以显示的颜色范围是什么?或者在特定的打印机上可以复制到纸上的颜色范围是什么?这个范围称为显示或打印机的色域。他们问的另一个问题是——<strong>如果我想复制的颜色不在我的显示器或打印机的色域内，我应该如何修改它们，使它们可以显示，而不过度扭曲我的图像的整体设计</strong>。修改过程称为色域映射，在遗传算法中避免颜色失真的替代策略(有几种)</p>
+<p><a target="_blank" rel="noopener" href="https://graphics.stanford.edu/courses/cs178/applets/gamutmapping.html">https://graphics.stanford.edu/courses/cs178/applets/gamutmapping.html</a></p>
+<h2 id="Reference-Monitors"><a href="#Reference-Monitors" class="headerlink" title="Reference Monitors"></a>Reference Monitors</h2><p>用于调节色彩数据的显示器。</p>
+<p>显示器亮度范围达不到PQ，范围。These are supposed to be highly accurate monitors but they are not capable of displaying the full range of luminance in the PQ standard, nor the full range of colors in the BT.2020 color gamut. </p>
+<p>显示器色彩范围达不到BT.2020 , Today, there are two practical reference monitors at 1000 and 4000 cd&#x2F;m² with each supporting the DCI-P3 color gamut, which is smaller than the BT.2020 color gamut. </p>
+<p>对于HDR来说，BT.2020是必须的，但是不需要有2020的色彩基色，但是需要有2020的色度图. In the world of HDR for consumers, BT.2020 is mandatory. <strong>This does not mean that the display has to have 2020 primaries, but it should follow BT.2020 colorimetry.</strong></p>
+<h3 id="System-colorimetry-edit"><a href="#System-colorimetry-edit" class="headerlink" title="System colorimetry[edit]"></a>System colorimetry[<a target="_blank" rel="noopener" href="https://en.wikipedia.org/w/index.php?title=Rec._2020&action=edit&section=5">edit</a>]</h3><table>
+<thead>
+<tr>
+<th align="center"><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Color_space">Color space</a></th>
+<th align="center"><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/White_point">White point</a></th>
+<th align="center"><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Primary_color">Primary colors</a></th>
+<th align="center"></th>
+<th align="center"></th>
+<th align="center"></th>
+<th align="center"></th>
+<th align="center"></th>
+<th></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">xW</td>
+<td align="center">yW</td>
+<td align="center">xR</td>
+<td align="center">yR</td>
+<td align="center">xG</td>
+<td align="center">yG</td>
+<td align="center">xB</td>
+<td align="center">yB</td>
+<td></td>
+</tr>
+<tr>
+<td align="center">ITU-R BT.2020</td>
+<td align="center">0.3127</td>
+<td align="center">0.3290</td>
+<td align="center">0.708</td>
+<td align="center">0.292</td>
+<td align="center">0.17</td>
+<td align="center">0.797</td>
+<td align="center">0.131</td>
+<td>0.046</td>
+</tr>
+</tbody></table>
+<p>The Rec. 2020 (UHDTV&#x2F;UHD-1&#x2F;UHD-2) color space can reproduce colors that cannot be shown with the <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Rec._709">Rec. 709</a> (HDTV) color space.[<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Rec._2020#cite_note-TVTechnologyDecember2012SuperHiVision-6">6]</a>[<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Rec._2020#cite_note-NHKannualreport2010-7">7]</a> The RGB primaries used by Rec. 2020 are equivalent to monochromatic light sources on the <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/CIE_1931_color_space#CIE_xy_chromaticity_diagram_and_the_CIE_xyY_color_space">CIE 1931 spectral locus</a>.[<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Rec._2020#cite_note-NHKannualreport2010-7">7]</a>[<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Rec._2020#cite_note-NHKOpenHouse2013Exhibit20-8">8]</a></p>
+<p>2020的物理亮度参数。The <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Wavelength">wavelength</a> of the Rec. 2020 <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Primary_color">primary colors</a> is 630 <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Nanometre">nm</a> for the red primary color, 532 nm for the green primary color, and 467 nm for the blue primary color.[<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Rec._2020#cite_note-NHKOpenHouse2013Exhibit20-8">8]</a>[<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Rec._2020#cite_note-DavidWoodDecidingTomorrowsTelevision-9">9]</a> </p>
+<h2 id="Lut"><a href="#Lut" class="headerlink" title="Lut"></a>Lut</h2><h3 id="LUTspace"><a href="#LUTspace" class="headerlink" title="LUTspace"></a>LUTspace</h3><h2 id="在HDR显示器上还原"><a href="#在HDR显示器上还原" class="headerlink" title="在HDR显示器上还原"></a>在HDR显示器上还原</h2><p>Tonemapping  进行LUT还原Tonemap 变回hdr值。 因为Shoulder不是无限的，所以也有clip的值。</p>
+<h2 id="卡通渲染的真实风格"><a href="#卡通渲染的真实风格" class="headerlink" title="卡通渲染的真实风格"></a>卡通渲染的真实风格</h2><p>饱和度和亮度的控制。</p>
+<h2 id="Perceptual-Quantizer"><a href="#Perceptual-Quantizer" class="headerlink" title="Perceptual Quantizer"></a>Perceptual Quantizer</h2><p><strong>Perceptual Quantizer (PQ)</strong>, published by <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Society_of_Motion_Picture_and_Television_Engineers">SMPTE</a> as <strong>SMPTE ST 2084</strong>, is a transfer function that allows for the display of <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/High_dynamic_range">high dynamic range</a> (HDR) video with a <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Luminance">luminance</a> level of up to 10,000 <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Cd/m2">cd&#x2F;m2</a> and can be used with the <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Rec._2020">Rec. 2020</a> color space.[<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/High-dynamic-range_video#cite_note-HPATechFebruary2014-32">32]</a>[<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/High-dynamic-range_video#cite_note-SMPTE2084HDR2014-33">33]</a>[<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/High-dynamic-range_video#cite_note-HDRReportSMPTE2015MESA-34">34]</a>[<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/High-dynamic-range_video#cite_note-GradingHDR2015studiodaily-35">35]</a> PQ is a non-linear <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Optical_transfer_function">electro-optical transfer function</a> (EOTF).</p>
+<p><strong>L0表示的是压缩到0-1的亮度， 也就是1表示10000 nits 。所以要根据实际要显示的亮度，渲染我们的颜色亮度，所以还有隐含的一步就是从计算的颜色FP16 到L0，然后再从L0压缩到[0,1].</strong></p>
+<p>对于Dolby Vsion来说，需要能够表达0-10000nis的亮度，目前的SDR显示器使用8bits表示0-100nits的数据，如果过使用相同的曲线，需要14bits，才能避免眼睛看到banding，但是这个时候亮度部分就浪费了，所以我们使用了12bits的 pq曲线。不给过大部分HDR方法，使用的是10bits。（10bit总是在可视曲线之上），但是噪声可以遮蔽掉banding效果。</p>
+<p><img src="/../../images/%E8%89%B2%E5%BD%A9%E8%A1%A8%E7%A4%BA%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/1590027884175.png" alt="1590027884175"></p>
+<p>下面是PQ EOTF曲线（x的坐标时0-1024，深度是10 bit）：</p>
+<p><img src="/../../images/%E8%89%B2%E5%BD%A9%E8%A1%A8%E7%A4%BA%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/1584935346381.png" alt="1584935346381"></p>
+<p>一定要注意下面说的是<strong>PT Inverse EOTF！！！！</strong></p>
+<p><img src="/../../images/%E8%89%B2%E5%BD%A9%E8%A1%A8%E7%A4%BA%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/1584499216410.png" alt="1584499216410"></p>
+<p>Inverse EOTF曲线（OETF曲线）：</p>
+<p><img src="/../../images/%E8%89%B2%E5%BD%A9%E8%A1%A8%E7%A4%BA%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/1584935431610.png" alt="1584935431610"></p>
+<h2 id="Hue-Preserving-and-Hue-shifts"><a href="#Hue-Preserving-and-Hue-shifts" class="headerlink" title="Hue Preserving and Hue shifts"></a>Hue Preserving and Hue shifts</h2><p>颜色从饱和色 转换到白色的时候（去饱和度），色相是否变化。</p>
+<p>这一点也影响到ColorGrading的效果，所以ToneMapping 要放在最后。</p>
+<h3 id="如何做到HuePreserving"><a href="#如何做到HuePreserving" class="headerlink" title="如何做到HuePreserving"></a>如何做到HuePreserving</h3><p> 分离亮度和饱和度，对亮度应用shoulder。对色度，应用降低饱和度（根据shoudler的位置，并且使用不同的速度）。</p>
+<p>使用ICtcpya 空间</p>
+<h2 id="tongMapping带来的改变"><a href="#tongMapping带来的改变" class="headerlink" title="tongMapping带来的改变"></a>tongMapping带来的改变</h2><p>Toe</p>
+<p>Hue shits</p>
+<p>对比度变化</p>
+<h1 id="HDR-标准与文件格式"><a href="#HDR-标准与文件格式" class="headerlink" title="HDR 标准与文件格式"></a>HDR 标准与文件格式</h1><p>​      <strong>HDR技术通常使用不同的方法，来将数据转化成HDR显示器可以接受的格式。基本上是一个接近log函数的型号编码方式。然后对应的显示器将这些数据还原会标准信号。由于Log函数的原因，所以如果过直接在SDR显示器上观察（没有HDR显示器的还原功能）那么数据是低饱和度，很灰暗的。类似Log函数的编码标准有：</strong></p>
+<ul>
+<li><p>Dolby Vision</p>
+</li>
+<li><p>HDR10</p>
+</li>
+<li><p>HDR10 +</p>
+</li>
+<li><p>Hybird Log-Gamma(HLG)</p>
+</li>
+</ul>
+<h3 id="HDR10"><a href="#HDR10" class="headerlink" title="HDR10"></a>HDR10</h3><p> wide-gamut <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Rec._2020">Rec. 2020</a> color space, </p>
+<ul>
+<li><p>EOTF: SMPTE ST 2084 (<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Perceptual_quantization">PQ</a>)</p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Bit_depth_(computer_graphics)">Bit Depth</a>: 10-bit </p>
+</li>
+<li><p>static metadata</p>
+</li>
+</ul>
+<h3 id="HDR10-1"><a href="#HDR10-1" class="headerlink" title="HDR10+"></a>HDR10+</h3><ul>
+<li>EOTF: SMPTE ST 2084 (<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Perceptual_quantization">PQ</a>)</li>
+<li>Resolution: Agnostic (2K&#x2F;4K&#x2F;8K[<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/HDR10%2B#cite_note-10">10]</a>, etc.)</li>
+<li><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Bit_depth_(computer_graphics)">Bit Depth</a>: 10-bit or more (up to 16-bit)</li>
+<li>Color Primaries: <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Rec._2020">ITU-R BT.2020</a></li>
+<li>Maximum linearized pixel value: 10,000 <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Candela_per_square_metre">cd&#x2F;m2</a> for each color R&#x2F;G&#x2F;B (content)</li>
+<li>Metadata (Required): Mastering Display Color Volume Metadata[<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/HDR10%2B#cite_note-11">11]</a></li>
+<li>Metadata (Optional): MaxCLL, MaxFALL[<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/HDR10%2B#cite_note-12">12]</a></li>
+<li>dynamic metadata</li>
+</ul>
+<p>HDR10+ technology can support the full range of HDR standards to 10,000 cd&#x2F;m2, 8K and BT.2020 color gamut. Being resolution agnostic, metadata needs to be created only once and can be applied to any target resolution.</p>
+<p>HDR10+ is applicable for HEVC and <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/VP9">VP9</a> compatibility via WebM[<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/HDR10%2B#cite_note-13">13]</a> as well as any codec that supports ITU-T T.35 metadata.</p>
+<h3 id="Dolby-Vision"><a href="#Dolby-Vision" class="headerlink" title="Dolby Vision"></a>Dolby Vision</h3><h3 id="HLG"><a href="#HLG" class="headerlink" title="HLG"></a>HLG</h3><p>HDR编码标准允许更高的最大亮度，并使用至少10位动态范围。</p>
+<p>虽然技术上“HDR”严格指的是最大和最小亮度之间的比例，但术语“HDR视频”通常被理解为也意味着广泛的色域</p>
+<p>HDR video当中记录了一个亮度的等级，不同的HDR技术会把文件数据当中的亮度等级映射到“一种长得像指数的空间”，显示器会用对应的EOTF将这个数据正确的显示。</p>
+<p>在DaVinCi当中颜色通常是10bit的数据。当使用HDR模式的时候，他就变成了绝对亮度。</p>
+<p>亮度对应为：</p>
+<p><img src="/../../images/%E8%89%B2%E5%BD%A9%E8%A1%A8%E7%A4%BA%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/2020320-160254.jpg" alt="2020320-160254"></p>
+<p>同样也可以，开启“Enable HDR Scopes for ST.2084”选项来查看实际的nit亮度。</p>
+<h2 id="HDR的文件格式"><a href="#HDR的文件格式" class="headerlink" title="HDR的文件格式"></a>HDR的文件格式</h2><h3 id="Raw"><a href="#Raw" class="headerlink" title="Raw"></a>Raw</h3><p>原始文件之所以这样命名，是因为它们还没有被处理，因此还不能使用位图图形编辑器打印或编辑。</p>
+<p>传统CCD每个像素只能感光一种颜色，根据感光的强度不同转换成不同的数字，不同的CCD这一数字范围是不同的，早期的8bit，到10bit、12bit。8bit就是一个点感光从最暗到最亮分为256个层次，10bit就是1024个层次，以此类推。</p>
+<p>RAW文件几乎是未经过处理而直接从CCD或CMOS上得到的信息,·也许RAW最大的优点就是可以将其转化为16位的图像。也就是有65536个层次可以被调整.</p>
+<p><strong>·成像芯片是线性装置。这意味着当一个像素点的采光量是另一个的两倍时，也将会产生2倍的电压。</strong>曝光中止时，亮度值是以其对数来呈现的，这就是说一个未修正的照片会看起来比较暗，因此需要通过色调曲线来调整正确。</p>
+<table>
+<thead>
+<tr>
+<th>富士</th>
+<th>*.raf</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>佳能</td>
+<td><em>.crw，</em>.cr2,*.cr3</td>
+</tr>
+<tr>
+<td>柯达</td>
+<td>*.kdc</td>
+</tr>
+<tr>
+<td>美能达</td>
+<td>*.mrw</td>
+</tr>
+<tr>
+<td>尼康</td>
+<td><em>.nef,</em>.cr2</td>
+</tr>
+<tr>
+<td>奥林巴斯</td>
+<td>*.orf</td>
+</tr>
+<tr>
+<td>adobe</td>
+<td>*.dng</td>
+</tr>
+<tr>
+<td>宾得</td>
+<td><em>.ptx，</em>.pef</td>
+</tr>
+<tr>
+<td>索尼</td>
+<td>*.arw</td>
+</tr>
+<tr>
+<td>适马</td>
+<td>*.x3f</td>
+</tr>
+<tr>
+<td>松下</td>
+<td>*.rw2</td>
+</tr>
+</tbody></table>
+<p><a target="_blank" rel="noopener" href="https://www.aftershotpro.com/en/pages/raw-file/">https://www.aftershotpro.com/en/pages/raw-file/</a></p>
+<h3 id="Camera’s-CCD"><a href="#Camera’s-CCD" class="headerlink" title="Camera’s CCD"></a>Camera’s CCD</h3><p>参考资料：</p>
+<p><a target="_blank" rel="noopener" href="https://electronics.howstuffworks.com/cameras-photography/digital/digital-camera2.htm">https://electronics.howstuffworks.com/cameras-photography/digital/digital-camera2.htm</a></p>
+<p>​	<strong>数码相机的传感器可以将光线转换成电荷</strong>，而不是胶片。大多数数码相机采用的图像传感器是电荷耦合器件(CCD)。一些相机使用互补的金属氧化物半导体(CMOS)技术代替。CCD和CMOS图像传感器都能将光转换成电子。</p>
+<p>接受光信号，（相机会重置CCD，将其暴露在光线下，产生电荷，直到快门关闭。）然后编码成二进制文件。（ADC测量电荷并创建数字信号，表示每个像素的电荷值。）</p>
+<p>文件类型：No matter what type of storage they use, all digital cameras need lots of room for pictures. They usually store images in one of two formats – TIFF, which is uncompressed, and JPEG, which is compressed, but some use RAW format. </p>
+<h3 id="Camera’s-ACD"><a href="#Camera’s-ACD" class="headerlink" title="Camera’s ACD"></a>Camera’s ACD</h3><p>参考资料：</p>
+<p><a target="_blank" rel="noopener" href="https://www.lifewire.com/the-adc-of-a-digital-camera-493714">https://www.lifewire.com/the-adc-of-a-digital-camera-493714</a></p>
+<p>ADC是数码相机内部的一个芯片，模拟型号和电信号转换芯片（Analog to Digital Converter (variously called the <em>ADC</em>, <em>AD Converter</em>, and the <em>A&#x2F;D Converter</em>).）<strong>，它的工作是将像素的电压划分为亮度级别</strong>，并将每个级别指定为由0和1组成的二进制数。大多数消费级数码相机至少使用8位ADC，单个像素的亮度最多可达256个值。</p>
+<p>ADC的最小比特率由**传感器的动态范围(精度)**决定（对电压的感受精度）。一个大的动态范围至少需要一个10位ADC来产生大量的tone并避免任何信息丢失。然而，相机制造商通常会过度指定ADC(比如12位而不是10位)，以避免任何错误。</p>
+<p>多出来的数据防止<strong>色调映射（ tonal curves）</strong>时产生banding效果。</p>
+<p>一个12位和14位的图像之间的差异将是非常轻微的，甚至可能在大多数照片是不明显的。同时，这一切都取决于传感器的动态范围。如果动态范围没有随着ADC的增大而增大，那么它就不能有效地改善图像质量。</p>
+<h3 id="ACD-tonal-curve"><a href="#ACD-tonal-curve" class="headerlink" title="ACD tonal curve"></a>ACD tonal curve</h3><p>参考资料：</p>
+<p><a target="_blank" rel="noopener" href="https://www.dpreview.com/articles/5426898916/ins-and-outs-of-iso-where-iso-gets-complex">https://www.dpreview.com/articles/5426898916/ins-and-outs-of-iso-where-iso-gets-complex</a></p>
+<p>过去针对不同的ISO，图片的亮度会变的不一样。这就是在调节模拟信号。他们使用的是同一个Tone Curve。</p>
+<p><img src="/../../images/%E8%89%B2%E5%BD%A9%E8%A1%A8%E7%A4%BA%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/ISO_pre_2006_green-1590543885563.png" alt="img"></p>
+<p>上图注意，模拟信号放大一倍，曝光级别降低一个曝光级别。所有图像都是用相同的ToneMapping，也就是中灰度亮度是固定的。数据分布也是一致的。</p>
+<p>随后不同的ISO等级（模拟信号放大）使用的不同tone curve和模拟信号放大：</p>
+<p>​	<strong>模拟信号放大会减少噪声，但是会减少动态范围（亮度范围），使用较低的放大可以得到更大的亮度范围。</strong></p>
+<p><img src="/../../images/%E8%89%B2%E5%BD%A9%E8%A1%A8%E7%A4%BA%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/ISO_post_2006_green.png" alt="img"></p>
+<h3 id="ISO"><a href="#ISO" class="headerlink" title="ISO"></a>ISO</h3><p>摄影中的流程，ISO是在特定的光照环境增强敏感度，以达到想要的亮度，但是ISO只是单纯的增加曝光么：</p>
+<p><img src="/../../images/%E8%89%B2%E5%BD%A9%E8%A1%A8%E7%A4%BA%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/ISO_Flow_Chart.png" alt="img"></p>
+<p>实际上ISO的处理包括了很多阶段：</p>
+<ul>
+<li><strong>Exposure</strong>：通过照明亮度、快门速度和光圈大小控制的曝光亮度。</li>
+<li>CCD：传感器对光的响应，无法修改。光学元件决定的。</li>
+<li><strong>Lightening</strong>：A&#x2F;D，从曝光当中获得期望的亮度，模拟型号放大和ToneCurve。</li>
+</ul>
+<p>很多摄像机有动态范围模式：佳能的高光调优先级和理光的高光校正DR模式都做到了这一点：</p>
+<p>使用一个比标准模式小的停止放大来保存高光数据，否则会放大到剪切。</p>
+<p><img src="/../../images/%E8%89%B2%E5%BD%A9%E8%A1%A8%E7%A4%BA%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/Fujfilm_DR_alt_green_rough.png" alt="img"></p>
+<h3 id="EV"><a href="#EV" class="headerlink" title="EV"></a>EV</h3><p>EV值：</p>
+<p>它的目的是通过将快门速度和f-数字(例如f&#x2F;16的1&#x2F;125 s)的组合替换为一个数字来简化相机曝光设置的选择</p>
+<p>$$ &#x3D;log _{2}{\frac{N^{2}}{t}}$$</p>
+<ul>
+<li><em>N</em> is the <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/F-number">f-number</a></li>
+<li><em>t</em> is the exposure time (“<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Shutter_speed">shutter speed</a>“) in seconds[<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Exposure_value#cite_note-no_units-2">2]</a></li>
+</ul>
+<p>曝光值每增加1就相当于曝光值的一个“台阶”(或者更常见的是一个“停止”)的变化（也就是一个bit），即通过将曝光时间减半或将光圈面积减半，或将上述变化结合起来，可以减少一半的曝光量。更大的曝光值适用于在更明亮的情况下拍摄，或更高的ISO速度。</p>
+<p>拍摄不同的环境通常需要参考的曝光.</p>
+<p><strong>根据固定的曝光（EV）决定，光圈、快门、感光度。</strong></p>
+<p><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Exposure_value">https://en.wikipedia.org/wiki/Exposure_value</a></p>
+<h2 id=""><a href="#" class="headerlink" title=""></a></h2><h2 id="热度图的作用"><a href="#热度图的作用" class="headerlink" title="热度图的作用"></a>热度图的作用</h2>
+    </main>
+    <footer class="post-footer">
+      
+    </footer>
+  </article>
+  
+  
+  <nav class="page-nav">
+    <div class="page-nav-next page-nav-item">
+      
+      <a href="/2022/07/09/Art/%E5%90%8E%E5%A4%84%E7%90%86ColorGrading/" rel="next" title="后处理ColorGrading"><i class="fas fa-angle-left"></i><span class="nav-title">后处理ColorGrading</span></a>
+      
+    </div>
+    <div class="page-nav-prev page-nav-item">
+      
+      <a href="/2022/07/09/Art/HDRColorGrading%E6%8A%80%E6%9C%AF%E6%96%B9%E6%A1%88/" rel="prev" title="HDRColorGrading技术方案"><span class="nav-title">HDRColorGrading技术方案</span><i class="fas fa-angle-right"></i></a>
+      
+    </div>
+  </nav>
+  
+  
+  
+
+<div class="comments" id="comments">
+  
+</div>
+
+
+
+  
+</div>
+
+          </div>
+          
+          
+          
+<aside class="sidebar" id="sidebar" style="background: url(/images/background.png);">
+  
+  <div class="search">
+    <div class="form-group">
+      <i class="fas fa-search"></i><input type="search" id="search-input" name="q" results="0" placeholder="搜索" class="form-control"/>
+    </div>
+  </div>
+  <div class="search-result-box" id="search-result"></div>
+  
+  
+<div class="info sidebar-item" id="info">
+  
+  <img class="author-avatar" src="/images/avatar.jpg" alt="leinlin">
+  
+  <h1 class="author-name">leinlin</h1>
+  <h2 class="author-description"></h2>
+  <div class="site-count">
+    
+    
+    
+    
+    <div class="archives-count count-block">
+      <div class="site-count-title">归档</div>
+      <div><a href="/archives/">27</a></div>
+    </div>
+    
+    
+    
+    <div class="categories-count count-block">
+      <div class="site-count-title">分类</div>
+      <div><a href="/categories/">5</a></div>
+    </div>
+    
+    
+  </div>
+  
+  <div class="rss">
+    <a class="rss-link button sidebar-item" href="/atom.xml"><i class="fas fa-rss"></i>RSS</a>
+  </div>
+  
+</div>
+
+
+  <div class="sidebar-sticky">
+    
+    
+    
+    
+    
+    <hr>
+    <div class="post-toc sidebar-item" id="toc-div">
+      <div><i class="fas fa-list-ol"></i>文章目录</div>
+      <div class="post-toc-content"><ol class="list-group toc"><li class="toc-item toc-level-1"><a class="list-group-item toc-link" href="#%E8%89%B2%E5%BD%A9%E8%A1%A8%E7%A4%BA%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F"><span class="toc-text">色彩表示的前世今生</span></a><ol class="list-group toc-child"><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#%E7%9C%BC%E7%9D%9B"><span class="toc-text">眼睛</span></a></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#%E9%A6%96%E5%85%88%E6%98%AF%E4%BB%8E%E6%B3%A2%E9%95%BF%E5%88%B0%E9%A2%9C%E8%89%B2%E6%84%9F%E7%9F%A5-CIE-1931-color-space%E6%9D%A5%E6%BA%90-wiki"><span class="toc-text">首先是从波长到颜色感知-CIE 1931 color space来源 wiki</span></a></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#%E4%BB%8E%E8%89%B2%E5%BD%A9%E6%84%9F%E7%9F%A5%E8%A6%81%E8%89%B2%E5%BD%A9%E8%A1%A8%E7%A4%BA"><span class="toc-text">从色彩感知要色彩表示</span></a></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#%E4%B8%89%E8%89%B2%E8%A1%A8%E7%A4%BA"><span class="toc-text">三色表示</span></a><ol class="list-group toc-child"><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#LMS-color-space"><span class="toc-text">LMS color space</span></a></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#%E9%A2%9C%E8%89%B2%E7%A9%BA%E9%97%B4"><span class="toc-text">颜色空间</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#XYZ%E9%A2%9C%E8%89%B2%E7%A9%BA%E9%97%B4"><span class="toc-text">XYZ颜色空间</span></a></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#%E9%A2%9C%E8%89%B2%E4%B8%89%E8%A7%92%E5%BD%A2"><span class="toc-text">颜色三角形</span></a><ol class="list-group toc-child"><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#%E5%85%89%E5%BA%A6%E5%87%BD%E6%95%B0"><span class="toc-text">光度函数</span></a></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#XYZ%E6%8E%A8%E5%88%B0"><span class="toc-text">XYZ推到</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#CIE-xy-chromaticity-diagram-and-the-CIE-xyY-color-space"><span class="toc-text">CIE xy chromaticity diagram and the CIE xyY color space</span></a></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#%E4%BA%AE%E5%BA%A6"><span class="toc-text">亮度</span></a></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#%E9%A2%9C%E8%89%B2%E6%A0%87%E5%87%86"><span class="toc-text">颜色标准</span></a></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#%E6%98%BE%E7%A4%BA%E5%99%A8"><span class="toc-text">显示器</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="list-group-item toc-link" href="#Illuminant-D65"><span class="toc-text">Illuminant D65</span></a><ol class="list-group toc-child"><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#%E8%89%B2%E6%B8%A9"><span class="toc-text">色温</span></a><ol class="list-group toc-child"><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#%E9%BB%91%E4%BD%93-wiki"><span class="toc-text">黑体 wiki</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#%E8%89%B2%E6%B8%A9-1"><span class="toc-text">色温</span></a></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#%E8%89%B2%E5%BD%A9%E5%B9%B3%E8%A1%A1"><span class="toc-text">色彩平衡</span></a></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#%E6%98%BE%E7%A4%BA%E5%99%A8%E7%9A%84%E8%89%B2%E5%9F%9F%E3%80%81%E8%89%B2%E6%95%B0%E3%80%81%E5%AF%B9%E6%AF%94%E5%BA%A6"><span class="toc-text">显示器的色域、色数、对比度</span></a></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#Nivida%E5%AF%B9HDR%E7%9A%84%E5%AE%9A%E4%B9%89%EF%BC%9A"><span class="toc-text">Nivida对HDR的定义：</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="list-group-item toc-link" href="#Tonemapping"><span class="toc-text">Tonemapping</span></a><ol class="list-group toc-child"><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#%E4%BA%AE%E5%BA%A6%E5%92%8CHDR%E7%9A%84%E5%85%B3%E7%B3%BB"><span class="toc-text">亮度和HDR的关系</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="list-group-item toc-link" href="#%E6%91%84%E5%83%8F%E8%AE%BE%E5%A4%87%E8%89%B2%E5%BD%A9%E5%8E%8B%E7%BC%A9"><span class="toc-text">摄像设备色彩压缩</span></a></li><li class="toc-item toc-level-1"><a class="list-group-item toc-link" href="#Gamma"><span class="toc-text">Gamma</span></a></li><li class="toc-item toc-level-1"><a class="list-group-item toc-link" href="#%E6%98%BE%E7%A4%BA%E5%99%A8%E6%B5%8B%E8%AF%95"><span class="toc-text">显示器测试</span></a><ol class="list-group toc-child"><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#%E6%B5%8B%E8%AF%951-%E8%BE%93%E5%85%A5%E7%BA%BF%E6%80%A7%E6%95%B0%E6%8D%AE-sRGB%E7%BA%B9%E7%90%86-sRGB-EOTF"><span class="toc-text">测试1:输入线性数据+sRGB纹理 + sRGB EOTF</span></a></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#%E6%B5%8B%E8%AF%952-%E8%BE%93%E5%85%A5Gamma%E8%A7%A3%E7%A0%81%E6%95%B0%E6%8D%AE-sRGB%E7%BA%B9%E7%90%86-sRGB-EOTF"><span class="toc-text">测试2:输入Gamma解码数据+sRGB纹理 + sRGB EOTF</span></a></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#%E6%B5%8B%E8%AF%953-%E8%BE%93%E5%85%A5%E7%BA%BF%E6%80%A7%E6%95%B0%E6%8D%AE-UNORM%E7%BA%B9%E7%90%86-sRGB-EOTF"><span class="toc-text">测试3:输入线性数据+UNORM纹理 + sRGB EOTF</span></a></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#%E6%B5%8B%E8%AF%954-%E8%BE%93%E5%85%A5%E7%BA%BF%E6%80%A7%E6%95%B0%E6%8D%AE-Float16%E7%BA%B9%E7%90%86-hdr-EOTF"><span class="toc-text">测试4:输入线性数据+Float16纹理 + hdr EOTF.</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#%E7%94%B5%E4%BF%A1%E5%8F%B7%E8%BD%AC%E6%8D%A2-%EF%BC%9A%E7%94%B5%E9%98%BB%E5%8F%91%E7%83%AD%E5%AF%BC%E8%87%B4%E7%9A%84%E8%83%BD%E9%87%8F%E6%8D%9F%E5%A4%B1%E3%80%82"><span class="toc-text">电信号转换 ：电阻发热导致的能量损失。</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="list-group-item toc-link" href="#%E6%98%BE%E7%A4%BA%E5%99%A8%E5%A6%82%E4%BD%95%E8%BF%98%E5%8E%9F%E9%A2%9C%E8%89%B2"><span class="toc-text">显示器如何还原颜色</span></a><ol class="list-group toc-child"><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#CIE-1931-xy-chromaticity-diagram"><span class="toc-text">CIE 1931 xy chromaticity diagram</span></a></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#%E5%85%89%E8%B0%B1%E8%BD%A8%E8%BF%B9"><span class="toc-text">光谱轨迹</span></a></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#%E7%B4%AB%E8%89%B2%E7%BA%BF"><span class="toc-text">紫色线</span></a></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#%E6%99%AE%E6%9C%97%E5%85%8B%E9%BB%91%E4%BD%93%E8%BD%A8%E8%BF%B9"><span class="toc-text">普朗克黑体轨迹</span></a></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#CIE-1976-u%E2%80%99v%E2%80%99-chromaticity-diagram"><span class="toc-text">CIE 1976 u’v’ chromaticity diagram</span></a></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#Pointer%E2%80%99s-gamut"><span class="toc-text">Pointer’s gamut</span></a><ol class="list-group toc-child"><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#Additive-color-mixing"><span class="toc-text">Additive color mixing</span></a></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#Subtractive-color-mixing"><span class="toc-text">Subtractive color mixing</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#Diffuse-reflection-vs-specular-reflection"><span class="toc-text">Diffuse reflection vs. specular reflection</span></a></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#Pointer%E2%80%99s-gamut-in-CIE-1931-xy-chromaticity-diagram"><span class="toc-text">Pointer’s gamut in CIE 1931 xy chromaticity diagram</span></a></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#RGB-Color-spaces"><span class="toc-text">RGB Color spaces</span></a><ol class="list-group toc-child"><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#Rec-709-x2F-sRGB"><span class="toc-text">Rec. 709 &#x2F; sRGB</span></a></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#BT-2020"><span class="toc-text">BT .2020</span></a><ol class="list-group toc-child"><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#Resolution-edit-%E5%88%86%E8%BE%A8%E7%8E%87"><span class="toc-text">Resolution[edit] 分辨率</span></a></li><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#Frame-rate-edit-%E5%B8%A7%E7%8E%87"><span class="toc-text">Frame rate[edit] 帧率</span></a></li><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#Digital-representation-%E6%95%B0%E6%8D%AE%E8%A1%A8%E7%A4%BA"><span class="toc-text">Digital representation 数据表示</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#sRGB"><span class="toc-text">sRGB</span></a></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#Adobe-Wide-Gamut-RGB%EF%BC%88Wide-gamut-RGB-color-space%EF%BC%89%E5%AE%BD%E8%89%B2%E5%9F%9F"><span class="toc-text">Adobe Wide Gamut RGB（Wide-gamut RGB color space）宽色域</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#%E9%87%8F%E5%AD%90%E7%82%B9%E6%98%BE%E7%A4%BA%E5%99%A8"><span class="toc-text">量子点显示器</span></a></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#%E6%8E%A5%E5%8F%A3%E8%A7%84%E8%8C%83"><span class="toc-text">接口规范</span></a></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#TransferSystem"><span class="toc-text">TransferSystem</span></a></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#OETF"><span class="toc-text">OETF</span></a></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#EOTF"><span class="toc-text">EOTF</span></a><ol class="list-group toc-child"><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#%E6%9E%84%E5%BB%BAEOTF%E6%9B%B2%E7%BA%BF"><span class="toc-text">构建EOTF曲线</span></a><ol class="list-group toc-child"><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#OpenEXR"><span class="toc-text">OpenEXR</span></a></li><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#Log"><span class="toc-text">Log</span></a></li><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#Gamma%EF%BC%88Rec1886%EF%BC%89"><span class="toc-text">Gamma（Rec1886）</span></a></li><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#PQ%E6%9B%B2%E7%BA%BF"><span class="toc-text">PQ曲线</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#OOTF"><span class="toc-text">OOTF</span></a></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#CSF"><span class="toc-text">CSF</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="list-group-item toc-link" href="#%E8%89%B2%E5%BD%A9%E5%A4%84%E7%90%86%E6%8A%80%E6%9C%AF"><span class="toc-text">色彩处理技术</span></a><ol class="list-group toc-child"><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#ToneMapping"><span class="toc-text">ToneMapping</span></a></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#Gamut-mapping"><span class="toc-text">Gamut mapping</span></a></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#Reference-Monitors"><span class="toc-text">Reference Monitors</span></a><ol class="list-group toc-child"><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#System-colorimetry-edit"><span class="toc-text">System colorimetry[edit]</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#Lut"><span class="toc-text">Lut</span></a><ol class="list-group toc-child"><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#LUTspace"><span class="toc-text">LUTspace</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#%E5%9C%A8HDR%E6%98%BE%E7%A4%BA%E5%99%A8%E4%B8%8A%E8%BF%98%E5%8E%9F"><span class="toc-text">在HDR显示器上还原</span></a></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#%E5%8D%A1%E9%80%9A%E6%B8%B2%E6%9F%93%E7%9A%84%E7%9C%9F%E5%AE%9E%E9%A3%8E%E6%A0%BC"><span class="toc-text">卡通渲染的真实风格</span></a></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#Perceptual-Quantizer"><span class="toc-text">Perceptual Quantizer</span></a></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#Hue-Preserving-and-Hue-shifts"><span class="toc-text">Hue Preserving and Hue shifts</span></a><ol class="list-group toc-child"><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#%E5%A6%82%E4%BD%95%E5%81%9A%E5%88%B0HuePreserving"><span class="toc-text">如何做到HuePreserving</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#tongMapping%E5%B8%A6%E6%9D%A5%E7%9A%84%E6%94%B9%E5%8F%98"><span class="toc-text">tongMapping带来的改变</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="list-group-item toc-link" href="#HDR-%E6%A0%87%E5%87%86%E4%B8%8E%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F"><span class="toc-text">HDR 标准与文件格式</span></a><ol class="list-group toc-child"><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#HDR10"><span class="toc-text">HDR10</span></a></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#HDR10-1"><span class="toc-text">HDR10+</span></a></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#Dolby-Vision"><span class="toc-text">Dolby Vision</span></a></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#HLG"><span class="toc-text">HLG</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#HDR%E7%9A%84%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F"><span class="toc-text">HDR的文件格式</span></a><ol class="list-group toc-child"><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#Raw"><span class="toc-text">Raw</span></a></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#Camera%E2%80%99s-CCD"><span class="toc-text">Camera’s CCD</span></a></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#Camera%E2%80%99s-ACD"><span class="toc-text">Camera’s ACD</span></a></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#ACD-tonal-curve"><span class="toc-text">ACD tonal curve</span></a></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#ISO"><span class="toc-text">ISO</span></a></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#EV"><span class="toc-text">EV</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link"><span class="toc-text"></span></a></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#%E7%83%AD%E5%BA%A6%E5%9B%BE%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="toc-text">热度图的作用</span></a></li></ol></li></ol></div>
+    </div>
+    
+    
+    
+    <hr>
+    <div class="social-link sidebar-item">
+      <div><i class="far fa-address-card"></i>社交链接</p></div>
+      <ul>
+        
+        <li><i class="fab fa-github"></i><a href="https://leinlin.github.com/" target="_blank">GitHub</a></li>
+        
+      </ul>
+    </div>
+    
+    
+  </div>
+</aside>
+
+
+          
+        </div>
+      </div>
+    </main>
+    
+<footer id="footer" class="footer" style="background: #33363b;">
+  <div class="container">
+    <div class="back-to-top">
+      <button id="back-to-top"><i class="fas fa-angle-double-up" aria-label="回到顶部"></i></button>
+    </div>
+    <div class="footer-container">
+      <div class="footer-left">
+        <div class="copyright">
+          <span class="author">leinlin</span><span class="year"><i class="far fa-copyright"></i>2022</span>
+        </div>
+        
+        <div class="busuanzi">
+          <span id="busuanzi_container_site_pv"><i class="fas fa-eye" aria-label="站点点击量" aria-hidden="false"></i><span id="busuanzi_value_site_pv"></span></span><span id="busuanzi_container_site_uv"><i class="fas fa-user" aria-label="站点用户数" aria-hidden="false"></i><span id="busuanzi_value_site_uv"></span></span><span id="busuanzi_container_page_pv"><i class="far fa-file-alt"></i><span id="busuanzi_value_page_pv" aria-label="页面点击量" aria-hidden="false"></span></span>
+        </div>
+        
+      </div>
+      <div class="footer-right">
+        <div class="custom-info">
+          
+          托管于<i class="fab fa-github-alt"></i><a href="https://pages.github.com/" target="_blank">GitHub Pages</a>
+          
+        </div>
+        <div class="powered-by">
+          由 <a href="https://hexo.io/" target="_blank">Hexo</a> 强力驱动 | 主题 <a href="https://github.com/AlynxZhou/hexo-theme-aria/" target="_blank">ARIA</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+  <script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

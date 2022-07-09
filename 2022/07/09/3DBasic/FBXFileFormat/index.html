@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#33363b">
+    <meta name="msapplication-TileColor" content="#33363b">
+    
+    
+    
+    
+    <meta name="keywords" content="leinlin, ARIA, Hexo">
+    
+    
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png">
+    
+    
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicons/android-chrome-192x192.png">
+    
+    
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png">
+    
+    
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png">
+    
+    
+    <link rel="mask-icon" href="/favicons/safari-pinned-tab.svg" color="#33363b">
+    
+    
+    <link rel="manifest" href="/favicons/site.webmanifest">
+    
+    
+    <meta name="msapplication-config" content="/favicons/browserconfig.xml">
+    
+    
+    <link rel="alternate" href="/atom.xml" title="leinlin的小笔记" type="application/atom+xml" />
+    
+    
+    <link rel="shortcut icon" type="image/x-icon" href="/favicons/favicon.ico">
+    
+    
+    <link rel="stylesheet" type="text/css" href="/css/normalize.css">
+    <link rel="stylesheet" type="text/css" href="/css/index.css">
+    
+    <link rel="stylesheet" type="text/css" href="/css/sidebar.css">
+    
+    
+<link rel="stylesheet" type="text/css" href="/css/page.css">
+<link rel="stylesheet" type="text/css" href="/css/post.css">
+
+    <link rel="stylesheet" type="text/css" href="/css/custom.css">
+    <link rel="stylesheet" type="text/css" href="/css/atom-one-light.css">
+    <link rel="stylesheet" type="text/css" href="/css/lightgallery.min.css">
+    <script type="text/javascript" src="/js/jquery.min.js"></script>
+    <script defer type="text/javascript" src="/js/util.js"></script>
+    <script defer type="text/javascript" src="/js/clipboard.min.js"></script>
+    <script defer type="text/javascript" src="/js/scrollspy.js"></script>
+    <script defer type="text/javascript" src="/js/fontawesome-all.min.js"></script>
+    <script defer type="text/javascript" src="/js/lightgallery.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-fullscreen.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-hash.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-pager.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-thumbnail.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-zoom.min.js"></script>
+    
+    <script defer src="/js/busuanzi.pure.mini.js"></script>
+    
+    
+    <script defer type="text/javascript" src="/js/search.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function () {
+      var searchPath = "search.xml";
+      if (searchPath.length === 0) {
+        searchPath = "search.xml";
+      }
+      var path = "/" + searchPath;
+      searchFunc(path, "search-input", "search-result");
+    });
+    </script>
+    
+    
+    <script defer type="text/javascript" src="/js/index.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function () {
+      var cb = null;
+      var els = $(".post figure.highlight");
+      if (els.length) {
+        // Enabled Hexo highlight line number.
+        $(els).each(function (i, e) {
+          // $(e).before("<button class=\"copy button\">复制</button>");
+          $(e).before([
+            "<div class=\"code-titlebar\">",
+              "<div class=\"titlebar-left\">",
+                "<button class=\"copy\">复制</button>",
+              "</div>",
+            "</div>"
+          ].join(""));
+        });
+        cb = new ClipboardJS("button.copy", {
+          "target": function (trigger) {
+              // Get target element by DOM API.
+              return trigger.parentNode.parentNode.nextElementSibling.firstChild.firstChild.firstChild.lastChild.firstChild.firstChild;
+          }
+        });
+      } else {
+        // Disabled Hexo highlight line number.
+        els = $(".post pre code");
+        $(els).each(function (i, e) {
+          // Add button before pre, not code.
+          // $(e).parent().before("<button class=\"copy button\">复制</button>");
+          $(e).before([
+            "<div class=\"code-titlebar\">",
+              "<div class=\"titlebar-left\">",
+                "<button class=\"copy\" >复制</button>",
+              "</div>",
+              "<div class=\"titlebar-right\">",
+                "<button class=\"button-dot dot-minimize\" aria-label=\"Decoration\"></button>",
+                "<button class=\"button-dot dot-maximize\" aria-label=\"Decoration\"></button>",
+                "<button class=\"button-dot dot-close\" aria-label=\"Decoration\"></button>",
+              "</div>",
+            "</div>"
+          ].join(""));
+        });
+        cb = new ClipboardJS("button.copy", {
+          "target": function (trigger) {
+              // Get target element by DOM API.
+              return trigger.parentNode.parentNode.nextElementSibling;
+          }
+        });
+      }
+      cb.on("success", function (e) {
+        e.clearSelection();
+        var trigger = e.trigger;
+        // Change button text as a user tip.
+        trigger.innerHTML = "已复制";
+        $(trigger).addClass("copied");
+        // Change button text back;
+        setTimeout(function () {
+          trigger.innerHTML = "复制";
+          $(trigger).removeClass("copied");
+        }, 1500);
+      });
+    });
+    </script>
+    
+    <script defer type="text/javascript" src="/js/custom.js"></script>
+    <title>FBXFileFormat | leinlin的小笔记</title>
+  <meta name="generator" content="Hexo 6.2.0"></head>
+  <body itemscope itemtype="http://schema.org/WebPage" lang="zh_CN"  data-spy="scroll" data-target=".list-group">
+    
+<header id="header" class="header" style="background: #33363b;">
+  <div class="container">
+    <div class="header-container">
+      <div class="header-title">
+        <h1 class="title"><a href="/">leinlin的小笔记</a></h1>
+        <h2 class="subtitle"></h2>
+      </div>
+      
+    </div>
+    <nav id="nav" class="nav">
+      <a id="nav-toggle" class="nav-toggle" aria-hidden="true"><i class="fas fa-bars" aria-label="切换导航栏"></i></a>
+      <ul id="menu" role="menubar" aria-hidden="false">
+        
+        <li role="menuitem"><a href="/"><i class="fas fa-home"></i><span class="menu-text">首页</span></a></li>
+        
+        <li role="menuitem"><a href="/archives/"><i class="fas fa-archive"></i><span class="menu-text">归档</span></a></li>
+        
+        <li role="menuitem"><a href="/categories/"><i class="fas fa-th-list"></i><span class="menu-text">分类</span></a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</header>
+
+
+    <main id="main" class="main">
+      <div class="container">
+        <div class="main-container">
+          <div class="content">
+            
+<div id="post" class="page">
+  
+  <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
+    <div class="post-block">
+      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/07/09/3DBasic/FBXFileFormat/">
+      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+       <meta itemprop="name" content="leinlin">
+       <meta itemprop="description" content="">
+       <meta itemprop="image" content="/images/avatar.jpg">
+      </span>
+      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+       <meta itemprop="name" content="leinlin的小笔记">
+      </span>
+    </div>
+    <header class="post-header">
+      <h1 class="post-title" itemprop="name headline">FBXFileFormat</h1>
+      <div class="post-meta">
+        
+        <span class="post-date">
+          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2022-07-09T12:00:14+08:00">2022-07-09 12:00:14</time></span>
+        </span>
+        
+        
+        
+        <span class="post-meta-divider divider">|</span>
+        
+        <span class="post-categories">
+          
+          <i class="far fa-folder-open"></i><span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/3DBasic/" itemprop="url" rel="index"><span itemprop="name">3DBasic</span></a></span>
+        </span>
+        
+        
+        
+        
+      </div>
+    </header>
+    <main class="post-main" itemprop="articleBody">
+      <h1 id="FBX-test-version-file-format-specification"><a href="#FBX-test-version-file-format-specification" class="headerlink" title="FBX test version file format specification"></a>FBX test version file format specification</h1><p><em>This post is extract from <a target="_blank" rel="noopener" href="https://archive.blender.org/wiki/index.php/User:Mont29/Foundation/FBX_File_Structure/">blender Doc :FBX File Structure</a>.</em></p>
+<h2 id="Generalities"><a href="#Generalities" class="headerlink" title="Generalities"></a>Generalities</h2><p>FBX is a nodal format, with a root element (which is never explicitly written) and a tree of children.</p>
+<p>Each element has an id (byte string), and can have data and children elements.</p>
+<p>Data are a set of (values, type) tuples, available types are: bool, short, int, long, float, double, bytes, string, and arrays of those types.</p>
+<p>Here is a (JSON) representation of an element:</p>
+<figure class="hljs highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">[</span><span class="hljs-string">&quot;Element_ID&quot;</span><span class="hljs-punctuation">,</span>                         # ID<br>     <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;data_string&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-number">13</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span>              # Data<br>     <span class="hljs-string">&quot;SI&quot;</span><span class="hljs-punctuation">,</span>                             # Data types<span class="hljs-punctuation">,</span> as single-char codes (S for String<span class="hljs-punctuation">,</span> I for Integer<span class="hljs-punctuation">,</span> etc.)<br>     <span class="hljs-punctuation">[</span>__other_children_elements__<span class="hljs-punctuation">]</span><br><span class="hljs-punctuation">]</span><br></code></pre></td></tr></table></figure>
+
+<p>Everything is based on this simple schema.</p>
+<span id="more"></span>
+<h2 id="Properties"><a href="#Properties" class="headerlink" title="Properties"></a>Properties</h2><p>Properties are a way to add heavily typed data.</p>
+<p>Properties are represented by elements children of a “Properties70” element, which does not contain any data.</p>
+<p>Each property is an element. Its ID does not seem to be important (usually, it’s “P” or “PS” for all of them). Their data layout follow that schema:</p>
+<figure class="hljs highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs JSON"><span class="hljs-punctuation">[</span><span class="hljs-string">&quot;PropName&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;PropType&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;Label(?)&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;Flags&quot;</span><span class="hljs-punctuation">,</span> __values__<span class="hljs-punctuation">,</span> …<span class="hljs-punctuation">]</span><br></code></pre></td></tr></table></figure>
+
+<p>In other words, the four first data of a property are always strings (its name, its type, presumably its label (often empty), and some flags (optional)), they are the “metadata” of the property. The other data are the property’s value (usually only one, but e.g. for colors or 3D vectors they are three - and some property types have no value :&#x2F;), and their type depends on the data type!</p>
+<p>Bellow are some basic examples of properties:</p>
+<figure class="hljs highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs JSON">Integer<span class="hljs-punctuation">:</span> <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;P&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;some_name&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;int&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;Integer&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-number">1</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;SSSSI&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><br>Double<span class="hljs-punctuation">:</span>  <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;P&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;some_name&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;double&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;Number&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-number">1.0</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;SSSSD&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><br>Color<span class="hljs-punctuation">:</span>   <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;P&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;some_name&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;ColorRGB&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;Color&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-number">0.0</span><span class="hljs-punctuation">,</span> <span class="hljs-number">0.0</span><span class="hljs-punctuation">,</span> <span class="hljs-number">0.0</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;SSSSDDD&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="Templates"><a href="#Templates" class="headerlink" title="Templates"></a>Templates</h2><p>Each template is defined by an “ObjectType” element, which takes a single property, the name of the template, which is also the name of the Object they “define” (e.g. “Model”, “Geometry”, “Material”, etc.).</p>
+<p>Each template has two children: “Count” is the number of Objects using this template, and “PropertyTemplate”, which simply contains some properties.</p>
+<p>To summarize, here is the generic structure of a template definition:</p>
+<figure class="hljs highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs JSON"><span class="hljs-punctuation">[</span><span class="hljs-string">&quot;ObjectType&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;Geometry&quot;</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;S&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span>            # Start of template definition<br>    <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;Count&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-number">1</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;I&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span>                   # Number of Objects using this template<br>    <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;PropertyTemplate&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;KFbxMesh&quot;</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;S&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span>  # Start of template&#x27;s properties<br>        <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;Properties70&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><br>            <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;P&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;Color&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;ColorRGB&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;Color&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-number">0.8</span><span class="hljs-punctuation">,</span> <span class="hljs-number">0.8</span><span class="hljs-punctuation">,</span> <span class="hljs-number">0.8</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;SSSSDDD&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;P&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;BBoxMin&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;Vector3D&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;Vector&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-number">0.0</span><span class="hljs-punctuation">,</span> <span class="hljs-number">0.0</span><span class="hljs-punctuation">,</span> <span class="hljs-number">0.0</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;SSSSDDD&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>            <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;P&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;BBoxMax&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;Vector3D&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;Vector&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-number">0.0</span><span class="hljs-punctuation">,</span> <span class="hljs-number">0.0</span><span class="hljs-punctuation">,</span> <span class="hljs-number">0.0</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;SSSSDDD&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>            ...<br>        <span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><br>    <span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><br><span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="Top-Structure"><a href="#Top-Structure" class="headerlink" title="Top Structure"></a>Top Structure</h2><p>A valid FBX file must contain a set of standard elements:</p>
+<ul>
+<li><strong>FBXHeaderExtension</strong>: Mandatory? Contains the metadata of the file.</li>
+<li><strong>FileId</strong>: Mandatory. Some kind of (currently) obscure hash, apparently based on the CreationTime data.</li>
+<li><strong>CreationTime</strong>: Mandatory. The date&#x2F;time of creation of that file, as a single string (e.g. “2013-08-05 10:27:44:000”).</li>
+<li><strong>Creator</strong>: Mandatory? A string identifying the tool used to create that FBX.</li>
+<li><strong>GlobalSettings</strong>: Mandatory? A set of properties defining general data, like the orientation of the scene…</li>
+<li><strong>Documents</strong>: Optional. Not sure what it is used for actually, so far only saw FBX files with a single doc definition here… Maybe it allows for several scenes in a single FBX?</li>
+<li><strong>References</strong>: ???</li>
+<li><strong>Definitions</strong>: Optional. Here templates are defined.</li>
+<li><strong>Objects</strong>: Optional. Here real, useful, static (?) data are stored (objects, geometries, textures, materials, etc.).</li>
+<li><strong>Connections</strong>: Optional. Here are defined links between data defined in Objects (e.g. which object uses which material, etc.).</li>
+<li><strong>Takes</strong>: Optional. Here animations are defined?</li>
+</ul>
+<h2 id="Main-Data-Objects"><a href="#Main-Data-Objects" class="headerlink" title="Main Data - Objects"></a>Main Data - Objects</h2><h3 id="Mesh-Data"><a href="#Mesh-Data" class="headerlink" title="Mesh Data"></a>Mesh Data</h3><figure class="hljs highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><code class="hljs JSON"><span class="hljs-punctuation">[</span><span class="hljs-string">&quot;Geometry&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-number">152167664</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;Name::Geometry&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;Mesh&quot;</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;LSS&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><br>     <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;Vertices&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">[</span>&lt;array_of_floats&gt;<span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;d&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>     <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;PolygonVertexIndex&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">[</span>&lt;array_of_integers&gt;<span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;i&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>     <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;Edges&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">[</span>&lt;array_of_integers&gt;<span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;i&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>     <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;GeometryVersion&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-number">124</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;I&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>     <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;LayerElementNormal&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-number">0</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;I&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><br>         <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;Version&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-number">101</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;I&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>         <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;Name&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;&quot;</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;S&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>         <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;MappingInformationType&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;ByVertice&quot;</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;S&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>         <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;ReferenceInformationType&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;Direct&quot;</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;S&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>         <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;Normals&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">[</span>&lt;array_of_floats&gt;<span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;d&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><br>     <span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>     <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;LayerElementSmoothing&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-number">0</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;I&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><br>         <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;Version&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-number">102</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;I&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>         <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;Name&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;&quot;</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;S&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>         <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;MappingInformationType&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;ByPolygon&quot;</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;S&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>         <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;ReferenceInformationType&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;Direct&quot;</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;S&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>         <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;Smoothing&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">[</span>&lt;array_of_integers&gt;<span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;i&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span>  # Yep<span class="hljs-punctuation">,</span> int32 for bool values...<br>     <span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>     <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;LayerElementUV&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-number">0</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;I&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><br>         <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;Version&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-number">101</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;I&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>         <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;Name&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;UVMap&quot;</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;S&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>         <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;MappingInformationType&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;ByPolygonVertex&quot;</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;S&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>         <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;ReferenceInformationType&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;IndexToDirect&quot;</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;S&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>         <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;UV&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">[</span>&lt;array_of_floats&gt;<span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;d&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>         <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;UVIndex&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">[</span>&lt;array_of_integers&gt;<span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;i&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>     <span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>     <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;LayerElementUV&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-number">1</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;I&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><br>         <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;Version&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-number">101</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;I&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>         <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;Name&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;UVMap.001&quot;</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;S&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>         <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;MappingInformationType&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;ByPolygonVertex&quot;</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;S&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>         <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;ReferenceInformationType&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;IndexToDirect&quot;</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;S&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>         <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;UV&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">[</span>&lt;array_of_floats&gt;<span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;d&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>         <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;UVIndex&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">[</span>&lt;array_of_integers&gt;<span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;i&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>     <span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>     <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;LayerElementMaterial&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-number">0</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;I&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><br>         <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;Version&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-number">101</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;I&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>         <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;Name&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;gold&quot;</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;S&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>         <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;MappingInformationType&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;AllSame&quot;</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;S&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>         <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;ReferenceInformationType&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;IndexToDirect&quot;</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;S&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>         <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;Materials&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">[</span><span class="hljs-number">0</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;i&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><br>     <span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>     <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;Layer&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-number">0</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;I&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><br>         <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;Version&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-number">100</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;I&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>         <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;LayerElement&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><br>             <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;Type&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;LayerElementNormal&quot;</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;S&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>             <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;TypedIndex&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-number">0</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;I&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><br>         <span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>         <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;LayerElement&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><br>             <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;Type&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;LayerElementMaterial&quot;</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;S&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>             <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;TypedIndex&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-number">0</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;I&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><br>         <span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>         <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;LayerElement&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><br>             <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;Type&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;LayerElementSmoothing&quot;</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;S&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>             <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;TypedIndex&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-number">0</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;I&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><br>         <span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><br>     <span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><br>     <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;Layer&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-number">1</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;I&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><br>         <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;Version&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-number">100</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;I&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>         <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;LayerElement&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><br>             <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;Type&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;LayerElementUV&quot;</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;S&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>             <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;TypedIndex&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-number">1</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;I&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><br>         <span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>     <span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><br> <span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="Armature-and-Bones"><a href="#Armature-and-Bones" class="headerlink" title="Armature and Bones"></a>Armature and Bones</h3><p>In FBX, there is no real armature concept, you rather have chains of bones, which are nearly only defined by “Model” elements (FbxNode), i.e. loc&#x2F;rot&#x2F;scale from parent bone. Root bones are children of an empty object (Model), which plays the role of an armature.</p>
+<p>In other words, armatures are presented more like a set of chains of parented-hooks.</p>
+<p>Each bone&#x2F;hook is represented by a “LimbNode”, which also contains a “Size” parameter (its length), not sure this is used&#x2F;understood by all importers though.</p>
+<p>Bones and mesh are “linked” first by a BindPose element, which stores the (transform) matrix of the mesh and all bones in global (world) space, at the time of binding.</p>
+<h3 id="Animation"><a href="#Animation" class="headerlink" title="Animation"></a>Animation</h3><p>(New) animation in FBX is actually fairly simple: you have a Stack (usually only one per FBX file, else you may have compatibility issues), to which a set of Layers are linked.</p>
+<p>A set of CurveNodes is linked to each AnimLayer, which define which properties are animated:</p>
+<figure class="hljs highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs JSON"><span class="hljs-punctuation">[</span><span class="hljs-string">&quot;AnimationCurveNode&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-number">2045776</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;T::AnimCurveNode&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;&quot;</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;LSS&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><br>     <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;Properties70&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><br>         <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;P&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;d&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;Compound&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;&quot;</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;SSSS&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>         <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;P&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;d|X&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;Number&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;A&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-number">2.227995</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;SSSSD&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>         <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;P&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;d|Y&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;Number&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;A&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-number">3.0238389999999997</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;SSSSD&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>         <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;P&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;d|Z&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;Number&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;A&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-number">-1.49012e-08</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;SSSSD&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><br></code></pre></td></tr></table></figure>
+
+<figure class="hljs highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs JSON"><span class="hljs-punctuation">[</span><span class="hljs-string">&quot;AnimationCurve&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-number">924545958</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;::AnimCurve&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;&quot;</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;LSS&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><br>    <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;Default&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-number">-120.30426094607161</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;D&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;KeyVer&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-number">4008</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;I&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;KeyTime&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">[</span><span class="hljs-number">1847446320</span><span class="hljs-punctuation">,</span> <span class="hljs-number">3694892640</span><span class="hljs-punctuation">,</span> <span class="hljs-number">5542338960</span><span class="hljs-punctuation">,</span> <span class="hljs-number">7389785280</span><span class="hljs-punctuation">,</span> <span class="hljs-number">9237231600</span><span class="hljs-punctuation">,</span> <span class="hljs-number">11084677920</span><span class="hljs-punctuation">,</span> <span class="hljs-number">12932124240</span><span class="hljs-punctuation">,</span> <span class="hljs-number">14779570560</span><span class="hljs-punctuation">,</span> <span class="hljs-number">16627016880</span><span class="hljs-punctuation">,</span> <span class="hljs-number">18474463200</span><span class="hljs-punctuation">,</span> <span class="hljs-number">20321909520</span><span class="hljs-punctuation">,</span> <span class="hljs-number">22169355840</span><span class="hljs-punctuation">,</span> <span class="hljs-number">24016802160</span><span class="hljs-punctuation">,</span> <span class="hljs-number">25864248480</span><span class="hljs-punctuation">,</span> <span class="hljs-number">27711694800</span><span class="hljs-punctuation">,</span> <span class="hljs-number">29559141120</span><span class="hljs-punctuation">,</span> <span class="hljs-number">31406587440</span><span class="hljs-punctuation">,</span> <span class="hljs-number">33254033760</span><span class="hljs-punctuation">,</span> <span class="hljs-number">35101480080</span><span class="hljs-punctuation">,</span> <span class="hljs-number">36948926400</span><span class="hljs-punctuation">,</span> <span class="hljs-number">38796372720</span><span class="hljs-punctuation">,</span> <span class="hljs-number">90524869680</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;l&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;KeyValueFloat&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">[</span><span class="hljs-number">-90.00000762939453</span><span class="hljs-punctuation">,</span> <span class="hljs-number">-90.16700744628906</span><span class="hljs-punctuation">,</span> <span class="hljs-number">-90.67182159423828</span><span class="hljs-punctuation">,</span> <span class="hljs-number">-91.51591491699219</span><span class="hljs-punctuation">,</span> <span class="hljs-number">-92.69371032714844</span><span class="hljs-punctuation">,</span> <span class="hljs-number">-94.19062042236328</span><span class="hljs-punctuation">,</span> <span class="hljs-number">-95.98118591308594</span><span class="hljs-punctuation">,</span> <span class="hljs-number">-98.02799224853516</span><span class="hljs-punctuation">,</span> <span class="hljs-number">-100.28105926513672</span><span class="hljs-punctuation">,</span> <span class="hljs-number">-102.67914581298828</span><span class="hljs-punctuation">,</span> <span class="hljs-number">-105.1521224975586</span><span class="hljs-punctuation">,</span> <span class="hljs-number">-107.62510681152344</span><span class="hljs-punctuation">,</span> <span class="hljs-number">-110.02317810058594</span><span class="hljs-punctuation">,</span> <span class="hljs-number">-112.27626037597656</span><span class="hljs-punctuation">,</span> <span class="hljs-number">-114.32304382324219</span><span class="hljs-punctuation">,</span> <span class="hljs-number">-116.11365509033203</span><span class="hljs-punctuation">,</span> <span class="hljs-number">-117.61054229736328</span><span class="hljs-punctuation">,</span> <span class="hljs-number">-118.78833770751953</span><span class="hljs-punctuation">,</span> <span class="hljs-number">-119.63243103027344</span><span class="hljs-punctuation">,</span> <span class="hljs-number">-120.13725280761719</span><span class="hljs-punctuation">,</span> <span class="hljs-number">-120.30426025390625</span><span class="hljs-punctuation">,</span> <span class="hljs-number">-120.30426025390625</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;f&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;KeyAttrFlags&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">[</span><span class="hljs-number">24840</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;i&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;KeyAttrDataFloat&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">[</span><span class="hljs-number">0.0</span><span class="hljs-punctuation">,</span> <span class="hljs-number">0.0</span><span class="hljs-punctuation">,</span> <span class="hljs-number">9.419963346924634e-30</span><span class="hljs-punctuation">,</span> <span class="hljs-number">0.0</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;f&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br>    <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;KeyAttrRefCount&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">[</span><span class="hljs-number">22</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;i&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><br></code></pre></td></tr></table></figure>
+
+
+
+<figure class="hljs highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs JSON"><span class="hljs-punctuation">[</span><span class="hljs-string">&quot;KeyAttrFlags&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">[</span>A<span class="hljs-punctuation">,</span> B<span class="hljs-punctuation">,</span> A<span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;i&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br><span class="hljs-punctuation">[</span><span class="hljs-string">&quot;KeyAttrDataFloat&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">[</span>A1<span class="hljs-punctuation">,</span> A2<span class="hljs-punctuation">,</span> A3<span class="hljs-punctuation">,</span> A4<span class="hljs-punctuation">,</span> B1<span class="hljs-punctuation">,</span> B2<span class="hljs-punctuation">,</span> B3<span class="hljs-punctuation">,</span> B4<span class="hljs-punctuation">,</span> A1<span class="hljs-punctuation">,</span> A2<span class="hljs-punctuation">,</span> A3<span class="hljs-punctuation">,</span> A4<span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;f&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span><br><span class="hljs-punctuation">[</span><span class="hljs-string">&quot;KeyAttrRefCount&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">[</span><span class="hljs-number">10</span><span class="hljs-punctuation">,</span> <span class="hljs-number">5</span><span class="hljs-punctuation">,</span> <span class="hljs-number">10</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span> <span class="hljs-string">&quot;i&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-punctuation">[</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">]</span><br></code></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+    </main>
+    <footer class="post-footer">
+      
+    </footer>
+  </article>
+  
+  
+  <nav class="page-nav">
+    <div class="page-nav-next page-nav-item">
+      
+      <a href="/2022/07/09/Art/ColorGrading%E4%B8%ADLUT%E7%9A%84%E7%94%9F%E6%88%90%E4%B8%8E%E4%BD%BF%E7%94%A8/" rel="next" title="ColorGrading中LUT的生成与使用"><i class="fas fa-angle-left"></i><span class="nav-title">ColorGrading中LUT的生成与使用</span></a>
+      
+    </div>
+    <div class="page-nav-prev page-nav-item">
+      
+      <a href="/2022/07/09/GPUAartch/HDR%E7%A1%AC%E4%BB%B6%E5%B1%82Framebuffer%E6%A0%BC%E5%BC%8F%E6%A0%87%E5%87%86%E4%B8%8E%E6%B8%B2%E6%9F%93%E9%98%B6%E6%AE%B5%E7%9A%84%E5%85%B3%E7%B3%BB/" rel="prev" title=""><span class="nav-title"></span><i class="fas fa-angle-right"></i></a>
+      
+    </div>
+  </nav>
+  
+  
+  
+
+<div class="comments" id="comments">
+  
+</div>
+
+
+
+  
+</div>
+
+          </div>
+          
+          
+          
+<aside class="sidebar" id="sidebar" style="background: url(/images/background.png);">
+  
+  <div class="search">
+    <div class="form-group">
+      <i class="fas fa-search"></i><input type="search" id="search-input" name="q" results="0" placeholder="搜索" class="form-control"/>
+    </div>
+  </div>
+  <div class="search-result-box" id="search-result"></div>
+  
+  
+<div class="info sidebar-item" id="info">
+  
+  <img class="author-avatar" src="/images/avatar.jpg" alt="leinlin">
+  
+  <h1 class="author-name">leinlin</h1>
+  <h2 class="author-description"></h2>
+  <div class="site-count">
+    
+    
+    
+    
+    <div class="archives-count count-block">
+      <div class="site-count-title">归档</div>
+      <div><a href="/archives/">27</a></div>
+    </div>
+    
+    
+    
+    <div class="categories-count count-block">
+      <div class="site-count-title">分类</div>
+      <div><a href="/categories/">5</a></div>
+    </div>
+    
+    
+  </div>
+  
+  <div class="rss">
+    <a class="rss-link button sidebar-item" href="/atom.xml"><i class="fas fa-rss"></i>RSS</a>
+  </div>
+  
+</div>
+
+
+  <div class="sidebar-sticky">
+    
+    
+    
+    
+    
+    <hr>
+    <div class="post-toc sidebar-item" id="toc-div">
+      <div><i class="fas fa-list-ol"></i>文章目录</div>
+      <div class="post-toc-content"><ol class="list-group toc"><li class="toc-item toc-level-1"><a class="list-group-item toc-link" href="#FBX-test-version-file-format-specification"><span class="toc-text">FBX test version file format specification</span></a><ol class="list-group toc-child"><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#Generalities"><span class="toc-text">Generalities</span></a></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#Properties"><span class="toc-text">Properties</span></a></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#Templates"><span class="toc-text">Templates</span></a></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#Top-Structure"><span class="toc-text">Top Structure</span></a></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#Main-Data-Objects"><span class="toc-text">Main Data - Objects</span></a><ol class="list-group toc-child"><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#Mesh-Data"><span class="toc-text">Mesh Data</span></a></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#Armature-and-Bones"><span class="toc-text">Armature and Bones</span></a></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#Animation"><span class="toc-text">Animation</span></a></li></ol></li></ol></li></ol></div>
+    </div>
+    
+    
+    
+    <hr>
+    <div class="social-link sidebar-item">
+      <div><i class="far fa-address-card"></i>社交链接</p></div>
+      <ul>
+        
+        <li><i class="fab fa-github"></i><a href="https://leinlin.github.com/" target="_blank">GitHub</a></li>
+        
+      </ul>
+    </div>
+    
+    
+  </div>
+</aside>
+
+
+          
+        </div>
+      </div>
+    </main>
+    
+<footer id="footer" class="footer" style="background: #33363b;">
+  <div class="container">
+    <div class="back-to-top">
+      <button id="back-to-top"><i class="fas fa-angle-double-up" aria-label="回到顶部"></i></button>
+    </div>
+    <div class="footer-container">
+      <div class="footer-left">
+        <div class="copyright">
+          <span class="author">leinlin</span><span class="year"><i class="far fa-copyright"></i>2022</span>
+        </div>
+        
+        <div class="busuanzi">
+          <span id="busuanzi_container_site_pv"><i class="fas fa-eye" aria-label="站点点击量" aria-hidden="false"></i><span id="busuanzi_value_site_pv"></span></span><span id="busuanzi_container_site_uv"><i class="fas fa-user" aria-label="站点用户数" aria-hidden="false"></i><span id="busuanzi_value_site_uv"></span></span><span id="busuanzi_container_page_pv"><i class="far fa-file-alt"></i><span id="busuanzi_value_page_pv" aria-label="页面点击量" aria-hidden="false"></span></span>
+        </div>
+        
+      </div>
+      <div class="footer-right">
+        <div class="custom-info">
+          
+          托管于<i class="fab fa-github-alt"></i><a href="https://pages.github.com/" target="_blank">GitHub Pages</a>
+          
+        </div>
+        <div class="powered-by">
+          由 <a href="https://hexo.io/" target="_blank">Hexo</a> 强力驱动 | 主题 <a href="https://github.com/AlynxZhou/hexo-theme-aria/" target="_blank">ARIA</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+  <script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>
