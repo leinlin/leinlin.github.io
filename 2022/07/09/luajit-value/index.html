@@ -35,7 +35,7 @@
     <meta name="msapplication-config" content="/favicons/browserconfig.xml">
     
     
-    <link rel="alternate" href="/atom.xml" title="游戏杂记" type="application/atom+xml" />
+    <link rel="alternate" href="/atom.xml" title="leinlin的小笔记" type="application/atom+xml" />
     
     
     <link rel="shortcut icon" type="image/x-icon" href="/favicons/favicon.ico">
@@ -146,7 +146,7 @@
     </script>
     
     <script defer type="text/javascript" src="/js/custom.js"></script>
-    <title>LuaJIT的变量实现 | 游戏杂记</title>
+    <title>LuaJIT的变量实现 | leinlin的小笔记</title>
   <meta name="generator" content="Hexo 6.2.0"></head>
   <body itemscope itemtype="http://schema.org/WebPage" lang="zh_CN"  data-spy="scroll" data-target=".list-group">
     
@@ -154,7 +154,7 @@
   <div class="container">
     <div class="header-container">
       <div class="header-title">
-        <h1 class="title"><a href="/">游戏杂记</a></h1>
+        <h1 class="title"><a href="/">leinlin的小笔记</a></h1>
         <h2 class="subtitle"></h2>
       </div>
       
@@ -186,12 +186,12 @@
     <div class="post-block">
       <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/07/09/luajit-value/">
       <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-       <meta itemprop="name" content="Leinlin">
+       <meta itemprop="name" content="leinlin">
        <meta itemprop="description" content="">
        <meta itemprop="image" content="/images/avatar.jpg">
       </span>
       <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-       <meta itemprop="name" content="游戏杂记">
+       <meta itemprop="name" content="leinlin的小笔记">
       </span>
     </div>
     <header class="post-header">
@@ -208,7 +208,7 @@
         
         <span class="post-categories">
           
-          <i class="far fa-folder-open"></i><span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/%E6%B1%87%E7%BC%96%E9%80%86%E5%90%91/" itemprop="url" rel="index"><span itemprop="name">汇编逆向</span></a></span>
+          <i class="far fa-folder-open"></i><span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Lua/" itemprop="url" rel="index"><span itemprop="name">Lua</span></a></span>
         </span>
         
         
@@ -229,6 +229,8 @@
 <li>当类型为lightuserdata时，成员p，表示指针</li>
 <li>当类型为function&#x2F;string&#x2F;userdata&#x2F;table&#x2F;thread等需要GC管理的类型时，成员gc表示相应GC对象的指针。<br>这样一个变量只要对应一个TValue结构便可以表示Lua支持的所有类型。</li>
 </ul>
+<span id="more"></span>
+
 <p>lua中所有的数值都是用double类型的浮点数来表示，需要占用64位的空间。再加上额外的int类型成员tt来表示类型，一个TValue结构至少需要64+32&#x3D;96位的空间，如果按照8字节对其的话就需要占用128位的空间。而LuaJIT中通过Nan-boxing技术，重组了TValue，只需要占用64位的空间。</p>
 <p>Nan-boxing<br>ieee754是使用最广泛的浮点数编码格式，它将浮点数编码成三个部分，符号、指数和尾数。如下所示</p>
 <p><img src="/../images/2022-07-09-17-19-13.png"></p>
@@ -279,6 +281,8 @@
     </div>
     <div class="page-nav-prev page-nav-item">
       
+      <a href="/2022/07/09/Vulkan_Shader/" rel="prev" title="Vulkan Shader编译与加载过程"><span class="nav-title">Vulkan Shader编译与加载过程</span><i class="fas fa-angle-right"></i></a>
+      
     </div>
   </nav>
   
@@ -310,9 +314,9 @@
   
 <div class="info sidebar-item" id="info">
   
-  <img class="author-avatar" src="/images/avatar.jpg" alt="Leinlin">
+  <img class="author-avatar" src="/images/avatar.jpg" alt="leinlin">
   
-  <h1 class="author-name">Leinlin</h1>
+  <h1 class="author-name">leinlin</h1>
   <h2 class="author-description"></h2>
   <div class="site-count">
     
@@ -321,14 +325,14 @@
     
     <div class="archives-count count-block">
       <div class="site-count-title">归档</div>
-      <div><a href="/archives/">3</a></div>
+      <div><a href="/archives/">5</a></div>
     </div>
     
     
     
     <div class="categories-count count-block">
       <div class="site-count-title">分类</div>
-      <div><a href="/categories/">1</a></div>
+      <div><a href="/categories/">3</a></div>
     </div>
     
     
@@ -383,7 +387,7 @@
     <div class="footer-container">
       <div class="footer-left">
         <div class="copyright">
-          <span class="author">Leinlin</span><span class="year"><i class="far fa-copyright"></i>2022</span>
+          <span class="author">leinlin</span><span class="year"><i class="far fa-copyright"></i>2022</span>
         </div>
         
         <div class="busuanzi">

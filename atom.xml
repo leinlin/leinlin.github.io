@@ -1,41 +1,90 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-  <title>游戏杂记</title>
+  <title>leinlin的小笔记</title>
   
   
   <link href="http://leinlin.github.io/atom.xml" rel="self"/>
   
   <link href="http://leinlin.github.io/"/>
-  <updated>2022-07-09T09:51:46.637Z</updated>
+  <updated>2022-07-09T04:53:34.610Z</updated>
   <id>http://leinlin.github.io/</id>
   
   <author>
-    <name>Leinlin</name>
+    <name>leinlin</name>
     
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title></title>
+    <link href="http://leinlin.github.io/2022/07/09/GPUAartch/HDR%E7%A1%AC%E4%BB%B6%E5%B1%82Framebuffer%E6%A0%BC%E5%BC%8F%E6%A0%87%E5%87%86%E4%B8%8E%E6%B8%B2%E6%9F%93%E9%98%B6%E6%AE%B5%E7%9A%84%E5%85%B3%E7%B3%BB/"/>
+    <id>http://leinlin.github.io/2022/07/09/GPUAartch/HDR%E7%A1%AC%E4%BB%B6%E5%B1%82Framebuffer%E6%A0%BC%E5%BC%8F%E6%A0%87%E5%87%86%E4%B8%8E%E6%B8%B2%E6%9F%93%E9%98%B6%E6%AE%B5%E7%9A%84%E5%85%B3%E7%B3%BB/</id>
+    <published>2022-07-09T10:30:15.425Z</published>
+    <updated>2022-07-09T04:53:34.610Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;HDR硬件层Framebuffer格式标准与渲染阶段的关系&quot;&gt;&lt;a href=&quot;#HDR硬件层Framebuffer格式标准与渲染阶段的关系&quot; class=&quot;headerlink&quot;</summary>
+        
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Vulkan Shader编译与加载过程</title>
+    <link href="http://leinlin.github.io/2022/07/09/Vulkan_Shader/"/>
+    <id>http://leinlin.github.io/2022/07/09/Vulkan_Shader/</id>
+    <published>2022-07-09T00:54:14.000Z</published>
+    <updated>2022-07-09T10:27:23.392Z</updated>
+    
+    
+    <summary type="html">&lt;h1 id=&quot;Vulkan-Shader编译与加载过程&quot;&gt;&lt;a href=&quot;#Vulkan-Shader编译与加载过程&quot; class=&quot;headerlink&quot; title=&quot;Vulkan Shader编译与加载过程&quot;&gt;&lt;/a&gt;Vulkan Shader编译与加载过程&lt;/h1&gt;&lt;h2 id=&quot;间接&quot;&gt;&lt;a href=&quot;#间接&quot; class=&quot;headerlink&quot; title=&quot;间接&quot;&gt;&lt;/a&gt;间接&lt;/h2&gt;&lt;p&gt;参考了&lt;a href=&quot;https://vulkan-tutorial.com/Drawing_a_triangle/Graphics_pipeline_basics/Shader_modules&quot;&gt;Vulkan教程&lt;/a&gt;&lt;/p&gt;
+&lt;p&gt;​	和一般的图形API不同（GL\DX），Vulkan 的shader代码是通过字节码的格式保存的，而非具备可读性的HLSL和GLSL。字节码的格式交过SPIR-V，它设计出来和Vulkan和OpenCL一同使用。可以用来编写图形Shader和计算Shader，这部分专注于图形Shader。&lt;/p&gt;
+&lt;p&gt;使用字节码的优点是由GPU供应商提供的把Shader代码转换成本地代码的编译器能复杂度更低。&lt;/p&gt;
+&lt;p&gt;过去使用可读代码的风险，编译器实现灵活，尝试特性实现不同：The past has shown that with human-readable syntax like GLSL, some GPU vendors were rather flexible with their interpretation of the standard. If you happen to write non-trivial shaders with a GPU from one of these vendors, then you’d risk other vendor’s drivers rejecting your code due to syntax errors, or worse, your shader running differently because of compiler bugs. With a straightforward bytecode format like SPIR-V that will hopefully be avoided.&lt;/p&gt;
+&lt;p&gt;我们不需要手写字节码，而是需要用与供应商独立的编译器把GLSL转化成SPIR-V.编译器用来验证Shader代码是完全标准的，并且声称SPIR-V代码集成在程序中。编译器提供了library用来集成在程序中，也可以用现有编译好的程序工具。&lt;/p&gt;
+&lt;p&gt;我们可以直接使用编译器glslangValidator.exe，不过这里使用glslc工具，因为这个工具提供了includes功能，并且它的参数和gcc和Clang很相似。这些已经集成在了VulkanSDK当中。&lt;/p&gt;
+&lt;p&gt;后面先展示GLSL代码，然后转换成SPIR-V，并在运行时加载。&lt;/p&gt;
+&lt;p&gt;GLSL语法：&lt;a href=&quot;http://nehe.gamedev.net/article/glsl_an_introduction/25007/&quot;&gt;语法简介&lt;/a&gt;&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="图形学" scheme="http://leinlin.github.io/categories/%E5%9B%BE%E5%BD%A2%E5%AD%A6/"/>
+    
+    
+  </entry>
+  
+  <entry>
     <title>LuaJIT的变量实现</title>
     <link href="http://leinlin.github.io/2022/07/09/luajit-value/"/>
     <id>http://leinlin.github.io/2022/07/09/luajit-value/</id>
     <published>2022-07-09T00:53:14.000Z</published>
-    <updated>2022-07-09T09:51:46.637Z</updated>
+    <updated>2022-07-09T10:27:08.897Z</updated>
     
     
-      
-      
-        
-        
     <summary type="html">&lt;p&gt;Lua是动态类型的编程语言，变量的值可以是数值、字符串、table等所有支持的数据类型。在Lua虚拟机中每个变量都是用一个TValue结构体表示。LuaJIT出于效率的考虑重新组织了TValue结构体。&lt;/p&gt;
-&lt;h1 id=&quot;lua-5-1中的TValue结构&quot;&gt;&lt;a</summary>
-        
-      
+&lt;h1 id=&quot;lua-5-1中的TValue结构&quot;&gt;&lt;a href=&quot;#lua-5-1中的TValue结构&quot; class=&quot;headerlink&quot; title=&quot;lua-5.1中的TValue结构&quot;&gt;&lt;/a&gt;lua-5.1中的TValue结构&lt;/h1&gt;&lt;p&gt;lua-5.1中TValue的结构定义在lobject.h中，如下所示&lt;/p&gt;
+&lt;figure class=&quot;highlight plaintext&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;code class=&quot;hljs plaintext&quot;&gt;typedef union &amp;#123;&lt;br&gt;  GCObject *gc;&lt;br&gt;  void *p;&lt;br&gt;  lua_Number n;&lt;br&gt;  int b;&lt;br&gt;&amp;#125; Value;&lt;br&gt;&lt;br&gt;#define TValuefields Value value;&lt;br&gt;int tt;&lt;br&gt;&lt;br&gt;typedef struct lua_TValue &amp;#123;&lt;br&gt;  TValuefields;&lt;br&gt;&amp;#125; TValue;&lt;br&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+
+&lt;p&gt;TValue结构体包含了两个部分，int类型的成员tt表示类型，Value成员是一个union结构，依据类型，有不同的含义。&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;当类型位nil时，nil本身不再需要其他标识，Value成员没有意义&lt;/li&gt;
+&lt;li&gt;当类型为boolean时，成员b为0或1表示false或true&lt;/li&gt;
+&lt;li&gt;当类型为number时，成员n表示，为double类型&lt;/li&gt;
+&lt;li&gt;当类型为lightuserdata时，成员p，表示指针&lt;/li&gt;
+&lt;li&gt;当类型为function&amp;#x2F;string&amp;#x2F;userdata&amp;#x2F;table&amp;#x2F;thread等需要GC管理的类型时，成员gc表示相应GC对象的指针。&lt;br&gt;这样一个变量只要对应一个TValue结构便可以表示Lua支持的所有类型。&lt;/li&gt;
+&lt;/ul&gt;</summary>
     
     
     
-    <category term="汇编逆向" scheme="http://leinlin.github.io/categories/%E6%B1%87%E7%BC%96%E9%80%86%E5%90%91/"/>
+    <category term="Lua" scheme="http://leinlin.github.io/categories/Lua/"/>
     
     
   </entry>

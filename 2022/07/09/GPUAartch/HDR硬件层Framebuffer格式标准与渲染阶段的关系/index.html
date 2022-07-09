@@ -146,7 +146,7 @@
     </script>
     
     <script defer type="text/javascript" src="/js/custom.js"></script>
-    <title>分类: 汇编逆向 | leinlin的小笔记</title>
+    <title> | leinlin的小笔记</title>
   <meta name="generator" content="Hexo 6.2.0"></head>
   <body itemscope itemtype="http://schema.org/WebPage" lang="zh_CN"  data-spy="scroll" data-target=".list-group">
     
@@ -180,35 +180,84 @@
         <div class="main-container">
           <div class="content">
             
-<div id="category" class="category page">
-  <h1 class="page-title">汇编逆向</h1>
+<div id="post" class="page">
   
   <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
-    <header id="post-header" class="post-header">
-      <h1 class="post-title-simple" itemprop="name headline">
-        <a class="post-title-link post-title-link-external" href="/2019/09/27/bugly-symbol/" itemprop="url">Android Unity 符号表上传</a>
-      </h1>
-      
-      <span class="post-date">
-        <time title="post-date" itemprop="dateCreated datePublished" datetime="2019-09-27T12:41:14+08:00">09-27</time>
+    <div class="post-block">
+      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/07/09/GPUAartch/HDR%E7%A1%AC%E4%BB%B6%E5%B1%82Framebuffer%E6%A0%BC%E5%BC%8F%E6%A0%87%E5%87%86%E4%B8%8E%E6%B8%B2%E6%9F%93%E9%98%B6%E6%AE%B5%E7%9A%84%E5%85%B3%E7%B3%BB/">
+      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+       <meta itemprop="name" content="leinlin">
+       <meta itemprop="description" content="">
+       <meta itemprop="image" content="/images/avatar.jpg">
       </span>
-      
+      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+       <meta itemprop="name" content="leinlin的小笔记">
+      </span>
+    </div>
+    <header class="post-header">
+      <h1 class="post-title" itemprop="name headline"></h1>
+      <div class="post-meta">
+        
+        <span class="post-date">
+          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2022-07-09T18:30:15+08:00">2022-07-09 18:30:15</time></span>
+        </span>
+        
+        
+        
+        
+        
+      </div>
     </header>
+    <main class="post-main" itemprop="articleBody">
+      <h1 id="HDR硬件层Framebuffer格式标准与渲染阶段的关系"><a href="#HDR硬件层Framebuffer格式标准与渲染阶段的关系" class="headerlink" title="HDR硬件层Framebuffer格式标准与渲染阶段的关系"></a>HDR硬件层Framebuffer格式标准与渲染阶段的关系</h1><p>这里主要探讨的是<strong>SwapChain的格式</strong>、<strong>写入其中的数据</strong>以及<strong>屏幕实际亮度</strong>之间的关系。</p>
+<h2 id="SDR格式"><a href="#SDR格式" class="headerlink" title="SDR格式"></a>SDR格式</h2><p>对于SDR屏幕 Buffer主要有：</p>
+<p>R8G8B8A8_UNORM：首先屏幕的eotf曲线是始终存在的，这种格式输入的颜色，图像接口不会进行任何处理，需要我们自己在shader中进行sRGB编码。</p>
+<p>R8G8B8A8_SNORM：这种格式输入的颜色在显示之前会自动编码到SRGB空间（自动Gamma矫正），所以我们不需要进行处理，也就是说shader当中直接写出线性颜色即可。A通道是线性的。</p>
+<blockquote>
+<p>  Vulkan的解释：</p>
+<p>  specifies a four-component, 32-bit unsigned normalized format that has an 8-bit B component stored with sRGB nonlinear encoding in byte 0, an 8-bit G component stored with sRGB nonlinear encoding in byte 1, an 8-bit R component stored with sRGB nonlinear encoding in byte 2, and an 8-bit A component in byte 3.</p>
+<p>  On the other hand, <strong>non-*_SRGB formats</strong> will be very likely exposed in pair with a <strong>SRGB color space.</strong> <strong>This means, the hardware will not apply any transfer function when reading from or writing to such images, yet they will still be presented on a device with sRGB display characteristics</strong>。（即使使用非SRGB的format，仍然可以使用 SRGB的colorSpace），这意味着硬件不会帮助进行自动的空间转换（在读写buffer时），但是仍然使用srgb的eotf的显示特性。</p>
+</blockquote>
+<p>SRGB的进一步说明：</p>
+<p><a target="_blank" rel="noopener" href="https://docs.rs/vulkano/0.7.2/vulkano/swapchain/enum.ColorSpace.html">https://docs.rs/vulkano/0.7.2/vulkano/swapchain/enum.ColorSpace.html</a></p>
+<p><img src="/HDR%E7%A1%AC%E4%BB%B6%E5%B1%82Framebuffer%E6%A0%BC%E5%BC%8F%E6%A0%87%E5%87%86%E4%B8%8E%E6%B8%B2%E6%9F%93%E9%98%B6%E6%AE%B5%E7%9A%84%E5%85%B3%E7%B3%BB/1590989148165.png" alt="1590989148165"></p>
+<h2 id="HDR格式"><a href="#HDR格式" class="headerlink" title="HDR格式"></a>HDR格式</h2><p>R16G16B16_Float:这种格式输出的是线性浮点数颜色，数据可以超过1，1对应的是80nits。使用的是scRGB。</p>
+<p>DX的参考：</p>
+<p><a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/windows/win32/direct3darticles/high-dynamic-range">https://docs.microsoft.com/en-us/windows/win32/direct3darticles/high-dynamic-range</a></p>
+<p>R10G10B10A2_UNORM：这种格式不会进行任何处理，直接结合EOFT曲线进行显示， 所以需要我们自己在Shader中进行PQ编码。（在我的显示器上Vulkan不支持，暂时没有测试过，但是GL和DX是支持这个格式的）</p>
+<p>VK_COLOR_SPACE_HDR10_ST2084_EXT：说明colorSpace，表示使用BT2020颜色空间，使用ST2048的EOTF。</p>
+<blockquote>
+<p>   Note:</p>
+<p>  对于Vulkan来说所有的ColorSpace都需要在Shader当中进行函数编码，除了SRGB。（对于SRGB的ColorSpace，通过指定带有SRGB的Format就能自动转换）。</p>
+</blockquote>
+
+    </main>
+    <footer class="post-footer">
+      
+    </footer>
   </article>
   
-  <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
-    <header id="post-header" class="post-header">
-      <h1 class="post-title-simple" itemprop="name headline">
-        <a class="post-title-link post-title-link-external" href="/2019/09/27/base-asm-calls/" itemprop="url">汇编调用指令，堆栈操作详解</a>
-      </h1>
-      
-      <span class="post-date">
-        <time title="post-date" itemprop="dateCreated datePublished" datetime="2019-09-27T12:41:14+08:00">09-27</time>
-      </span>
-      
-    </header>
-  </article>
   
+  <nav class="page-nav">
+    <div class="page-nav-next page-nav-item">
+      
+      <a href="/2022/07/09/Vulkan_Shader/" rel="next" title="Vulkan Shader编译与加载过程"><i class="fas fa-angle-left"></i><span class="nav-title">Vulkan Shader编译与加载过程</span></a>
+      
+    </div>
+    <div class="page-nav-prev page-nav-item">
+      
+    </div>
+  </nav>
+  
+  
+  
+
+<div class="comments" id="comments">
+  
+</div>
+
+
+
   
 </div>
 
@@ -260,6 +309,17 @@
 
 
   <div class="sidebar-sticky">
+    
+    
+    
+    
+    
+    <hr>
+    <div class="post-toc sidebar-item" id="toc-div">
+      <div><i class="fas fa-list-ol"></i>文章目录</div>
+      <div class="post-toc-content"><ol class="list-group toc"><li class="toc-item toc-level-1"><a class="list-group-item toc-link" href="#HDR%E7%A1%AC%E4%BB%B6%E5%B1%82Framebuffer%E6%A0%BC%E5%BC%8F%E6%A0%87%E5%87%86%E4%B8%8E%E6%B8%B2%E6%9F%93%E9%98%B6%E6%AE%B5%E7%9A%84%E5%85%B3%E7%B3%BB"><span class="toc-text">HDR硬件层Framebuffer格式标准与渲染阶段的关系</span></a><ol class="list-group toc-child"><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#SDR%E6%A0%BC%E5%BC%8F"><span class="toc-text">SDR格式</span></a></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#HDR%E6%A0%BC%E5%BC%8F"><span class="toc-text">HDR格式</span></a></li></ol></li></ol></div>
+    </div>
+    
     
     
     <hr>
