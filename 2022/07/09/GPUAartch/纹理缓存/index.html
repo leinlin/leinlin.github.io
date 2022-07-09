@@ -223,7 +223,7 @@
 <p>​	解决纹理所缩小的走样问题需要时用mipmap技术。Mipmap预先滤波是将纹理贴图生成一系列分辨率减半的贴图，构成一个图像金字塔。Trilinear mipmap是通过搜索金字塔相邻两层的贴图，然后在每个贴图上进行bilinear插值之后再用这两个值进行线性插值，最终会得到Trilinear滤波结果。下图可以看到在level0和level1上选择的2*2的像素进行bilinear 滤波。为了选择这两张贴图，需要计算lod值。lod值的计算需要计算相邻2*2像素的所对应的纹理坐标的偏差。</p>
 <p><img src="/../../images/%E7%BA%B9%E7%90%86%E7%BC%93%E5%AD%98/1573532955239.png" alt="1573532955239"></p>
 <h2 id="Rasterization"><a href="#Rasterization" class="headerlink" title="Rasterization"></a>Rasterization</h2><p>光栅会是将三角形转换成屏幕像素的过程，三角形是GPU使用的基本图元，通过限制使用三角形进行光栅化，算法可以根据硬件实现优化。最简单的像素生成顺序就是从上到下进行水平臊面。这个方法很直观，但这个不是最有的方法，所以通常顺序会进行修改来改进效率。</p>
-<p>*** GPU的光栅化会把屏幕像素分成2*2的block，通常也称作QUAD。每一个像素保存了uv坐标和纹理梯度，纹理梯度是 $ \frac{ \delta u }{ \delta x} $  等内容，是通过计算邻域像素纹理坐标的差值得到的。这些纹理梯度，用于计算LOD。如果一个三角形没有覆盖完整的quad，GPU也会为空的像素产生开销，也就是会占据GPU计算引擎的空间。这回导致单一像素的三角形对于GPU来说十分低效，但是也有一些解决方案提出来。 ***</p>
+<p>*** GPU的光栅化会把屏幕像素分成2*2的block，通常也称作QUAD。每一个像素保存了uv坐标和纹理梯度，纹理梯度是<br>$$ \frac{ \delta u }{ \delta x} $$<br>等内容，是通过计算邻域像素纹理坐标的差值得到的。这些纹理梯度，用于计算LOD。如果一个三角形没有覆盖完整的quad，GPU也会为空的像素产生开销，也就是会占据GPU计算引擎的空间。这回导致单一像素的三角形对于GPU来说十分低效，但是也有一些解决方案提出来。 ***</p>
 <p>有关Texture Mapping和光栅化的更多的细节可以参考：[9] T. Akenine-M¨oller, E. Haines, and N. Hoffman, Real-Time Rendering, 3rd ed. AK Peters Ltd., 2008</p>
 <h2 id="Texture-Map-Memory"><a href="#Texture-Map-Memory" class="headerlink" title="Texture Map Memory"></a>Texture Map Memory</h2><p>纹素被访问的顺序可以是与光栅化顺序有关的任何方向（The order of texels accessed in a texture map can have any orientation with respect to the rasterization order，不是很理解，列出原文）。如果纹素在贴图中以简单的行主序存储，纹理映射是水平进行的。缓存会保存很长的一条水平纹素提高命中率，但是如果纹理映射顺序旋转了90度那么，每一个像素都会丢失，每次访问都需要一次新的访存，读取新的一行，为了避免这种依赖朝向的纹理，纹理在内存中是以tile为单位保存的，或者是blocked。每一个纹理被分成n*n的tile，并且所有的纹素成组保存的。</p>
 <p>研究显示如果要提高命中率，tile的尺寸需要和cacheline的尺寸一样大，128K或者256K，那么tile的大小就是8*8或者16*16</p>
