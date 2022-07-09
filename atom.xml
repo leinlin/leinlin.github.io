@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+  <title>游戏杂记</title>
+  
+  
+  <link href="http://leinlin.github.io/atom.xml" rel="self"/>
+  
+  <link href="http://leinlin.github.io/"/>
+  <updated>2022-07-09T09:51:46.637Z</updated>
+  <id>http://leinlin.github.io/</id>
+  
+  <author>
+    <name>Leinlin</name>
+    
+  </author>
+  
+  <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>LuaJIT的变量实现</title>
+    <link href="http://leinlin.github.io/2022/07/09/luajit-value/"/>
+    <id>http://leinlin.github.io/2022/07/09/luajit-value/</id>
+    <published>2022-07-09T00:53:14.000Z</published>
+    <updated>2022-07-09T09:51:46.637Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;Lua是动态类型的编程语言，变量的值可以是数值、字符串、table等所有支持的数据类型。在Lua虚拟机中每个变量都是用一个TValue结构体表示。LuaJIT出于效率的考虑重新组织了TValue结构体。&lt;/p&gt;
+&lt;h1 id=&quot;lua-5-1中的TValue结构&quot;&gt;&lt;a</summary>
+        
+      
+    
+    
+    
+    <category term="汇编逆向" scheme="http://leinlin.github.io/categories/%E6%B1%87%E7%BC%96%E9%80%86%E5%90%91/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>Android Unity 符号表上传</title>
+    <link href="http://leinlin.github.io/2019/09/27/bugly-symbol/"/>
+    <id>http://leinlin.github.io/2019/09/27/bugly-symbol/</id>
+    <published>2019-09-27T04:41:14.000Z</published>
+    <updated>2022-07-09T09:55:20.368Z</updated>
+    
+    
+    <summary type="html">&lt;h2 id=&quot;Why-do-it&quot;&gt;&lt;a href=&quot;#Why-do-it&quot; class=&quot;headerlink&quot; title=&quot;Why do it&quot;&gt;&lt;/a&gt;Why do it&lt;/h2&gt;&lt;p&gt;最近游戏内测，发现不少崩溃的堆栈发生在libunity.so之中，而大部分仅仅给一个代码执行到的PC地址，查起来代码比较蛋疼。&lt;/p&gt;
+&lt;figure class=&quot;highlight c#&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;code class=&quot;hljs C#&quot;&gt;&lt;span class=&quot;hljs-meta&quot;&gt;#00 pc 00a6ac38 /data/app/.../libunity.so&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;hljs-meta&quot;&gt;#01 pc 00a6c128 /data/app/.../x86/libunity.so&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;hljs-meta&quot;&gt;#02 pc 003f1bf6 /data/app/.../x86/libunity.so &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;hljs-meta&quot;&gt;#03 pc 003f0b4a /data/app/.../x86/libunity.so &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;hljs-meta&quot;&gt;#04 pc 0039ff68 /data/app/.../x86/libunity.so &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;hljs-meta&quot;&gt;#05 pc 00396e77 /data/app/.../x86/libunity.so &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;hljs-meta&quot;&gt;#06 pc 00398ce0 /data/app/.../x86/libunity.so &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;hljs-meta&quot;&gt;#07 pc 00398149 /data/app/.../x86/libunity.so &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;hljs-meta&quot;&gt;#08 pc 003980a2 /data/app/.../x86/libunity.so &lt;/span&gt;&lt;br&gt;&lt;span class=&quot;hljs-meta&quot;&gt;#09 pc 004f2ca3 /data/app/.../x86/libunity.so &lt;/span&gt;&lt;br&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;</summary>
+    
+    
+    
+    <category term="汇编逆向" scheme="http://leinlin.github.io/categories/%E6%B1%87%E7%BC%96%E9%80%86%E5%90%91/"/>
+    
+    
+  </entry>
+  
+  <entry>
+    <title>汇编调用指令，堆栈操作详解</title>
+    <link href="http://leinlin.github.io/2019/09/27/base-asm-calls/"/>
+    <id>http://leinlin.github.io/2019/09/27/base-asm-calls/</id>
+    <published>2019-09-27T04:41:14.000Z</published>
+    <updated>2022-07-09T08:52:33.160Z</updated>
+    
+    
+    <summary type="html">&lt;h2 id=&quot;一些常用的汇编指令直观翻译&quot;&gt;&lt;a href=&quot;#一些常用的汇编指令直观翻译&quot; class=&quot;headerlink&quot; title=&quot;一些常用的汇编指令直观翻译&quot;&gt;&lt;/a&gt;一些常用的汇编指令直观翻译&lt;/h2&gt;&lt;figure class=&quot;highlight x86asm&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;code class=&quot;hljs x86asm&quot;&gt;&lt;span class=&quot;hljs-keyword&quot;&gt;mov&lt;/span&gt; &lt;span class=&quot;hljs-built_in&quot;&gt;eax&lt;/span&gt; , &lt;span class=&quot;hljs-built_in&quot;&gt;ebx&lt;/span&gt;            &lt;span class=&quot;hljs-comment&quot;&gt;; eax = ebx&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;hljs-keyword&quot;&gt;lea&lt;/span&gt; &lt;span class=&quot;hljs-built_in&quot;&gt;eax&lt;/span&gt; , [&lt;span class=&quot;hljs-built_in&quot;&gt;ebx&lt;/span&gt; + &lt;span class=&quot;hljs-number&quot;&gt;30&lt;/span&gt;]     &lt;span class=&quot;hljs-comment&quot;&gt;; eax = ebx + 30 &lt;/span&gt;&lt;br&gt;                         &lt;span class=&quot;hljs-comment&quot;&gt;; 不这样写就是两条指令 mov eax, ebx ;add eax 30&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;hljs-keyword&quot;&gt;push&lt;/span&gt; &lt;span class=&quot;hljs-keyword&quot;&gt;pop&lt;/span&gt;                 &lt;span class=&quot;hljs-comment&quot;&gt;; 入栈，出栈&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;hljs-keyword&quot;&gt;add&lt;/span&gt; &lt;span class=&quot;hljs-built_in&quot;&gt;eax&lt;/span&gt;, &lt;span class=&quot;hljs-number&quot;&gt;5&lt;/span&gt;               &lt;span class=&quot;hljs-comment&quot;&gt;; eax += 5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;hljs-keyword&quot;&gt;sub&lt;/span&gt; &lt;span class=&quot;hljs-built_in&quot;&gt;eax&lt;/span&gt;, &lt;span class=&quot;hljs-number&quot;&gt;5&lt;/span&gt;               &lt;span class=&quot;hljs-comment&quot;&gt;; eax -= 5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;hljs-keyword&quot;&gt;inc&lt;/span&gt; &lt;span class=&quot;hljs-built_in&quot;&gt;eax&lt;/span&gt;                  &lt;span class=&quot;hljs-comment&quot;&gt;; eax += 1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;hljs-keyword&quot;&gt;mul&lt;/span&gt;                      &lt;span class=&quot;hljs-comment&quot;&gt;; 乘法&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;hljs-keyword&quot;&gt;div&lt;/span&gt;                      &lt;span class=&quot;hljs-comment&quot;&gt;; 除法&lt;/span&gt;&lt;br&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+
+&lt;h2 id=&quot;改变堆栈的操作&quot;&gt;&lt;a href=&quot;#改变堆栈的操作&quot; class=&quot;headerlink&quot; title=&quot;改变堆栈的操作&quot;&gt;&lt;/a&gt;改变堆栈的操作&lt;/h2&gt;&lt;figure class=&quot;highlight x86asm&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;code class=&quot;hljs x86asm&quot;&gt;&lt;span class=&quot;hljs-keyword&quot;&gt;push&lt;/span&gt; &lt;span class=&quot;hljs-built_in&quot;&gt;eax&lt;/span&gt;   // &lt;span class=&quot;hljs-keyword&quot;&gt;sub&lt;/span&gt; &lt;span class=&quot;hljs-built_in&quot;&gt;esp&lt;/span&gt; , &lt;span class=&quot;hljs-number&quot;&gt;4&lt;/span&gt;  &lt;span class=&quot;hljs-keyword&quot;&gt;mov&lt;/span&gt; [&lt;span class=&quot;hljs-built_in&quot;&gt;esp&lt;/span&gt;] , &lt;span class=&quot;hljs-built_in&quot;&gt;eax&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;hljs-keyword&quot;&gt;pop&lt;/span&gt; &lt;span class=&quot;hljs-built_in&quot;&gt;eax&lt;/span&gt;    // &lt;span class=&quot;hljs-keyword&quot;&gt;mov&lt;/span&gt; &lt;span class=&quot;hljs-built_in&quot;&gt;eax&lt;/span&gt; , [&lt;span class=&quot;hljs-built_in&quot;&gt;esp&lt;/span&gt;]   &lt;span class=&quot;hljs-keyword&quot;&gt;add&lt;/span&gt; &lt;span class=&quot;hljs-built_in&quot;&gt;esp&lt;/span&gt; , &lt;span class=&quot;hljs-number&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;hljs-keyword&quot;&gt;call&lt;/span&gt; &lt;span class=&quot;hljs-number&quot;&gt;1234&lt;/span&gt;  // &lt;span class=&quot;hljs-keyword&quot;&gt;push&lt;/span&gt; &lt;span class=&quot;hljs-built_in&quot;&gt;eip&lt;/span&gt;   &lt;span class=&quot;hljs-keyword&quot;&gt;jmp&lt;/span&gt; &lt;span class=&quot;hljs-number&quot;&gt;1234&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;hljs-keyword&quot;&gt;retn&lt;/span&gt; &lt;span class=&quot;hljs-number&quot;&gt;8&lt;/span&gt;     // &lt;span class=&quot;hljs-keyword&quot;&gt;pop&lt;/span&gt; &lt;span class=&quot;hljs-built_in&quot;&gt;eip&lt;/span&gt;   &lt;span class=&quot;hljs-keyword&quot;&gt;add&lt;/span&gt; &lt;span class=&quot;hljs-built_in&quot;&gt;esp&lt;/span&gt; , &lt;span class=&quot;hljs-number&quot;&gt;8&lt;/span&gt;   常用于 __stdcall,这种函数自己清理自己的参数的&lt;br&gt;&lt;span class=&quot;hljs-keyword&quot;&gt;add&lt;/span&gt; &lt;span class=&quot;hljs-built_in&quot;&gt;esp&lt;/span&gt; , xxx&lt;br&gt;&lt;span class=&quot;hljs-keyword&quot;&gt;sub&lt;/span&gt; &lt;span class=&quot;hljs-built_in&quot;&gt;esp&lt;/span&gt; , xxx&lt;br&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;</summary>
+    
+    
+    
+    <category term="汇编逆向" scheme="http://leinlin.github.io/categories/%E6%B1%87%E7%BC%96%E9%80%86%E5%90%91/"/>
+    
+    
+  </entry>
+  
+</feed>
