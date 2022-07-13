@@ -6,7 +6,7 @@
   <link href="http://leinlin.github.io/atom.xml" rel="self"/>
   
   <link href="http://leinlin.github.io/"/>
-  <updated>2022-07-13T06:21:59.453Z</updated>
+  <updated>2022-07-13T06:47:49.855Z</updated>
   <id>http://leinlin.github.io/</id>
   
   <author>
@@ -17,11 +17,38 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>IDVS shader variants</title>
+    <link href="http://leinlin.github.io/2022/07/13/ARM/IDVS-shader-variants/"/>
+    <id>http://leinlin.github.io/2022/07/13/ARM/IDVS-shader-variants/</id>
+    <published>2022-07-12T22:57:19.000Z</published>
+    <updated>2022-07-13T06:47:49.855Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;IDVS-shader-variants&quot;&gt;&lt;a href=&quot;#IDVS-shader-variants&quot; class=&quot;headerlink&quot; title=&quot;IDVS shader variants&quot;&gt;&lt;/a&gt;IDVS shader</summary>
+        
+      
+    
+    
+    
+    <category term="mali gpu" scheme="http://leinlin.github.io/categories/mali-gpu/"/>
+    
+    
+    <category term="mali" scheme="http://leinlin.github.io/tags/mali/"/>
+    
+    <category term="IDVS" scheme="http://leinlin.github.io/tags/IDVS/"/>
+    
+  </entry>
+  
+  <entry>
     <title>Mali Bifrost Family Performance Counters</title>
     <link href="http://leinlin.github.io/2022/07/11/ARM/mali-bifrost-family-performance-counters/"/>
     <id>http://leinlin.github.io/2022/07/11/ARM/mali-bifrost-family-performance-counters/</id>
     <published>2022-07-11T01:57:19.000Z</published>
-    <updated>2022-07-13T06:21:59.453Z</updated>
+    <updated>2022-07-13T06:43:36.040Z</updated>
     
     
     <summary type="html">&lt;h1 id=&quot;Mali-Bifrost-Family-Performance-Counters&quot;&gt;&lt;a href=&quot;#Mali-Bifrost-Family-Performance-Counters&quot; class=&quot;headerlink&quot; title=&quot;Mali Bifrost Family Performance Counters&quot;&gt;&lt;/a&gt;Mali Bifrost Family Performance Counters&lt;/h1&gt;&lt;p&gt;Analysis and optimization of graphics and compute content running on a GPU is an important task when trying to build a top quality system integration, or a compelling high performance application. For developers working with the public APIs, such as OpenGL ES and OpenCL, the GPU is a black box which is very difficult to analyze based solely on the API visible behaviors. Frame pipelining and asynchronous processing of submitted work effectively decouple the application’s visible performance from the API calls which define the workload being executed, making analysis of performance an activity based on expert knowledge and intuition rather than direct measurement.&lt;/p&gt;
@@ -36,6 +63,12 @@
     
     <category term="mali gpu" scheme="http://leinlin.github.io/categories/mali-gpu/"/>
     
+    
+    <category term="mali" scheme="http://leinlin.github.io/tags/mali/"/>
+    
+    <category term="Gpu Counters" scheme="http://leinlin.github.io/tags/Gpu-Counters/"/>
+    
+    <category term="Bifrost" scheme="http://leinlin.github.io/tags/Bifrost/"/>
     
   </entry>
   
@@ -511,33 +544,6 @@
 &lt;/ul&gt;
 &lt;p&gt;​      数据格式的转换几乎不会有变化，因为合法数据会被被保存下来。区别是undershoots 和overshoots可能丢失，但是Resolve软件内部会记录下来，保证之后可以还原。&lt;/p&gt;
 &lt;p&gt;   &lt;strong&gt;在DaVinci Resolve中，所有的图像格式都会以Full的格式进行处理。并且是未被压缩的32bit浮点数表示。&lt;/strong&gt;也就是说，每一个图片无论原始的bit-depth是多少，都会转换成32bit的数据。转换的质量依赖于原始数据，总之是无压缩的转换。&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="Art" scheme="http://leinlin.github.io/categories/Art/"/>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>材质制作参数F0</title>
-    <link href="http://leinlin.github.io/2022/07/09/Art/%E6%9D%90%E8%B4%A8%E5%88%B6%E4%BD%9C%E5%8F%82%E6%95%B0F0/"/>
-    <id>http://leinlin.github.io/2022/07/09/Art/%E6%9D%90%E8%B4%A8%E5%88%B6%E4%BD%9C%E5%8F%82%E6%95%B0F0/</id>
-    <published>2022-07-09T04:00:14.000Z</published>
-    <updated>2022-07-09T12:55:32.063Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;- &lt;a href=&quot;#%E6%9D%90%E8%B4%A8%E5%88%B6%E4%BD%9C%E5%8F%82%E6%95%B0f0&quot;&gt;材质制作参数F0&lt;/a&gt;&lt;br&gt;    - &lt;a href=&quot;#%E9%9D%9E%E9%87%91%E5%B1%9E&quot;&gt;非金属&lt;/a&gt;&lt;br&gt;    - &lt;a href=&quot;#%E9%87%91%E5%B1%9E%E6%9D%90%E8%B4%A8&quot;&gt;金属材质&lt;/a&gt;&lt;br&gt;    - &lt;a href=&quot;#%E5%B8%B8%E8%A7%81%E9%87%91%E5%B1%9E%E5%8F%82%E6%95%B0&quot;&gt;常见金属参数&lt;/a&gt;&lt;/p&gt;
-&lt;h1 id=&quot;材质制作参数F0&quot;&gt;&lt;a href=&quot;#材质制作参数F0&quot; class=&quot;headerlink&quot; title=&quot;材质制作参数F0&quot;&gt;&lt;/a&gt;材质制作参数F0&lt;/h1&gt;&lt;h2 id=&quot;非金属&quot;&gt;&lt;a href=&quot;#非金属&quot; class=&quot;headerlink&quot; title=&quot;非金属&quot;&gt;&lt;/a&gt;非金属&lt;/h2&gt;&lt;p&gt;网上可以查到很多物体的折射率&lt;/p&gt;
-&lt;p&gt;对于非金属来说，将折射率转化成F0的公式：&lt;/p&gt;
-&lt;p&gt;$$ F0 &amp;#x3D; \frac{(n-1)^2}{(n+1)^2} $$&lt;/p&gt;
-&lt;p&gt;不同物体的Fresnel的值&lt;/p&gt;
-&lt;figure class=&quot;highlight plaintext&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;19&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;code class=&quot;hljs plaintext&quot;&gt;Charcoal       0.04&lt;br&gt;Fresh asphalt  0.04&lt;br&gt;Worn asphalt   0.12&lt;br&gt;Bare soil      0.17&lt;br&gt;Green grass    0.25&lt;br&gt;Desert sand    0.40&lt;br&gt;New concrete   0.55&lt;br&gt;Ocean Ice      0.5–0.7&lt;br&gt;Fresh snow     0.80–0.90&lt;br&gt;Quartz    0.045593921&lt;br&gt;ice       0.017908907&lt;br&gt;Water     0.020373188&lt;br&gt;Alcohol   0.01995505&lt;br&gt;Glass     0.04&lt;br&gt;Milk      0.022181983&lt;br&gt;Ruby      0.077271957&lt;br&gt;Crystal   0.111111111&lt;br&gt;Diamond   0.171968833&lt;br&gt;Skin      0.028&lt;br&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-
-&lt;p&gt;更多参数可以参考：&lt;a href=&quot;https://www.btbat.com/12032.html&quot;&gt;常见材质IOR&lt;/a&gt;，不过因为电介质材质的IOR通常很小在渲染中一般为0.04即可。&lt;/p&gt;
-&lt;p&gt;&lt;strong&gt;但是对于非金属的宝石之类的特殊物体，需要比较高的IOR，这个时候一般的金属工作流是不适用的，应为他需要特殊的F0&lt;/strong&gt;.&lt;/p&gt;
-&lt;p&gt;电介质F0的定义准则：&lt;/p&gt;
-&lt;figure class=&quot;highlight c&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;code class=&quot;hljs c&quot;&gt;No value under &lt;span class=&quot;hljs-number&quot;&gt;0.02&lt;/span&gt;&lt;br&gt;Common gemstones &lt;span class=&quot;hljs-number&quot;&gt;0.05&lt;/span&gt;&lt;span class=&quot;hljs-number&quot;&gt;-0.17&lt;/span&gt;&lt;br&gt;Common liquids &lt;span class=&quot;hljs-number&quot;&gt;0.02&lt;/span&gt;&lt;span class=&quot;hljs-number&quot;&gt;-0.04&lt;/span&gt;&lt;br&gt;When not finding reference &lt;span class=&quot;hljs-keyword&quot;&gt;for&lt;/span&gt; a dielectric material, setting a value of &lt;span class=&quot;hljs-number&quot;&gt;0.04&lt;/span&gt; (around plastic)&lt;br&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;</summary>
     
     
     

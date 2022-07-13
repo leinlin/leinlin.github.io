@@ -204,6 +204,67 @@
   
   <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
     <div class="post-block">
+      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/07/13/ARM/IDVS-shader-variants/">
+      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <meta itemprop="name" content="leinlin">
+        <meta itemprop="description" content="">
+        <meta itemprop="image" content="/images/avatar.jpg">
+      </span>
+      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+        <meta itemprop="name" content="leinlin的小笔记">
+      </span>
+    </div>
+    <header class="post-header">
+      <h1 class="post-title" itemprop="name headline">
+        <a class="post-title-link post-title-link-external" href="/2022/07/13/ARM/IDVS-shader-variants/" itemprop="url">IDVS shader variants</a>
+      </h1>
+      <div class="post-meta">
+        
+        <span class="post-date">
+          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2022-07-13T06:57:19+08:00">2022-07-13 06:57:19</time></span>
+        </span>
+        
+        
+        
+        <span class="post-meta-divider divider">|</span>
+        
+        <span class="post-categories">
+          
+          <i class="far fa-folder-open"></i><span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/mali-gpu/" itemprop="url" rel="index"><span itemprop="name">mali gpu</span></a></span>
+        </span>
+        
+        
+        
+        
+      </div>
+    </header>
+    <main class="post-main" itemprop="articleBody">
+      
+      <h1 id="IDVS-shader-variants"><a href="#IDVS-shader-variants" class="headerlink" title="IDVS shader variants"></a>IDVS shader variants</h1><p>On Mali GPUs in the Bifrost and Valhall families, vertex shaders are executed using an optimized shading flow called Index-Driven Vertex Shading (IDVS).</p>
+<p>In the IDVS pipeline, vertex shaders are compiled into two binaries:</p>
+<ul>
+<li>A position shader, which computes only position.</li>
+<li>A varying shader, which computes the remaining non-position vertex attribute outputs.</li>
+</ul>
+<h2 id="Figure-2-1-IDVS-pipeline"><a href="#Figure-2-1-IDVS-pipeline" class="headerlink" title="Figure 2-1 IDVS pipeline"></a>Figure 2-1 IDVS pipeline</h2>
+      
+      <p align="right"><a class="morebtn" href="/2022/07/13/ARM/IDVS-shader-variants/" title="IDVS shader variants">阅读全文</a></p>
+    </main>
+    <footer class="post-footer">
+      
+      <div class="post-tags">
+        
+        <a class="post-tag button" href="/tags/mali/" rel="tag"><i class="fas fa-tags"></i>mali</a>
+        
+        <a class="post-tag button" href="/tags/IDVS/" rel="tag"><i class="fas fa-tags"></i>IDVS</a>
+        
+      </div>
+      
+    </footer>
+  </article>
+  
+  <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
+    <div class="post-block">
       <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/07/11/ARM/mali-bifrost-family-performance-counters/">
       <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
         <meta itemprop="name" content="leinlin">
@@ -251,6 +312,16 @@
       <p align="right"><a class="morebtn" href="/2022/07/11/ARM/mali-bifrost-family-performance-counters/" title="Mali Bifrost Family Performance Counters">阅读全文</a></p>
     </main>
     <footer class="post-footer">
+      
+      <div class="post-tags">
+        
+        <a class="post-tag button" href="/tags/mali/" rel="tag"><i class="fas fa-tags"></i>mali</a>
+        
+        <a class="post-tag button" href="/tags/Gpu-Counters/" rel="tag"><i class="fas fa-tags"></i>Gpu Counters</a>
+        
+        <a class="post-tag button" href="/tags/Bifrost/" rel="tag"><i class="fas fa-tags"></i>Bifrost</a>
+        
+      </div>
       
     </footer>
   </article>
@@ -650,94 +721,6 @@
 <p>​	根据硬件这一特性，我们可以利用ddx、ddy获取到更多的信息。</p>
       
       <p align="right"><a class="morebtn" href="/2022/07/09/GPUAartch/Partial_Derivatives(DDX)%E5%8E%9F%E7%90%86%E4%B8%8E%E8%AE%BE%E5%A4%87%E5%AE%9E%E7%8E%B0%E5%B7%AE%E5%BC%82/" title="">阅读全文</a></p>
-    </main>
-    <footer class="post-footer">
-      
-    </footer>
-  </article>
-  
-  <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
-    <div class="post-block">
-      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/07/09/GPUAartch/GPU%E6%9E%B6%E6%9E%84%E7%B1%BB%E5%9E%8B%E6%95%B4%E5%90%88/">
-      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-        <meta itemprop="name" content="leinlin">
-        <meta itemprop="description" content="">
-        <meta itemprop="image" content="/images/avatar.jpg">
-      </span>
-      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-        <meta itemprop="name" content="leinlin的小笔记">
-      </span>
-    </div>
-    <header class="post-header">
-      <h1 class="post-title" itemprop="name headline">
-        <a class="post-title-link post-title-link-external" href="/2022/07/09/GPUAartch/GPU%E6%9E%B6%E6%9E%84%E7%B1%BB%E5%9E%8B%E6%95%B4%E5%90%88/" itemprop="url"></a>
-      </h1>
-      <div class="post-meta">
-        
-        <span class="post-date">
-          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2022-07-09T19:34:20+08:00">2022-07-09 19:34:20</time></span>
-        </span>
-        
-        
-        
-        
-        
-      </div>
-    </header>
-    <main class="post-main" itemprop="articleBody">
-      
-      <h1 id="GPU架构整合"><a href="#GPU架构整合" class="headerlink" title="GPU架构整合"></a>GPU架构整合</h1><p>AMD公司GPU芯片架构:</p>
-<table>
-<thead>
-<tr>
-<th align="center">Microarchitecture</th>
-<th align="center">GPUs</th>
-<th align="center">Graphic cards &#x2F; SoCs</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">GCN 5th</td>
-<td align="center">Vega 10</td>
-<td align="center">Radeon Rx Vega series</td>
-</tr>
-<tr>
-<td align="center">GCN 4th</td>
-<td align="center">Polaris 10, Polaris 11, Polaris 12</td>
-<td align="center">Radeon Rx 400 series Radeon_500_series</td>
-</tr>
-<tr>
-<td align="center">GCN 3rd</td>
-<td align="center">Tonga, Fiji, Carrizo</td>
-<td align="center">Radeon R9 Series</td>
-</tr>
-<tr>
-<td align="center">GCN 2nd</td>
-<td align="center">Bonaire, Hawaii, Kaveri, Kabini, Temash, Mullins, Beema, Carrizo-L</td>
-<td align="center">Radeon HD 7790, <strong>PlayStation 4</strong>, Xbox One</td>
-</tr>
-<tr>
-<td align="center">GCN 1st</td>
-<td align="center">Oland, Cape Verde, Pitcairn, Tahiti</td>
-<td align="center">Radeon HD 77xx–7900 Series</td>
-</tr>
-<tr>
-<td align="center">TeraScale 3</td>
-<td align="center">Cayman, Trinity&#x2F;Richland</td>
-<td align="center">Radeon HD 69xx Series, Radeon HD 7xxx–76xx Series</td>
-</tr>
-<tr>
-<td align="center">TeraScale 2</td>
-<td align="center">Cedar, Cypress, Juniper, Redwood, Palm, Sumo</td>
-<td align="center">Radeon HD 5000 Series, Radeon HD 6350, Radeon HD 64xx–68xx Series</td>
-</tr>
-<tr>
-<td align="center">TeraScale 1</td>
-<td align="center">R600, RV630, RV610, RV790, RV770, …</td>
-<td align="center">Radeon HD 2000 Series, HD 3000, HD 4000</td>
-</tr>
-</tbody></table>
-      
-      <p align="right"><a class="morebtn" href="/2022/07/09/GPUAartch/GPU%E6%9E%B6%E6%9E%84%E7%B1%BB%E5%9E%8B%E6%95%B4%E5%90%88/" title="">阅读全文</a></p>
     </main>
     <footer class="post-footer">
       
