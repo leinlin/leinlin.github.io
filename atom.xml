@@ -6,7 +6,7 @@
   <link href="http://leinlin.github.io/atom.xml" rel="self"/>
   
   <link href="http://leinlin.github.io/"/>
-  <updated>2022-07-09T12:04:26.229Z</updated>
+  <updated>2022-07-13T06:21:59.453Z</updated>
   <id>http://leinlin.github.io/</id>
   
   <author>
@@ -15,6 +15,29 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Mali Bifrost Family Performance Counters</title>
+    <link href="http://leinlin.github.io/2022/07/11/ARM/mali-bifrost-family-performance-counters/"/>
+    <id>http://leinlin.github.io/2022/07/11/ARM/mali-bifrost-family-performance-counters/</id>
+    <published>2022-07-11T01:57:19.000Z</published>
+    <updated>2022-07-13T06:21:59.453Z</updated>
+    
+    
+    <summary type="html">&lt;h1 id=&quot;Mali-Bifrost-Family-Performance-Counters&quot;&gt;&lt;a href=&quot;#Mali-Bifrost-Family-Performance-Counters&quot; class=&quot;headerlink&quot; title=&quot;Mali Bifrost Family Performance Counters&quot;&gt;&lt;/a&gt;Mali Bifrost Family Performance Counters&lt;/h1&gt;&lt;p&gt;Analysis and optimization of graphics and compute content running on a GPU is an important task when trying to build a top quality system integration, or a compelling high performance application. For developers working with the public APIs, such as OpenGL ES and OpenCL, the GPU is a black box which is very difficult to analyze based solely on the API visible behaviors. Frame pipelining and asynchronous processing of submitted work effectively decouple the application’s visible performance from the API calls which define the workload being executed, making analysis of performance an activity based on expert knowledge and intuition rather than direct measurement.&lt;/p&gt;
+&lt;p&gt;Tools such as ARM DS-5 Streamline provide developers access to the GPU hardware performance counters, the principle means to determine the behavior inside the black box beneath the API and identify any problem areas which need optimization. This work guide assumes that DS-5 Streamline is the tool being used for performance analysis, and follows the DS-5 naming conventions for the counters.&lt;/p&gt;
+&lt;h2 id=&quot;1-Performance-Counter-Infrastructure&quot;&gt;&lt;a href=&quot;#1-Performance-Counter-Infrastructure&quot; class=&quot;headerlink&quot; title=&quot;1 Performance Counter Infrastructure&quot;&gt;&lt;/a&gt;1 Performance Counter Infrastructure&lt;/h2&gt;&lt;p&gt;The Bifrost GPU family supports many performance counters which can all be captured simultaneously. Performance counters are provided for each functional block in the design:&lt;/p&gt;
+&lt;p&gt;Job Manager&lt;br&gt;Tiler&lt;br&gt;Shader core(s)&lt;br&gt;L2 cache(s)&lt;br&gt;See my earlier blog series for an introduction to the Bifrost GPU architecture - it introduces some of the fundamental concepts which are important to understand, and which place the more detailed information in this document in context.&lt;/p&gt;
+&lt;p&gt;The Mali GPU: An Abstract Machine, Part 1 - Frame Pipelining&lt;br&gt;The Mali GPU: An Abstract Machine, Part 2 - Tile-based Rendering&lt;br&gt;The Mali GPU: An Abstract Machine, Part 4 - The Bifrost Shader Core&lt;/p&gt;
+&lt;h3 id=&quot;1-1-Supported-Counters&quot;&gt;&lt;a href=&quot;#1-1-Supported-Counters&quot; class=&quot;headerlink&quot; title=&quot;1.1 Supported Counters&quot;&gt;&lt;/a&gt;1.1 Supported Counters&lt;/h3&gt;&lt;p&gt;The GPUs in the Bifrost family implement a large number of performance counters natively in the hardware, and it is also generally useful to generate some derived counters by combining one or more of the raw hardware counters in useful and interesting ways. This document will describe all of the counters exported from DS-5 Streamline, and some of the useful derived counters which can be derived from them. DS-5 Streamline allows custom performance counter graphs to be created using equations, so all of these performance counters can be directly visualized in the GUI.&lt;/p&gt;
+&lt;h3 id=&quot;1-2-Counter-Implementation-Caveats&quot;&gt;&lt;a href=&quot;#1-2-Counter-Implementation-Caveats&quot; class=&quot;headerlink&quot; title=&quot;1.2 Counter Implementation Caveats&quot;&gt;&lt;/a&gt;1.2 Counter Implementation Caveats&lt;/h3&gt;&lt;p&gt;The hardware counter implementation in the GPU is designed to be low cost, such that it has minimal impact on performance and power. Many of the counters are close approximations of the behavior described in this document in order to minimize the amount of additional hardware logic required to generate the counter signals, so some small deviations from what you may expect may be encountered.&lt;/p&gt;</summary>
+    
+    
+    
+    <category term="mali gpu" scheme="http://leinlin.github.io/categories/mali-gpu/"/>
+    
+    
+  </entry>
   
   <entry>
     <title></title>
@@ -515,42 +538,6 @@
 &lt;p&gt;&lt;strong&gt;但是对于非金属的宝石之类的特殊物体，需要比较高的IOR，这个时候一般的金属工作流是不适用的，应为他需要特殊的F0&lt;/strong&gt;.&lt;/p&gt;
 &lt;p&gt;电介质F0的定义准则：&lt;/p&gt;
 &lt;figure class=&quot;highlight c&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;code class=&quot;hljs c&quot;&gt;No value under &lt;span class=&quot;hljs-number&quot;&gt;0.02&lt;/span&gt;&lt;br&gt;Common gemstones &lt;span class=&quot;hljs-number&quot;&gt;0.05&lt;/span&gt;&lt;span class=&quot;hljs-number&quot;&gt;-0.17&lt;/span&gt;&lt;br&gt;Common liquids &lt;span class=&quot;hljs-number&quot;&gt;0.02&lt;/span&gt;&lt;span class=&quot;hljs-number&quot;&gt;-0.04&lt;/span&gt;&lt;br&gt;When not finding reference &lt;span class=&quot;hljs-keyword&quot;&gt;for&lt;/span&gt; a dielectric material, setting a value of &lt;span class=&quot;hljs-number&quot;&gt;0.04&lt;/span&gt; (around plastic)&lt;br&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;</summary>
-    
-    
-    
-    <category term="Art" scheme="http://leinlin.github.io/categories/Art/"/>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>材质制作数值标准总结</title>
-    <link href="http://leinlin.github.io/2022/07/09/Art/%E6%9D%90%E8%B4%A8%E5%88%B6%E4%BD%9C%E6%95%B0%E5%80%BC%E6%A0%87%E5%87%86%E6%80%BB%E7%BB%93/"/>
-    <id>http://leinlin.github.io/2022/07/09/Art/%E6%9D%90%E8%B4%A8%E5%88%B6%E4%BD%9C%E6%95%B0%E5%80%BC%E6%A0%87%E5%87%86%E6%80%BB%E7%BB%93/</id>
-    <published>2022-07-09T04:00:14.000Z</published>
-    <updated>2022-07-09T12:10:03.367Z</updated>
-    
-    
-    <summary type="html">&lt;!-- TOC --&gt;
-
-
-
-&lt;p&gt;- &lt;a href=&quot;#%E6%9D%90%E8%B4%A8%E5%88%B6%E4%BD%9C%E6%95%B0%E5%80%BC%E6%A0%87%E5%87%86%E6%80%BB%E7%BB%93&quot;&gt;材质制作数值标准总结&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;​    - &lt;a href=&quot;#%E6%9D%90%E8%B4%A8%E5%8F%82%E6%95%B0%E8%8C%83%E5%9B%B4&quot;&gt;材质参数范围&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;​        - &lt;a href=&quot;#basecolorrgb-srgb&quot;&gt;BaseColor（RGB-sRGB）&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;​            - &lt;a href=&quot;#guidelines&quot;&gt;Guidelines&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;​        - &lt;a href=&quot;#metallic&quot;&gt;Metallic&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;​            - &lt;a href=&quot;#f0&quot;&gt;F0&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;​            - &lt;a href=&quot;#%E9%87%91%E5%B1%9E&quot;&gt;金属&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;​            - &lt;a href=&quot;#%E9%9D%9E%E9%87%91%E5%B1%9E&quot;&gt;非金属&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;​            - &lt;a href=&quot;#guideline&quot;&gt;Guideline&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;​        - &lt;a href=&quot;#roughness&quot;&gt;Roughness&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;​            - &lt;a href=&quot;#guideline&quot;&gt;GuideLine&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;​        - &lt;a href=&quot;#ao&quot;&gt;AO&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;​            - &lt;a href=&quot;#guidline&quot;&gt;Guidline&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;​        - &lt;a href=&quot;#%E6%80%BB%E7%BB%93&quot;&gt;总结&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;​    - &lt;a href=&quot;#gamma%E7%A9%BA%E9%97%B4&quot;&gt;Gamma空间&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;​    - &lt;a href=&quot;#%E9%AA%8C%E8%AF%81&quot;&gt;验证&lt;/a&gt;&lt;/p&gt;</summary>
     
     
     

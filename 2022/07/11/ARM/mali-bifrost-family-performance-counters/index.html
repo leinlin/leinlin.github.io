@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#33363b">
+    <meta name="msapplication-TileColor" content="#33363b">
+    
+    
+    
+    
+    <meta name="keywords" content="leinlin, ARIA, Hexo">
+    
+    
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png">
+    
+    
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicons/android-chrome-192x192.png">
+    
+    
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png">
+    
+    
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png">
+    
+    
+    <link rel="mask-icon" href="/favicons/safari-pinned-tab.svg" color="#33363b">
+    
+    
+    <link rel="manifest" href="/favicons/site.webmanifest">
+    
+    
+    <meta name="msapplication-config" content="/favicons/browserconfig.xml">
+    
+    
+    <link rel="alternate" href="/atom.xml" title="leinlin的小笔记" type="application/atom+xml" />
+    
+    
+    <link rel="shortcut icon" type="image/x-icon" href="/favicons/favicon.ico">
+    
+    
+    <link rel="stylesheet" type="text/css" href="/css/normalize.css">
+    <link rel="stylesheet" type="text/css" href="/css/index.css">
+    
+    <link rel="stylesheet" type="text/css" href="/css/sidebar.css">
+    
+    
+<link rel="stylesheet" type="text/css" href="/css/page.css">
+<link rel="stylesheet" type="text/css" href="/css/post.css">
+
+    <link rel="stylesheet" type="text/css" href="/css/custom.css">
+    <link rel="stylesheet" type="text/css" href="/css/atom-one-light.css">
+    <link rel="stylesheet" type="text/css" href="/css/lightgallery.min.css">
+    <script type="text/javascript" src="/js/jquery.min.js"></script>
+    <script defer type="text/javascript" src="/js/util.js"></script>
+    <script defer type="text/javascript" src="/js/clipboard.min.js"></script>
+    <script defer type="text/javascript" src="/js/scrollspy.js"></script>
+    <script defer type="text/javascript" src="/js/fontawesome-all.min.js"></script>
+    <script defer type="text/javascript" src="/js/lightgallery.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-fullscreen.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-hash.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-pager.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-thumbnail.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-zoom.min.js"></script>
+    
+    <script defer src="/js/busuanzi.pure.mini.js"></script>
+    
+    
+    <script defer type="text/javascript" src="/js/search.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function () {
+      var searchPath = "search.xml";
+      if (searchPath.length === 0) {
+        searchPath = "search.xml";
+      }
+      var path = "/" + searchPath;
+      searchFunc(path, "search-input", "search-result");
+    });
+    </script>
+    
+    
+    
+    <script defer type="text/javascript" src="https://cdn.staticfile.org/MathJax/MathJax-2.6-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ["$","$"], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ["script", "noscript", "style", "textarea", "pre", "code"]
+      }
+    });
+    </script>
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for (i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += " has-jax";
+      }
+    });
+    </script>
+    
+    
+    <script defer type="text/javascript" src="/js/index.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function () {
+      var cb = null;
+      var els = $(".post figure.highlight");
+      if (els.length) {
+        // Enabled Hexo highlight line number.
+        $(els).each(function (i, e) {
+          // $(e).before("<button class=\"copy button\">复制</button>");
+          $(e).before([
+            "<div class=\"code-titlebar\">",
+              "<div class=\"titlebar-left\">",
+                "<button class=\"copy\">复制</button>",
+              "</div>",
+            "</div>"
+          ].join(""));
+        });
+        cb = new ClipboardJS("button.copy", {
+          "target": function (trigger) {
+              // Get target element by DOM API.
+              return trigger.parentNode.parentNode.nextElementSibling.firstChild.firstChild.firstChild.lastChild.firstChild.firstChild;
+          }
+        });
+      } else {
+        // Disabled Hexo highlight line number.
+        els = $(".post pre code");
+        $(els).each(function (i, e) {
+          // Add button before pre, not code.
+          // $(e).parent().before("<button class=\"copy button\">复制</button>");
+          $(e).before([
+            "<div class=\"code-titlebar\">",
+              "<div class=\"titlebar-left\">",
+                "<button class=\"copy\" >复制</button>",
+              "</div>",
+              "<div class=\"titlebar-right\">",
+                "<button class=\"button-dot dot-minimize\" aria-label=\"Decoration\"></button>",
+                "<button class=\"button-dot dot-maximize\" aria-label=\"Decoration\"></button>",
+                "<button class=\"button-dot dot-close\" aria-label=\"Decoration\"></button>",
+              "</div>",
+            "</div>"
+          ].join(""));
+        });
+        cb = new ClipboardJS("button.copy", {
+          "target": function (trigger) {
+              // Get target element by DOM API.
+              return trigger.parentNode.parentNode.nextElementSibling;
+          }
+        });
+      }
+      cb.on("success", function (e) {
+        e.clearSelection();
+        var trigger = e.trigger;
+        // Change button text as a user tip.
+        trigger.innerHTML = "已复制";
+        $(trigger).addClass("copied");
+        // Change button text back;
+        setTimeout(function () {
+          trigger.innerHTML = "复制";
+          $(trigger).removeClass("copied");
+        }, 1500);
+      });
+    });
+    </script>
+    
+    <script defer type="text/javascript" src="/js/custom.js"></script>
+    <title>Mali Bifrost Family Performance Counters | leinlin的小笔记</title>
+  <meta name="generator" content="Hexo 6.2.0"></head>
+  <body itemscope itemtype="http://schema.org/WebPage" lang="zh_CN"  data-spy="scroll" data-target=".list-group">
+    
+<header id="header" class="header" style="background: #33363b;">
+  <div class="container">
+    <div class="header-container">
+      <div class="header-title">
+        <h1 class="title"><a href="/">leinlin的小笔记</a></h1>
+        <h2 class="subtitle"></h2>
+      </div>
+      
+    </div>
+    <nav id="nav" class="nav">
+      <a id="nav-toggle" class="nav-toggle" aria-hidden="true"><i class="fas fa-bars" aria-label="切换导航栏"></i></a>
+      <ul id="menu" role="menubar" aria-hidden="false">
+        
+        <li role="menuitem"><a href="/"><i class="fas fa-home"></i><span class="menu-text">首页</span></a></li>
+        
+        <li role="menuitem"><a href="/categories/"><i class="fas fa-th-list"></i><span class="menu-text">分类</span></a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</header>
+
+
+    <main id="main" class="main">
+      <div class="container">
+        <div class="main-container">
+          <div class="content">
+            
+<div id="post" class="page">
+  
+  <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
+    <div class="post-block">
+      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/07/11/ARM/mali-bifrost-family-performance-counters/">
+      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+       <meta itemprop="name" content="leinlin">
+       <meta itemprop="description" content="">
+       <meta itemprop="image" content="/images/avatar.jpg">
+      </span>
+      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+       <meta itemprop="name" content="leinlin的小笔记">
+      </span>
+    </div>
+    <header class="post-header">
+      <h1 class="post-title" itemprop="name headline">Mali Bifrost Family Performance Counters</h1>
+      <div class="post-meta">
+        
+        <span class="post-date">
+          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2022-07-11T09:57:19+08:00">2022-07-11 09:57:19</time></span>
+        </span>
+        
+        
+        
+        <span class="post-meta-divider divider">|</span>
+        
+        <span class="post-categories">
+          
+          <i class="far fa-folder-open"></i><span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/mali-gpu/" itemprop="url" rel="index"><span itemprop="name">mali gpu</span></a></span>
+        </span>
+        
+        
+        
+        
+      </div>
+    </header>
+    <main class="post-main" itemprop="articleBody">
+      <h1 id="Mali-Bifrost-Family-Performance-Counters"><a href="#Mali-Bifrost-Family-Performance-Counters" class="headerlink" title="Mali Bifrost Family Performance Counters"></a>Mali Bifrost Family Performance Counters</h1><p>Analysis and optimization of graphics and compute content running on a GPU is an important task when trying to build a top quality system integration, or a compelling high performance application. For developers working with the public APIs, such as OpenGL ES and OpenCL, the GPU is a black box which is very difficult to analyze based solely on the API visible behaviors. Frame pipelining and asynchronous processing of submitted work effectively decouple the application’s visible performance from the API calls which define the workload being executed, making analysis of performance an activity based on expert knowledge and intuition rather than direct measurement.</p>
+<p>Tools such as ARM DS-5 Streamline provide developers access to the GPU hardware performance counters, the principle means to determine the behavior inside the black box beneath the API and identify any problem areas which need optimization. This work guide assumes that DS-5 Streamline is the tool being used for performance analysis, and follows the DS-5 naming conventions for the counters.</p>
+<h2 id="1-Performance-Counter-Infrastructure"><a href="#1-Performance-Counter-Infrastructure" class="headerlink" title="1 Performance Counter Infrastructure"></a>1 Performance Counter Infrastructure</h2><p>The Bifrost GPU family supports many performance counters which can all be captured simultaneously. Performance counters are provided for each functional block in the design:</p>
+<p>Job Manager<br>Tiler<br>Shader core(s)<br>L2 cache(s)<br>See my earlier blog series for an introduction to the Bifrost GPU architecture - it introduces some of the fundamental concepts which are important to understand, and which place the more detailed information in this document in context.</p>
+<p>The Mali GPU: An Abstract Machine, Part 1 - Frame Pipelining<br>The Mali GPU: An Abstract Machine, Part 2 - Tile-based Rendering<br>The Mali GPU: An Abstract Machine, Part 4 - The Bifrost Shader Core</p>
+<h3 id="1-1-Supported-Counters"><a href="#1-1-Supported-Counters" class="headerlink" title="1.1 Supported Counters"></a>1.1 Supported Counters</h3><p>The GPUs in the Bifrost family implement a large number of performance counters natively in the hardware, and it is also generally useful to generate some derived counters by combining one or more of the raw hardware counters in useful and interesting ways. This document will describe all of the counters exported from DS-5 Streamline, and some of the useful derived counters which can be derived from them. DS-5 Streamline allows custom performance counter graphs to be created using equations, so all of these performance counters can be directly visualized in the GUI.</p>
+<h3 id="1-2-Counter-Implementation-Caveats"><a href="#1-2-Counter-Implementation-Caveats" class="headerlink" title="1.2 Counter Implementation Caveats"></a>1.2 Counter Implementation Caveats</h3><p>The hardware counter implementation in the GPU is designed to be low cost, such that it has minimal impact on performance and power. Many of the counters are close approximations of the behavior described in this document in order to minimize the amount of additional hardware logic required to generate the counter signals, so some small deviations from what you may expect may be encountered.</p>
+<span id="more"></span>
+<h2 id="2-Job-Manager-Counters"><a href="#2-Job-Manager-Counters" class="headerlink" title="2 Job Manager Counters"></a>2 Job Manager Counters</h2><p>This section describes the counters implemented by the Mali Job Manager component.</p>
+<h3 id="2-1-Top-Level-Activity"><a href="#2-1-Top-Level-Activity" class="headerlink" title="2.1 Top Level Activity"></a>2.1 Top Level Activity</h3><p>These counters provide information about the overall number of cycles that the GPU was processing a workload, or waiting for software to handle workload completion interrupts.</p>
+<h4 id="2-1-1-JM-GPU-ACTIVE"><a href="#2-1-1-JM-GPU-ACTIVE" class="headerlink" title="2.1.1 JM.GPU_ACTIVE"></a>2.1.1 JM.GPU_ACTIVE</h4><p>Availability: All</p>
+<p>This counter increments every cycle that the GPU either has any workload queued in a Job slot. Note that this counter will increment any cycle a workload is present even if the GPU is totally stalled waiting for external memory to return data; that is still counted as active time even though no forward progress was made.</p>
+<h4 id="2-1-2-JM-GPU-UTILIZATION-Derived"><a href="#2-1-2-JM-GPU-UTILIZATION-Derived" class="headerlink" title="2.1.2 JM.GPU_UTILIZATION (Derived)"></a>2.1.2 JM.GPU_UTILIZATION (Derived)</h4><p>Availability: All</p>
+<p>If the GPU operating frequency is known then overall GPU utilization can be calculated as:</p>
+<figure class="hljs highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">JM.GPU_UTILIZATION = JM.GPU_ACTIVE / GPU_MHZ<br></code></pre></td></tr></table></figure>
+
+<p>Well pipelined applications which are not running at vsync and keeping the GPU busy should achieve a utilization of around 98%. Lower utilization than this typically indicates one of the following scenarios:</p>
+<p>  Content running at vsync.<br>  In this scenario the GPU goes idle as it has no need to run until next vsync signal.<br>  Content which is bottlenecked by the CPU.<br>  In this scenario the application or driver is causing high CPU load, and cannot build new workloads for the GPU quickly enough to keep it busy.<br>  Content which is oscillating between CPU and the GPU activity.<br>  In this scenario the application is using APIs which break the frame-level pipeline needed to keep the GPU busy. The most common causes are calls to glReadPixels() or glFinish(), as these explicitly drain the pipeline, but other API calls can cause stalls if used in a blocking manner before their result is ready. These include calls such as glClientWaitSync(), glWaitSync(), or glGetQueryObjectuiv().<br>Collecting GPU activity and CPU activity as part of the same DS-5 Streamline data capture can help disambiguate between the cases above. This type of analysis is explored in more detail in my blog on Mali performance.</p>
+<p>It is important to note that most modern devices support Dynamic Voltage and Frequency Scaling (DVFS) to optimize energy usage, which means that the GPU frequency is often not constant while running a piece of content. It is recommended that platform DVFS is disabled, locking the CPU, GPU and memory bus at a fixed frequency, if possible as it makes performance analysis much easier, and results more reproducible. The method for doing this is device specific, and many not be possible at all on production devices; please refer to your platform’s documentation for details.</p>
+<h4 id="2-1-3-JM-JS0-ACTIVE"><a href="#2-1-3-JM-JS0-ACTIVE" class="headerlink" title="2.1.3 JM.JS0_ACTIVE"></a>2.1.3 JM.JS0_ACTIVE</h4><p>Availability: All</p>
+<p>This counter increments every cycle that the GPU has a Job chain running in Job slot 0. This Job slot is used solely for the processing of fragment Jobs, so this corresponds directly to fragment shading workloads.</p>
+<p>For most graphics content there are orders of magnitude more fragments than vertices, so this Job slot will usually be the dominant Job slot which has the highest processing load. In content which is not hitting vsync and the GPU is the performance bottleneck, it is normal for JS0_ACTIVE to be approximately equal to GPU_ACTIVE. In this scenario vertex processing can run in parallel to the fragment processing, allowing fragment processing to run all of the time.</p>
+<h4 id="2-1-4-JM-JS0-UTILIZATION-Derived"><a href="#2-1-4-JM-JS0-UTILIZATION-Derived" class="headerlink" title="2.1.4 JM.JS0_UTILIZATION (Derived)"></a>2.1.4 JM.JS0_UTILIZATION (Derived)</h4><p>Availability: All</p>
+<p>The percentage JS0 utilization can be calculated as:</p>
+<p>JM.JS0_UTILIZATION &#x3D; JM.JS0_ACTIVE &#x2F; JM.GPU_ACTIVE<br>In content which is not hitting vsync and the GPU is the performance bottleneck it is normal for this utilization metric to be close to 1.0 (100%). Fragment processing is normally the dominant workload, and a utilization of close to 100% shows that vertex processing is running in parallel to the fragment processing, allowing maximum utilization of the functional units in the hardware.</p>
+<h4 id="2-1-5-JM-JS1-ACTIVE"><a href="#2-1-5-JM-JS1-ACTIVE" class="headerlink" title="2.1.5 JM.JS1_ACTIVE"></a>2.1.5 JM.JS1_ACTIVE</h4><p>Availability: All</p>
+<p>This counter increments every cycle the GPU has a Job chain running in Job slot 1. This Job slot can be used for compute shaders, vertex shaders, and tiling workloads. This counter cannot disambiguate between these workloads.</p>
+<h4 id="2-1-6-JM-JS1-UTILIZATION-Derived"><a href="#2-1-6-JM-JS1-UTILIZATION-Derived" class="headerlink" title="2.1.6 JM.JS1_UTILIZATION (Derived)"></a>2.1.6 JM.JS1_UTILIZATION (Derived)</h4><p>Availability: All</p>
+<p>The percentage JS1 utilization can be calculated as:</p>
+<figure class="hljs highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">JM.JS1_UTILIZATION = JM.JS1_ACTIVE / JM.GPU_ACTIVE<br></code></pre></td></tr></table></figure>
+<h4 id="2-1-7-JM-IRQ-ACTIVE"><a href="#2-1-7-JM-IRQ-ACTIVE" class="headerlink" title="2.1.7 JM.IRQ_ACTIVE"></a>2.1.7 JM.IRQ_ACTIVE</h4><p>Availability: All</p>
+<p>This counter increments every cycle the GPU has an interrupt pending, awaiting handling by the driver running on the CPU. Note that this does not necessarily indicate lost performance because the GPU can still process Job chains from other Job slots, as well as process the next work item in the interrupt generating Job slot, while an interrupt is pending.</p>
+<p>If a high JM.IRQ_ACTIVE cycle count is observed alongside other counters which make it look like the GPU is starving for work, such as a low SC.COMPUTE_ACTIVE and SC.FRAG_ACTIVE, this may indicate a system performance issue. Possible causes include:</p>
+<p>A system where the CPU is fully utilized, causing a delay in scheduling IRQ handlers.<br>A system where a device driver, which may not be the Mali device driver, has IRQs masked for a long period of time, stopping the CPU receiving new interrupt notifications.<br>Processing a very high number of small framebuffers or small compute workloads, resulting in a high frequency of job completion interrupts to the CPU.</p>
+<h3 id="2-2-Task-Dispatch"><a href="#2-2-Task-Dispatch" class="headerlink" title="2.2 Task Dispatch"></a>2.2 Task Dispatch</h3><p>This section looks at the counters related to how the Job Manager issues work to shader cores.</p>
+<h4 id="2-2-1-JM-JS0-TASKS"><a href="#2-2-1-JM-JS0-TASKS" class="headerlink" title="2.2.1 JM.JS0_TASKS"></a>2.2.1 JM.JS0_TASKS</h4><p>Availability: All</p>
+<p>This counter increments every time the Job Manager issues a task to a shader core. For JS0 these tasks correspond to a single 32x32 pixel screen region, although not all of these pixels may be rendered due to viewport or scissor settings.</p>
+<h4 id="2-2-2-JM-PIXEL-COUNT-Derived"><a href="#2-2-2-JM-PIXEL-COUNT-Derived" class="headerlink" title="2.2.2 JM.PIXEL_COUNT (Derived)"></a>2.2.2 JM.PIXEL_COUNT (Derived)</h4><p>Availability: All</p>
+<p>A approximation of the total scene pixel count can be computed as:</p>
+<figure class="hljs highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">JM.PIXEL_COUNT = JM.JS0_TASKS * 32 * 32<br></code></pre></td></tr></table></figure>
+
+<h2 id="3-Shader-Core-Counters"><a href="#3-Shader-Core-Counters" class="headerlink" title="3 Shader Core Counters"></a>3 Shader Core Counters</h2><p>This section describes the counters implemented by the Mali Shader Core. For the purposes of clarity this section talks about either fragment workloads or compute workloads. Vertex, Geometry, and Tessellation workloads are treated as a one dimensional compute problem by the shader core, so are counted as a compute workload from the point of view of the counters in this section.</p>
+<p>The GPU hardware records separate counters per shader core in the system. DS-5 Streamline shows the average of all of the shader core counters.</p>
+<h3 id="3-1-Shader-Core-Activity"><a href="#3-1-Shader-Core-Activity" class="headerlink" title="3.1 Shader Core Activity"></a>3.1 Shader Core Activity</h3><p>These counters show the total activity level of the shader core.</p>
+<h4 id="3-1-1-SC-COMPUTE-ACTIVE"><a href="#3-1-1-SC-COMPUTE-ACTIVE" class="headerlink" title="3.1.1 SC.COMPUTE_ACTIVE"></a>3.1.1 SC.COMPUTE_ACTIVE</h4><p>Availability: All</p>
+<p>This counter increments every cycle at least one compute task is active anywhere inside the shader core, including the fixed-function compute frontend, or the programmable execution core.</p>
+<h4 id="3-1-2-SC-FRAG-ACTIVE"><a href="#3-1-2-SC-FRAG-ACTIVE" class="headerlink" title="3.1.2 SC.FRAG_ACTIVE"></a>3.1.2 SC.FRAG_ACTIVE</h4><p>Availability: All</p>
+<p>This counter increments every cycle at least one fragment task is active anywhere inside the shader core, including the fixed-function fragment frontend, the programmable execution core, or the fixed-function fragment backend.</p>
+<h4 id="3-1-3-SC-EXEC-CORE-ACTIVE"><a href="#3-1-3-SC-EXEC-CORE-ACTIVE" class="headerlink" title="3.1.3 SC.EXEC_CORE_ACTIVE"></a>3.1.3 SC.EXEC_CORE_ACTIVE</h4><p>Availability: All</p>
+<p>This counter increments every cycle at least one quad is active inside the programmable execution core. Note that this counter does not give any idea of total utilization of the shader core resources, but simply gives an indication that something was running.</p>
+<h4 id="3-1-4-SC-EXEC-CORE-UTILIZATION-Derived"><a href="#3-1-4-SC-EXEC-CORE-UTILIZATION-Derived" class="headerlink" title="3.1.4 SC.EXEC_CORE_UTILIZATION (Derived)"></a>3.1.4 SC.EXEC_CORE_UTILIZATION (Derived)</h4><p>Availability: All</p>
+<p>An approximation of the overall utilization of the execution core can be determined using the following equation:</p>
+<figure class="hljs highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">SC.EXEC_CORE_UTILIZATION = SC.EXEC_CORE_ACTIVE / JM.GPU_ACTIVE<br></code></pre></td></tr></table></figure>
+<p>A low utilization of the execution core indicates possible lost performance, as there are spare shader core cycles which could be used if they could be accessed. There are multiple possible root causes of low utilization. The most common cause is content with a significant number tiles which do not require any fragment shader program to be executed. This may occur because:</p>
+<p>Screen regions are simply a clear color and contain no drawn geometry.<br>Screen regions contain significant amount of geometry which only does a depth&#x2F;stencil update and this update can be entirely resolved at the point of early-zs, prior to fragment shading.<br>Other causes include:</p>
+<p>Screen regions containing a high level of front-to-back geometry, resulting in one layer being drawn and multiple redundant layers being killed by early-zs. If the cost of loading the redundant geometry exceeds the cost of shading the visible layer then some idle time will be observed.<br>Screen regions containing a high level of opaque back-to-front geometry, resulting in one layer being drawn and multiple redundant layers being killed by Forward Pixel Kill (FPK); see Killing Pixels - A New Optimization for Shading on ARM Mali GPUs.</p>
+<h3 id="3-2-Compute-Frontend-Events"><a href="#3-2-Compute-Frontend-Events" class="headerlink" title="3.2 Compute Frontend Events"></a>3.2 Compute Frontend Events</h3><p>These counters show the task and thread issue behavior of the shader core’s fixed function compute frontend which issues work into the programmable core.</p>
+<h4 id="3-2-1-SC-COMPUTE-QUADS"><a href="#3-2-1-SC-COMPUTE-QUADS" class="headerlink" title="3.2.1 SC.COMPUTE_QUADS"></a>3.2.1 SC.COMPUTE_QUADS</h4><p>Availability: All</p>
+<p>This counter increments for every compute quad spawned by the shader core. One compute quad is spawned for every four work items (compute shaders), vertices (vertex and tessellation evaluation shaders), primitives (geometry shaders), or control points (tessellation control shaders). To ensure full utilization of the four thread capacity of a quad any compute workgroups should be a multiple of four in size.</p>
+<h4 id="3-2-2-SC-COMPUTE-QUAD-CYCLES-Derived"><a href="#3-2-2-SC-COMPUTE-QUAD-CYCLES-Derived" class="headerlink" title="3.2.2 SC.COMPUTE_QUAD_CYCLES (Derived)"></a>3.2.2 SC.COMPUTE_QUAD_CYCLES (Derived)</h4><p>Availability: All</p>
+<p>This counter calculates an average compute cycles per compute quad, giving some measure of the per-quad processing load.</p>
+<p>SC.COMPUTE_QUAD_CYCLES &#x3D; SC.COMPUTE_ACTIVE &#x2F; SC.COMPUTE_QUADS<br>Note that in most cases the dominant cost here is the programmable code running on the execution core, and so there will be some cross-talk caused by compute and fragment workloads running concurrently on the same hardware. This counter is therefore indicative of cost, but does not reflect precise costing.</p>
+<h3 id="3-3-Fragment-Frontend-Events"><a href="#3-3-Fragment-Frontend-Events" class="headerlink" title="3.3 Fragment Frontend Events"></a>3.3 Fragment Frontend Events</h3><p>These counters show the task and thread issue behavior of the shader core’s fixed-function fragment frontend. This unit is significantly more complicated than the compute frontend, so there are a large number of counters available.</p>
+<h4 id="3-3-1-SC-FRAG-PRIMITIVES-RAST"><a href="#3-3-1-SC-FRAG-PRIMITIVES-RAST" class="headerlink" title="3.3.1 SC.FRAG_PRIMITIVES_RAST"></a>3.3.1 SC.FRAG_PRIMITIVES_RAST</h4><p>Availability: All</p>
+<p>This counter increments for every primitive entering the frontend fixed-function rasterization stage; these primitives are guaranteed to be inside the current tile being rendered.</p>
+<p>Note that this counter will increment once per primitive per tile in which that primitive is located. If you wish to know the total number of primitives in the scene without factoring in tiling effects see the Tiler block’s primitive counters.</p>
+<h4 id="3-3-2-SC-FRAG-QUADS-RAST"><a href="#3-3-2-SC-FRAG-QUADS-RAST" class="headerlink" title="3.3.2 SC.FRAG_QUADS_RAST"></a>3.3.2 SC.FRAG_QUADS_RAST</h4><p>Availability: All</p>
+<p>This counter increments for every 2x2 pixel quad which is rasterized by the rasterization unit. The quads generated have at least some coverage based on the current sample pattern, but may subsequently be killed by early depth and stencil testing and as such never issued to the programmable core.</p>
+<h4 id="3-3-3-SC-FRAG-QUADS-EZS-TEST"><a href="#3-3-3-SC-FRAG-QUADS-EZS-TEST" class="headerlink" title="3.3.3 SC.FRAG_QUADS_EZS_TEST"></a>3.3.3 SC.FRAG_QUADS_EZS_TEST</h4><p>Availability: All</p>
+<p>This counter increments for every 2x2 pixel quad which is subjected to ZS testing. We want as many quads as possible to be subject to early ZS testing as it is significantly more efficient than late ZS testing, which will only kill threads after they have been fragment shaded.</p>
+<h4 id="3-3-4-SC-FRAG-QUADS-EZS-UPDATE"><a href="#3-3-4-SC-FRAG-QUADS-EZS-UPDATE" class="headerlink" title="3.3.4 SC.FRAG_QUADS_EZS_UPDATE"></a>3.3.4 SC.FRAG_QUADS_EZS_UPDATE</h4><p>Availability: All</p>
+<p>This counter increments for every 2x2 pixel quad which has completed an early ZS update operation. Quads which have a depth value which depends on shader execution, or which have indeterminate coverage due to use of discard statements in the shader or the use of alpha-to-coverage, may be early ZS tested but cannot do an early ZS update.</p>
+<h4 id="3-3-5-SC-FRAG-QUADS-EZS-KILLED"><a href="#3-3-5-SC-FRAG-QUADS-EZS-KILLED" class="headerlink" title="3.3.5 SC.FRAG_QUADS_EZS_KILLED"></a>3.3.5 SC.FRAG_QUADS_EZS_KILLED</h4><p>Availability: All</p>
+<p>This counter increments for every 2x2 pixel quad which is completely killed by early ZS testing. These killed quads will not generate any further processing in the shader core.</p>
+<h4 id="3-3-6-SC-FRAG-QUADS-KILLED-BY-OVERDRAW-Derived"><a href="#3-3-6-SC-FRAG-QUADS-KILLED-BY-OVERDRAW-Derived" class="headerlink" title="3.3.6 SC.FRAG_QUADS_KILLED_BY_OVERDRAW (Derived)"></a>3.3.6 SC.FRAG_QUADS_KILLED_BY_OVERDRAW (Derived)</h4><p>Availability: All</p>
+<p>This derived counter increments for every 2x2 pixel quad which survives early-zs testing but that is overdrawn by an opaque quad before spawning as fragment shading threads in the programmable core.</p>
+<figure class="hljs highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">SC.FRAG_QUADS_KILLED_BY_OVERDRAW = SC.FRAG_QUADS_RAST - SC.FRAG_QUADS_EZS_KILL - SC.FRAG_QUADS<br></code></pre></td></tr></table></figure>
+<p>If a significant percentage of the total rasterized quads are overdrawn, this is indicative that the application is rendering in a back-to-front order which means that the early-zs test is unable to kill the redundant workload. Schemes such as Forward Pixel Kill can minimize the cost, but it is recommended that the application renders opaque geometry front-to-back as early-zs testing provides stronger guarantees of efficiency.</p>
+<h4 id="3-3-7-SC-FRAG-QUADS-OPAQUE"><a href="#3-3-7-SC-FRAG-QUADS-OPAQUE" class="headerlink" title="3.3.7 SC.FRAG_QUADS_OPAQUE"></a>3.3.7 SC.FRAG_QUADS_OPAQUE</h4><p>Availability: All</p>
+<p>This counter increments for every 2x2 pixel quad which is architecturally opaque – i.e. not using blending, shader discard, or alpha-to-coverage – that survives early-zs testing. Opaque fragments are normally more efficient for the GPU to handle, as only the top opaque layer needs to be drawn, so we recommend ensuring opacity of draw calls whenever possible.</p>
+<h4 id="3-3-8-SC-FRAG-QUADS-TRANSPARENT-Derived"><a href="#3-3-8-SC-FRAG-QUADS-TRANSPARENT-Derived" class="headerlink" title="3.3.8 SC.FRAG_QUADS_TRANSPARENT (Derived)"></a>3.3.8 SC.FRAG_QUADS_TRANSPARENT (Derived)</h4><p>Availability: All</p>
+<p>This counter increments for every 2x2 pixel quad which is architecturally transparent – i.e. using blending, shader discard, or alpha-to-coverage – that survives early-zs testing. Note that transparent in this context implies either alpha transparency, or a shader-dependent coverage mask.</p>
+<figure class="hljs highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">SC.FRAG_QUADS_TRANSPARENT = SC.FRAG_QUADS_RAST - SC.FRAG_QUADS_EZS_KILL - SC.FRAG_QUADS_OPAQUE<br></code></pre></td></tr></table></figure>
+<h4 id="3-3-9-SC-FRAG-QUAD-BUFFER-NOT-EMPTY"><a href="#3-3-9-SC-FRAG-QUAD-BUFFER-NOT-EMPTY" class="headerlink" title="3.3.9 SC.FRAG_QUAD_BUFFER_NOT_EMPTY"></a>3.3.9 SC.FRAG_QUAD_BUFFER_NOT_EMPTY</h4><p>Availability: All</p>
+<p>This counter increments every cycle the fragment unit is active, and the pre-pipe buffer contains at least one 2x2 pixel quad waiting to be executed in the execution core. If this buffer drains the frontend will be unable to spawn a new quad if an execution core quad slot becomes free.</p>
+<p>If this counter is low relative to SC.FRAG_ACTIVE then the shader core may be running out of rasterized quads to turn in to fragment quads, which can in turn cause low utilization of the functional units in the execution core if the total number of quads active in the execution core drops too far. Possible causes for this include:</p>
+<p>Tiles which contain no geometry.<br>Tiles which contain a lot of geometry which can be dropped at early-zs, either because it is redundant and it is killed, or because it is a simple depth and stencil update which can be resolved without fragment shader execution.<br>Tiles which contain triangles from a large number of different drawing operations, causing state loading to become a bottleneck. It is recommended that industry best practice, such as draw batching, is used to minimize the number of unique drawing operations present in a frame.</p>
+<h4 id="3-3-10-SC-FRAG-QUADS"><a href="#3-3-10-SC-FRAG-QUADS" class="headerlink" title="3.3.10 SC.FRAG_QUADS"></a>3.3.10 SC.FRAG_QUADS</h4><p>Availability: All</p>
+<p>This counter increments for every fragment quad created by the GPU.</p>
+<p>In most situations a single quad contains threads for four fragments spanning a 2×2 pixel region of the screen. If an application is rendering to a multi-sampled render target with GL_SAMPLE_SHADING enabled then shader evaluation is per-sample rather than per pixel and one fragment thread will be generated for example sample point covered. For example, an 8xMSAA render target using sample rate shading will generate two fragment quads per screen pixel covered by the primitive.</p>
+<h4 id="3-3-11-SC-FRAG-PARTIAL-QUADS"><a href="#3-3-11-SC-FRAG-PARTIAL-QUADS" class="headerlink" title="3.3.11 SC.FRAG_PARTIAL_QUADS"></a>3.3.11 SC.FRAG_PARTIAL_QUADS</h4><p>Availability: All</p>
+<p>This counter increments for every fragment quad which contains at least one thread slot which has no sample coverage, and is therefore indicative of lost performance. Partial coverage in a 2×2 fragment quad will occur if its sample points span the edge of a triangle, or if one or more sample points fail an early-zs test.</p>
+<h4 id="3-3-12-SC-FRAG-PARTIAL-QUAD-PERCENTAGE-Derived"><a href="#3-3-12-SC-FRAG-PARTIAL-QUAD-PERCENTAGE-Derived" class="headerlink" title="3.3.12 SC.FRAG_PARTIAL_QUAD_PERCENTAGE (Derived)"></a>3.3.12 SC.FRAG_PARTIAL_QUAD_PERCENTAGE (Derived)</h4><p>Availability: All</p>
+<p>This counter calculates an percentage of spawned quads that have partial coverage.</p>
+<p>SC.FRAG_PARTIAL_QUAD_PERCENTAGE &#x3D; SC.FRAG_PARTIAL_QUADS &#x2F; SC.FRAG_QUADS<br>A high percentage of partial quads indicates possible problems with meshes containing high numbers of small triangles; the ratio of the total edge length of a primitive to the screen area of a primitive increases as primitives shrink, so quads which span primitive edges become more common.</p>
+<p>Partial coverage issues can be reduced by using object meshes which contain larger triangles. One common optimization technique which helps reduce the frequency of microtriangles is the use of dynamic model level of detail selection. In these schemes, each object mesh is generated at multiple detail levels during content generation, and an appropriate mesh is chosen per draw call based on the distance between the object and the camera. The further the object is from the camera, the lower the selected mesh complexity needs to be.</p>
+<h4 id="3-3-13-SC-FRAG-QUAD-CYCLES-Derived"><a href="#3-3-13-SC-FRAG-QUAD-CYCLES-Derived" class="headerlink" title="3.3.13 SC.FRAG_QUAD_CYCLES (Derived)"></a>3.3.13 SC.FRAG_QUAD_CYCLES (Derived)</h4><p>Availability: All</p>
+<p>This counter calculates an average fragment cycles per fragment quad, giving some measure of the per-quad processing cost.</p>
+<figure class="hljs highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">SC.FRAG_QUAD_CYCLES = SC.FRAG_ACTIVE / SC.FRAG_QUADS<br></code></pre></td></tr></table></figure>
+<p>Note that in most cases the dominant cost here is the programmable code running on the execution core, so there will be some cross-talk caused by compute and fragment workloads running concurrently on the same hardware. This counter is therefore indicative of cost, but does not reflect precise costing.</p>
+<h3 id="3-4-Fragment-Backend-Events"><a href="#3-4-Fragment-Backend-Events" class="headerlink" title="3.4 Fragment Backend Events"></a>3.4 Fragment Backend Events</h3><p>These counters record the fragment backend behavior.</p>
+<h4 id="3-4-1-SC-FRAG-THREADS-LZS-TEST"><a href="#3-4-1-SC-FRAG-THREADS-LZS-TEST" class="headerlink" title="3.4.1 SC.FRAG_THREADS_LZS_TEST"></a>3.4.1 SC.FRAG_THREADS_LZS_TEST</h4><p>Availability: All</p>
+<p>This counter increments for every thread triggering late depth and stencil (ZS) testing.</p>
+<h4 id="3-4-2-SC-FRAG-THREADS-LZS-KILLED"><a href="#3-4-2-SC-FRAG-THREADS-LZS-KILLED" class="headerlink" title="3.4.2 SC.FRAG_THREADS_LZS_KILLED"></a>3.4.2 SC.FRAG_THREADS_LZS_KILLED</h4><p>Availability: All</p>
+<p>This counter increments for every thread killed by late ZS testing. These threads are killed after their fragment program has executed, so a significant number of threads being killed at late ZS implies a significant amount of lost performance and&#x2F;or wasted energy performing rendering which has no useful visual output.</p>
+<p>The main causes of threads using late-zs are:</p>
+<p>Fragment shader programs using explicit discard statements<br>Fragment shader programs using implicit discard (alpha-to-coverage).<br>Fragment shader programs with side-effects on shared resources, such as shader storage buffer objects, images, or atomics.</p>
+<h4 id="3-4-3-SC-FRAG-NUM-TILES"><a href="#3-4-3-SC-FRAG-NUM-TILES" class="headerlink" title="3.4.3 SC.FRAG_NUM_TILES"></a>3.4.3 SC.FRAG_NUM_TILES</h4><p>Availability: All</p>
+<p>This counter increments for every tile rendered. The size of a physical tile can vary from 16×16 pixels (largest) downwards. The size of physical tile actually used depends on the number of bytes of memory needed to store the working set for each pixel; the largest tile size allows up to 128-bits per pixel of color storage – enough for a single 32-bit per pixel render target using 4xMSAA, or  4x32-bit per pixel surfaces using multiple-render targets (MRT). Requiring more than that will result in proportionally smaller tile sizes.</p>
+<p>The total storage required per pixel depends on the use of:</p>
+<p>Multi-sample anti-aliasing (MSAA)<br>Multiple render targets (MRT)<br>The size of the attached per-pixel color data format(s)<br>The use of pixel local storage (PLS); see Pixel Local Storage.<br>In general the larger tile sizes are more efficient than smaller tile sizes, especially for content with high geometry complexity. This counter cannot be used to directly determine the physical tile sizes used.</p>
+<h4 id="3-4-4-SC-FRAG-TILES-CRC-CULLED"><a href="#3-4-4-SC-FRAG-TILES-CRC-CULLED" class="headerlink" title="3.4.4 SC.FRAG_TILES_CRC_CULLED"></a>3.4.4 SC.FRAG_TILES_CRC_CULLED</h4><p>Availability: All</p>
+<p>This counter increments for every physical rendered tile which has its writeback cancelled due to a matching transaction elimination CRC hash. If a high percentage of the tile writes are being eliminated this implies that you are re-rendering the entire screen when not much has changed, so consider using scissor rectangles to minimize the amount of area which is redrawn. This isn’t always easy, especially for window surfaces which are pipelines using multiple buffers, but EGL extensions such as these may be supported on your platform which can help manage the partial frame updates:</p>
+<p><a target="_blank" rel="noopener" href="https://www.khronos.org/registry/egl/extensions/KHR/EGL_KHR_partial_update.txt">https://www.khronos.org/registry/egl/extensions/KHR/EGL_KHR_partial_update.txt</a><br><a target="_blank" rel="noopener" href="https://www.khronos.org/registry/egl/extensions/EXT/EGL_EXT_swap_buffers_with_damage.txt">https://www.khronos.org/registry/egl/extensions/EXT/EGL_EXT_swap_buffers_with_damage.txt</a></p>
+<h3 id="3-5-Execution-Engine-Events"><a href="#3-5-Execution-Engine-Events" class="headerlink" title="3.5 Execution Engine Events"></a>3.5 Execution Engine Events</h3><p>These counters look at the behavior of the arithmetic execution engine.</p>
+<h4 id="3-5-1-SC-EE-INSTRS"><a href="#3-5-1-SC-EE-INSTRS" class="headerlink" title="3.5.1 SC.EE_INSTRS"></a>3.5.1 SC.EE_INSTRS</h4><p>Availability: All</p>
+<p>This counter increments for every arithmetic instruction architecturally executed for a quad in an execution engine. This counter is normalized based on the number of execution engines implemented in the design, so gives the per engine performance, rather than the total executed application workload.</p>
+<h4 id="3-5-2-SC-EE-UTILIZATION-Derived"><a href="#3-5-2-SC-EE-UTILIZATION-Derived" class="headerlink" title="3.5.2. SC.EE_UTILIZATION (Derived)"></a>3.5.2. SC.EE_UTILIZATION (Derived)</h4><p>Availability: All</p>
+<p>The peak performance is one arithmetic instruction per engine per cycle, so the effective utilization of the arithmetic hardware can be computed as:</p>
+<figure class="hljs highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">SC.EE_UTILIZATION = SC.EE_INSTRS / SC.EXEC_CORE_ACTIVE<br></code></pre></td></tr></table></figure>
+<h4 id="3-5-3-SC-EE-INSTRS-DIVERGED"><a href="#3-5-3-SC-EE-INSTRS-DIVERGED" class="headerlink" title="3.5.3 SC.EE_INSTRS_DIVERGED"></a>3.5.3 SC.EE_INSTRS_DIVERGED</h4><p>Availability: All</p>
+<p>This counter increments for every arithmetic instruction architecturally executed where there is control flow divergence in the quad resulting in at least one lane of computation being masked out. Control flow divergence erodes arithmetic execution efficiency because it implies some arithmetic lanes are idle, so should be minimized when designing shader effects.</p>
+<h3 id="3-6-Load-x2F-Store-Cache-Events"><a href="#3-6-Load-x2F-Store-Cache-Events" class="headerlink" title="3.6 Load&#x2F;Store Cache Events"></a>3.6 Load&#x2F;Store Cache Events</h3><p>These counters look at the behavior of the load&#x2F;store pipe.</p>
+<h4 id="3-6-1-SC-LSC-READS-FULL"><a href="#3-6-1-SC-LSC-READS-FULL" class="headerlink" title="3.6.1 SC.LSC_READS_FULL"></a>3.6.1 SC.LSC_READS_FULL</h4><p>Availability: All</p>
+<p>This counter increments for every LS cache access executed which returns 128-bits of data.</p>
+<h4 id="3-6-2-SC-LSC-READS-SHORT"><a href="#3-6-2-SC-LSC-READS-SHORT" class="headerlink" title="3.6.2 SC.LSC_READS_SHORT"></a>3.6.2 SC.LSC_READS_SHORT</h4><p>Availability: All</p>
+<p>This counter increments for every LS cache access executed which returns less than 128-bits of data.</p>
+<p>Full width data loads make best use of the cache, so where possible efficiency can be improved by merging short loads together.</p>
+<p>Maximize data locality in attributes, varyings, and uniform buffers within a thread, for example packing data into adjacent vector elements and structure fields.<br>Minimize the amount of unused data in vector data types, uniform buffer control structures, and interleaved vertex attribute buffers.<br>Write compute shaders so adjacent threads sharing a quad access adjacent addresses in memory, allowing multiple loads to return data from the same cache line.</p>
+<h4 id="3-6-3-SC-LSC-WRITES-FULL"><a href="#3-6-3-SC-LSC-WRITES-FULL" class="headerlink" title="3.6.3 SC.LSC_WRITES_FULL"></a>3.6.3 SC.LSC_WRITES_FULL</h4><p>Availability: All</p>
+<p>This counter increments for every LS cache access executed which writes 128-bits of data.</p>
+<h4 id="3-6-4-SC-LSC-WRITES-SHORT"><a href="#3-6-4-SC-LSC-WRITES-SHORT" class="headerlink" title="3.6.4 SC.LSC_WRITES_SHORT"></a>3.6.4 SC.LSC_WRITES_SHORT</h4><p>Availability: All</p>
+<p>This counter increments for every LS cache access executed which writes less than 128-bits of data.</p>
+<p>Full width data writes make best use of the cache, so where possible efficiency can be improved by merging short writes together. See LS_READ_SHORT section for advice on how this can be achieved.</p>
+<h4 id="3-6-5-SC-LSC-ATOMICS"><a href="#3-6-5-SC-LSC-ATOMICS" class="headerlink" title="3.6.5 SC.LSC_ATOMICS"></a>3.6.5 SC.LSC_ATOMICS</h4><p>Availability: All</p>
+<p>This counter increments for atomic operation issued to the LS cache.</p>
+<h4 id="3-6-6-SC-LSC-ISSUES-Derived"><a href="#3-6-6-SC-LSC-ISSUES-Derived" class="headerlink" title="3.6.6 SC.LSC_ISSUES (Derived)"></a>3.6.6 SC.LSC_ISSUES (Derived)</h4><p>Availability: All</p>
+<p>This counter counts the total number of load&#x2F;store cache access operations issued. Each operation is executed with single cycle throughput, but latency of response depends on cache hit rate and external memory system performance.</p>
+<figure class="hljs highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">SC.LSC_ISSUES = SC.LSC_READS_FULL + SC.LSC_READS_SHORT + <br>                SC.LSC_WRITES_FULL + SC.LSC_WRITES_SHORT +<br>                SC.LSC_ATOMICS<br></code></pre></td></tr></table></figure>
+<h4 id="3-6-7-SC-LSC-UTILIZATION-Derived"><a href="#3-6-7-SC-LSC-UTILIZATION-Derived" class="headerlink" title="3.6.7 SC.LSC_UTILIZATION (Derived)"></a>3.6.7 SC.LSC_UTILIZATION (Derived)</h4><p>Availability: All</p>
+<p>The utilization of the load&#x2F;store cache can be determined as:</p>
+<figure class="hljs highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">SC.LSC_UTILIZATION = SC.LSC_ISSUES / SC.EXEC_CORE_ACTIVE<br></code></pre></td></tr></table></figure>
+<h4 id="3-6-8-SC-LSC-READ-BEATS"><a href="#3-6-8-SC-LSC-READ-BEATS" class="headerlink" title="3.6.8 SC.LSC_READ_BEATS"></a>3.6.8 SC.LSC_READ_BEATS</h4><p>Availability: All</p>
+<p>This counter increments for every 16 bytes of data fetched from the L2 memory system.</p>
+<h4 id="3-6-9-SC-LSC-L2-BYTES-PER-ISSUE-Derived"><a href="#3-6-9-SC-LSC-L2-BYTES-PER-ISSUE-Derived" class="headerlink" title="3.6.9 SC.LSC_L2_BYTES_PER_ISSUE (Derived)"></a>3.6.9 SC.LSC_L2_BYTES_PER_ISSUE (Derived)</h4><p>Availability: All</p>
+<p>The average number of bytes read from the L2 cache per load&#x2F;store L1 cache access can be given as.</p>
+<figure class="hljs highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">SC.LSC_L2_BYTES_PER_ISSUE = (SC.LSC_READ_BEATS * 16) / SC.LSC_ISSUES<br></code></pre></td></tr></table></figure>
+<p>This gives some idea of level one cache efficiency, although does require some knowledge of how the application is using non-texture data to interpret. For example some use cases expect to have good cache hit rates and reuse the same data many times from different threads, whereas other use cases are data streaming use cases are use each data item exactly once.</p>
+<h4 id="3-6-10-SC-LSC-READ-BEATS-EXTERNAL"><a href="#3-6-10-SC-LSC-READ-BEATS-EXTERNAL" class="headerlink" title="3.6.10 SC.LSC_READ_BEATS_EXTERNAL"></a>3.6.10 SC.LSC_READ_BEATS_EXTERNAL</h4><p>Availability: All</p>
+<p>This counter increments for every 16 bytes of data fetched from the L2 memory system which missed in the L2 cache and required a fetch from external memory.</p>
+<h4 id="3-6-11-SC-LSC-EXTERNAL-BYTES-PER-ISSUE-Derived"><a href="#3-6-11-SC-LSC-EXTERNAL-BYTES-PER-ISSUE-Derived" class="headerlink" title="3.6.11 SC.LSC_EXTERNAL_BYTES_PER_ISSUE (Derived)"></a>3.6.11 SC.LSC_EXTERNAL_BYTES_PER_ISSUE (Derived)</h4><p>Availability: All</p>
+<p>The average number of bytes read from the external memory interface per load&#x2F;store L1 cache access can be given as.</p>
+<figure class="hljs highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">SC.LSC_EXTERNAL_BYTES_PER_ISSUE = (SC.LSC_READ_BEATS_EXTERNAL * 16) / SC.<br></code></pre></td></tr></table></figure>
+<p>LSC_ISSUES<br>This gives some idea of level two cache efficiency, although does require some knowledge of how the application is using non-texture data to interpret. For example some use cases expect to have good cache hit rates and reuse the same data many times from different threads, whereas other use cases are data streaming use cases are use each data item exactly once.</p>
+<h4 id="3-6-12-SC-LSC-WRITE-BEATS"><a href="#3-6-12-SC-LSC-WRITE-BEATS" class="headerlink" title="3.6.12 SC.LSC_WRITE_BEATS"></a>3.6.12 SC.LSC_WRITE_BEATS</h4><p>Availability: All</p>
+<p>This counter increments for every 16 bytes of data written to the L2 memory system.</p>
+<h3 id="3-7-Texture-Pipe-Events"><a href="#3-7-Texture-Pipe-Events" class="headerlink" title="3.7 Texture Pipe Events"></a>3.7 Texture Pipe Events</h3><p>This counter set looks at the texture pipe behavior.</p>
+<p>Note: The texture pipe event counters increment per thread (fragment), not per quad.</p>
+<h4 id="3-7-1-SC-TEX-INSTRS"><a href="#3-7-1-SC-TEX-INSTRS" class="headerlink" title="3.7.1 SC.TEX_INSTRS"></a>3.7.1 SC.TEX_INSTRS</h4><p>Availability: All</p>
+<p>This counter increments for every architecturally executed texture instruction.</p>
+<h4 id="3-7-2-SC-TEX-ISSUES"><a href="#3-7-2-SC-TEX-ISSUES" class="headerlink" title="3.7.2 SC.TEX_ISSUES"></a>3.7.2 SC.TEX_ISSUES</h4><p>Availability: All</p>
+<p>This counter increments for every texture issue cycle used. Some instructions take more than one cycle due to multi-cycle data access and filtering operations:</p>
+<p>2D bilinear filtering takes one cycle.<br>2D trilinear filtering takes two cycles.<br>3D bilinear filtering takes two cycles.<br>3D trilinear filtering takes four cycles.<br>Sampling from multi-plane YUV may take multiple cycles on some implementations.<br>Sampling from wide (&gt;&#x3D; 16-bit per channel)  textures may take multiple cycles.<br>Note: sampling from a depth texture only requires a single channel to be returned and so only takes a single cycle, even though it would otherwise qualify as a wide data format.</p>
+<h4 id="3-7-3-SC-TEX-UTILIZATION-Derived"><a href="#3-7-3-SC-TEX-UTILIZATION-Derived" class="headerlink" title="3.7.3 SC.TEX_UTILIZATION (Derived)"></a>3.7.3 SC.TEX_UTILIZATION (Derived)</h4><p>Availability: All</p>
+<p>The texture unit utilization is computed as:</p>
+<figure class="hljs highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">SC.TEX_UTILIZATION = SC.TEX_ISSUES / SC.EXEC_CORE_ACTIVE<br></code></pre></td></tr></table></figure>
+<h4 id="3-7-4-SC-TEX-CPI-Derived"><a href="#3-7-4-SC-TEX-CPI-Derived" class="headerlink" title="3.7.4 SC.TEX_CPI (Derived)"></a>3.7.4 SC.TEX_CPI (Derived)</h4><p>Availability: All</p>
+<p>The average cycle usage of the texture unit per instruction can be computed as:</p>
+<figure class="hljs highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">SC.TEX_CPI = SC.TEX_ISSUES / SC.TEX_INSTRS<br></code></pre></td></tr></table></figure>
+<p>The best case CPI is 1.0; CPI above 1.0 implies the use of multi-cycle texture instructions. The following counters give a direct view of two of the sources of multi-cycle texture operations:</p>
+<p>SC.TEX_INSTR_3D (see )<br>SC.TEX_INSTR_TRILINEAR (see section)<br>If both of these counter sources are zero then the third source of multi-cycle operations (for which a direct counter does not exist) is accesses to wide channel texture formats such as the OpenGL ES 3.x 16-bit and 32-bit per channel integer and floating point formats, or multi-plane YUV formats.</p>
+<h4 id="3-7-5-SC-TEX-INSTR-3D"><a href="#3-7-5-SC-TEX-INSTR-3D" class="headerlink" title="3.7.5 SC.TEX_INSTR_3D"></a>3.7.5 SC.TEX_INSTR_3D</h4><p>Availability: All</p>
+<p>This counter increments for every architecturally executed texture instruction which is accessing a 3D texture. These will take at least two cycles to process, and may take four cycles if trilinear filtering is used.</p>
+<h4 id="3-7-6-SC-TEX-INSTR-TRILINEAR"><a href="#3-7-6-SC-TEX-INSTR-TRILINEAR" class="headerlink" title="3.7.6 SC.TEX_INSTR_TRILINEAR"></a>3.7.6 SC.TEX_INSTR_TRILINEAR</h4><p>Availability: All</p>
+<p>This counter increments for every architecturally executed texture instruction which is using a trilinear (GL_LINEAR_MIPMAP_LINEAR) minification filter. These will take at least two cycles to process, and may take four cycles if a 3D texture is being sampled from.</p>
+<p>In content which is texture filtering throughput limited, switching from trilinear filtering to bilinear filtering (GL_LINEAR_MIPMAP_NEAREST) may improve performance.</p>
+<h4 id="3-7-7-SC-TEX-INSTR-MIPMAP"><a href="#3-7-7-SC-TEX-INSTR-MIPMAP" class="headerlink" title="3.7.7 SC.TEX_INSTR_MIPMAP"></a>3.7.7 SC.TEX_INSTR_MIPMAP</h4><p>Availability: All</p>
+<p>This counter increments for every architecturally executed texture instruction which is accessing a texture which has mipmaps enabled. Mipmapping provides improved 3D texturing quality, as it provides some pre-filtering for minified texture samples, and also improves performance as it reduces pressure on texture caches. It is highly recommended that mipmapping is used for all 3D texturing operations reading from static input textures.</p>
+<h4 id="3-7-8-SC-TEX-INSTR-COMPRESSED"><a href="#3-7-8-SC-TEX-INSTR-COMPRESSED" class="headerlink" title="3.7.8 SC.TEX_INSTR_COMPRESSED"></a>3.7.8 SC.TEX_INSTR_COMPRESSED</h4><p>Availability: All</p>
+<p>This counter increments for every architecturally executed texture instruction which is accessing a texture which is compressed, including both application-level texture compression such as ETC and ASTC, as well as internal texture compression such as AFBC framebuffer compression. Texture compression can significantly improve performance due to reduced pressure on the texture data caches and external memory system. It is recommended that all input assets from the application use compression whenever it is possible to do so.</p>
+<h4 id="3-7-9-SC-TEX-READ-BEATS"><a href="#3-7-9-SC-TEX-READ-BEATS" class="headerlink" title="3.7.9 SC.TEX_READ_BEATS"></a>3.7.9 SC.TEX_READ_BEATS</h4><p>Availability: All</p>
+<p>This counter increments for every 16 bytes of texture data fetched from the L2 memory system.</p>
+<h4 id="3-7-10-SC-TEX-L2-BYTES-PER-ISSUE-Derived"><a href="#3-7-10-SC-TEX-L2-BYTES-PER-ISSUE-Derived" class="headerlink" title="3.7.10 SC.TEX_L2_BYTES_PER_ISSUE (Derived)"></a>3.7.10 SC.TEX_L2_BYTES_PER_ISSUE (Derived)</h4><p>Availability: All</p>
+<p>The average number of bytes read from the L2 cache per texture L1 cache access can be given as.</p>
+<figure class="hljs highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">SC.TEX_L2_BYTES_PER_ISSUE = (SC.TEX_READ_BEATS * 16) / SC.TEX_ISSUES<br></code></pre></td></tr></table></figure>
+<p>This gives some idea of level one cache efficiency, although does require some knowledge of how the application is using texture data to interpret. For example some use cases expect to have good cache hit rates and reuse the same data many times from different threads, whereas other use cases are data streaming use cases are use each data item exactly once.</p>
+<h4 id="3-7-11-SC-TEX-READ-BEATS-EXTERNAL"><a href="#3-7-11-SC-TEX-READ-BEATS-EXTERNAL" class="headerlink" title="3.7.11 SC.TEX_READ_BEATS_EXTERNAL"></a>3.7.11 SC.TEX_READ_BEATS_EXTERNAL</h4><p>Availability: All</p>
+<p>This counter increments for every 16 bytes of texture data fetched from the L2 memory system which missed in the L2 cache and required a fetch from external memory.</p>
+<h4 id="3-7-12-SC-TEX-EXTERNAL-BYTES-PER-ISSUE-Derived"><a href="#3-7-12-SC-TEX-EXTERNAL-BYTES-PER-ISSUE-Derived" class="headerlink" title="3.7.12 SC.TEX_EXTERNAL_BYTES_PER_ISSUE (Derived)"></a>3.7.12 SC.TEX_EXTERNAL_BYTES_PER_ISSUE (Derived)</h4><p>Availability: All</p>
+<p>The average number of bytes read from the external memory interface per texture operation can be given as.</p>
+<figure class="hljs highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">SC.TEX_EXTERNAL_BYTES_PER_ISSUE = (SC.TEX_READ_BEATS_EXTERNAL * 16) / SC.TEX_ISSUES<br></code></pre></td></tr></table></figure>
+<p>This gives some idea of level two cache efficiency, although does require some knowledge of how the application is using texture data to interpret. For example some use cases expect to have good cache hit rates and reuse the same data many times from different threads, whereas other use cases are data streaming use cases are use each data item exactly once.</p>
+<h3 id="3-8-Varying-Unit-Events"><a href="#3-8-Varying-Unit-Events" class="headerlink" title="3.8 Varying Unit Events"></a>3.8 Varying Unit Events</h3><p>This counter set looks at the varying unit behavior:</p>
+<h4 id="3-8-1-SC-VARY-INSTR"><a href="#3-8-1-SC-VARY-INSTR" class="headerlink" title="3.8.1 SC.VARY_INSTR"></a>3.8.1 SC.VARY_INSTR</h4><p>Availability: All</p>
+<p>This counter increments for every architecturally executed varying unit instruction for a fragment quad.</p>
+<h4 id="3-8-2-SC-VARY-ISSUES-16"><a href="#3-8-2-SC-VARY-ISSUES-16" class="headerlink" title="3.8.2 SC.VARY_ISSUES_16"></a>3.8.2 SC.VARY_ISSUES_16</h4><p>Availability: All</p>
+<p>This counter increments for every architecturally executed cycle of “mediump” 16-bit varying interpolation.</p>
+<p>Interpolating mediump fp16 values is twice as fast as interpolating highp fp32 values, so should be used whenever it is suitable. Most use cases which contribute to computing an 8-bit unorm color value can safely use fp16 precision</p>
+<h4 id="3-8-3-SC-VARY-ISSUES-32"><a href="#3-8-3-SC-VARY-ISSUES-32" class="headerlink" title="3.8.3 SC.VARY_ISSUES_32"></a>3.8.3 SC.VARY_ISSUES_32</h4><p>Availability: All</p>
+<p>This counter increments for every architecturally executed cycle of “highp” 32-bit varying interpolation.</p>
+<p>Interpolating highp fp32 values is half the performance and twice the bandwidth of interpolating medium fp16 values, so should only be used for cases where the additional floating point precision is necessary. The most common use cases requiring high-precision varyings are texture sampling coordinates, and anything related to accurately computing 3D position in the scene.</p>
+<h4 id="3-8-4-SC-VARY-UTILIZATION-Derived"><a href="#3-8-4-SC-VARY-UTILIZATION-Derived" class="headerlink" title="3.8.4 SC.VARY_UTILIZATION (Derived)"></a>3.8.4 SC.VARY_UTILIZATION (Derived)</h4><p>Availability: All</p>
+<p>The utilization of the varying unit can be determined as:</p>
+<figure class="hljs highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">SC.VARY_UTILIZATION = (SC.VARY_ISSUES_16 + SC.VARY_ISSUES_32) / SC.EXEC_CORE_ACTIVE<br></code></pre></td></tr></table></figure>
+<h2 id="4-Tiler-Counters"><a href="#4-Tiler-Counters" class="headerlink" title="4 Tiler Counters"></a>4 Tiler Counters</h2><p>The tiler counters provide details of the workload of the fixed function tiling unit, which places primitives into the tile lists which are subsequently read by the fragment frontend during fragment shading.</p>
+<h3 id="4-1-Tiler-Activity"><a href="#4-1-Tiler-Activity" class="headerlink" title="4.1 Tiler Activity"></a>4.1 Tiler Activity</h3><p>These counters show the overall activity of the tiling unit.</p>
+<h4 id="4-1-1-TI-ACTIVE"><a href="#4-1-1-TI-ACTIVE" class="headerlink" title="4.1.1 TI.ACTIVE"></a>4.1.1 TI.ACTIVE</h4><p>Availability: All</p>
+<p>This counter increments every cycle the tiler is processing a task. The tiler can run in parallel to vertex shading and fragment shading so a high cycle count here does not necessarily imply a bottleneck, unless the SC.COMPUTE_ACTIVE counter in the shader cores are very low relative to this.</p>
+<h4 id="4-2-Tiler-Primitive-Occurrence"><a href="#4-2-Tiler-Primitive-Occurrence" class="headerlink" title="4.2 Tiler Primitive Occurrence"></a>4.2 Tiler Primitive Occurrence</h4><p>These counters give a functional breakdown of the tiling workload given to the GPU by the application.</p>
+<h4 id="4-2-1-TI-PRIMITIVE-POINTS"><a href="#4-2-1-TI-PRIMITIVE-POINTS" class="headerlink" title="4.2.1 TI.PRIMITIVE_POINTS"></a>4.2.1 TI.PRIMITIVE_POINTS</h4><p>Availability: All</p>
+<p>This counter increments for every point primitive processed by the tiler. This counter is incremented before any clipping or culling, so reflects the raw workload from the application.</p>
+<h4 id="4-2-2-TI-PRIMITIVE-LINES"><a href="#4-2-2-TI-PRIMITIVE-LINES" class="headerlink" title="4.2.2 TI.PRIMITIVE_LINES"></a>4.2.2 TI.PRIMITIVE_LINES</h4><p>Availability: All</p>
+<p>This counter increments for every line segment primitive processed by the tiler. This counter is incremented before any clipping or culling, so reflects the raw workload from the application.</p>
+<h4 id="4-2-3-TI-PRIMITIVE-TRIANGLES"><a href="#4-2-3-TI-PRIMITIVE-TRIANGLES" class="headerlink" title="4.2.3 TI.PRIMITIVE_TRIANGLES"></a>4.2.3 TI.PRIMITIVE_TRIANGLES</h4><p>Availability: All</p>
+<p>This counter increments for every triangle primitive processed by the tiler. This counter is incremented before any clipping or culling, so reflects the raw workload from the application.</p>
+<h4 id="4-2-4-TI-INPUT-PRIMITIVES-Derived"><a href="#4-2-4-TI-INPUT-PRIMITIVES-Derived" class="headerlink" title="4.2.4 TI.INPUT_PRIMITIVES (Derived)"></a>4.2.4 TI.INPUT_PRIMITIVES (Derived)</h4><p>Availability: All</p>
+<p>This derived counter contains the total number of primitives entering primitive assembly.</p>
+<figure class="hljs highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">TI.INPUT_PRIMITIVES = TI.PRIMITIVE_POINTS + TI.PRIMITIVE_LINES + TI.PRIMITIVE_TRIANGLES<br></code></pre></td></tr></table></figure>
+<h3 id="4-3-Tiler-Visibility-and-Culling-Occurrence"><a href="#4-3-Tiler-Visibility-and-Culling-Occurrence" class="headerlink" title="4.3 Tiler Visibility and Culling Occurrence"></a>4.3 Tiler Visibility and Culling Occurrence</h3><p>These counters give a breakdown of how the workload has been affected by clipping and culling. The culling schemes are applied in the order shown below:</p>
+<p>Culling diagram</p>
+<p>This order impacts the interpretation of the counters in terms of comparing the culling rates against the total number of primitives entering and leaving each stage.</p>
+<h4 id="4-3-1-TI-CULLED-FACING"><a href="#4-3-1-TI-CULLED-FACING" class="headerlink" title="4.3.1 TI.CULLED_FACING"></a>4.3.1 TI.CULLED_FACING</h4><p>Availability: All</p>
+<p>This counter is incremented for every primitive which is culled due to the application of front-face or back-face culling rules. For most meshes approximately half of the triangles are back facing so this counter should typically be similar to the visible primitives, although lower is always better.</p>
+<h4 id="4-3-2-TI-CULLED-FRUSTUM"><a href="#4-3-2-TI-CULLED-FRUSTUM" class="headerlink" title="4.3.2 TI.CULLED_FRUSTUM"></a>4.3.2 TI.CULLED_FRUSTUM</h4><p>Availability: All</p>
+<p>This counter is incremented for every primitive which is culled due to being totally outside of the clip-space volume. Application-side culling should be used to minimize the amount of out-of-shot geometry being sent to the GPU as it is expensive in terms of bandwidth and power. One of my blogs looks at application side culling in more detail</p>
+<h4 id="4-3-3-TI-CULLED-COVERAGE"><a href="#4-3-3-TI-CULLED-COVERAGE" class="headerlink" title="4.3.3 TI.CULLED_COVERAGE"></a>4.3.3 TI.CULLED_COVERAGE</h4><p>Availability: All</p>
+<p>This counter is incremented for every microtriangle primitive which is culled due to lack of any coverage of active sample points.</p>
+<h4 id="4-3-4-TI-PRIMITIVE-VISIBLE"><a href="#4-3-4-TI-PRIMITIVE-VISIBLE" class="headerlink" title="4.3.4 TI.PRIMITIVE_VISIBLE"></a>4.3.4 TI.PRIMITIVE_VISIBLE</h4><p>Availability: All</p>
+<p>This counter is incremented for every primitive which is visible, surviving all types of culling which are applied.</p>
+<p>Note: Visible in this context simply means that a primitive is inside the viewing frustum, facing in the correct direction, and has at least some sample coverage. Primitives which are visible at this stage still may generate no rendered fragments; for example ZS testing during fragment processing may determine that a primitive is entirely occluded by other primitives.</p>
+<h4 id="4-3-5-TI-CULLED-FACING-PERCENT-Derived"><a href="#4-3-5-TI-CULLED-FACING-PERCENT-Derived" class="headerlink" title="4.3.5 TI.CULLED_FACING_PERCENT (Derived)"></a>4.3.5 TI.CULLED_FACING_PERCENT (Derived)</h4><p>Availability: All</p>
+<p>This counter determines the percentage of primitive inputs into the facing test which are culled by it.</p>
+<figure class="hljs highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">TI.CULLED_FACING_PERCENT = TI.CULLED_FACING / TI_INPUT_PRIMITIVES<br></code></pre></td></tr></table></figure>
+<p>In typical 3D content it is expected that approximately half of the input primitives will be culled by the facing tests, as the side of a model which is facing away from the camera is not visible and can be dropped without fragment shading. If a low percentage of primitives are culled by the facing tests in a 3D application this implies that the application may not be enabling the back-face test for everything which could benefit from it; check the application draw calls for opaque objects are enabling GL_CULL_FACE correctly.</p>
+<h4 id="4-3-6-TI-CULLED-FRUSTUM-PERCENT-Derived"><a href="#4-3-6-TI-CULLED-FRUSTUM-PERCENT-Derived" class="headerlink" title="4.3.6 TI.CULLED_FRUSTUM_PERCENT (Derived)"></a>4.3.6 TI.CULLED_FRUSTUM_PERCENT (Derived)</h4><p>Availability: All</p>
+<p>This counter determines the percentage of primitive inputs into the frustum test which are culled by it.</p>
+<figure class="hljs highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">TI.CULLED_FRUSTUM_PERCENT = TI.CULLED_FRUSTUM / (TI.INPUT_PRIMITIVES - TL.CULLED_FACING)<br></code></pre></td></tr></table></figure>
+<p>One of the most important optimizations an application can perform is efficiently culling objects which are outside of the visible frustum, as these optimizations can be applied quickly by exploiting scene knowledge such as object bounding volume checks (see Mali Performance 5: An Application’s Performance Responsibilities for more information on application culling techniques). It is expected that some triangles will be outside of the frustum – CPU culling is normally approximate, and some objects may be span frustum boundary – but this should be minimized as it indicates that redundant vertex processing is occurring.</p>
+<h4 id="4-3-7-TI-CULLED-COVERAGE-PERCENT-Derived"><a href="#4-3-7-TI-CULLED-COVERAGE-PERCENT-Derived" class="headerlink" title="4.3.7 TI.CULLED_COVERAGE_PERCENT (Derived)"></a>4.3.7 TI.CULLED_COVERAGE_PERCENT (Derived)</h4><p>Availability: All</p>
+<p>This counter determines the percentage of primitive inputs into the coverage test which are culled by it.</p>
+<figure class="hljs highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">TI.CULLED_COVERAGE_PERCENT = TI.CULLED_FRUSTUM / (TI.INPUT_PRIMITIVES - TL.CULLED_FACING - TI.CULLED_FRUSTUM)<br></code></pre></td></tr></table></figure>
+<p>A significant number of triangles being culled due to the coverage test indicates that the application is using very dense models which are producing small microtriangles; even if the triangles which produce no coverage are killed it is expected that there will also be a number of visible triangles which cover a small number of sample points, which are still disproportionately expensive to process relative to their screen coverage.</p>
+<p>Microtriangles are expensive to process for a number of reasons.</p>
+<p>On mobile devices they are most expensive due to the bandwidth cost they incur. The vertex shader has to read the vertex attributes and write the varyings, and the fragment shader has to read and interpolate the varyings, which are typically bulky floating point vector data types. For example, the simplest vertex consisting of only a vec4 fp32 position attribute requires two 128-bit reads and one 128-bit write, a total of 24 bytes of memory bandwidth used. The cost of the vertex bandwidth is amortized over the number of fragments that a triangle generates. A triangle covering 50 pixels will effectively cost 0.5 bytes per pixel in terms of vertex bandwidth, which is equivalent of the cost of a single ETC2 compressed texture fetch. A microtriangle covering a two pixels will cost 12 bytes per pixel, and is therefore likely to generate stalls on the memory system.</p>
+<p>Note: This example is for the “best case” microtriangle consisting of only of a position; most real applications will also have additional per-vertex attributes, such as vertex normals and texture coordinates. Applications loading between 50 and 100 bytes of input data per vertex are common.</p>
+<p>Fragment workloads are always spawned as 2×2 pixel quads; quads which span the edges of a triangle may contain partial sample coverage, in which one or more of the fragments in the quad does not contribute to the final render, but which costs some performance to process. Microtriangles cause an increase in partial quads, as there are more edges per unit area shaded. The shader core counter SC.FRAG_PARTIAL_QUADS (see section 3.3.11) may provide additional evidence of the existence of microtriangles.</p>
+<h4 id="4-3-8-TI-FRONT-FACING"><a href="#4-3-8-TI-FRONT-FACING" class="headerlink" title="4.3.8 TI.FRONT_FACING"></a>4.3.8 TI.FRONT_FACING</h4><p>Availability: All</p>
+<p>This counter is incremented for every triangle which is front-facing. This counter is incremented after culling, so only counts visible primitives which are actually emitted into the tile list.</p>
+<p>This counter is not directly useful for performance profiling as there is no rendering performance difference between front-facing and back-facing triangles, but is useful used for debugging culling related logic problems, and stencil test logic problems as stencil testing can do different things for front-facing and back-facing triangles.</p>
+<h4 id="4-3-9-TI-BACK-FACING"><a href="#4-3-9-TI-BACK-FACING" class="headerlink" title="4.3.9 TI.BACK_FACING"></a>4.3.9 TI.BACK_FACING</h4><p>Availability: All</p>
+<p>This counter is incremented for every triangle which is back-facing. This counter is incremented after culling, so only counts visible primitives which are actually emitted into the tile list.</p>
+<p>If you are not using back-facing triangles for some special algorithmic purpose, such as Refraction Based on Local Cubemaps, then a high value here relative to the total number of triangles may indicate that the application has forgotten to turn on back-face culling. For most opaque geometry no back facing triangles should be expected.</p>
+<p>This counter is not directly useful for performance profiling as there is no rendering performance difference between front-facing and back-facing triangles, but is useful used for debugging culling related logic problems, and stencil test logic problems as stencil testing can do different things for front-facing and back-facing triangles.</p>
+<h3 id="4-4-Shading-Requests"><a href="#4-4-Shading-Requests" class="headerlink" title="4.4 Shading Requests"></a>4.4 Shading Requests</h3><p>These counters track the workload requests for the Index-Driver Vertex Shading pipeline, one of the new features introduced in the Bifrost GPU architecture.</p>
+<h4 id="4-4-1-TI-IDVS-POSITION-SHADING-REQUEST"><a href="#4-4-1-TI-IDVS-POSITION-SHADING-REQUEST" class="headerlink" title="4.4.1 TI.IDVS_POSITION_SHADING_REQUEST"></a>4.4.1 TI.IDVS_POSITION_SHADING_REQUEST</h4><p>Availability: All</p>
+<p>This counter is incremented for every batch of triangles which have been position shaded. Each batch consists of 4 vertices from sequential index ranges.</p>
+<h4 id="4-4-2-TI-IDVS-VARYING-SHADING-REQUEST"><a href="#4-4-2-TI-IDVS-VARYING-SHADING-REQUEST" class="headerlink" title="4.4.2 TI.IDVS_VARYING_SHADING_REQUEST"></a>4.4.2 TI.IDVS_VARYING_SHADING_REQUEST</h4><p>Availability: All</p>
+<p>This counter is incremented for every batch of triangles which have been varying shaded. Each batch consists of 4 vertices from sequential index ranges.</p>
+<h2 id="5-L2-Cache-Counters"><a href="#5-L2-Cache-Counters" class="headerlink" title="5 L2 Cache Counters"></a>5 L2 Cache Counters</h2><p>This section documents the behavior of the L2 memory system counters.</p>
+<p>In systems which implement multiple L2 caches or bus interfaces the counters presented in DS-5 Streamline are the sum of the counters from all of the L2 counter blocks present, as this gives the aggregate memory system usage.</p>
+<p>All derivations in this document are computations per slice, so it may be necessary to divide these by the number of cache slices present in your design when using user-level equations in DS-5 Streamline.</p>
+<h3 id="5-1-Internal-Cache-Usage"><a href="#5-1-Internal-Cache-Usage" class="headerlink" title="5.1 Internal Cache Usage"></a>5.1 Internal Cache Usage</h3><p>These counters profile the internal use of the L2 cache versus the available cycle capacity.</p>
+<h3 id="5-1-1-L2-ANY-LOOKUP"><a href="#5-1-1-L2-ANY-LOOKUP" class="headerlink" title="5.1.1 L2.ANY_LOOKUP"></a>5.1.1 L2.ANY_LOOKUP</h3><p>Availability: All</p>
+<p>The counter increments for any L2 read or write request from an internal master, or snoop request from an internal or external master.</p>
+<h3 id="5-1-2-L2-INTERNAL-UTILIZATION-Derived"><a href="#5-1-2-L2-INTERNAL-UTILIZATION-Derived" class="headerlink" title="5.1.2 L2.INTERNAL_UTILIZATION (Derived)"></a>5.1.2 L2.INTERNAL_UTILIZATION (Derived)</h3><p>Availability: All</p>
+<p>Each L2 cache slice can process a single read, write, or snoop operation per clock cycle. The internal utilization of the L2 cache by the processing masters in the system can be determined via the equation:</p>
+<figure class="hljs highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">LS.INTERNAL_UTILIZATION = L2.ANY_LOOKUP / JM.GPU_ACTIVE<br></code></pre></td></tr></table></figure>
+<h3 id="5-2-Internal-Traffic-Profile"><a href="#5-2-Internal-Traffic-Profile" class="headerlink" title="5.2 Internal Traffic Profile"></a>5.2 Internal Traffic Profile</h3><p>These counters profile the internal read traffic into the L2 cache from the various internal masters.</p>
+<h3 id="5-2-1-L2-READ-REQUEST"><a href="#5-2-1-L2-READ-REQUEST" class="headerlink" title="5.2.1 L2.READ_REQUEST"></a>5.2.1 L2.READ_REQUEST</h3><p>Availability: All</p>
+<p>The counter increments for every read transaction received by the L2 cache.</p>
+<h3 id="5-2-2-L2-EXTERNAL-READ-REQUEST"><a href="#5-2-2-L2-EXTERNAL-READ-REQUEST" class="headerlink" title="5.2.2 L2.EXTERNAL_READ_REQUEST"></a>5.2.2 L2.EXTERNAL_READ_REQUEST</h3><p>Availability: All</p>
+<p>The counter increments for every read transaction sent by the L2 cache to external memory.</p>
+<h3 id="5-2-3-L2-READ-MISS-RATE-Derived"><a href="#5-2-3-L2-READ-MISS-RATE-Derived" class="headerlink" title="5.2.3 L2.READ_MISS_RATE (Derived)"></a>5.2.3 L2.READ_MISS_RATE (Derived)</h3><p>Availability: All</p>
+<p>The counter gives an indication of the number of reads which are missing and being sent on the L2 external interface to main memory.</p>
+<figure class="hljs highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">L2.READ_MISS_RATE = L2.EXTERNAL_READ_REQUEST / L2.READ_REQUEST<br></code></pre></td></tr></table></figure>
+<h4 id="5-2-4-L2-WRITE-REQUEST"><a href="#5-2-4-L2-WRITE-REQUEST" class="headerlink" title="5.2.4 L2.WRITE_REQUEST"></a>5.2.4 L2.WRITE_REQUEST</h4><p>Availability: All</p>
+<p>The counter increments for every write transaction received by the L2 cache.</p>
+<h4 id="5-2-5-L2-EXTERNAL-WRITE-REQUEST"><a href="#5-2-5-L2-EXTERNAL-WRITE-REQUEST" class="headerlink" title="5.2.5 L2.EXTERNAL_WRITE_REQUEST"></a>5.2.5 L2.EXTERNAL_WRITE_REQUEST</h4><p>Availability: All</p>
+<p>The counter increments for every write transaction sent by the L2 cache to external memory.</p>
+<h4 id="5-2-6-L2-WRITE-MISS-RATE-Derived"><a href="#5-2-6-L2-WRITE-MISS-RATE-Derived" class="headerlink" title="5.2.6 L2.WRITE_MISS_RATE (Derived)"></a>5.2.6 L2.WRITE_MISS_RATE (Derived)</h4><p>Availability: All</p>
+<p>The counter gives an indication of the number of writes which are missing and being sent on the L2 external interface to main memory.</p>
+<figure class="hljs highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">L2.WRITE_MISS_RATE = L2.EXTERNAL_WRITE_REQUEST / L2.WRITE_REQUEST<br></code></pre></td></tr></table></figure>
+<p>Note: In most cases writes to main memory are necessary and not a bad thing, for example writing vertex data to intermediate storage for later use during fragment shading, or when writing back the final color contents of a tile at the end of a frame. A high write miss rate is therefore not necessarily indicative of a performance problem if those writes were always intended to be sent to main memory. </p>
+<h3 id="5-3-External-Read-Traffic-Events"><a href="#5-3-External-Read-Traffic-Events" class="headerlink" title="5.3 External Read Traffic Events"></a>5.3 External Read Traffic Events</h3><p>These counters profile the external read memory interface behavior. Note that this includes traffic from the entire GPU L2 memory subsystem, not just traffic from the L2 cache, as some types of access will bypass the L2 cache.</p>
+<h4 id="5-3-1-L2-EXTERNAL-READ-BEATS"><a href="#5-3-1-L2-EXTERNAL-READ-BEATS" class="headerlink" title="5.3.1 L2.EXTERNAL_READ_BEATS"></a>5.3.1 L2.EXTERNAL_READ_BEATS</h4><p>Availability: All</p>
+<p>This counter increments on every clock cycle a read beat is read off the external AXI bus.</p>
+<h4 id="5-3-2-L2-EXTERNAL-READ-BYTES-Derived"><a href="#5-3-2-L2-EXTERNAL-READ-BYTES-Derived" class="headerlink" title="5.3.2 L2.EXTERNAL_READ_BYTES (Derived)"></a>5.3.2 L2.EXTERNAL_READ_BYTES (Derived)</h4><p>Availability: All</p>
+<p>With knowledge of the bus width used in the GPU the beat counter can be converted into a raw bandwidth counter.</p>
+<figure class="hljs highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">L2.EXTERNAL_READ_BYTES = SUM(L2.EXTERNAL_READ_BEATS * L2.AXI_WIDTH_BYTES)<br></code></pre></td></tr></table></figure>
+<p>Note: Most implementations of a Bifrost GPU use a 128-bit (16 byte) AXI interface, but a 64-bit (8 byte) interface is also possible to reduce the area used by a design. This information can be obtained from your chipset manufacturer.</p>
+<h4 id="5-3-3-L2-EXTERNAL-READ-UTILIZATION-Derived"><a href="#5-3-3-L2-EXTERNAL-READ-UTILIZATION-Derived" class="headerlink" title="5.3.3 L2.EXTERNAL_READ_UTILIZATION (Derived)"></a>5.3.3 L2.EXTERNAL_READ_UTILIZATION (Derived)</h4><p>Availability: All</p>
+<p>The GPU can issue one read beat per clock per implemented cache slice. The total utilization of the AXI read interface can be determined per cache slice using:</p>
+<p>L2.EXTERNAL_READ_UTILIZATION &#x3D; L2.EXTERNAL_READ_BEATS &#x2F; SC.GPU_ACTIVE<br>Note: This utilization metric ignores any frequency changes which may occur downstream of the GPU. If you have, for example, a 600MHz GPU connected to a 300MHz AXI bus of the same data width then it will be impossible for the GPU to achieve more than 50% utilization of its native interface because the AXI bus is unable to provide the data as quickly as the GPU can consume it.</p>
+<h4 id="5-3-4-L2-EXTERNAL-READ-STALL"><a href="#5-3-4-L2-EXTERNAL-READ-STALL" class="headerlink" title="5.3.4 L2.EXTERNAL_READ_STALL"></a>5.3.4 L2.EXTERNAL_READ_STALL</h4><p>Availability: All</p>
+<p>This counter increments every cycle that the GPU is unable to issue a new read transaction to AXI, because AXI is unable to accept the request. If this number is high it may indicate that the AXI bus is suffering from high contention due to accesses from other sources, or that the GPU is clocked faster than the AXI bus it is connected to.</p>
+<h4 id="5-3-5-L2-Read-Latency-Histogram"><a href="#5-3-5-L2-Read-Latency-Histogram" class="headerlink" title="5.3.5 L2 Read Latency Histogram"></a>5.3.5 L2 Read Latency Histogram</h4><p>Availability: All</p>
+<p>The L2 interface implements a six entry histogram which tracks the response latency for the external reads. The counter for the sixth level is synthesized from multiple raw counter values.</p>
+<p>Histogram Range</p>
+<p>Counter Equation</p>
+<p>0-127 Cycles</p>
+<p>L2.EXT_RRESP_0_127</p>
+<p>128-191 Cycles</p>
+<p>L2.EXT_RRESP_128_191</p>
+<p>192-255 Cycles</p>
+<p>L2.EXT_RRESP_192_255</p>
+<p>256-319 Cycles</p>
+<p>L2.EXT_RRESP_256_319</p>
+<p>320-383 Cycles</p>
+<p>L2.EXT_RRESP_320_383</p>
+<blockquote>
+<p>383 Cycles</p>
+</blockquote>
+<p>L2.EXTERNAL_READ_BEATS - L2.EXT_RRESP_0_127 -<br>L2.EXT_RRESP_128_191 - L2.EXT_RRESP_192_255 -<br>L2.EXT_RRESP_256_319 - L2.EXT_RRESP_320_383</p>
+<p>Mali shader cores are designed to tolerate an external read response latency of 170 GPU cycles; systems reporting significantly higher latency than this for a high percentage of transactions will observe some reduction in performance, as the shader core will stall more often waiting for main memory to provide data.</p>
+<h4 id="5-3-6-L2-Read-Outstanding-Transaction-Histogram"><a href="#5-3-6-L2-Read-Outstanding-Transaction-Histogram" class="headerlink" title="5.3.6 L2 Read Outstanding Transaction Histogram"></a>5.3.6 L2 Read Outstanding Transaction Histogram</h4><p>Availability: All</p>
+<p>The L2 interface implements a four entry histogram which tracks the outstanding transaction levels for the external reads. The counter for the fourth level is synthesized from multiple raw counter values.</p>
+<p>Histogram Range</p>
+<p>Counter Equation</p>
+<p>0-25%</p>
+<p>L2.EXT_READ_CNT_Q1</p>
+<p>25-50%</p>
+<p>L2.EXT_READ_CNT_Q2</p>
+<p>50-75%</p>
+<p>L2.EXT_READ_CNT_Q3</p>
+<p>75%-100%</p>
+<figure class="hljs highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">L2.EXTERNAL_READ - L2.EXT_READ_CNT_Q1 - L2.EXT_READ_CNT_Q2 - L2.EXT_READ_CNT_Q3<br></code></pre></td></tr></table></figure>
+<p>The number of currently outstanding transactions gives some idea of how many concurrent memory requests the shader core has queued on the AXI bus. This will not directly cost performance unless we completely run out of transactions; content with a high percentage of transactions in the 75-100% range may be losing performance because it is unable to construct new requests to be sent onto the AXI interface.</p>
+<p>Note: The maximum number of outstanding transactions available is a synthesis time option when implementing the GPU. The total number of outstanding transaction count should be selected to ensure that the GPU can keep data requests queued on the external DDR controller. In a system with 170 cycles of read response latency, and a typical transaction size of 4 data beats, at least 170&#x2F;4 (42) outstanding transactions are required.</p>
+<h3 id="5-4-External-Write-Traffic-Events"><a href="#5-4-External-Write-Traffic-Events" class="headerlink" title="5.4 External Write Traffic Events"></a>5.4 External Write Traffic Events</h3><p>These counters profile the external write memory interface behavior. Note that this includes traffic from the entire GPU L2 memory subsystem, not just traffic from the L2 cache, as some types of access will bypass the L2 cache.</p>
+<h4 id="5-4-1-L2-EXTERNAL-WRITE-BEATS"><a href="#5-4-1-L2-EXTERNAL-WRITE-BEATS" class="headerlink" title="5.4.1 L2.EXTERNAL_WRITE_BEATS"></a>5.4.1 L2.EXTERNAL_WRITE_BEATS</h4><p>Availability: All</p>
+<p>This counter increments on every clock cycle a write beat is read off the external AXI bus.</p>
+<h4 id="5-4-2-L2-EXTERNAL-WRITE-BYTES-Derived"><a href="#5-4-2-L2-EXTERNAL-WRITE-BYTES-Derived" class="headerlink" title="5.4.2 L2.EXTERNAL_WRITE_BYTES (Derived)"></a>5.4.2 L2.EXTERNAL_WRITE_BYTES (Derived)</h4><p>Availability: All</p>
+<p>With knowledge of the bus width used in the GPU the beat counter can be converted into a raw bandwidth counter.</p>
+<figure class="hljs highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">L2.EXTERNAL_WRITE_BYTES = SUM(L2.EXTERNAL_WRITE_BEATS * L2.AXI_WIDTH_BYTES)<br></code></pre></td></tr></table></figure>
+<p>Note: Most implementations of a Bifrost GPU use a 128-bit (16 byte) AXI interface, but a 64-bit (8 byte) interface is also possible to reduce the area used by a design. This information can be obtained from your chipset manufacturer.</p>
+<h4 id="5-4-3-L2-EXTERNAL-WRITE-UTILIZATION-Derived"><a href="#5-4-3-L2-EXTERNAL-WRITE-UTILIZATION-Derived" class="headerlink" title="5.4.3 L2.EXTERNAL_WRITE_UTILIZATION (Derived)"></a>5.4.3 L2.EXTERNAL_WRITE_UTILIZATION (Derived)</h4><p>Availability: All</p>
+<p>The GPU can issue one read beat per clock per implemented cache slice. The total utilization of the AXI write interface can be determined per cache slice using:</p>
+<figure class="hljs highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">L2.EXTERNAL_WRITE_UTILIZATION = L2.EXTERNAL_WRITE_BEATS / SC.GPU_ACTIVE<br></code></pre></td></tr></table></figure>
+<p>Note: This utilization metric ignores any frequency changes which may occur downstream of the GPU. If you have, for example, a 600MHz GPU connected to a 300MHz AXI bus of the same data width then it will be impossible for the GPU to achieve more than 50% utilization of its native interface because the AXI bus is unable to provide the data as quickly as the GPU can consume it.</p>
+<h4 id="5-4-4-L2-EXTERNAL-WRITE-STALL"><a href="#5-4-4-L2-EXTERNAL-WRITE-STALL" class="headerlink" title="5.4.4 L2.EXTERNAL_WRITE_STALL"></a>5.4.4 L2.EXTERNAL_WRITE_STALL</h4><p>Availability: All</p>
+<p>This counter increments every cycle that the GPU is unable to issue a new write transaction to AXI, because AXI is unable to accept the request. If this number is high it may indicate that the AXI bus is suffering from high contention due to accesses from other sources, or that the GPU is clocked faster than the AXI bus it is connected to.</p>
+<h4 id="5-4-5-L2-Write-Outstanding-Transaction-Histogram"><a href="#5-4-5-L2-Write-Outstanding-Transaction-Histogram" class="headerlink" title="5.4.5 L2 Write Outstanding Transaction Histogram"></a>5.4.5 L2 Write Outstanding Transaction Histogram</h4><p>Availability: All</p>
+<p>The L2 interface implements a four entry histogram which tracks the outstanding transaction levels for the external writes. The counter for the fourth level is synthesized from multiple raw counter values.</p>
+<p>Histogram Range</p>
+<p>Counter Equation</p>
+<p>0-25%</p>
+<p>L2.EXT_WRITE_CNT_Q1</p>
+<p>25-50%</p>
+<p>L2.EXT_WRITE_CNT_Q2</p>
+<p>50-75%</p>
+<p>L2.EXT_WRITE_CNT_Q3</p>
+<p>75%-100%</p>
+<p>L2.EXTERNAL_WRITE - L2.EXT_WRITE_CNT_Q1 -<br>L2.EXT_WRITE_CNT_Q2 - L2.EXT_WRITE_CNT_Q3</p>
+<p>The number of currently outstanding transactions gives some idea of how many concurrent memory requests the shader core has queued on the AXI bus. This will not directly cost performance unless we completely run out of transactions; content with a high percentage of transactions in the 75-100% range may be losing performance because it is unable to construct new requests to be sent onto the AXI interface.</p>
+<p>Note: The maximum number of outstanding transactions available is a synthesis time option when implementing the GPU. The total number of outstanding transaction count should be selected to ensure that the GPU can keep data requests queued on the external DDR controller. In a system with 90 cycles of write response latency, and a typical transaction size of 4 data beats, at least 90&#x2F;4 (23) outstanding transactions are required.</p>
+<h2 id="6-Conclusions"><a href="#6-Conclusions" class="headerlink" title="6 Conclusions"></a>6 Conclusions</h2><p>This document has defined all of the Mali Bifrost family performance counters available via DS-5 Streamline, as well as some derived-counters which can be derived from them. Hopefully this provides a useful starting point for your application optimization activity when using Mali GPUs.</p>
+<p>We also publish a Mali Application Optimization Guide. You can visit this by clicking on the link below:</p>
+
+    </main>
+    <footer class="post-footer">
+      
+    </footer>
+  </article>
+  
+  
+  <nav class="page-nav">
+    <div class="page-nav-next page-nav-item">
+      
+      <a href="/2022/07/09/GPUAartch/%E4%B8%80%E4%B8%AA%E4%B8%89%E8%A7%92%E5%BD%A2%E5%9C%A8GPU%E4%B8%AD%E7%9A%84%E4%B8%80%E7%94%9F/" rel="next" title=""><i class="fas fa-angle-left"></i><span class="nav-title"></span></a>
+      
+    </div>
+    <div class="page-nav-prev page-nav-item">
+      
+    </div>
+  </nav>
+  
+  
+  
+
+<div class="comments" id="comments">
+  
+  
+  <div class="commentjs" id="comment-thread"></div>
+  <link rel="stylesheet" href="/css/commentjs.css">
+  <script defer type="text/javascript" src="/js/marked.min.js"></script>
+  <script defer type="text/javascript" src="/js/timeago.min.js"></script>
+  <script defer type="text/javascript" src="/js/highlight.min.js"></script>
+  <script defer type="text/javascript" src="/js/commentjs.js"></script>
+  <script type="text/javascript">
+  $(document).ready(function () {
+    getComments({
+      "type": "github",
+      "user": "leinlin",
+      "repo": "leinlin.github.io",
+      "client_id": "aee134bdfb54c4ef5826",
+      "client_secret": "4af1d3f2b82dccc028c49715becc01e611afbe43",
+      "no_comment": "这个页面还没有评论，现在就去评论吧！",
+      "go_to_comment": "去评论",
+      "issue_title": "Mali Bifrost Family Performance Counters",
+      "btn_class": "button",
+      "comments_target": "#comment-thread"
+    });
+    marked.setOptions({
+      "highlight": function (code, lang) {
+        return hljs.highlightAuto(code).value;
+      }
+    });
+    function mark() {
+      var markdowns = document.getElementsByClassName("markdown");
+      for (var i = 0; i < markdowns.length; ++i){
+        if (markdowns[i].innerHTML) {
+          markdowns[i].innerHTML = marked(markdowns[i].innerHTML);
+        }
+      }
+    }
+    window.addEventListener("DOMContentLoaded", mark, false);
+    window.addEventListener("load", mark, false);
+  });
+  </script>
+  
+  
+</div>
+
+
+
+  
+</div>
+
+          </div>
+          
+          
+          
+<aside class="sidebar" id="sidebar" style="background: url(/images/background.png);">
+  
+  <div class="search">
+    <div class="form-group">
+      <i class="fas fa-search"></i><input type="search" id="search-input" name="q" results="0" placeholder="搜索" class="form-control"/>
+    </div>
+  </div>
+  <div class="search-result-box" id="search-result"></div>
+  
+  
+<div class="info sidebar-item" id="info">
+  
+  <img class="author-avatar" src="/images/avatar.jpg" alt="leinlin">
+  
+  <h1 class="author-name">leinlin</h1>
+  <h2 class="author-description"></h2>
+  <div class="site-count">
+    
+    
+    
+    
+    <div class="categories-count count-block">
+      <div class="site-count-title">分类</div>
+      <div><a href="/categories/">6</a></div>
+    </div>
+    
+    
+  </div>
+  
+  <div class="rss">
+    <a class="rss-link button sidebar-item" href="/atom.xml"><i class="fas fa-rss"></i>RSS</a>
+  </div>
+  
+</div>
+
+
+  <div class="sidebar-sticky">
+    
+    
+    
+    
+    
+    <hr>
+    <div class="post-toc sidebar-item" id="toc-div">
+      <div><i class="fas fa-list-ol"></i>文章目录</div>
+      <div class="post-toc-content"><ol class="list-group toc"><li class="toc-item toc-level-1"><a class="list-group-item toc-link" href="#Mali-Bifrost-Family-Performance-Counters"><span class="toc-text">Mali Bifrost Family Performance Counters</span></a><ol class="list-group toc-child"><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#1-Performance-Counter-Infrastructure"><span class="toc-text">1 Performance Counter Infrastructure</span></a><ol class="list-group toc-child"><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#1-1-Supported-Counters"><span class="toc-text">1.1 Supported Counters</span></a></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#1-2-Counter-Implementation-Caveats"><span class="toc-text">1.2 Counter Implementation Caveats</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#2-Job-Manager-Counters"><span class="toc-text">2 Job Manager Counters</span></a><ol class="list-group toc-child"><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#2-1-Top-Level-Activity"><span class="toc-text">2.1 Top Level Activity</span></a><ol class="list-group toc-child"><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#2-1-1-JM-GPU-ACTIVE"><span class="toc-text">2.1.1 JM.GPU_ACTIVE</span></a></li><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#2-1-2-JM-GPU-UTILIZATION-Derived"><span class="toc-text">2.1.2 JM.GPU_UTILIZATION (Derived)</span></a></li><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#2-1-3-JM-JS0-ACTIVE"><span class="toc-text">2.1.3 JM.JS0_ACTIVE</span></a></li><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#2-1-4-JM-JS0-UTILIZATION-Derived"><span class="toc-text">2.1.4 JM.JS0_UTILIZATION (Derived)</span></a></li><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#2-1-5-JM-JS1-ACTIVE"><span class="toc-text">2.1.5 JM.JS1_ACTIVE</span></a></li><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#2-1-6-JM-JS1-UTILIZATION-Derived"><span class="toc-text">2.1.6 JM.JS1_UTILIZATION (Derived)</span></a></li><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#2-1-7-JM-IRQ-ACTIVE"><span class="toc-text">2.1.7 JM.IRQ_ACTIVE</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#2-2-Task-Dispatch"><span class="toc-text">2.2 Task Dispatch</span></a><ol class="list-group toc-child"><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#2-2-1-JM-JS0-TASKS"><span class="toc-text">2.2.1 JM.JS0_TASKS</span></a></li><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#2-2-2-JM-PIXEL-COUNT-Derived"><span class="toc-text">2.2.2 JM.PIXEL_COUNT (Derived)</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#3-Shader-Core-Counters"><span class="toc-text">3 Shader Core Counters</span></a><ol class="list-group toc-child"><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#3-1-Shader-Core-Activity"><span class="toc-text">3.1 Shader Core Activity</span></a><ol class="list-group toc-child"><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#3-1-1-SC-COMPUTE-ACTIVE"><span class="toc-text">3.1.1 SC.COMPUTE_ACTIVE</span></a></li><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#3-1-2-SC-FRAG-ACTIVE"><span class="toc-text">3.1.2 SC.FRAG_ACTIVE</span></a></li><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#3-1-3-SC-EXEC-CORE-ACTIVE"><span class="toc-text">3.1.3 SC.EXEC_CORE_ACTIVE</span></a></li><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#3-1-4-SC-EXEC-CORE-UTILIZATION-Derived"><span class="toc-text">3.1.4 SC.EXEC_CORE_UTILIZATION (Derived)</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#3-2-Compute-Frontend-Events"><span class="toc-text">3.2 Compute Frontend Events</span></a><ol class="list-group toc-child"><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#3-2-1-SC-COMPUTE-QUADS"><span class="toc-text">3.2.1 SC.COMPUTE_QUADS</span></a></li><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#3-2-2-SC-COMPUTE-QUAD-CYCLES-Derived"><span class="toc-text">3.2.2 SC.COMPUTE_QUAD_CYCLES (Derived)</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#3-3-Fragment-Frontend-Events"><span class="toc-text">3.3 Fragment Frontend Events</span></a><ol class="list-group toc-child"><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#3-3-1-SC-FRAG-PRIMITIVES-RAST"><span class="toc-text">3.3.1 SC.FRAG_PRIMITIVES_RAST</span></a></li><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#3-3-2-SC-FRAG-QUADS-RAST"><span class="toc-text">3.3.2 SC.FRAG_QUADS_RAST</span></a></li><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#3-3-3-SC-FRAG-QUADS-EZS-TEST"><span class="toc-text">3.3.3 SC.FRAG_QUADS_EZS_TEST</span></a></li><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#3-3-4-SC-FRAG-QUADS-EZS-UPDATE"><span class="toc-text">3.3.4 SC.FRAG_QUADS_EZS_UPDATE</span></a></li><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#3-3-5-SC-FRAG-QUADS-EZS-KILLED"><span class="toc-text">3.3.5 SC.FRAG_QUADS_EZS_KILLED</span></a></li><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#3-3-6-SC-FRAG-QUADS-KILLED-BY-OVERDRAW-Derived"><span class="toc-text">3.3.6 SC.FRAG_QUADS_KILLED_BY_OVERDRAW (Derived)</span></a></li><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#3-3-7-SC-FRAG-QUADS-OPAQUE"><span class="toc-text">3.3.7 SC.FRAG_QUADS_OPAQUE</span></a></li><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#3-3-8-SC-FRAG-QUADS-TRANSPARENT-Derived"><span class="toc-text">3.3.8 SC.FRAG_QUADS_TRANSPARENT (Derived)</span></a></li><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#3-3-9-SC-FRAG-QUAD-BUFFER-NOT-EMPTY"><span class="toc-text">3.3.9 SC.FRAG_QUAD_BUFFER_NOT_EMPTY</span></a></li><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#3-3-10-SC-FRAG-QUADS"><span class="toc-text">3.3.10 SC.FRAG_QUADS</span></a></li><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#3-3-11-SC-FRAG-PARTIAL-QUADS"><span class="toc-text">3.3.11 SC.FRAG_PARTIAL_QUADS</span></a></li><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#3-3-12-SC-FRAG-PARTIAL-QUAD-PERCENTAGE-Derived"><span class="toc-text">3.3.12 SC.FRAG_PARTIAL_QUAD_PERCENTAGE (Derived)</span></a></li><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#3-3-13-SC-FRAG-QUAD-CYCLES-Derived"><span class="toc-text">3.3.13 SC.FRAG_QUAD_CYCLES (Derived)</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#3-4-Fragment-Backend-Events"><span class="toc-text">3.4 Fragment Backend Events</span></a><ol class="list-group toc-child"><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#3-4-1-SC-FRAG-THREADS-LZS-TEST"><span class="toc-text">3.4.1 SC.FRAG_THREADS_LZS_TEST</span></a></li><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#3-4-2-SC-FRAG-THREADS-LZS-KILLED"><span class="toc-text">3.4.2 SC.FRAG_THREADS_LZS_KILLED</span></a></li><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#3-4-3-SC-FRAG-NUM-TILES"><span class="toc-text">3.4.3 SC.FRAG_NUM_TILES</span></a></li><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#3-4-4-SC-FRAG-TILES-CRC-CULLED"><span class="toc-text">3.4.4 SC.FRAG_TILES_CRC_CULLED</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#3-5-Execution-Engine-Events"><span class="toc-text">3.5 Execution Engine Events</span></a><ol class="list-group toc-child"><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#3-5-1-SC-EE-INSTRS"><span class="toc-text">3.5.1 SC.EE_INSTRS</span></a></li><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#3-5-2-SC-EE-UTILIZATION-Derived"><span class="toc-text">3.5.2. SC.EE_UTILIZATION (Derived)</span></a></li><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#3-5-3-SC-EE-INSTRS-DIVERGED"><span class="toc-text">3.5.3 SC.EE_INSTRS_DIVERGED</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#3-6-Load-x2F-Store-Cache-Events"><span class="toc-text">3.6 Load&#x2F;Store Cache Events</span></a><ol class="list-group toc-child"><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#3-6-1-SC-LSC-READS-FULL"><span class="toc-text">3.6.1 SC.LSC_READS_FULL</span></a></li><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#3-6-2-SC-LSC-READS-SHORT"><span class="toc-text">3.6.2 SC.LSC_READS_SHORT</span></a></li><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#3-6-3-SC-LSC-WRITES-FULL"><span class="toc-text">3.6.3 SC.LSC_WRITES_FULL</span></a></li><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#3-6-4-SC-LSC-WRITES-SHORT"><span class="toc-text">3.6.4 SC.LSC_WRITES_SHORT</span></a></li><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#3-6-5-SC-LSC-ATOMICS"><span class="toc-text">3.6.5 SC.LSC_ATOMICS</span></a></li><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#3-6-6-SC-LSC-ISSUES-Derived"><span class="toc-text">3.6.6 SC.LSC_ISSUES (Derived)</span></a></li><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#3-6-7-SC-LSC-UTILIZATION-Derived"><span class="toc-text">3.6.7 SC.LSC_UTILIZATION (Derived)</span></a></li><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#3-6-8-SC-LSC-READ-BEATS"><span class="toc-text">3.6.8 SC.LSC_READ_BEATS</span></a></li><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#3-6-9-SC-LSC-L2-BYTES-PER-ISSUE-Derived"><span class="toc-text">3.6.9 SC.LSC_L2_BYTES_PER_ISSUE (Derived)</span></a></li><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#3-6-10-SC-LSC-READ-BEATS-EXTERNAL"><span class="toc-text">3.6.10 SC.LSC_READ_BEATS_EXTERNAL</span></a></li><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#3-6-11-SC-LSC-EXTERNAL-BYTES-PER-ISSUE-Derived"><span class="toc-text">3.6.11 SC.LSC_EXTERNAL_BYTES_PER_ISSUE (Derived)</span></a></li><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#3-6-12-SC-LSC-WRITE-BEATS"><span class="toc-text">3.6.12 SC.LSC_WRITE_BEATS</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#3-7-Texture-Pipe-Events"><span class="toc-text">3.7 Texture Pipe Events</span></a><ol class="list-group toc-child"><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#3-7-1-SC-TEX-INSTRS"><span class="toc-text">3.7.1 SC.TEX_INSTRS</span></a></li><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#3-7-2-SC-TEX-ISSUES"><span class="toc-text">3.7.2 SC.TEX_ISSUES</span></a></li><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#3-7-3-SC-TEX-UTILIZATION-Derived"><span class="toc-text">3.7.3 SC.TEX_UTILIZATION (Derived)</span></a></li><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#3-7-4-SC-TEX-CPI-Derived"><span class="toc-text">3.7.4 SC.TEX_CPI (Derived)</span></a></li><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#3-7-5-SC-TEX-INSTR-3D"><span class="toc-text">3.7.5 SC.TEX_INSTR_3D</span></a></li><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#3-7-6-SC-TEX-INSTR-TRILINEAR"><span class="toc-text">3.7.6 SC.TEX_INSTR_TRILINEAR</span></a></li><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#3-7-7-SC-TEX-INSTR-MIPMAP"><span class="toc-text">3.7.7 SC.TEX_INSTR_MIPMAP</span></a></li><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#3-7-8-SC-TEX-INSTR-COMPRESSED"><span class="toc-text">3.7.8 SC.TEX_INSTR_COMPRESSED</span></a></li><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#3-7-9-SC-TEX-READ-BEATS"><span class="toc-text">3.7.9 SC.TEX_READ_BEATS</span></a></li><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#3-7-10-SC-TEX-L2-BYTES-PER-ISSUE-Derived"><span class="toc-text">3.7.10 SC.TEX_L2_BYTES_PER_ISSUE (Derived)</span></a></li><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#3-7-11-SC-TEX-READ-BEATS-EXTERNAL"><span class="toc-text">3.7.11 SC.TEX_READ_BEATS_EXTERNAL</span></a></li><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#3-7-12-SC-TEX-EXTERNAL-BYTES-PER-ISSUE-Derived"><span class="toc-text">3.7.12 SC.TEX_EXTERNAL_BYTES_PER_ISSUE (Derived)</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#3-8-Varying-Unit-Events"><span class="toc-text">3.8 Varying Unit Events</span></a><ol class="list-group toc-child"><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#3-8-1-SC-VARY-INSTR"><span class="toc-text">3.8.1 SC.VARY_INSTR</span></a></li><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#3-8-2-SC-VARY-ISSUES-16"><span class="toc-text">3.8.2 SC.VARY_ISSUES_16</span></a></li><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#3-8-3-SC-VARY-ISSUES-32"><span class="toc-text">3.8.3 SC.VARY_ISSUES_32</span></a></li><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#3-8-4-SC-VARY-UTILIZATION-Derived"><span class="toc-text">3.8.4 SC.VARY_UTILIZATION (Derived)</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#4-Tiler-Counters"><span class="toc-text">4 Tiler Counters</span></a><ol class="list-group toc-child"><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#4-1-Tiler-Activity"><span class="toc-text">4.1 Tiler Activity</span></a><ol class="list-group toc-child"><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#4-1-1-TI-ACTIVE"><span class="toc-text">4.1.1 TI.ACTIVE</span></a></li><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#4-2-Tiler-Primitive-Occurrence"><span class="toc-text">4.2 Tiler Primitive Occurrence</span></a></li><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#4-2-1-TI-PRIMITIVE-POINTS"><span class="toc-text">4.2.1 TI.PRIMITIVE_POINTS</span></a></li><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#4-2-2-TI-PRIMITIVE-LINES"><span class="toc-text">4.2.2 TI.PRIMITIVE_LINES</span></a></li><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#4-2-3-TI-PRIMITIVE-TRIANGLES"><span class="toc-text">4.2.3 TI.PRIMITIVE_TRIANGLES</span></a></li><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#4-2-4-TI-INPUT-PRIMITIVES-Derived"><span class="toc-text">4.2.4 TI.INPUT_PRIMITIVES (Derived)</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#4-3-Tiler-Visibility-and-Culling-Occurrence"><span class="toc-text">4.3 Tiler Visibility and Culling Occurrence</span></a><ol class="list-group toc-child"><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#4-3-1-TI-CULLED-FACING"><span class="toc-text">4.3.1 TI.CULLED_FACING</span></a></li><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#4-3-2-TI-CULLED-FRUSTUM"><span class="toc-text">4.3.2 TI.CULLED_FRUSTUM</span></a></li><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#4-3-3-TI-CULLED-COVERAGE"><span class="toc-text">4.3.3 TI.CULLED_COVERAGE</span></a></li><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#4-3-4-TI-PRIMITIVE-VISIBLE"><span class="toc-text">4.3.4 TI.PRIMITIVE_VISIBLE</span></a></li><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#4-3-5-TI-CULLED-FACING-PERCENT-Derived"><span class="toc-text">4.3.5 TI.CULLED_FACING_PERCENT (Derived)</span></a></li><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#4-3-6-TI-CULLED-FRUSTUM-PERCENT-Derived"><span class="toc-text">4.3.6 TI.CULLED_FRUSTUM_PERCENT (Derived)</span></a></li><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#4-3-7-TI-CULLED-COVERAGE-PERCENT-Derived"><span class="toc-text">4.3.7 TI.CULLED_COVERAGE_PERCENT (Derived)</span></a></li><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#4-3-8-TI-FRONT-FACING"><span class="toc-text">4.3.8 TI.FRONT_FACING</span></a></li><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#4-3-9-TI-BACK-FACING"><span class="toc-text">4.3.9 TI.BACK_FACING</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#4-4-Shading-Requests"><span class="toc-text">4.4 Shading Requests</span></a><ol class="list-group toc-child"><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#4-4-1-TI-IDVS-POSITION-SHADING-REQUEST"><span class="toc-text">4.4.1 TI.IDVS_POSITION_SHADING_REQUEST</span></a></li><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#4-4-2-TI-IDVS-VARYING-SHADING-REQUEST"><span class="toc-text">4.4.2 TI.IDVS_VARYING_SHADING_REQUEST</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#5-L2-Cache-Counters"><span class="toc-text">5 L2 Cache Counters</span></a><ol class="list-group toc-child"><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#5-1-Internal-Cache-Usage"><span class="toc-text">5.1 Internal Cache Usage</span></a></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#5-1-1-L2-ANY-LOOKUP"><span class="toc-text">5.1.1 L2.ANY_LOOKUP</span></a></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#5-1-2-L2-INTERNAL-UTILIZATION-Derived"><span class="toc-text">5.1.2 L2.INTERNAL_UTILIZATION (Derived)</span></a></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#5-2-Internal-Traffic-Profile"><span class="toc-text">5.2 Internal Traffic Profile</span></a></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#5-2-1-L2-READ-REQUEST"><span class="toc-text">5.2.1 L2.READ_REQUEST</span></a></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#5-2-2-L2-EXTERNAL-READ-REQUEST"><span class="toc-text">5.2.2 L2.EXTERNAL_READ_REQUEST</span></a></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#5-2-3-L2-READ-MISS-RATE-Derived"><span class="toc-text">5.2.3 L2.READ_MISS_RATE (Derived)</span></a><ol class="list-group toc-child"><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#5-2-4-L2-WRITE-REQUEST"><span class="toc-text">5.2.4 L2.WRITE_REQUEST</span></a></li><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#5-2-5-L2-EXTERNAL-WRITE-REQUEST"><span class="toc-text">5.2.5 L2.EXTERNAL_WRITE_REQUEST</span></a></li><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#5-2-6-L2-WRITE-MISS-RATE-Derived"><span class="toc-text">5.2.6 L2.WRITE_MISS_RATE (Derived)</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#5-3-External-Read-Traffic-Events"><span class="toc-text">5.3 External Read Traffic Events</span></a><ol class="list-group toc-child"><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#5-3-1-L2-EXTERNAL-READ-BEATS"><span class="toc-text">5.3.1 L2.EXTERNAL_READ_BEATS</span></a></li><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#5-3-2-L2-EXTERNAL-READ-BYTES-Derived"><span class="toc-text">5.3.2 L2.EXTERNAL_READ_BYTES (Derived)</span></a></li><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#5-3-3-L2-EXTERNAL-READ-UTILIZATION-Derived"><span class="toc-text">5.3.3 L2.EXTERNAL_READ_UTILIZATION (Derived)</span></a></li><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#5-3-4-L2-EXTERNAL-READ-STALL"><span class="toc-text">5.3.4 L2.EXTERNAL_READ_STALL</span></a></li><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#5-3-5-L2-Read-Latency-Histogram"><span class="toc-text">5.3.5 L2 Read Latency Histogram</span></a></li><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#5-3-6-L2-Read-Outstanding-Transaction-Histogram"><span class="toc-text">5.3.6 L2 Read Outstanding Transaction Histogram</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#5-4-External-Write-Traffic-Events"><span class="toc-text">5.4 External Write Traffic Events</span></a><ol class="list-group toc-child"><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#5-4-1-L2-EXTERNAL-WRITE-BEATS"><span class="toc-text">5.4.1 L2.EXTERNAL_WRITE_BEATS</span></a></li><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#5-4-2-L2-EXTERNAL-WRITE-BYTES-Derived"><span class="toc-text">5.4.2 L2.EXTERNAL_WRITE_BYTES (Derived)</span></a></li><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#5-4-3-L2-EXTERNAL-WRITE-UTILIZATION-Derived"><span class="toc-text">5.4.3 L2.EXTERNAL_WRITE_UTILIZATION (Derived)</span></a></li><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#5-4-4-L2-EXTERNAL-WRITE-STALL"><span class="toc-text">5.4.4 L2.EXTERNAL_WRITE_STALL</span></a></li><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#5-4-5-L2-Write-Outstanding-Transaction-Histogram"><span class="toc-text">5.4.5 L2 Write Outstanding Transaction Histogram</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#6-Conclusions"><span class="toc-text">6 Conclusions</span></a></li></ol></li></ol></div>
+    </div>
+    
+    
+    
+    <hr>
+    <div class="social-link sidebar-item">
+      <div><i class="far fa-address-card"></i>社交链接</p></div>
+      <ul>
+        
+        <li><i class="fab fa-github"></i><a href="https://leinlin.github.com/" target="_blank">GitHub</a></li>
+        
+      </ul>
+    </div>
+    
+    
+  </div>
+</aside>
+
+
+          
+        </div>
+      </div>
+    </main>
+    
+<footer id="footer" class="footer" style="background: #33363b;">
+  <div class="container">
+    <div class="back-to-top">
+      <button id="back-to-top"><i class="fas fa-angle-double-up" aria-label="回到顶部"></i></button>
+    </div>
+    <div class="footer-container">
+      <div class="footer-left">
+        <div class="copyright">
+          <span class="author">leinlin</span><span class="year"><i class="far fa-copyright"></i>2022</span>
+        </div>
+        
+        <div class="busuanzi">
+          <span id="busuanzi_container_site_pv"><i class="fas fa-eye" aria-label="站点点击量" aria-hidden="false"></i><span id="busuanzi_value_site_pv"></span></span><span id="busuanzi_container_site_uv"><i class="fas fa-user" aria-label="站点用户数" aria-hidden="false"></i><span id="busuanzi_value_site_uv"></span></span><span id="busuanzi_container_page_pv"><i class="far fa-file-alt"></i><span id="busuanzi_value_page_pv" aria-label="页面点击量" aria-hidden="false"></span></span>
+        </div>
+        
+      </div>
+      <div class="footer-right">
+        <div class="custom-info">
+          
+          托管于<i class="fab fa-github-alt"></i><a href="https://pages.github.com/" target="_blank">GitHub Pages</a>
+          
+        </div>
+        <div class="powered-by">
+          由 <a href="https://hexo.io/" target="_blank">Hexo</a> 强力驱动 | 主题 <a href="https://github.com/AlynxZhou/hexo-theme-aria/" target="_blank">ARIA</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+  <script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

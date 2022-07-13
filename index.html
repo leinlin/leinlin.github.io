@@ -204,6 +204,59 @@
   
   <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
     <div class="post-block">
+      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/07/11/ARM/mali-bifrost-family-performance-counters/">
+      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <meta itemprop="name" content="leinlin">
+        <meta itemprop="description" content="">
+        <meta itemprop="image" content="/images/avatar.jpg">
+      </span>
+      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+        <meta itemprop="name" content="leinlin的小笔记">
+      </span>
+    </div>
+    <header class="post-header">
+      <h1 class="post-title" itemprop="name headline">
+        <a class="post-title-link post-title-link-external" href="/2022/07/11/ARM/mali-bifrost-family-performance-counters/" itemprop="url">Mali Bifrost Family Performance Counters</a>
+      </h1>
+      <div class="post-meta">
+        
+        <span class="post-date">
+          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2022-07-11T09:57:19+08:00">2022-07-11 09:57:19</time></span>
+        </span>
+        
+        
+        
+        <span class="post-meta-divider divider">|</span>
+        
+        <span class="post-categories">
+          
+          <i class="far fa-folder-open"></i><span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/mali-gpu/" itemprop="url" rel="index"><span itemprop="name">mali gpu</span></a></span>
+        </span>
+        
+        
+        
+        
+      </div>
+    </header>
+    <main class="post-main" itemprop="articleBody">
+      
+      <h1 id="Mali-Bifrost-Family-Performance-Counters"><a href="#Mali-Bifrost-Family-Performance-Counters" class="headerlink" title="Mali Bifrost Family Performance Counters"></a>Mali Bifrost Family Performance Counters</h1><p>Analysis and optimization of graphics and compute content running on a GPU is an important task when trying to build a top quality system integration, or a compelling high performance application. For developers working with the public APIs, such as OpenGL ES and OpenCL, the GPU is a black box which is very difficult to analyze based solely on the API visible behaviors. Frame pipelining and asynchronous processing of submitted work effectively decouple the application’s visible performance from the API calls which define the workload being executed, making analysis of performance an activity based on expert knowledge and intuition rather than direct measurement.</p>
+<p>Tools such as ARM DS-5 Streamline provide developers access to the GPU hardware performance counters, the principle means to determine the behavior inside the black box beneath the API and identify any problem areas which need optimization. This work guide assumes that DS-5 Streamline is the tool being used for performance analysis, and follows the DS-5 naming conventions for the counters.</p>
+<h2 id="1-Performance-Counter-Infrastructure"><a href="#1-Performance-Counter-Infrastructure" class="headerlink" title="1 Performance Counter Infrastructure"></a>1 Performance Counter Infrastructure</h2><p>The Bifrost GPU family supports many performance counters which can all be captured simultaneously. Performance counters are provided for each functional block in the design:</p>
+<p>Job Manager<br>Tiler<br>Shader core(s)<br>L2 cache(s)<br>See my earlier blog series for an introduction to the Bifrost GPU architecture - it introduces some of the fundamental concepts which are important to understand, and which place the more detailed information in this document in context.</p>
+<p>The Mali GPU: An Abstract Machine, Part 1 - Frame Pipelining<br>The Mali GPU: An Abstract Machine, Part 2 - Tile-based Rendering<br>The Mali GPU: An Abstract Machine, Part 4 - The Bifrost Shader Core</p>
+<h3 id="1-1-Supported-Counters"><a href="#1-1-Supported-Counters" class="headerlink" title="1.1 Supported Counters"></a>1.1 Supported Counters</h3><p>The GPUs in the Bifrost family implement a large number of performance counters natively in the hardware, and it is also generally useful to generate some derived counters by combining one or more of the raw hardware counters in useful and interesting ways. This document will describe all of the counters exported from DS-5 Streamline, and some of the useful derived counters which can be derived from them. DS-5 Streamline allows custom performance counter graphs to be created using equations, so all of these performance counters can be directly visualized in the GUI.</p>
+<h3 id="1-2-Counter-Implementation-Caveats"><a href="#1-2-Counter-Implementation-Caveats" class="headerlink" title="1.2 Counter Implementation Caveats"></a>1.2 Counter Implementation Caveats</h3><p>The hardware counter implementation in the GPU is designed to be low cost, such that it has minimal impact on performance and power. Many of the counters are close approximations of the behavior described in this document in order to minimize the amount of additional hardware logic required to generate the counter signals, so some small deviations from what you may expect may be encountered.</p>
+      
+      <p align="right"><a class="morebtn" href="/2022/07/11/ARM/mali-bifrost-family-performance-counters/" title="Mali Bifrost Family Performance Counters">阅读全文</a></p>
+    </main>
+    <footer class="post-footer">
+      
+    </footer>
+  </article>
+  
+  <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
+    <div class="post-block">
       <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/07/09/GPUAartch/%E4%B8%80%E4%B8%AA%E4%B8%89%E8%A7%92%E5%BD%A2%E5%9C%A8GPU%E4%B8%AD%E7%9A%84%E4%B8%80%E7%94%9F/">
       <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
         <meta itemprop="name" content="leinlin">
@@ -691,50 +744,6 @@
     </footer>
   </article>
   
-  <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
-    <div class="post-block">
-      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/07/09/GPUAartch/GPU%E6%9E%B6%E6%9E%84/">
-      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-        <meta itemprop="name" content="leinlin">
-        <meta itemprop="description" content="">
-        <meta itemprop="image" content="/images/avatar.jpg">
-      </span>
-      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-        <meta itemprop="name" content="leinlin的小笔记">
-      </span>
-    </div>
-    <header class="post-header">
-      <h1 class="post-title" itemprop="name headline">
-        <a class="post-title-link post-title-link-external" href="/2022/07/09/GPUAartch/GPU%E6%9E%B6%E6%9E%84/" itemprop="url"></a>
-      </h1>
-      <div class="post-meta">
-        
-        <span class="post-date">
-          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2022-07-09T19:34:20+08:00">2022-07-09 19:34:20</time></span>
-        </span>
-        
-        
-        
-        
-        
-      </div>
-    </header>
-    <main class="post-main" itemprop="articleBody">
-      
-      <h1 id="GPU架构"><a href="#GPU架构" class="headerlink" title="GPU架构"></a>GPU架构</h1><p>参考资料:</p>
-<p><a target="_blank" rel="noopener" href="http://haifux.org/lectures/267/Introduction-to-GPUs.pdf">Introduction to GPU Architecture</a></p>
-<p><a target="_blank" rel="noopener" href="https://www.amd.com/Documents/GCN_Architecture_whitepaper.pdf">GCN_Architecture</a></p>
-<p><a target="_blank" rel="noopener" href="https://anteru.net/blog/2018/intro-to-compute-shaders/index.html">Compute Shader</a></p>
-<h2 id="概要"><a href="#概要" class="headerlink" title="概要"></a>概要</h2><p>主要简单介绍GPU架构，已经架构带来的性能优化代码编写问题。</p>
-<h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><p>同过总结上面的资料，大概梳理了相关内容。</p>
-      
-      <p align="right"><a class="morebtn" href="/2022/07/09/GPUAartch/GPU%E6%9E%B6%E6%9E%84/" title="">阅读全文</a></p>
-    </main>
-    <footer class="post-footer">
-      
-    </footer>
-  </article>
-  
   
   <nav class="pagination">
     <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/"><i class="fas fa-angle-right" aria-label="下一页"></i></a>
@@ -781,7 +790,7 @@
     
     <div class="categories-count count-block">
       <div class="site-count-title">分类</div>
-      <div><a href="/categories/">5</a></div>
+      <div><a href="/categories/">6</a></div>
     </div>
     
     
