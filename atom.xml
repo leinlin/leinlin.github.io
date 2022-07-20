@@ -121,11 +121,11 @@
     <link href="http://leinlin.github.io/2022/07/09/GPUAartch/%E7%BA%B9%E7%90%86%E7%BC%93%E5%AD%98/"/>
     <id>http://leinlin.github.io/2022/07/09/GPUAartch/%E7%BA%B9%E7%90%86%E7%BC%93%E5%AD%98/</id>
     <published>2022-07-09T11:34:20.499Z</published>
-    <updated>2022-07-09T12:25:14.193Z</updated>
+    <updated>2022-07-20T09:52:12.022Z</updated>
     
     
     <summary type="html">&lt;h1 id=&quot;纹理缓存&quot;&gt;&lt;a href=&quot;#纹理缓存&quot; class=&quot;headerlink&quot; title=&quot;纹理缓存&quot;&gt;&lt;/a&gt;纹理缓存&lt;/h1&gt;&lt;p&gt;参考文献：&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;/../../images/%E7%BA%B9%E7%90%86%E7%BC%93%E5%AD%98/1574825701596.png&quot; alt=&quot;1574825701596&quot;&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/../../images/%E7%BA%B9%E7%90%86%E7%BC%93%E5%AD%98/1574825701596.png&quot; alt=&quot;1574825701596&quot;&gt;&lt;br&gt;&lt;a href=&quot;https://fileadmin.cs.lth.se/cs/Personal/Michael_Doggett/pubs/doggett12-tc.pdf&quot;&gt;https://fileadmin.cs.lth.se/cs/Personal/Michael_Doggett/pubs/doggett12-tc.pdf&lt;/a&gt;&lt;/p&gt;
 &lt;h2 id=&quot;介绍&quot;&gt;&lt;a href=&quot;#介绍&quot; class=&quot;headerlink&quot; title=&quot;介绍&quot;&gt;&lt;/a&gt;介绍&lt;/h2&gt;&lt;p&gt;纹理缓存是现代GPU的基础组件，是实现实时渲染的性能的重要部分。&lt;/p&gt;
 &lt;p&gt;纹理缓存对GPU来说是Read-Only的。主要在texture-mapping阶段由GPU程序读取。&lt;/p&gt;
 &lt;p&gt;纹理缓存有很高的命中率，因为相邻像素之间有大量的重用，而且通常位于着色器处理器附近，所以纹理数据具有高吞吐量和低读延迟。&lt;/p&gt;
