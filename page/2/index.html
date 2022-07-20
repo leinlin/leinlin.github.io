@@ -204,6 +204,49 @@
   
   <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
     <div class="post-block">
+      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/07/09/GPUAartch/Partial_Derivatives(DDX)%E5%8E%9F%E7%90%86%E4%B8%8E%E8%AE%BE%E5%A4%87%E5%AE%9E%E7%8E%B0%E5%B7%AE%E5%BC%82/">
+      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <meta itemprop="name" content="leinlin">
+        <meta itemprop="description" content="">
+        <meta itemprop="image" content="/images/avatar.jpg">
+      </span>
+      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+        <meta itemprop="name" content="leinlin的小笔记">
+      </span>
+    </div>
+    <header class="post-header">
+      <h1 class="post-title" itemprop="name headline">
+        <a class="post-title-link post-title-link-external" href="/2022/07/09/GPUAartch/Partial_Derivatives(DDX)%E5%8E%9F%E7%90%86%E4%B8%8E%E8%AE%BE%E5%A4%87%E5%AE%9E%E7%8E%B0%E5%B7%AE%E5%BC%82/" itemprop="url"></a>
+      </h1>
+      <div class="post-meta">
+        
+        <span class="post-date">
+          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2022-07-09T19:34:20+08:00">2022-07-09 19:34:20</time></span>
+        </span>
+        
+        
+        
+        
+        
+      </div>
+    </header>
+    <main class="post-main" itemprop="articleBody">
+      
+      <h1 id="Partial-Derivatives-DDX-原理与设备实现差异"><a href="#Partial-Derivatives-DDX-原理与设备实现差异" class="headerlink" title="Partial_Derivatives(DDX)原理与设备实现差异"></a>Partial_Derivatives(DDX)原理与设备实现差异</h1><h2 id="DDX-DDY的硬件条件"><a href="#DDX-DDY的硬件条件" class="headerlink" title="DDX\DDY的硬件条件"></a>DDX\DDY的硬件条件</h2><p>​	“导数”意思是在某一点上“函数的变化”。在图形处理当中，指的是相邻像素之间的变化。</p>
+<p>​	ddx和ddy是常用的简单的图像导数，它们比较相邻的两个像素的垂直或水平值。具体的实现方法以及<strong>结果</strong>依赖于GPU的特殊架构结构细节。</p>
+<p>​	在图形计算过程中，像素着色阶段的最小调度单元是一个warp，一个warp执行同一段程序，包括了最少32个线程。但是最小的执行单元是一个quad。也就是说一次最少需要执行一个2 * 2的像素，而不需要的像素会被丢弃掉。</p>
+<p>​	这4个像素也就对应了四个线程，他们共同申请使用设备上下文，也就是说可以在硬件上，方便的访问到隔壁像素的数据。</p>
+<p>​	根据硬件这一特性，我们可以利用ddx、ddy获取到更多的信息。</p>
+      
+      <p align="right"><a class="morebtn" href="/2022/07/09/GPUAartch/Partial_Derivatives(DDX)%E5%8E%9F%E7%90%86%E4%B8%8E%E8%AE%BE%E5%A4%87%E5%AE%9E%E7%8E%B0%E5%B7%AE%E5%BC%82/" title="">阅读全文</a></p>
+    </main>
+    <footer class="post-footer">
+      
+    </footer>
+  </article>
+  
+  <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
+    <div class="post-block">
       <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/07/09/GPUAartch/GPU%E6%9E%B6%E6%9E%84%E7%B1%BB%E5%9E%8B%E6%95%B4%E5%90%88/">
       <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
         <meta itemprop="name" content="leinlin">
@@ -682,66 +725,6 @@
 <p>这里需要注意，BRDF符合正确的物理明暗变化，但是艺术处理上有所欠缺。</p>
       
       <p align="right"><a class="morebtn" href="/2022/07/09/Art/BRDF%E4%B8%8E%E8%89%B2%E5%BD%A9%E4%B8%8E%E6%98%8E%E6%9A%97/" title="BRDF与色彩与明暗">阅读全文</a></p>
-    </main>
-    <footer class="post-footer">
-      
-    </footer>
-  </article>
-  
-  <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
-    <div class="post-block">
-      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/07/09/Art/DaVinCi%E8%89%B2%E5%BD%A9%E5%A4%84%E7%90%86%E5%8E%9F%E7%90%86%E5%85%A5%E9%97%A8/">
-      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-        <meta itemprop="name" content="leinlin">
-        <meta itemprop="description" content="">
-        <meta itemprop="image" content="/images/avatar.jpg">
-      </span>
-      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-        <meta itemprop="name" content="leinlin的小笔记">
-      </span>
-    </div>
-    <header class="post-header">
-      <h1 class="post-title" itemprop="name headline">
-        <a class="post-title-link post-title-link-external" href="/2022/07/09/Art/DaVinCi%E8%89%B2%E5%BD%A9%E5%A4%84%E7%90%86%E5%8E%9F%E7%90%86%E5%85%A5%E9%97%A8/" itemprop="url">DaVinCi色彩处理原理</a>
-      </h1>
-      <div class="post-meta">
-        
-        <span class="post-date">
-          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2022-07-09T12:00:14+08:00">2022-07-09 12:00:14</time></span>
-        </span>
-        
-        
-        
-        <span class="post-meta-divider divider">|</span>
-        
-        <span class="post-categories">
-          
-          <i class="far fa-folder-open"></i><span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Art/" itemprop="url" rel="index"><span itemprop="name">Art</span></a></span>
-        </span>
-        
-        
-        
-        
-      </div>
-    </header>
-    <main class="post-main" itemprop="articleBody">
-      
-      <h1 id="DaVinCi色彩处理原理"><a href="#DaVinCi色彩处理原理" class="headerlink" title="DaVinCi色彩处理原理"></a>DaVinCi色彩处理原理</h1><h2 id="Data-Level（pdf，P215）"><a href="#Data-Level（pdf，P215）" class="headerlink" title="Data Level（pdf，P215）"></a>Data Level（pdf，P215）</h2><p>不同的媒体数据文件使用不同范围的数据表示。通常来讲处理的是10bit的数据(0-1023)，有两种不同的data level用来保存图像数据：</p>
-<ul>
-<li><p><strong>Video：</strong>所有的图像数据从0-1的颜色强度，会映射到64-940之间。Y通道[64-940]，CB和CR[64-960],小于64用于表示比黑色更黑的区域，941&#x2F;961–1019 表示超过白色的区域。过低过高的数据称作：undershoots 和overshoots。</p>
-</li>
-<li><p><strong>Full：</strong>对于RGB444数据，数据强度0-1映射到4-1023。</p>
-</li>
-</ul>
-<p>无论哪种数据类型，都有0-100的最大和最小亮度。当数据格式转换时，范围会重新映射：</p>
-<ul>
-<li>(minimum Video Level) 64 &#x3D; 4 (Data Level minimum) </li>
-<li>(maximum Video Level) 940 or 960 &#x3D; 1023 (Data Level maximum）</li>
-</ul>
-<p>​      数据格式的转换几乎不会有变化，因为合法数据会被被保存下来。区别是undershoots 和overshoots可能丢失，但是Resolve软件内部会记录下来，保证之后可以还原。</p>
-<p>   <strong>在DaVinci Resolve中，所有的图像格式都会以Full的格式进行处理。并且是未被压缩的32bit浮点数表示。</strong>也就是说，每一个图片无论原始的bit-depth是多少，都会转换成32bit的数据。转换的质量依赖于原始数据，总之是无压缩的转换。</p>
-      
-      <p align="right"><a class="morebtn" href="/2022/07/09/Art/DaVinCi%E8%89%B2%E5%BD%A9%E5%A4%84%E7%90%86%E5%8E%9F%E7%90%86%E5%85%A5%E9%97%A8/" title="DaVinCi色彩处理原理">阅读全文</a></p>
     </main>
     <footer class="post-footer">
       

@@ -6,7 +6,7 @@
   <link href="http://leinlin.github.io/atom.xml" rel="self"/>
   
   <link href="http://leinlin.github.io/"/>
-  <updated>2022-07-13T06:47:49.855Z</updated>
+  <updated>2022-07-20T09:42:44.257Z</updated>
   <id>http://leinlin.github.io/</id>
   
   <author>
@@ -17,11 +17,34 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>snp Profiler</title>
+    <link href="http://leinlin.github.io/2022/07/18/Unity/profiler/"/>
+    <id>http://leinlin.github.io/2022/07/18/Unity/profiler/</id>
+    <published>2022-07-18T00:17:00.000Z</published>
+    <updated>2022-07-20T09:42:44.257Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;&lt;img</summary>
+        
+      
+    
+    
+    
+    
+    <category term="snp android" scheme="http://leinlin.github.io/tags/snp-android/"/>
+    
+  </entry>
+  
+  <entry>
     <title>IDVS shader variants</title>
     <link href="http://leinlin.github.io/2022/07/13/ARM/IDVS-shader-variants/"/>
     <id>http://leinlin.github.io/2022/07/13/ARM/IDVS-shader-variants/</id>
     <published>2022-07-12T22:57:19.000Z</published>
-    <updated>2022-07-13T06:47:49.855Z</updated>
+    <updated>2022-07-20T09:37:17.645Z</updated>
     
     
       
@@ -514,36 +537,6 @@
 &lt;p&gt;brdf和实际的明暗在拾色器中的变化如下图：&lt;br&gt;&lt;img src=&quot;/../../images/brdf.jpg&quot; alt=&quot;brdf&quot;&gt;&lt;/p&gt;
 &lt;p&gt;在Cel Shading当中，画面通常需要保证高饱和度，所以通常需要通过后期的Tone Mapping或者Ramp Map的方式调整暗部颜色。&lt;/p&gt;
 &lt;p&gt;这里需要注意，BRDF符合正确的物理明暗变化，但是艺术处理上有所欠缺。&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="Art" scheme="http://leinlin.github.io/categories/Art/"/>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>DaVinCi色彩处理原理</title>
-    <link href="http://leinlin.github.io/2022/07/09/Art/DaVinCi%E8%89%B2%E5%BD%A9%E5%A4%84%E7%90%86%E5%8E%9F%E7%90%86%E5%85%A5%E9%97%A8/"/>
-    <id>http://leinlin.github.io/2022/07/09/Art/DaVinCi%E8%89%B2%E5%BD%A9%E5%A4%84%E7%90%86%E5%8E%9F%E7%90%86%E5%85%A5%E9%97%A8/</id>
-    <published>2022-07-09T04:00:14.000Z</published>
-    <updated>2022-07-09T12:11:13.919Z</updated>
-    
-    
-    <summary type="html">&lt;h1 id=&quot;DaVinCi色彩处理原理&quot;&gt;&lt;a href=&quot;#DaVinCi色彩处理原理&quot; class=&quot;headerlink&quot; title=&quot;DaVinCi色彩处理原理&quot;&gt;&lt;/a&gt;DaVinCi色彩处理原理&lt;/h1&gt;&lt;h2 id=&quot;Data-Level（pdf，P215）&quot;&gt;&lt;a href=&quot;#Data-Level（pdf，P215）&quot; class=&quot;headerlink&quot; title=&quot;Data Level（pdf，P215）&quot;&gt;&lt;/a&gt;Data Level（pdf，P215）&lt;/h2&gt;&lt;p&gt;不同的媒体数据文件使用不同范围的数据表示。通常来讲处理的是10bit的数据(0-1023)，有两种不同的data level用来保存图像数据：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;&lt;p&gt;&lt;strong&gt;Video：&lt;/strong&gt;所有的图像数据从0-1的颜色强度，会映射到64-940之间。Y通道[64-940]，CB和CR[64-960],小于64用于表示比黑色更黑的区域，941&amp;#x2F;961–1019 表示超过白色的区域。过低过高的数据称作：undershoots 和overshoots。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;&lt;strong&gt;Full：&lt;/strong&gt;对于RGB444数据，数据强度0-1映射到4-1023。&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;无论哪种数据类型，都有0-100的最大和最小亮度。当数据格式转换时，范围会重新映射：&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;(minimum Video Level) 64 &amp;#x3D; 4 (Data Level minimum) &lt;/li&gt;
-&lt;li&gt;(maximum Video Level) 940 or 960 &amp;#x3D; 1023 (Data Level maximum）&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;​      数据格式的转换几乎不会有变化，因为合法数据会被被保存下来。区别是undershoots 和overshoots可能丢失，但是Resolve软件内部会记录下来，保证之后可以还原。&lt;/p&gt;
-&lt;p&gt;   &lt;strong&gt;在DaVinci Resolve中，所有的图像格式都会以Full的格式进行处理。并且是未被压缩的32bit浮点数表示。&lt;/strong&gt;也就是说，每一个图片无论原始的bit-depth是多少，都会转换成32bit的数据。转换的质量依赖于原始数据，总之是无压缩的转换。&lt;/p&gt;</summary>
     
     
     
