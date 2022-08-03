@@ -6,7 +6,7 @@
   <link href="http://leinlin.github.io/atom.xml" rel="self"/>
   
   <link href="http://leinlin.github.io/"/>
-  <updated>2022-07-20T09:42:44.257Z</updated>
+  <updated>2022-08-03T12:48:08.141Z</updated>
   <id>http://leinlin.github.io/</id>
   
   <author>
@@ -17,11 +17,38 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
+    <title>在unity的IL2CPP中接入FASTBuild</title>
+    <link href="http://leinlin.github.io/2022/08/03/Unity/il2cpp_fastbuild/"/>
+    <id>http://leinlin.github.io/2022/08/03/Unity/il2cpp_fastbuild/</id>
+    <published>2022-08-03T00:17:00.000Z</published>
+    <updated>2022-08-03T12:48:08.141Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;在unity的IL2CPP中接入FASTBuild&quot;&gt;&lt;a href=&quot;#在unity的IL2CPP中接入FASTBuild&quot; class=&quot;headerlink&quot;</summary>
+        
+      
+    
+    
+    
+    <category term="FASTBUILD" scheme="http://leinlin.github.io/categories/FASTBUILD/"/>
+    
+    
+    <category term="IL2CPP" scheme="http://leinlin.github.io/tags/IL2CPP/"/>
+    
+    <category term="FASTBUILD" scheme="http://leinlin.github.io/tags/FASTBUILD/"/>
+    
+  </entry>
+  
+  <entry>
     <title>snp Profiler</title>
     <link href="http://leinlin.github.io/2022/07/18/Unity/profiler/"/>
     <id>http://leinlin.github.io/2022/07/18/Unity/profiler/</id>
     <published>2022-07-18T00:17:00.000Z</published>
-    <updated>2022-07-20T09:42:44.257Z</updated>
+    <updated>2022-07-21T07:33:33.516Z</updated>
     
     
       
@@ -35,7 +62,32 @@
     
     
     
-    <category term="snp android" scheme="http://leinlin.github.io/tags/snp-android/"/>
+    <category term="snp" scheme="http://leinlin.github.io/tags/snp/"/>
+    
+    <category term="android" scheme="http://leinlin.github.io/tags/android/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>textmesh-pro 压缩通道</title>
+    <link href="http://leinlin.github.io/2022/07/18/Unity/textmeshpro/"/>
+    <id>http://leinlin.github.io/2022/07/18/Unity/textmeshpro/</id>
+    <published>2022-07-18T00:17:00.000Z</published>
+    <updated>2022-08-03T12:48:11.455Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h2 id=&quot;把Alpha-8改为4通道的RGBA&quot;&gt;&lt;a href=&quot;#把Alpha-8改为4通道的RGBA&quot; class=&quot;headerlink&quot; title=&quot;把Alpha 8改为4通道的RGBA&quot;&gt;&lt;/a&gt;把Alpha 8改为4通道的RGBA&lt;/h2&gt;&lt;p&gt;&lt;img</summary>
+        
+      
+    
+    
+    
+    
+    <category term="textmesh-pro" scheme="http://leinlin.github.io/tags/textmesh-pro/"/>
     
   </entry>
   
@@ -486,57 +538,6 @@
 &lt;li&gt;直接在PS当中调整。&lt;/li&gt;
 &lt;/ol&gt;
 &lt;h2 id=&quot;PS直接调整&quot;&gt;&lt;a href=&quot;#PS直接调整&quot; class=&quot;headerlink&quot; title=&quot;PS直接调整&quot;&gt;&lt;/a&gt;PS直接调整&lt;/h2&gt;&lt;p&gt;对于用ps直接调整来说，只要把参考图片和Natural LUT一起调整即可，最终Natural LUT的结果就是我们要的LUT。&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="Art" scheme="http://leinlin.github.io/categories/Art/"/>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>PS颜色风格</title>
-    <link href="http://leinlin.github.io/2022/07/09/Art/%E9%A2%9C%E8%89%B2%E9%A3%8E%E6%A0%BC/"/>
-    <id>http://leinlin.github.io/2022/07/09/Art/%E9%A2%9C%E8%89%B2%E9%A3%8E%E6%A0%BC/</id>
-    <published>2022-07-09T04:00:14.000Z</published>
-    <updated>2022-07-09T12:10:45.022Z</updated>
-    
-    
-    <summary type="html">&lt;h1 id=&quot;PS颜色风格&quot;&gt;&lt;a href=&quot;#PS颜色风格&quot; class=&quot;headerlink&quot; title=&quot;PS颜色风格&quot;&gt;&lt;/a&gt;PS颜色风格&lt;/h1&gt;&lt;h2 id=&quot;基础&quot;&gt;&lt;a href=&quot;#基础&quot; class=&quot;headerlink&quot; title=&quot;基础&quot;&gt;&lt;/a&gt;基础&lt;/h2&gt;&lt;p&gt;日系，ins风格，低饱和度，平和。&lt;/p&gt;
-&lt;p&gt;欧美系，高饱和，有侵略性。&lt;/p&gt;
-&lt;p&gt;明度，轻盈舒适。&lt;/p&gt;
-&lt;p&gt;低明度，压抑称重，有质感，金属—&amp;gt; 铁和铝箔的IBL。&lt;/p&gt;
-&lt;p&gt;同类色-&amp;gt; 15%的色相环，-&amp;gt;靠明度和饱和度达到设计和层次感。–&amp;gt;ToneMapping。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;/../../images/%E9%A2%9C%E8%89%B2%E9%A3%8E%E6%A0%BC/1592918191766.png&quot; alt=&quot;1592918191766&quot;&gt;&lt;/p&gt;
-&lt;h2 id=&quot;Camera-Raw&quot;&gt;&lt;a href=&quot;#Camera-Raw&quot; class=&quot;headerlink&quot; title=&quot;Camera Raw&quot;&gt;&lt;/a&gt;Camera Raw&lt;/h2&gt;&lt;p&gt;Ctrl + Shift + A进入PS的Camera Raw风格。&lt;/p&gt;
-&lt;p&gt; 主要用来编辑Raw文件的。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;/../../images/%E9%A2%9C%E8%89%B2%E9%A3%8E%E6%A0%BC/1592918699887.png&quot; alt=&quot;1592918699887&quot;&gt;&lt;/p&gt;
-&lt;p&gt;自动白平衡和手动白平衡。&lt;/p&gt;
-&lt;p&gt;下面的图像有没有色偏？可以有也可以没有，但是自动白平衡会去掉。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;/../../images/%E9%A2%9C%E8%89%B2%E9%A3%8E%E6%A0%BC/1592919134345.png&quot; alt=&quot;1592919134345&quot;&gt;&lt;/p&gt;
-&lt;p&gt;渲染当中白色光就没有色偏！！怎么做。&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="Art" scheme="http://leinlin.github.io/categories/Art/"/>
-    
-    
-  </entry>
-  
-  <entry>
-    <title>BRDF与色彩与明暗</title>
-    <link href="http://leinlin.github.io/2022/07/09/Art/BRDF%E4%B8%8E%E8%89%B2%E5%BD%A9%E4%B8%8E%E6%98%8E%E6%9A%97/"/>
-    <id>http://leinlin.github.io/2022/07/09/Art/BRDF%E4%B8%8E%E8%89%B2%E5%BD%A9%E4%B8%8E%E6%98%8E%E6%9A%97/</id>
-    <published>2022-07-09T04:00:14.000Z</published>
-    <updated>2022-07-09T12:10:53.655Z</updated>
-    
-    
-    <summary type="html">&lt;h1 id=&quot;BRDF与色彩与明暗&quot;&gt;&lt;a href=&quot;#BRDF与色彩与明暗&quot; class=&quot;headerlink&quot; title=&quot;BRDF与色彩与明暗&quot;&gt;&lt;/a&gt;BRDF与色彩与明暗&lt;/h1&gt;&lt;p&gt;最近看了一些和色彩相关的文章。在美术当中，明暗变化和颜色的过度是紧紧关联起来的（例如：油画变暗并不是单纯地混入黑色），与BRDF模拟有一些差别（单纯考虑明暗，多个通道同样的明暗衰退过程），原画师、插画师一般是从HSV空间（色相环之类的）下手。&lt;/p&gt;
-&lt;h2 id=&quot;BRDF明暗与美术明暗&quot;&gt;&lt;a href=&quot;#BRDF明暗与美术明暗&quot; class=&quot;headerlink&quot; title=&quot;BRDF明暗与美术明暗&quot;&gt;&lt;/a&gt;BRDF明暗与美术明暗&lt;/h2&gt;&lt;p&gt;在美术配色当中，颜色的变化并不只是混入黑色，现实世界同样是，&lt;strong&gt;亮度的降低往往伴随了饱和度的升高&lt;/strong&gt;（下图蓝色）。&lt;/p&gt;
-&lt;p&gt;但是BRDF总是等比例降低RGB大小（下图黄色），饱和度没有变化。导致画面看起来暗部部分变脏。&lt;/p&gt;
-&lt;p&gt;brdf和实际的明暗在拾色器中的变化如下图：&lt;br&gt;&lt;img src=&quot;/../../images/brdf.jpg&quot; alt=&quot;brdf&quot;&gt;&lt;/p&gt;
-&lt;p&gt;在Cel Shading当中，画面通常需要保证高饱和度，所以通常需要通过后期的Tone Mapping或者Ramp Map的方式调整暗部颜色。&lt;/p&gt;
-&lt;p&gt;这里需要注意，BRDF符合正确的物理明暗变化，但是艺术处理上有所欠缺。&lt;/p&gt;</summary>
     
     
     

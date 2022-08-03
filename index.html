@@ -204,6 +204,80 @@
   
   <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
     <div class="post-block">
+      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/08/03/Unity/il2cpp_fastbuild/">
+      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <meta itemprop="name" content="leinlin">
+        <meta itemprop="description" content="">
+        <meta itemprop="image" content="/images/avatar.jpg">
+      </span>
+      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+        <meta itemprop="name" content="leinlin的小笔记">
+      </span>
+    </div>
+    <header class="post-header">
+      <h1 class="post-title" itemprop="name headline">
+        <a class="post-title-link post-title-link-external" href="/2022/08/03/Unity/il2cpp_fastbuild/" itemprop="url">在unity的IL2CPP中接入FASTBuild</a>
+      </h1>
+      <div class="post-meta">
+        
+        <span class="post-date">
+          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2022-08-03T08:17:00+08:00">2022-08-03 08:17:00</time></span>
+        </span>
+        
+        
+        
+        <span class="post-meta-divider divider">|</span>
+        
+        <span class="post-categories">
+          
+          <i class="far fa-folder-open"></i><span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/FASTBUILD/" itemprop="url" rel="index"><span itemprop="name">FASTBUILD</span></a></span>
+        </span>
+        
+        
+        
+        
+      </div>
+    </header>
+    <main class="post-main" itemprop="articleBody">
+      
+      <h1 id="在unity的IL2CPP中接入FASTBuild"><a href="#在unity的IL2CPP中接入FASTBuild" class="headerlink" title="在unity的IL2CPP中接入FASTBuild"></a>在unity的IL2CPP中接入FASTBuild</h1><h2 id="如何编译IL2CPP-exe"><a href="#如何编译IL2CPP-exe" class="headerlink" title="如何编译IL2CPP.exe"></a>如何编译IL2CPP.exe</h2><figure class="hljs highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">jam WinEditor<br></code></pre></td></tr></table></figure>
+
+<h2 id="如何调试IL2CPP-exe"><a href="#如何调试IL2CPP-exe" class="headerlink" title="如何调试IL2CPP.exe"></a>如何调试IL2CPP.exe</h2><p>用vs2017我研究了一天没有成功，改用rider进行附加调试。第一步加入一个ReadKey的指令，等待附加</p>
+<figure class="hljs highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">public static int Main(string[] args)<br>&#123;<br>    // 这里是等待附加的代码<br>    ConsoleKey key = Console.ReadKey().Key;<br>    int exitCode;<br>    try<br>    &#123;<br>        exitCode = Run(args, true);<br>    &#125;<br>    catch (PathTooLongException e)<br>    &#123;<br>        Console.WriteLine(&quot;IL2CPP error: The specified output path is too long to write generated files. Please choose a location with a shorter path.&quot;);<br>        Console.WriteLine(e);<br>        throw;<br>    &#125;<br>    catch (Exception e)<br>    &#123;<br>        Console.WriteLine(&quot;il2cpp.exe didn&#x27;t catch exception: &quot; + e.StackTrace);<br>        throw;<br>    &#125;<br><br>    return exitCode;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>jam 编译的il2cpp.exe断点上好像有一些BUG，我直接用rider的debug编译了il2cpp.exe然后copy到对应文件夹</p>
+<figure class="hljs highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">WindowsEditor\Data\il2cpp\build\deploy\net471<br></code></pre></td></tr></table></figure>
+
+<p>il2cpp.exe主要负责生成和编译代码，fastbuild只负责编译，所以可以修改编译部分的代码，例如在指令上加入一个开关，指定是否使用fastbuild</p>
+<p>目前思路：</p>
+<p>编译代码之前会生成一个编译列表sourceFilesToCompile,这个决定了哪些文件需要编译成 .obj以及使用哪些编译器以及链接器</p>
+<figure class="hljs highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">using (MiniProfiler.Section(&quot;FindFilesToCompile&quot;))<br>&#123;<br>    sourceFilesToCompile = _programBuildDescription.CppCompileInstructions.Concat(toolChainContext.ExtraCompileInstructions).ToArray();<br><br>    foreach (var sourceFile in sourceFilesToCompile)<br>    &#123;<br>        sourceFile.Defines = sourceFile.Defines.Concat(_cppToolChain.ToolChainDefines());<br>        sourceFile.IncludePaths = sourceFile.IncludePaths.Concat(_cppToolChain.ToolChainIncludePaths()).Concat(toolChainContext.ExtraIncludeDirectories);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>之后调用BuildAllCppFiles进行obj编译</p>
+<figure class="hljs highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">using (MiniProfiler.Section(&quot;BuildAllCppFiles&quot;))<br>    objectFiles = BuildAllCppFiles(sourceFilesToCompile, buildStatistics);<br></code></pre></td></tr></table></figure>
+
+<p>BuildAllCppFiles主要是先生成cached以及needsCompiled两个列表，对needsCompiled会开对应多的线程进行并行编译</p>
+<figure class="hljs highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">if (needsCompiled.Count &gt; 0)<br>&#123;<br>    var compiledObjectResults = ParallelFor.RunWithResult(needsCompiled.ToArray(), ProvideObjectFile).ToList();<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>加入fastbuild选项，可以利用sourceFilesToCompile这个列表，生成fbuild.bff文件，然后拉起对应平台的fastbuild即可实现IL2CPP的联合编译。</p>
+
+      
+      <p align="right"><a class="morebtn" href="/2022/08/03/Unity/il2cpp_fastbuild/" title="在unity的IL2CPP中接入FASTBuild">阅读全文</a></p>
+    </main>
+    <footer class="post-footer">
+      
+      <div class="post-tags">
+        
+        <a class="post-tag button" href="/tags/IL2CPP/" rel="tag"><i class="fas fa-tags"></i>IL2CPP</a>
+        
+        <a class="post-tag button" href="/tags/FASTBUILD/" rel="tag"><i class="fas fa-tags"></i>FASTBUILD</a>
+        
+      </div>
+      
+    </footer>
+  </article>
+  
+  <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
+    <div class="post-block">
       <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/07/18/Unity/profiler/">
       <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
         <meta itemprop="name" content="leinlin">
@@ -241,7 +315,64 @@
       
       <div class="post-tags">
         
-        <a class="post-tag button" href="/tags/snp-android/" rel="tag"><i class="fas fa-tags"></i>snp android</a>
+        <a class="post-tag button" href="/tags/snp/" rel="tag"><i class="fas fa-tags"></i>snp</a>
+        
+        <a class="post-tag button" href="/tags/android/" rel="tag"><i class="fas fa-tags"></i>android</a>
+        
+      </div>
+      
+    </footer>
+  </article>
+  
+  <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
+    <div class="post-block">
+      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/07/18/Unity/textmeshpro/">
+      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <meta itemprop="name" content="leinlin">
+        <meta itemprop="description" content="">
+        <meta itemprop="image" content="/images/avatar.jpg">
+      </span>
+      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+        <meta itemprop="name" content="leinlin的小笔记">
+      </span>
+    </div>
+    <header class="post-header">
+      <h1 class="post-title" itemprop="name headline">
+        <a class="post-title-link post-title-link-external" href="/2022/07/18/Unity/textmeshpro/" itemprop="url">textmesh-pro 压缩通道</a>
+      </h1>
+      <div class="post-meta">
+        
+        <span class="post-date">
+          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2022-07-18T08:17:00+08:00">2022-07-18 08:17:00</time></span>
+        </span>
+        
+        
+        
+        
+        
+      </div>
+    </header>
+    <main class="post-main" itemprop="articleBody">
+      
+      <h2 id="把Alpha-8改为4通道的RGBA"><a href="#把Alpha-8改为4通道的RGBA" class="headerlink" title="把Alpha 8改为4通道的RGBA"></a>把Alpha 8改为4通道的RGBA</h2><p><img src="/../../images/2022-07-21-17-44-41.png"></p>
+<h2 id="修改shader根据uv采样不同的通道"><a href="#修改shader根据uv采样不同的通道" class="headerlink" title="修改shader根据uv采样不同的通道"></a>修改shader根据uv采样不同的通道</h2><p><img src="/../../images/2022-07-21-17-45-35.png"></p>
+<h2 id="补充"><a href="#补充" class="headerlink" title="补充"></a>补充</h2><ul>
+<li><p>优化图集算法，不能让中间线切割字符，使一个字符分布到多个通道中</p>
+</li>
+<li><p>修改采样的shader</p>
+</li>
+<li><p>稳定化debug</p>
+</li>
+</ul>
+
+      
+      <p align="right"><a class="morebtn" href="/2022/07/18/Unity/textmeshpro/" title="textmesh-pro 压缩通道">阅读全文</a></p>
+    </main>
+    <footer class="post-footer">
+      
+      <div class="post-tags">
+        
+        <a class="post-tag button" href="/tags/textmesh-pro/" rel="tag"><i class="fas fa-tags"></i>textmesh-pro</a>
         
       </div>
       
@@ -608,132 +739,9 @@
     </footer>
   </article>
   
-  <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
-    <div class="post-block">
-      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/07/09/GPUAartch/%E5%85%B3%E4%BA%8ECuda%E3%80%81Shader%E4%B8%ADif%E8%AF%AD%E5%8F%A5%E6%89%A7%E8%A1%8C%E5%8E%9F%E7%90%86/">
-      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-        <meta itemprop="name" content="leinlin">
-        <meta itemprop="description" content="">
-        <meta itemprop="image" content="/images/avatar.jpg">
-      </span>
-      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-        <meta itemprop="name" content="leinlin的小笔记">
-      </span>
-    </div>
-    <header class="post-header">
-      <h1 class="post-title" itemprop="name headline">
-        <a class="post-title-link post-title-link-external" href="/2022/07/09/GPUAartch/%E5%85%B3%E4%BA%8ECuda%E3%80%81Shader%E4%B8%ADif%E8%AF%AD%E5%8F%A5%E6%89%A7%E8%A1%8C%E5%8E%9F%E7%90%86/" itemprop="url"></a>
-      </h1>
-      <div class="post-meta">
-        
-        <span class="post-date">
-          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2022-07-09T19:34:20+08:00">2022-07-09 19:34:20</time></span>
-        </span>
-        
-        
-        
-        
-        
-      </div>
-    </header>
-    <main class="post-main" itemprop="articleBody">
-      
-      <h1 id="关于Cuda-Shader中if语句执行原理"><a href="#关于Cuda-Shader中if语句执行原理" class="headerlink" title="关于Cuda\Shader中if语句执行原理"></a>关于Cuda\Shader中if语句执行原理</h1><p>目前大部分人认为：shader当中动态if判断性能很低，只是用来做条件判断的，要避免使用。实际上if语句是可以用来做性能优化的。</p>
-<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p>主要来自于几个文档：</p>
-<ol start="0">
-<li><p><a target="_blank" rel="noopener" href="http://haifux.org/lectures/267/Introduction-to-GPUs.pdf">http://haifux.org/lectures/267/Introduction-to-GPUs.pdf</a> 直接说明了GPU分支是如何工作的。</p>
-</li>
-<li><p>第一个是GPU Gems 2当中提到的流控制<a target="_blank" rel="noopener" href="https://developer.nvidia.com/gpugems/GPUGems2/gpugems2_chapter34.html">Chapter 34. GPU Flow-Control Idioms</a></p>
-</li>
-</ol>
-<p>里面提到了对于Z-cull来说分支和warp分布的关系。</p>
-<ol start="2">
-<li><p>和GPU分支优化相关的文章：[Reducing_branch_divergence_in_GPU_programs]，上面也提到了分支发散，并且提到了：</p>
-<p>In the presence of a datadependent branch that causes diﬀerent threads in the same warp to follow diﬀerent paths (also known as branch divergence), the warp serially executes each branch path taken, disabling threads that are not on that path.</p>
-<p>说明如果一个Warp没有进行分支发散，是所有warp只走一个分支的。</p>
-</li>
-<li><p>手机部分GPU架构主要是高通和AMD，目前找到了高通的资料：<a href="%5Bfile:///C:/Users/liangzhe/Desktop/80-nb295-11_a.pdf%5D(file:///C:/Users/liangzhe/Desktop/80-nb295-11_a.pdf)">Qualcomm® Snapdragon™ Mobile Platform OpenCL General Programming and Optimization</a></p>
-<p>这里面提到了避免分支发散（Avoid branch divergence）可以从文本中推测出，手机的GPU架构和PC是一样的，有同Warp优化功能，并不会两个分支都走。</p>
-</li>
-<li><p>《GPU编程与优化》当中提到没有分支的Warp可以省略空跑分支。</p>
-      
-      <p align="right"><a class="morebtn" href="/2022/07/09/GPUAartch/%E5%85%B3%E4%BA%8ECuda%E3%80%81Shader%E4%B8%ADif%E8%AF%AD%E5%8F%A5%E6%89%A7%E8%A1%8C%E5%8E%9F%E7%90%86/" title="">阅读全文</a></p>
-    </main>
-    <footer class="post-footer">
-      
-    </footer>
-  </article>
-  
-  <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
-    <div class="post-block">
-      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/07/09/GPUAartch/TeraScale%E6%9E%B6%E6%9E%84%E6%B5%85%E6%9E%90/">
-      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-        <meta itemprop="name" content="leinlin">
-        <meta itemprop="description" content="">
-        <meta itemprop="image" content="/images/avatar.jpg">
-      </span>
-      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-        <meta itemprop="name" content="leinlin的小笔记">
-      </span>
-    </div>
-    <header class="post-header">
-      <h1 class="post-title" itemprop="name headline">
-        <a class="post-title-link post-title-link-external" href="/2022/07/09/GPUAartch/TeraScale%E6%9E%B6%E6%9E%84%E6%B5%85%E6%9E%90/" itemprop="url"></a>
-      </h1>
-      <div class="post-meta">
-        
-        <span class="post-date">
-          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2022-07-09T19:34:20+08:00">2022-07-09 19:34:20</time></span>
-        </span>
-        
-        
-        
-        
-        
-      </div>
-    </header>
-    <main class="post-main" itemprop="articleBody">
-      
-      <h1 id="TeraScale"><a href="#TeraScale" class="headerlink" title="TeraScale"></a>TeraScale</h1><p>TeraScale架构是AMD公司在2011年之前的早期GPU架构。</p>
-<p>TeraScale使用超长指令字架构。</p>
-<p>使用TeraScale的图形显卡: HD 2000 - 6000 </p>
-<h2 id="架构拆解"><a href="#架构拆解" class="headerlink" title="架构拆解"></a>架构拆解</h2><p>TeraScale的结构如下图：</p>
-<p><img src="/../../images/img/TelascaleArch.jpg" alt="TelascaleArch"></p>
-<p>上面的架构：</p>
-<ol>
-<li><p>包含10个SIMD核心，每一个包括了32个32bit流处理单元，总共320个。</p>
-</li>
-<li><p>包括4个纹理单元。</p>
-</li>
-</ol>
-<p>一个SIMD core结构示意图：</p>
-<p><img src="/../../images/img/SIMDcore.jpg" alt="SIMDcore"></p>
-<p>上面的SIMD core：</p>
-<ol>
-<li><p>包括了16个Stream Processing Units（标量流处理单元），和16KB的本地数据共享存储器。</p>
-</li>
-<li><p>有一组运行的线程共享一个逻辑控制单元。</p>
-</li>
-<li><p>四个专用纹理单元和L1 Cache。</p>
-</li>
-</ol>
-<p>下面是一组Stream Processing Units结构：</p>
-<p><img src="/../../images/img/StreamProcessingUnits.jpg" alt="StreamProcessingUnits"></p>
-<p>对于Stream Processing Units：</p>
-<ol>
-<li>有自己的通用寄存器</li>
-<li>我的猜测四个小的黄色格子应该就是ALU。产生指令流水。
-      
-      <p align="right"><a class="morebtn" href="/2022/07/09/GPUAartch/TeraScale%E6%9E%B6%E6%9E%84%E6%B5%85%E6%9E%90/" title="">阅读全文</a></p>
-    </main>
-    <footer class="post-footer">
-      
-    </footer>
-  </article>
-  
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/"><i class="fas fa-angle-right" aria-label="下一页"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/"><i class="fas fa-angle-right" aria-label="下一页"></i></a>
   </nav>
   
   
@@ -777,7 +785,7 @@
     
     <div class="categories-count count-block">
       <div class="site-count-title">分类</div>
-      <div><a href="/categories/">6</a></div>
+      <div><a href="/categories/">7</a></div>
     </div>
     
     
