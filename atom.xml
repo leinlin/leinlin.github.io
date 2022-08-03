@@ -6,7 +6,7 @@
   <link href="http://leinlin.github.io/atom.xml" rel="self"/>
   
   <link href="http://leinlin.github.io/"/>
-  <updated>2022-08-03T12:48:08.141Z</updated>
+  <updated>2022-08-03T12:50:40.896Z</updated>
   <id>http://leinlin.github.io/</id>
   
   <author>
@@ -21,16 +21,13 @@
     <link href="http://leinlin.github.io/2022/08/03/Unity/il2cpp_fastbuild/"/>
     <id>http://leinlin.github.io/2022/08/03/Unity/il2cpp_fastbuild/</id>
     <published>2022-08-03T00:17:00.000Z</published>
-    <updated>2022-08-03T12:48:08.141Z</updated>
+    <updated>2022-08-03T12:50:40.896Z</updated>
     
     
-      
-      
-        
-        
-    <summary type="html">&lt;h1 id=&quot;在unity的IL2CPP中接入FASTBuild&quot;&gt;&lt;a href=&quot;#在unity的IL2CPP中接入FASTBuild&quot; class=&quot;headerlink&quot;</summary>
-        
-      
+    <summary type="html">&lt;h1 id=&quot;在unity的IL2CPP中接入FASTBuild&quot;&gt;&lt;a href=&quot;#在unity的IL2CPP中接入FASTBuild&quot; class=&quot;headerlink&quot; title=&quot;在unity的IL2CPP中接入FASTBuild&quot;&gt;&lt;/a&gt;在unity的IL2CPP中接入FASTBuild&lt;/h1&gt;&lt;h2 id=&quot;如何编译IL2CPP-exe&quot;&gt;&lt;a href=&quot;#如何编译IL2CPP-exe&quot; class=&quot;headerlink&quot; title=&quot;如何编译IL2CPP.exe&quot;&gt;&lt;/a&gt;如何编译IL2CPP.exe&lt;/h2&gt;&lt;figure class=&quot;highlight plaintext&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;code class=&quot;hljs plaintext&quot;&gt;jam WinEditor&lt;br&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
+
+&lt;h2 id=&quot;如何调试IL2CPP-exe&quot;&gt;&lt;a href=&quot;#如何调试IL2CPP-exe&quot; class=&quot;headerlink&quot; title=&quot;如何调试IL2CPP.exe&quot;&gt;&lt;/a&gt;如何调试IL2CPP.exe&lt;/h2&gt;&lt;p&gt;用vs2017我研究了一天没有成功，改用rider进行附加调试。第一步加入一个ReadKey的指令，等待附加&lt;/p&gt;
+&lt;figure class=&quot;highlight plaintext&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;19&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;20&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;21&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;22&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;23&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;code class=&quot;hljs plaintext&quot;&gt;public static int Main(string[] args)&lt;br&gt;&amp;#123;&lt;br&gt;    // 这里是等待附加的代码&lt;br&gt;    ConsoleKey key = Console.ReadKey().Key;&lt;br&gt;    int exitCode;&lt;br&gt;    try&lt;br&gt;    &amp;#123;&lt;br&gt;        exitCode = Run(args, true);&lt;br&gt;    &amp;#125;&lt;br&gt;    catch (PathTooLongException e)&lt;br&gt;    &amp;#123;&lt;br&gt;        Console.WriteLine(&amp;quot;IL2CPP error: The specified output path is too long to write generated files. Please choose a location with a shorter path.&amp;quot;);&lt;br&gt;        Console.WriteLine(e);&lt;br&gt;        throw;&lt;br&gt;    &amp;#125;&lt;br&gt;    catch (Exception e)&lt;br&gt;    &amp;#123;&lt;br&gt;        Console.WriteLine(&amp;quot;il2cpp.exe didn&amp;#x27;t catch exception: &amp;quot; + e.StackTrace);&lt;br&gt;        throw;&lt;br&gt;    &amp;#125;&lt;br&gt;&lt;br&gt;    return exitCode;&lt;br&gt;&amp;#125;&lt;br&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;</summary>
     
     
     
