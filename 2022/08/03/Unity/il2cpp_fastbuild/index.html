@@ -246,6 +246,7 @@
 
 <p>il2cpp.exe主要负责生成和编译代码，fastbuild只负责编译，所以可以修改编译部分的代码，例如在指令上加入一个开关，指定是否使用fastbuild</p>
 <p>目前思路：</p>
+<p>IL2CPP 编译cache</p>
 <p>编译代码之前会生成一个编译列表sourceFilesToCompile,这个决定了哪些文件需要编译成 .obj以及使用哪些编译器以及链接器</p>
 <figure class="hljs highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">using (MiniProfiler.Section(&quot;FindFilesToCompile&quot;))<br>&#123;<br>    sourceFilesToCompile = _programBuildDescription.CppCompileInstructions.Concat(toolChainContext.ExtraCompileInstructions).ToArray();<br><br>    foreach (var sourceFile in sourceFilesToCompile)<br>    &#123;<br>        sourceFile.Defines = sourceFile.Defines.Concat(_cppToolChain.ToolChainDefines());<br>        sourceFile.IncludePaths = sourceFile.IncludePaths.Concat(_cppToolChain.ToolChainIncludePaths()).Concat(toolChainContext.ExtraIncludeDirectories);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 
@@ -279,6 +280,8 @@
       
     </div>
     <div class="page-nav-prev page-nav-item">
+      
+      <a href="/2022/09/19/HDRPartist/CubeMap%E7%94%9F%E6%88%90/" rel="prev" title=""><span class="nav-title"></span><i class="fas fa-angle-right"></i></a>
       
     </div>
   </nav>
@@ -362,7 +365,7 @@
     
     <div class="categories-count count-block">
       <div class="site-count-title">分类</div>
-      <div><a href="/categories/">7</a></div>
+      <div><a href="/categories/">11</a></div>
     </div>
     
     

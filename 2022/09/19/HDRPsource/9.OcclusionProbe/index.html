@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#33363b">
+    <meta name="msapplication-TileColor" content="#33363b">
+    
+    
+    
+    
+    <meta name="keywords" content="leinlin, ARIA, Hexo">
+    
+    
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png">
+    
+    
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicons/android-chrome-192x192.png">
+    
+    
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png">
+    
+    
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png">
+    
+    
+    <link rel="mask-icon" href="/favicons/safari-pinned-tab.svg" color="#33363b">
+    
+    
+    <link rel="manifest" href="/favicons/site.webmanifest">
+    
+    
+    <meta name="msapplication-config" content="/favicons/browserconfig.xml">
+    
+    
+    <link rel="alternate" href="/atom.xml" title="leinlin的小笔记" type="application/atom+xml" />
+    
+    
+    <link rel="shortcut icon" type="image/x-icon" href="/favicons/favicon.ico">
+    
+    
+    <link rel="stylesheet" type="text/css" href="/css/normalize.css">
+    <link rel="stylesheet" type="text/css" href="/css/index.css">
+    
+    <link rel="stylesheet" type="text/css" href="/css/sidebar.css">
+    
+    
+<link rel="stylesheet" type="text/css" href="/css/page.css">
+<link rel="stylesheet" type="text/css" href="/css/post.css">
+
+    <link rel="stylesheet" type="text/css" href="/css/custom.css">
+    <link rel="stylesheet" type="text/css" href="/css/atom-one-light.css">
+    <link rel="stylesheet" type="text/css" href="/css/lightgallery.min.css">
+    <script type="text/javascript" src="/js/jquery.min.js"></script>
+    <script defer type="text/javascript" src="/js/util.js"></script>
+    <script defer type="text/javascript" src="/js/clipboard.min.js"></script>
+    <script defer type="text/javascript" src="/js/scrollspy.js"></script>
+    <script defer type="text/javascript" src="/js/fontawesome-all.min.js"></script>
+    <script defer type="text/javascript" src="/js/lightgallery.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-fullscreen.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-hash.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-pager.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-thumbnail.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-zoom.min.js"></script>
+    
+    <script defer src="/js/busuanzi.pure.mini.js"></script>
+    
+    
+    <script defer type="text/javascript" src="/js/search.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function () {
+      var searchPath = "search.xml";
+      if (searchPath.length === 0) {
+        searchPath = "search.xml";
+      }
+      var path = "/" + searchPath;
+      searchFunc(path, "search-input", "search-result");
+    });
+    </script>
+    
+    
+    
+    <script defer type="text/javascript" src="https://cdn.staticfile.org/MathJax/MathJax-2.6-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ["$","$"], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ["script", "noscript", "style", "textarea", "pre", "code"]
+      }
+    });
+    </script>
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for (i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += " has-jax";
+      }
+    });
+    </script>
+    
+    
+    <script defer type="text/javascript" src="/js/index.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function () {
+      var cb = null;
+      var els = $(".post figure.highlight");
+      if (els.length) {
+        // Enabled Hexo highlight line number.
+        $(els).each(function (i, e) {
+          // $(e).before("<button class=\"copy button\">复制</button>");
+          $(e).before([
+            "<div class=\"code-titlebar\">",
+              "<div class=\"titlebar-left\">",
+                "<button class=\"copy\">复制</button>",
+              "</div>",
+            "</div>"
+          ].join(""));
+        });
+        cb = new ClipboardJS("button.copy", {
+          "target": function (trigger) {
+              // Get target element by DOM API.
+              return trigger.parentNode.parentNode.nextElementSibling.firstChild.firstChild.firstChild.lastChild.firstChild.firstChild;
+          }
+        });
+      } else {
+        // Disabled Hexo highlight line number.
+        els = $(".post pre code");
+        $(els).each(function (i, e) {
+          // Add button before pre, not code.
+          // $(e).parent().before("<button class=\"copy button\">复制</button>");
+          $(e).before([
+            "<div class=\"code-titlebar\">",
+              "<div class=\"titlebar-left\">",
+                "<button class=\"copy\" >复制</button>",
+              "</div>",
+              "<div class=\"titlebar-right\">",
+                "<button class=\"button-dot dot-minimize\" aria-label=\"Decoration\"></button>",
+                "<button class=\"button-dot dot-maximize\" aria-label=\"Decoration\"></button>",
+                "<button class=\"button-dot dot-close\" aria-label=\"Decoration\"></button>",
+              "</div>",
+            "</div>"
+          ].join(""));
+        });
+        cb = new ClipboardJS("button.copy", {
+          "target": function (trigger) {
+              // Get target element by DOM API.
+              return trigger.parentNode.parentNode.nextElementSibling;
+          }
+        });
+      }
+      cb.on("success", function (e) {
+        e.clearSelection();
+        var trigger = e.trigger;
+        // Change button text as a user tip.
+        trigger.innerHTML = "已复制";
+        $(trigger).addClass("copied");
+        // Change button text back;
+        setTimeout(function () {
+          trigger.innerHTML = "复制";
+          $(trigger).removeClass("copied");
+        }, 1500);
+      });
+    });
+    </script>
+    
+    <script defer type="text/javascript" src="/js/custom.js"></script>
+    <title> | leinlin的小笔记</title>
+  <meta name="generator" content="Hexo 6.2.0"></head>
+  <body itemscope itemtype="http://schema.org/WebPage" lang="zh_CN"  data-spy="scroll" data-target=".list-group">
+    
+<header id="header" class="header" style="background: #33363b;">
+  <div class="container">
+    <div class="header-container">
+      <div class="header-title">
+        <h1 class="title"><a href="/">leinlin的小笔记</a></h1>
+        <h2 class="subtitle"></h2>
+      </div>
+      
+    </div>
+    <nav id="nav" class="nav">
+      <a id="nav-toggle" class="nav-toggle" aria-hidden="true"><i class="fas fa-bars" aria-label="切换导航栏"></i></a>
+      <ul id="menu" role="menubar" aria-hidden="false">
+        
+        <li role="menuitem"><a href="/"><i class="fas fa-home"></i><span class="menu-text">首页</span></a></li>
+        
+        <li role="menuitem"><a href="/categories/"><i class="fas fa-th-list"></i><span class="menu-text">分类</span></a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</header>
+
+
+    <main id="main" class="main">
+      <div class="container">
+        <div class="main-container">
+          <div class="content">
+            
+<div id="post" class="page">
+  
+  <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
+    <div class="post-block">
+      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/09/19/HDRPsource/9.OcclusionProbe/">
+      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+       <meta itemprop="name" content="leinlin">
+       <meta itemprop="description" content="">
+       <meta itemprop="image" content="/images/avatar.jpg">
+      </span>
+      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+       <meta itemprop="name" content="leinlin的小笔记">
+      </span>
+    </div>
+    <header class="post-header">
+      <h1 class="post-title" itemprop="name headline"></h1>
+      <div class="post-meta">
+        
+        <span class="post-date">
+          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2022-09-19T19:53:33+08:00">2022-09-19 19:53:33</time></span>
+        </span>
+        
+        
+        
+        
+        
+      </div>
+    </header>
+    <main class="post-main" itemprop="articleBody">
+      <h1 id="Occlusion-Probe-Shader部分"><a href="#Occlusion-Probe-Shader部分" class="headerlink" title="Occlusion Probe Shader部分"></a>Occlusion Probe Shader部分</h1><p>OcclusionProbe主要是用来计算环境光遮挡的探针，基本的原理是生成一个体素划分的块区域，在体素中填充阴影遮挡情况。在后在Shader当中提取计算的体素信息。</p>
+<p>有两个步骤需要实现：</p>
+<p>1.需要使用Unity自带的Progressive烘焙工具，<strong>手动</strong>烘焙环境贴图。</p>
+<p>2.需要保证产生遮挡的物体，开启lightmap static</p>
+<p>3.需要保证Baked Global Illumination是选择的。</p>
+<p>4.烘焙完成，需要修改Shader读取这些体素信息。</p>
+<h2 id="Shader中SurfaceData的区别"><a href="#Shader中SurfaceData的区别" class="headerlink" title="Shader中SurfaceData的区别"></a>Shader中SurfaceData的区别</h2><p>HDRP中SurfaceData数据保存了遮挡信息</p>
+<p>主要的区别是三个Occlusion值</p>
+<ol>
+<li>skyOcclusion </li>
+<li>treeOcclusion</li>
+<li>grassOcclusion</li>
+</ol>
+<figure class="hljs highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">struct SurfaceData<br>&#123;<br>    uint materialFeatures;<br>    float3 baseColor;<br>    float specularOcclusion;<br>    float3 normalWS;<br>    float perceptualSmoothness;<br>    float ambientOcclusion;<br>    float metallic;<br>    float coatMask;<br>    float3 specularColor;<br>    uint diffusionProfile;<br>    float subsurfaceMask;<br>    float thickness;<br>    float3 tangentWS;<br>    float anisotropy;<br>    float iridescenceThickness;<br>    float iridescenceMask;<br>    float ior;<br>    float3 transmittanceColor;<br>    float atDistance;<br>    float transmittanceMask;<br>    // (BofD)中的内容<br>    float skyOcclusion; // Occlusion Prode的遮挡信息<br>    float treeOcclusion;  // Occlusion Prode2的遮挡信息<br>    // 还有一个grassOcclusion 是一个临时变量没有出现<br>&#125;;<br>================================<br>struct SurfaceData<br>&#123;<br>    uint materialFeatures;<br>    float3 baseColor;<br>    float specularOcclusion;<br>    float3 normalWS;<br>    float perceptualSmoothness;<br>    float ambientOcclusion;<br>    float metallic;<br>    float coatMask;<br>    float3 specularColor;<br>    uint diffusionProfile;<br>    float subsurfaceMask;<br>    float thickness;<br>    float3 tangentWS;<br>    float anisotropy;<br>    float iridescenceThickness;<br>    float iridescenceMask;<br>    float3 geomNormalWS;<br>    float ior;<br>    float3 transmittanceColor;<br>    float atDistance;<br>    float transmittanceMask;<br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<h2 id="Occlusion遮挡信息的读取"><a href="#Occlusion遮挡信息的读取" class="headerlink" title="Occlusion遮挡信息的读取"></a>Occlusion遮挡信息的读取</h2><figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs c">主要获取到SurfaceData的位置是LitDaysIndividualLayer.  (BofD)<br>  ...<br><span class="hljs-comment">//forest-begin: sky occlusion</span><br>    <span class="hljs-type">float</span> grassOcclusion;<br>    surfaceData.skyOcclusion = SampleSkyOcclusion(input.positionRWS, grassOcclusion);<br><span class="hljs-comment">//forest-end</span><br><span class="hljs-comment">//forest-begin: Tree Occlusion</span><br>    float4 treeOcclusionInput = float4(input.texCoord2.xy, input.texCoord3.xy);<br>    surfaceData.treeOcclusion = GetTreeOcclusion(input.positionRWS, treeOcclusionInput);<br><span class="hljs-comment">//forest-end:</span><br><span class="hljs-meta">#<span class="hljs-keyword">else</span> <span class="hljs-comment">// #if !defined(LAYERED_LIT_SHADER)</span></span><br> 	...<br></code></pre></td></tr></table></figure>
+
+<p>上面涉及到的具体的函数</p>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br></pre></td><td class="code"><pre><code class="hljs c">float3 _AtmosphericScatteringSunVector;<br><span class="hljs-comment">// 通过树的参数计算得到。</span><br><span class="hljs-type">float</span> <span class="hljs-title function_">GetTreeOcclusion</span><span class="hljs-params">(float3 positionRWS, float4 treeOcclusionInput)</span> &#123;<br><span class="hljs-meta">#<span class="hljs-keyword">if</span> defined(_ANIM_SINGLE_PIVOT_COLOR) || defined(_ANIM_HIERARCHY_PIVOT)</span><br>	<span class="hljs-keyword">if</span>(_UseTreeOcclusion) &#123;<br>		float3 positionWS = GetAbsolutePositionWS(positionRWS);<br>		<span class="hljs-type">float</span> treeWidth = _Tree12Width == <span class="hljs-number">0</span> ? <span class="hljs-number">1.f</span> : saturate((positionWS.y - UNITY_MATRIX_M._m13) / _Tree12Width);<br>		<span class="hljs-type">float</span> treeDO = lerp(_TreeDO, _TreeDO2, treeWidth);<br>		<span class="hljs-type">float</span> treeAO = lerp(_TreeAO, _TreeAO2, treeWidth);<br>		float4 lightDir = float4(-_AtmosphericScatteringSunVector * treeDO, treeAO);<br>		<span class="hljs-type">float</span> treeDOBias = lerp(_TreeDOBias, _TreeDOBias2, treeWidth);<br>		<span class="hljs-type">float</span> treeAOBias = lerp(_TreeAOBias, _TreeAOBias2, treeWidth);<br>		<span class="hljs-keyword">return</span> saturate(dot(saturate(treeOcclusionInput + float4(treeDOBias.rrr, treeAOBias)), lightDir));<br>	&#125;<br>	<span class="hljs-keyword">else</span><br><span class="hljs-meta">#<span class="hljs-keyword">endif</span></span><br>	&#123;<br>		<span class="hljs-keyword">return</span> <span class="hljs-number">1.f</span>;<br>	&#125;<br>&#125;<br><br><span class="hljs-type">float</span> <span class="hljs-title function_">SampleOcclusionProbes</span><span class="hljs-params">(float3 positionWS)</span><br>&#123;<br>    <span class="hljs-type">float</span> occlusionProbes = <span class="hljs-number">1</span>;<br>	<span class="hljs-comment">// 世界坐标转换到探针坐标</span><br>    float3 pos = mul(_OcclusionProbesWorldToLocalDetail, float4(positionWS, <span class="hljs-number">1</span>)).xyz;<br>	<br>  	<span class="hljs-comment">// 这里有两个三维纹理。一个细节一个全局</span><br>    UNITY_BRANCH<br>	<span class="hljs-title function_">if</span><span class="hljs-params">(all(pos &gt; <span class="hljs-number">0</span>) &amp;&amp; all(pos &lt; <span class="hljs-number">1</span>))</span><br>    &#123;<br>      	<span class="hljs-comment">// 采样三维纹理</span><br>		occlusionProbes = tex3D(_OcclusionProbesDetail, pos).a;<br>	&#125;<br>    <span class="hljs-keyword">else</span><br>    &#123;<br>		pos = mul(_OcclusionProbesWorldToLocal, float4(positionWS, <span class="hljs-number">1</span>)).xyz;<br>		occlusionProbes = tex3D(_OcclusionProbes, pos).a;<br>	&#125;<br><br>    <span class="hljs-keyword">return</span> occlusionProbes;<br>&#125;<br><br><span class="hljs-comment">// 草的环境光遮挡，这是二维纹理。</span><br><span class="hljs-type">float</span> <span class="hljs-title function_">SampleGrassOcclusion</span><span class="hljs-params">(float2 terrainUV)</span><br>&#123;<br>    <span class="hljs-keyword">return</span> lerp(<span class="hljs-number">1.0</span>, tex2D(_GrassOcclusion, terrainUV).a, _GrassOcclusionAmountTerrain);<br>&#125;<br><br><span class="hljs-type">float</span> <span class="hljs-title function_">SampleGrassOcclusion</span><span class="hljs-params">(float3 positionWS)</span><br>&#123;<br>    float3 pos = mul(_GrassOcclusionWorldToLocal, float4(positionWS, <span class="hljs-number">1</span>)).xyz;<br>    <span class="hljs-type">float</span> terrainHeight = tex2D(_GrassOcclusionHeightmap, pos.xz).a;<br>    <span class="hljs-type">float</span> height = pos.y - terrainHeight * _GrassOcclusionHeightRange;<br><br>    UNITY_BRANCH<br>    <span class="hljs-title function_">if</span><span class="hljs-params">(height &lt; _GrassOcclusionCullHeight)</span><br>    &#123;<br>        <span class="hljs-type">float</span> xz = lerp(<span class="hljs-number">1.0</span>, tex2D(_GrassOcclusion, pos.xz).a, _GrassOcclusionAmountGrass);<br>        <span class="hljs-keyword">return</span> saturate(xz + smoothstep(_GrassOcclusionHeightFadeBottom, _GrassOcclusionHeightFadeTop, height));<br><br>    &#125;<br>    <span class="hljs-keyword">else</span><br>        <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;<br>&#125;<br><br><span class="hljs-comment">// 这里会返回grassOcclusion和SkyOcclusion两个内容</span><br><span class="hljs-type">float</span> <span class="hljs-title function_">SampleSkyOcclusion</span><span class="hljs-params">(float3 positionRWS, out <span class="hljs-type">float</span> grassOcclusion)</span><br>&#123;<br>  	<span class="hljs-comment">// 获取世界坐标</span><br>    float3 positionWS = GetAbsolutePositionWS(positionRWS);<br>  	<span class="hljs-comment">// 从世界坐标采样体素块</span><br>    grassOcclusion = SampleGrassOcclusion(positionWS);<br>  <br>    <span class="hljs-keyword">return</span> grassOcclusion * SampleOcclusionProbes(positionWS);<br>&#125;<br><br><span class="hljs-type">float</span> <span class="hljs-title function_">SampleSkyOcclusion</span><span class="hljs-params">(float3 positionRWS, float2 terrainUV, out <span class="hljs-type">float</span> grassOcclusion)</span><br>&#123;<br>    float3 positionWS = GetAbsolutePositionWS(positionRWS);<br>    grassOcclusion = SampleGrassOcclusion(terrainUV);<br>    <span class="hljs-keyword">return</span> grassOcclusion * SampleOcclusionProbes(positionWS);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>现在可以知道三个信息的来源：</p>
+<ol>
+<li>skyOcclusion  来自三维纹理</li>
+<li>treeOcclusion  通过树的参数计算得到</li>
+<li>grassOcclusion 来自二维纹理</li>
+</ol>
+<h2 id="Occlusion遮挡信息的使用"><a href="#Occlusion遮挡信息的使用" class="headerlink" title="Occlusion遮挡信息的使用"></a>Occlusion遮挡信息的使用</h2><figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">//BuildinData中获取环境烘焙信息是使用了上面的采样结果。</span><br>SampleBakedGI函数出现了区别<br><span class="hljs-comment">// 所有的基础烘焙信息：</span><br><span class="hljs-comment">// LightMap：fully baked lightmap (static lightmap) + enlighten realtime lightmap (dynamic lightmap) 可以组合使用</span><br><span class="hljs-comment">// for each case we can have directional lightmap or not.</span><br><span class="hljs-comment">// lightprobe for dynamic/moving entity：</span><br><span class="hljs-comment">//探针类型：Either SH9 per object lightprobe or SH4 per pixel per object volume probe</span><br>float3 <span class="hljs-title function_">SampleBakedGI</span><span class="hljs-params">(float3 positionRWS, float3 normalWS, float2 uvStaticLightmap, float2 uvDynamicLightmap)</span><br>&#123;<br><span class="hljs-comment">// If there is no lightmap, it assume lightprobe</span><br><span class="hljs-meta">#<span class="hljs-keyword">if</span> !defined(LIGHTMAP_ON) &amp;&amp; !defined(DYNAMICLIGHTMAP_ON)</span><br><br>    <span class="hljs-keyword">if</span> (unity_ProbeVolumeParams.x == <span class="hljs-number">0.0</span>)<br>    &#123;<br>        <span class="hljs-comment">// <span class="hljs-doctag">TODO:</span> pass a tab of coefficient instead!</span><br>        real4 SHCoefficients[<span class="hljs-number">7</span>];<br>        SHCoefficients[<span class="hljs-number">0</span>] = unity_SHAr;<br>        SHCoefficients[<span class="hljs-number">1</span>] = unity_SHAg;<br>        SHCoefficients[<span class="hljs-number">2</span>] = unity_SHAb;<br>        SHCoefficients[<span class="hljs-number">3</span>] = unity_SHBr;<br>        SHCoefficients[<span class="hljs-number">4</span>] = unity_SHBg;<br>        SHCoefficients[<span class="hljs-number">5</span>] = unity_SHBb;<br>        SHCoefficients[<span class="hljs-number">6</span>] = unity_SHC;<br><br>        <span class="hljs-keyword">return</span> SampleSH9(SHCoefficients, normalWS);<br>    &#125;<br>    <span class="hljs-keyword">else</span><br>    &#123;<br>        <span class="hljs-keyword">return</span> SampleProbeVolumeSH4(TEXTURE3D_PARAM(unity_ProbeVolumeSH, samplerunity_ProbeVolumeSH), positionRWS, normalWS, GetProbeVolumeWorldToObject(),<br>        unity_ProbeVolumeParams.y, unity_ProbeVolumeParams.z, unity_ProbeVolumeMin.xyz, unity_ProbeVolumeSizeInv.xyz);<br>    &#125;<br><br><span class="hljs-meta">#<span class="hljs-keyword">else</span></span><br>	<span class="hljs-comment">//定义了光照贴图，进行贴图内容的读取</span><br>    float3 bakeDiffuseLighting = float3(<span class="hljs-number">0.0</span>, <span class="hljs-number">0.0</span>, <span class="hljs-number">0.0</span>);<br><br><span class="hljs-meta">#<span class="hljs-keyword">ifdef</span> UNITY_LIGHTMAP_FULL_HDR</span><br>    <span class="hljs-type">bool</span> useRGBMLightmap = <span class="hljs-literal">false</span>;<br>    float4 decodeInstructions = float4(<span class="hljs-number">0.0</span>, <span class="hljs-number">0.0</span>, <span class="hljs-number">0.0</span>, <span class="hljs-number">0.0</span>); <span class="hljs-comment">// Never used but needed for the interface since it supports gamma lightmaps</span><br><span class="hljs-meta">#<span class="hljs-keyword">else</span></span><br>    <span class="hljs-type">bool</span> useRGBMLightmap = <span class="hljs-literal">true</span>;<br>    <span class="hljs-meta">#<span class="hljs-keyword">if</span> defined(UNITY_LIGHTMAP_RGBM_ENCODING)</span><br>        float4 decodeInstructions = float4(<span class="hljs-number">34.493242</span>, <span class="hljs-number">2.2</span>, <span class="hljs-number">0.0</span>, <span class="hljs-number">0.0</span>); <span class="hljs-comment">// range^2.2 = 5^2.2, gamma = 2.2</span><br>    <span class="hljs-meta">#<span class="hljs-keyword">else</span></span><br>        float4 decodeInstructions = float4(<span class="hljs-number">2.0</span>, <span class="hljs-number">2.2</span>, <span class="hljs-number">0.0</span>, <span class="hljs-number">0.0</span>); <span class="hljs-comment">// range = 2.0^2.2 = 4.59</span><br>    <span class="hljs-meta">#<span class="hljs-keyword">endif</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">endif</span></span><br>	<span class="hljs-comment">// 每一种Light都可以分成方向烘焙和单一烘焙两种</span><br>    <span class="hljs-meta">#<span class="hljs-keyword">ifdef</span> LIGHTMAP_ON</span><br>        <span class="hljs-meta">#<span class="hljs-keyword">ifdef</span> DIRLIGHTMAP_COMBINED</span><br>        bakeDiffuseLighting += SampleDirectionalLightmap(TEXTURE2D_PARAM(unity_Lightmap, samplerunity_Lightmap),<br>                                                        TEXTURE2D_PARAM(unity_LightmapInd, samplerunity_Lightmap),<br>                                                        uvStaticLightmap, unity_LightmapST, normalWS, useRGBMLightmap, decodeInstructions);<br>        <span class="hljs-meta">#<span class="hljs-keyword">else</span></span><br>        bakeDiffuseLighting += SampleSingleLightmap(TEXTURE2D_PARAM(unity_Lightmap, samplerunity_Lightmap), uvStaticLightmap, unity_LightmapST, useRGBMLightmap, decodeInstructions);<br>        <span class="hljs-meta">#<span class="hljs-keyword">endif</span></span><br>    <span class="hljs-meta">#<span class="hljs-keyword">endif</span></span><br><br>    <span class="hljs-meta">#<span class="hljs-keyword">ifdef</span> DYNAMICLIGHTMAP_ON</span><br>        <span class="hljs-meta">#<span class="hljs-keyword">ifdef</span> DIRLIGHTMAP_COMBINED</span><br>        bakeDiffuseLighting += SampleDirectionalLightmap(TEXTURE2D_PARAM(unity_DynamicLightmap, samplerunity_DynamicLightmap),<br>                                                        TEXTURE2D_PARAM(unity_DynamicDirectionality, samplerunity_DynamicLightmap),<br>                                                        uvDynamicLightmap, unity_DynamicLightmapST, normalWS, <span class="hljs-literal">false</span>, decodeInstructions);<br>        <span class="hljs-meta">#<span class="hljs-keyword">else</span></span><br>        bakeDiffuseLighting += SampleSingleLightmap(TEXTURE2D_PARAM(unity_DynamicLightmap, samplerunity_DynamicLightmap), uvDynamicLightmap, unity_DynamicLightmapST, <span class="hljs-literal">false</span>, decodeInstructions);<br>        <span class="hljs-meta">#<span class="hljs-keyword">endif</span></span><br>    <span class="hljs-meta">#<span class="hljs-keyword">endif</span></span><br><br>  	<span class="hljs-comment">// 俩个lightmap是相加的关系</span><br>    <span class="hljs-keyword">return</span> bakeDiffuseLighting;<br><br><span class="hljs-meta">#<span class="hljs-keyword">endif</span></span><br>&#125;<br><br><br><span class="hljs-comment">// 修改后的烘焙信息获取。</span><br>float3 <span class="hljs-title function_">SampleBakedGI</span><span class="hljs-params">(float3 positionRWS, float3 normalWS, float2 uvStaticLightmap, float2 uvDynamicLightmap, <span class="hljs-type">float</span> skyOcclusion, <span class="hljs-type">float</span> grassOcclusion, <span class="hljs-type">float</span> treeOcclusion)</span><br><span class="hljs-comment">//forest-end</span><br>&#123;<br>    <span class="hljs-comment">// If there is no lightmap, it assume lightprobe</span><br><span class="hljs-meta">#<span class="hljs-keyword">if</span> !defined(LIGHTMAP_ON) &amp;&amp; !defined(DYNAMICLIGHTMAP_ON)</span><br>    <span class="hljs-keyword">if</span> (unity_ProbeVolumeParams.x == <span class="hljs-number">0.0</span>)<br>    &#123;<br>        <span class="hljs-comment">// <span class="hljs-doctag">TODO:</span> pass a tab of coefficient instead!</span><br>        real4 SHCoefficients[<span class="hljs-number">7</span>];<br>        SHCoefficients[<span class="hljs-number">0</span>] = unity_SHAr;<br>        SHCoefficients[<span class="hljs-number">1</span>] = unity_SHAg;<br>        SHCoefficients[<span class="hljs-number">2</span>] = unity_SHAb;<br>        SHCoefficients[<span class="hljs-number">3</span>] = unity_SHBr;<br>        SHCoefficients[<span class="hljs-number">4</span>] = unity_SHBg;<br>        SHCoefficients[<span class="hljs-number">5</span>] = unity_SHBb;<br>        SHCoefficients[<span class="hljs-number">6</span>] = unity_SHC;<br>		<br>      <span class="hljs-comment">// 这个累加计算了一个环境光的探针。</span><br><span class="hljs-comment">//forest-begin: sky occlusion</span><br>        <span class="hljs-meta">#<span class="hljs-keyword">if</span> SKY_OCCLUSION</span><br>			SHCoefficients[<span class="hljs-number">0</span>] += _AmbientProbeSH[<span class="hljs-number">0</span>] * skyOcclusion;<br>			SHCoefficients[<span class="hljs-number">1</span>] += _AmbientProbeSH[<span class="hljs-number">1</span>] * skyOcclusion;<br>			SHCoefficients[<span class="hljs-number">2</span>] += _AmbientProbeSH[<span class="hljs-number">2</span>] * skyOcclusion;<br>			SHCoefficients[<span class="hljs-number">3</span>] += _AmbientProbeSH[<span class="hljs-number">3</span>] * skyOcclusion;<br>			SHCoefficients[<span class="hljs-number">4</span>] += _AmbientProbeSH[<span class="hljs-number">4</span>] * skyOcclusion;<br>			SHCoefficients[<span class="hljs-number">5</span>] += _AmbientProbeSH[<span class="hljs-number">5</span>] * skyOcclusion;<br>			SHCoefficients[<span class="hljs-number">6</span>] += _AmbientProbeSH[<span class="hljs-number">6</span>] * skyOcclusion;<br>       <span class="hljs-meta">#<span class="hljs-keyword">endif</span></span><br><span class="hljs-comment">//forest-end</span><br><br>		<span class="hljs-comment">// 同时还积累的树的环境光遮挡</span><br><span class="hljs-comment">//forest-begin: Tree occlusion</span><br>        <span class="hljs-keyword">return</span> SampleSH9(SHCoefficients, normalWS) * treeOcclusion;<br><span class="hljs-comment">//forest-end</span><br>    &#125;<br>    <span class="hljs-keyword">else</span><br>    &#123;<br>      <span class="hljs-comment">//这里只是多了一个树木的遮挡</span><br>        <span class="hljs-keyword">return</span> SampleProbeVolumeSH4(TEXTURE3D_PARAM(unity_ProbeVolumeSH, samplerunity_ProbeVolumeSH), positionRWS, normalWS, GetProbeVolumeWorldToObject(),<br><span class="hljs-comment">//forest-begin: Tree occlusion</span><br>            unity_ProbeVolumeParams.y, unity_ProbeVolumeParams.z, unity_ProbeVolumeMin, unity_ProbeVolumeSizeInv) * treeOcclusion;<br><span class="hljs-comment">//forest-end</span><br>    &#125;<br><br><span class="hljs-meta">#<span class="hljs-keyword">else</span></span><br><br>    float3 bakeDiffuseLighting = float3(<span class="hljs-number">0.0</span>, <span class="hljs-number">0.0</span>, <span class="hljs-number">0.0</span>);<br><br><span class="hljs-meta">#<span class="hljs-keyword">ifdef</span> UNITY_LIGHTMAP_FULL_HDR</span><br>    <span class="hljs-type">bool</span> useRGBMLightmap = <span class="hljs-literal">false</span>;<br>    float4 decodeInstructions = float4(<span class="hljs-number">0.0</span>, <span class="hljs-number">0.0</span>, <span class="hljs-number">0.0</span>, <span class="hljs-number">0.0</span>); <span class="hljs-comment">// Never used but needed for the interface since it supports gamma lightmaps</span><br><span class="hljs-meta">#<span class="hljs-keyword">else</span></span><br>    <span class="hljs-type">bool</span> useRGBMLightmap = <span class="hljs-literal">true</span>;<br>    <span class="hljs-meta">#<span class="hljs-keyword">if</span> defined(UNITY_LIGHTMAP_RGBM_ENCODING)</span><br>        float4 decodeInstructions = float4(<span class="hljs-number">34.493242</span>, <span class="hljs-number">2.2</span>, <span class="hljs-number">0.0</span>, <span class="hljs-number">0.0</span>); <span class="hljs-comment">// range^2.2 = 5^2.2, gamma = 2.2</span><br>    <span class="hljs-meta">#<span class="hljs-keyword">else</span></span><br>        float4 decodeInstructions = float4(<span class="hljs-number">2.0</span>, <span class="hljs-number">2.2</span>, <span class="hljs-number">0.0</span>, <span class="hljs-number">0.0</span>); <span class="hljs-comment">// range = 2.0^2.2 = 4.59</span><br>    <span class="hljs-meta">#<span class="hljs-keyword">endif</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">endif</span></span><br><br>    <span class="hljs-meta">#<span class="hljs-keyword">ifdef</span> LIGHTMAP_ON</span><br>        <span class="hljs-meta">#<span class="hljs-keyword">ifdef</span> DIRLIGHTMAP_COMBINED</span><br>        bakeDiffuseLighting += SampleDirectionalLightmap(TEXTURE2D_PARAM(unity_Lightmap, samplerunity_Lightmap),<br>                                                        TEXTURE2D_PARAM(unity_LightmapInd, samplerunity_Lightmap),<br>                                                        uvStaticLightmap, unity_LightmapST, normalWS, useRGBMLightmap, decodeInstructions);<br>        <span class="hljs-meta">#<span class="hljs-keyword">else</span></span><br>        bakeDiffuseLighting += SampleSingleLightmap(TEXTURE2D_PARAM(unity_Lightmap, samplerunity_Lightmap), uvStaticLightmap, unity_LightmapST, useRGBMLightmap, decodeInstructions);<br>        <span class="hljs-meta">#<span class="hljs-keyword">endif</span></span><br>    <span class="hljs-meta">#<span class="hljs-keyword">endif</span></span><br><br>    <span class="hljs-meta">#<span class="hljs-keyword">ifdef</span> DYNAMICLIGHTMAP_ON</span><br>        <span class="hljs-meta">#<span class="hljs-keyword">ifdef</span> DIRLIGHTMAP_COMBINED</span><br>        bakeDiffuseLighting += SampleDirectionalLightmap(TEXTURE2D_PARAM(unity_DynamicLightmap, samplerunity_DynamicLightmap),<br>                                                        TEXTURE2D_PARAM(unity_DynamicDirectionality, samplerunity_DynamicLightmap),<br>                                                        uvDynamicLightmap, unity_DynamicLightmapST, normalWS, <span class="hljs-literal">false</span>, decodeInstructions);<br>        <span class="hljs-meta">#<span class="hljs-keyword">else</span></span><br>        bakeDiffuseLighting += SampleSingleLightmap(TEXTURE2D_PARAM(unity_DynamicLightmap, samplerunity_DynamicLightmap), uvDynamicLightmap, unity_DynamicLightmapST, <span class="hljs-literal">false</span>, decodeInstructions);<br>        <span class="hljs-meta">#<span class="hljs-keyword">endif</span></span><br>    <span class="hljs-meta">#<span class="hljs-keyword">endif</span></span><br><br>  <span class="hljs-comment">// 这里只是多积累了一个草的环境光遮挡，也就是说LightProbe是给动态物体使用的</span><br><span class="hljs-comment">//forest-begin: sky occlusion</span><br>    <span class="hljs-keyword">return</span> bakeDiffuseLighting * grassOcclusion;<br><span class="hljs-comment">//forest-end</span><br><br><span class="hljs-meta">#<span class="hljs-keyword">endif</span></span><br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+<p><strong>从上面的代码中我发现skyOcclusion只在lightprobe计算的时候生效，也就是他是给动态物体使用的!!!!</strong></p>
+<p>现在三个Occlusion的作用就清楚了</p>
+<ol>
+<li>grassOcclusion 用于乘到每一个烘焙信息上</li>
+<li>treeOcclusion 用于乘到每一个光照探针结果上</li>
+<li>skyOcclusion  用于乘到动态光照探针SH9上</li>
+</ol>
+<h2 id="Shader部分总结"><a href="#Shader部分总结" class="headerlink" title="Shader部分总结"></a>Shader部分总结</h2><p>上面的内容只是Book of Death的使用方式，而我们可以自己修改应用位置，计算方法。</p>
+<p>下面需要讨论这些Occlusion的参数是如何传递到Shader当中的。</p>
+<h1 id="Occlusion-Prob-Script部分"><a href="#Occlusion-Prob-Script部分" class="headerlink" title="Occlusion Prob Script部分"></a>Occlusion Prob Script部分</h1><p>上面介绍了如何在Shader当中使用prob三维纹理内容，现在看一下脚本当中如何生成这些。</p>
+<p>在BofD当中主要的脚本就是OcclusionProbes以及他对应的Editor代码</p>
+<figure class="hljs highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">首先最终要的内容就是传递到unity当中参数。<br>    static class Uniforms<br>    &#123;<br>        internal static readonly int _AmbientProbeSH = Shader.PropertyToID(&quot;_AmbientProbeSH&quot;);<br>        internal static readonly int _OcclusionProbes = Shader.PropertyToID(&quot;_OcclusionProbes&quot;);<br>        internal static readonly int _OcclusionProbesWorldToLocal = Shader.PropertyToID(&quot;_OcclusionProbesWorldToLocal&quot;);<br>        internal static readonly int _OcclusionProbesDetail = Shader.PropertyToID(&quot;_OcclusionProbesDetail&quot;);<br>        internal static readonly int _OcclusionProbesWorldToLocalDetail = Shader.PropertyToID(&quot;_OcclusionProbesWorldToLocalDetail&quot;);<br>        internal static readonly int _OcclusionProbesReflectionOcclusionAmount = Shader.PropertyToID(&quot;_OcclusionProbesReflectionOcclusionAmount&quot;);<br>    &#125;<br></code></pre></td></tr></table></figure>
+
+<p><strong>这些数据是通过Progressive烘焙lightmapping引擎烘焙出来的内容，相当于使用了引擎的特性。</strong></p>
+<p><strong>要使用引擎的特性需要自己写一部分回调函数。BofD的代码在OcclusionProbes.Editor.cs文件中。</strong></p>
+<h2 id="OcclusionProbes生成设置"><a href="#OcclusionProbes生成设置" class="headerlink" title="OcclusionProbes生成设置"></a>OcclusionProbes生成设置</h2><p>主要有两部分：</p>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs c">Lightmapping.started += Started;<br>Lightmapping.completed += Completed;<br></code></pre></td></tr></table></figure>
+
+<h3 id="Started"><a href="#Started" class="headerlink" title="Started"></a>Started</h3><p>在光照贴图开始烘焙之前调用</p>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">void</span> <span class="hljs-title function_">Started</span><span class="hljs-params">()</span><br>&#123;<br>    <span class="hljs-comment">// 计算探针的数量：这里使用的是体素形式，我们也可以定义自己的形状。</span><br>    <span class="hljs-type">int</span> probeCount = m_XCount * m_YCount * m_ZCount;<br>    <span class="hljs-keyword">if</span> (probeCount == <span class="hljs-number">0</span>)<br>      <span class="hljs-keyword">return</span>;<br><br>  	<span class="hljs-comment">// 细节Probe数量统计</span><br>    <span class="hljs-type">int</span> detailSetCount = <span class="hljs-number">0</span>;<br>    foreach(OcclusionProbesDetail detail in m_OcclusionProbesDetail)<br>    &#123;<br>      <span class="hljs-keyword">if</span> (detail == null || !detail.gameObject.activeSelf)<br>        <span class="hljs-keyword">continue</span>;<br><br>      probeCount += detail.m_XCount * detail.m_YCount * detail.m_ZCount;<br>      detailSetCount++;<br>    &#125;<br><br>  	<span class="hljs-comment">// 声明主探针位置数组,坐标矩阵等等</span><br>    Vector4[] positions = new Vector4[probeCount];<br><br>        <span class="hljs-comment">// Main</span><br>        Vector3 size = transform.localScale;<br>        Matrix4x4 localToWorld = Matrix4x4.TRS(transform.position - size * <span class="hljs-number">0.5f</span>, transform.rotation, size);<br>        m_WorldToLocal = localToWorld.inverse;<br>        m_CountBaked = new Vector3i(m_XCount, m_YCount, m_ZCount);<br><br>        <span class="hljs-type">int</span> indexOffset = <span class="hljs-number">0</span>;<br>        GenerateProbePositions(ref positions, ref indexOffset, m_CountBaked, localToWorld, CalculateRayOffset(m_RayOffset, size, m_CountBaked));<br><br>        <span class="hljs-comment">// Detail</span><br>        m_CountBakedDetail = new Vector3i[detailSetCount];<br>        m_WorldToLocalDetail = new Matrix4x4[detailSetCount];<br><br>  		<span class="hljs-comment">// 声明细节探针的位置，矩阵转化，大小等等</span><br>        <span class="hljs-type">int</span> i = <span class="hljs-number">0</span>;<br>        foreach(OcclusionProbesDetail detail in m_OcclusionProbesDetail)<br>        &#123;<br>            <span class="hljs-keyword">if</span> (detail == null || !detail.gameObject.activeSelf)<br>                <span class="hljs-keyword">continue</span>;<br>            <br>            Transform t = detail.transform;<br>            Vector3 sizeDetail = t.localScale;<br>            Matrix4x4 localToWorldDetail = Matrix4x4.TRS(t.position - sizeDetail * <span class="hljs-number">0.5f</span>, t.rotation, sizeDetail);<br>            m_WorldToLocalDetail[i] = localToWorldDetail.inverse;<br>            m_CountBakedDetail[i] = new Vector3i(detail.m_XCount, detail.m_YCount, detail.m_ZCount);<br>            GenerateProbePositions(ref positions, ref indexOffset, m_CountBakedDetail[i], localToWorldDetail, CalculateRayOffset(detail.m_RayOffset, sizeDetail, m_CountBakedDetail[i]));<br>            i++;<br>        &#125;<br><br>        <span class="hljs-type">int</span> sampleCount = <span class="hljs-number">1024</span>;<br><br>  <br>  	<span class="hljs-comment">//这两句话才是核心内容，传入顶点数量和顶点位置，上面的内容实际上都是逻辑层的东西。</span><br>  UnityEditor.Experimental.Lightmapping.SetCustomBakeInputs(positions, sampleCount);<br>        m_SampleCountBaked = sampleCount;<br><br>        UnityEditor.Experimental.Lightmapping.probesIgnoreDirectEnvironment = <span class="hljs-literal">true</span>;<br>    &#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="Completed"><a href="#Completed" class="headerlink" title="Completed"></a>Completed</h3><p>光照烘焙计算之后保存数据</p>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs c">  <span class="hljs-type">void</span> <span class="hljs-title function_">Completed</span><span class="hljs-params">()</span><br>  &#123;<br><span class="hljs-comment">// 从烘焙管线当中提取所有的探针生成三维纹理。</span><br>    	<span class="hljs-comment">// 同样也可以生成别的list之类的结构</span><br>    	<span class="hljs-comment">// ...</span><br><br>      <span class="hljs-comment">// Ambient probe</span><br>      <span class="hljs-comment">// 这个只是一个SH9 用于记录全局的光线                              </span><br>      BakeAmbientProbe();<br><span class="hljs-comment">// 把所有资源保存</span><br>      AssetDatabase.SaveAssets();<br><br>      m_CountBaked = new Vector3i(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>);<br>  &#125;<br></code></pre></td></tr></table></figure>
+
+<p>经过上面两步的计算所有的内容都会保存在和Lightmap相同的目录当中，需要自己通过代码设置到Shader当中来使用。</p>
+<p>剩下的工作就是把这些点传递到Shader当中就可以了，主要代码在OcclusionProbes当中。</p>
+<p>注：在BofD当中OcclusionProbes主要用来削减BakeAmbientProbe，然后削减的值叠加到原始的光照探针上。</p>
+<h1 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h1><p>1.在场景中新建一个Occlusion Probes，设置大小，体素纹理分辨率，细节纹理个数及其分辨率。</p>
+<p>2.将烘焙方式设置为<strong>手动</strong>，烘焙引擎设置为Progressive。</p>
+<p>3.点击烘焙，就会生成资源了。</p>
+<p>4.通过Occlusion Probes脚本，设置全局的Shader参数。</p>
+<p>5.在所有Shader当中就可以读取多个三维纹理，根据矩阵等位置的计算，就可以提去出各个点的环境光明暗情况。</p>
+
+    </main>
+    <footer class="post-footer">
+      
+    </footer>
+  </article>
+  
+  
+  <nav class="page-nav">
+    <div class="page-nav-next page-nav-item">
+      
+      <a href="/2022/09/19/HDRPsource/8.LitShader/" rel="next" title=""><i class="fas fa-angle-left"></i><span class="nav-title"></span></a>
+      
+    </div>
+    <div class="page-nav-prev page-nav-item">
+      
+      <a href="/2022/09/19/HDRPsource/HDRPShader%E5%86%85%E7%BD%AE%E7%9F%A9%E9%98%B5%E5%A4%87%E6%9F%A5/" rel="prev" title=""><span class="nav-title"></span><i class="fas fa-angle-right"></i></a>
+      
+    </div>
+  </nav>
+  
+  
+  
+
+<div class="comments" id="comments">
+  
+  
+  <div class="commentjs" id="comment-thread"></div>
+  <link rel="stylesheet" href="/css/commentjs.css">
+  <script defer type="text/javascript" src="/js/marked.min.js"></script>
+  <script defer type="text/javascript" src="/js/timeago.min.js"></script>
+  <script defer type="text/javascript" src="/js/highlight.min.js"></script>
+  <script defer type="text/javascript" src="/js/commentjs.js"></script>
+  <script type="text/javascript">
+  $(document).ready(function () {
+    getComments({
+      "type": "github",
+      "user": "leinlin",
+      "repo": "leinlin.github.io",
+      "client_id": "aee134bdfb54c4ef5826",
+      "client_secret": "4af1d3f2b82dccc028c49715becc01e611afbe43",
+      "no_comment": "这个页面还没有评论，现在就去评论吧！",
+      "go_to_comment": "去评论",
+      "issue_title": "",
+      "btn_class": "button",
+      "comments_target": "#comment-thread"
+    });
+    marked.setOptions({
+      "highlight": function (code, lang) {
+        return hljs.highlightAuto(code).value;
+      }
+    });
+    function mark() {
+      var markdowns = document.getElementsByClassName("markdown");
+      for (var i = 0; i < markdowns.length; ++i){
+        if (markdowns[i].innerHTML) {
+          markdowns[i].innerHTML = marked(markdowns[i].innerHTML);
+        }
+      }
+    }
+    window.addEventListener("DOMContentLoaded", mark, false);
+    window.addEventListener("load", mark, false);
+  });
+  </script>
+  
+  
+</div>
+
+
+
+  
+</div>
+
+          </div>
+          
+          
+          
+<aside class="sidebar" id="sidebar" style="background: url(/images/background.png);">
+  
+  <div class="search">
+    <div class="form-group">
+      <i class="fas fa-search"></i><input type="search" id="search-input" name="q" results="0" placeholder="搜索" class="form-control"/>
+    </div>
+  </div>
+  <div class="search-result-box" id="search-result"></div>
+  
+  
+<div class="info sidebar-item" id="info">
+  
+  <img class="author-avatar" src="/images/avatar.jpg" alt="leinlin">
+  
+  <h1 class="author-name">leinlin</h1>
+  <h2 class="author-description"></h2>
+  <div class="site-count">
+    
+    
+    
+    
+    <div class="categories-count count-block">
+      <div class="site-count-title">分类</div>
+      <div><a href="/categories/">11</a></div>
+    </div>
+    
+    
+  </div>
+  
+  <div class="rss">
+    <a class="rss-link button sidebar-item" href="/atom.xml"><i class="fas fa-rss"></i>RSS</a>
+  </div>
+  
+</div>
+
+
+  <div class="sidebar-sticky">
+    
+    
+    
+    
+    
+    <hr>
+    <div class="post-toc sidebar-item" id="toc-div">
+      <div><i class="fas fa-list-ol"></i>文章目录</div>
+      <div class="post-toc-content"><ol class="list-group toc"><li class="toc-item toc-level-1"><a class="list-group-item toc-link" href="#Occlusion-Probe-Shader%E9%83%A8%E5%88%86"><span class="toc-text">Occlusion Probe Shader部分</span></a><ol class="list-group toc-child"><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#Shader%E4%B8%ADSurfaceData%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="toc-text">Shader中SurfaceData的区别</span></a></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#Occlusion%E9%81%AE%E6%8C%A1%E4%BF%A1%E6%81%AF%E7%9A%84%E8%AF%BB%E5%8F%96"><span class="toc-text">Occlusion遮挡信息的读取</span></a></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#Occlusion%E9%81%AE%E6%8C%A1%E4%BF%A1%E6%81%AF%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="toc-text">Occlusion遮挡信息的使用</span></a></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#Shader%E9%83%A8%E5%88%86%E6%80%BB%E7%BB%93"><span class="toc-text">Shader部分总结</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="list-group-item toc-link" href="#Occlusion-Prob-Script%E9%83%A8%E5%88%86"><span class="toc-text">Occlusion Prob Script部分</span></a><ol class="list-group toc-child"><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#OcclusionProbes%E7%94%9F%E6%88%90%E8%AE%BE%E7%BD%AE"><span class="toc-text">OcclusionProbes生成设置</span></a><ol class="list-group toc-child"><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#Started"><span class="toc-text">Started</span></a></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#Completed"><span class="toc-text">Completed</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="list-group-item toc-link" href="#%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95"><span class="toc-text">使用方法</span></a></li></ol></div>
+    </div>
+    
+    
+    
+    <hr>
+    <div class="social-link sidebar-item">
+      <div><i class="far fa-address-card"></i>社交链接</p></div>
+      <ul>
+        
+        <li><i class="fab fa-github"></i><a href="https://leinlin.github.com/" target="_blank">GitHub</a></li>
+        
+      </ul>
+    </div>
+    
+    
+  </div>
+</aside>
+
+
+          
+        </div>
+      </div>
+    </main>
+    
+<footer id="footer" class="footer" style="background: #33363b;">
+  <div class="container">
+    <div class="back-to-top">
+      <button id="back-to-top"><i class="fas fa-angle-double-up" aria-label="回到顶部"></i></button>
+    </div>
+    <div class="footer-container">
+      <div class="footer-left">
+        <div class="copyright">
+          <span class="author">leinlin</span><span class="year"><i class="far fa-copyright"></i>2022</span>
+        </div>
+        
+        <div class="busuanzi">
+          <span id="busuanzi_container_site_pv"><i class="fas fa-eye" aria-label="站点点击量" aria-hidden="false"></i><span id="busuanzi_value_site_pv"></span></span><span id="busuanzi_container_site_uv"><i class="fas fa-user" aria-label="站点用户数" aria-hidden="false"></i><span id="busuanzi_value_site_uv"></span></span><span id="busuanzi_container_page_pv"><i class="far fa-file-alt"></i><span id="busuanzi_value_page_pv" aria-label="页面点击量" aria-hidden="false"></span></span>
+        </div>
+        
+      </div>
+      <div class="footer-right">
+        <div class="custom-info">
+          
+          托管于<i class="fab fa-github-alt"></i><a href="https://pages.github.com/" target="_blank">GitHub Pages</a>
+          
+        </div>
+        <div class="powered-by">
+          由 <a href="https://hexo.io/" target="_blank">Hexo</a> 强力驱动 | 主题 <a href="https://github.com/AlynxZhou/hexo-theme-aria/" target="_blank">ARIA</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+  <script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

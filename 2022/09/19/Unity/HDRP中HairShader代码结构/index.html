@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#33363b">
+    <meta name="msapplication-TileColor" content="#33363b">
+    
+    
+    
+    
+    <meta name="keywords" content="leinlin, ARIA, Hexo">
+    
+    
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png">
+    
+    
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicons/android-chrome-192x192.png">
+    
+    
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png">
+    
+    
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png">
+    
+    
+    <link rel="mask-icon" href="/favicons/safari-pinned-tab.svg" color="#33363b">
+    
+    
+    <link rel="manifest" href="/favicons/site.webmanifest">
+    
+    
+    <meta name="msapplication-config" content="/favicons/browserconfig.xml">
+    
+    
+    <link rel="alternate" href="/atom.xml" title="leinlin的小笔记" type="application/atom+xml" />
+    
+    
+    <link rel="shortcut icon" type="image/x-icon" href="/favicons/favicon.ico">
+    
+    
+    <link rel="stylesheet" type="text/css" href="/css/normalize.css">
+    <link rel="stylesheet" type="text/css" href="/css/index.css">
+    
+    <link rel="stylesheet" type="text/css" href="/css/sidebar.css">
+    
+    
+<link rel="stylesheet" type="text/css" href="/css/page.css">
+<link rel="stylesheet" type="text/css" href="/css/post.css">
+
+    <link rel="stylesheet" type="text/css" href="/css/custom.css">
+    <link rel="stylesheet" type="text/css" href="/css/atom-one-light.css">
+    <link rel="stylesheet" type="text/css" href="/css/lightgallery.min.css">
+    <script type="text/javascript" src="/js/jquery.min.js"></script>
+    <script defer type="text/javascript" src="/js/util.js"></script>
+    <script defer type="text/javascript" src="/js/clipboard.min.js"></script>
+    <script defer type="text/javascript" src="/js/scrollspy.js"></script>
+    <script defer type="text/javascript" src="/js/fontawesome-all.min.js"></script>
+    <script defer type="text/javascript" src="/js/lightgallery.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-fullscreen.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-hash.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-pager.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-thumbnail.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-zoom.min.js"></script>
+    
+    <script defer src="/js/busuanzi.pure.mini.js"></script>
+    
+    
+    <script defer type="text/javascript" src="/js/search.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function () {
+      var searchPath = "search.xml";
+      if (searchPath.length === 0) {
+        searchPath = "search.xml";
+      }
+      var path = "/" + searchPath;
+      searchFunc(path, "search-input", "search-result");
+    });
+    </script>
+    
+    
+    
+    <script defer type="text/javascript" src="https://cdn.staticfile.org/MathJax/MathJax-2.6-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ["$","$"], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ["script", "noscript", "style", "textarea", "pre", "code"]
+      }
+    });
+    </script>
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for (i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += " has-jax";
+      }
+    });
+    </script>
+    
+    
+    <script defer type="text/javascript" src="/js/index.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function () {
+      var cb = null;
+      var els = $(".post figure.highlight");
+      if (els.length) {
+        // Enabled Hexo highlight line number.
+        $(els).each(function (i, e) {
+          // $(e).before("<button class=\"copy button\">复制</button>");
+          $(e).before([
+            "<div class=\"code-titlebar\">",
+              "<div class=\"titlebar-left\">",
+                "<button class=\"copy\">复制</button>",
+              "</div>",
+            "</div>"
+          ].join(""));
+        });
+        cb = new ClipboardJS("button.copy", {
+          "target": function (trigger) {
+              // Get target element by DOM API.
+              return trigger.parentNode.parentNode.nextElementSibling.firstChild.firstChild.firstChild.lastChild.firstChild.firstChild;
+          }
+        });
+      } else {
+        // Disabled Hexo highlight line number.
+        els = $(".post pre code");
+        $(els).each(function (i, e) {
+          // Add button before pre, not code.
+          // $(e).parent().before("<button class=\"copy button\">复制</button>");
+          $(e).before([
+            "<div class=\"code-titlebar\">",
+              "<div class=\"titlebar-left\">",
+                "<button class=\"copy\" >复制</button>",
+              "</div>",
+              "<div class=\"titlebar-right\">",
+                "<button class=\"button-dot dot-minimize\" aria-label=\"Decoration\"></button>",
+                "<button class=\"button-dot dot-maximize\" aria-label=\"Decoration\"></button>",
+                "<button class=\"button-dot dot-close\" aria-label=\"Decoration\"></button>",
+              "</div>",
+            "</div>"
+          ].join(""));
+        });
+        cb = new ClipboardJS("button.copy", {
+          "target": function (trigger) {
+              // Get target element by DOM API.
+              return trigger.parentNode.parentNode.nextElementSibling;
+          }
+        });
+      }
+      cb.on("success", function (e) {
+        e.clearSelection();
+        var trigger = e.trigger;
+        // Change button text as a user tip.
+        trigger.innerHTML = "已复制";
+        $(trigger).addClass("copied");
+        // Change button text back;
+        setTimeout(function () {
+          trigger.innerHTML = "复制";
+          $(trigger).removeClass("copied");
+        }, 1500);
+      });
+    });
+    </script>
+    
+    <script defer type="text/javascript" src="/js/custom.js"></script>
+    <title> | leinlin的小笔记</title>
+  <meta name="generator" content="Hexo 6.2.0"></head>
+  <body itemscope itemtype="http://schema.org/WebPage" lang="zh_CN"  data-spy="scroll" data-target=".list-group">
+    
+<header id="header" class="header" style="background: #33363b;">
+  <div class="container">
+    <div class="header-container">
+      <div class="header-title">
+        <h1 class="title"><a href="/">leinlin的小笔记</a></h1>
+        <h2 class="subtitle"></h2>
+      </div>
+      
+    </div>
+    <nav id="nav" class="nav">
+      <a id="nav-toggle" class="nav-toggle" aria-hidden="true"><i class="fas fa-bars" aria-label="切换导航栏"></i></a>
+      <ul id="menu" role="menubar" aria-hidden="false">
+        
+        <li role="menuitem"><a href="/"><i class="fas fa-home"></i><span class="menu-text">首页</span></a></li>
+        
+        <li role="menuitem"><a href="/categories/"><i class="fas fa-th-list"></i><span class="menu-text">分类</span></a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</header>
+
+
+    <main id="main" class="main">
+      <div class="container">
+        <div class="main-container">
+          <div class="content">
+            
+<div id="post" class="page">
+  
+  <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
+    <div class="post-block">
+      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/09/19/Unity/HDRP%E4%B8%ADHairShader%E4%BB%A3%E7%A0%81%E7%BB%93%E6%9E%84/">
+      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+       <meta itemprop="name" content="leinlin">
+       <meta itemprop="description" content="">
+       <meta itemprop="image" content="/images/avatar.jpg">
+      </span>
+      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+       <meta itemprop="name" content="leinlin的小笔记">
+      </span>
+    </div>
+    <header class="post-header">
+      <h1 class="post-title" itemprop="name headline"></h1>
+      <div class="post-meta">
+        
+        <span class="post-date">
+          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2022-09-19T19:53:46+08:00">2022-09-19 19:53:46</time></span>
+        </span>
+        
+        
+        
+        
+        
+      </div>
+    </header>
+    <main class="post-main" itemprop="articleBody">
+      <h1 id="HDRP-HairShader代码结构"><a href="#HDRP-HairShader代码结构" class="headerlink" title="HDRP HairShader代码结构"></a>HDRP HairShader代码结构</h1><p>Hair只能在前向渲染阶段渲染，使用下面两个Pass：</p>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c">&#123;<br>    LightMode = DepthForwardOnly<br>    LightMode = ForwardOnly<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>头发有一个特殊的Stencil</p>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs c">Stencil<br>&#123;<br>   WriteMask <span class="hljs-number">7</span><br>   Ref  <span class="hljs-number">2</span><br>   Comp Always<br>   Pass Replace<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>##透明和不透明有所区别</p>
+<p>混合方式上的区别</p>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">//透明</span><br>            Blend One OneMinusSrcAlpha <br>            ZTest LEqual <span class="hljs-comment">// 正常的深度渲染，注意这个时候也可以提前绘制深度。</span><br>            ZWrite Off<br><span class="hljs-comment">//不透明</span><br>            Blend One Zero  <span class="hljs-comment">// 直接覆盖</span><br>            ZTest Equal  <span class="hljs-comment">// 因为会提前绘制深度，所以需要和原本深度值相等才能绘制</span><br>            ZWrite On<br><span class="hljs-comment">// 在原本的shader当中如果开启blend默认编程了透明？</span><br></code></pre></td></tr></table></figure>
+
+<p>透明不透明的宏定义区别</p>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// 透明加不透明</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> _MATERIAL_FEATURE_HAIR_KAJIYA_KAY 1</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> _SURFACE_TYPE_TRANSPARENT 1</span><br><span class="hljs-comment">// 透明部分</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> _BLENDMODE_ALPHA 1   <span class="hljs-comment">// 开启 混合</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> _BLENDMODE_PRESERVE_SPECULAR_LIGHTING 1  <span class="hljs-comment">// ??</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> _ENABLE_FOG_ON_TRANSPARENT 1  <span class="hljs-comment">// 开启透明物体上的雾</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> _SPECULAR_OCCLUSION_FROM_AO 1 <span class="hljs-comment">// AO 对高光生效</span></span><br></code></pre></td></tr></table></figure>
+
+<p>下面是关于分割光线的 split Lighting 是什么</p>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// If we use subsurface scattering, enable output split lighting (for forward pass)</span><br><span class="hljs-meta">#<span class="hljs-keyword">if</span> defined(_MATERIAL_FEATURE_SUBSURFACE_SCATTERING) &amp;&amp; !defined(_SURFACE_TYPE_TRANSPARENT) <span class="hljs-comment">// 子表面散射 并且不是半透明物体</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> OUTPUT_SPLIT_LIGHTING  <span class="hljs-comment">// 分割光线？？？</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">endif</span></span><br></code></pre></td></tr></table></figure>
+
+<h2 id="头发渲染部分代码"><a href="#头发渲染部分代码" class="headerlink" title="头发渲染部分代码"></a>头发渲染部分代码</h2><h3 id="Shader-Pass-Forward"><a href="#Shader-Pass-Forward" class="headerlink" title="Shader Pass Forward"></a>Shader Pass Forward</h3><p>头发的Pass文件：</p>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;Packages/com.unity.render-pipelines.high-definition/Runtime/RenderPipeline/ShaderPass/ShaderPassForward.hlsl&quot;</span></span><br></code></pre></td></tr></table></figure>
+
+<p>也就是说头发使用的事一般的前向渲染的Pass描述。</p>
+<p>####Vert</p>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">//这部分是通用的代码</span><br>PackedVaryingsType <span class="hljs-title function_">Vert</span><span class="hljs-params">(AttributesMesh inputMesh)</span><br>&#123;<br>    VaryingsType varyingsType;<br>    varyingsType.vmesh = VertMesh(inputMesh);<br>    <span class="hljs-keyword">return</span> PackVaryingsType(varyingsType);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;Packages/com.unity.render-pipelines.high-definition/Runtime/RenderPipeline/ShaderPass/VertMesh.hlsl&quot;</span></span><br><span class="hljs-comment">//使用的上面的内容用来计算Vert当中的参数。</span><br></code></pre></td></tr></table></figure>
+
+<p>####Frag</p>
+<p>下面是去掉了debug信息的Frag代码：</p>
+<p>如果使用了SSS效果并且没有使用半透则会进入OUTPUT_SPLIT_LIGHTING的部分，看起来是分开了高光和漫反射颜色，以及SSS的某个特殊buffer。</p>
+<p>否则就是用一个单独的颜色。</p>
+<p>这里有个_DEPTHOFFSET_ON，暂时不考虑。</p>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">void</span> <span class="hljs-title function_">Frag</span><span class="hljs-params">(PackedVaryingsToPS packedInput,</span><br><span class="hljs-params">        #ifdef OUTPUT_SPLIT_LIGHTING  <span class="hljs-comment">//使用分割光线</span></span><br><span class="hljs-params">            out float4 outColor : SV_Target0,  <span class="hljs-comment">// outSpecularLighting</span></span><br><span class="hljs-params">            out float4 outDiffuseLighting : SV_Target1,</span><br><span class="hljs-params">            OUTPUT_SSSBUFFER(outSSSBuffer)</span><br><span class="hljs-params">        #<span class="hljs-keyword">else</span></span><br><span class="hljs-params">            out float4 outColor : SV_Target0  <span class="hljs-comment">// 没有SSS效果的一个输出颜色。</span></span><br><span class="hljs-params">        #endif</span><br><span class="hljs-params">        #ifdef _DEPTHOFFSET_ON</span><br><span class="hljs-params">            , out <span class="hljs-type">float</span> outputDepth : SV_Depth</span><br><span class="hljs-params">        #endif</span><br><span class="hljs-params">          )</span><br>&#123;<br>    UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(packedInput);<br>    FragInputs input = UnpackVaryingsMeshToFragInputs(packedInput.vmesh);<br><br>    uint2 tileIndex = uint2(input.positionSS.xy) / GetTileSize();<br><span class="hljs-meta">#<span class="hljs-keyword">if</span> defined(UNITY_SINGLE_PASS_STEREO)</span><br>    tileIndex.x -= unity_StereoEyeIndex * _NumTileClusteredX;<br><span class="hljs-meta">#<span class="hljs-keyword">endif</span></span><br><br>    <span class="hljs-comment">// input.positionSS is SV_Position</span><br>    PositionInputs posInput = GetPositionInput_Stereo(input.positionSS.xy, _ScreenSize.zw, input.positionSS.z, input.positionSS.w, input.positionRWS.xyz, tileIndex, unity_StereoEyeIndex); <span class="hljs-comment">// 计算屏幕坐标 视口坐标 纹理坐标等内容（ComputeShader也会用这个函数）。</span><br><br><span class="hljs-meta">#<span class="hljs-keyword">ifdef</span> VARYINGS_NEED_POSITION_WS</span><br>    float3 V = GetWorldSpaceNormalizeViewDir(input.positionRWS);<br><span class="hljs-meta">#<span class="hljs-keyword">else</span></span><br>    <span class="hljs-comment">// Unused</span><br>    float3 V = float3(<span class="hljs-number">1.0</span>, <span class="hljs-number">1.0</span>, <span class="hljs-number">1.0</span>); <span class="hljs-comment">// Avoid the division by 0</span><br><span class="hljs-meta">#<span class="hljs-keyword">endif</span></span><br><br>    SurfaceData surfaceData;<br>    BuiltinData builtinData;<br>    <br>    <span class="hljs-comment">// 纹理属性的计算</span><br>    GetSurfaceAndBuiltinData(input, V, posInput, surfaceData, builtinData);<br>	<span class="hljs-comment">// 材质参数计算</span><br>    BSDFData bsdfData = ConvertSurfaceDataToBSDFData(input.positionSS.xy, surfaceData);<br><br>    PreLightData preLightData = GetPreLightData(V, posInput, bsdfData);<br>	<span class="hljs-comment">// 定义输出颜色</span><br>    outColor = float4(<span class="hljs-number">0.0</span>, <span class="hljs-number">0.0</span>, <span class="hljs-number">0.0</span>, <span class="hljs-number">0.0</span>);<br><br><br>    &#123;<br>    <span class="hljs-comment">//透明和不透明物体单独处理</span><br><span class="hljs-meta">#<span class="hljs-keyword">ifdef</span> _SURFACE_TYPE_TRANSPARENT</span><br>        uint featureFlags = LIGHT_FEATURE_MASK_FLAGS_TRANSPARENT;<br><span class="hljs-meta">#<span class="hljs-keyword">else</span></span><br>        uint featureFlags = LIGHT_FEATURE_MASK_FLAGS_OPAQUE;<br><span class="hljs-meta">#<span class="hljs-keyword">endif</span></span><br>	<span class="hljs-comment">// 将要分别计算的高光和漫反射光</span><br>        float3 diffuseLighting;<br>        float3 specularLighting;<br>	<br>	<span class="hljs-comment">// 进入光照循环计算光照</span><br>        LightLoop(V, posInput, preLightData, bsdfData, builtinData, featureFlags, diffuseLighting, specularLighting);<br>	<span class="hljs-comment">// 此时就返回了计算好的高光和 漫反射光</span><br>	<span class="hljs-comment">// 进行全局的缩放</span><br>        diffuseLighting *= GetCurrentExposureMultiplier();<br>        specularLighting *= GetCurrentExposureMultiplier();<br>	<br><span class="hljs-meta">#<span class="hljs-keyword">ifdef</span> OUTPUT_SPLIT_LIGHTING</span><br>	<span class="hljs-comment">// 如果开启SSS 并且需要分割光照（通过参数判断），则把两个光照分开。</span><br>        <span class="hljs-keyword">if</span> (_EnableSubsurfaceScattering != <span class="hljs-number">0</span> &amp;&amp; ShouldOutputSplitLighting(bsdfData))<br>        &#123;<br>            outColor = float4(specularLighting, <span class="hljs-number">1.0</span>);<br>            outDiffuseLighting = float4(TagLightingForSSS(diffuseLighting), <span class="hljs-number">1.0</span>);<br>        &#125;<br>        <span class="hljs-keyword">else</span><br>        &#123;<br>        	<span class="hljs-comment">//如果不需要SSS，或者不需要分割光照，就把两个颜色都合并到Specular里面。</span><br>            outColor = float4(diffuseLighting + specularLighting, <span class="hljs-number">1.0</span>);<br>            outDiffuseLighting = <span class="hljs-number">0</span>;<br>        &#125;<br>        <span class="hljs-comment">// 这里面写入一些 SSS需要用到的属性。</span><br>        ENCODE_INTO_SSSBUFFER(surfaceData, posInput.positionSS, outSSSBuffer);<br>        <span class="hljs-comment">// 如果分割颜色就，在Gbuffer结束时统一计算大气散射。</span><br><span class="hljs-meta">#<span class="hljs-keyword">else</span></span><br>        outColor = ApplyBlendMode(diffuseLighting, specularLighting, builtinData.opacity);<br>        <br>        <span class="hljs-comment">// 如果不分割颜色 就直接计算大气散射。</span><br>        outColor = EvaluateAtmosphericScattering(posInput, V, outColor);<br><span class="hljs-meta">#<span class="hljs-keyword">endif</span></span><br>    &#125;<br><br><span class="hljs-comment">// 忽略</span><br><span class="hljs-meta">#<span class="hljs-keyword">ifdef</span> _DEPTHOFFSET_ON</span><br>    outputDepth = posInput.deviceDepth;<br><span class="hljs-meta">#<span class="hljs-keyword">endif</span></span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="LightLoop"><a href="#LightLoop" class="headerlink" title="LightLoop"></a>LightLoop</h4><p>具体Shader的光照循环部分，参见光照循环文档</p>
+
+    </main>
+    <footer class="post-footer">
+      
+    </footer>
+  </article>
+  
+  
+  <nav class="page-nav">
+    <div class="page-nav-next page-nav-item">
+      
+      <a href="/2022/09/19/Unity/Hdrp%E4%B8%80%E4%BA%9B%E7%89%B9%E6%AE%8A%E5%8A%9F%E8%83%BD/" rel="next" title=""><i class="fas fa-angle-left"></i><span class="nav-title"></span></a>
+      
+    </div>
+    <div class="page-nav-prev page-nav-item">
+      
+      <a href="/2022/09/19/Unity/HDRP%E4%B8%ADHairShader%E4%BB%A3%E7%A0%81%E7%BB%93%E6%9E%842/" rel="prev" title=""><span class="nav-title"></span><i class="fas fa-angle-right"></i></a>
+      
+    </div>
+  </nav>
+  
+  
+  
+
+<div class="comments" id="comments">
+  
+  
+  <div class="commentjs" id="comment-thread"></div>
+  <link rel="stylesheet" href="/css/commentjs.css">
+  <script defer type="text/javascript" src="/js/marked.min.js"></script>
+  <script defer type="text/javascript" src="/js/timeago.min.js"></script>
+  <script defer type="text/javascript" src="/js/highlight.min.js"></script>
+  <script defer type="text/javascript" src="/js/commentjs.js"></script>
+  <script type="text/javascript">
+  $(document).ready(function () {
+    getComments({
+      "type": "github",
+      "user": "leinlin",
+      "repo": "leinlin.github.io",
+      "client_id": "aee134bdfb54c4ef5826",
+      "client_secret": "4af1d3f2b82dccc028c49715becc01e611afbe43",
+      "no_comment": "这个页面还没有评论，现在就去评论吧！",
+      "go_to_comment": "去评论",
+      "issue_title": "",
+      "btn_class": "button",
+      "comments_target": "#comment-thread"
+    });
+    marked.setOptions({
+      "highlight": function (code, lang) {
+        return hljs.highlightAuto(code).value;
+      }
+    });
+    function mark() {
+      var markdowns = document.getElementsByClassName("markdown");
+      for (var i = 0; i < markdowns.length; ++i){
+        if (markdowns[i].innerHTML) {
+          markdowns[i].innerHTML = marked(markdowns[i].innerHTML);
+        }
+      }
+    }
+    window.addEventListener("DOMContentLoaded", mark, false);
+    window.addEventListener("load", mark, false);
+  });
+  </script>
+  
+  
+</div>
+
+
+
+  
+</div>
+
+          </div>
+          
+          
+          
+<aside class="sidebar" id="sidebar" style="background: url(/images/background.png);">
+  
+  <div class="search">
+    <div class="form-group">
+      <i class="fas fa-search"></i><input type="search" id="search-input" name="q" results="0" placeholder="搜索" class="form-control"/>
+    </div>
+  </div>
+  <div class="search-result-box" id="search-result"></div>
+  
+  
+<div class="info sidebar-item" id="info">
+  
+  <img class="author-avatar" src="/images/avatar.jpg" alt="leinlin">
+  
+  <h1 class="author-name">leinlin</h1>
+  <h2 class="author-description"></h2>
+  <div class="site-count">
+    
+    
+    
+    
+    <div class="categories-count count-block">
+      <div class="site-count-title">分类</div>
+      <div><a href="/categories/">11</a></div>
+    </div>
+    
+    
+  </div>
+  
+  <div class="rss">
+    <a class="rss-link button sidebar-item" href="/atom.xml"><i class="fas fa-rss"></i>RSS</a>
+  </div>
+  
+</div>
+
+
+  <div class="sidebar-sticky">
+    
+    
+    
+    
+    
+    <hr>
+    <div class="post-toc sidebar-item" id="toc-div">
+      <div><i class="fas fa-list-ol"></i>文章目录</div>
+      <div class="post-toc-content"><ol class="list-group toc"><li class="toc-item toc-level-1"><a class="list-group-item toc-link" href="#HDRP-HairShader%E4%BB%A3%E7%A0%81%E7%BB%93%E6%9E%84"><span class="toc-text">HDRP HairShader代码结构</span></a><ol class="list-group toc-child"><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#%E5%A4%B4%E5%8F%91%E6%B8%B2%E6%9F%93%E9%83%A8%E5%88%86%E4%BB%A3%E7%A0%81"><span class="toc-text">头发渲染部分代码</span></a><ol class="list-group toc-child"><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#Shader-Pass-Forward"><span class="toc-text">Shader Pass Forward</span></a><ol class="list-group toc-child"><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#LightLoop"><span class="toc-text">LightLoop</span></a></li></ol></li></ol></li></ol></li></ol></div>
+    </div>
+    
+    
+    
+    <hr>
+    <div class="social-link sidebar-item">
+      <div><i class="far fa-address-card"></i>社交链接</p></div>
+      <ul>
+        
+        <li><i class="fab fa-github"></i><a href="https://leinlin.github.com/" target="_blank">GitHub</a></li>
+        
+      </ul>
+    </div>
+    
+    
+  </div>
+</aside>
+
+
+          
+        </div>
+      </div>
+    </main>
+    
+<footer id="footer" class="footer" style="background: #33363b;">
+  <div class="container">
+    <div class="back-to-top">
+      <button id="back-to-top"><i class="fas fa-angle-double-up" aria-label="回到顶部"></i></button>
+    </div>
+    <div class="footer-container">
+      <div class="footer-left">
+        <div class="copyright">
+          <span class="author">leinlin</span><span class="year"><i class="far fa-copyright"></i>2022</span>
+        </div>
+        
+        <div class="busuanzi">
+          <span id="busuanzi_container_site_pv"><i class="fas fa-eye" aria-label="站点点击量" aria-hidden="false"></i><span id="busuanzi_value_site_pv"></span></span><span id="busuanzi_container_site_uv"><i class="fas fa-user" aria-label="站点用户数" aria-hidden="false"></i><span id="busuanzi_value_site_uv"></span></span><span id="busuanzi_container_page_pv"><i class="far fa-file-alt"></i><span id="busuanzi_value_page_pv" aria-label="页面点击量" aria-hidden="false"></span></span>
+        </div>
+        
+      </div>
+      <div class="footer-right">
+        <div class="custom-info">
+          
+          托管于<i class="fab fa-github-alt"></i><a href="https://pages.github.com/" target="_blank">GitHub Pages</a>
+          
+        </div>
+        <div class="powered-by">
+          由 <a href="https://hexo.io/" target="_blank">Hexo</a> 强力驱动 | 主题 <a href="https://github.com/AlynxZhou/hexo-theme-aria/" target="_blank">ARIA</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+  <script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

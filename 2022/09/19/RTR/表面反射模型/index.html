@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#33363b">
+    <meta name="msapplication-TileColor" content="#33363b">
+    
+    
+    
+    
+    <meta name="keywords" content="leinlin, ARIA, Hexo">
+    
+    
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png">
+    
+    
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicons/android-chrome-192x192.png">
+    
+    
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png">
+    
+    
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png">
+    
+    
+    <link rel="mask-icon" href="/favicons/safari-pinned-tab.svg" color="#33363b">
+    
+    
+    <link rel="manifest" href="/favicons/site.webmanifest">
+    
+    
+    <meta name="msapplication-config" content="/favicons/browserconfig.xml">
+    
+    
+    <link rel="alternate" href="/atom.xml" title="leinlin的小笔记" type="application/atom+xml" />
+    
+    
+    <link rel="shortcut icon" type="image/x-icon" href="/favicons/favicon.ico">
+    
+    
+    <link rel="stylesheet" type="text/css" href="/css/normalize.css">
+    <link rel="stylesheet" type="text/css" href="/css/index.css">
+    
+    <link rel="stylesheet" type="text/css" href="/css/sidebar.css">
+    
+    
+<link rel="stylesheet" type="text/css" href="/css/page.css">
+<link rel="stylesheet" type="text/css" href="/css/post.css">
+
+    <link rel="stylesheet" type="text/css" href="/css/custom.css">
+    <link rel="stylesheet" type="text/css" href="/css/atom-one-light.css">
+    <link rel="stylesheet" type="text/css" href="/css/lightgallery.min.css">
+    <script type="text/javascript" src="/js/jquery.min.js"></script>
+    <script defer type="text/javascript" src="/js/util.js"></script>
+    <script defer type="text/javascript" src="/js/clipboard.min.js"></script>
+    <script defer type="text/javascript" src="/js/scrollspy.js"></script>
+    <script defer type="text/javascript" src="/js/fontawesome-all.min.js"></script>
+    <script defer type="text/javascript" src="/js/lightgallery.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-fullscreen.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-hash.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-pager.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-thumbnail.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-zoom.min.js"></script>
+    
+    <script defer src="/js/busuanzi.pure.mini.js"></script>
+    
+    
+    <script defer type="text/javascript" src="/js/search.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function () {
+      var searchPath = "search.xml";
+      if (searchPath.length === 0) {
+        searchPath = "search.xml";
+      }
+      var path = "/" + searchPath;
+      searchFunc(path, "search-input", "search-result");
+    });
+    </script>
+    
+    
+    
+    <script defer type="text/javascript" src="https://cdn.staticfile.org/MathJax/MathJax-2.6-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ["$","$"], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ["script", "noscript", "style", "textarea", "pre", "code"]
+      }
+    });
+    </script>
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for (i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += " has-jax";
+      }
+    });
+    </script>
+    
+    
+    <script defer type="text/javascript" src="/js/index.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function () {
+      var cb = null;
+      var els = $(".post figure.highlight");
+      if (els.length) {
+        // Enabled Hexo highlight line number.
+        $(els).each(function (i, e) {
+          // $(e).before("<button class=\"copy button\">复制</button>");
+          $(e).before([
+            "<div class=\"code-titlebar\">",
+              "<div class=\"titlebar-left\">",
+                "<button class=\"copy\">复制</button>",
+              "</div>",
+            "</div>"
+          ].join(""));
+        });
+        cb = new ClipboardJS("button.copy", {
+          "target": function (trigger) {
+              // Get target element by DOM API.
+              return trigger.parentNode.parentNode.nextElementSibling.firstChild.firstChild.firstChild.lastChild.firstChild.firstChild;
+          }
+        });
+      } else {
+        // Disabled Hexo highlight line number.
+        els = $(".post pre code");
+        $(els).each(function (i, e) {
+          // Add button before pre, not code.
+          // $(e).parent().before("<button class=\"copy button\">复制</button>");
+          $(e).before([
+            "<div class=\"code-titlebar\">",
+              "<div class=\"titlebar-left\">",
+                "<button class=\"copy\" >复制</button>",
+              "</div>",
+              "<div class=\"titlebar-right\">",
+                "<button class=\"button-dot dot-minimize\" aria-label=\"Decoration\"></button>",
+                "<button class=\"button-dot dot-maximize\" aria-label=\"Decoration\"></button>",
+                "<button class=\"button-dot dot-close\" aria-label=\"Decoration\"></button>",
+              "</div>",
+            "</div>"
+          ].join(""));
+        });
+        cb = new ClipboardJS("button.copy", {
+          "target": function (trigger) {
+              // Get target element by DOM API.
+              return trigger.parentNode.parentNode.nextElementSibling;
+          }
+        });
+      }
+      cb.on("success", function (e) {
+        e.clearSelection();
+        var trigger = e.trigger;
+        // Change button text as a user tip.
+        trigger.innerHTML = "已复制";
+        $(trigger).addClass("copied");
+        // Change button text back;
+        setTimeout(function () {
+          trigger.innerHTML = "复制";
+          $(trigger).removeClass("copied");
+        }, 1500);
+      });
+    });
+    </script>
+    
+    <script defer type="text/javascript" src="/js/custom.js"></script>
+    <title> | leinlin的小笔记</title>
+  <meta name="generator" content="Hexo 6.2.0"></head>
+  <body itemscope itemtype="http://schema.org/WebPage" lang="zh_CN"  data-spy="scroll" data-target=".list-group">
+    
+<header id="header" class="header" style="background: #33363b;">
+  <div class="container">
+    <div class="header-container">
+      <div class="header-title">
+        <h1 class="title"><a href="/">leinlin的小笔记</a></h1>
+        <h2 class="subtitle"></h2>
+      </div>
+      
+    </div>
+    <nav id="nav" class="nav">
+      <a id="nav-toggle" class="nav-toggle" aria-hidden="true"><i class="fas fa-bars" aria-label="切换导航栏"></i></a>
+      <ul id="menu" role="menubar" aria-hidden="false">
+        
+        <li role="menuitem"><a href="/"><i class="fas fa-home"></i><span class="menu-text">首页</span></a></li>
+        
+        <li role="menuitem"><a href="/categories/"><i class="fas fa-th-list"></i><span class="menu-text">分类</span></a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</header>
+
+
+    <main id="main" class="main">
+      <div class="container">
+        <div class="main-container">
+          <div class="content">
+            
+<div id="post" class="page">
+  
+  <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
+    <div class="post-block">
+      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/09/19/RTR/%E8%A1%A8%E9%9D%A2%E5%8F%8D%E5%B0%84%E6%A8%A1%E5%9E%8B/">
+      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+       <meta itemprop="name" content="leinlin">
+       <meta itemprop="description" content="">
+       <meta itemprop="image" content="/images/avatar.jpg">
+      </span>
+      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+       <meta itemprop="name" content="leinlin的小笔记">
+      </span>
+    </div>
+    <header class="post-header">
+      <h1 class="post-title" itemprop="name headline"></h1>
+      <div class="post-meta">
+        
+        <span class="post-date">
+          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2022-09-19T19:53:33+08:00">2022-09-19 19:53:33</time></span>
+        </span>
+        
+        
+        
+        
+        
+      </div>
+    </header>
+    <main class="post-main" itemprop="articleBody">
+      <h1 id="表面反射模型基础推到"><a href="#表面反射模型基础推到" class="headerlink" title="表面反射模型基础推到"></a>表面反射模型基础推到</h1><p>这篇文章主要用来推导、描述表面反射模型：包括PBR的BRDF、BSSRDF、BSDF以及风格化渲染的反射模型、二次元渲染的反射模型等等内容。</p>
+<p>光线照射到物体表面，发生反射，之后反射光线进入人眼，最终形成人眼对物体的感觉。</p>
+<p><strong>所以最重要的就是光线如何在不同的材质上进行反射，也就是我们现在要研究的反射模型。</strong></p>
+<h2 id="BRDF"><a href="#BRDF" class="headerlink" title="BRDF"></a>BRDF</h2><p><strong>双向反射分布函数（BRDF）</strong>就是最常用的对表面反射的定义。</p>
+<p>BRDF描述的问题：当沿着$w_i$方向入射辐射度为$$ L_{(p,w_i)} $$时，朝向观察者且方向为$$ w_o $$的离开当前表面的辐射度。</p>
+<p>假设$ w_i $为微分方向视椎体，$$ p $$为入射点，则p处的微分入射辐射度为：</p>
+<p>$$ dE(p,w_i) &#x3D; L_i(p,w_i)cos(\theta_i)dw_i $$</p>
+<p>$ L_i(p,w_i) $ 单位辐射角入射光强度，$ cos(\theta_i) $法线和入射角夹角，$ dw_i $为微分方向视椎体</p>
+<p>我们很容易想到，反射光线和入射光线强度是成正比的：</p>
+<p>$$ dE(p,w_i) \propto dL_o(p,w_o) $$ </p>
+<p>所以当给定一对如何方向和反射方向，BDRF函数可以写作：</p>
+<p>$$ f_r(p,w_o,w_i) &#x3D; \frac{dL_o(p,w_o)}{dE(p,w_i)} &#x3D; \frac{dL_o(p,w_o)}{L_i(p,w_i)cos(\theta_i)dw_i} $$</p>
+<p>上面是BRDF函数，而物理的BRDF函数同时还需要满足：</p>
+<ul>
+<li><p>互易性：$$ f_r(p,w_o,w_i) &#x3D; f_r(p,w_i,w_o) $$</p>
+</li>
+<li><p>能量守恒。</p>
+</li>
+</ul>
+<p>最终的反射光为：</p>
+<p>$$ L_o{(p,w_o)} &#x3D; \int_{\cal H(n)} f_r(p,w_o,w_i)L_i(p,w_i)cos(\theta_i)dw_i $$</p>
+<p>上面的$$ w_o $$只局限在反射方向，就是法线方向的上半球$$ \cal H(n) $$。</p>
+<h2 id="BTDF"><a href="#BTDF" class="headerlink" title="BTDF"></a>BTDF</h2><p>而表面还可能有透视光线，即穿透到法线放线下半球的光线，我们用<strong>双向透射分布函数表述（BTDF）</strong>。$$ w_o $$和$$ w_i $$分布于法线两边。</p>
+<ul>
+<li>BTDF不需要满足互易性：从物理意义上来说就是，透射两边的折射率不同。</li>
+</ul>
+<p>最终的透射光为：</p>
+<p>​			$$ L_o{(p,w_o)} &#x3D; \int_{\Theta(n)} f_t(p,w_o,w_i)L_i(p,w_i)|cos(\theta_i)|dw_i $$</p>
+<p>上面的$$w_o$$只局限在透射方向，就是法线方向的下半球$$ \Theta(n) $$。</p>
+<h2 id="BSSRDF"><a href="#BSSRDF" class="headerlink" title="BSSRDF"></a>BSSRDF</h2><p>很多材质还会表现出<strong>下表面的光线传输</strong>。<strong>双向散射表面反射分布函数（BSSRDF）</strong>。</p>
+<p>与反射分布函数和透射分布函数不同的是：<strong>散射的能量还需要考虑从其他附近入射点传递来的能量</strong>。</p>
+<p>此时，$$ f_r(p,w_o,w_i) &#x3D; \frac{dL_o(p,w_o)}{dE(p,w_i)}  $$  只考虑了当前点的入射，还需要考虑附近点的积累$$ S(p_o,w_o,p_i,w_i) &#x3D; \frac{dL_o(p_o,w_o)}{dE(p_i,w_i)}  $$。</p>
+<p>也就是说，在附近某一点$ p_i $ 处入射的能量与他最终离开$ p_o $点时能量的比例就是$$ S(p_o,w_o,p_i,w_i) $$。</p>
+<p>所以这个时候的积分需要考虑的不再是一个点，还需要考虑一片区域：</p>
+<p>​			$$  L_o{(p_o,w_o)} &#x3D; \int_A  \int_{\Theta(n)} S(p_o,w_o,p_i,w_i) L_i(p_i,w_i)|cos(\theta_i)|dw_i dA $$</p>
+<p>这个公式有如下特点：</p>
+<ul>
+<li>随着$p_o$和$ p_i$的距离增加S的值会变小</li>
+<li>通常算法会通过一个卷积（基于几何空间或者基于图片空间）来表述，周围表面受光对当前点的影响。</li>
+</ul>
+<h1 id="辐射度理论"><a href="#辐射度理论" class="headerlink" title="辐射度理论"></a>辐射度理论</h1><p>为什么将辐射度理论，<strong>就是为了更好的理解光线的发射与吸收的多少。</strong></p>
+<p>辐射通量（$$ \Phi $$，也叫作功率）：单位时间内，穿过某一表面或空间的全部能量。</p>
+<p>辐射度（$$ W&#x2F;m^2 $$）：表示穿过某一表面的<strong>通量面密度</strong>（可以理解成穿过单位面积的光线数量，<strong>可以理解亮度、光照强度</strong>）。</p>
+<p>一个点光源发射光线，在具体他为r的位置，出辐射度为：</p>
+<p>$$ E &#x3D; \Phi &#x2F; 4\pi r^2 $$</p>
+<p>所以<strong>光照强度</strong>（就是单位面积光线数量，也就是<strong>通量面密度</strong>）按照距离的平方进行衰减的。</p>
+<h2 id="Lambertian定理"><a href="#Lambertian定理" class="headerlink" title="Lambertian定理"></a>Lambertian定理</h2><h3 id="入射辐射度"><a href="#入射辐射度" class="headerlink" title="入射辐射度"></a>入射辐射度</h3><p><strong>Lambertian定理：到达表面的光线数量正比与光线方向和法线方向夹角的余弦。</strong></p>
+<p>如下图，一个<strong>面光源</strong>以$\theta$角度照射表面，面光源面积为$ A $,辐射通量为$ \Phi $，对应接受光照的表面面积为$ A1 $。<strong>如果A足够的小</strong>（这一点非常重要），那么对于A1内的点，入辐射度<strong>约</strong>为 $$ E &#x3D; \frac{\Phi\cos(\theta)}{A} $$ 。</p>
+<p><img src="/../../images/img/brdf_inlight.jpg" alt="brdf_inlight"></p>
+<h3 id="出射辐射度"><a href="#出射辐射度" class="headerlink" title="出射辐射度"></a>出射辐射度</h3><p><strong>Lambertian反射</strong>：反射方向的单位<strong>辐射度</strong>均匀分布&#x3D; $$ \frac{接收的光线强度}{\pi} $$ </p>
+<p>如下图，假如A处的<strong>光线是按照各个方向平均反射</strong>的，那么A1和A2接收到的<strong>光线总数</strong>是一样多的。但是，由于A1和A2的<strong>面积不一样</strong>，所以他们的<strong>辐射度</strong>（<strong>光照强度</strong>，<strong>亮度</strong>）是不一样的！！！</p>
+<p><strong>而Lambertian反射要求的是辐射度一样</strong>，<strong>所以光线的反射数量与反射方向和法线方向夹角的余弦成正比。</strong></p>
+<p><img src="/../../images/img/brdf_outlight.jpg" alt="brdf_outlight"></p>
+<h1 id="表面反射函数实践"><a href="#表面反射函数实践" class="headerlink" title="表面反射函数实践"></a>表面反射函数实践</h1><p>首先BDRF的积分可以简化为求和，因为游戏引擎中光照都是通过有限个光源计算的，不在需要<strong>微分方向视椎体</strong>：</p>
+<p>$$ L_o{(p,w_o)} &#x3D; \int_{\cal H(n)} f_r(p,w_o,w_i)L_i(p,w_i)cos(\theta_i)dw_i $$</p>
+<p>变成：</p>
+<p>$$ L_o{(p,w_o)} &#x3D; \sum_{w_i} f_r(p,w_o,w_i)L_i(p,w_i)cos(\theta_i) $$</p>
+<p>$$ w_i $$ :为某个入射光方向。</p>
+<p>$$ L_i(p,w_i) $$  :  一般就是经过<strong>距离衰减</strong>和<strong>阴影遮挡</strong>计算之后的光亮度。</p>
+<p>$$ cos(\theta_i) $$ 	: 就是$$ dot(w_i,w_o) $$</p>
+<p>另一点需要注意的是，RGB通道的每个分量的颜色都是独立计算的。</p>
+<p>下面我们将讨论具体的$$  f_r(p,w_o,w_i) $$都是怎么计算的。</p>
+<h2 id="Lambertian反射"><a href="#Lambertian反射" class="headerlink" title="Lambertian反射"></a>Lambertian反射</h2><p>Lambertian模型可以作为最简单的BRDF模型，他是能量守恒的。</p>
+<p>$$ f_{Lambertian}(p,w_o,w_i) &#x3D; \frac{R}{\pi} $$</p>
+<p>$$ R $$  :表示的是表面反射率（Albedo\Diffuse），在实际中就是RGB通道的颜色值。</p>
+<h3 id="Lambertian为什么除-pi"><a href="#Lambertian为什么除-pi" class="headerlink" title="Lambertian为什么除$ \pi $"></a>Lambertian为什么除$ \pi $</h3><p>首先分析一种错误的理解：反射半球的表面积应该是$$ 2\pi r^2 $$，反射射光照总能量比例为$$R$$，各个方向平均反射，所以最终lambertian反射强度应该是:</p>
+<p>$$ \frac{R}{2\pi} $$</p>
+<p>这种理解错误的原因是：Lambertian考虑的是反射辐通量（光照强度）各个方向恒定，而不是反射总辐通量R被平均分。</p>
+<p>那么这个$$ \frac{R}{\pi} $$是怎么来的？</p>
+<p>对<strong>幅通量</strong>根据Lambertian定律（反射幅通量和$ cos(\theta) $成正比）进行半球积分得到表面接收的<strong>辐通量</strong>。</p>
+<p><img src="/../../images/img/Lamberts-cosine-law.png" alt="Lamberts-cosine-law"></p>
+<p>对所有方向的辐通量进行积分就可以得到反射全部的总辐射度：</p>
+<p>$$ L_o&#x3D; \int  f_{Lambertian}(p,w_o,w_i) cos\theta dw_o $$	</p>
+<p><strong>有一个需要理解的地方：因某个方向的出辐射度为X（面积小），那么对其贡献辐射度的表面上的辐射度为$Xcos\theta$（面积大所以贡献的辐射度少）。</strong></p>
+<p>因为，Lambertian的brdf($$ f_{Lambertian}(p,w_o,w_i) $$ )是常数：</p>
+<p>$$ L_o&#x3D; \int  f_{Lambertian}(p,w_o,w_i)  cos\theta dw_o $$	</p>
+<p>进行移项：</p>
+<p>$$ \frac{L_o}{f_{Lambertian}(p,w_o,w_i) } &#x3D; \int cos \theta dw_o $$</p>
+<p>下面对：反射半球半球积分$$ \int cos \theta dw_o $$ 进行拆解和仔细计算：</p>
+<p>$$ \int_0^{2\pi} \int_0^{\frac{\pi}{2} } cos \theta \ sin \theta d \theta d \phi   $$</p>
+<p>$$ &#x3D; 4  \int_0^{\frac{\pi}{2}}  \int_0^{\frac{\pi}{2} }  cos \theta  sin\theta d \theta d \phi $$</p>
+<p>$$ &#x3D;   \int_0^{\frac{\pi}{2}}  \int_0^{\frac{\pi}{2} }  sin 2\theta d 2\theta d \phi $$</p>
+<p>$$ &#x3D; \int_0^{\frac{\pi}{2}}  \int_0^{\frac{\pi}{2} }  d(-cos 2\theta  )d \phi $$</p>
+<p>$$ &#x3D;(-cos \pi + cos 0) *\frac{\pi}{2} $$</p>
+<p>$$ &#x3D;\pi $$</p>
+<p>所以：</p>
+<p>$$ \frac{L_o}{f_{Lambertian}(p,w_o,w_i)} &#x3D; \pi $$</p>
+<p>$$f_{Lambertian}(p,w_o,w_i)  &#x3D;  \frac{L_o}{ \pi} $$</p>
+<p>假设入射辐通量为1，表面反射率为R（入射光被反射的比例），则反射辐通量（反射之后分布到各个方向后的比例）为：</p>
+<p>$$f_{Lambertian}(p,w_o,w_i) &#x3D;  \frac{R}{ \pi} $$</p>
+<p>至此，推导完毕。</p>
+<h2 id="菲涅尔方程"><a href="#菲涅尔方程" class="headerlink" title="菲涅尔方程"></a>菲涅尔方程</h2><p>菲涅尔等式主要用来求解反射和透射系数。</p>
+<p>首先需要，两种材质的折射率$$ \eta_i $$和$$ \eta_t $$ ,一般情况下随着光的波长折射率会有变化。</p>
+<p>菲涅尔定律：</p>
+<p>$$ \eta_i \sin(\theta_i) &#x3D; \eta_t \sin(\theta_t) $$</p>
+<p>反射定律：</p>
+<p>$$\theta_i &#x3D; \theta_o$$</p>
+<h3 id="Unity-Fresnel"><a href="#Unity-Fresnel" class="headerlink" title="Unity Fresnel"></a>Unity Fresnel</h3><figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs c">real3 <span class="hljs-title function_">F_Schlick</span><span class="hljs-params">(real3 f0, real f90, real u)</span><br>&#123;<br>    real x = <span class="hljs-number">1.0</span> - u;<br>    real x2 = x * x;<br>    real x5 = x * x2 * x2;<br>    <span class="hljs-keyword">return</span> f0 * (<span class="hljs-number">1.0</span> - x5) + (f90 * x5);        <span class="hljs-comment">// sub mul mul mul sub mul mad*3</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="微表面模型-TODO"><a href="#微表面模型-TODO" class="headerlink" title="微表面模型 TODO"></a>微表面模型 TODO</h2><p>整体BRDF模型：</p>
+<p>$$f &#x3D; \frac{D()G()F()}{4cos\theta_o cos\theta_i}$$</p>
+<p>下面描述整体推到过程:</p>
+<h3 id="通量-Phi"><a href="#通量-Phi" class="headerlink" title="通量$ \Phi $"></a>通量$ \Phi $</h3><p>第一个概念是通量，单位时间穿过一个表面上光线的<strong>总量</strong>。（也就是功率）。</p>
+<h3 id="入射辐射度-L-i-和反射辐射度-L-o"><a href="#入射辐射度-L-i-和反射辐射度-L-o" class="headerlink" title="入射辐射度$ L_i $和反射辐射度$ L_o $"></a>入射辐射度$ L_i $和反射辐射度$ L_o $</h3><p>表示<strong>单位时间单位面积</strong>入射（反射）表面接受（反射）的光线量。</p>
+<p>如果入射表面面积为$$ A $$， 则：$$ L_i &#x3D; \frac{\Phi}{A} $$</p>
+<p>写成微分形式：$$ L_i &#x3D; \frac{d \Phi}{d A} $$</p>
+<h3 id="立体角-w-和光强"><a href="#立体角-w-和光强" class="headerlink" title="立体角$ w $和光强"></a>立体角$ w $和光强</h3><p>光线传过单位立体角的数量。就是光强。$$ E &#x3D; \frac{\Phi}{w} $$微分形式：$$ E &#x3D; \frac{d \Phi}{d w} $$</p>
+<h3 id="辐射度-L"><a href="#辐射度-L" class="headerlink" title="辐射度$ L $"></a>辐射度$ L $</h3><p>单位时间内传过单位立体角单位面积的光线量。</p>
+<p>$$ L &#x3D;\frac{d\Phi }{dw dA_{w} } $$         </p>
+<p>$$ d\Phi_i&#x3D;  L(w_i)dw_i cos \theta_i dA $$ </p>
+<p>$$ d\Phi_o&#x3D;  L(w_o)dw_o cos \theta_o dA $$ </p>
+<h3 id="菲涅尔公式F"><a href="#菲涅尔公式F" class="headerlink" title="菲涅尔公式F"></a>菲涅尔公式F</h3><p>表示某一角度下光线被反射、折射的比例。 $$ \Phi_i $$为入射通量，$$ \Phi_o $$反射通量。则：</p>
+<p>$$ \Phi_o &#x3D; F\Phi_i $$</p>
+<h3 id="BDRF公式"><a href="#BDRF公式" class="headerlink" title="BDRF公式"></a>BDRF公式</h3><p>​				$$ f_r(p,w_o,w_i) &#x3D; \frac{L_o(p,w_o)}{dE(p,w_i)} &#x3D; \frac{L_o(p,w_o)}{L_i(p,w_i)cos(\theta_i)dw_i} $$</p>
+<p>这里的$ L_o $ 没有积分符号，是因为我们现在计算的是某一条线如何光线与某一条反射光线。</p>
+<h3 id="BDRF推导"><a href="#BDRF推导" class="headerlink" title="BDRF推导"></a>BDRF推导</h3><p>在微面元理论中，我们的$ dA $由很多微面元组成，并且这些面元只有<strong>全镜面反射</strong>，只有满足$$ w_h &#x3D; w_n $$的表面才能被反射出去。我们<strong>用统计模型$$D(w_h) $$来描述某个角度的面片比例</strong>。 那么入射的辐通量就需要考虑面片分布。则：</p>
+<p>$$ d\Phi_i&#x3D;  L(w_i)dw_i D(w_h) dw_hcos \theta_o dA $$ </p>
+<p>半角向量和出射角向量微分的对应关系:</p>
+<p>$$dw_h &#x3D; \frac{dw_o}{4cos(\theta_o)}$$</p>
+<p><strong>1. 菲涅尔公式+BRDF公式：</strong></p>
+<p>$$ L(w_o)dw_o cos \theta_o dA &#x3D;  F L(w_i)dw_i D(w_h) dw_hcos \theta_o dA $$</p>
+<p><strong>2. 半角向量和出射角向量微分的对应关系:</strong></p>
+<p>$$ 4 cos \theta_o L(w_o) cos \theta_o &#x3D;  F L(w_i)dw_i D(w_h)cos \theta_h $$</p>
+<p><strong>3. 通过移项、约分构造brdf</strong></p>
+<p>$$ \frac{L_o(p,w_o)}{L_i(p,w_i)cos(\theta_i)dw_i}  &#x3D; \frac{ F D(w_h)  }{4  cos \theta_o cos \theta_i} $$</p>
+<p><strong>4.除了上面的F、D之外，由于几何结构，还有一些光线由于几何结构被：masking 和 shadowing。所以这个比例为G项。</strong></p>
+<p><strong>5.所以最终结果为：</strong></p>
+<p>$$ brdf &#x3D;  \frac{L_o(p,w_o)}{L_i(p,w_i)cos(\theta_i)dw_i}  &#x3D; \frac{ F D(w_h)  G}{4  cos \theta_o cos \theta_i} $$</p>
+<h3 id="法线分布函数：normal-distribution-function"><a href="#法线分布函数：normal-distribution-function" class="headerlink" title="法线分布函数：normal distribution function"></a>法线分布函数：normal distribution function</h3><p>D项：法线分布函数用来描述，法线方向在表面上的分布情况，积分结果为1。</p>
+<h3 id="几何衰减：Evaluate-shadowing-x2F-masking-term"><a href="#几何衰减：Evaluate-shadowing-x2F-masking-term" class="headerlink" title="几何衰减：Evaluate shadowing&#x2F;masking term"></a>几何衰减：Evaluate shadowing&#x2F;masking <strong>term</strong></h3><p>G项：用来描述Shadow和masking项。用来描述不同的几何结构有多少光线被遮挡。</p>
+<h3 id="菲涅尔项：Fresnel"><a href="#菲涅尔项：Fresnel" class="headerlink" title="菲涅尔项：Fresnel"></a>菲涅尔项：Fresnel</h3><p>F项：用来描述在不同材质，不同角度上，反射光线所占的比例。</p>
+<h2 id="unity中的实现"><a href="#unity中的实现" class="headerlink" title="unity中的实现"></a>unity中的实现</h2><h3 id="Unity-Specular-Term"><a href="#Unity-Specular-Term" class="headerlink" title="Unity Specular Term"></a>Unity Specular Term</h3><figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-keyword">case</span> <span class="hljs-number">0</span>: specularTerm = ComputeWard(H, LdotH, NdotL, NdotV, positionWS, preLightData, bsdfData); <span class="hljs-keyword">break</span>;<br><span class="hljs-keyword">case</span> <span class="hljs-number">1</span>: specularTerm = ComputeBlinnPhong(H, LdotH, NdotL, NdotV, positionWS, preLightData, bsdfData); <span class="hljs-keyword">break</span>;<br><span class="hljs-keyword">case</span> <span class="hljs-number">2</span>: specularTerm = ComputeCookTorrance(H, LdotH, NdotL, NdotV, positionWS, preLightData, bsdfData); <span class="hljs-keyword">break</span>;<br><span class="hljs-keyword">case</span> <span class="hljs-number">3</span>: specularTerm = ComputeGGX(H, LdotH, NdotL, NdotV, positionWS, preLightData, bsdfData); <span class="hljs-keyword">break</span>;<br><span class="hljs-keyword">case</span> <span class="hljs-number">4</span>: specularTerm = ComputePhong(H, LdotH, NdotL, NdotV, positionWS, preLightData, bsdfData); <span class="hljs-keyword">break</span>;<br></code></pre></td></tr></table></figure>
+
+<h3 id="Unity-Specular-Term-1"><a href="#Unity-Specular-Term-1" class="headerlink" title="Unity Specular Term"></a>Unity Specular Term</h3><figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs c">Lambert<br>OrenNayar<br></code></pre></td></tr></table></figure>
+
+
+    </main>
+    <footer class="post-footer">
+      
+    </footer>
+  </article>
+  
+  
+  <nav class="page-nav">
+    <div class="page-nav-next page-nav-item">
+      
+      <a href="/2022/09/19/RTR/%E8%92%99%E7%89%B9%E5%8D%A1%E6%B4%9B%E6%96%B9%E6%B3%95/" rel="next" title=""><i class="fas fa-angle-left"></i><span class="nav-title"></span></a>
+      
+    </div>
+    <div class="page-nav-prev page-nav-item">
+      
+      <a href="/2022/09/19/RTR/%E9%87%8D%E8%A6%81%E5%BA%A6%E9%87%87%E6%A0%B7/" rel="prev" title=""><span class="nav-title"></span><i class="fas fa-angle-right"></i></a>
+      
+    </div>
+  </nav>
+  
+  
+  
+
+<div class="comments" id="comments">
+  
+  
+  <div class="commentjs" id="comment-thread"></div>
+  <link rel="stylesheet" href="/css/commentjs.css">
+  <script defer type="text/javascript" src="/js/marked.min.js"></script>
+  <script defer type="text/javascript" src="/js/timeago.min.js"></script>
+  <script defer type="text/javascript" src="/js/highlight.min.js"></script>
+  <script defer type="text/javascript" src="/js/commentjs.js"></script>
+  <script type="text/javascript">
+  $(document).ready(function () {
+    getComments({
+      "type": "github",
+      "user": "leinlin",
+      "repo": "leinlin.github.io",
+      "client_id": "aee134bdfb54c4ef5826",
+      "client_secret": "4af1d3f2b82dccc028c49715becc01e611afbe43",
+      "no_comment": "这个页面还没有评论，现在就去评论吧！",
+      "go_to_comment": "去评论",
+      "issue_title": "",
+      "btn_class": "button",
+      "comments_target": "#comment-thread"
+    });
+    marked.setOptions({
+      "highlight": function (code, lang) {
+        return hljs.highlightAuto(code).value;
+      }
+    });
+    function mark() {
+      var markdowns = document.getElementsByClassName("markdown");
+      for (var i = 0; i < markdowns.length; ++i){
+        if (markdowns[i].innerHTML) {
+          markdowns[i].innerHTML = marked(markdowns[i].innerHTML);
+        }
+      }
+    }
+    window.addEventListener("DOMContentLoaded", mark, false);
+    window.addEventListener("load", mark, false);
+  });
+  </script>
+  
+  
+</div>
+
+
+
+  
+</div>
+
+          </div>
+          
+          
+          
+<aside class="sidebar" id="sidebar" style="background: url(/images/background.png);">
+  
+  <div class="search">
+    <div class="form-group">
+      <i class="fas fa-search"></i><input type="search" id="search-input" name="q" results="0" placeholder="搜索" class="form-control"/>
+    </div>
+  </div>
+  <div class="search-result-box" id="search-result"></div>
+  
+  
+<div class="info sidebar-item" id="info">
+  
+  <img class="author-avatar" src="/images/avatar.jpg" alt="leinlin">
+  
+  <h1 class="author-name">leinlin</h1>
+  <h2 class="author-description"></h2>
+  <div class="site-count">
+    
+    
+    
+    
+    <div class="categories-count count-block">
+      <div class="site-count-title">分类</div>
+      <div><a href="/categories/">11</a></div>
+    </div>
+    
+    
+  </div>
+  
+  <div class="rss">
+    <a class="rss-link button sidebar-item" href="/atom.xml"><i class="fas fa-rss"></i>RSS</a>
+  </div>
+  
+</div>
+
+
+  <div class="sidebar-sticky">
+    
+    
+    
+    
+    
+    <hr>
+    <div class="post-toc sidebar-item" id="toc-div">
+      <div><i class="fas fa-list-ol"></i>文章目录</div>
+      <div class="post-toc-content"><ol class="list-group toc"><li class="toc-item toc-level-1"><a class="list-group-item toc-link" href="#%E8%A1%A8%E9%9D%A2%E5%8F%8D%E5%B0%84%E6%A8%A1%E5%9E%8B%E5%9F%BA%E7%A1%80%E6%8E%A8%E5%88%B0"><span class="toc-text">表面反射模型基础推到</span></a><ol class="list-group toc-child"><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#BRDF"><span class="toc-text">BRDF</span></a></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#BTDF"><span class="toc-text">BTDF</span></a></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#BSSRDF"><span class="toc-text">BSSRDF</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="list-group-item toc-link" href="#%E8%BE%90%E5%B0%84%E5%BA%A6%E7%90%86%E8%AE%BA"><span class="toc-text">辐射度理论</span></a><ol class="list-group toc-child"><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#Lambertian%E5%AE%9A%E7%90%86"><span class="toc-text">Lambertian定理</span></a><ol class="list-group toc-child"><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#%E5%85%A5%E5%B0%84%E8%BE%90%E5%B0%84%E5%BA%A6"><span class="toc-text">入射辐射度</span></a></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#%E5%87%BA%E5%B0%84%E8%BE%90%E5%B0%84%E5%BA%A6"><span class="toc-text">出射辐射度</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="list-group-item toc-link" href="#%E8%A1%A8%E9%9D%A2%E5%8F%8D%E5%B0%84%E5%87%BD%E6%95%B0%E5%AE%9E%E8%B7%B5"><span class="toc-text">表面反射函数实践</span></a><ol class="list-group toc-child"><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#Lambertian%E5%8F%8D%E5%B0%84"><span class="toc-text">Lambertian反射</span></a><ol class="list-group toc-child"><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#Lambertian%E4%B8%BA%E4%BB%80%E4%B9%88%E9%99%A4-pi"><span class="toc-text">Lambertian为什么除$ \pi $</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#%E8%8F%B2%E6%B6%85%E5%B0%94%E6%96%B9%E7%A8%8B"><span class="toc-text">菲涅尔方程</span></a><ol class="list-group toc-child"><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#Unity-Fresnel"><span class="toc-text">Unity Fresnel</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#%E5%BE%AE%E8%A1%A8%E9%9D%A2%E6%A8%A1%E5%9E%8B-TODO"><span class="toc-text">微表面模型 TODO</span></a><ol class="list-group toc-child"><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#%E9%80%9A%E9%87%8F-Phi"><span class="toc-text">通量$ \Phi $</span></a></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#%E5%85%A5%E5%B0%84%E8%BE%90%E5%B0%84%E5%BA%A6-L-i-%E5%92%8C%E5%8F%8D%E5%B0%84%E8%BE%90%E5%B0%84%E5%BA%A6-L-o"><span class="toc-text">入射辐射度$ L_i $和反射辐射度$ L_o $</span></a></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#%E7%AB%8B%E4%BD%93%E8%A7%92-w-%E5%92%8C%E5%85%89%E5%BC%BA"><span class="toc-text">立体角$ w $和光强</span></a></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#%E8%BE%90%E5%B0%84%E5%BA%A6-L"><span class="toc-text">辐射度$ L $</span></a></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#%E8%8F%B2%E6%B6%85%E5%B0%94%E5%85%AC%E5%BC%8FF"><span class="toc-text">菲涅尔公式F</span></a></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#BDRF%E5%85%AC%E5%BC%8F"><span class="toc-text">BDRF公式</span></a></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#BDRF%E6%8E%A8%E5%AF%BC"><span class="toc-text">BDRF推导</span></a></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#%E6%B3%95%E7%BA%BF%E5%88%86%E5%B8%83%E5%87%BD%E6%95%B0%EF%BC%9Anormal-distribution-function"><span class="toc-text">法线分布函数：normal distribution function</span></a></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#%E5%87%A0%E4%BD%95%E8%A1%B0%E5%87%8F%EF%BC%9AEvaluate-shadowing-x2F-masking-term"><span class="toc-text">几何衰减：Evaluate shadowing&#x2F;masking term</span></a></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#%E8%8F%B2%E6%B6%85%E5%B0%94%E9%A1%B9%EF%BC%9AFresnel"><span class="toc-text">菲涅尔项：Fresnel</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#unity%E4%B8%AD%E7%9A%84%E5%AE%9E%E7%8E%B0"><span class="toc-text">unity中的实现</span></a><ol class="list-group toc-child"><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#Unity-Specular-Term"><span class="toc-text">Unity Specular Term</span></a></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#Unity-Specular-Term-1"><span class="toc-text">Unity Specular Term</span></a></li></ol></li></ol></li></ol></div>
+    </div>
+    
+    
+    
+    <hr>
+    <div class="social-link sidebar-item">
+      <div><i class="far fa-address-card"></i>社交链接</p></div>
+      <ul>
+        
+        <li><i class="fab fa-github"></i><a href="https://leinlin.github.com/" target="_blank">GitHub</a></li>
+        
+      </ul>
+    </div>
+    
+    
+  </div>
+</aside>
+
+
+          
+        </div>
+      </div>
+    </main>
+    
+<footer id="footer" class="footer" style="background: #33363b;">
+  <div class="container">
+    <div class="back-to-top">
+      <button id="back-to-top"><i class="fas fa-angle-double-up" aria-label="回到顶部"></i></button>
+    </div>
+    <div class="footer-container">
+      <div class="footer-left">
+        <div class="copyright">
+          <span class="author">leinlin</span><span class="year"><i class="far fa-copyright"></i>2022</span>
+        </div>
+        
+        <div class="busuanzi">
+          <span id="busuanzi_container_site_pv"><i class="fas fa-eye" aria-label="站点点击量" aria-hidden="false"></i><span id="busuanzi_value_site_pv"></span></span><span id="busuanzi_container_site_uv"><i class="fas fa-user" aria-label="站点用户数" aria-hidden="false"></i><span id="busuanzi_value_site_uv"></span></span><span id="busuanzi_container_page_pv"><i class="far fa-file-alt"></i><span id="busuanzi_value_page_pv" aria-label="页面点击量" aria-hidden="false"></span></span>
+        </div>
+        
+      </div>
+      <div class="footer-right">
+        <div class="custom-info">
+          
+          托管于<i class="fab fa-github-alt"></i><a href="https://pages.github.com/" target="_blank">GitHub Pages</a>
+          
+        </div>
+        <div class="powered-by">
+          由 <a href="https://hexo.io/" target="_blank">Hexo</a> 强力驱动 | 主题 <a href="https://github.com/AlynxZhou/hexo-theme-aria/" target="_blank">ARIA</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+  <script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

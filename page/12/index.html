@@ -1,0 +1,945 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#33363b">
+    <meta name="msapplication-TileColor" content="#33363b">
+    
+    
+    
+    
+    <meta name="keywords" content="leinlin, ARIA, Hexo">
+    
+    
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png">
+    
+    
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicons/android-chrome-192x192.png">
+    
+    
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png">
+    
+    
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png">
+    
+    
+    <link rel="mask-icon" href="/favicons/safari-pinned-tab.svg" color="#33363b">
+    
+    
+    <link rel="manifest" href="/favicons/site.webmanifest">
+    
+    
+    <meta name="msapplication-config" content="/favicons/browserconfig.xml">
+    
+    
+    <link rel="alternate" href="/atom.xml" title="leinlin的小笔记" type="application/atom+xml" />
+    
+    
+    <link rel="shortcut icon" type="image/x-icon" href="/favicons/favicon.ico">
+    
+    
+    <link rel="stylesheet" type="text/css" href="/css/normalize.css">
+    <link rel="stylesheet" type="text/css" href="/css/index.css">
+    
+    <link rel="stylesheet" type="text/css" href="/css/sidebar.css">
+    
+    
+<link rel="stylesheet" type="text/css" href="/css/page.css">
+<link rel="stylesheet" type="text/css" href="/css/post.css">
+
+    <link rel="stylesheet" type="text/css" href="/css/custom.css">
+    <link rel="stylesheet" type="text/css" href="/css/atom-one-light.css">
+    <link rel="stylesheet" type="text/css" href="/css/lightgallery.min.css">
+    <script type="text/javascript" src="/js/jquery.min.js"></script>
+    <script defer type="text/javascript" src="/js/util.js"></script>
+    <script defer type="text/javascript" src="/js/clipboard.min.js"></script>
+    <script defer type="text/javascript" src="/js/scrollspy.js"></script>
+    <script defer type="text/javascript" src="/js/fontawesome-all.min.js"></script>
+    <script defer type="text/javascript" src="/js/lightgallery.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-fullscreen.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-hash.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-pager.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-thumbnail.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-zoom.min.js"></script>
+    
+    <script defer src="/js/busuanzi.pure.mini.js"></script>
+    
+    
+    <script defer type="text/javascript" src="/js/search.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function () {
+      var searchPath = "search.xml";
+      if (searchPath.length === 0) {
+        searchPath = "search.xml";
+      }
+      var path = "/" + searchPath;
+      searchFunc(path, "search-input", "search-result");
+    });
+    </script>
+    
+    
+    
+    <script defer type="text/javascript" src="https://cdn.staticfile.org/MathJax/MathJax-2.6-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ["$","$"], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ["script", "noscript", "style", "textarea", "pre", "code"]
+      }
+    });
+    </script>
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for (i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += " has-jax";
+      }
+    });
+    </script>
+    
+    
+    <script defer type="text/javascript" src="/js/index.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function () {
+      var cb = null;
+      var els = $(".post figure.highlight");
+      if (els.length) {
+        // Enabled Hexo highlight line number.
+        $(els).each(function (i, e) {
+          // $(e).before("<button class=\"copy button\">复制</button>");
+          $(e).before([
+            "<div class=\"code-titlebar\">",
+              "<div class=\"titlebar-left\">",
+                "<button class=\"copy\">复制</button>",
+              "</div>",
+            "</div>"
+          ].join(""));
+        });
+        cb = new ClipboardJS("button.copy", {
+          "target": function (trigger) {
+              // Get target element by DOM API.
+              return trigger.parentNode.parentNode.nextElementSibling.firstChild.firstChild.firstChild.lastChild.firstChild.firstChild;
+          }
+        });
+      } else {
+        // Disabled Hexo highlight line number.
+        els = $(".post pre code");
+        $(els).each(function (i, e) {
+          // Add button before pre, not code.
+          // $(e).parent().before("<button class=\"copy button\">复制</button>");
+          $(e).before([
+            "<div class=\"code-titlebar\">",
+              "<div class=\"titlebar-left\">",
+                "<button class=\"copy\" >复制</button>",
+              "</div>",
+              "<div class=\"titlebar-right\">",
+                "<button class=\"button-dot dot-minimize\" aria-label=\"Decoration\"></button>",
+                "<button class=\"button-dot dot-maximize\" aria-label=\"Decoration\"></button>",
+                "<button class=\"button-dot dot-close\" aria-label=\"Decoration\"></button>",
+              "</div>",
+            "</div>"
+          ].join(""));
+        });
+        cb = new ClipboardJS("button.copy", {
+          "target": function (trigger) {
+              // Get target element by DOM API.
+              return trigger.parentNode.parentNode.nextElementSibling;
+          }
+        });
+      }
+      cb.on("success", function (e) {
+        e.clearSelection();
+        var trigger = e.trigger;
+        // Change button text as a user tip.
+        trigger.innerHTML = "已复制";
+        $(trigger).addClass("copied");
+        // Change button text back;
+        setTimeout(function () {
+          trigger.innerHTML = "复制";
+          $(trigger).removeClass("copied");
+        }, 1500);
+      });
+    });
+    </script>
+    
+    <script defer type="text/javascript" src="/js/custom.js"></script>
+    <title>leinlin的小笔记</title>
+  <meta name="generator" content="Hexo 6.2.0"></head>
+  <body itemscope itemtype="http://schema.org/WebPage" lang="zh_CN"  data-spy="scroll" data-target=".list-group">
+    
+<header id="header" class="header" style="background: #33363b;">
+  <div class="container">
+    <div class="header-container">
+      <div class="header-title">
+        <h1 class="title"><a href="/">leinlin的小笔记</a></h1>
+        <h2 class="subtitle"></h2>
+      </div>
+      
+    </div>
+    <nav id="nav" class="nav">
+      <a id="nav-toggle" class="nav-toggle" aria-hidden="true"><i class="fas fa-bars" aria-label="切换导航栏"></i></a>
+      <ul id="menu" role="menubar" aria-hidden="false">
+        
+        <li role="menuitem"><a href="/"><i class="fas fa-home"></i><span class="menu-text">首页</span></a></li>
+        
+        <li role="menuitem"><a href="/categories/"><i class="fas fa-th-list"></i><span class="menu-text">分类</span></a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</header>
+
+
+    <main id="main" class="main">
+      <div class="container">
+        <div class="main-container">
+          <div class="content">
+            
+
+<div id="index" class="index page">
+  
+  <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
+    <div class="post-block">
+      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/09/19/HDRPartist/CubeMap%E7%94%9F%E6%88%90/">
+      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <meta itemprop="name" content="leinlin">
+        <meta itemprop="description" content="">
+        <meta itemprop="image" content="/images/avatar.jpg">
+      </span>
+      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+        <meta itemprop="name" content="leinlin的小笔记">
+      </span>
+    </div>
+    <header class="post-header">
+      <h1 class="post-title" itemprop="name headline">
+        <a class="post-title-link post-title-link-external" href="/2022/09/19/HDRPartist/CubeMap%E7%94%9F%E6%88%90/" itemprop="url"></a>
+      </h1>
+      <div class="post-meta">
+        
+        <span class="post-date">
+          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2022-09-19T19:47:59+08:00">2022-09-19 19:47:59</time></span>
+        </span>
+        
+        
+        
+        
+        
+      </div>
+    </header>
+    <main class="post-main" itemprop="articleBody">
+      
+      <h1 id="CubeMap生成与使用"><a href="#CubeMap生成与使用" class="headerlink" title="CubeMap生成与使用"></a>CubeMap生成与使用</h1><h2 id="使用工具生成CubeMap"><a href="#使用工具生成CubeMap" class="headerlink" title="使用工具生成CubeMap"></a>使用工具生成CubeMap</h2><p>主要内容来自于<a target="_blank" rel="noopener" href="https://docs.unrealengine.com/en-US/Engine/Content/Types/Textures/Cubemaps/index.html">UE4官方文档</a></p>
+<h3 id="需要一张HDR贴图"><a href="#需要一张HDR贴图" class="headerlink" title="需要一张HDR贴图"></a>需要一张HDR贴图</h3><p>在<a target="_blank" rel="noopener" href="https://hdrihaven.com/hdris/category/?c=skies">HDRIhaven</a>中可以搜索到很多免费的HDRI贴图。</p>
+<p>是一张：railway_bridges_4k.hdr的贴图</p>
+<p><img src="/../../images/CubeMap%E7%94%9F%E6%88%90%E4%B8%8E%E4%BD%BF%E7%94%A8/1574128098932.png" alt="1574128098932"></p>
+<h2 id="从HDRI到映射到Cubemap"><a href="#从HDRI到映射到Cubemap" class="headerlink" title="从HDRI到映射到Cubemap"></a>从HDRI到映射到Cubemap</h2><p>这个时候需要用到xNormal工具。</p>
+<ol>
+<li>点击High definition加载一个Cube的mesh。</li>
+</ol>
+<p><img src="/../../images/CubeMap%E7%94%9F%E6%88%90%E4%B8%8E%E4%BD%BF%E7%94%A8/1574133444216.png" alt="1574133444216"></p>
+<p>2.点击Base Texture to bake，加载这张hdri贴图</p>
+<p><img src="/../../images/CubeMap%E7%94%9F%E6%88%90%E4%B8%8E%E4%BD%BF%E7%94%A8/1574133454919.png" alt="1574133454919"></p>
+<p>3.点击Low definition meshes，加载一个Sphere形状的mesh。</p>
+<p><img src="/../../images/CubeMap%E7%94%9F%E6%88%90%E4%B8%8E%E4%BD%BF%E7%94%A8/1574133470000.png" alt="1574133470000"></p>
+<p>4.点击Bake Options，Size设置成4096, 512. (本身应该是6:1但是这里没有3072这个选项).。Maps to Render 设置成Bake base texture。Output File设置一个合适的名字：</p>
+<p><img src="/../../images/CubeMap%E7%94%9F%E6%88%90%E4%B8%8E%E4%BD%BF%E7%94%A8/1574133482559.png" alt="1574133482559"></p>
+<p>5.点击右下角的Generation Maps，生成结果：</p>
+<p><img src="/../../images/CubeMap%E7%94%9F%E6%88%90%E4%B8%8E%E4%BD%BF%E7%94%A8/1574133497943.png" alt="1574133497943"></p>
+<h3 id="调整Cubemap格式和尺寸"><a href="#调整Cubemap格式和尺寸" class="headerlink" title="调整Cubemap格式和尺寸"></a>调整Cubemap格式和尺寸</h3><ol>
+<li><p>需要一个NVIDIA的ps4插件工具：<a target="_blank" rel="noopener" href="https://developer.nvidia.com/nvidia-texture-tools-adobe-photoshop">NVIDIA Texture Tools for Adobe Photoshop</a>, 注意支持的ps版本。</p>
+</li>
+<li><p>用ps打开上面的贴图</p>
+<p><img src="/../../images/CubeMap%E7%94%9F%E6%88%90%E4%B8%8E%E4%BD%BF%E7%94%A8/1574133528409.png" alt="1574133528409"></p>
+</li>
+<li><p>调整到正确的尺寸6:1，（下面图片有点错误）</p>
+</li>
+</ol>
+<p><img src="/../../images/CubeMap%E7%94%9F%E6%88%90%E4%B8%8E%E4%BD%BF%E7%94%A8/1574133585920.png" alt="1574133585920"></p>
+<ol start="4">
+<li>存储为dds</li>
+</ol>
+<p><img src="/../../images/CubeMap%E7%94%9F%E6%88%90%E4%B8%8E%E4%BD%BF%E7%94%A8/1574132648798.png" alt="1574132648798"></p>
+<ol start="5">
+<li>点击保存会显示，注意下面的格式，CubeMap  、8888、No MIP maps（unity和ue4会生成自己的mipmap应该）：</li>
+</ol>
+<p><img src="/../../images/CubeMap%E7%94%9F%E6%88%90%E4%B8%8E%E4%BD%BF%E7%94%A8/1574132674591.png" alt="1574132674591"></p>
+<h3 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h3><p>这张cubemap可以直接在Unity和UE4当中使用。</p>
+<h2 id="CubeMap的采样"><a href="#CubeMap的采样" class="headerlink" title="CubeMap的采样"></a>CubeMap的采样</h2><h3 id="Unity非HDRP"><a href="#Unity非HDRP" class="headerlink" title="Unity非HDRP"></a>Unity非HDRP</h3><figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs c">half3 <span class="hljs-title function_">Unity_GlossyEnvironment</span> <span class="hljs-params">(UNITY_ARGS_TEXCUBE(tex), half4 hdr, Unity_GlossyEnvironmentData glossIn)</span><br>&#123;<br>    half perceptualRoughness = glossIn.roughness <span class="hljs-comment">/* perceptualRoughness */</span> ;<br>	<span class="hljs-comment">// 这部分是让其尽快模糊起来</span><br>    perceptualRoughness = perceptualRoughness*(<span class="hljs-number">1.7</span> - <span class="hljs-number">0.7</span>*perceptualRoughness);<br>	<br>    half mip = perceptualRoughnessToMipmapLevel(perceptualRoughness);<br>    half3 R = glossIn.reflUVW; <span class="hljs-comment">// 反射方向</span><br>    half4 rgbm = UNITY_SAMPLE_TEXCUBE_LOD(tex, R, mip); <span class="hljs-comment">// 采样贴图</span><br><br>    <span class="hljs-keyword">return</span> DecodeHDR(rgbm, hdr);<br>&#125;<br><br><span class="hljs-comment">// 从粗糙度到mipmap等级</span><br>half <span class="hljs-title function_">perceptualRoughnessToMipmapLevel</span><span class="hljs-params">(half perceptualRoughness)</span><br>&#123;<br>    <span class="hljs-keyword">return</span> perceptualRoughness * UNITY_SPECCUBE_LOD_STEPS;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="Unity-HDRP的cubemap采样"><a href="#Unity-HDRP的cubemap采样" class="headerlink" title="Unity HDRP的cubemap采样"></a>Unity HDRP的cubemap采样</h3><figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs c"> R = lerp(R, preLightData.iblR, saturate(smoothstep(<span class="hljs-number">0</span>, <span class="hljs-number">1</span>, roughness * roughness)));<br><br><span class="hljs-comment">// 计算的效果</span><br>preLightData.iblPerceptualRoughness = bsdfData.perceptualRoughness;<br><span class="hljs-comment">/// 计算要采样的mipmap的层级</span><br>   iblMipLevel = PerceptualRoughnessToMipmapLevel(preLightData.iblPerceptualRoughness);<br><br><span class="hljs-comment">/// 和非HDRP的效果一样</span><br>real <span class="hljs-title function_">PerceptualRoughnessToMipmapLevel</span><span class="hljs-params">(real perceptualRoughness, uint mipMapCount)</span><br>&#123;<br>    perceptualRoughness = perceptualRoughness * (<span class="hljs-number">1.7</span> - <span class="hljs-number">0.7</span> * perceptualRoughness);<br><br>    <span class="hljs-keyword">return</span> perceptualRoughness * mipMapCount;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="UE4"><a href="#UE4" class="headerlink" title="UE4"></a>UE4</h3><figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">define</span> REFLECTION_CAPTURE_ROUGHEST_MIP 1</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> REFLECTION_CAPTURE_ROUGHNESS_MIP_SCALE 1.2</span><br><br>half <span class="hljs-title function_">ComputeReflectionCaptureMipFromRoughness</span><span class="hljs-params">(half Roughness, half CubemapMaxMip)</span><br>&#123;<br>	<span class="hljs-comment">// Heuristic that maps roughness to mip level</span><br>	<span class="hljs-comment">// This is done in a way such that a certain mip level will always have the same roughness, regardless of how many mips are in the texture</span><br>	<span class="hljs-comment">// Using more mips in the cubemap just allows sharper reflections to be supported</span><br>	half LevelFrom1x1 = <span class="hljs-number">1</span> - <span class="hljs-number">1.2</span> * log2(Roughness);<br>	<span class="hljs-keyword">return</span> CubemapMaxMip - <span class="hljs-number">1</span> - LevelFrom1x1;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+
+      
+      <p align="right"><a class="morebtn" href="/2022/09/19/HDRPartist/CubeMap%E7%94%9F%E6%88%90/" title="">阅读全文</a></p>
+    </main>
+    <footer class="post-footer">
+      
+    </footer>
+  </article>
+  
+  <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
+    <div class="post-block">
+      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/08/03/Unity/il2cpp_fastbuild/">
+      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <meta itemprop="name" content="leinlin">
+        <meta itemprop="description" content="">
+        <meta itemprop="image" content="/images/avatar.jpg">
+      </span>
+      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+        <meta itemprop="name" content="leinlin的小笔记">
+      </span>
+    </div>
+    <header class="post-header">
+      <h1 class="post-title" itemprop="name headline">
+        <a class="post-title-link post-title-link-external" href="/2022/08/03/Unity/il2cpp_fastbuild/" itemprop="url">在unity的IL2CPP中接入FASTBuild</a>
+      </h1>
+      <div class="post-meta">
+        
+        <span class="post-date">
+          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2022-08-03T08:17:00+08:00">2022-08-03 08:17:00</time></span>
+        </span>
+        
+        
+        
+        <span class="post-meta-divider divider">|</span>
+        
+        <span class="post-categories">
+          
+          <i class="far fa-folder-open"></i><span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/FASTBUILD/" itemprop="url" rel="index"><span itemprop="name">FASTBUILD</span></a></span>
+        </span>
+        
+        
+        
+        
+      </div>
+    </header>
+    <main class="post-main" itemprop="articleBody">
+      
+      <h1 id="在unity的IL2CPP中接入FASTBuild"><a href="#在unity的IL2CPP中接入FASTBuild" class="headerlink" title="在unity的IL2CPP中接入FASTBuild"></a>在unity的IL2CPP中接入FASTBuild</h1><h2 id="如何编译IL2CPP-exe"><a href="#如何编译IL2CPP-exe" class="headerlink" title="如何编译IL2CPP.exe"></a>如何编译IL2CPP.exe</h2><figure class="hljs highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">jam WinEditor<br></code></pre></td></tr></table></figure>
+
+<h2 id="如何调试IL2CPP-exe"><a href="#如何调试IL2CPP-exe" class="headerlink" title="如何调试IL2CPP.exe"></a>如何调试IL2CPP.exe</h2><p>用vs2017我研究了一天没有成功，改用rider进行附加调试。第一步加入一个ReadKey的指令，等待附加</p>
+<figure class="hljs highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">public static int Main(string[] args)<br>&#123;<br>    // 这里是等待附加的代码<br>    ConsoleKey key = Console.ReadKey().Key;<br>    int exitCode;<br>    try<br>    &#123;<br>        exitCode = Run(args, true);<br>    &#125;<br>    catch (PathTooLongException e)<br>    &#123;<br>        Console.WriteLine(&quot;IL2CPP error: The specified output path is too long to write generated files. Please choose a location with a shorter path.&quot;);<br>        Console.WriteLine(e);<br>        throw;<br>    &#125;<br>    catch (Exception e)<br>    &#123;<br>        Console.WriteLine(&quot;il2cpp.exe didn&#x27;t catch exception: &quot; + e.StackTrace);<br>        throw;<br>    &#125;<br><br>    return exitCode;<br>&#125;<br></code></pre></td></tr></table></figure>
+      
+      <p align="right"><a class="morebtn" href="/2022/08/03/Unity/il2cpp_fastbuild/" title="在unity的IL2CPP中接入FASTBuild">阅读全文</a></p>
+    </main>
+    <footer class="post-footer">
+      
+      <div class="post-tags">
+        
+        <a class="post-tag button" href="/tags/IL2CPP/" rel="tag"><i class="fas fa-tags"></i>IL2CPP</a>
+        
+        <a class="post-tag button" href="/tags/FASTBUILD/" rel="tag"><i class="fas fa-tags"></i>FASTBUILD</a>
+        
+      </div>
+      
+    </footer>
+  </article>
+  
+  <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
+    <div class="post-block">
+      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/07/18/Unity/profiler/">
+      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <meta itemprop="name" content="leinlin">
+        <meta itemprop="description" content="">
+        <meta itemprop="image" content="/images/avatar.jpg">
+      </span>
+      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+        <meta itemprop="name" content="leinlin的小笔记">
+      </span>
+    </div>
+    <header class="post-header">
+      <h1 class="post-title" itemprop="name headline">
+        <a class="post-title-link post-title-link-external" href="/2022/07/18/Unity/profiler/" itemprop="url">snp Profiler</a>
+      </h1>
+      <div class="post-meta">
+        
+        <span class="post-date">
+          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2022-07-18T08:17:00+08:00">2022-07-18 08:17:00</time></span>
+        </span>
+        
+        
+        
+        
+        
+      </div>
+    </header>
+    <main class="post-main" itemprop="articleBody">
+      
+      <p><img src="/../../images/2022-07-19-18-03-57.png"></p>
+
+      
+      <p align="right"><a class="morebtn" href="/2022/07/18/Unity/profiler/" title="snp Profiler">阅读全文</a></p>
+    </main>
+    <footer class="post-footer">
+      
+      <div class="post-tags">
+        
+        <a class="post-tag button" href="/tags/snp/" rel="tag"><i class="fas fa-tags"></i>snp</a>
+        
+        <a class="post-tag button" href="/tags/android/" rel="tag"><i class="fas fa-tags"></i>android</a>
+        
+      </div>
+      
+    </footer>
+  </article>
+  
+  <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
+    <div class="post-block">
+      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/07/18/Unity/textmeshpro/">
+      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <meta itemprop="name" content="leinlin">
+        <meta itemprop="description" content="">
+        <meta itemprop="image" content="/images/avatar.jpg">
+      </span>
+      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+        <meta itemprop="name" content="leinlin的小笔记">
+      </span>
+    </div>
+    <header class="post-header">
+      <h1 class="post-title" itemprop="name headline">
+        <a class="post-title-link post-title-link-external" href="/2022/07/18/Unity/textmeshpro/" itemprop="url">textmesh-pro 压缩通道</a>
+      </h1>
+      <div class="post-meta">
+        
+        <span class="post-date">
+          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2022-07-18T08:17:00+08:00">2022-07-18 08:17:00</time></span>
+        </span>
+        
+        
+        
+        
+        
+      </div>
+    </header>
+    <main class="post-main" itemprop="articleBody">
+      
+      <h2 id="把Alpha-8改为4通道的RGBA"><a href="#把Alpha-8改为4通道的RGBA" class="headerlink" title="把Alpha 8改为4通道的RGBA"></a>把Alpha 8改为4通道的RGBA</h2><p><img src="/../../images/2022-07-21-17-44-41.png"></p>
+<h2 id="修改shader根据uv采样不同的通道"><a href="#修改shader根据uv采样不同的通道" class="headerlink" title="修改shader根据uv采样不同的通道"></a>修改shader根据uv采样不同的通道</h2><p><img src="/../../images/2022-07-21-17-45-35.png"></p>
+<h2 id="补充"><a href="#补充" class="headerlink" title="补充"></a>补充</h2><ul>
+<li><p>优化图集算法，不能让中间线切割字符，使一个字符分布到多个通道中</p>
+</li>
+<li><p>修改采样的shader</p>
+</li>
+<li><p>稳定化debug</p>
+</li>
+<li><p>不如把图片直接改为2048x2048 alpha8</p>
+</li>
+</ul>
+
+      
+      <p align="right"><a class="morebtn" href="/2022/07/18/Unity/textmeshpro/" title="textmesh-pro 压缩通道">阅读全文</a></p>
+    </main>
+    <footer class="post-footer">
+      
+      <div class="post-tags">
+        
+        <a class="post-tag button" href="/tags/textmesh-pro/" rel="tag"><i class="fas fa-tags"></i>textmesh-pro</a>
+        
+      </div>
+      
+    </footer>
+  </article>
+  
+  <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
+    <div class="post-block">
+      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/07/13/ARM/IDVS-shader-variants/">
+      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <meta itemprop="name" content="leinlin">
+        <meta itemprop="description" content="">
+        <meta itemprop="image" content="/images/avatar.jpg">
+      </span>
+      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+        <meta itemprop="name" content="leinlin的小笔记">
+      </span>
+    </div>
+    <header class="post-header">
+      <h1 class="post-title" itemprop="name headline">
+        <a class="post-title-link post-title-link-external" href="/2022/07/13/ARM/IDVS-shader-variants/" itemprop="url">IDVS shader variants</a>
+      </h1>
+      <div class="post-meta">
+        
+        <span class="post-date">
+          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2022-07-13T06:57:19+08:00">2022-07-13 06:57:19</time></span>
+        </span>
+        
+        
+        
+        <span class="post-meta-divider divider">|</span>
+        
+        <span class="post-categories">
+          
+          <i class="far fa-folder-open"></i><span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/mali-gpu/" itemprop="url" rel="index"><span itemprop="name">mali gpu</span></a></span>
+        </span>
+        
+        
+        
+        
+      </div>
+    </header>
+    <main class="post-main" itemprop="articleBody">
+      
+      <h1 id="IDVS-shader-variants"><a href="#IDVS-shader-variants" class="headerlink" title="IDVS shader variants"></a>IDVS shader variants</h1><p>On Mali GPUs in the Bifrost and Valhall families, vertex shaders are executed using an optimized shading flow called Index-Driven Vertex Shading (IDVS).</p>
+<p>In the IDVS pipeline, vertex shaders are compiled into two binaries:</p>
+<ul>
+<li>A position shader, which computes only position.</li>
+<li>A varying shader, which computes the remaining non-position vertex attribute outputs.</li>
+</ul>
+<h2 id="Figure-2-1-IDVS-pipeline"><a href="#Figure-2-1-IDVS-pipeline" class="headerlink" title="Figure 2-1 IDVS pipeline"></a>Figure 2-1 IDVS pipeline</h2><p><img src="/../../images/2022-07-13-14-47-58.png"></p>
+
+      
+      <p align="right"><a class="morebtn" href="/2022/07/13/ARM/IDVS-shader-variants/" title="IDVS shader variants">阅读全文</a></p>
+    </main>
+    <footer class="post-footer">
+      
+      <div class="post-tags">
+        
+        <a class="post-tag button" href="/tags/mali/" rel="tag"><i class="fas fa-tags"></i>mali</a>
+        
+        <a class="post-tag button" href="/tags/IDVS/" rel="tag"><i class="fas fa-tags"></i>IDVS</a>
+        
+      </div>
+      
+    </footer>
+  </article>
+  
+  <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
+    <div class="post-block">
+      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/07/11/ARM/mali-bifrost-family-performance-counters/">
+      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <meta itemprop="name" content="leinlin">
+        <meta itemprop="description" content="">
+        <meta itemprop="image" content="/images/avatar.jpg">
+      </span>
+      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+        <meta itemprop="name" content="leinlin的小笔记">
+      </span>
+    </div>
+    <header class="post-header">
+      <h1 class="post-title" itemprop="name headline">
+        <a class="post-title-link post-title-link-external" href="/2022/07/11/ARM/mali-bifrost-family-performance-counters/" itemprop="url">Mali Bifrost Family Performance Counters</a>
+      </h1>
+      <div class="post-meta">
+        
+        <span class="post-date">
+          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2022-07-11T09:57:19+08:00">2022-07-11 09:57:19</time></span>
+        </span>
+        
+        
+        
+        <span class="post-meta-divider divider">|</span>
+        
+        <span class="post-categories">
+          
+          <i class="far fa-folder-open"></i><span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/mali-gpu/" itemprop="url" rel="index"><span itemprop="name">mali gpu</span></a></span>
+        </span>
+        
+        
+        
+        
+      </div>
+    </header>
+    <main class="post-main" itemprop="articleBody">
+      
+      <h1 id="Mali-Bifrost-Family-Performance-Counters"><a href="#Mali-Bifrost-Family-Performance-Counters" class="headerlink" title="Mali Bifrost Family Performance Counters"></a>Mali Bifrost Family Performance Counters</h1><p>Analysis and optimization of graphics and compute content running on a GPU is an important task when trying to build a top quality system integration, or a compelling high performance application. For developers working with the public APIs, such as OpenGL ES and OpenCL, the GPU is a black box which is very difficult to analyze based solely on the API visible behaviors. Frame pipelining and asynchronous processing of submitted work effectively decouple the application’s visible performance from the API calls which define the workload being executed, making analysis of performance an activity based on expert knowledge and intuition rather than direct measurement.</p>
+<p>Tools such as ARM DS-5 Streamline provide developers access to the GPU hardware performance counters, the principle means to determine the behavior inside the black box beneath the API and identify any problem areas which need optimization. This work guide assumes that DS-5 Streamline is the tool being used for performance analysis, and follows the DS-5 naming conventions for the counters.</p>
+<h2 id="1-Performance-Counter-Infrastructure"><a href="#1-Performance-Counter-Infrastructure" class="headerlink" title="1 Performance Counter Infrastructure"></a>1 Performance Counter Infrastructure</h2><p>The Bifrost GPU family supports many performance counters which can all be captured simultaneously. Performance counters are provided for each functional block in the design:</p>
+<p>Job Manager<br>Tiler<br>Shader core(s)<br>L2 cache(s)<br>See my earlier blog series for an introduction to the Bifrost GPU architecture - it introduces some of the fundamental concepts which are important to understand, and which place the more detailed information in this document in context.</p>
+<p>The Mali GPU: An Abstract Machine, Part 1 - Frame Pipelining<br>The Mali GPU: An Abstract Machine, Part 2 - Tile-based Rendering<br>The Mali GPU: An Abstract Machine, Part 4 - The Bifrost Shader Core</p>
+<h3 id="1-1-Supported-Counters"><a href="#1-1-Supported-Counters" class="headerlink" title="1.1 Supported Counters"></a>1.1 Supported Counters</h3><p>The GPUs in the Bifrost family implement a large number of performance counters natively in the hardware, and it is also generally useful to generate some derived counters by combining one or more of the raw hardware counters in useful and interesting ways. This document will describe all of the counters exported from DS-5 Streamline, and some of the useful derived counters which can be derived from them. DS-5 Streamline allows custom performance counter graphs to be created using equations, so all of these performance counters can be directly visualized in the GUI.</p>
+<h3 id="1-2-Counter-Implementation-Caveats"><a href="#1-2-Counter-Implementation-Caveats" class="headerlink" title="1.2 Counter Implementation Caveats"></a>1.2 Counter Implementation Caveats</h3><p>The hardware counter implementation in the GPU is designed to be low cost, such that it has minimal impact on performance and power. Many of the counters are close approximations of the behavior described in this document in order to minimize the amount of additional hardware logic required to generate the counter signals, so some small deviations from what you may expect may be encountered.</p>
+      
+      <p align="right"><a class="morebtn" href="/2022/07/11/ARM/mali-bifrost-family-performance-counters/" title="Mali Bifrost Family Performance Counters">阅读全文</a></p>
+    </main>
+    <footer class="post-footer">
+      
+      <div class="post-tags">
+        
+        <a class="post-tag button" href="/tags/mali/" rel="tag"><i class="fas fa-tags"></i>mali</a>
+        
+        <a class="post-tag button" href="/tags/Gpu-Counters/" rel="tag"><i class="fas fa-tags"></i>Gpu Counters</a>
+        
+        <a class="post-tag button" href="/tags/Bifrost/" rel="tag"><i class="fas fa-tags"></i>Bifrost</a>
+        
+      </div>
+      
+    </footer>
+  </article>
+  
+  <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
+    <div class="post-block">
+      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/07/09/GPUAartch/HDR%E7%A1%AC%E4%BB%B6%E5%B1%82Framebuffer%E6%A0%BC%E5%BC%8F%E6%A0%87%E5%87%86%E4%B8%8E%E6%B8%B2%E6%9F%93%E9%98%B6%E6%AE%B5%E7%9A%84%E5%85%B3%E7%B3%BB/">
+      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <meta itemprop="name" content="leinlin">
+        <meta itemprop="description" content="">
+        <meta itemprop="image" content="/images/avatar.jpg">
+      </span>
+      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+        <meta itemprop="name" content="leinlin的小笔记">
+      </span>
+    </div>
+    <header class="post-header">
+      <h1 class="post-title" itemprop="name headline">
+        <a class="post-title-link post-title-link-external" href="/2022/07/09/GPUAartch/HDR%E7%A1%AC%E4%BB%B6%E5%B1%82Framebuffer%E6%A0%BC%E5%BC%8F%E6%A0%87%E5%87%86%E4%B8%8E%E6%B8%B2%E6%9F%93%E9%98%B6%E6%AE%B5%E7%9A%84%E5%85%B3%E7%B3%BB/" itemprop="url">HDR硬件层Framebuffer格式标准与渲染阶段的关系</a>
+      </h1>
+      <div class="post-meta">
+        
+        <span class="post-date">
+          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2022-07-09T12:00:14+08:00">2022-07-09 12:00:14</time></span>
+        </span>
+        
+        
+        
+        <span class="post-meta-divider divider">|</span>
+        
+        <span class="post-categories">
+          
+          <i class="far fa-folder-open"></i><span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/GPUAartch/" itemprop="url" rel="index"><span itemprop="name">GPUAartch</span></a></span>
+        </span>
+        
+        
+        
+        
+      </div>
+    </header>
+    <main class="post-main" itemprop="articleBody">
+      
+      <h1 id="HDR硬件层Framebuffer格式标准与渲染阶段的关系"><a href="#HDR硬件层Framebuffer格式标准与渲染阶段的关系" class="headerlink" title="HDR硬件层Framebuffer格式标准与渲染阶段的关系"></a>HDR硬件层Framebuffer格式标准与渲染阶段的关系</h1><p>这里主要探讨的是<strong>SwapChain的格式</strong>、<strong>写入其中的数据</strong>以及<strong>屏幕实际亮度</strong>之间的关系。</p>
+<h2 id="SDR格式"><a href="#SDR格式" class="headerlink" title="SDR格式"></a>SDR格式</h2><p>对于SDR屏幕 Buffer主要有：</p>
+<p>R8G8B8A8_UNORM：首先屏幕的eotf曲线是始终存在的，这种格式输入的颜色，图像接口不会进行任何处理，需要我们自己在shader中进行sRGB编码。</p>
+<p>R8G8B8A8_SNORM：这种格式输入的颜色在显示之前会自动编码到SRGB空间（自动Gamma矫正），所以我们不需要进行处理，也就是说shader当中直接写出线性颜色即可。A通道是线性的。</p>
+<blockquote>
+<p>  Vulkan的解释：</p>
+<p>  specifies a four-component, 32-bit unsigned normalized format that has an 8-bit B component stored with sRGB nonlinear encoding in byte 0, an 8-bit G component stored with sRGB nonlinear encoding in byte 1, an 8-bit R component stored with sRGB nonlinear encoding in byte 2, and an 8-bit A component in byte 3.</p>
+<p>  On the other hand, <strong>non-*_SRGB formats</strong> will be very likely exposed in pair with a <strong>SRGB color space.</strong> <strong>This means, the hardware will not apply any transfer function when reading from or writing to such images, yet they will still be presented on a device with sRGB display characteristics</strong>。（即使使用非SRGB的format，仍然可以使用 SRGB的colorSpace），这意味着硬件不会帮助进行自动的空间转换（在读写buffer时），但是仍然使用srgb的eotf的显示特性。</p>
+</blockquote>
+<p>SRGB的进一步说明：</p>
+<p><a target="_blank" rel="noopener" href="https://docs.rs/vulkano/0.7.2/vulkano/swapchain/enum.ColorSpace.html">https://docs.rs/vulkano/0.7.2/vulkano/swapchain/enum.ColorSpace.html</a></p>
+<p><img src="/../../images/HDR%E7%A1%AC%E4%BB%B6%E5%B1%82Framebuffer%E6%A0%BC%E5%BC%8F%E6%A0%87%E5%87%86%E4%B8%8E%E6%B8%B2%E6%9F%93%E9%98%B6%E6%AE%B5%E7%9A%84%E5%85%B3%E7%B3%BB/1590989148165.png" alt="1590989148165"></p>
+      
+      <p align="right"><a class="morebtn" href="/2022/07/09/GPUAartch/HDR%E7%A1%AC%E4%BB%B6%E5%B1%82Framebuffer%E6%A0%BC%E5%BC%8F%E6%A0%87%E5%87%86%E4%B8%8E%E6%B8%B2%E6%9F%93%E9%98%B6%E6%AE%B5%E7%9A%84%E5%85%B3%E7%B3%BB/" title="HDR硬件层Framebuffer格式标准与渲染阶段的关系">阅读全文</a></p>
+    </main>
+    <footer class="post-footer">
+      
+    </footer>
+  </article>
+  
+  <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
+    <div class="post-block">
+      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/07/09/GPUAartch/GCN%E6%9E%B6%E6%9E%84%E6%B5%85%E6%9E%90/">
+      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <meta itemprop="name" content="leinlin">
+        <meta itemprop="description" content="">
+        <meta itemprop="image" content="/images/avatar.jpg">
+      </span>
+      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+        <meta itemprop="name" content="leinlin的小笔记">
+      </span>
+    </div>
+    <header class="post-header">
+      <h1 class="post-title" itemprop="name headline">
+        <a class="post-title-link post-title-link-external" href="/2022/07/09/GPUAartch/GCN%E6%9E%B6%E6%9E%84%E6%B5%85%E6%9E%90/" itemprop="url">Graphics Core Next</a>
+      </h1>
+      <div class="post-meta">
+        
+        <span class="post-date">
+          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2022-07-09T12:00:14+08:00">2022-07-09 12:00:14</time></span>
+        </span>
+        
+        
+        
+        <span class="post-meta-divider divider">|</span>
+        
+        <span class="post-categories">
+          
+          <i class="far fa-folder-open"></i><span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/GPUAartch/" itemprop="url" rel="index"><span itemprop="name">GPUAartch</span></a></span>
+        </span>
+        
+        
+        
+        
+      </div>
+    </header>
+    <main class="post-main" itemprop="articleBody">
+      
+      <h1 id="Graphics-Core-Next"><a href="#Graphics-Core-Next" class="headerlink" title="Graphics Core Next"></a>Graphics Core Next</h1><p>GCN是2012年之后的GPU架构。</p>
+<p>使用了精简指令集合。</p>
+<p>GCN架构同时用到了PS4和XboxOne APU的图形部分。</p>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Graphics_Core_Next#cite_note-24">Wiki Graphics_Core_Next</a></p>
+
+      
+      <p align="right"><a class="morebtn" href="/2022/07/09/GPUAartch/GCN%E6%9E%B6%E6%9E%84%E6%B5%85%E6%9E%90/" title="Graphics Core Next">阅读全文</a></p>
+    </main>
+    <footer class="post-footer">
+      
+    </footer>
+  </article>
+  
+  <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
+    <div class="post-block">
+      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/07/09/GPUAartch/GPU%E5%88%86%E6%94%AF%E8%AF%AD%E5%8F%A5%E6%80%A7%E8%83%BD/">
+      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <meta itemprop="name" content="leinlin">
+        <meta itemprop="description" content="">
+        <meta itemprop="image" content="/images/avatar.jpg">
+      </span>
+      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+        <meta itemprop="name" content="leinlin的小笔记">
+      </span>
+    </div>
+    <header class="post-header">
+      <h1 class="post-title" itemprop="name headline">
+        <a class="post-title-link post-title-link-external" href="/2022/07/09/GPUAartch/GPU%E5%88%86%E6%94%AF%E8%AF%AD%E5%8F%A5%E6%80%A7%E8%83%BD/" itemprop="url">GPU分支语句性能</a>
+      </h1>
+      <div class="post-meta">
+        
+        <span class="post-date">
+          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2022-07-09T12:00:14+08:00">2022-07-09 12:00:14</time></span>
+        </span>
+        
+        
+        
+        <span class="post-meta-divider divider">|</span>
+        
+        <span class="post-categories">
+          
+          <i class="far fa-folder-open"></i><span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/GPUAartch/" itemprop="url" rel="index"><span itemprop="name">GPUAartch</span></a></span>
+        </span>
+        
+        
+        
+        
+      </div>
+    </header>
+    <main class="post-main" itemprop="articleBody">
+      
+      <h1 id="GPU分支语句性能"><a href="#GPU分支语句性能" class="headerlink" title="GPU分支语句性能"></a>GPU分支语句性能</h1><p>下面就是一组线程同时执行，*表示空跑，&#x3D;表示执行。可以看到他们是同时完成的。一个计算单元的所有线程结束以后，可以开始下一组。</p>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs c">线程A:  =========<span class="hljs-keyword">if</span>==============<span class="hljs-keyword">else</span>**********endif===========<br>线程B:  =========<span class="hljs-keyword">if</span>**************<span class="hljs-keyword">else</span>==========endif===========<br></code></pre></td></tr></table></figure>
+
+<p>就可以理解为判断只会产生一个遮罩，这个遮罩会决定我这段代码是不是空跑。GPU的计算资源十分紧俏，空跑越多就是我们说的开销大。例如32个线程，每一个都跑不通的分支，那么就相当于性能下降到了1&#x2F;32。这里的开销是利用率降低而不是时间变长。</p>
+<p>关于跑完会等待的。。。GPU一般不会阻塞等待别的线程的（有例外），假如w表示等待。下面的状态是不对的</p>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs c">线程A:  =========<span class="hljs-keyword">if</span>==============<span class="hljs-keyword">else</span> endif===========<br><br>线程B:  =========<span class="hljs-keyword">if</span> <span class="hljs-keyword">else</span>=======endif===========wwwwwww<br></code></pre></td></tr></table></figure>
+      
+      <p align="right"><a class="morebtn" href="/2022/07/09/GPUAartch/GPU%E5%88%86%E6%94%AF%E8%AF%AD%E5%8F%A5%E6%80%A7%E8%83%BD/" title="GPU分支语句性能">阅读全文</a></p>
+    </main>
+    <footer class="post-footer">
+      
+    </footer>
+  </article>
+  
+  <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
+    <div class="post-block">
+      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/07/09/GPUAartch/GPU%E6%9E%B6%E6%9E%84%E7%B1%BB%E5%9E%8B%E6%95%B4%E5%90%88/">
+      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <meta itemprop="name" content="leinlin">
+        <meta itemprop="description" content="">
+        <meta itemprop="image" content="/images/avatar.jpg">
+      </span>
+      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+        <meta itemprop="name" content="leinlin的小笔记">
+      </span>
+    </div>
+    <header class="post-header">
+      <h1 class="post-title" itemprop="name headline">
+        <a class="post-title-link post-title-link-external" href="/2022/07/09/GPUAartch/GPU%E6%9E%B6%E6%9E%84%E7%B1%BB%E5%9E%8B%E6%95%B4%E5%90%88/" itemprop="url">GPU架构整合</a>
+      </h1>
+      <div class="post-meta">
+        
+        <span class="post-date">
+          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2022-07-09T12:00:14+08:00">2022-07-09 12:00:14</time></span>
+        </span>
+        
+        
+        
+        <span class="post-meta-divider divider">|</span>
+        
+        <span class="post-categories">
+          
+          <i class="far fa-folder-open"></i><span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/GPUAartch/" itemprop="url" rel="index"><span itemprop="name">GPUAartch</span></a></span>
+        </span>
+        
+        
+        
+        
+      </div>
+    </header>
+    <main class="post-main" itemprop="articleBody">
+      
+      <h1 id="GPU架构整合"><a href="#GPU架构整合" class="headerlink" title="GPU架构整合"></a>GPU架构整合</h1><p>AMD公司GPU芯片架构:</p>
+<table>
+<thead>
+<tr>
+<th align="center">Microarchitecture</th>
+<th align="center">GPUs</th>
+<th align="center">Graphic cards &#x2F; SoCs</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="center">GCN 5th</td>
+<td align="center">Vega 10</td>
+<td align="center">Radeon Rx Vega series</td>
+</tr>
+<tr>
+<td align="center">GCN 4th</td>
+<td align="center">Polaris 10, Polaris 11, Polaris 12</td>
+<td align="center">Radeon Rx 400 series Radeon_500_series</td>
+</tr>
+<tr>
+<td align="center">GCN 3rd</td>
+<td align="center">Tonga, Fiji, Carrizo</td>
+<td align="center">Radeon R9 Series</td>
+</tr>
+<tr>
+<td align="center">GCN 2nd</td>
+<td align="center">Bonaire, Hawaii, Kaveri, Kabini, Temash, Mullins, Beema, Carrizo-L</td>
+<td align="center">Radeon HD 7790, <strong>PlayStation 4</strong>, Xbox One</td>
+</tr>
+<tr>
+<td align="center">GCN 1st</td>
+<td align="center">Oland, Cape Verde, Pitcairn, Tahiti</td>
+<td align="center">Radeon HD 77xx–7900 Series</td>
+</tr>
+<tr>
+<td align="center">TeraScale 3</td>
+<td align="center">Cayman, Trinity&#x2F;Richland</td>
+<td align="center">Radeon HD 69xx Series, Radeon HD 7xxx–76xx Series</td>
+</tr>
+<tr>
+<td align="center">TeraScale 2</td>
+<td align="center">Cedar, Cypress, Juniper, Redwood, Palm, Sumo</td>
+<td align="center">Radeon HD 5000 Series, Radeon HD 6350, Radeon HD 64xx–68xx Series</td>
+</tr>
+<tr>
+<td align="center">TeraScale 1</td>
+<td align="center">R600, RV630, RV610, RV790, RV770, …</td>
+<td align="center">Radeon HD 2000 Series, HD 3000, HD 4000</td>
+</tr>
+</tbody></table>
+      
+      <p align="right"><a class="morebtn" href="/2022/07/09/GPUAartch/GPU%E6%9E%B6%E6%9E%84%E7%B1%BB%E5%9E%8B%E6%95%B4%E5%90%88/" title="GPU架构整合">阅读全文</a></p>
+    </main>
+    <footer class="post-footer">
+      
+    </footer>
+  </article>
+  
+  
+  <nav class="pagination">
+    <a class="extend prev" rel="prev" href="/page/11/"><i class="fas fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="space">&hellip;</span><a class="page-number" href="/page/11/">11</a><span class="page-number current">12</span><a class="page-number" href="/page/13/">13</a><span class="space">&hellip;</span><a class="page-number" href="/page/16/">16</a><a class="extend next" rel="next" href="/page/13/"><i class="fas fa-angle-right" aria-label="下一页"></i></a>
+  </nav>
+  
+  
+  
+
+<div class="comments" id="comments">
+  
+  
+  
+</div>
+
+
+
+  
+</div>
+
+          </div>
+          
+          
+          
+<aside class="sidebar" id="sidebar" style="background: url(/images/background.png);">
+  
+  <div class="search">
+    <div class="form-group">
+      <i class="fas fa-search"></i><input type="search" id="search-input" name="q" results="0" placeholder="搜索" class="form-control"/>
+    </div>
+  </div>
+  <div class="search-result-box" id="search-result"></div>
+  
+  
+<div class="info sidebar-item" id="info">
+  
+  <img class="author-avatar" src="/images/avatar.jpg" alt="leinlin">
+  
+  <h1 class="author-name">leinlin</h1>
+  <h2 class="author-description"></h2>
+  <div class="site-count">
+    
+    
+    
+    
+    <div class="categories-count count-block">
+      <div class="site-count-title">分类</div>
+      <div><a href="/categories/">11</a></div>
+    </div>
+    
+    
+  </div>
+  
+  <div class="rss">
+    <a class="rss-link button sidebar-item" href="/atom.xml"><i class="fas fa-rss"></i>RSS</a>
+  </div>
+  
+</div>
+
+
+  <div class="sidebar-sticky">
+    
+    
+    <hr>
+    <div class="social-link sidebar-item">
+      <div><i class="far fa-address-card"></i>社交链接</p></div>
+      <ul>
+        
+        <li><i class="fab fa-github"></i><a href="https://leinlin.github.com/" target="_blank">GitHub</a></li>
+        
+      </ul>
+    </div>
+    
+    
+  </div>
+</aside>
+
+
+          
+        </div>
+      </div>
+    </main>
+    
+<footer id="footer" class="footer" style="background: #33363b;">
+  <div class="container">
+    <div class="back-to-top">
+      <button id="back-to-top"><i class="fas fa-angle-double-up" aria-label="回到顶部"></i></button>
+    </div>
+    <div class="footer-container">
+      <div class="footer-left">
+        <div class="copyright">
+          <span class="author">leinlin</span><span class="year"><i class="far fa-copyright"></i>2022</span>
+        </div>
+        
+        <div class="busuanzi">
+          <span id="busuanzi_container_site_pv"><i class="fas fa-eye" aria-label="站点点击量" aria-hidden="false"></i><span id="busuanzi_value_site_pv"></span></span><span id="busuanzi_container_site_uv"><i class="fas fa-user" aria-label="站点用户数" aria-hidden="false"></i><span id="busuanzi_value_site_uv"></span></span><span id="busuanzi_container_page_pv"><i class="far fa-file-alt"></i><span id="busuanzi_value_page_pv" aria-label="页面点击量" aria-hidden="false"></span></span>
+        </div>
+        
+      </div>
+      <div class="footer-right">
+        <div class="custom-info">
+          
+          托管于<i class="fab fa-github-alt"></i><a href="https://pages.github.com/" target="_blank">GitHub Pages</a>
+          
+        </div>
+        <div class="powered-by">
+          由 <a href="https://hexo.io/" target="_blank">Hexo</a> 强力驱动 | 主题 <a href="https://github.com/AlynxZhou/hexo-theme-aria/" target="_blank">ARIA</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+  <script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#33363b">
+    <meta name="msapplication-TileColor" content="#33363b">
+    
+    
+    
+    
+    <meta name="keywords" content="leinlin, ARIA, Hexo">
+    
+    
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png">
+    
+    
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicons/android-chrome-192x192.png">
+    
+    
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png">
+    
+    
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png">
+    
+    
+    <link rel="mask-icon" href="/favicons/safari-pinned-tab.svg" color="#33363b">
+    
+    
+    <link rel="manifest" href="/favicons/site.webmanifest">
+    
+    
+    <meta name="msapplication-config" content="/favicons/browserconfig.xml">
+    
+    
+    <link rel="alternate" href="/atom.xml" title="leinlin的小笔记" type="application/atom+xml" />
+    
+    
+    <link rel="shortcut icon" type="image/x-icon" href="/favicons/favicon.ico">
+    
+    
+    <link rel="stylesheet" type="text/css" href="/css/normalize.css">
+    <link rel="stylesheet" type="text/css" href="/css/index.css">
+    
+    <link rel="stylesheet" type="text/css" href="/css/sidebar.css">
+    
+    
+<link rel="stylesheet" type="text/css" href="/css/page.css">
+<link rel="stylesheet" type="text/css" href="/css/post.css">
+
+    <link rel="stylesheet" type="text/css" href="/css/custom.css">
+    <link rel="stylesheet" type="text/css" href="/css/atom-one-light.css">
+    <link rel="stylesheet" type="text/css" href="/css/lightgallery.min.css">
+    <script type="text/javascript" src="/js/jquery.min.js"></script>
+    <script defer type="text/javascript" src="/js/util.js"></script>
+    <script defer type="text/javascript" src="/js/clipboard.min.js"></script>
+    <script defer type="text/javascript" src="/js/scrollspy.js"></script>
+    <script defer type="text/javascript" src="/js/fontawesome-all.min.js"></script>
+    <script defer type="text/javascript" src="/js/lightgallery.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-fullscreen.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-hash.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-pager.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-thumbnail.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-zoom.min.js"></script>
+    
+    <script defer src="/js/busuanzi.pure.mini.js"></script>
+    
+    
+    <script defer type="text/javascript" src="/js/search.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function () {
+      var searchPath = "search.xml";
+      if (searchPath.length === 0) {
+        searchPath = "search.xml";
+      }
+      var path = "/" + searchPath;
+      searchFunc(path, "search-input", "search-result");
+    });
+    </script>
+    
+    
+    
+    <script defer type="text/javascript" src="https://cdn.staticfile.org/MathJax/MathJax-2.6-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ["$","$"], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ["script", "noscript", "style", "textarea", "pre", "code"]
+      }
+    });
+    </script>
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for (i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += " has-jax";
+      }
+    });
+    </script>
+    
+    
+    <script defer type="text/javascript" src="/js/index.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function () {
+      var cb = null;
+      var els = $(".post figure.highlight");
+      if (els.length) {
+        // Enabled Hexo highlight line number.
+        $(els).each(function (i, e) {
+          // $(e).before("<button class=\"copy button\">复制</button>");
+          $(e).before([
+            "<div class=\"code-titlebar\">",
+              "<div class=\"titlebar-left\">",
+                "<button class=\"copy\">复制</button>",
+              "</div>",
+            "</div>"
+          ].join(""));
+        });
+        cb = new ClipboardJS("button.copy", {
+          "target": function (trigger) {
+              // Get target element by DOM API.
+              return trigger.parentNode.parentNode.nextElementSibling.firstChild.firstChild.firstChild.lastChild.firstChild.firstChild;
+          }
+        });
+      } else {
+        // Disabled Hexo highlight line number.
+        els = $(".post pre code");
+        $(els).each(function (i, e) {
+          // Add button before pre, not code.
+          // $(e).parent().before("<button class=\"copy button\">复制</button>");
+          $(e).before([
+            "<div class=\"code-titlebar\">",
+              "<div class=\"titlebar-left\">",
+                "<button class=\"copy\" >复制</button>",
+              "</div>",
+              "<div class=\"titlebar-right\">",
+                "<button class=\"button-dot dot-minimize\" aria-label=\"Decoration\"></button>",
+                "<button class=\"button-dot dot-maximize\" aria-label=\"Decoration\"></button>",
+                "<button class=\"button-dot dot-close\" aria-label=\"Decoration\"></button>",
+              "</div>",
+            "</div>"
+          ].join(""));
+        });
+        cb = new ClipboardJS("button.copy", {
+          "target": function (trigger) {
+              // Get target element by DOM API.
+              return trigger.parentNode.parentNode.nextElementSibling;
+          }
+        });
+      }
+      cb.on("success", function (e) {
+        e.clearSelection();
+        var trigger = e.trigger;
+        // Change button text as a user tip.
+        trigger.innerHTML = "已复制";
+        $(trigger).addClass("copied");
+        // Change button text back;
+        setTimeout(function () {
+          trigger.innerHTML = "复制";
+          $(trigger).removeClass("copied");
+        }, 1500);
+      });
+    });
+    </script>
+    
+    <script defer type="text/javascript" src="/js/custom.js"></script>
+    <title> | leinlin的小笔记</title>
+  <meta name="generator" content="Hexo 6.2.0"></head>
+  <body itemscope itemtype="http://schema.org/WebPage" lang="zh_CN"  data-spy="scroll" data-target=".list-group">
+    
+<header id="header" class="header" style="background: #33363b;">
+  <div class="container">
+    <div class="header-container">
+      <div class="header-title">
+        <h1 class="title"><a href="/">leinlin的小笔记</a></h1>
+        <h2 class="subtitle"></h2>
+      </div>
+      
+    </div>
+    <nav id="nav" class="nav">
+      <a id="nav-toggle" class="nav-toggle" aria-hidden="true"><i class="fas fa-bars" aria-label="切换导航栏"></i></a>
+      <ul id="menu" role="menubar" aria-hidden="false">
+        
+        <li role="menuitem"><a href="/"><i class="fas fa-home"></i><span class="menu-text">首页</span></a></li>
+        
+        <li role="menuitem"><a href="/categories/"><i class="fas fa-th-list"></i><span class="menu-text">分类</span></a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</header>
+
+
+    <main id="main" class="main">
+      <div class="container">
+        <div class="main-container">
+          <div class="content">
+            
+<div id="post" class="page">
+  
+  <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
+    <div class="post-block">
+      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/09/19/Unity/HDRP%E4%B8%ADHairShader%E4%BB%A3%E7%A0%81%E7%BB%93%E6%9E%842/">
+      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+       <meta itemprop="name" content="leinlin">
+       <meta itemprop="description" content="">
+       <meta itemprop="image" content="/images/avatar.jpg">
+      </span>
+      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+       <meta itemprop="name" content="leinlin的小笔记">
+      </span>
+    </div>
+    <header class="post-header">
+      <h1 class="post-title" itemprop="name headline"></h1>
+      <div class="post-meta">
+        
+        <span class="post-date">
+          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2022-09-19T19:53:46+08:00">2022-09-19 19:53:46</time></span>
+        </span>
+        
+        
+        
+        
+        
+      </div>
+    </header>
+    <main class="post-main" itemprop="articleBody">
+      <h3 id="HairShader光照模型"><a href="#HairShader光照模型" class="headerlink" title="HairShader光照模型"></a>HairShader光照模型</h3><p>创建ShaderGraph:</p>
+<p>定义的内容</p>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">define</span> SHADERPASS SHADERPASS_FORWARD</span><br><span class="hljs-meta">#<span class="hljs-keyword">pragma</span> multi_compile _ DEBUG_DISPLAY</span><br><span class="hljs-meta">#<span class="hljs-keyword">pragma</span> multi_compile _ LIGHTMAP_ON</span><br><span class="hljs-meta">#<span class="hljs-keyword">pragma</span> multi_compile _ DIRLIGHTMAP_COMBINED</span><br><span class="hljs-meta">#<span class="hljs-keyword">pragma</span> multi_compile _ DYNAMICLIGHTMAP_ON</span><br><span class="hljs-meta">#<span class="hljs-keyword">pragma</span> multi_compile _ SHADOWS_SHADOWMASK</span><br><span class="hljs-meta">#<span class="hljs-keyword">pragma</span> multi_compile DECALS_OFF DECALS_3RT DECALS_4RT</span><br><span class="hljs-meta">#<span class="hljs-keyword">pragma</span> multi_compile USE_FPTL_LIGHTLIST USE_CLUSTERED_LIGHTLIST</span><br><span class="hljs-meta">#<span class="hljs-keyword">pragma</span> multi_compile SHADOW_LOW SHADOW_MEDIUM SHADOW_HIGH SHADOW_VERY_HIGH</span><br></code></pre></td></tr></table></figure>
+
+<p>include文件</p>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;Packages/com.unity.render-pipelines.core/ShaderLibrary/Common.hlsl&quot;</span></span><br>        <br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;Packages/com.unity.render-pipelines.core/ShaderLibrary/NormalSurfaceGradient.hlsl&quot;</span></span><br>        <br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;Packages/com.unity.render-pipelines.high-definition/Runtime/RenderPipeline/ShaderPass/FragInputs.hlsl&quot;</span></span><br><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;Packages/com.unity.render-pipelines.high-definition/Runtime/RenderPipeline/ShaderPass/ShaderPass.cs.hlsl&quot;</span></span><br><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;Packages/com.unity.render-pipelines.high-definition/Runtime/ShaderLibrary/ShaderVariables.hlsl&quot;</span></span><br><br><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;Packages/com.unity.render-pipelines.high-definition/Runtime/Material/Material.hlsl&quot;</span></span><br><br><span class="hljs-comment">// 这个在前面定义了</span><br><span class="hljs-meta">#<span class="hljs-keyword">if</span> (SHADERPASS == SHADERPASS_FORWARD)</span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;Packages/com.unity.render-pipelines.high-definition/Runtime/Lighting/Lighting.hlsl&quot;</span></span><br><br>    <span class="hljs-meta">#<span class="hljs-keyword">define</span> HAS_LIGHTLOOP</span><br><br>    <span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;Packages/com.unity.render-pipelines.high-definition/Runtime/Lighting/LightLoop/LightLoopDef.hlsl&quot;</span></span><br>    <span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;Packages/com.unity.render-pipelines.high-definition/Runtime/Material/Hair/Hair.hlsl&quot;</span></span><br>    <span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;Packages/com.unity.render-pipelines.high-definition/Runtime/Lighting/LightLoop/LightLoop.hlsl&quot;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">else</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;Packages/com.unity.render-pipelines.high-definition/Runtime/Material/Hair/Hair.hlsl&quot;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">endif</span></span><br><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;Packages/com.unity.render-pipelines.high-definition/Runtime/Material/BuiltinUtilities.hlsl&quot;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;Packages/com.unity.render-pipelines.high-definition/Runtime/Material/MaterialUtilities.hlsl&quot;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;Packages/com.unity.render-pipelines.high-definition/Runtime/Material/Decal/DecalUtilities.hlsl&quot;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;Packages/com.unity.render-pipelines.high-definition/Runtime/ShaderLibrary/ShaderGraphFunctions.hlsl&quot;</span></span><br></code></pre></td></tr></table></figure>
+
+<p>和头发表面相关的参数，这个函数主要是ShaderGraph的输入</p>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs c">SurfaceDescription <span class="hljs-title function_">SurfaceDescriptionFunction</span><span class="hljs-params">(SurfaceDescriptionInputs IN)</span><br>&#123;<br>    SurfaceDescription surface = (SurfaceDescription)<span class="hljs-number">0</span>;<br>    surface.Albedo = float3(<span class="hljs-number">0.7353569</span>, <span class="hljs-number">0.7353569</span>, <span class="hljs-number">0.7353569</span>);<br>    surface.Normal = IN.TangentSpaceNormal;<br>    surface.BentNormal = IN.TangentSpaceNormal;<br>    surface.HairStrandDirection = float3 (<span class="hljs-number">0</span>,<span class="hljs-number">-1</span>,<span class="hljs-number">0</span>); <span class="hljs-comment">//头发走向</span><br>    surface.Occlusion = <span class="hljs-number">1</span>;<br>    surface.Alpha = <span class="hljs-number">1</span>;<br>    <br>    <span class="hljs-comment">// 用于就算高光的内容：高光的颜色，粗糙的，高光的Shift</span><br>    surface.SpecularTint = float3(<span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>);<br>    surface.Smoothness = <span class="hljs-number">0.5</span>;<br>    surface.SpecularShift = <span class="hljs-number">0.1</span>;<br>    <br>    surface.SecondarySpecularTint =  float3(<span class="hljs-number">0.5</span>, <span class="hljs-number">0.5</span>, <span class="hljs-number">0.5</span>) ;<br>    surface.SecondarySmoothness = <span class="hljs-number">0.5</span>;<br>    surface.SecondarySpecularShift = <span class="hljs-number">-0.1</span>;<br>    <span class="hljs-keyword">return</span> surface;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>上面的的函数在GetSurfaceAndBuiltinData函数当中调用。</p>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">void</span> <span class="hljs-title function_">GetSurfaceAndBuiltinData</span><span class="hljs-params">(FragInputs fragInputs, inout SurfaceDescription surfaceDescription, float3 V, PositionInputs posInput, out SurfaceData surfaceData, out float3 bentNormalWS)</span><br>&#123;<br>    ...<br>	<br>    <span class="hljs-comment">// 双面处理</span><br>    float3 doubleSidedConstants = float3(<span class="hljs-number">1.0</span>, <span class="hljs-number">1.0</span>, <span class="hljs-number">1.0</span>);<br>    ApplyDoubleSidedFlipOrMirror(fragInputs, doubleSidedConstants);<br>	<br>    <span class="hljs-comment">// 基本的Normal 切线之类的</span><br>    SurfaceDescriptionInputs surfaceDescriptionInputs = FragInputsToSurfaceDescriptionInputs(fragInputs, V);<br>    <br>    <span class="hljs-comment">// 表面信息 高光 粗糙度 从Graph当中读取</span><br>    SurfaceDescription surfaceDescription = SurfaceDescriptionFunction(surfaceDescriptionInputs);<br><br>    <span class="hljs-comment">// 将信息写入到 需要计算的两个结构体当中</span><br>    float3 bentNormalWS;<br>    BuildSurfaceData(fragInputs, surfaceDescription, V, posInput, surfaceData, bentNormalWS);<br><br>    <span class="hljs-comment">// Builtin Data</span><br>    <span class="hljs-comment">// For back lighting we use the oposite vertex normal  背面的光使用相反的法线，主要用来采样GI？</span><br>    InitBuiltinData(surfaceDescription.Alpha, bentNormalWS, -fragInputs.worldToTangent[<span class="hljs-number">2</span>]<span class="hljs-comment">/*这部分内容是反向法线*/</span>, fragInputs.positionRWS, fragInputs.texCoord1, fragInputs.texCoord2, builtinData);<br>        <br><br>    PostInitBuiltinData(V, posInput, surfaceData, builtinData);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<p>BuilSurfaceData()</p>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">void</span> <span class="hljs-title function_">BuildSurfaceData</span><span class="hljs-params">(FragInputs fragInputs, inout SurfaceDescription surfaceDescription, float3 V, PositionInputs posInput, out SurfaceData surfaceData, out float3 bentNormalWS)</span><br>&#123;<br>   	<span class="hljs-comment">// 初始化</span><br>    ZERO_INITIALIZE(SurfaceData, surfaceData);<br><br>    <span class="hljs-comment">// copy across graph values, if defined 直接复制ShaderGraph的内容</span><br>    surfaceData.diffuseColor =                  surfaceDescription.Albedo;<br>    surfaceData.ambientOcclusion =              surfaceDescription.Occlusion; <span class="hljs-comment">// AO</span><br><br>    <span class="hljs-comment">// 两组高光相关的内容</span><br>    surfaceData.perceptualSmoothness =          surfaceDescription.Smoothness; <span class="hljs-comment">// 粗糙度 </span><br>    surfaceData.specularTint =                  surfaceDescription.SpecularTint;<br>    surfaceData.specularShift =                 surfaceDescription.SpecularShift;<br><br>    surfaceData.secondaryPerceptualSmoothness = surfaceDescription.SecondarySmoothness;<br>    surfaceData.secondarySpecularTint =         surfaceDescription.SecondarySpecularTint;<br>    surfaceData.secondarySpecularShift =        surfaceDescription.SecondarySpecularShift;<br><br>    <span class="hljs-comment">// These static material feature allow compile time optimization</span><br>    surfaceData.materialFeatures = <span class="hljs-number">0</span>;<br><br>    <span class="hljs-comment">// 材质特性：头发的透光以及头发的 SSS效果</span><br>    <span class="hljs-meta">#<span class="hljs-keyword">ifdef</span> _MATERIAL_FEATURE_HAIR_KAJIYA_KAY</span><br>    surfaceData.materialFeatures = MATERIALFEATUREFLAGS_HAIR_KAJIYA_KAY;<br>    <span class="hljs-meta">#<span class="hljs-keyword">endif</span></span><br><br>    <span class="hljs-meta">#<span class="hljs-keyword">ifdef</span> _MATERIAL_FEATURE_SUBSURFACE_SCATTERING</span><br>    surfaceData.materialFeatures |= MATERIALFEATUREFLAGS_HAIR_SUBSURFACE_SCATTERING;<br>    <span class="hljs-meta">#<span class="hljs-keyword">endif</span></span><br><br>    <span class="hljs-meta">#<span class="hljs-keyword">ifdef</span> _MATERIAL_FEATURE_TRANSMISSION</span><br>    surfaceData.materialFeatures |= MATERIALFEATUREFLAGS_HAIR_TRANSMISSION;<br>    <span class="hljs-meta">#<span class="hljs-keyword">endif</span></span><br>    <br><br>    <span class="hljs-comment">// 法线 切线</span><br>    float3 doubleSidedConstants = float3(<span class="hljs-number">1.0</span>, <span class="hljs-number">1.0</span>, <span class="hljs-number">1.0</span>);<br>    <span class="hljs-comment">// tangent-space normal</span><br>    float3 normalTS = float3(<span class="hljs-number">0.0f</span>, <span class="hljs-number">0.0f</span>, <span class="hljs-number">1.0f</span>);<br>    normalTS = surfaceDescription.Normal;<br>    <span class="hljs-comment">// compute world space normal</span><br>    GetNormalWS(fragInputs, normalTS, surfaceData.normalWS, doubleSidedConstants);<br>    bentNormalWS = surfaceData.normalWS;<br>    surfaceData.geomNormalWS = fragInputs.worldToTangent[<span class="hljs-number">2</span>];<br><br>    <span class="hljs-comment">// For a typical Unity quad, you have tangent vectors pointing to the right (X axis),</span><br>    <span class="hljs-comment">// and bitangent vectors pointing up (Y axis).</span><br>    <span class="hljs-comment">// The current hair setup uses mesh cards (e.g. quads).</span><br>    <span class="hljs-comment">// Hair is usually painted top-down, from the root to the tip.</span><br>    <span class="hljs-comment">// Therefore, DefaultHairStrandTangent = -MeshCardBitangent. // &lt;==这句话关键</span><br>    <span class="hljs-comment">// Both the SurfaceData and the BSDFData store the hair tangent</span><br>    <span class="hljs-comment">// (which represents the hair strand direction, root to tip). // 头发的方向</span><br>    surfaceData.hairStrandDirectionWS = -fragInputs.worldToTangent[<span class="hljs-number">1</span>].xyz;<br>    <span class="hljs-comment">// The hair strand direction texture contains tangent-space vectors.</span><br>    <span class="hljs-comment">// We use the same convention for the texture, which means that</span><br>    <span class="hljs-comment">// to get the default behavior (DefaultHairStrandTangent = -MeshCardBitangent),</span><br>    <span class="hljs-comment">// the artist has to paint (0, -1, 0).</span><br>    <span class="hljs-comment">// <span class="hljs-doctag">TODO:</span> pending artist feedback...</span><br>    <span class="hljs-comment">// The original Kajiya-Kay BRDF model expects an orthonormal TN frame.</span><br>    <span class="hljs-comment">// Since we use the tangent shift hack </span><br>    <br>    <span class="hljs-comment">// 这个文档需要看一下</span><br>    <span class="hljs-comment">// (http://web.engr.oregonstate.edu/~mjb/cs519/Projects/Papers/HairRendering.pdf),</span><br>    <span class="hljs-comment">// we may as well not bother to orthonormalize anymore.</span><br>    <span class="hljs-comment">// The tangent should still be a unit vector, though.</span><br>    surfaceData.hairStrandDirectionWS = normalize(surfaceData.hairStrandDirectionWS);<br><br>    <span class="hljs-comment">// By default we use the ambient occlusion with Tri-ace trick (apply outside) for specular occlusion.</span><br>    <span class="hljs-comment">// If user provide bent normal then we process a better term</span><br>    surfaceData.specularOcclusion = <span class="hljs-number">1.0</span>;<br>	<br>    <span class="hljs-comment">// 下面有一部分是计算 specularOcclusion的</span><br>	..........<br>        <br>    <span class="hljs-comment">// 下面是计算GAA的，后面需要看一下</span><br><br>    <span class="hljs-comment">// Propagate the geometry normal</span><br>    surfaceData.geomNormalWS = fragInputs.worldToTangent[<span class="hljs-number">2</span>];<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>其他部分的计算最终都会归结到BSDF函数</p>
+<figure class="hljs highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">void BSDF(  float3 V, float3 L, float NdotL, float3 positionWS, PreLightData preLightData, BSDFData bsdfData,<br>            out float3 diffuseLighting,<br>            out float3 specularLighting)<br>&#123;<br>	//preLightData	当中比较重要的就用到了NdotV<br>    float LdotV, NdotH, LdotH, NdotV, invLenLV;<br>    GetBSDFAngle(V, L, NdotL, preLightData.NdotV, LdotV, NdotH, LdotH, NdotV, invLenLV);<br><br>    if (HasFlag(bsdfData.materialFeatures, MATERIALFEATUREFLAGS_HAIR_KAJIYA_KAY))<br>    &#123;<br>    	// 颜色以高光为主<br>        float3 t1 = ShiftTangent(bsdfData.hairStrandDirectionWS, bsdfData.normalWS, bsdfData.specularShift);<br>        float3 t2 = ShiftTangent(bsdfData.hairStrandDirectionWS, bsdfData.normalWS, bsdfData.secondarySpecularShift);<br><br>        float3 H = (L + V) * invLenLV;<br><br>        float3 hairSpec1 = bsdfData.specularTint * D_KajiyaKay(t1, H, bsdfData.specularExponent);<br>        float3 hairSpec2 = bsdfData.secondarySpecularTint * D_KajiyaKay(t2, H, bsdfData.secondarySpecularExponent);<br><br>        float3 F = F_Schlick(bsdfData.fresnel0, LdotH);<br>        specularLighting = F * (hairSpec1 + hairSpec2);<br><br>        // Diffuse lighting<br>        // #define INV_PI      0.31830988618379067154<br>        float diffuseTerm = Lambert();  // 漫反射项的强度<br>        diffuseLighting = diffuseTerm;<br>    &#125;<br>    else<br>    &#123;<br>        specularLighting = float3(0.0, 0.0, 0.0);<br>        diffuseLighting = float3(0.0, 0.0, 0.0);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>高光</p>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs c">float3 <span class="hljs-title function_">D_KajiyaKay</span><span class="hljs-params">(float3 T, float3 H, <span class="hljs-type">float</span> specularExponent)</span><br>&#123;<br>    <span class="hljs-type">float</span> TdotH = dot(T, H);<br>    <span class="hljs-type">float</span> sinTHSq = saturate(<span class="hljs-number">1.0</span> - (TdotH * TdotH));<br><br>    <span class="hljs-type">float</span> dirAttn = saturate(TdotH + <span class="hljs-number">1.0</span>);<br><br>    <span class="hljs-keyword">return</span> dirAttn * PositivePow(sinTHSq, specularExponent);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>和BSDF相关的内容</p>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// return usual BSDF angle</span><br><span class="hljs-type">void</span> <span class="hljs-title function_">GetBSDFAngle</span><span class="hljs-params">(float3 V, float3 L, <span class="hljs-type">float</span> NdotL, <span class="hljs-type">float</span> unclampNdotV, out <span class="hljs-type">float</span> LdotV, out <span class="hljs-type">float</span> NdotH, out <span class="hljs-type">float</span> LdotH, out <span class="hljs-type">float</span> clampNdotV, out <span class="hljs-type">float</span> invLenLV)</span><br>&#123;<br>    <span class="hljs-comment">// Optimized math. Ref: PBR Diffuse Lighting for GGX + Smith Microsurfaces (slide 114).</span><br>    LdotV = dot(L, V);<br>    invLenLV = rsqrt(max(<span class="hljs-number">2.0</span> * LdotV + <span class="hljs-number">2.0</span>, FLT_EPS));    <span class="hljs-comment">// invLenLV = rcp(length(L + V)), clamp to avoid rsqrt(0) = inf, inf * 0 = NaN</span><br>    NdotH = saturate((NdotL + unclampNdotV) * invLenLV);        <span class="hljs-comment">// Do not clamp NdotV here</span><br>    LdotH = saturate(invLenLV * LdotV + invLenLV);<br>    clampNdotV = ClampNdotV(unclampNdotV);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// 平滑度到粗糙度</span><br>real <span class="hljs-title function_">PerceptualSmoothnessToPerceptualRoughness</span><span class="hljs-params">(real perceptualSmoothness)</span><br>&#123;<br>    <span class="hljs-keyword">return</span> (<span class="hljs-number">1.0</span> - perceptualSmoothness);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c">real <span class="hljs-title function_">PerceptualRoughnessToRoughness</span><span class="hljs-params">(real perceptualRoughness)</span><br>&#123;<br>    <span class="hljs-keyword">return</span> perceptualRoughness * perceptualRoughness;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>Bsdf数据当中需要的内容“</p>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><code class="hljs c"><br>BSDFData <span class="hljs-title function_">ConvertSurfaceDataToBSDFData</span><span class="hljs-params">(uint2 positionSS, SurfaceData surfaceData)</span><br>&#123;<br>    BSDFData bsdfData;<br>    ZERO_INITIALIZE(BSDFData, bsdfData);<br><br>    <span class="hljs-comment">// IMPORTANT: All enable flags are statically know at compile time, so the compiler can do compile time optimization</span><br>    bsdfData.materialFeatures = surfaceData.materialFeatures;<br><br>    bsdfData.ambientOcclusion = surfaceData.ambientOcclusion;<br>    bsdfData.specularOcclusion = surfaceData.specularOcclusion;<br><br>    bsdfData.diffuseColor = surfaceData.diffuseColor;<br><br>    bsdfData.normalWS = surfaceData.normalWS;<br>    bsdfData.geomNormalWS = surfaceData.geomNormalWS;<br>    bsdfData.perceptualRoughness = PerceptualSmoothnessToPerceptualRoughness(surfaceData.perceptualSmoothness);<br><br>    <span class="hljs-comment">// This value will be override by the value in diffusion profile</span><br>    bsdfData.fresnel0 = DEFAULT_HAIR_SPECULAR_VALUE;<br><br>    <span class="hljs-comment">// Note: we have ZERO_INITIALIZE the struct so bsdfData.anisotropy == 0.0</span><br>    <span class="hljs-comment">// Note: DIFFUSION_PROFILE_NEUTRAL_ID is 0</span><br>    <br>    bsdfData.diffusionProfileIndex = FindDiffusionProfileIndex(surfaceData.diffusionProfileHash);<br><br>    <span class="hljs-keyword">if</span> (HasFlag(surfaceData.materialFeatures, MATERIALFEATUREFLAGS_HAIR_SUBSURFACE_SCATTERING))<br>    &#123;<br>        <span class="hljs-comment">// Assign profile id and overwrite fresnel0</span><br>        FillMaterialSSS(bsdfData.diffusionProfileIndex, surfaceData.subsurfaceMask, bsdfData);<br>    &#125;<br><br>    <span class="hljs-keyword">if</span> (HasFlag(surfaceData.materialFeatures, MATERIALFEATUREFLAGS_HAIR_TRANSMISSION))<br>    &#123;<br>        <span class="hljs-comment">// Assign profile id and overwrite fresnel0</span><br>        FillMaterialTransmission(bsdfData.diffusionProfileIndex, surfaceData.thickness, bsdfData);<br>    &#125;<br><br>    <span class="hljs-comment">// This is the hair tangent (which represents the hair strand direction, root to tip).</span><br>    bsdfData.hairStrandDirectionWS = surfaceData.hairStrandDirectionWS;<br><br>    <span class="hljs-comment">// Kajiya kay</span><br>    <span class="hljs-keyword">if</span> (HasFlag(surfaceData.materialFeatures, MATERIALFEATUREFLAGS_HAIR_KAJIYA_KAY))<br>    &#123;<br>        bsdfData.secondaryPerceptualRoughness = PerceptualSmoothnessToPerceptualRoughness(surfaceData.secondaryPerceptualSmoothness);        <br>        bsdfData.specularTint = surfaceData.specularTint;<br>        bsdfData.secondarySpecularTint = surfaceData.secondarySpecularTint;<br>        bsdfData.specularShift = surfaceData.specularShift;<br>        bsdfData.secondarySpecularShift = surfaceData.secondarySpecularShift;<br><br>        <span class="hljs-comment">// We can rewrite specExp from exp2(10 * (1.0 - roughness)) in order</span><br>        <span class="hljs-comment">// to remove the need to take the square root of sinTH</span><br>        <span class="hljs-comment">// 这里是通过粗糙度计算曝光信息</span><br>        bsdfData.specularExponent = exp2(<span class="hljs-number">9.0</span> - <span class="hljs-number">10.0</span> * PerceptualRoughnessToRoughness(bsdfData.perceptualRoughness));<br>        bsdfData.secondarySpecularExponent = exp2(<span class="hljs-number">9.0</span> - <span class="hljs-number">10.0</span> * PerceptualRoughnessToRoughness(bsdfData.secondaryPerceptualRoughness));<br><br>        bsdfData.anisotropy = <span class="hljs-number">0.8</span>; <span class="hljs-comment">// For hair we fix the anisotropy</span><br>    &#125;<br><br>    ApplyDebugToBSDFData(bsdfData);<br><br>    <span class="hljs-keyword">return</span> bsdfData;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </main>
+    <footer class="post-footer">
+      
+    </footer>
+  </article>
+  
+  
+  <nav class="page-nav">
+    <div class="page-nav-next page-nav-item">
+      
+      <a href="/2022/09/19/Unity/HDRP%E4%B8%ADHairShader%E4%BB%A3%E7%A0%81%E7%BB%93%E6%9E%84/" rel="next" title=""><i class="fas fa-angle-left"></i><span class="nav-title"></span></a>
+      
+    </div>
+    <div class="page-nav-prev page-nav-item">
+      
+      <a href="/2022/09/19/Unity/HDRP%E4%B8%ADShaderGraph%E7%94%9F%E6%88%90%E7%9A%84UnlitTransparent%E4%B8%8D%E6%8E%A5%E5%8F%97%E9%9B%BE/" rel="prev" title=""><span class="nav-title"></span><i class="fas fa-angle-right"></i></a>
+      
+    </div>
+  </nav>
+  
+  
+  
+
+<div class="comments" id="comments">
+  
+  
+  <div class="commentjs" id="comment-thread"></div>
+  <link rel="stylesheet" href="/css/commentjs.css">
+  <script defer type="text/javascript" src="/js/marked.min.js"></script>
+  <script defer type="text/javascript" src="/js/timeago.min.js"></script>
+  <script defer type="text/javascript" src="/js/highlight.min.js"></script>
+  <script defer type="text/javascript" src="/js/commentjs.js"></script>
+  <script type="text/javascript">
+  $(document).ready(function () {
+    getComments({
+      "type": "github",
+      "user": "leinlin",
+      "repo": "leinlin.github.io",
+      "client_id": "aee134bdfb54c4ef5826",
+      "client_secret": "4af1d3f2b82dccc028c49715becc01e611afbe43",
+      "no_comment": "这个页面还没有评论，现在就去评论吧！",
+      "go_to_comment": "去评论",
+      "issue_title": "",
+      "btn_class": "button",
+      "comments_target": "#comment-thread"
+    });
+    marked.setOptions({
+      "highlight": function (code, lang) {
+        return hljs.highlightAuto(code).value;
+      }
+    });
+    function mark() {
+      var markdowns = document.getElementsByClassName("markdown");
+      for (var i = 0; i < markdowns.length; ++i){
+        if (markdowns[i].innerHTML) {
+          markdowns[i].innerHTML = marked(markdowns[i].innerHTML);
+        }
+      }
+    }
+    window.addEventListener("DOMContentLoaded", mark, false);
+    window.addEventListener("load", mark, false);
+  });
+  </script>
+  
+  
+</div>
+
+
+
+  
+</div>
+
+          </div>
+          
+          
+          
+<aside class="sidebar" id="sidebar" style="background: url(/images/background.png);">
+  
+  <div class="search">
+    <div class="form-group">
+      <i class="fas fa-search"></i><input type="search" id="search-input" name="q" results="0" placeholder="搜索" class="form-control"/>
+    </div>
+  </div>
+  <div class="search-result-box" id="search-result"></div>
+  
+  
+<div class="info sidebar-item" id="info">
+  
+  <img class="author-avatar" src="/images/avatar.jpg" alt="leinlin">
+  
+  <h1 class="author-name">leinlin</h1>
+  <h2 class="author-description"></h2>
+  <div class="site-count">
+    
+    
+    
+    
+    <div class="categories-count count-block">
+      <div class="site-count-title">分类</div>
+      <div><a href="/categories/">11</a></div>
+    </div>
+    
+    
+  </div>
+  
+  <div class="rss">
+    <a class="rss-link button sidebar-item" href="/atom.xml"><i class="fas fa-rss"></i>RSS</a>
+  </div>
+  
+</div>
+
+
+  <div class="sidebar-sticky">
+    
+    
+    
+    
+    
+    <hr>
+    <div class="post-toc sidebar-item" id="toc-div">
+      <div><i class="fas fa-list-ol"></i>文章目录</div>
+      <div class="post-toc-content"><ol class="list-group toc"><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#HairShader%E5%85%89%E7%85%A7%E6%A8%A1%E5%9E%8B"><span class="toc-text">HairShader光照模型</span></a></li></ol></div>
+    </div>
+    
+    
+    
+    <hr>
+    <div class="social-link sidebar-item">
+      <div><i class="far fa-address-card"></i>社交链接</p></div>
+      <ul>
+        
+        <li><i class="fab fa-github"></i><a href="https://leinlin.github.com/" target="_blank">GitHub</a></li>
+        
+      </ul>
+    </div>
+    
+    
+  </div>
+</aside>
+
+
+          
+        </div>
+      </div>
+    </main>
+    
+<footer id="footer" class="footer" style="background: #33363b;">
+  <div class="container">
+    <div class="back-to-top">
+      <button id="back-to-top"><i class="fas fa-angle-double-up" aria-label="回到顶部"></i></button>
+    </div>
+    <div class="footer-container">
+      <div class="footer-left">
+        <div class="copyright">
+          <span class="author">leinlin</span><span class="year"><i class="far fa-copyright"></i>2022</span>
+        </div>
+        
+        <div class="busuanzi">
+          <span id="busuanzi_container_site_pv"><i class="fas fa-eye" aria-label="站点点击量" aria-hidden="false"></i><span id="busuanzi_value_site_pv"></span></span><span id="busuanzi_container_site_uv"><i class="fas fa-user" aria-label="站点用户数" aria-hidden="false"></i><span id="busuanzi_value_site_uv"></span></span><span id="busuanzi_container_page_pv"><i class="far fa-file-alt"></i><span id="busuanzi_value_page_pv" aria-label="页面点击量" aria-hidden="false"></span></span>
+        </div>
+        
+      </div>
+      <div class="footer-right">
+        <div class="custom-info">
+          
+          托管于<i class="fab fa-github-alt"></i><a href="https://pages.github.com/" target="_blank">GitHub Pages</a>
+          
+        </div>
+        <div class="powered-by">
+          由 <a href="https://hexo.io/" target="_blank">Hexo</a> 强力驱动 | 主题 <a href="https://github.com/AlynxZhou/hexo-theme-aria/" target="_blank">ARIA</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+  <script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

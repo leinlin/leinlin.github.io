@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#33363b">
+    <meta name="msapplication-TileColor" content="#33363b">
+    
+    
+    
+    
+    <meta name="keywords" content="leinlin, ARIA, Hexo">
+    
+    
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png">
+    
+    
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicons/android-chrome-192x192.png">
+    
+    
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png">
+    
+    
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png">
+    
+    
+    <link rel="mask-icon" href="/favicons/safari-pinned-tab.svg" color="#33363b">
+    
+    
+    <link rel="manifest" href="/favicons/site.webmanifest">
+    
+    
+    <meta name="msapplication-config" content="/favicons/browserconfig.xml">
+    
+    
+    <link rel="alternate" href="/atom.xml" title="leinlin的小笔记" type="application/atom+xml" />
+    
+    
+    <link rel="shortcut icon" type="image/x-icon" href="/favicons/favicon.ico">
+    
+    
+    <link rel="stylesheet" type="text/css" href="/css/normalize.css">
+    <link rel="stylesheet" type="text/css" href="/css/index.css">
+    
+    <link rel="stylesheet" type="text/css" href="/css/sidebar.css">
+    
+    
+<link rel="stylesheet" type="text/css" href="/css/page.css">
+<link rel="stylesheet" type="text/css" href="/css/post.css">
+
+    <link rel="stylesheet" type="text/css" href="/css/custom.css">
+    <link rel="stylesheet" type="text/css" href="/css/atom-one-light.css">
+    <link rel="stylesheet" type="text/css" href="/css/lightgallery.min.css">
+    <script type="text/javascript" src="/js/jquery.min.js"></script>
+    <script defer type="text/javascript" src="/js/util.js"></script>
+    <script defer type="text/javascript" src="/js/clipboard.min.js"></script>
+    <script defer type="text/javascript" src="/js/scrollspy.js"></script>
+    <script defer type="text/javascript" src="/js/fontawesome-all.min.js"></script>
+    <script defer type="text/javascript" src="/js/lightgallery.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-fullscreen.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-hash.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-pager.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-thumbnail.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-zoom.min.js"></script>
+    
+    <script defer src="/js/busuanzi.pure.mini.js"></script>
+    
+    
+    <script defer type="text/javascript" src="/js/search.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function () {
+      var searchPath = "search.xml";
+      if (searchPath.length === 0) {
+        searchPath = "search.xml";
+      }
+      var path = "/" + searchPath;
+      searchFunc(path, "search-input", "search-result");
+    });
+    </script>
+    
+    
+    
+    <script defer type="text/javascript" src="https://cdn.staticfile.org/MathJax/MathJax-2.6-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ["$","$"], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ["script", "noscript", "style", "textarea", "pre", "code"]
+      }
+    });
+    </script>
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for (i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += " has-jax";
+      }
+    });
+    </script>
+    
+    
+    <script defer type="text/javascript" src="/js/index.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function () {
+      var cb = null;
+      var els = $(".post figure.highlight");
+      if (els.length) {
+        // Enabled Hexo highlight line number.
+        $(els).each(function (i, e) {
+          // $(e).before("<button class=\"copy button\">复制</button>");
+          $(e).before([
+            "<div class=\"code-titlebar\">",
+              "<div class=\"titlebar-left\">",
+                "<button class=\"copy\">复制</button>",
+              "</div>",
+            "</div>"
+          ].join(""));
+        });
+        cb = new ClipboardJS("button.copy", {
+          "target": function (trigger) {
+              // Get target element by DOM API.
+              return trigger.parentNode.parentNode.nextElementSibling.firstChild.firstChild.firstChild.lastChild.firstChild.firstChild;
+          }
+        });
+      } else {
+        // Disabled Hexo highlight line number.
+        els = $(".post pre code");
+        $(els).each(function (i, e) {
+          // Add button before pre, not code.
+          // $(e).parent().before("<button class=\"copy button\">复制</button>");
+          $(e).before([
+            "<div class=\"code-titlebar\">",
+              "<div class=\"titlebar-left\">",
+                "<button class=\"copy\" >复制</button>",
+              "</div>",
+              "<div class=\"titlebar-right\">",
+                "<button class=\"button-dot dot-minimize\" aria-label=\"Decoration\"></button>",
+                "<button class=\"button-dot dot-maximize\" aria-label=\"Decoration\"></button>",
+                "<button class=\"button-dot dot-close\" aria-label=\"Decoration\"></button>",
+              "</div>",
+            "</div>"
+          ].join(""));
+        });
+        cb = new ClipboardJS("button.copy", {
+          "target": function (trigger) {
+              // Get target element by DOM API.
+              return trigger.parentNode.parentNode.nextElementSibling;
+          }
+        });
+      }
+      cb.on("success", function (e) {
+        e.clearSelection();
+        var trigger = e.trigger;
+        // Change button text as a user tip.
+        trigger.innerHTML = "已复制";
+        $(trigger).addClass("copied");
+        // Change button text back;
+        setTimeout(function () {
+          trigger.innerHTML = "复制";
+          $(trigger).removeClass("copied");
+        }, 1500);
+      });
+    });
+    </script>
+    
+    <script defer type="text/javascript" src="/js/custom.js"></script>
+    <title> | leinlin的小笔记</title>
+  <meta name="generator" content="Hexo 6.2.0"></head>
+  <body itemscope itemtype="http://schema.org/WebPage" lang="zh_CN"  data-spy="scroll" data-target=".list-group">
+    
+<header id="header" class="header" style="background: #33363b;">
+  <div class="container">
+    <div class="header-container">
+      <div class="header-title">
+        <h1 class="title"><a href="/">leinlin的小笔记</a></h1>
+        <h2 class="subtitle"></h2>
+      </div>
+      
+    </div>
+    <nav id="nav" class="nav">
+      <a id="nav-toggle" class="nav-toggle" aria-hidden="true"><i class="fas fa-bars" aria-label="切换导航栏"></i></a>
+      <ul id="menu" role="menubar" aria-hidden="false">
+        
+        <li role="menuitem"><a href="/"><i class="fas fa-home"></i><span class="menu-text">首页</span></a></li>
+        
+        <li role="menuitem"><a href="/categories/"><i class="fas fa-th-list"></i><span class="menu-text">分类</span></a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</header>
+
+
+    <main id="main" class="main">
+      <div class="container">
+        <div class="main-container">
+          <div class="content">
+            
+<div id="post" class="page">
+  
+  <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
+    <div class="post-block">
+      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/09/19/tech/hadoop_headfirst/">
+      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+       <meta itemprop="name" content="leinlin">
+       <meta itemprop="description" content="">
+       <meta itemprop="image" content="/images/avatar.jpg">
+      </span>
+      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+       <meta itemprop="name" content="leinlin的小笔记">
+      </span>
+    </div>
+    <header class="post-header">
+      <h1 class="post-title" itemprop="name headline"></h1>
+      <div class="post-meta">
+        
+        <span class="post-date">
+          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2022-09-19T19:53:45+08:00">2022-09-19 19:53:45</time></span>
+        </span>
+        
+        
+        
+        
+        
+      </div>
+    </header>
+    <main class="post-main" itemprop="articleBody">
+      <h2 id="Hadoop安装（Ubuntu14-04）"><a href="#Hadoop安装（Ubuntu14-04）" class="headerlink" title="Hadoop安装（Ubuntu14.04）"></a>Hadoop安装（Ubuntu14.04）</h2><ol>
+<li>安装java</li>
+<li>配置JAVA_HOME</li>
+<li>下载hadoop2.7解压即可使用</li>
+</ol>
+<h2 id="HDFS"><a href="#HDFS" class="headerlink" title="HDFS"></a>HDFS</h2><p>在下面的配置文件中配置HDFS:</p>
+<p>etc&#x2F;hadoop&#x2F;core-site.xml:</p>
+<figure class="hljs highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">configuration</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">property</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">name</span>&gt;</span>fs.defaultFS<span class="hljs-tag">&lt;/<span class="hljs-name">name</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">value</span>&gt;</span>hdfs://localhost:9000<span class="hljs-tag">&lt;/<span class="hljs-name">value</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">property</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">configuration</span>&gt;</span><br></code></pre></td></tr></table></figure>
+
+<p>etc&#x2F;hadoop&#x2F;hdfs-site.xml:</p>
+<figure class="hljs highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">configuration</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">property</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">name</span>&gt;</span>dfs.replication<span class="hljs-tag">&lt;/<span class="hljs-name">name</span>&gt;</span><br>        <span class="hljs-tag">&lt;<span class="hljs-name">value</span>&gt;</span>1<span class="hljs-tag">&lt;/<span class="hljs-name">value</span>&gt;</span><br>    <span class="hljs-tag">&lt;/<span class="hljs-name">property</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">configuration</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<p>完成以上两个配置文件尝试进行ssh链接</p>
+<figure class="hljs highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">$ </span><span class="language-bash">ssh localhost</span><br></code></pre></td></tr></table></figure>
+
+<p>使用下面的命令进行无密码ssh链接:</p>
+<figure class="hljs highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">$ </span><span class="language-bash">ssh-keygen -t dsa -P <span class="hljs-string">&#x27;&#x27;</span> -f ~/.ssh/id_dsa</span><br><span class="hljs-meta prompt_">$ </span><span class="language-bash"><span class="hljs-built_in">cat</span> ~/.ssh/id_dsa.pub &gt;&gt; ~/.ssh/authorized_keys</span><br><span class="hljs-meta prompt_">$ </span><span class="language-bash"><span class="hljs-built_in">chmod</span> 0600 ~/.ssh/authorized_keys</span><br></code></pre></td></tr></table></figure>
+
+<ol>
+<li>Format the filesystem:</li>
+</ol>
+<figure class="hljs highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">$</span><span class="language-bash">bin/hdfs namenode -format</span><br></code></pre></td></tr></table></figure>
+
+<ol start="2">
+<li>Start NameNode daemon and DataNode daemon:</li>
+</ol>
+<figure class="hljs highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">$ </span><span class="language-bash">sbin/start-dfs.sh</span><br></code></pre></td></tr></table></figure>
+<ol start="3">
+<li><p>在浏览器中查看NameNode<br>NameNode - <a target="_blank" rel="noopener" href="http://localhost:50070/">http://localhost:50070/</a></p>
+</li>
+<li><p>创建目录</p>
+</li>
+</ol>
+<figure class="hljs highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">$ </span><span class="language-bash">bin/hdfs dfs -<span class="hljs-built_in">mkdir</span> /user</span><br><span class="hljs-meta prompt_">$ </span><span class="language-bash">bin/hdfs dfs -<span class="hljs-built_in">mkdir</span> /user/&lt;username&gt;</span><br></code></pre></td></tr></table></figure>
+
+<ol start="5">
+<li>将文件拷贝到HDFS文件系统:</li>
+</ol>
+<figure class="hljs highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">$ </span><span class="language-bash">bin/hdfs dfs -put etc/hadoop input</span><br></code></pre></td></tr></table></figure>
+
+<ol start="6">
+<li>Run some of the examples provided:</li>
+</ol>
+<figure class="hljs highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">$ </span><span class="language-bash">bin/hadoop jar share/hadoop/mapreduce/hadoop-mapreduce-examples-2.7.2.jar grep input output <span class="hljs-string">&#x27;dfs[a-z.]+&#x27;</span></span><br></code></pre></td></tr></table></figure>
+
+<ol start="7">
+<li>Examine the output files: Copy the output files from the distributed filesystem to the local filesystem and examine them:</li>
+</ol>
+<figure class="hljs highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">$ </span><span class="language-bash">bin/hdfs dfs -get output output</span><br><span class="hljs-meta prompt_">$ </span><span class="language-bash"><span class="hljs-built_in">cat</span> output/*</span><br></code></pre></td></tr></table></figure>
+<ol start="8">
+<li>When you’re done, stop the daemons with:</li>
+</ol>
+<figure class="hljs highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">$ </span><span class="language-bash">sbin/stop-dfs.sh</span><br></code></pre></td></tr></table></figure>
+<h2 id="MapReduce"><a href="#MapReduce" class="headerlink" title="MapReduce"></a>MapReduce</h2><p>编写map reduce文件</p>
+<figure class="hljs highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">import</span> java.io.IOException;<br><span class="hljs-keyword">import</span> java.util.StringTokenizer;<br><br><span class="hljs-keyword">import</span> org.apache.hadoop.conf.Configuration;<br><span class="hljs-keyword">import</span> org.apache.hadoop.fs.Path;<br><span class="hljs-keyword">import</span> org.apache.hadoop.io.IntWritable;<br><span class="hljs-keyword">import</span> org.apache.hadoop.io.Text;<br><span class="hljs-keyword">import</span> org.apache.hadoop.mapreduce.Job;<br><span class="hljs-keyword">import</span> org.apache.hadoop.mapreduce.Mapper;<br><span class="hljs-keyword">import</span> org.apache.hadoop.mapreduce.Reducer;<br><span class="hljs-keyword">import</span> org.apache.hadoop.mapreduce.lib.input.FileInputFormat;<br><span class="hljs-keyword">import</span> org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;<br><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">WordCount</span> &#123;<br><br>  <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">TokenizerMapper</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">Mapper</span>&lt;Object, Text, Text, IntWritable&gt;&#123;<br><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> <span class="hljs-keyword">static</span> <span class="hljs-type">IntWritable</span> <span class="hljs-variable">one</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">IntWritable</span>(<span class="hljs-number">1</span>);<br>    <span class="hljs-keyword">private</span> <span class="hljs-type">Text</span> <span class="hljs-variable">word</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Text</span>();<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">map</span><span class="hljs-params">(Object key, Text value, Context context )</span> <span class="hljs-keyword">throws</span> IOException, InterruptedException &#123;<br>      <span class="hljs-type">StringTokenizer</span> <span class="hljs-variable">itr</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">StringTokenizer</span>(value.toString());<br>      <span class="hljs-keyword">while</span> (itr.hasMoreTokens()) &#123;<br>        word.set(itr.nextToken());<br>        context.write(word, one);<br>      &#125;<br>    &#125;<br>  &#125;<br><br>  <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">IntSumReducer</span> <span class="hljs-keyword">extends</span> <span class="hljs-title class_">Reducer</span>&lt;Text,IntWritable,Text,IntWritable&gt; &#123;<br>    <span class="hljs-keyword">private</span> <span class="hljs-type">IntWritable</span> <span class="hljs-variable">result</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">IntWritable</span>();<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">reduce</span><span class="hljs-params">(Text key, Iterable&lt;IntWritable&gt; values,Context context)</span> <span class="hljs-keyword">throws</span> IOException, InterruptedException &#123;<br>      <span class="hljs-type">int</span> <span class="hljs-variable">sum</span> <span class="hljs-operator">=</span> <span class="hljs-number">0</span>;<br>      <span class="hljs-keyword">for</span> (IntWritable val : values) &#123;<br>        sum += val.get();<br>      &#125;<br>      result.set(sum);<br>      context.write(key, result);<br>    &#125;<br>  &#125;<br><br>  <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">main</span><span class="hljs-params">(String[] args)</span> <span class="hljs-keyword">throws</span> Exception &#123;<br>    <span class="hljs-type">Configuration</span> <span class="hljs-variable">conf</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">Configuration</span>();<br>    <span class="hljs-type">Job</span> <span class="hljs-variable">job</span> <span class="hljs-operator">=</span> Job.getInstance(conf, <span class="hljs-string">&quot;word count&quot;</span>);<br>    job.setJarByClass(WordCount.class);<br>    job.setMapperClass(TokenizerMapper.class);<br>    job.setCombinerClass(IntSumReducer.class);<br>    job.setReducerClass(IntSumReducer.class);<br>    job.setOutputKeyClass(Text.class);<br>    job.setOutputValueClass(IntWritable.class);<br>    FileInputFormat.addInputPath(job, <span class="hljs-keyword">new</span> <span class="hljs-title class_">Path</span>(args[<span class="hljs-number">0</span>]));<br>    FileOutputFormat.setOutputPath(job, <span class="hljs-keyword">new</span> <span class="hljs-title class_">Path</span>(args[<span class="hljs-number">1</span>]));<br>    System.exit(job.waitForCompletion(<span class="hljs-literal">true</span>) ? <span class="hljs-number">0</span> : <span class="hljs-number">1</span>);<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>制作成jar包</p>
+<figure class="hljs highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs shell"><span class="hljs-meta prompt_">$ </span><span class="language-bash">bin/hadoop com.sun.tools.javac.Main WordCount.java</span><br><span class="hljs-meta prompt_">$ </span><span class="language-bash">jar cf wc.jar WordCount*.class</span><br></code></pre></td></tr></table></figure>
+
+<p>启动hdfs并将文件提交到hdfs中:参考HDFS</p>
+<p>执行程序：</p>
+<figure class="hljs highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">bin/hadoop jar wc.jar WordCount /user/liangz14/input /user/liangz14/output<br></code></pre></td></tr></table></figure>
+
+<p>查看结果</p>
+<figure class="hljs highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">bin/hadoop fs -cat /user/joe/wordcount/output/part-r-00000`<br></code></pre></td></tr></table></figure>
+<p>-libjars, -files and -archives: 参数的使用  分别用来制定jar包，指定文件，和未解压文件 通过#也可以致命具体解压后的文件名<br>，不同参数之间用‘’，‘分割</p>
+<h3 id="mr的一般过程"><a href="#mr的一般过程" class="headerlink" title="mr的一般过程"></a>mr的一般过程</h3><figure class="hljs highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs xml">(input) &lt;k1, v1&gt; -&gt; map -&gt; &lt;k2, v2&gt; -&gt; combine -&gt; &lt;k2, v2&gt; -&gt; reduce -&gt; &lt;k3, v3&gt; (output)<br>combine和reducer的作用一样 设置的方法：  job.setCombinerClass(IntSumReducer.class);<br></code></pre></td></tr></table></figure>
+
+<h3 id="MAIN方法中的设置"><a href="#MAIN方法中的设置" class="headerlink" title="MAIN方法中的设置"></a>MAIN方法中的设置</h3><h4 id="Mapper-："><a href="#Mapper-：" class="headerlink" title="Mapper ："></a>Mapper ：</h4><p>通过Job.setMapperClass(Class) 设置map </p>
+<p>map的结果通过context.write(WritableComparable, Writable).进行收集</p>
+<p>之后会根据比较器进行分组： Job.setGroupingComparatorClass(Class).</p>
+<p>之后map的结果救回被排序 并被划分给不同的reducer，划分任务的个数和reduce任务的个数一样</p>
+<p>可以制定那个key进入那个Reducer：通过实现客户自定义的划分器</p>
+<p>用户可以选择是有使用一个结合器 Job.setCombinerClass(Class)，来实现中间结果的本地聚合，可以减少数据传输的总量（从Mapper到Reducer）</p>
+<p>中间结果总是会进行排序，根据：key的长度，key，值的长度，值。可以控制是否压缩，如何压缩。</p>
+<h4 id="Maps的数量："><a href="#Maps的数量：" class="headerlink" title="Maps的数量："></a>Maps的数量：</h4><p>有输入数据的总数决定。输入文件的总的块数</p>
+<p>maps的数量最好为每个节点10到100  经过设置到了每个cpu最多300</p>
+<p>Configuration.set(MRJobConfig.NUM_MAPS, int) 可以进行设置</p>
+<h4 id="Mapper细节："><a href="#Mapper细节：" class="headerlink" title="Mapper细节："></a>Mapper细节：</h4><p>Map首先调用setup（context）操作</p>
+<p>然后调用map（object，object，context）操作</p>
+<p>最后调用cleanup（context）操作</p>
+<p>map可以通过RawComparator 控制分组和排序</p>
+<p>通过Partitioner控制那个key进入那个Reducer</p>
+<p>通过setCombinerClass 可以进行本地的组合</p>
+<p>通过 CompressionCodec控制压缩</p>
+<h4 id="Reducer："><a href="#Reducer：" class="headerlink" title="Reducer："></a>Reducer：</h4><p>Reducer将中间结果（有共同的key）装换成一个更小的值的集合</p>
+<p>Job.setNumReduceTasks(int).来设置reduce的数量</p>
+<p>Job.setReducerClass(Class) 来对reduce进行设置</p>
+<p>每一个 &lt;key, (list of values)&gt;都会调用一次</p>
+<p>Reducer有三个主要的阶段shuffle, sort and reduce.</p>
+<h4 id="Shuffle："><a href="#Shuffle：" class="headerlink" title="Shuffle："></a>Shuffle：</h4><p>框架从所有Mapper的排序结果中获取相关的划分</p>
+<p>Sort：框架通过key将Reducer的输入进行分组，因为不同的mapper可能有相同key的输出   </p>
+<p>Job.setSortComparatorClass(Class).可以生命子集的规则，指定如何分组</p>
+<p>Reduce：每一个key都会执行一个reduce，这个结果会通过Context.write写入到文件系统中。</p>
+<p>Reduce的输出结果是没有经过排序的</p>
+<p>Recude的个数 0.95 *  节点数 * 节点最大容器数 - 1.75 * …</p>
+<h4 id="Partitioner"><a href="#Partitioner" class="headerlink" title="Partitioner"></a>Partitioner</h4><p>用来将key空间进行划分，最终划分的总数和reduce任务的总数是一样的<br>HashPartitioner是默认的划分器</p>
+<h4 id="Counter"><a href="#Counter" class="headerlink" title="Counter"></a>Counter</h4><p>计数器时统计工具，M R都能用来统计</p>
+<p>Hadoop MapReduce comes bundled with a library of generally useful mappers, reducers, and partitioners.</p>
+<p>Hadoop的MR 是由一系列的 M  R 和P操作库 组成的</p>
+<h4 id="JOB设置"><a href="#JOB设置" class="headerlink" title="JOB设置"></a>JOB设置</h4><p>Mapper, combiner (if any), Partitioner, Reducer, InputFormat, OutputFormat implementations</p>
+<p>其中FileInputFormat设置输入文件的集合路径</p>
+<p>FileOutputFormat设置输出路径</p>
+<h2 id="HDFS常用命令"><a href="#HDFS常用命令" class="headerlink" title="HDFS常用命令"></a>HDFS常用命令</h2><figure class="hljs highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs shell">hadoop fs -ls /<br>hadoop fs -lsr<br>hadoop fs -mkdir /user/hadoop<br>hadoop fs -put a.txt /user/hadoop/<br>hadoop fs -get /user/hadoop/a.txt /<br>hadoop fs -cp src dst<br>hadoop fs -mv src dst<br>hadoop fs -cat /user/hadoop/a.txt<br>hadoop fs -rm /user/hadoop/a.txt<br>hadoop fs -rmr /user/hadoop/a.txt<br>hadoop fs -text /user/hadoop/a.txt<br>hadoop fs -copyFromLocal localsrc dst 与hadoop fs -put功能类似。<br>hadoop fs -moveFromLocal localsrc dst 将本地文件上传到hdfs，同时删除本地文件。<br><br>hadoop dfsadmin -report<br>hadoop dfsadmin -safemode enter | leave | get | wait<br>hadoop dfsadmin -setBalancerBandwidth 1000<br></code></pre></td></tr></table></figure>
+
+<p><a href="../../index.md">back</a></p>
+
+    </main>
+    <footer class="post-footer">
+      
+    </footer>
+  </article>
+  
+  
+  <nav class="page-nav">
+    <div class="page-nav-next page-nav-item">
+      
+      <a href="/2022/09/19/tech/github_page_ssl_error/" rel="next" title=""><i class="fas fa-angle-left"></i><span class="nav-title"></span></a>
+      
+    </div>
+    <div class="page-nav-prev page-nav-item">
+      
+      <a href="/2022/09/19/tech/learn_makefile/" rel="prev" title=""><span class="nav-title"></span><i class="fas fa-angle-right"></i></a>
+      
+    </div>
+  </nav>
+  
+  
+  
+
+<div class="comments" id="comments">
+  
+  
+  <div class="commentjs" id="comment-thread"></div>
+  <link rel="stylesheet" href="/css/commentjs.css">
+  <script defer type="text/javascript" src="/js/marked.min.js"></script>
+  <script defer type="text/javascript" src="/js/timeago.min.js"></script>
+  <script defer type="text/javascript" src="/js/highlight.min.js"></script>
+  <script defer type="text/javascript" src="/js/commentjs.js"></script>
+  <script type="text/javascript">
+  $(document).ready(function () {
+    getComments({
+      "type": "github",
+      "user": "leinlin",
+      "repo": "leinlin.github.io",
+      "client_id": "aee134bdfb54c4ef5826",
+      "client_secret": "4af1d3f2b82dccc028c49715becc01e611afbe43",
+      "no_comment": "这个页面还没有评论，现在就去评论吧！",
+      "go_to_comment": "去评论",
+      "issue_title": "",
+      "btn_class": "button",
+      "comments_target": "#comment-thread"
+    });
+    marked.setOptions({
+      "highlight": function (code, lang) {
+        return hljs.highlightAuto(code).value;
+      }
+    });
+    function mark() {
+      var markdowns = document.getElementsByClassName("markdown");
+      for (var i = 0; i < markdowns.length; ++i){
+        if (markdowns[i].innerHTML) {
+          markdowns[i].innerHTML = marked(markdowns[i].innerHTML);
+        }
+      }
+    }
+    window.addEventListener("DOMContentLoaded", mark, false);
+    window.addEventListener("load", mark, false);
+  });
+  </script>
+  
+  
+</div>
+
+
+
+  
+</div>
+
+          </div>
+          
+          
+          
+<aside class="sidebar" id="sidebar" style="background: url(/images/background.png);">
+  
+  <div class="search">
+    <div class="form-group">
+      <i class="fas fa-search"></i><input type="search" id="search-input" name="q" results="0" placeholder="搜索" class="form-control"/>
+    </div>
+  </div>
+  <div class="search-result-box" id="search-result"></div>
+  
+  
+<div class="info sidebar-item" id="info">
+  
+  <img class="author-avatar" src="/images/avatar.jpg" alt="leinlin">
+  
+  <h1 class="author-name">leinlin</h1>
+  <h2 class="author-description"></h2>
+  <div class="site-count">
+    
+    
+    
+    
+    <div class="categories-count count-block">
+      <div class="site-count-title">分类</div>
+      <div><a href="/categories/">11</a></div>
+    </div>
+    
+    
+  </div>
+  
+  <div class="rss">
+    <a class="rss-link button sidebar-item" href="/atom.xml"><i class="fas fa-rss"></i>RSS</a>
+  </div>
+  
+</div>
+
+
+  <div class="sidebar-sticky">
+    
+    
+    
+    
+    
+    <hr>
+    <div class="post-toc sidebar-item" id="toc-div">
+      <div><i class="fas fa-list-ol"></i>文章目录</div>
+      <div class="post-toc-content"><ol class="list-group toc"><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#Hadoop%E5%AE%89%E8%A3%85%EF%BC%88Ubuntu14-04%EF%BC%89"><span class="toc-text">Hadoop安装（Ubuntu14.04）</span></a></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#HDFS"><span class="toc-text">HDFS</span></a></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#MapReduce"><span class="toc-text">MapReduce</span></a><ol class="list-group toc-child"><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#mr%E7%9A%84%E4%B8%80%E8%88%AC%E8%BF%87%E7%A8%8B"><span class="toc-text">mr的一般过程</span></a></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#MAIN%E6%96%B9%E6%B3%95%E4%B8%AD%E7%9A%84%E8%AE%BE%E7%BD%AE"><span class="toc-text">MAIN方法中的设置</span></a><ol class="list-group toc-child"><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#Mapper-%EF%BC%9A"><span class="toc-text">Mapper ：</span></a></li><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#Maps%E7%9A%84%E6%95%B0%E9%87%8F%EF%BC%9A"><span class="toc-text">Maps的数量：</span></a></li><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#Mapper%E7%BB%86%E8%8A%82%EF%BC%9A"><span class="toc-text">Mapper细节：</span></a></li><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#Reducer%EF%BC%9A"><span class="toc-text">Reducer：</span></a></li><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#Shuffle%EF%BC%9A"><span class="toc-text">Shuffle：</span></a></li><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#Partitioner"><span class="toc-text">Partitioner</span></a></li><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#Counter"><span class="toc-text">Counter</span></a></li><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#JOB%E8%AE%BE%E7%BD%AE"><span class="toc-text">JOB设置</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#HDFS%E5%B8%B8%E7%94%A8%E5%91%BD%E4%BB%A4"><span class="toc-text">HDFS常用命令</span></a></li></ol></div>
+    </div>
+    
+    
+    
+    <hr>
+    <div class="social-link sidebar-item">
+      <div><i class="far fa-address-card"></i>社交链接</p></div>
+      <ul>
+        
+        <li><i class="fab fa-github"></i><a href="https://leinlin.github.com/" target="_blank">GitHub</a></li>
+        
+      </ul>
+    </div>
+    
+    
+  </div>
+</aside>
+
+
+          
+        </div>
+      </div>
+    </main>
+    
+<footer id="footer" class="footer" style="background: #33363b;">
+  <div class="container">
+    <div class="back-to-top">
+      <button id="back-to-top"><i class="fas fa-angle-double-up" aria-label="回到顶部"></i></button>
+    </div>
+    <div class="footer-container">
+      <div class="footer-left">
+        <div class="copyright">
+          <span class="author">leinlin</span><span class="year"><i class="far fa-copyright"></i>2022</span>
+        </div>
+        
+        <div class="busuanzi">
+          <span id="busuanzi_container_site_pv"><i class="fas fa-eye" aria-label="站点点击量" aria-hidden="false"></i><span id="busuanzi_value_site_pv"></span></span><span id="busuanzi_container_site_uv"><i class="fas fa-user" aria-label="站点用户数" aria-hidden="false"></i><span id="busuanzi_value_site_uv"></span></span><span id="busuanzi_container_page_pv"><i class="far fa-file-alt"></i><span id="busuanzi_value_page_pv" aria-label="页面点击量" aria-hidden="false"></span></span>
+        </div>
+        
+      </div>
+      <div class="footer-right">
+        <div class="custom-info">
+          
+          托管于<i class="fab fa-github-alt"></i><a href="https://pages.github.com/" target="_blank">GitHub Pages</a>
+          
+        </div>
+        <div class="powered-by">
+          由 <a href="https://hexo.io/" target="_blank">Hexo</a> 强力驱动 | 主题 <a href="https://github.com/AlynxZhou/hexo-theme-aria/" target="_blank">ARIA</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+  <script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

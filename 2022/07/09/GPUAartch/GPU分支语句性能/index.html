@@ -167,7 +167,7 @@
     </script>
     
     <script defer type="text/javascript" src="/js/custom.js"></script>
-    <title> | leinlin的小笔记</title>
+    <title>GPU分支语句性能 | leinlin的小笔记</title>
   <meta name="generator" content="Hexo 6.2.0"></head>
   <body itemscope itemtype="http://schema.org/WebPage" lang="zh_CN"  data-spy="scroll" data-target=".list-group">
     
@@ -214,13 +214,21 @@
       </span>
     </div>
     <header class="post-header">
-      <h1 class="post-title" itemprop="name headline"></h1>
+      <h1 class="post-title" itemprop="name headline">GPU分支语句性能</h1>
       <div class="post-meta">
         
         <span class="post-date">
-          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2022-07-09T19:34:20+08:00">2022-07-09 19:34:20</time></span>
+          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2022-07-09T12:00:14+08:00">2022-07-09 12:00:14</time></span>
         </span>
         
+        
+        
+        <span class="post-meta-divider divider">|</span>
+        
+        <span class="post-categories">
+          
+          <i class="far fa-folder-open"></i><span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/GPUAartch/" itemprop="url" rel="index"><span itemprop="name">GPUAartch</span></a></span>
+        </span>
         
         
         
@@ -228,7 +236,7 @@
       </div>
     </header>
     <main class="post-main" itemprop="articleBody">
-      <p>下面就是一组线程同时执行，*表示空跑，&#x3D;表示执行。可以看到他们是同时完成的。一个计算单元的所有线程结束以后，可以开始下一组。</p>
+      <h1 id="GPU分支语句性能"><a href="#GPU分支语句性能" class="headerlink" title="GPU分支语句性能"></a>GPU分支语句性能</h1><p>下面就是一组线程同时执行，*表示空跑，&#x3D;表示执行。可以看到他们是同时完成的。一个计算单元的所有线程结束以后，可以开始下一组。</p>
 <figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs c">线程A:  =========<span class="hljs-keyword">if</span>==============<span class="hljs-keyword">else</span>**********endif===========<br>线程B:  =========<span class="hljs-keyword">if</span>**************<span class="hljs-keyword">else</span>==========endif===========<br></code></pre></td></tr></table></figure>
 
 <p>就可以理解为判断只会产生一个遮罩，这个遮罩会决定我这段代码是不是空跑。GPU的计算资源十分紧俏，空跑越多就是我们说的开销大。例如32个线程，每一个都跑不通的分支，那么就相当于性能下降到了1&#x2F;32。这里的开销是利用率降低而不是时间变长。</p>
@@ -263,12 +271,12 @@
   <nav class="page-nav">
     <div class="page-nav-next page-nav-item">
       
-      <a href="/2022/07/09/GPUAartch/GCN%E6%9E%B6%E6%9E%84%E6%B5%85%E6%9E%90/" rel="next" title=""><i class="fas fa-angle-left"></i><span class="nav-title"></span></a>
+      <a href="/2022/07/09/GPUAartch/GPU%E6%9E%B6%E6%9E%84%E7%B1%BB%E5%9E%8B%E6%95%B4%E5%90%88/" rel="next" title="GPU架构整合"><i class="fas fa-angle-left"></i><span class="nav-title">GPU架构整合</span></a>
       
     </div>
     <div class="page-nav-prev page-nav-item">
       
-      <a href="/2022/07/09/GPUAartch/GPU%E6%9E%B6%E6%9E%84/" rel="prev" title=""><span class="nav-title"></span><i class="fas fa-angle-right"></i></a>
+      <a href="/2022/07/09/GPUAartch/GCN%E6%9E%B6%E6%9E%84%E6%B5%85%E6%9E%90/" rel="prev" title="Graphics Core Next"><span class="nav-title">Graphics Core Next</span><i class="fas fa-angle-right"></i></a>
       
     </div>
   </nav>
@@ -295,7 +303,7 @@
       "client_secret": "4af1d3f2b82dccc028c49715becc01e611afbe43",
       "no_comment": "这个页面还没有评论，现在就去评论吧！",
       "go_to_comment": "去评论",
-      "issue_title": "",
+      "issue_title": "GPU分支语句性能",
       "btn_class": "button",
       "comments_target": "#comment-thread"
     });
@@ -352,7 +360,7 @@
     
     <div class="categories-count count-block">
       <div class="site-count-title">分类</div>
-      <div><a href="/categories/">7</a></div>
+      <div><a href="/categories/">11</a></div>
     </div>
     
     
@@ -370,6 +378,12 @@
     
     
     
+    
+    <hr>
+    <div class="post-toc sidebar-item" id="toc-div">
+      <div><i class="fas fa-list-ol"></i>文章目录</div>
+      <div class="post-toc-content"><ol class="list-group toc"><li class="toc-item toc-level-1"><a class="list-group-item toc-link" href="#GPU%E5%88%86%E6%94%AF%E8%AF%AD%E5%8F%A5%E6%80%A7%E8%83%BD"><span class="toc-text">GPU分支语句性能</span></a></li></ol></div>
+    </div>
     
     
     

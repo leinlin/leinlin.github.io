@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#33363b">
+    <meta name="msapplication-TileColor" content="#33363b">
+    
+    
+    
+    
+    <meta name="keywords" content="leinlin, ARIA, Hexo">
+    
+    
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png">
+    
+    
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicons/android-chrome-192x192.png">
+    
+    
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png">
+    
+    
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png">
+    
+    
+    <link rel="mask-icon" href="/favicons/safari-pinned-tab.svg" color="#33363b">
+    
+    
+    <link rel="manifest" href="/favicons/site.webmanifest">
+    
+    
+    <meta name="msapplication-config" content="/favicons/browserconfig.xml">
+    
+    
+    <link rel="alternate" href="/atom.xml" title="leinlin的小笔记" type="application/atom+xml" />
+    
+    
+    <link rel="shortcut icon" type="image/x-icon" href="/favicons/favicon.ico">
+    
+    
+    <link rel="stylesheet" type="text/css" href="/css/normalize.css">
+    <link rel="stylesheet" type="text/css" href="/css/index.css">
+    
+    <link rel="stylesheet" type="text/css" href="/css/sidebar.css">
+    
+    
+<link rel="stylesheet" type="text/css" href="/css/page.css">
+<link rel="stylesheet" type="text/css" href="/css/post.css">
+
+    <link rel="stylesheet" type="text/css" href="/css/custom.css">
+    <link rel="stylesheet" type="text/css" href="/css/atom-one-light.css">
+    <link rel="stylesheet" type="text/css" href="/css/lightgallery.min.css">
+    <script type="text/javascript" src="/js/jquery.min.js"></script>
+    <script defer type="text/javascript" src="/js/util.js"></script>
+    <script defer type="text/javascript" src="/js/clipboard.min.js"></script>
+    <script defer type="text/javascript" src="/js/scrollspy.js"></script>
+    <script defer type="text/javascript" src="/js/fontawesome-all.min.js"></script>
+    <script defer type="text/javascript" src="/js/lightgallery.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-fullscreen.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-hash.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-pager.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-thumbnail.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-zoom.min.js"></script>
+    
+    <script defer src="/js/busuanzi.pure.mini.js"></script>
+    
+    
+    <script defer type="text/javascript" src="/js/search.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function () {
+      var searchPath = "search.xml";
+      if (searchPath.length === 0) {
+        searchPath = "search.xml";
+      }
+      var path = "/" + searchPath;
+      searchFunc(path, "search-input", "search-result");
+    });
+    </script>
+    
+    
+    
+    <script defer type="text/javascript" src="https://cdn.staticfile.org/MathJax/MathJax-2.6-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ["$","$"], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ["script", "noscript", "style", "textarea", "pre", "code"]
+      }
+    });
+    </script>
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for (i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += " has-jax";
+      }
+    });
+    </script>
+    
+    
+    <script defer type="text/javascript" src="/js/index.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function () {
+      var cb = null;
+      var els = $(".post figure.highlight");
+      if (els.length) {
+        // Enabled Hexo highlight line number.
+        $(els).each(function (i, e) {
+          // $(e).before("<button class=\"copy button\">复制</button>");
+          $(e).before([
+            "<div class=\"code-titlebar\">",
+              "<div class=\"titlebar-left\">",
+                "<button class=\"copy\">复制</button>",
+              "</div>",
+            "</div>"
+          ].join(""));
+        });
+        cb = new ClipboardJS("button.copy", {
+          "target": function (trigger) {
+              // Get target element by DOM API.
+              return trigger.parentNode.parentNode.nextElementSibling.firstChild.firstChild.firstChild.lastChild.firstChild.firstChild;
+          }
+        });
+      } else {
+        // Disabled Hexo highlight line number.
+        els = $(".post pre code");
+        $(els).each(function (i, e) {
+          // Add button before pre, not code.
+          // $(e).parent().before("<button class=\"copy button\">复制</button>");
+          $(e).before([
+            "<div class=\"code-titlebar\">",
+              "<div class=\"titlebar-left\">",
+                "<button class=\"copy\" >复制</button>",
+              "</div>",
+              "<div class=\"titlebar-right\">",
+                "<button class=\"button-dot dot-minimize\" aria-label=\"Decoration\"></button>",
+                "<button class=\"button-dot dot-maximize\" aria-label=\"Decoration\"></button>",
+                "<button class=\"button-dot dot-close\" aria-label=\"Decoration\"></button>",
+              "</div>",
+            "</div>"
+          ].join(""));
+        });
+        cb = new ClipboardJS("button.copy", {
+          "target": function (trigger) {
+              // Get target element by DOM API.
+              return trigger.parentNode.parentNode.nextElementSibling;
+          }
+        });
+      }
+      cb.on("success", function (e) {
+        e.clearSelection();
+        var trigger = e.trigger;
+        // Change button text as a user tip.
+        trigger.innerHTML = "已复制";
+        $(trigger).addClass("copied");
+        // Change button text back;
+        setTimeout(function () {
+          trigger.innerHTML = "复制";
+          $(trigger).removeClass("copied");
+        }, 1500);
+      });
+    });
+    </script>
+    
+    <script defer type="text/javascript" src="/js/custom.js"></script>
+    <title> | leinlin的小笔记</title>
+  <meta name="generator" content="Hexo 6.2.0"></head>
+  <body itemscope itemtype="http://schema.org/WebPage" lang="zh_CN"  data-spy="scroll" data-target=".list-group">
+    
+<header id="header" class="header" style="background: #33363b;">
+  <div class="container">
+    <div class="header-container">
+      <div class="header-title">
+        <h1 class="title"><a href="/">leinlin的小笔记</a></h1>
+        <h2 class="subtitle"></h2>
+      </div>
+      
+    </div>
+    <nav id="nav" class="nav">
+      <a id="nav-toggle" class="nav-toggle" aria-hidden="true"><i class="fas fa-bars" aria-label="切换导航栏"></i></a>
+      <ul id="menu" role="menubar" aria-hidden="false">
+        
+        <li role="menuitem"><a href="/"><i class="fas fa-home"></i><span class="menu-text">首页</span></a></li>
+        
+        <li role="menuitem"><a href="/categories/"><i class="fas fa-th-list"></i><span class="menu-text">分类</span></a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</header>
+
+
+    <main id="main" class="main">
+      <div class="container">
+        <div class="main-container">
+          <div class="content">
+            
+<div id="post" class="page">
+  
+  <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
+    <div class="post-block">
+      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/09/19/RTR/%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF/">
+      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+       <meta itemprop="name" content="leinlin">
+       <meta itemprop="description" content="">
+       <meta itemprop="image" content="/images/avatar.jpg">
+      </span>
+      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+       <meta itemprop="name" content="leinlin的小笔记">
+      </span>
+    </div>
+    <header class="post-header">
+      <h1 class="post-title" itemprop="name headline"></h1>
+      <div class="post-meta">
+        
+        <span class="post-date">
+          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2022-09-19T19:53:33+08:00">2022-09-19 19:53:33</time></span>
+        </span>
+        
+        
+        
+        
+        
+      </div>
+    </header>
+    <main class="post-main" itemprop="articleBody">
+      <h1 id="渲染管线"><a href="#渲染管线" class="headerlink" title="渲染管线"></a>渲染管线</h1><p>最近回顾了一下基础的图形学内容，发现很多都忘记了，现在认真的总结一下。主要内容都来自<a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/windows/desktop/direct3d11/overviews-direct3d-11-graphics-pipeline">d3d的官方文档当中提取的图形管线</a>当中。</p>
+<p>下图是一个总览的流程，这个流程主要是针对D3D API可配置的阶段：</p>
+<p><img src="/img/renderpipeline-d3d11-pipeline-stages.jpg" alt="d3d11-pipeline-stages"></p>
+<h2 id="渲染管线总览"><a href="#渲染管线总览" class="headerlink" title="渲染管线总览"></a>渲染管线总览</h2><p>D3D 10和更高级的API支持将渲染管线 划分成不同的功能阶段，下面是每一个阶段的主要描述：</p>
+<table>
+<thead>
+<tr>
+<th align="left">Topic</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">Input-Assembler Stage 输入装配阶段</td>
+<td align="left">the first stage in the pipeline is the input-assembler (IA) stage.第一个阶段是输入装配阶段。</td>
+</tr>
+<tr>
+<td align="left">Vertex Shader Stage</td>
+<td align="left">The vertex-shader (VS) stage processes vertices from the input assembler, performing per-vertex operations such as transformations, skinning, morphing, and per-vertex lighting. （vertexShder阶段主要处理逐顶点操作，包括：transformation，顶点光照，变形，蒙皮等，他的数据来源于IA阶段。）Vertex shaders always operate on a single input vertex and produce a single output vertex（输入输出都是单独顶点）.</td>
+</tr>
+<tr>
+<td align="left">Tessellation Stages</td>
+<td align="left">曲面细分，处理的是表面：三角形。</td>
+</tr>
+<tr>
+<td align="left">Geometry Shader Stage</td>
+<td align="left">处理一系列顶点输入，产生一系列顶点输出。</td>
+</tr>
+<tr>
+<td align="left">Stream-Output Stage</td>
+<td align="left">The purpose of the stream-output stage is to continuously output (or stream) vertex data from the geometry-shader stage (or the vertex-shader stage if the geometry-shader stage is inactive) to one or more buffers in memory (see <a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/windows/desktop/direct3d11/d3d10-graphics-programming-guide-output-stream-stage-getting-started">Getting Started with the Stream-Output Stage</a>).  将顶点处理的数据传送到一个或者多个内存？</td>
+</tr>
+<tr>
+<td align="left">Rasterizer Stage</td>
+<td align="left">The rasterization stage converts vector information (composed of shapes or primitives) into a raster image (composed of pixels) for the purpose of displaying real-time 3D graphics.  从顶点到图像。</td>
+</tr>
+<tr>
+<td align="left">Pixel Shader Stage</td>
+<td align="left">The pixel-shader stage (PS) enables rich shading techniques such as per-pixel lighting and post-processing. <strong>A pixel shader is a program that combines constant variables, texture data, interpolated per-vertex values, and other data to produce per-pixel outputs.</strong> （pixel Shader主要将常量、纹理数据、逐顶点插值数据等内容来生成像素输出）The rasterizer stage invokes a pixel shader once for each pixel covered by a primitive, however, it is possible to specify a <strong>NULL</strong> shader to avoid running a shader. （光栅化阶段会为每一个被图元覆盖的像素执行一次pixelShader）</td>
+</tr>
+<tr>
+<td align="left">Output-Merger Stage</td>
+<td align="left">The output-merger (OM) stage generates the final rendered pixel color using a combination of pipeline state（OM阶段会根据渲染状态的组合生成最终的颜色：pixel Shader输出，渲染目标，深度&#x2F;stencil buffer内容）, the pixel data generated by the pixel shaders, the contents of the render targets, and the contents of the depth&#x2F;stencil buffers. The OM stage is the final step for determining which pixels are visible (with depth-stencil testing) and blending the final pixel colors**.(OM阶段决定哪个像素可见，深度和stencil测试和blend。）**</td>
+</tr>
+</tbody></table>
+<h2 id="渲染阶段"><a href="#渲染阶段" class="headerlink" title="渲染阶段"></a>渲染阶段</h2><h3 id="Input-Assembler-Stage-IA-（未补全）"><a href="#Input-Assembler-Stage-IA-（未补全）" class="headerlink" title="Input-Assembler Stage(IA) （未补全）"></a>Input-Assembler Stage(IA) （未补全）</h3><p>简介：IA阶段的目的主要是从user-filled buffer当中读取图元数据（points, lines and&#x2F;or triangles），然后组合成在之后阶段需要使用的新的结构的图元数据。 AI阶段能够将顶点组合成不同的图元类型，组合过程需要读取相邻的数据，这部分数据只在Geometry Stage阶段可以。例如：如果一个几何着色器在三角形上被调用，那么他的输入就包括他自身的三个顶点，和相邻三角形的顶点数据。</p>
+<h4 id="IA阶段步骤总结"><a href="#IA阶段步骤总结" class="headerlink" title="IA阶段步骤总结"></a>IA阶段步骤总结</h4><ol>
+<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/windows/desktop/direct3d11/d3d10-graphics-programming-guide-input-assembler-stage-getting-started#create-input-buffers">Create Input Buffers</a>：使用输入的vertex data初始化input buffer。</li>
+<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/windows/desktop/direct3d11/d3d10-graphics-programming-guide-input-assembler-stage-getting-started#create-the-input-layout-object">Create the Input-Layout Object</a>：使用input layout object描述vertex buffer中的数据类型。</li>
+<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/windows/desktop/direct3d11/d3d10-graphics-programming-guide-input-assembler-stage-getting-started#bind-objects-to-the-input-assembler-stage">Bind Objects to the Input-Assembler Stage</a>：将vertex data buffer和layout object 绑定到IA阶段。</li>
+<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/windows/desktop/direct3d11/d3d10-graphics-programming-guide-input-assembler-stage-getting-started#specify-the-primitive-type">Specify the Primitive Type</a>：定义顶点数据如何组成图元。</li>
+<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/windows/desktop/direct3d11/d3d10-graphics-programming-guide-input-assembler-stage-getting-started#call-draw-methods">Call Draw Methods</a>：调用绘制方法，将绑定到IA的数据传送到pipeline。</li>
+</ol>
+<h4 id="Create-Input-Buffers"><a href="#Create-Input-Buffers" class="headerlink" title="Create Input Buffers"></a>Create Input Buffers</h4><p>inpute buffer有两种：vertex buffer和index buffer。vertex buffer提供数据，index buffer提供数据索引，可以创建多个vertex buffer。可以创建一个index buffer。</p>
+<h3 id="Vertex-Shader-Stage"><a href="#Vertex-Shader-Stage" class="headerlink" title="Vertex Shader Stage"></a>Vertex Shader Stage</h3><p>vertex Shader的输入最多为16 个 32-bit的4维向量，输出也是一样。一个vertex shader必须至少有一个输入和一个输出（一个标量）。</p>
+<p>vertex Shader能够处理两个来自IA阶段的系统生成值：VertexID and InstanceID，他们只提供给vertex shader stage。</p>
+<p>vertex Shader在所有顶点上运行，包括有邻接拓扑关系的图元的相邻顶点。</p>
+<p>顶点着色器可以在不需要屏幕空间导数的情况下执行加载和纹理采样操作。（应该指的是类似Unity的Sample2D_Load操作）</p>
+<h3 id="Tessellation-Stages（未补全）"><a href="#Tessellation-Stages（未补全）" class="headerlink" title="Tessellation Stages（未补全）"></a>Tessellation Stages（未补全）</h3><h3 id="Geometry-Shader-Stage"><a href="#Geometry-Shader-Stage" class="headerlink" title="Geometry Shader Stage"></a>Geometry Shader Stage</h3><p>这部分没有太多特殊的内容，见<a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/windows/desktop/direct3d11/geometry-shader-stage">官方文档</a>。</p>
+<h3 id="Stream-Output-Stage"><a href="#Stream-Output-Stage" class="headerlink" title="Stream-Output Stage"></a>Stream-Output Stage</h3><p>连续的将顶点数据输出到内存的buffer当中。</p>
+<p><img src="/../../images/img/renderpipeline-d3d10-depth-stencil-test.png" alt="renderpipeline-d3d10-depth-stencil-test"></p>
+<p>When a triangle or line strip is bound to the input-assembler stage, each strip is converted into a list before they are streamed out。（<strong>所有的数据在输出之前，都是一个链表</strong>）The amount of data streamed out can vary（<strong>数据可以变化，例如：几何着色器会向链表插入数据</strong>，<em>几何、纹理、常量数据在整个渲染流程中如何存储需要研究一下</em>）。</p>
+<h3 id="Rasterizer-Stage"><a href="#Rasterizer-Stage" class="headerlink" title="Rasterizer Stage"></a>Rasterizer Stage</h3><p>将图元数据转化成光栅图像（像素），每个像素根据顶点进行插值。</p>
+<p>光栅化阶段包括：视椎体剪裁、透视变化（<strong>剪裁空间坐标除z（这里说的不是z分量，而是深度值，对应的是剪裁空间坐标中的w分量）</strong>）等。（Rasterization includes clipping vertices to the view frustum, performing a divide by z to provide perspective, mapping primitives to a 2D viewport, and determining how to invoke the pixel shader. ）</p>
+<p><strong>重点：为什么不一步变换到NDC呢？因为，视椎体剪裁需要在Clip-Space进行。当完成视椎体剪裁之后，才会进行透视变化，这个时候才会进行透视除法。以上两步都在光栅化阶段进行。所以Unity在Vertex Shader阶段输出的是Clip-Space坐标，是提供给这个阶段使用的。</strong></p>
+<p>进入光栅化阶段的顶点，被认为是在齐次坐标的剪裁空间的（x，y，z ，w），x正方向向右，Y正方向向上，Z正方向是摄像机前方。(Vertices (x,y,z,w), coming into the rasterizer stage are assumed to be in homogeneous clip-space. In this coordinate space the X axis points right, Y points up and Z points away from camera.)</p>
+<p>齐次坐标和NDC：</p>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs c"> [x y z w]   →   [x/w y/w z/w]<br>homogeneous     normalized device<br>clip space      <span class="hljs-title function_">coordinates</span> <span class="hljs-params">(NDC)</span><br></code></pre></td></tr></table></figure>
+
+<p>Zbuffer优化：On hardware that implements <strong>hierarchical Z-buffer optimizations</strong>, you may enable preloading the z-buffer by setting the pixel shader stage to <strong>NULL</strong> while enabling depth and stencil testing.</p>
+<h3 id="Pixel-Shader-Stage"><a href="#Pixel-Shader-Stage" class="headerlink" title="Pixel Shader Stage"></a>Pixel Shader Stage</h3><p>在这个阶段进行丰富的着色、光照和后处理计算。这个阶段使用常量、纹理数据、插值数据和其他顶点程序输出的数据。光栅化阶段会为每一个被图元覆盖的区域执行一次Pixel Shader。</p>
+<p>Use the depth-write-enable state (in the output-merger stage) to control whether depth data gets written to a depth buffer (or use the discard instruction to discard data for that pixel). A pixel shader can also output an optional 32-bit, 1-component, floating-point, depth value for depth testing (using the SV_Depth semantic). The depth value is output in the oDepth register, and replaces the interpolated depth value for depth testing (assuming depth testing is enabled). There is no way to dynamically change between using fixed-function depth or shader oDepth。<strong>比较重要的部分是可以通过SV_Depth 语义来直接输出深度到深度贴图当中，这样可以直接代替来自Vertex Data的深度插值数据。不过这两种方式不能动态变化。目前没有在Unity当中尝试过。</strong></p>
+<h3 id="Output-Merger-Stage"><a href="#Output-Merger-Stage" class="headerlink" title="Output-Merger Stage"></a>Output-Merger Stage</h3><p>OM阶段会根据渲染状态的组合生成最终的颜色：pixel Shader输出，渲染目标，深度&#x2F;stencil buffer内容。</p>
+<h4 id="Depth-Stencil"><a href="#Depth-Stencil" class="headerlink" title="Depth-Stencil"></a>Depth-Stencil</h4><p>OM阶段的第一步就是Depth-Stencil Testing，这步骤依赖于一张Depth-Stencil buffer。Depth-Stencil是作为纹理资源创建的，他包括了深度信息和Stencil信息。</p>
+<p>深度信息用来决定哪些像素距离摄像机更近，Stencil数据用来当做Mask使用。他们在这个阶段使用用来决定这个像素是否被绘制。下图描述了Depth-Stencil是如何被使用的。</p>
+<p><img src="/../../images/img/renderpipeline-d3d10-depth-stencil-test.png" alt="renderpipeline-d3d10-depth-stencil-test"></p>
+<p>Depth-Stencil的状态如果没有被配置，那么久会使用默认参数。<strong>如果没有开启multisampling那么混合操作逐像素进行，如果开启，混合就在多个采样结果上进行。（这个内容我理解的是MSAA之类的操作）。</strong></p>
+<p>使用深度缓冲区来确定应该绘制哪个像素的过程称为depth-buffer，有时也称为z-buffer。</p>
+<h4 id="Blending"><a href="#Blending" class="headerlink" title="Blending"></a>Blending</h4><p>Blending的作用就是将一个或者多个像素颜色值混合作为最终的颜色输出。</p>
+<p><img src="/../../images/img/renderpipeline-d3d10-blend-state.png" alt="renderpipeline-d3d10-blend-state"></p>
+<p><strong>D3D文档里面说：Blend values (including BlendFactor) are always clamped to the range of the render-target format before blending. 。就是说所有混合的值会再blending阶段进行Clamp，但是我发现Unity如果使用负数的Alpha(Blend Factor)时并没有被Clamp</strong></p>
+<p><strong>另一个要点：When you use sRGB render targets, the runtime converts the render target color into linear space before it performs blending. The runtime converts the final blended value back into sRGB space before it saves the value back to the render target. 当使用sRGB的render targets的时候，在混合之前会转换到线性空间，混合结束之后再返回sRGB的render target。Unity当中的做法是只使用Linear的render targets。全部渲染完成之后再一次性转换会原始的sRGB。</strong></p>
+<h4 id="Multiple-RenderTargets"><a href="#Multiple-RenderTargets" class="headerlink" title="Multiple RenderTargets"></a>Multiple RenderTargets</h4><p>多个渲染目标。一个Pixel Shader能够同时渲染8个render target。所有的render target需要是同一种类型(buffer, Texture1D, Texture1DArray, and so on)，同一种尺寸 (width, height, depth, array size, sample counts)。但是可以有不同的数据格式（Each render target may have a different data format.）。例如：多个G-buffer在一个Pass完成，但根据存储数据的不同，使用了不同的数据格式。</p>
+<h4 id="Output-Write-Mask"><a href="#Output-Write-Mask" class="headerlink" title="Output-Write Mask"></a>Output-Write Mask</h4><p>Use an output-write mask to control (per component) what data can be written to a render target.</p>
+<p>这个没有在Unity当中找到对应物。</p>
+<h4 id="Sample-Mask"><a href="#Sample-Mask" class="headerlink" title="Sample Mask"></a>Sample Mask</h4><p>这个没有在Unity当中找到对应物。</p>
+
+    </main>
+    <footer class="post-footer">
+      
+    </footer>
+  </article>
+  
+  
+  <nav class="page-nav">
+    <div class="page-nav-next page-nav-item">
+      
+      <a href="/2022/09/19/RTR/%E6%B3%95%E7%BA%BF%E7%A9%BA%E9%97%B4%E8%BD%AC%E6%8D%A2/" rel="next" title=""><i class="fas fa-angle-left"></i><span class="nav-title"></span></a>
+      
+    </div>
+    <div class="page-nav-prev page-nav-item">
+      
+      <a href="/2022/09/19/RTR/%E7%90%83%E9%9D%A2%E8%B0%90%E6%B3%A2%E7%90%86%E8%AE%BA%E4%B8%8E%E5%BA%94%E7%94%A8/" rel="prev" title=""><span class="nav-title"></span><i class="fas fa-angle-right"></i></a>
+      
+    </div>
+  </nav>
+  
+  
+  
+
+<div class="comments" id="comments">
+  
+  
+  <div class="commentjs" id="comment-thread"></div>
+  <link rel="stylesheet" href="/css/commentjs.css">
+  <script defer type="text/javascript" src="/js/marked.min.js"></script>
+  <script defer type="text/javascript" src="/js/timeago.min.js"></script>
+  <script defer type="text/javascript" src="/js/highlight.min.js"></script>
+  <script defer type="text/javascript" src="/js/commentjs.js"></script>
+  <script type="text/javascript">
+  $(document).ready(function () {
+    getComments({
+      "type": "github",
+      "user": "leinlin",
+      "repo": "leinlin.github.io",
+      "client_id": "aee134bdfb54c4ef5826",
+      "client_secret": "4af1d3f2b82dccc028c49715becc01e611afbe43",
+      "no_comment": "这个页面还没有评论，现在就去评论吧！",
+      "go_to_comment": "去评论",
+      "issue_title": "",
+      "btn_class": "button",
+      "comments_target": "#comment-thread"
+    });
+    marked.setOptions({
+      "highlight": function (code, lang) {
+        return hljs.highlightAuto(code).value;
+      }
+    });
+    function mark() {
+      var markdowns = document.getElementsByClassName("markdown");
+      for (var i = 0; i < markdowns.length; ++i){
+        if (markdowns[i].innerHTML) {
+          markdowns[i].innerHTML = marked(markdowns[i].innerHTML);
+        }
+      }
+    }
+    window.addEventListener("DOMContentLoaded", mark, false);
+    window.addEventListener("load", mark, false);
+  });
+  </script>
+  
+  
+</div>
+
+
+
+  
+</div>
+
+          </div>
+          
+          
+          
+<aside class="sidebar" id="sidebar" style="background: url(/images/background.png);">
+  
+  <div class="search">
+    <div class="form-group">
+      <i class="fas fa-search"></i><input type="search" id="search-input" name="q" results="0" placeholder="搜索" class="form-control"/>
+    </div>
+  </div>
+  <div class="search-result-box" id="search-result"></div>
+  
+  
+<div class="info sidebar-item" id="info">
+  
+  <img class="author-avatar" src="/images/avatar.jpg" alt="leinlin">
+  
+  <h1 class="author-name">leinlin</h1>
+  <h2 class="author-description"></h2>
+  <div class="site-count">
+    
+    
+    
+    
+    <div class="categories-count count-block">
+      <div class="site-count-title">分类</div>
+      <div><a href="/categories/">11</a></div>
+    </div>
+    
+    
+  </div>
+  
+  <div class="rss">
+    <a class="rss-link button sidebar-item" href="/atom.xml"><i class="fas fa-rss"></i>RSS</a>
+  </div>
+  
+</div>
+
+
+  <div class="sidebar-sticky">
+    
+    
+    
+    
+    
+    <hr>
+    <div class="post-toc sidebar-item" id="toc-div">
+      <div><i class="fas fa-list-ol"></i>文章目录</div>
+      <div class="post-toc-content"><ol class="list-group toc"><li class="toc-item toc-level-1"><a class="list-group-item toc-link" href="#%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF"><span class="toc-text">渲染管线</span></a><ol class="list-group toc-child"><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF%E6%80%BB%E8%A7%88"><span class="toc-text">渲染管线总览</span></a></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#%E6%B8%B2%E6%9F%93%E9%98%B6%E6%AE%B5"><span class="toc-text">渲染阶段</span></a><ol class="list-group toc-child"><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#Input-Assembler-Stage-IA-%EF%BC%88%E6%9C%AA%E8%A1%A5%E5%85%A8%EF%BC%89"><span class="toc-text">Input-Assembler Stage(IA) （未补全）</span></a><ol class="list-group toc-child"><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#IA%E9%98%B6%E6%AE%B5%E6%AD%A5%E9%AA%A4%E6%80%BB%E7%BB%93"><span class="toc-text">IA阶段步骤总结</span></a></li><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#Create-Input-Buffers"><span class="toc-text">Create Input Buffers</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#Vertex-Shader-Stage"><span class="toc-text">Vertex Shader Stage</span></a></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#Tessellation-Stages%EF%BC%88%E6%9C%AA%E8%A1%A5%E5%85%A8%EF%BC%89"><span class="toc-text">Tessellation Stages（未补全）</span></a></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#Geometry-Shader-Stage"><span class="toc-text">Geometry Shader Stage</span></a></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#Stream-Output-Stage"><span class="toc-text">Stream-Output Stage</span></a></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#Rasterizer-Stage"><span class="toc-text">Rasterizer Stage</span></a></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#Pixel-Shader-Stage"><span class="toc-text">Pixel Shader Stage</span></a></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#Output-Merger-Stage"><span class="toc-text">Output-Merger Stage</span></a><ol class="list-group toc-child"><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#Depth-Stencil"><span class="toc-text">Depth-Stencil</span></a></li><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#Blending"><span class="toc-text">Blending</span></a></li><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#Multiple-RenderTargets"><span class="toc-text">Multiple RenderTargets</span></a></li><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#Output-Write-Mask"><span class="toc-text">Output-Write Mask</span></a></li><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#Sample-Mask"><span class="toc-text">Sample Mask</span></a></li></ol></li></ol></li></ol></li></ol></div>
+    </div>
+    
+    
+    
+    <hr>
+    <div class="social-link sidebar-item">
+      <div><i class="far fa-address-card"></i>社交链接</p></div>
+      <ul>
+        
+        <li><i class="fab fa-github"></i><a href="https://leinlin.github.com/" target="_blank">GitHub</a></li>
+        
+      </ul>
+    </div>
+    
+    
+  </div>
+</aside>
+
+
+          
+        </div>
+      </div>
+    </main>
+    
+<footer id="footer" class="footer" style="background: #33363b;">
+  <div class="container">
+    <div class="back-to-top">
+      <button id="back-to-top"><i class="fas fa-angle-double-up" aria-label="回到顶部"></i></button>
+    </div>
+    <div class="footer-container">
+      <div class="footer-left">
+        <div class="copyright">
+          <span class="author">leinlin</span><span class="year"><i class="far fa-copyright"></i>2022</span>
+        </div>
+        
+        <div class="busuanzi">
+          <span id="busuanzi_container_site_pv"><i class="fas fa-eye" aria-label="站点点击量" aria-hidden="false"></i><span id="busuanzi_value_site_pv"></span></span><span id="busuanzi_container_site_uv"><i class="fas fa-user" aria-label="站点用户数" aria-hidden="false"></i><span id="busuanzi_value_site_uv"></span></span><span id="busuanzi_container_page_pv"><i class="far fa-file-alt"></i><span id="busuanzi_value_page_pv" aria-label="页面点击量" aria-hidden="false"></span></span>
+        </div>
+        
+      </div>
+      <div class="footer-right">
+        <div class="custom-info">
+          
+          托管于<i class="fab fa-github-alt"></i><a href="https://pages.github.com/" target="_blank">GitHub Pages</a>
+          
+        </div>
+        <div class="powered-by">
+          由 <a href="https://hexo.io/" target="_blank">Hexo</a> 强力驱动 | 主题 <a href="https://github.com/AlynxZhou/hexo-theme-aria/" target="_blank">ARIA</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+  <script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

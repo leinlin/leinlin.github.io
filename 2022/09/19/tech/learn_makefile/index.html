@@ -1,0 +1,470 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#33363b">
+    <meta name="msapplication-TileColor" content="#33363b">
+    
+    
+    
+    
+    <meta name="keywords" content="leinlin, ARIA, Hexo">
+    
+    
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png">
+    
+    
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicons/android-chrome-192x192.png">
+    
+    
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png">
+    
+    
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png">
+    
+    
+    <link rel="mask-icon" href="/favicons/safari-pinned-tab.svg" color="#33363b">
+    
+    
+    <link rel="manifest" href="/favicons/site.webmanifest">
+    
+    
+    <meta name="msapplication-config" content="/favicons/browserconfig.xml">
+    
+    
+    <link rel="alternate" href="/atom.xml" title="leinlin的小笔记" type="application/atom+xml" />
+    
+    
+    <link rel="shortcut icon" type="image/x-icon" href="/favicons/favicon.ico">
+    
+    
+    <link rel="stylesheet" type="text/css" href="/css/normalize.css">
+    <link rel="stylesheet" type="text/css" href="/css/index.css">
+    
+    <link rel="stylesheet" type="text/css" href="/css/sidebar.css">
+    
+    
+<link rel="stylesheet" type="text/css" href="/css/page.css">
+<link rel="stylesheet" type="text/css" href="/css/post.css">
+
+    <link rel="stylesheet" type="text/css" href="/css/custom.css">
+    <link rel="stylesheet" type="text/css" href="/css/atom-one-light.css">
+    <link rel="stylesheet" type="text/css" href="/css/lightgallery.min.css">
+    <script type="text/javascript" src="/js/jquery.min.js"></script>
+    <script defer type="text/javascript" src="/js/util.js"></script>
+    <script defer type="text/javascript" src="/js/clipboard.min.js"></script>
+    <script defer type="text/javascript" src="/js/scrollspy.js"></script>
+    <script defer type="text/javascript" src="/js/fontawesome-all.min.js"></script>
+    <script defer type="text/javascript" src="/js/lightgallery.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-fullscreen.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-hash.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-pager.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-thumbnail.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-zoom.min.js"></script>
+    
+    <script defer src="/js/busuanzi.pure.mini.js"></script>
+    
+    
+    <script defer type="text/javascript" src="/js/search.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function () {
+      var searchPath = "search.xml";
+      if (searchPath.length === 0) {
+        searchPath = "search.xml";
+      }
+      var path = "/" + searchPath;
+      searchFunc(path, "search-input", "search-result");
+    });
+    </script>
+    
+    
+    
+    <script defer type="text/javascript" src="https://cdn.staticfile.org/MathJax/MathJax-2.6-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ["$","$"], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ["script", "noscript", "style", "textarea", "pre", "code"]
+      }
+    });
+    </script>
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for (i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += " has-jax";
+      }
+    });
+    </script>
+    
+    
+    <script defer type="text/javascript" src="/js/index.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function () {
+      var cb = null;
+      var els = $(".post figure.highlight");
+      if (els.length) {
+        // Enabled Hexo highlight line number.
+        $(els).each(function (i, e) {
+          // $(e).before("<button class=\"copy button\">复制</button>");
+          $(e).before([
+            "<div class=\"code-titlebar\">",
+              "<div class=\"titlebar-left\">",
+                "<button class=\"copy\">复制</button>",
+              "</div>",
+            "</div>"
+          ].join(""));
+        });
+        cb = new ClipboardJS("button.copy", {
+          "target": function (trigger) {
+              // Get target element by DOM API.
+              return trigger.parentNode.parentNode.nextElementSibling.firstChild.firstChild.firstChild.lastChild.firstChild.firstChild;
+          }
+        });
+      } else {
+        // Disabled Hexo highlight line number.
+        els = $(".post pre code");
+        $(els).each(function (i, e) {
+          // Add button before pre, not code.
+          // $(e).parent().before("<button class=\"copy button\">复制</button>");
+          $(e).before([
+            "<div class=\"code-titlebar\">",
+              "<div class=\"titlebar-left\">",
+                "<button class=\"copy\" >复制</button>",
+              "</div>",
+              "<div class=\"titlebar-right\">",
+                "<button class=\"button-dot dot-minimize\" aria-label=\"Decoration\"></button>",
+                "<button class=\"button-dot dot-maximize\" aria-label=\"Decoration\"></button>",
+                "<button class=\"button-dot dot-close\" aria-label=\"Decoration\"></button>",
+              "</div>",
+            "</div>"
+          ].join(""));
+        });
+        cb = new ClipboardJS("button.copy", {
+          "target": function (trigger) {
+              // Get target element by DOM API.
+              return trigger.parentNode.parentNode.nextElementSibling;
+          }
+        });
+      }
+      cb.on("success", function (e) {
+        e.clearSelection();
+        var trigger = e.trigger;
+        // Change button text as a user tip.
+        trigger.innerHTML = "已复制";
+        $(trigger).addClass("copied");
+        // Change button text back;
+        setTimeout(function () {
+          trigger.innerHTML = "复制";
+          $(trigger).removeClass("copied");
+        }, 1500);
+      });
+    });
+    </script>
+    
+    <script defer type="text/javascript" src="/js/custom.js"></script>
+    <title> | leinlin的小笔记</title>
+  <meta name="generator" content="Hexo 6.2.0"></head>
+  <body itemscope itemtype="http://schema.org/WebPage" lang="zh_CN"  data-spy="scroll" data-target=".list-group">
+    
+<header id="header" class="header" style="background: #33363b;">
+  <div class="container">
+    <div class="header-container">
+      <div class="header-title">
+        <h1 class="title"><a href="/">leinlin的小笔记</a></h1>
+        <h2 class="subtitle"></h2>
+      </div>
+      
+    </div>
+    <nav id="nav" class="nav">
+      <a id="nav-toggle" class="nav-toggle" aria-hidden="true"><i class="fas fa-bars" aria-label="切换导航栏"></i></a>
+      <ul id="menu" role="menubar" aria-hidden="false">
+        
+        <li role="menuitem"><a href="/"><i class="fas fa-home"></i><span class="menu-text">首页</span></a></li>
+        
+        <li role="menuitem"><a href="/categories/"><i class="fas fa-th-list"></i><span class="menu-text">分类</span></a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</header>
+
+
+    <main id="main" class="main">
+      <div class="container">
+        <div class="main-container">
+          <div class="content">
+            
+<div id="post" class="page">
+  
+  <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
+    <div class="post-block">
+      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/09/19/tech/learn_makefile/">
+      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+       <meta itemprop="name" content="leinlin">
+       <meta itemprop="description" content="">
+       <meta itemprop="image" content="/images/avatar.jpg">
+      </span>
+      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+       <meta itemprop="name" content="leinlin的小笔记">
+      </span>
+    </div>
+    <header class="post-header">
+      <h1 class="post-title" itemprop="name headline"></h1>
+      <div class="post-meta">
+        
+        <span class="post-date">
+          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2022-09-19T19:53:45+08:00">2022-09-19 19:53:45</time></span>
+        </span>
+        
+        
+        
+        
+        
+      </div>
+    </header>
+    <main class="post-main" itemprop="articleBody">
+      <p>“这篇博客的内容来自我原来开源中国的博客这里修正了一下<del>因为原来直接拷贝的ipython的格式代码是有问题的</del>”</p>
+<p>下面的内容是直接从我的ipython notebook中摘录出来的所以可能不是很清楚，如果想查看完整版本以及例子，可以访问：</p>
+<p><a href="git@github.com:liangz0707/WTF-makefile.git">git地址</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/liangz0707/WTF-makefile/archive/master.zip">下载地址</a></p>
+<p>如果不能查看ipython notebook 可以直接打开其中的lession.html 结果是一样的</p>
+<h2 id="首先讲解编译器等内容"><a href="#首先讲解编译器等内容" class="headerlink" title="首先讲解编译器等内容"></a>首先讲解编译器等内容</h2><p>What is Compiler？</p>
+<p>Compiler&#x3D;编译器，就是将某种代码编译成机器语言，或者说编译成能够由处理器直接执行的“代码”。一个程序员会以一种语言在编辑器当中编写语句。例如：c、Lisp。编写完成后生成的文件就是源代码。然后程序员运行具体的编译器，把上述文件名作为参数进行编译。</p>
+<p>执行过程中，编译器会依照语法顺序，逐一对语句进行解析。最终生成输出代码。一般的编译器的输出结果叫做object code或者object module（这里的object和面向对象中的object不同）。这里的object code是机器语言。</p>
+<p>在传统的操作系统当中，在编译之后往往还需要额外的步骤，因为当有多于一个Object Code时 他们的指令、和数据之间存在关系，所以需要进行链接，得到的结果是。 load module。</p>
+<h2 id="下面使用具体的编译器GCC来讲解"><a href="#下面使用具体的编译器GCC来讲解" class="headerlink" title="下面使用具体的编译器GCC来讲解"></a>下面使用具体的编译器GCC来讲解</h2><p>GCC是c语言的编译器之一：</p>
+<p>gcc is the “GNU” C Compiler, and g++ is the “GNU C++ compiler</p>
+<p>我们编写一个hello.c文件（见目录）：</p>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;iostream.h&quot;</span></span><br><span class="hljs-type">int</span> <span class="hljs-title function_">main</span><span class="hljs-params">()</span><br>&#123;<br><span class="hljs-built_in">cout</span> &amp;lt;&amp;lt; <span class="hljs-string">&quot;Hello\n&quot;</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>执行如下命令，输出的结果就是可执行的机器码（.exe可执行程序），默认文件名是a.exe</p>
+<p>主要g++编译的源文件中头文件的引用一般为#include,并且要注意使用命名空间。</p>
+<figure class="hljs highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">g++ hello.c -o hello<br></code></pre></td></tr></table></figure>
+
+<h2 id="Makefiles的使用"><a href="#Makefiles的使用" class="headerlink" title="Makefiles的使用"></a>Makefiles的使用</h2><p>在实际的编译过程中，逐个的编译源代码过于冗杂，尤其是当你需要包含很多源文件时，你不得不每一次都要打字输入。</p>
+<p>而是用Makefile就是为了简化很多源文件的编译过程。 例如我们有很多c问见需要编译:</p>
+<ul>
+    <li>main.cpp</li>
+    <li>hello.cpp</li>
+    <li>factorial.cpp</li>
+    <li>functions.h 以上的文件都是通过头文件串联起来的</li>
+</ul>
+如果需要手动的编译，如下非常麻烦
+
+<figure class="hljs highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">g++ main.cpp hello.cpp factorial.cpp -o hello<br></code></pre></td></tr></table></figure>
+
+<p>执行上面得到的文件</p>
+<figure class="hljs highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs shell">hello<br></code></pre></td></tr></table></figure>
+
+<p>###编译的过程包含了：</p>
+<ul>
+    <li>把source code转换成object files</li>
+    <li>将不同的object files连接成可执行的机器码（.exe) 下面使用最简单的Makefile 来进行编译，代替手工过程</li>
+</ul>
+基本的Makefile组成如下：
+
+<p><code><span style="color: #ff0000; font-family: Consolas;">target: dependencies</span></code></p>
+<p><code><span style="color: #ff0000; font-family: Consolas;">[tab]system command</span></code></p>
+<p>‘target’可以理解为要编译的目标或任务（分号后的内容），dependencies表示要完成这个目标所需要的前提。编写成我们需要的格式如下：</p>
+<p><code><span style="color: #ff0000; font-family: Consolas;">all:     </span></code></p>
+<p><code><span style="color: #ff0000; font-family: Consolas;">    g++ main.cpp hello.cpp factorial.cpp -o hello</span></code></p>
+<p>从makefile文件中可以看出我们的目的是‘all’，这是makefiles默认的目标。make工具在没有特殊声明的时候会有限执行‘all’，我们看到all是没有依赖的，所以可以安全的执行。</p>
+<h3>那么如何使用依赖关系呢？</h3>
+有时候我们会使用不同的‘target’。因为当我们修改了一个文件的时候，不希望把所有的文件都进行重新编译。
+
+<p>例如以下的例子：</p>
+<figure class="hljs highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs makefiles">all: hello<br>hello: main.o factorial.o hello.o     <br>    g++ main.o factorial.o hello.o -o hello<br>main.o: main.cpp     <br>    g++ -c main.cpp<br>factorial.o: factorial.cpp     <br>    g++ -c factorial.cpp<br>hello.o: hello.cpp     <br>    g++ -c hello.cpp<br>clean:     <br>    del *o hello.exe<br></code></pre></td></tr></table></figure>
+
+<p>相当于把编译的过程（上述的两部，编译、连接）拆分开。</p>
+<p>我们看到all只有一个依赖，而没有命令，这是为了让make能够正确的执行。all必须执行才能完成。</p>
+<p>对于每一个可用的目标所有的依赖都会被搜索，如果找到则执行。</p>
+<p>我们还看到了一个clean的目标,他可以快速的清除所有的object和可执行程序。</p>
+<h3 id="在makefiles中使用变量和注释"><a href="#在makefiles中使用变量和注释" class="headerlink" title="在makefiles中使用变量和注释"></a>在makefiles中使用变量和注释</h3><p>例子如下：</p>
+<figure class="hljs highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs makefiles"># I am a comment, and I want to say that the variable CC will be<br><br># the compiler to use. CC=g++<br><br># Hey!, I am comment number 2. I want to say that CFLAGS will be the<br><br># options I&#x27;ll pass to the compiler.<br><br>CFLAGS=-c -Wall<br><br>all: hello<br><br>hello: main.o factorial.o hello.o    <br><br>    $(CC) main.o factorial.o hello.o -o hello<br><br>main.o: main.cpp     <br><br>    $(CC) $(CFLAGS) main.cpp<br><br>factorial.o: factorial.cpp     <br><br>    $(CC) $(CFLAGS) factorial.cpp<br><br>hello.o: hello.cpp     <br><br>    $(CC) $(CFLAGS) hello.cpp<br><br>clean:     <br><br>    del *o hello.exe<br></code></pre></td></tr></table></figure>
+<p>如上所示，使用$(VAR)就可以轻松的访问变量。</p>
+<p><a href="../../index.md">back</a></p>
+
+    </main>
+    <footer class="post-footer">
+      
+    </footer>
+  </article>
+  
+  
+  <nav class="page-nav">
+    <div class="page-nav-next page-nav-item">
+      
+      <a href="/2022/09/19/tech/hadoop_headfirst/" rel="next" title=""><i class="fas fa-angle-left"></i><span class="nav-title"></span></a>
+      
+    </div>
+    <div class="page-nav-prev page-nav-item">
+      
+      <a href="/2022/09/19/tech/learn_mongodb/" rel="prev" title=""><span class="nav-title"></span><i class="fas fa-angle-right"></i></a>
+      
+    </div>
+  </nav>
+  
+  
+  
+
+<div class="comments" id="comments">
+  
+  
+  <div class="commentjs" id="comment-thread"></div>
+  <link rel="stylesheet" href="/css/commentjs.css">
+  <script defer type="text/javascript" src="/js/marked.min.js"></script>
+  <script defer type="text/javascript" src="/js/timeago.min.js"></script>
+  <script defer type="text/javascript" src="/js/highlight.min.js"></script>
+  <script defer type="text/javascript" src="/js/commentjs.js"></script>
+  <script type="text/javascript">
+  $(document).ready(function () {
+    getComments({
+      "type": "github",
+      "user": "leinlin",
+      "repo": "leinlin.github.io",
+      "client_id": "aee134bdfb54c4ef5826",
+      "client_secret": "4af1d3f2b82dccc028c49715becc01e611afbe43",
+      "no_comment": "这个页面还没有评论，现在就去评论吧！",
+      "go_to_comment": "去评论",
+      "issue_title": "",
+      "btn_class": "button",
+      "comments_target": "#comment-thread"
+    });
+    marked.setOptions({
+      "highlight": function (code, lang) {
+        return hljs.highlightAuto(code).value;
+      }
+    });
+    function mark() {
+      var markdowns = document.getElementsByClassName("markdown");
+      for (var i = 0; i < markdowns.length; ++i){
+        if (markdowns[i].innerHTML) {
+          markdowns[i].innerHTML = marked(markdowns[i].innerHTML);
+        }
+      }
+    }
+    window.addEventListener("DOMContentLoaded", mark, false);
+    window.addEventListener("load", mark, false);
+  });
+  </script>
+  
+  
+</div>
+
+
+
+  
+</div>
+
+          </div>
+          
+          
+          
+<aside class="sidebar" id="sidebar" style="background: url(/images/background.png);">
+  
+  <div class="search">
+    <div class="form-group">
+      <i class="fas fa-search"></i><input type="search" id="search-input" name="q" results="0" placeholder="搜索" class="form-control"/>
+    </div>
+  </div>
+  <div class="search-result-box" id="search-result"></div>
+  
+  
+<div class="info sidebar-item" id="info">
+  
+  <img class="author-avatar" src="/images/avatar.jpg" alt="leinlin">
+  
+  <h1 class="author-name">leinlin</h1>
+  <h2 class="author-description"></h2>
+  <div class="site-count">
+    
+    
+    
+    
+    <div class="categories-count count-block">
+      <div class="site-count-title">分类</div>
+      <div><a href="/categories/">11</a></div>
+    </div>
+    
+    
+  </div>
+  
+  <div class="rss">
+    <a class="rss-link button sidebar-item" href="/atom.xml"><i class="fas fa-rss"></i>RSS</a>
+  </div>
+  
+</div>
+
+
+  <div class="sidebar-sticky">
+    
+    
+    
+    
+    
+    <hr>
+    <div class="post-toc sidebar-item" id="toc-div">
+      <div><i class="fas fa-list-ol"></i>文章目录</div>
+      <div class="post-toc-content"><ol class="list-group toc"><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#%E9%A6%96%E5%85%88%E8%AE%B2%E8%A7%A3%E7%BC%96%E8%AF%91%E5%99%A8%E7%AD%89%E5%86%85%E5%AE%B9"><span class="toc-text">首先讲解编译器等内容</span></a></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#%E4%B8%8B%E9%9D%A2%E4%BD%BF%E7%94%A8%E5%85%B7%E4%BD%93%E7%9A%84%E7%BC%96%E8%AF%91%E5%99%A8GCC%E6%9D%A5%E8%AE%B2%E8%A7%A3"><span class="toc-text">下面使用具体的编译器GCC来讲解</span></a></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#Makefiles%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="toc-text">Makefiles的使用</span></a><ol class="list-group toc-child"><li class="toc-item toc-level-3"><a class="list-group-item toc-link"><span class="toc-text">那么如何使用依赖关系呢？</span></a></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#%E5%9C%A8makefiles%E4%B8%AD%E4%BD%BF%E7%94%A8%E5%8F%98%E9%87%8F%E5%92%8C%E6%B3%A8%E9%87%8A"><span class="toc-text">在makefiles中使用变量和注释</span></a></li></ol></li></ol></div>
+    </div>
+    
+    
+    
+    <hr>
+    <div class="social-link sidebar-item">
+      <div><i class="far fa-address-card"></i>社交链接</p></div>
+      <ul>
+        
+        <li><i class="fab fa-github"></i><a href="https://leinlin.github.com/" target="_blank">GitHub</a></li>
+        
+      </ul>
+    </div>
+    
+    
+  </div>
+</aside>
+
+
+          
+        </div>
+      </div>
+    </main>
+    
+<footer id="footer" class="footer" style="background: #33363b;">
+  <div class="container">
+    <div class="back-to-top">
+      <button id="back-to-top"><i class="fas fa-angle-double-up" aria-label="回到顶部"></i></button>
+    </div>
+    <div class="footer-container">
+      <div class="footer-left">
+        <div class="copyright">
+          <span class="author">leinlin</span><span class="year"><i class="far fa-copyright"></i>2022</span>
+        </div>
+        
+        <div class="busuanzi">
+          <span id="busuanzi_container_site_pv"><i class="fas fa-eye" aria-label="站点点击量" aria-hidden="false"></i><span id="busuanzi_value_site_pv"></span></span><span id="busuanzi_container_site_uv"><i class="fas fa-user" aria-label="站点用户数" aria-hidden="false"></i><span id="busuanzi_value_site_uv"></span></span><span id="busuanzi_container_page_pv"><i class="far fa-file-alt"></i><span id="busuanzi_value_page_pv" aria-label="页面点击量" aria-hidden="false"></span></span>
+        </div>
+        
+      </div>
+      <div class="footer-right">
+        <div class="custom-info">
+          
+          托管于<i class="fab fa-github-alt"></i><a href="https://pages.github.com/" target="_blank">GitHub Pages</a>
+          
+        </div>
+        <div class="powered-by">
+          由 <a href="https://hexo.io/" target="_blank">Hexo</a> 强力驱动 | 主题 <a href="https://github.com/AlynxZhou/hexo-theme-aria/" target="_blank">ARIA</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+  <script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

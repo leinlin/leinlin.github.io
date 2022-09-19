@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#33363b">
+    <meta name="msapplication-TileColor" content="#33363b">
+    
+    
+    
+    
+    <meta name="keywords" content="leinlin, ARIA, Hexo">
+    
+    
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png">
+    
+    
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicons/android-chrome-192x192.png">
+    
+    
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png">
+    
+    
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png">
+    
+    
+    <link rel="mask-icon" href="/favicons/safari-pinned-tab.svg" color="#33363b">
+    
+    
+    <link rel="manifest" href="/favicons/site.webmanifest">
+    
+    
+    <meta name="msapplication-config" content="/favicons/browserconfig.xml">
+    
+    
+    <link rel="alternate" href="/atom.xml" title="leinlin的小笔记" type="application/atom+xml" />
+    
+    
+    <link rel="shortcut icon" type="image/x-icon" href="/favicons/favicon.ico">
+    
+    
+    <link rel="stylesheet" type="text/css" href="/css/normalize.css">
+    <link rel="stylesheet" type="text/css" href="/css/index.css">
+    
+    <link rel="stylesheet" type="text/css" href="/css/sidebar.css">
+    
+    
+<link rel="stylesheet" type="text/css" href="/css/page.css">
+<link rel="stylesheet" type="text/css" href="/css/post.css">
+
+    <link rel="stylesheet" type="text/css" href="/css/custom.css">
+    <link rel="stylesheet" type="text/css" href="/css/atom-one-light.css">
+    <link rel="stylesheet" type="text/css" href="/css/lightgallery.min.css">
+    <script type="text/javascript" src="/js/jquery.min.js"></script>
+    <script defer type="text/javascript" src="/js/util.js"></script>
+    <script defer type="text/javascript" src="/js/clipboard.min.js"></script>
+    <script defer type="text/javascript" src="/js/scrollspy.js"></script>
+    <script defer type="text/javascript" src="/js/fontawesome-all.min.js"></script>
+    <script defer type="text/javascript" src="/js/lightgallery.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-fullscreen.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-hash.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-pager.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-thumbnail.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-zoom.min.js"></script>
+    
+    <script defer src="/js/busuanzi.pure.mini.js"></script>
+    
+    
+    <script defer type="text/javascript" src="/js/search.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function () {
+      var searchPath = "search.xml";
+      if (searchPath.length === 0) {
+        searchPath = "search.xml";
+      }
+      var path = "/" + searchPath;
+      searchFunc(path, "search-input", "search-result");
+    });
+    </script>
+    
+    
+    
+    <script defer type="text/javascript" src="https://cdn.staticfile.org/MathJax/MathJax-2.6-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ["$","$"], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ["script", "noscript", "style", "textarea", "pre", "code"]
+      }
+    });
+    </script>
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for (i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += " has-jax";
+      }
+    });
+    </script>
+    
+    
+    <script defer type="text/javascript" src="/js/index.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function () {
+      var cb = null;
+      var els = $(".post figure.highlight");
+      if (els.length) {
+        // Enabled Hexo highlight line number.
+        $(els).each(function (i, e) {
+          // $(e).before("<button class=\"copy button\">复制</button>");
+          $(e).before([
+            "<div class=\"code-titlebar\">",
+              "<div class=\"titlebar-left\">",
+                "<button class=\"copy\">复制</button>",
+              "</div>",
+            "</div>"
+          ].join(""));
+        });
+        cb = new ClipboardJS("button.copy", {
+          "target": function (trigger) {
+              // Get target element by DOM API.
+              return trigger.parentNode.parentNode.nextElementSibling.firstChild.firstChild.firstChild.lastChild.firstChild.firstChild;
+          }
+        });
+      } else {
+        // Disabled Hexo highlight line number.
+        els = $(".post pre code");
+        $(els).each(function (i, e) {
+          // Add button before pre, not code.
+          // $(e).parent().before("<button class=\"copy button\">复制</button>");
+          $(e).before([
+            "<div class=\"code-titlebar\">",
+              "<div class=\"titlebar-left\">",
+                "<button class=\"copy\" >复制</button>",
+              "</div>",
+              "<div class=\"titlebar-right\">",
+                "<button class=\"button-dot dot-minimize\" aria-label=\"Decoration\"></button>",
+                "<button class=\"button-dot dot-maximize\" aria-label=\"Decoration\"></button>",
+                "<button class=\"button-dot dot-close\" aria-label=\"Decoration\"></button>",
+              "</div>",
+            "</div>"
+          ].join(""));
+        });
+        cb = new ClipboardJS("button.copy", {
+          "target": function (trigger) {
+              // Get target element by DOM API.
+              return trigger.parentNode.parentNode.nextElementSibling;
+          }
+        });
+      }
+      cb.on("success", function (e) {
+        e.clearSelection();
+        var trigger = e.trigger;
+        // Change button text as a user tip.
+        trigger.innerHTML = "已复制";
+        $(trigger).addClass("copied");
+        // Change button text back;
+        setTimeout(function () {
+          trigger.innerHTML = "复制";
+          $(trigger).removeClass("copied");
+        }, 1500);
+      });
+    });
+    </script>
+    
+    <script defer type="text/javascript" src="/js/custom.js"></script>
+    <title>汇编调用指令，堆栈操作详解 | leinlin的小笔记</title>
+  <meta name="generator" content="Hexo 6.2.0"></head>
+  <body itemscope itemtype="http://schema.org/WebPage" lang="zh_CN"  data-spy="scroll" data-target=".list-group">
+    
+<header id="header" class="header" style="background: #33363b;">
+  <div class="container">
+    <div class="header-container">
+      <div class="header-title">
+        <h1 class="title"><a href="/">leinlin的小笔记</a></h1>
+        <h2 class="subtitle"></h2>
+      </div>
+      
+    </div>
+    <nav id="nav" class="nav">
+      <a id="nav-toggle" class="nav-toggle" aria-hidden="true"><i class="fas fa-bars" aria-label="切换导航栏"></i></a>
+      <ul id="menu" role="menubar" aria-hidden="false">
+        
+        <li role="menuitem"><a href="/"><i class="fas fa-home"></i><span class="menu-text">首页</span></a></li>
+        
+        <li role="menuitem"><a href="/categories/"><i class="fas fa-th-list"></i><span class="menu-text">分类</span></a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</header>
+
+
+    <main id="main" class="main">
+      <div class="container">
+        <div class="main-container">
+          <div class="content">
+            
+<div id="post" class="page">
+  
+  <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
+    <div class="post-block">
+      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2019/09/27/Asm/base-asm-calls/">
+      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+       <meta itemprop="name" content="leinlin">
+       <meta itemprop="description" content="">
+       <meta itemprop="image" content="/images/avatar.jpg">
+      </span>
+      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+       <meta itemprop="name" content="leinlin的小笔记">
+      </span>
+    </div>
+    <header class="post-header">
+      <h1 class="post-title" itemprop="name headline">汇编调用指令，堆栈操作详解</h1>
+      <div class="post-meta">
+        
+        <span class="post-date">
+          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2019-09-27T12:41:14+08:00">2019-09-27 12:41:14</time></span>
+        </span>
+        
+        
+        
+        <span class="post-meta-divider divider">|</span>
+        
+        <span class="post-categories">
+          
+          <i class="far fa-folder-open"></i><span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/%E6%B1%87%E7%BC%96%E9%80%86%E5%90%91/" itemprop="url" rel="index"><span itemprop="name">汇编逆向</span></a></span>
+        </span>
+        
+        
+        
+        
+      </div>
+    </header>
+    <main class="post-main" itemprop="articleBody">
+      <h2 id="一些常用的汇编指令直观翻译"><a href="#一些常用的汇编指令直观翻译" class="headerlink" title="一些常用的汇编指令直观翻译"></a>一些常用的汇编指令直观翻译</h2><figure class="hljs highlight x86asm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs x86asm"><span class="hljs-keyword">mov</span> <span class="hljs-built_in">eax</span> , <span class="hljs-built_in">ebx</span>            <span class="hljs-comment">; eax = ebx</span><br><span class="hljs-keyword">lea</span> <span class="hljs-built_in">eax</span> , [<span class="hljs-built_in">ebx</span> + <span class="hljs-number">30</span>]     <span class="hljs-comment">; eax = ebx + 30 </span><br>                         <span class="hljs-comment">; 不这样写就是两条指令 mov eax, ebx ;add eax 30</span><br><span class="hljs-keyword">push</span> <span class="hljs-keyword">pop</span>                 <span class="hljs-comment">; 入栈，出栈</span><br><span class="hljs-keyword">add</span> <span class="hljs-built_in">eax</span>, <span class="hljs-number">5</span>               <span class="hljs-comment">; eax += 5</span><br><span class="hljs-keyword">sub</span> <span class="hljs-built_in">eax</span>, <span class="hljs-number">5</span>               <span class="hljs-comment">; eax -= 5</span><br><span class="hljs-keyword">inc</span> <span class="hljs-built_in">eax</span>                  <span class="hljs-comment">; eax += 1</span><br><span class="hljs-keyword">mul</span>                      <span class="hljs-comment">; 乘法</span><br><span class="hljs-keyword">div</span>                      <span class="hljs-comment">; 除法</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="改变堆栈的操作"><a href="#改变堆栈的操作" class="headerlink" title="改变堆栈的操作"></a>改变堆栈的操作</h2><figure class="hljs highlight x86asm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs x86asm"><span class="hljs-keyword">push</span> <span class="hljs-built_in">eax</span>   // <span class="hljs-keyword">sub</span> <span class="hljs-built_in">esp</span> , <span class="hljs-number">4</span>  <span class="hljs-keyword">mov</span> [<span class="hljs-built_in">esp</span>] , <span class="hljs-built_in">eax</span><br><span class="hljs-keyword">pop</span> <span class="hljs-built_in">eax</span>    // <span class="hljs-keyword">mov</span> <span class="hljs-built_in">eax</span> , [<span class="hljs-built_in">esp</span>]   <span class="hljs-keyword">add</span> <span class="hljs-built_in">esp</span> , <span class="hljs-number">4</span><br><span class="hljs-keyword">call</span> <span class="hljs-number">1234</span>  // <span class="hljs-keyword">push</span> <span class="hljs-built_in">eip</span>   <span class="hljs-keyword">jmp</span> <span class="hljs-number">1234</span><br><span class="hljs-keyword">retn</span> <span class="hljs-number">8</span>     // <span class="hljs-keyword">pop</span> <span class="hljs-built_in">eip</span>   <span class="hljs-keyword">add</span> <span class="hljs-built_in">esp</span> , <span class="hljs-number">8</span>   常用于 __stdcall,这种函数自己清理自己的参数的<br><span class="hljs-keyword">add</span> <span class="hljs-built_in">esp</span> , xxx<br><span class="hljs-keyword">sub</span> <span class="hljs-built_in">esp</span> , xxx<br></code></pre></td></tr></table></figure>
+
+<span id="more"></span>
+
+<h2 id="栈指针、帧指针的学习"><a href="#栈指针、帧指针的学习" class="headerlink" title="栈指针、帧指针的学习"></a>栈指针、帧指针的学习</h2><p>ESP栈指针,每一次push或者pop值会跟这变，永远指向栈顶 </br><br>EBP帧指针，其实有无无所谓，如果没有使用ESP取局部变量和参数的时候因为地址会一直改变，人的理解上比较麻烦，于是在call指令save 的 EIP后记录下来当前的ESP到EBP中，这样子取参数或者局部变量的时候回更方便。</br></p>
+<p>以下面这个在32位x86计算机上编译的函数为例：</p>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs C"><span class="hljs-type">void</span> <span class="hljs-title function_">bar</span><span class="hljs-params">(<span class="hljs-type">int</span> j, <span class="hljs-type">int</span> k)</span>; <span class="hljs-comment">// a function to call</span><br><span class="hljs-type">void</span> <span class="hljs-title function_">demo_stackframe</span><span class="hljs-params">(<span class="hljs-type">int</span> a, <span class="hljs-type">int</span> b, in c)</span>&#123;<br>    <span class="hljs-type">int</span> x;<br>    <span class="hljs-type">char</span> buffer[<span class="hljs-number">64</span>];<br>    <span class="hljs-type">int</span> y;<br>    <span class="hljs-type">int</span> z;<br>    bar(z, y);<br>&#125;<br></code></pre></td></tr></table></figure>
+<p><img src="/../../images/only_esp.png" alt="&quot;&quot;"></p>
+<p>调用bar函数的时候,如果没有设置 ebp传递参数汇编码如下:</p>
+<figure class="hljs highlight x86asm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs x86asm"><span class="hljs-comment">; 假设为__cdecl,参数从右往左入栈，调用者清理堆栈</span><br><span class="hljs-keyword">push</span> <span class="hljs-built_in">dword</span> [<span class="hljs-built_in">esp</span>+<span class="hljs-number">4</span>]    <span class="hljs-comment">; push y</span><br><span class="hljs-keyword">push</span> <span class="hljs-built_in">dword</span> [<span class="hljs-built_in">esp</span>+<span class="hljs-number">4</span>]    <span class="hljs-comment">; push z</span><br><span class="hljs-keyword">call</span> bar              <span class="hljs-comment">; push eip,jmp bar</span><br><span class="hljs-keyword">add</span> <span class="hljs-built_in">esp</span>, <span class="hljs-number">8</span>            <span class="hljs-comment">; 清理堆栈</span><br></code></pre></td></tr></table></figure>
+<p>我们可以发现，如果根据esp来寻找地址，很不直观，第一次我们将 y push到堆栈中后，导致esp sub 4,然后取z的时候地址就会跟着改变，显然这样理解上比较麻烦，同一个参数获取的时候esp的偏移量总是不一样。</p>
+<p>为了更好的计算偏移量，我们需要一个固定不变的堆栈地址，这样就不会出现同一个参数然后偏移不一样的情况。于是引入了ebp(帧指针)的概念,在call bar之后将esp地址记录下来，此时的堆栈情况如下。</p>
+<p><img src="/../../images/use_ebp.png" alt="&quot;&quot;"><br>注意调用前要把caller的ebp保存起来，不然到调用完成后，caller的ebp就找不到了。所以调用bar函数前要写上“序言”代码</p>
+<figure class="hljs highlight x86asm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs x86asm"><span class="hljs-keyword">push</span> <span class="hljs-built_in">ebp</span>        <span class="hljs-comment">; 保存 caller的 ebp </span><br><span class="hljs-keyword">mov</span>  <span class="hljs-built_in">ebp</span>, <span class="hljs-built_in">esp</span>   <span class="hljs-comment">; 将bar函数的ebp设置为当前的esp</span><br><span class="hljs-keyword">sub</span>  <span class="hljs-built_in">esp</span>, <span class="hljs-number">76</span>    <span class="hljs-comment">; 提前扩容好局部变量</span><br></code></pre></td></tr></table></figure>
+
+<p>注意这里仅仅保存了caller函数的ebp,如果想要保存caller函数的其他寄存器信息比如eax之类的，需要在序言这边push进去</p>
+<p>现在调用bar函数的汇编指令差不多为：</p>
+<figure class="hljs highlight x86asm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs x86asm"><span class="hljs-keyword">push</span> <span class="hljs-built_in">dword</span> [<span class="hljs-built_in">ebp</span>-<span class="hljs-number">72</span>]         <span class="hljs-comment">; push y</span><br><span class="hljs-keyword">push</span> <span class="hljs-built_in">dword</span> [<span class="hljs-built_in">ebp</span>-<span class="hljs-number">76</span>]         <span class="hljs-comment">; push z</span><br><span class="hljs-keyword">call</span> bar<br><span class="hljs-keyword">add</span> <span class="hljs-built_in">esp</span>, <span class="hljs-number">8</span>                  <span class="hljs-comment">; 清栈</span><br></code></pre></td></tr></table></figure>
+<p>使用了帧指针ebp后，所有的变量相对于ebp的偏移量都可以计算出来。许多时候，正偏移量用于访问函数参数，而负偏移量用于访问局部变量。使用ebp指针后，我们可以自由的更改esp指针而不用担心，其他变量的偏移地址</p>
+<p>最后完成bar函数调用的时候：</p>
+<figure class="hljs highlight x86asm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs x86asm"><span class="hljs-keyword">mov</span> <span class="hljs-built_in">esp</span>,<span class="hljs-built_in">ebp</span>          <span class="hljs-comment">; 清理局部变量</span><br><span class="hljs-keyword">pop</span> <span class="hljs-built_in">ebp</span>              <span class="hljs-comment">; 恢复caller函数的ebp</span><br><span class="hljs-keyword">ret</span>                  <span class="hljs-comment">; pop eip</span><br></code></pre></td></tr></table></figure>
+
+<p>由于 这种操作非常常见，因此x86体系提供了leave指令来缩短汇编指令长度</p>
+<figure class="hljs highlight x86asm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs x86asm"><span class="hljs-keyword">leave</span>                <span class="hljs-comment">; 相当于</span><br>                     <span class="hljs-comment">; mov esp,ebp</span><br>                     <span class="hljs-comment">; pop ebp</span><br><br><span class="hljs-keyword">ret</span>                  <span class="hljs-comment">; pop eip</span><br></code></pre></td></tr></table></figure>
+    </main>
+    <footer class="post-footer">
+      
+    </footer>
+  </article>
+  
+  
+  <nav class="page-nav">
+    <div class="page-nav-next page-nav-item">
+      
+      <a href="/2019/09/27/Asm/bugly-symbol/" rel="next" title="Android Unity 符号表上传"><i class="fas fa-angle-left"></i><span class="nav-title">Android Unity 符号表上传</span></a>
+      
+    </div>
+    <div class="page-nav-prev page-nav-item">
+      
+      <a href="/2022/07/09/Asm/luajit-value/" rel="prev" title="LuaJIT的变量实现"><span class="nav-title">LuaJIT的变量实现</span><i class="fas fa-angle-right"></i></a>
+      
+    </div>
+  </nav>
+  
+  
+  
+
+<div class="comments" id="comments">
+  
+  
+  <div class="commentjs" id="comment-thread"></div>
+  <link rel="stylesheet" href="/css/commentjs.css">
+  <script defer type="text/javascript" src="/js/marked.min.js"></script>
+  <script defer type="text/javascript" src="/js/timeago.min.js"></script>
+  <script defer type="text/javascript" src="/js/highlight.min.js"></script>
+  <script defer type="text/javascript" src="/js/commentjs.js"></script>
+  <script type="text/javascript">
+  $(document).ready(function () {
+    getComments({
+      "type": "github",
+      "user": "leinlin",
+      "repo": "leinlin.github.io",
+      "client_id": "aee134bdfb54c4ef5826",
+      "client_secret": "4af1d3f2b82dccc028c49715becc01e611afbe43",
+      "no_comment": "这个页面还没有评论，现在就去评论吧！",
+      "go_to_comment": "去评论",
+      "issue_title": "汇编调用指令，堆栈操作详解",
+      "btn_class": "button",
+      "comments_target": "#comment-thread"
+    });
+    marked.setOptions({
+      "highlight": function (code, lang) {
+        return hljs.highlightAuto(code).value;
+      }
+    });
+    function mark() {
+      var markdowns = document.getElementsByClassName("markdown");
+      for (var i = 0; i < markdowns.length; ++i){
+        if (markdowns[i].innerHTML) {
+          markdowns[i].innerHTML = marked(markdowns[i].innerHTML);
+        }
+      }
+    }
+    window.addEventListener("DOMContentLoaded", mark, false);
+    window.addEventListener("load", mark, false);
+  });
+  </script>
+  
+  
+</div>
+
+
+
+  
+</div>
+
+          </div>
+          
+          
+          
+<aside class="sidebar" id="sidebar" style="background: url(/images/background.png);">
+  
+  <div class="search">
+    <div class="form-group">
+      <i class="fas fa-search"></i><input type="search" id="search-input" name="q" results="0" placeholder="搜索" class="form-control"/>
+    </div>
+  </div>
+  <div class="search-result-box" id="search-result"></div>
+  
+  
+<div class="info sidebar-item" id="info">
+  
+  <img class="author-avatar" src="/images/avatar.jpg" alt="leinlin">
+  
+  <h1 class="author-name">leinlin</h1>
+  <h2 class="author-description"></h2>
+  <div class="site-count">
+    
+    
+    
+    
+    <div class="categories-count count-block">
+      <div class="site-count-title">分类</div>
+      <div><a href="/categories/">11</a></div>
+    </div>
+    
+    
+  </div>
+  
+  <div class="rss">
+    <a class="rss-link button sidebar-item" href="/atom.xml"><i class="fas fa-rss"></i>RSS</a>
+  </div>
+  
+</div>
+
+
+  <div class="sidebar-sticky">
+    
+    
+    
+    
+    
+    <hr>
+    <div class="post-toc sidebar-item" id="toc-div">
+      <div><i class="fas fa-list-ol"></i>文章目录</div>
+      <div class="post-toc-content"><ol class="list-group toc"><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#%E4%B8%80%E4%BA%9B%E5%B8%B8%E7%94%A8%E7%9A%84%E6%B1%87%E7%BC%96%E6%8C%87%E4%BB%A4%E7%9B%B4%E8%A7%82%E7%BF%BB%E8%AF%91"><span class="toc-text">一些常用的汇编指令直观翻译</span></a></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#%E6%94%B9%E5%8F%98%E5%A0%86%E6%A0%88%E7%9A%84%E6%93%8D%E4%BD%9C"><span class="toc-text">改变堆栈的操作</span></a></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#%E6%A0%88%E6%8C%87%E9%92%88%E3%80%81%E5%B8%A7%E6%8C%87%E9%92%88%E7%9A%84%E5%AD%A6%E4%B9%A0"><span class="toc-text">栈指针、帧指针的学习</span></a></li></ol></div>
+    </div>
+    
+    
+    
+    <hr>
+    <div class="social-link sidebar-item">
+      <div><i class="far fa-address-card"></i>社交链接</p></div>
+      <ul>
+        
+        <li><i class="fab fa-github"></i><a href="https://leinlin.github.com/" target="_blank">GitHub</a></li>
+        
+      </ul>
+    </div>
+    
+    
+  </div>
+</aside>
+
+
+          
+        </div>
+      </div>
+    </main>
+    
+<footer id="footer" class="footer" style="background: #33363b;">
+  <div class="container">
+    <div class="back-to-top">
+      <button id="back-to-top"><i class="fas fa-angle-double-up" aria-label="回到顶部"></i></button>
+    </div>
+    <div class="footer-container">
+      <div class="footer-left">
+        <div class="copyright">
+          <span class="author">leinlin</span><span class="year"><i class="far fa-copyright"></i>2022</span>
+        </div>
+        
+        <div class="busuanzi">
+          <span id="busuanzi_container_site_pv"><i class="fas fa-eye" aria-label="站点点击量" aria-hidden="false"></i><span id="busuanzi_value_site_pv"></span></span><span id="busuanzi_container_site_uv"><i class="fas fa-user" aria-label="站点用户数" aria-hidden="false"></i><span id="busuanzi_value_site_uv"></span></span><span id="busuanzi_container_page_pv"><i class="far fa-file-alt"></i><span id="busuanzi_value_page_pv" aria-label="页面点击量" aria-hidden="false"></span></span>
+        </div>
+        
+      </div>
+      <div class="footer-right">
+        <div class="custom-info">
+          
+          托管于<i class="fab fa-github-alt"></i><a href="https://pages.github.com/" target="_blank">GitHub Pages</a>
+          
+        </div>
+        <div class="powered-by">
+          由 <a href="https://hexo.io/" target="_blank">Hexo</a> 强力驱动 | 主题 <a href="https://github.com/AlynxZhou/hexo-theme-aria/" target="_blank">ARIA</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+  <script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

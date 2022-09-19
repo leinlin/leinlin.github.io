@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#33363b">
+    <meta name="msapplication-TileColor" content="#33363b">
+    
+    
+    
+    
+    <meta name="keywords" content="leinlin, ARIA, Hexo">
+    
+    
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png">
+    
+    
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicons/android-chrome-192x192.png">
+    
+    
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png">
+    
+    
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png">
+    
+    
+    <link rel="mask-icon" href="/favicons/safari-pinned-tab.svg" color="#33363b">
+    
+    
+    <link rel="manifest" href="/favicons/site.webmanifest">
+    
+    
+    <meta name="msapplication-config" content="/favicons/browserconfig.xml">
+    
+    
+    <link rel="alternate" href="/atom.xml" title="leinlin的小笔记" type="application/atom+xml" />
+    
+    
+    <link rel="shortcut icon" type="image/x-icon" href="/favicons/favicon.ico">
+    
+    
+    <link rel="stylesheet" type="text/css" href="/css/normalize.css">
+    <link rel="stylesheet" type="text/css" href="/css/index.css">
+    
+    <link rel="stylesheet" type="text/css" href="/css/sidebar.css">
+    
+    
+<link rel="stylesheet" type="text/css" href="/css/page.css">
+<link rel="stylesheet" type="text/css" href="/css/post.css">
+
+    <link rel="stylesheet" type="text/css" href="/css/custom.css">
+    <link rel="stylesheet" type="text/css" href="/css/atom-one-light.css">
+    <link rel="stylesheet" type="text/css" href="/css/lightgallery.min.css">
+    <script type="text/javascript" src="/js/jquery.min.js"></script>
+    <script defer type="text/javascript" src="/js/util.js"></script>
+    <script defer type="text/javascript" src="/js/clipboard.min.js"></script>
+    <script defer type="text/javascript" src="/js/scrollspy.js"></script>
+    <script defer type="text/javascript" src="/js/fontawesome-all.min.js"></script>
+    <script defer type="text/javascript" src="/js/lightgallery.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-fullscreen.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-hash.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-pager.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-thumbnail.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-zoom.min.js"></script>
+    
+    <script defer src="/js/busuanzi.pure.mini.js"></script>
+    
+    
+    <script defer type="text/javascript" src="/js/search.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function () {
+      var searchPath = "search.xml";
+      if (searchPath.length === 0) {
+        searchPath = "search.xml";
+      }
+      var path = "/" + searchPath;
+      searchFunc(path, "search-input", "search-result");
+    });
+    </script>
+    
+    
+    
+    <script defer type="text/javascript" src="https://cdn.staticfile.org/MathJax/MathJax-2.6-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ["$","$"], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ["script", "noscript", "style", "textarea", "pre", "code"]
+      }
+    });
+    </script>
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for (i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += " has-jax";
+      }
+    });
+    </script>
+    
+    
+    <script defer type="text/javascript" src="/js/index.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function () {
+      var cb = null;
+      var els = $(".post figure.highlight");
+      if (els.length) {
+        // Enabled Hexo highlight line number.
+        $(els).each(function (i, e) {
+          // $(e).before("<button class=\"copy button\">复制</button>");
+          $(e).before([
+            "<div class=\"code-titlebar\">",
+              "<div class=\"titlebar-left\">",
+                "<button class=\"copy\">复制</button>",
+              "</div>",
+            "</div>"
+          ].join(""));
+        });
+        cb = new ClipboardJS("button.copy", {
+          "target": function (trigger) {
+              // Get target element by DOM API.
+              return trigger.parentNode.parentNode.nextElementSibling.firstChild.firstChild.firstChild.lastChild.firstChild.firstChild;
+          }
+        });
+      } else {
+        // Disabled Hexo highlight line number.
+        els = $(".post pre code");
+        $(els).each(function (i, e) {
+          // Add button before pre, not code.
+          // $(e).parent().before("<button class=\"copy button\">复制</button>");
+          $(e).before([
+            "<div class=\"code-titlebar\">",
+              "<div class=\"titlebar-left\">",
+                "<button class=\"copy\" >复制</button>",
+              "</div>",
+              "<div class=\"titlebar-right\">",
+                "<button class=\"button-dot dot-minimize\" aria-label=\"Decoration\"></button>",
+                "<button class=\"button-dot dot-maximize\" aria-label=\"Decoration\"></button>",
+                "<button class=\"button-dot dot-close\" aria-label=\"Decoration\"></button>",
+              "</div>",
+            "</div>"
+          ].join(""));
+        });
+        cb = new ClipboardJS("button.copy", {
+          "target": function (trigger) {
+              // Get target element by DOM API.
+              return trigger.parentNode.parentNode.nextElementSibling;
+          }
+        });
+      }
+      cb.on("success", function (e) {
+        e.clearSelection();
+        var trigger = e.trigger;
+        // Change button text as a user tip.
+        trigger.innerHTML = "已复制";
+        $(trigger).addClass("copied");
+        // Change button text back;
+        setTimeout(function () {
+          trigger.innerHTML = "复制";
+          $(trigger).removeClass("copied");
+        }, 1500);
+      });
+    });
+    </script>
+    
+    <script defer type="text/javascript" src="/js/custom.js"></script>
+    <title> | leinlin的小笔记</title>
+  <meta name="generator" content="Hexo 6.2.0"></head>
+  <body itemscope itemtype="http://schema.org/WebPage" lang="zh_CN"  data-spy="scroll" data-target=".list-group">
+    
+<header id="header" class="header" style="background: #33363b;">
+  <div class="container">
+    <div class="header-container">
+      <div class="header-title">
+        <h1 class="title"><a href="/">leinlin的小笔记</a></h1>
+        <h2 class="subtitle"></h2>
+      </div>
+      
+    </div>
+    <nav id="nav" class="nav">
+      <a id="nav-toggle" class="nav-toggle" aria-hidden="true"><i class="fas fa-bars" aria-label="切换导航栏"></i></a>
+      <ul id="menu" role="menubar" aria-hidden="false">
+        
+        <li role="menuitem"><a href="/"><i class="fas fa-home"></i><span class="menu-text">首页</span></a></li>
+        
+        <li role="menuitem"><a href="/categories/"><i class="fas fa-th-list"></i><span class="menu-text">分类</span></a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</header>
+
+
+    <main id="main" class="main">
+      <div class="container">
+        <div class="main-container">
+          <div class="content">
+            
+<div id="post" class="page">
+  
+  <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
+    <div class="post-block">
+      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/09/19/Shader/%E6%B8%B2%E6%9F%93%E8%BF%87%E7%A8%8B%E4%B8%AD%E5%90%84%E7%A7%8D%E6%B5%AE%E7%82%B9%E6%95%B0%E7%9A%84%E7%B2%BE%E7%A1%AE%E5%BA%A6/">
+      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+       <meta itemprop="name" content="leinlin">
+       <meta itemprop="description" content="">
+       <meta itemprop="image" content="/images/avatar.jpg">
+      </span>
+      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+       <meta itemprop="name" content="leinlin的小笔记">
+      </span>
+    </div>
+    <header class="post-header">
+      <h1 class="post-title" itemprop="name headline"></h1>
+      <div class="post-meta">
+        
+        <span class="post-date">
+          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2022-09-19T19:53:44+08:00">2022-09-19 19:53:44</time></span>
+        </span>
+        
+        
+        
+        
+        
+      </div>
+    </header>
+    <main class="post-main" itemprop="articleBody">
+      <!-- TOC -->
+
+
+
+<p>- <a href="#gpu%E6%B5%AE%E7%82%B9%E6%95%B0%E7%9A%84%E7%B2%BE%E7%A1%AE%E5%BA%A6%E4%BB%A5%E5%8F%8A%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9">GPU浮点数的精确度以及注意事项</a></p>
+<p>​    - <a href="#%E6%B5%AE%E7%82%B9%E6%95%B0%E7%9A%84%E4%BD%9C%E7%94%A8">浮点数的作用</a></p>
+<p>​    - <a href="#%E6%B5%AE%E7%82%B9%E6%95%B0%E5%9B%9E%E9%A1%BE">浮点数回顾</a></p>
+<p>​    - <a href="#%E6%A0%87%E5%87%86%E5%92%8C%E4%BD%8E%E7%B2%BE%E5%BA%A6%E6%B5%AE%E7%82%B9%E6%95%B0">标准和低精度浮点数</a></p>
+<p>​    - <a href="#%E6%B5%AE%E7%82%B9%E6%95%B0%E8%8C%83%E5%9B%B4%E8%A7%A3%E9%87%8A">浮点数范围解释</a></p>
+<p>​    - <a href="#%E4%BD%8E%E7%B2%BE%E5%BA%A6%E5%B0%BE%E6%95%B0%E4%BD%8D%E9%97%AE%E9%A2%98%E4%B8%BE%E4%BE%8B">低精度尾数位问题举例</a></p>
+<p>​    - <a href="#%E4%BD%8E%E7%B2%BE%E5%BA%A6%E5%B0%BE%E6%95%B0%E4%BD%8D%E9%97%AE%E9%A2%98%E5%8F%AF%E8%A7%86%E5%8C%96%E5%B1%95%E7%A4%BA">低精度尾数位问题可视化展示</a></p>
+<p>​    - <a href="#%E4%BD%8E%E7%B2%BE%E5%BA%A6%E4%B8%8D%E5%9D%87%E5%8C%80%E5%B0%BE%E6%95%B0%E4%BD%8D%E9%95%BF%E5%BA%A6%E9%97%AE%E9%A2%98">低精度不均匀尾数位长度问题</a></p>
+<p>​    - <a href="#%E9%A2%9C%E8%89%B2%E7%BC%A9%E6%94%BE%E5%A4%B1%E6%95%88">颜色缩放失效</a></p>
+<!-- /TOC -->
+
+<h1 id="GPU浮点数的精确度以及注意事项"><a href="#GPU浮点数的精确度以及注意事项" class="headerlink" title="GPU浮点数的精确度以及注意事项"></a>GPU浮点数的精确度以及注意事项</h1><p>​		在hdr的开发流程中，pbr的灯光计算结果和特效的亮度理论上是没有上限，但是需要保存到Color Buffer当中，这就涉及到Color Buffer的数据精度，通常Color Buffer的格式是R11G11B10F。所以需要进行Min操作，来保证保存到RT当中的数据没有溢出，因为计算的精度通常是half或者float要比保存的精确度高。所以会有一些问题，下面找到了资料来讨论Float精确度相关的问题。</p>
+<p>​		内容主要摘录一部分自：<a target="_blank" rel="noopener" href="https://bartwronski.com/2017/04/02/small-float-formats-r11g11b10f-precision/">参考链接</a>，并作了补充和例子说明，本文主要为了说明Color Buffer浮点数范围问题，原文对误差部分做了更详细的讨论。</p>
+<h2 id="浮点数的作用"><a href="#浮点数的作用" class="headerlink" title="浮点数的作用"></a>浮点数的作用</h2><p>通常颜色在渲染中的表示不是整型，而是浮点数。浮点数有很大的浮动范围可以用于：</p>
+<ul>
+<li>编码HDR的颜色和记录光照。</li>
+<li>当操作多个颜色的混合滤波需要分数。</li>
+<li>在黑暗区域不通过Gamma编码也可以表示更大的精确度。</li>
+<li>需要量化边界相对误差</li>
+<li>浮点数是GPU的自然表示（GPU很长一段时间没有整数的支持，并且用浮点数模拟，并且现在整数的操作比浮点数慢）。</li>
+</ul>
+<p>​		即便浮点数十分重要，但是我们很少存储32bit的浮点数值，即便是HDR的颜色。因为内存带宽和性能两部分的限制。内存带宽和缓存通常是重要的资源，最基础的经验法则是： “ALU is cheap, memory access is expensive”。即便是最简单的内存访问操作也需要上百个时钟周期的延迟。并且纹理单元的开销更高，应为需要滤波等开销很高的操作。</p>
+<p>​		因此，渲染程序员通常使用低精度的浮点数格式来保存浮点数。两个最常用的是RGBA16F(4通道的16bit的单精度浮点数)和R11G11B10F（R和G通道使用11bit，B通道使用10bit）。</p>
+<p>​		下面先分析IEEE的32bit浮点数和上述浮点数格式的区别：</p>
+<h2 id="浮点数回顾"><a href="#浮点数回顾" class="headerlink" title="浮点数回顾"></a>浮点数回顾</h2><p>​	浮点数的表示方式：</p>
+<ul>
+<li><p>符号位<strong>sign</strong>：一个bit用来表示符号位。在数据最前面的一个bit，可选。</p>
+</li>
+<li><p>指数位<strong>exponent</strong>：多个Bit用来表示2的指数幂和剩余的数相乘，<strong>阶码是有偏移的，单精度偏移是127（0000001 表示 -126 11111110 表示127 而全0和全1有特殊用处），双精度是1024。 11bit和10bit 指数位5位偏移应该是15</strong></p>
+</li>
+<li><p>尾数位<strong>mantissa</strong>：多个bit用来表示数据的表示小数部分，和指数位结果相乘，通常假设小数点前整数位是1（<strong>这个是IEEE 754标准，其他标准也可能会约定小点后第一位始终是1</strong>）。例如：如果尾数位是01011000 ，那么他表示的数是：1.01011000</p>
+<p>所以最终表示是数是：</p>
+</li>
+</ul>
+<p>$$ sign(\pm 1)*2^{decoded exponent} *1.mantissa  $$</p>
+<p>​		<strong>参见对指数位的说明，对很多特殊的编码，指数位使用了特殊的值。这里只讨论一个：0的编码，通过将指数和尾数都设置成0，由于符号位可以设置，所以会存在两个0 （+0 和-0）。</strong></p>
+<p>​		浮点数是一种非常聪明的表示法，它具有许多很好的属性（例如，正浮点数可以解释为整数可以直观的排序或计算最小&#x2F;最大，并且整数0对应于正的浮点数0）。然而，伴随而来的是许多精度问题，这些问题并不总是最直观的。下面来谈论这些问题。</p>
+<h2 id="标准和低精度浮点数"><a href="#标准和低精度浮点数" class="headerlink" title="标准和低精度浮点数"></a>标准和低精度浮点数</h2><p>​		下面是常用的浮点数格式和编码方式。</p>
+<table>
+<thead>
+<tr>
+<th><strong>Bit depth</strong></th>
+<th><strong>Sign bit present?</strong></th>
+<th><strong>Exponent bits</strong></th>
+<th><strong>Mantissa bits</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td>32</td>
+<td>Yes</td>
+<td>8</td>
+<td>23</td>
+</tr>
+<tr>
+<td>16</td>
+<td>Yes</td>
+<td>5</td>
+<td>10</td>
+</tr>
+<tr>
+<td>11</td>
+<td>No</td>
+<td>5</td>
+<td>6</td>
+</tr>
+<tr>
+<td>10</td>
+<td>No</td>
+<td>5</td>
+<td>5</td>
+</tr>
+</tbody></table>
+<p>​		可以发现一些规律：</p>
+<ul>
+<li>11和10位的浮点数没有符号位，主要是由于本身精确度并不高，并且通常被图形API用作保存颜色的格式，所以没有必要使用符号位。</li>
+<li><strong>16bit的half类型和11bit、10bit有相同的指数位。但是有符号位，整数和负数有相同的范围。5位的指数位可以保证最大到64500到65500之间（见下方解释）</strong></li>
+</ul>
+<h2 id="浮点数范围解释"><a href="#浮点数范围解释" class="headerlink" title="浮点数范围解释"></a>浮点数范围解释</h2><p>​		<strong>这里主要讨论16bit、11bit和10bit的浮点数上限，因为32bit的浮点数完成光照计算之后要进行Min操作，然后才能保存到RT当中，所以Min的操作数十分关键。</strong></p>
+<p>​		由于这三个类型的指数位都相同，所以上限依赖于<strong>尾数位的数量</strong>：</p>
+<ul>
+<li><p>16位的float，尾数最大可以表示1.1111111111 ，十进制为1.9990234375；5位指数位，计算偏移15，那么最大可以表示11110 &#x3D;15，指数部分就是32768，最大的数就是32768*1.9990234375，约为65,504。</p>
+</li>
+<li><p>11bit的浮点数，尾数最大可以表示1.111111，十进制为1.984375；5位指数位，计算偏移15，那么最大可以表示11110 &#x3D;15，指数部分就是32768，最大数就是32768*1.984375&#x3D; 65,024  。</p>
+</li>
+<li><p>10bit的浮点数，尾数最大可以表示1.11111，十进制为1.96875；5位指数位，计算偏移15，那么最大可以表示11110 &#x3D;15，指数部分就是32768，最大为32768*1.96875&#x3D;64,512‬）</p>
+</li>
+</ul>
+<p><strong>综上所述在保存数据的时候如果不清楚引擎当中如何设置hdr Color buffer类型，Min的上限设置成64500是最安全的。</strong></p>
+<h2 id="低精度尾数位问题举例"><a href="#低精度尾数位问题举例" class="headerlink" title="低精度尾数位问题举例"></a>低精度尾数位问题举例</h2><p>首先看一个用8位整数表示0-1的例子：</p>
+<p>N[252&#x2F;255, 8] &#x3D;  0.98823529</p>
+<p>N[253&#x2F;255, 8] &#x3D;  0.99215686</p>
+<p>N[254&#x2F;255, 8] &#x3D;  0.99607843</p>
+<p>接下来用二进制小数表示他们：</p>
+<p>BaseForm[N[2*252&#x2F;255, 8], 2] &#x3D; 1.<strong>11111</strong>00111111001111110100</p>
+<p>BaseForm[N[2*253&#x2F;255, 8], 2] &#x3D; 1.<strong>11111</strong>01111111011111111000</p>
+<p>BaseForm[N[2*254&#x2F;255, 8], 2] &#x3D; 1.<strong>11111</strong>10111111101111111100</p>
+<p>​		我高亮了前五位小数位。我们知道10bit的浮点数只有5bit的尾数位，可以发现10bit的浮点数甚至不能精确地表示8bit整型颜色（因为5bit尾数不足以区分这三个颜色，<strong>主要原因有效位太短</strong>）。于此同时，你能够看到下一位是不同的，因此在11bit的浮点数中可以被区分出来，这就会造成白色的错误表示。</p>
+<h2 id="低精度尾数位问题可视化展示"><a href="#低精度尾数位问题可视化展示" class="headerlink" title="低精度尾数位问题可视化展示"></a>低精度尾数位问题可视化展示</h2><p>好的，我们知道低位数的浮点数甚至不能准确地表示简单的8位亮度。但是会差到什么程度呢？</p>
+<p>我们创建了尾数位的可视化效果。</p>
+<p><img src="/../../images/%E6%B8%B2%E6%9F%93%E8%BF%87%E7%A8%8B%E4%B8%AD%E5%90%84%E7%A7%8D%E6%B5%AE%E7%82%B9%E6%95%B0%E7%9A%84%E7%B2%BE%E7%A1%AE%E5%BA%A6/10bit_floatvs8bit_linear.png" alt="10bit_floatvs8bit_linear.png"></p>
+<p>随着数值增大误差也快速增加。</p>
+<p>我们通常不使用8bit的线性值保存颜色， 因为为了节省精度，保存人眼更敏感的部分（暗部），所以用Gamma。下面是考虑了Gamma编码的误差结果。</p>
+<p><img src="/../../images/%E6%B8%B2%E6%9F%93%E8%BF%87%E7%A8%8B%E4%B8%AD%E5%90%84%E7%A7%8D%E6%B5%AE%E7%82%B9%E6%95%B0%E7%9A%84%E7%B2%BE%E7%A1%AE%E5%BA%A6/10bit_floatvs8bit_srgb.png" alt="10bit_floatvs8bit_srgb.png"></p>
+<p>​		<strong>这部分主要展示了不同的数据有效位对于颜色误差的影响。为什么随着数据变大误差会变大？因为数据越大需要的有效位数越多，但是可用的有效位又是固定的，所以会呈现上面的效果。</strong></p>
+<h2 id="低精度不均匀尾数位长度问题"><a href="#低精度不均匀尾数位长度问题" class="headerlink" title="低精度不均匀尾数位长度问题"></a>低精度不均匀尾数位长度问题</h2><p>由于R11G11B10类型的浮点数有不均的尾数，我们量化他们的区别。</p>
+<p><img src="/../../images/%E6%B8%B2%E6%9F%93%E8%BF%87%E7%A8%8B%E4%B8%AD%E5%90%84%E7%A7%8D%E6%B5%AE%E7%82%B9%E6%95%B0%E7%9A%84%E7%B2%BE%E7%A1%AE%E5%BA%A6/11bit_float_vs_10bit_float.png" alt="11bit_float_vs_10bit_float.png"></p>
+<p>数值越大误差越大。</p>
+<p><img src="/../../images/%E6%B8%B2%E6%9F%93%E8%BF%87%E7%A8%8B%E4%B8%AD%E5%90%84%E7%A7%8D%E6%B5%AE%E7%82%B9%E6%95%B0%E7%9A%84%E7%B2%BE%E7%A1%AE%E5%BA%A6/11bit_float_vs_10bit_float_smallerrange.png" alt="11bit_float_vs_10bit_float_smallerrange.png"></p>
+<p>这种误差意味着什么？下面是从0.5到0.6的颜色变化，产生了错误的饱和度。</p>
+<p><img src="/../../images/%E6%B8%B2%E6%9F%93%E8%BF%87%E7%A8%8B%E4%B8%AD%E5%90%84%E7%A7%8D%E6%B5%AE%E7%82%B9%E6%95%B0%E7%9A%84%E7%B2%BE%E7%A1%AE%E5%BA%A6/gradient_quantized.png" alt="gradient_quantized.png"></p>
+<p>如何显示器好，这个效果会更加明显，例如hdr显示器有更加精确的显示范围和色域，可以看到：</p>
+<p><img src="/../../images/%E6%B8%B2%E6%9F%93%E8%BF%87%E7%A8%8B%E4%B8%AD%E5%90%84%E7%A7%8D%E6%B5%AE%E7%82%B9%E6%95%B0%E7%9A%84%E7%B2%BE%E7%A1%AE%E5%BA%A6/gradient_quantized_contrast.png" alt="gradient_quantized_contrast.png"></p>
+<p><strong>可以通过改变颜色动态范围和dithering来修正这样的效果。</strong></p>
+<h2 id="颜色缩放失效"><a href="#颜色缩放失效" class="headerlink" title="颜色缩放失效"></a>颜色缩放失效</h2><p>​		有一个常见的错误关键，乘上一个大数就可以对浮点数进行编码提升精确度，然后解码。这是无效的。下面是量化数据：</p>
+<p><img src="/../../images/%E6%B8%B2%E6%9F%93%E8%BF%87%E7%A8%8B%E4%B8%AD%E5%90%84%E7%A7%8D%E6%B5%AE%E7%82%B9%E6%95%B0%E7%9A%84%E7%B2%BE%E7%A1%AE%E5%BA%A6/8bitsrgb_vs_10float_relative_vs_premultiplied.png" alt="8bitsrgb_vs_10float_relative_vs_premultiplied.png"></p>
+<p>​		<strong>可以看到没有区别，这是因为有效位数没有变化，所以表示的精度也没有变化。也就是说尾数位没有变化，变化的只有指数位。</strong></p>
+<p>​		我们可以设置不同的缩放值看看误差，误差也只是左右移动了：</p>
+<p><img src="/../../images/%E6%B8%B2%E6%9F%93%E8%BF%87%E7%A8%8B%E4%B8%AD%E5%90%84%E7%A7%8D%E6%B5%AE%E7%82%B9%E6%95%B0%E7%9A%84%E7%B2%BE%E7%A1%AE%E5%BA%A6/8bitsrgb_vs_10float_relative_vs_premultiplied_smaller.png" alt="8bitsrgb_vs_10float_relative_vs_premultiplied_smaller.png"></p>
+
+    </main>
+    <footer class="post-footer">
+      
+    </footer>
+  </article>
+  
+  
+  <nav class="page-nav">
+    <div class="page-nav-next page-nav-item">
+      
+      <a href="/2022/09/19/Shader/%E4%B8%8D%E5%90%8C%E5%9B%BE%E5%BD%A2API%E7%9F%A9%E9%98%B5%E8%A1%8C%E5%88%97%E4%B8%BB%E5%BA%8F%E5%8F%8A%E5%85%B6%E5%BD%B1%E5%93%8D/" rel="next" title=""><i class="fas fa-angle-left"></i><span class="nav-title"></span></a>
+      
+    </div>
+    <div class="page-nav-prev page-nav-item">
+      
+      <a href="/2022/09/19/tech/docker_headfirst/" rel="prev" title=""><span class="nav-title"></span><i class="fas fa-angle-right"></i></a>
+      
+    </div>
+  </nav>
+  
+  
+  
+
+<div class="comments" id="comments">
+  
+  
+  <div class="commentjs" id="comment-thread"></div>
+  <link rel="stylesheet" href="/css/commentjs.css">
+  <script defer type="text/javascript" src="/js/marked.min.js"></script>
+  <script defer type="text/javascript" src="/js/timeago.min.js"></script>
+  <script defer type="text/javascript" src="/js/highlight.min.js"></script>
+  <script defer type="text/javascript" src="/js/commentjs.js"></script>
+  <script type="text/javascript">
+  $(document).ready(function () {
+    getComments({
+      "type": "github",
+      "user": "leinlin",
+      "repo": "leinlin.github.io",
+      "client_id": "aee134bdfb54c4ef5826",
+      "client_secret": "4af1d3f2b82dccc028c49715becc01e611afbe43",
+      "no_comment": "这个页面还没有评论，现在就去评论吧！",
+      "go_to_comment": "去评论",
+      "issue_title": "",
+      "btn_class": "button",
+      "comments_target": "#comment-thread"
+    });
+    marked.setOptions({
+      "highlight": function (code, lang) {
+        return hljs.highlightAuto(code).value;
+      }
+    });
+    function mark() {
+      var markdowns = document.getElementsByClassName("markdown");
+      for (var i = 0; i < markdowns.length; ++i){
+        if (markdowns[i].innerHTML) {
+          markdowns[i].innerHTML = marked(markdowns[i].innerHTML);
+        }
+      }
+    }
+    window.addEventListener("DOMContentLoaded", mark, false);
+    window.addEventListener("load", mark, false);
+  });
+  </script>
+  
+  
+</div>
+
+
+
+  
+</div>
+
+          </div>
+          
+          
+          
+<aside class="sidebar" id="sidebar" style="background: url(/images/background.png);">
+  
+  <div class="search">
+    <div class="form-group">
+      <i class="fas fa-search"></i><input type="search" id="search-input" name="q" results="0" placeholder="搜索" class="form-control"/>
+    </div>
+  </div>
+  <div class="search-result-box" id="search-result"></div>
+  
+  
+<div class="info sidebar-item" id="info">
+  
+  <img class="author-avatar" src="/images/avatar.jpg" alt="leinlin">
+  
+  <h1 class="author-name">leinlin</h1>
+  <h2 class="author-description"></h2>
+  <div class="site-count">
+    
+    
+    
+    
+    <div class="categories-count count-block">
+      <div class="site-count-title">分类</div>
+      <div><a href="/categories/">11</a></div>
+    </div>
+    
+    
+  </div>
+  
+  <div class="rss">
+    <a class="rss-link button sidebar-item" href="/atom.xml"><i class="fas fa-rss"></i>RSS</a>
+  </div>
+  
+</div>
+
+
+  <div class="sidebar-sticky">
+    
+    
+    
+    
+    
+    <hr>
+    <div class="post-toc sidebar-item" id="toc-div">
+      <div><i class="fas fa-list-ol"></i>文章目录</div>
+      <div class="post-toc-content"><ol class="list-group toc"><li class="toc-item toc-level-1"><a class="list-group-item toc-link" href="#GPU%E6%B5%AE%E7%82%B9%E6%95%B0%E7%9A%84%E7%B2%BE%E7%A1%AE%E5%BA%A6%E4%BB%A5%E5%8F%8A%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9"><span class="toc-text">GPU浮点数的精确度以及注意事项</span></a><ol class="list-group toc-child"><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#%E6%B5%AE%E7%82%B9%E6%95%B0%E7%9A%84%E4%BD%9C%E7%94%A8"><span class="toc-text">浮点数的作用</span></a></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#%E6%B5%AE%E7%82%B9%E6%95%B0%E5%9B%9E%E9%A1%BE"><span class="toc-text">浮点数回顾</span></a></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#%E6%A0%87%E5%87%86%E5%92%8C%E4%BD%8E%E7%B2%BE%E5%BA%A6%E6%B5%AE%E7%82%B9%E6%95%B0"><span class="toc-text">标准和低精度浮点数</span></a></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#%E6%B5%AE%E7%82%B9%E6%95%B0%E8%8C%83%E5%9B%B4%E8%A7%A3%E9%87%8A"><span class="toc-text">浮点数范围解释</span></a></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#%E4%BD%8E%E7%B2%BE%E5%BA%A6%E5%B0%BE%E6%95%B0%E4%BD%8D%E9%97%AE%E9%A2%98%E4%B8%BE%E4%BE%8B"><span class="toc-text">低精度尾数位问题举例</span></a></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#%E4%BD%8E%E7%B2%BE%E5%BA%A6%E5%B0%BE%E6%95%B0%E4%BD%8D%E9%97%AE%E9%A2%98%E5%8F%AF%E8%A7%86%E5%8C%96%E5%B1%95%E7%A4%BA"><span class="toc-text">低精度尾数位问题可视化展示</span></a></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#%E4%BD%8E%E7%B2%BE%E5%BA%A6%E4%B8%8D%E5%9D%87%E5%8C%80%E5%B0%BE%E6%95%B0%E4%BD%8D%E9%95%BF%E5%BA%A6%E9%97%AE%E9%A2%98"><span class="toc-text">低精度不均匀尾数位长度问题</span></a></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#%E9%A2%9C%E8%89%B2%E7%BC%A9%E6%94%BE%E5%A4%B1%E6%95%88"><span class="toc-text">颜色缩放失效</span></a></li></ol></li></ol></div>
+    </div>
+    
+    
+    
+    <hr>
+    <div class="social-link sidebar-item">
+      <div><i class="far fa-address-card"></i>社交链接</p></div>
+      <ul>
+        
+        <li><i class="fab fa-github"></i><a href="https://leinlin.github.com/" target="_blank">GitHub</a></li>
+        
+      </ul>
+    </div>
+    
+    
+  </div>
+</aside>
+
+
+          
+        </div>
+      </div>
+    </main>
+    
+<footer id="footer" class="footer" style="background: #33363b;">
+  <div class="container">
+    <div class="back-to-top">
+      <button id="back-to-top"><i class="fas fa-angle-double-up" aria-label="回到顶部"></i></button>
+    </div>
+    <div class="footer-container">
+      <div class="footer-left">
+        <div class="copyright">
+          <span class="author">leinlin</span><span class="year"><i class="far fa-copyright"></i>2022</span>
+        </div>
+        
+        <div class="busuanzi">
+          <span id="busuanzi_container_site_pv"><i class="fas fa-eye" aria-label="站点点击量" aria-hidden="false"></i><span id="busuanzi_value_site_pv"></span></span><span id="busuanzi_container_site_uv"><i class="fas fa-user" aria-label="站点用户数" aria-hidden="false"></i><span id="busuanzi_value_site_uv"></span></span><span id="busuanzi_container_page_pv"><i class="far fa-file-alt"></i><span id="busuanzi_value_page_pv" aria-label="页面点击量" aria-hidden="false"></span></span>
+        </div>
+        
+      </div>
+      <div class="footer-right">
+        <div class="custom-info">
+          
+          托管于<i class="fab fa-github-alt"></i><a href="https://pages.github.com/" target="_blank">GitHub Pages</a>
+          
+        </div>
+        <div class="powered-by">
+          由 <a href="https://hexo.io/" target="_blank">Hexo</a> 强力驱动 | 主题 <a href="https://github.com/AlynxZhou/hexo-theme-aria/" target="_blank">ARIA</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+  <script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

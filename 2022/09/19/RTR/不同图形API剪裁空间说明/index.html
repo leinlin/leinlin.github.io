@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#33363b">
+    <meta name="msapplication-TileColor" content="#33363b">
+    
+    
+    
+    
+    <meta name="keywords" content="leinlin, ARIA, Hexo">
+    
+    
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png">
+    
+    
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicons/android-chrome-192x192.png">
+    
+    
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png">
+    
+    
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png">
+    
+    
+    <link rel="mask-icon" href="/favicons/safari-pinned-tab.svg" color="#33363b">
+    
+    
+    <link rel="manifest" href="/favicons/site.webmanifest">
+    
+    
+    <meta name="msapplication-config" content="/favicons/browserconfig.xml">
+    
+    
+    <link rel="alternate" href="/atom.xml" title="leinlin的小笔记" type="application/atom+xml" />
+    
+    
+    <link rel="shortcut icon" type="image/x-icon" href="/favicons/favicon.ico">
+    
+    
+    <link rel="stylesheet" type="text/css" href="/css/normalize.css">
+    <link rel="stylesheet" type="text/css" href="/css/index.css">
+    
+    <link rel="stylesheet" type="text/css" href="/css/sidebar.css">
+    
+    
+<link rel="stylesheet" type="text/css" href="/css/page.css">
+<link rel="stylesheet" type="text/css" href="/css/post.css">
+
+    <link rel="stylesheet" type="text/css" href="/css/custom.css">
+    <link rel="stylesheet" type="text/css" href="/css/atom-one-light.css">
+    <link rel="stylesheet" type="text/css" href="/css/lightgallery.min.css">
+    <script type="text/javascript" src="/js/jquery.min.js"></script>
+    <script defer type="text/javascript" src="/js/util.js"></script>
+    <script defer type="text/javascript" src="/js/clipboard.min.js"></script>
+    <script defer type="text/javascript" src="/js/scrollspy.js"></script>
+    <script defer type="text/javascript" src="/js/fontawesome-all.min.js"></script>
+    <script defer type="text/javascript" src="/js/lightgallery.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-fullscreen.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-hash.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-pager.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-thumbnail.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-zoom.min.js"></script>
+    
+    <script defer src="/js/busuanzi.pure.mini.js"></script>
+    
+    
+    <script defer type="text/javascript" src="/js/search.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function () {
+      var searchPath = "search.xml";
+      if (searchPath.length === 0) {
+        searchPath = "search.xml";
+      }
+      var path = "/" + searchPath;
+      searchFunc(path, "search-input", "search-result");
+    });
+    </script>
+    
+    
+    
+    <script defer type="text/javascript" src="https://cdn.staticfile.org/MathJax/MathJax-2.6-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ["$","$"], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ["script", "noscript", "style", "textarea", "pre", "code"]
+      }
+    });
+    </script>
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for (i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += " has-jax";
+      }
+    });
+    </script>
+    
+    
+    <script defer type="text/javascript" src="/js/index.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function () {
+      var cb = null;
+      var els = $(".post figure.highlight");
+      if (els.length) {
+        // Enabled Hexo highlight line number.
+        $(els).each(function (i, e) {
+          // $(e).before("<button class=\"copy button\">复制</button>");
+          $(e).before([
+            "<div class=\"code-titlebar\">",
+              "<div class=\"titlebar-left\">",
+                "<button class=\"copy\">复制</button>",
+              "</div>",
+            "</div>"
+          ].join(""));
+        });
+        cb = new ClipboardJS("button.copy", {
+          "target": function (trigger) {
+              // Get target element by DOM API.
+              return trigger.parentNode.parentNode.nextElementSibling.firstChild.firstChild.firstChild.lastChild.firstChild.firstChild;
+          }
+        });
+      } else {
+        // Disabled Hexo highlight line number.
+        els = $(".post pre code");
+        $(els).each(function (i, e) {
+          // Add button before pre, not code.
+          // $(e).parent().before("<button class=\"copy button\">复制</button>");
+          $(e).before([
+            "<div class=\"code-titlebar\">",
+              "<div class=\"titlebar-left\">",
+                "<button class=\"copy\" >复制</button>",
+              "</div>",
+              "<div class=\"titlebar-right\">",
+                "<button class=\"button-dot dot-minimize\" aria-label=\"Decoration\"></button>",
+                "<button class=\"button-dot dot-maximize\" aria-label=\"Decoration\"></button>",
+                "<button class=\"button-dot dot-close\" aria-label=\"Decoration\"></button>",
+              "</div>",
+            "</div>"
+          ].join(""));
+        });
+        cb = new ClipboardJS("button.copy", {
+          "target": function (trigger) {
+              // Get target element by DOM API.
+              return trigger.parentNode.parentNode.nextElementSibling;
+          }
+        });
+      }
+      cb.on("success", function (e) {
+        e.clearSelection();
+        var trigger = e.trigger;
+        // Change button text as a user tip.
+        trigger.innerHTML = "已复制";
+        $(trigger).addClass("copied");
+        // Change button text back;
+        setTimeout(function () {
+          trigger.innerHTML = "复制";
+          $(trigger).removeClass("copied");
+        }, 1500);
+      });
+    });
+    </script>
+    
+    <script defer type="text/javascript" src="/js/custom.js"></script>
+    <title> | leinlin的小笔记</title>
+  <meta name="generator" content="Hexo 6.2.0"></head>
+  <body itemscope itemtype="http://schema.org/WebPage" lang="zh_CN"  data-spy="scroll" data-target=".list-group">
+    
+<header id="header" class="header" style="background: #33363b;">
+  <div class="container">
+    <div class="header-container">
+      <div class="header-title">
+        <h1 class="title"><a href="/">leinlin的小笔记</a></h1>
+        <h2 class="subtitle"></h2>
+      </div>
+      
+    </div>
+    <nav id="nav" class="nav">
+      <a id="nav-toggle" class="nav-toggle" aria-hidden="true"><i class="fas fa-bars" aria-label="切换导航栏"></i></a>
+      <ul id="menu" role="menubar" aria-hidden="false">
+        
+        <li role="menuitem"><a href="/"><i class="fas fa-home"></i><span class="menu-text">首页</span></a></li>
+        
+        <li role="menuitem"><a href="/categories/"><i class="fas fa-th-list"></i><span class="menu-text">分类</span></a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</header>
+
+
+    <main id="main" class="main">
+      <div class="container">
+        <div class="main-container">
+          <div class="content">
+            
+<div id="post" class="page">
+  
+  <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
+    <div class="post-block">
+      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/09/19/RTR/%E4%B8%8D%E5%90%8C%E5%9B%BE%E5%BD%A2API%E5%89%AA%E8%A3%81%E7%A9%BA%E9%97%B4%E8%AF%B4%E6%98%8E/">
+      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+       <meta itemprop="name" content="leinlin">
+       <meta itemprop="description" content="">
+       <meta itemprop="image" content="/images/avatar.jpg">
+      </span>
+      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+       <meta itemprop="name" content="leinlin的小笔记">
+      </span>
+    </div>
+    <header class="post-header">
+      <h1 class="post-title" itemprop="name headline"></h1>
+      <div class="post-meta">
+        
+        <span class="post-date">
+          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2022-09-19T19:53:33+08:00">2022-09-19 19:53:33</time></span>
+        </span>
+        
+        
+        
+        
+        
+      </div>
+    </header>
+    <main class="post-main" itemprop="articleBody">
+      <h1 id="不同图形API剪裁空间说明"><a href="#不同图形API剪裁空间说明" class="headerlink" title="不同图形API剪裁空间说明"></a>不同图形API剪裁空间说明</h1><h2 id="D3D剪裁空间"><a href="#D3D剪裁空间" class="headerlink" title="D3D剪裁空间"></a>D3D剪裁空间</h2><p><a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/windows/win32/dxtecharts/the-direct3d-transformation-pipeline">官方链接</a></p>
+<p>整体流程：</p>
+<p><img src="/../../images/%E4%B8%8D%E5%90%8C%E5%9B%BE%E5%BD%A2API%E5%89%AA%E8%A3%81%E7%A9%BA%E9%97%B4%E8%AF%B4%E6%98%8E/d3dxfrm61.gif" alt="model space to screen space transformation"></p>
+<p>剪裁空间的矩阵是将摄像机空间的坐标转换到裁剪空间。剪裁空间矩阵最后一列最好是(0, 0, 1, 0)。</p>
+<p>原文解释：The last column of the projection matrix should be (0, 0, 1, 0), or (0, 0, a, 0) for correct fog and lighting effects; (0, 0, 1, 0) form is preferred.</p>
+<p>剪裁空间的坐标： (Xp, Yp, Zp, Wp)  ，剪裁的原则是：</p>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs c">-Wp &lt; Xp &lt;= Wp <br>  -Wp &lt; Yp &lt;= Wp <br>  <span class="hljs-number">0</span> &lt; Zp &lt;= Wp <br></code></pre></td></tr></table></figure>
+
+<p>所有不满足上面的点都会被剪裁。</p>
+<p>假设摄像机空间的坐标满足：</p>
+<p>Sw - 近剪裁平面屏幕宽度</p>
+<p>Sh - 近剪裁平面屏幕高度</p>
+<p>Zn - 近剪裁平面距离</p>
+<p>Zf -  远剪裁平面距离</p>
+<p><img src="/../../images/%E4%B8%8D%E5%90%8C%E5%9B%BE%E5%BD%A2API%E5%89%AA%E8%A3%81%E7%A9%BA%E9%97%B4%E8%AF%B4%E6%98%8E/1575083272973.png" alt="1575083272973"></p>
+<p>透视投影矩阵如下：</p>
+<p><img src="/../../images/%E4%B8%8D%E5%90%8C%E5%9B%BE%E5%BD%A2API%E5%89%AA%E8%A3%81%E7%A9%BA%E9%97%B4%E8%AF%B4%E6%98%8E/d3dxfrm62.gif" alt="perspective projection matrix"></p>
+<p>Direct3D假设投影矩阵满足下面的形式，如果不满足会有一些不自然效果：</p>
+<p><img src="/../../images/%E4%B8%8D%E5%90%8C%E5%9B%BE%E5%BD%A2API%E5%89%AA%E8%A3%81%E7%A9%BA%E9%97%B4%E8%AF%B4%E6%98%8E/d3dxfrm64.gif" alt="perspective projection matrix"></p>
+<p>Direct3D允许修改剪裁体以达到更高的精确度，这部分实际上就是对Proj空间进行变换得到Clip空间，实际上Proj就是Clip：</p>
+<p><img src="/../../images/%E4%B8%8D%E5%90%8C%E5%9B%BE%E5%BD%A2API%E5%89%AA%E8%A3%81%E7%A9%BA%E9%97%B4%E8%AF%B4%E6%98%8E/d3dxfrm67.gif" alt="mclip matrix"></p>
+<p>默认参数：</p>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs c">dvClipWidth = <span class="hljs-number">2</span>   <br>dvClipHeight = <span class="hljs-number">2</span>   <br>dvClipX = <span class="hljs-number">-1</span>   <br>dvClipY = <span class="hljs-number">1</span>   <br>dvMinZ = <span class="hljs-number">0</span>   <br>dvMaxZ = <span class="hljs-number">1</span>   <br></code></pre></td></tr></table></figure>
+
+<p>从投影到剪裁空间：</p>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c">(Xc, Yc, Zc, Wc) = (Xp, Yp, Zp, Wp) * Mclip<br></code></pre></td></tr></table></figure>
+
+<p>视口缩放矩阵会把坐标缩放到窗口坐标中，并且把Y轴上下翻转。</p>
+<p><img src="/../../images/%E4%B8%8D%E5%90%8C%E5%9B%BE%E5%BD%A2API%E5%89%AA%E8%A3%81%E7%A9%BA%E9%97%B4%E8%AF%B4%E6%98%8E/d3dxfrm68.gif" alt="viewport scale matrix mvs"></p>
+<p> dwX, dwY - 视口的像素偏移。</p>
+<p> dwWidth, dwHeight视口的像素宽高。</p>
+<p>最终的屏幕坐标是：</p>
+<p><img src="/../../images/%E4%B8%8D%E5%90%8C%E5%9B%BE%E5%BD%A2API%E5%89%AA%E8%A3%81%E7%A9%BA%E9%97%B4%E8%AF%B4%E6%98%8E/d3dxfrm69.gif" alt="screen coordinates computed and passed to the rasterizer"></p>
+<p>注意：在D3D当中PS的输入语义SV_POSITION是屏幕坐标。而输出语义SV_POSITION的投影空间对应Glsl的<strong>gl_FragCoord</strong>。而Unity当中的SV_Position就是VS的输出。</p>
+<h2 id="OpengGL"><a href="#OpengGL" class="headerlink" title="OpengGL"></a>OpengGL</h2><p><a target="_blank" rel="noopener" href="https://learnopengl.com/Getting-started/Coordinate-Systems">官方文档</a></p>
+<p>OpenGl是投影空间提供剪裁范围：The projection matrix maps a given frustum range to clip space, but also manipulates the <code>w</code> value of each vertex coordinate in such a way that the further away a vertex coordinate is from the viewer, the higher this <code>w</code> component becomes.</p>
+<p>越远w的值越大。剪裁范围是-w 和w之间,z坐标和D3D是有区别的 :Once the coordinates are transformed to clip space they are in the range <code>-w</code> to <code>w</code> (anything outside this range is clipped). </p>
+<p>OpenGL requires that the visible coordinates fall between the range <code>-1.0</code> and <code>1.0</code> as the final vertex shader output, thus once the coordinates are in clip space, perspective division is applied to the clip space coordinates:</p>
+<p>剪裁之后的结果进行透视除法。</p>
+<p><img src="/../../images/%E4%B8%8D%E5%90%8C%E5%9B%BE%E5%BD%A2API%E5%89%AA%E8%A3%81%E7%A9%BA%E9%97%B4%E8%AF%B4%E6%98%8E/1575085853893.png" alt="1575085853893"></p>
+
+    </main>
+    <footer class="post-footer">
+      
+    </footer>
+  </article>
+  
+  
+  <nav class="page-nav">
+    <div class="page-nav-next page-nav-item">
+      
+      <a href="/2022/09/19/RTR/TAA/" rel="next" title=""><i class="fas fa-angle-left"></i><span class="nav-title"></span></a>
+      
+    </div>
+    <div class="page-nav-prev page-nav-item">
+      
+      <a href="/2022/09/19/RTR/%E4%B8%BB%E6%9C%BA%E6%B8%B2%E6%9F%93%E5%92%8C%E4%BC%98%E5%8C%96%E6%8A%80%E6%9C%AF%E6%A6%82%E8%A6%81/" rel="prev" title=""><span class="nav-title"></span><i class="fas fa-angle-right"></i></a>
+      
+    </div>
+  </nav>
+  
+  
+  
+
+<div class="comments" id="comments">
+  
+  
+  <div class="commentjs" id="comment-thread"></div>
+  <link rel="stylesheet" href="/css/commentjs.css">
+  <script defer type="text/javascript" src="/js/marked.min.js"></script>
+  <script defer type="text/javascript" src="/js/timeago.min.js"></script>
+  <script defer type="text/javascript" src="/js/highlight.min.js"></script>
+  <script defer type="text/javascript" src="/js/commentjs.js"></script>
+  <script type="text/javascript">
+  $(document).ready(function () {
+    getComments({
+      "type": "github",
+      "user": "leinlin",
+      "repo": "leinlin.github.io",
+      "client_id": "aee134bdfb54c4ef5826",
+      "client_secret": "4af1d3f2b82dccc028c49715becc01e611afbe43",
+      "no_comment": "这个页面还没有评论，现在就去评论吧！",
+      "go_to_comment": "去评论",
+      "issue_title": "",
+      "btn_class": "button",
+      "comments_target": "#comment-thread"
+    });
+    marked.setOptions({
+      "highlight": function (code, lang) {
+        return hljs.highlightAuto(code).value;
+      }
+    });
+    function mark() {
+      var markdowns = document.getElementsByClassName("markdown");
+      for (var i = 0; i < markdowns.length; ++i){
+        if (markdowns[i].innerHTML) {
+          markdowns[i].innerHTML = marked(markdowns[i].innerHTML);
+        }
+      }
+    }
+    window.addEventListener("DOMContentLoaded", mark, false);
+    window.addEventListener("load", mark, false);
+  });
+  </script>
+  
+  
+</div>
+
+
+
+  
+</div>
+
+          </div>
+          
+          
+          
+<aside class="sidebar" id="sidebar" style="background: url(/images/background.png);">
+  
+  <div class="search">
+    <div class="form-group">
+      <i class="fas fa-search"></i><input type="search" id="search-input" name="q" results="0" placeholder="搜索" class="form-control"/>
+    </div>
+  </div>
+  <div class="search-result-box" id="search-result"></div>
+  
+  
+<div class="info sidebar-item" id="info">
+  
+  <img class="author-avatar" src="/images/avatar.jpg" alt="leinlin">
+  
+  <h1 class="author-name">leinlin</h1>
+  <h2 class="author-description"></h2>
+  <div class="site-count">
+    
+    
+    
+    
+    <div class="categories-count count-block">
+      <div class="site-count-title">分类</div>
+      <div><a href="/categories/">11</a></div>
+    </div>
+    
+    
+  </div>
+  
+  <div class="rss">
+    <a class="rss-link button sidebar-item" href="/atom.xml"><i class="fas fa-rss"></i>RSS</a>
+  </div>
+  
+</div>
+
+
+  <div class="sidebar-sticky">
+    
+    
+    
+    
+    
+    <hr>
+    <div class="post-toc sidebar-item" id="toc-div">
+      <div><i class="fas fa-list-ol"></i>文章目录</div>
+      <div class="post-toc-content"><ol class="list-group toc"><li class="toc-item toc-level-1"><a class="list-group-item toc-link" href="#%E4%B8%8D%E5%90%8C%E5%9B%BE%E5%BD%A2API%E5%89%AA%E8%A3%81%E7%A9%BA%E9%97%B4%E8%AF%B4%E6%98%8E"><span class="toc-text">不同图形API剪裁空间说明</span></a><ol class="list-group toc-child"><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#D3D%E5%89%AA%E8%A3%81%E7%A9%BA%E9%97%B4"><span class="toc-text">D3D剪裁空间</span></a></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#OpengGL"><span class="toc-text">OpengGL</span></a></li></ol></li></ol></div>
+    </div>
+    
+    
+    
+    <hr>
+    <div class="social-link sidebar-item">
+      <div><i class="far fa-address-card"></i>社交链接</p></div>
+      <ul>
+        
+        <li><i class="fab fa-github"></i><a href="https://leinlin.github.com/" target="_blank">GitHub</a></li>
+        
+      </ul>
+    </div>
+    
+    
+  </div>
+</aside>
+
+
+          
+        </div>
+      </div>
+    </main>
+    
+<footer id="footer" class="footer" style="background: #33363b;">
+  <div class="container">
+    <div class="back-to-top">
+      <button id="back-to-top"><i class="fas fa-angle-double-up" aria-label="回到顶部"></i></button>
+    </div>
+    <div class="footer-container">
+      <div class="footer-left">
+        <div class="copyright">
+          <span class="author">leinlin</span><span class="year"><i class="far fa-copyright"></i>2022</span>
+        </div>
+        
+        <div class="busuanzi">
+          <span id="busuanzi_container_site_pv"><i class="fas fa-eye" aria-label="站点点击量" aria-hidden="false"></i><span id="busuanzi_value_site_pv"></span></span><span id="busuanzi_container_site_uv"><i class="fas fa-user" aria-label="站点用户数" aria-hidden="false"></i><span id="busuanzi_value_site_uv"></span></span><span id="busuanzi_container_page_pv"><i class="far fa-file-alt"></i><span id="busuanzi_value_page_pv" aria-label="页面点击量" aria-hidden="false"></span></span>
+        </div>
+        
+      </div>
+      <div class="footer-right">
+        <div class="custom-info">
+          
+          托管于<i class="fab fa-github-alt"></i><a href="https://pages.github.com/" target="_blank">GitHub Pages</a>
+          
+        </div>
+        <div class="powered-by">
+          由 <a href="https://hexo.io/" target="_blank">Hexo</a> 强力驱动 | 主题 <a href="https://github.com/AlynxZhou/hexo-theme-aria/" target="_blank">ARIA</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+  <script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

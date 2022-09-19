@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#33363b">
+    <meta name="msapplication-TileColor" content="#33363b">
+    
+    
+    
+    
+    <meta name="keywords" content="leinlin, ARIA, Hexo">
+    
+    
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png">
+    
+    
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicons/android-chrome-192x192.png">
+    
+    
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png">
+    
+    
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png">
+    
+    
+    <link rel="mask-icon" href="/favicons/safari-pinned-tab.svg" color="#33363b">
+    
+    
+    <link rel="manifest" href="/favicons/site.webmanifest">
+    
+    
+    <meta name="msapplication-config" content="/favicons/browserconfig.xml">
+    
+    
+    <link rel="alternate" href="/atom.xml" title="leinlin的小笔记" type="application/atom+xml" />
+    
+    
+    <link rel="shortcut icon" type="image/x-icon" href="/favicons/favicon.ico">
+    
+    
+    <link rel="stylesheet" type="text/css" href="/css/normalize.css">
+    <link rel="stylesheet" type="text/css" href="/css/index.css">
+    
+    <link rel="stylesheet" type="text/css" href="/css/sidebar.css">
+    
+    
+<link rel="stylesheet" type="text/css" href="/css/page.css">
+<link rel="stylesheet" type="text/css" href="/css/post.css">
+
+    <link rel="stylesheet" type="text/css" href="/css/custom.css">
+    <link rel="stylesheet" type="text/css" href="/css/atom-one-light.css">
+    <link rel="stylesheet" type="text/css" href="/css/lightgallery.min.css">
+    <script type="text/javascript" src="/js/jquery.min.js"></script>
+    <script defer type="text/javascript" src="/js/util.js"></script>
+    <script defer type="text/javascript" src="/js/clipboard.min.js"></script>
+    <script defer type="text/javascript" src="/js/scrollspy.js"></script>
+    <script defer type="text/javascript" src="/js/fontawesome-all.min.js"></script>
+    <script defer type="text/javascript" src="/js/lightgallery.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-fullscreen.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-hash.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-pager.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-thumbnail.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-zoom.min.js"></script>
+    
+    <script defer src="/js/busuanzi.pure.mini.js"></script>
+    
+    
+    <script defer type="text/javascript" src="/js/search.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function () {
+      var searchPath = "search.xml";
+      if (searchPath.length === 0) {
+        searchPath = "search.xml";
+      }
+      var path = "/" + searchPath;
+      searchFunc(path, "search-input", "search-result");
+    });
+    </script>
+    
+    
+    
+    <script defer type="text/javascript" src="https://cdn.staticfile.org/MathJax/MathJax-2.6-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ["$","$"], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ["script", "noscript", "style", "textarea", "pre", "code"]
+      }
+    });
+    </script>
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for (i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += " has-jax";
+      }
+    });
+    </script>
+    
+    
+    <script defer type="text/javascript" src="/js/index.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function () {
+      var cb = null;
+      var els = $(".post figure.highlight");
+      if (els.length) {
+        // Enabled Hexo highlight line number.
+        $(els).each(function (i, e) {
+          // $(e).before("<button class=\"copy button\">复制</button>");
+          $(e).before([
+            "<div class=\"code-titlebar\">",
+              "<div class=\"titlebar-left\">",
+                "<button class=\"copy\">复制</button>",
+              "</div>",
+            "</div>"
+          ].join(""));
+        });
+        cb = new ClipboardJS("button.copy", {
+          "target": function (trigger) {
+              // Get target element by DOM API.
+              return trigger.parentNode.parentNode.nextElementSibling.firstChild.firstChild.firstChild.lastChild.firstChild.firstChild;
+          }
+        });
+      } else {
+        // Disabled Hexo highlight line number.
+        els = $(".post pre code");
+        $(els).each(function (i, e) {
+          // Add button before pre, not code.
+          // $(e).parent().before("<button class=\"copy button\">复制</button>");
+          $(e).before([
+            "<div class=\"code-titlebar\">",
+              "<div class=\"titlebar-left\">",
+                "<button class=\"copy\" >复制</button>",
+              "</div>",
+              "<div class=\"titlebar-right\">",
+                "<button class=\"button-dot dot-minimize\" aria-label=\"Decoration\"></button>",
+                "<button class=\"button-dot dot-maximize\" aria-label=\"Decoration\"></button>",
+                "<button class=\"button-dot dot-close\" aria-label=\"Decoration\"></button>",
+              "</div>",
+            "</div>"
+          ].join(""));
+        });
+        cb = new ClipboardJS("button.copy", {
+          "target": function (trigger) {
+              // Get target element by DOM API.
+              return trigger.parentNode.parentNode.nextElementSibling;
+          }
+        });
+      }
+      cb.on("success", function (e) {
+        e.clearSelection();
+        var trigger = e.trigger;
+        // Change button text as a user tip.
+        trigger.innerHTML = "已复制";
+        $(trigger).addClass("copied");
+        // Change button text back;
+        setTimeout(function () {
+          trigger.innerHTML = "复制";
+          $(trigger).removeClass("copied");
+        }, 1500);
+      });
+    });
+    </script>
+    
+    <script defer type="text/javascript" src="/js/custom.js"></script>
+    <title> | leinlin的小笔记</title>
+  <meta name="generator" content="Hexo 6.2.0"></head>
+  <body itemscope itemtype="http://schema.org/WebPage" lang="zh_CN"  data-spy="scroll" data-target=".list-group">
+    
+<header id="header" class="header" style="background: #33363b;">
+  <div class="container">
+    <div class="header-container">
+      <div class="header-title">
+        <h1 class="title"><a href="/">leinlin的小笔记</a></h1>
+        <h2 class="subtitle"></h2>
+      </div>
+      
+    </div>
+    <nav id="nav" class="nav">
+      <a id="nav-toggle" class="nav-toggle" aria-hidden="true"><i class="fas fa-bars" aria-label="切换导航栏"></i></a>
+      <ul id="menu" role="menubar" aria-hidden="false">
+        
+        <li role="menuitem"><a href="/"><i class="fas fa-home"></i><span class="menu-text">首页</span></a></li>
+        
+        <li role="menuitem"><a href="/categories/"><i class="fas fa-th-list"></i><span class="menu-text">分类</span></a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</header>
+
+
+    <main id="main" class="main">
+      <div class="container">
+        <div class="main-container">
+          <div class="content">
+            
+<div id="post" class="page">
+  
+  <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
+    <div class="post-block">
+      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/09/19/language/c++/thread/">
+      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+       <meta itemprop="name" content="leinlin">
+       <meta itemprop="description" content="">
+       <meta itemprop="image" content="/images/avatar.jpg">
+      </span>
+      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+       <meta itemprop="name" content="leinlin的小笔记">
+      </span>
+    </div>
+    <header class="post-header">
+      <h1 class="post-title" itemprop="name headline"></h1>
+      <div class="post-meta">
+        
+        <span class="post-date">
+          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2022-09-19T19:53:33+08:00">2022-09-19 19:53:33</time></span>
+        </span>
+        
+        
+        
+        
+        
+      </div>
+    </header>
+    <main class="post-main" itemprop="articleBody">
+      <p>##临界区</p>
+<p>在多线程当中进行互斥同步的锁。</p>
+<p>可是使用windase.h当中的临时区锁进行控制：</p>
+<p>**InitializeCriticalSection  此函数初始化一个临界区对象 **</p>
+<p>void InitializeCriticalSection(  LPCRITICAL_SECTION <em>lpCriticalSection</em>);</p>
+<p>参数：lpCriticalSection指向临界区对象的指针</p>
+<p>这个进程负责分配一个临界区对象使用的内存，它可以通过声明类型的CRITICAL_SECTION的变量使用的内存。一旦一个临界区对象已被初始化，该进程的线程可以在EnterCriticalSection或LeaveCriticalSection函数指定对象，提供对共享资源的相互独占式访问。对于不同进程之间的类似线程同步，使用互斥对象。</p>
+<p>一个临界区对象不能移动或复制。这一进程也绝不能修改该对象，但必须把它作为逻辑不透明来处理。只能使用由与Microsoft Win32 ® API提供的临界区功能，用来管理临界区对象。</p>
+<p>在低内存的情况下，InitializeCriticalSection可能提出STATUS_NO_MEMORY异常。</p>
+<p><strong>DeleteCriticalSection 删除关键节对象释放由该对象使用的所有系统资源。</strong></p>
+<p>void WINAPI DeleteCriticalSection(<em>Inout</em> LPCRITICAL_SECTION lpCriticalSection);</p>
+<p>参数：<em>lpCriticalSection，</em>对关键节对象的指针。先前必须已将该对象初始化于InitializeCriticalSection对象中。</p>
+<p><strong>线程锁的概念函数EnterCriticalSection和LeaveCriticalSection的用法</strong></p>
+<p>使用结构CRITICAL_SECTION 需加入头文件#include “afxmt.h”</p>
+<p>定义一个全局的锁 CRITICAL_SECTION的实例</p>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs c">CRITICAL_SECTION cs;<br>InitializeCriticalSection(&amp;cs);<br><br><span class="hljs-comment">//第一个线程</span><br><span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i&lt;<span class="hljs-number">10</span>; i++)&#123;      <br>  EnterCriticalSection(&amp;cs);<span class="hljs-comment">//加锁</span><br>	<span class="hljs-comment">// TODO：逻辑</span><br>  LeaveCriticalSection(&amp;cs);<span class="hljs-comment">//解锁</span><br>&#125;<br><br><span class="hljs-comment">//第二线程</span><br><span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i&lt;<span class="hljs-number">10</span>; i++)&#123;      <br>  EnterCriticalSection(&amp;cs);<span class="hljs-comment">//加锁</span><br>	<span class="hljs-comment">// TODO：逻辑</span><br>  LeaveCriticalSection(&amp;cs);<span class="hljs-comment">//解锁</span><br>&#125;<br><br><span class="hljs-comment">//使用完成</span><br>DeleteCriticalSection(&amp;cs);<br></code></pre></td></tr></table></figure>
+
+
+
+<h2 id="互斥锁和阻塞信号"><a href="#互斥锁和阻塞信号" class="headerlink" title="互斥锁和阻塞信号"></a>互斥锁和阻塞信号</h2><p>SuspendThread 如果暂停了获取锁的进程：</p>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs c">EnterCriticalSection(&amp;cs);<span class="hljs-comment">//加锁</span><br><span class="hljs-comment">// <span class="hljs-doctag">TODO:</span>A</span><br>LeaveCriticalSection(&amp;cs);<span class="hljs-comment">//解锁</span><br></code></pre></td></tr></table></figure>
+
+<p>如果在A处暂停则可能造成死锁。</p>
+<p>WaitForSingleObject是等待一个特定的对象编程发出信号的状态或者过时。</p>
+<p>说明<a target="_blank" rel="noopener" href="https://msdn.microsoft.com/en-us/library/windows/desktop/ms687032(v=vs.85).aspx">WaitForSingleObject</a></p>
+<p>例子<a target="_blank" rel="noopener" href="https://msdn.microsoft.com/en-us/library/windows/desktop/ms686915(v=vs.85).aspx">WaitForSingleObject</a></p>
+<h2 id="多线程编程之Windows同步方式"><a href="#多线程编程之Windows同步方式" class="headerlink" title="多线程编程之Windows同步方式"></a>多线程编程之Windows同步方式</h2><p>　本文来自<a target="_blank" rel="noopener" href="http://www.cnblogs.com/kuliuheng/p/4062211.html">cnblogs.</a></p>
+<p>​	在Windows环境下针对多线程同步与互斥操作的支持，主要包括四种方式：临界区（CriticalSection）、互斥对象（Mutex）、信号量（Semaphore）、事件对象（Event）。下面分别针对这四种方式作说明：</p>
+<p><strong>（1）临界区（CriticalSection）</strong></p>
+<p>　　每个进程中访问临界资源的那段代码称为临界区（临界资源是一次仅允许一个进程使用的共享资源）。每次只准许一个进程进入临界区，进入后不允许其他进程进入。不论是硬件临界资源，还是软件临界资源，多个进程必须互斥地对它进行访问。Windows环境下临界区的基本操作有以下几个：</p>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs c">CRITICAL_SECTION CriticalSection;<br>InitializeCriticalSection(&amp;CriticalSection);<br>EnterCriticalSection(&amp;CriticalSection);<br>LeaveCriticalSection(&amp;CriticalSection);<br>DeleteCriticalSection(&amp;CriticalSection);<br></code></pre></td></tr></table></figure>
+
+<p><strong>（2）互斥对象（Mutex）</strong></p>
+<p>　　在编程中，引入了对象互斥对象（也叫互斥锁）的概念，来保证共享数据操作的完整性。每个对象都对应于一个可称为“互斥锁”的标记，这个标记用来保证在任一时刻，只能有一个线程访问该对象。互斥对象的操作接口有以下几个：</p>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs c">CreateMutex<br>OpenMutex<br>ReleaseMutex<br></code></pre></td></tr></table></figure>
+
+<p> 　　在使用互斥对象的时候借助WaitforSingleObject，例如：</p>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs c">WaitForSingleObject(<span class="hljs-comment">/*...*/</span>);<br>    do_something();<br>ReleaseMutex(<span class="hljs-comment">/*...*/</span>);<br></code></pre></td></tr></table></figure>
+
+<p> **（3）信号量（Semaphore）　　**</p>
+<p>　　信号量有时被称为信号灯，是在多线程环境下使用的一种设施，它负责协调各个线程，以保证它们能够正确、合理的使用公共资源。也是操作系统中用于控制<strong>进程同步互斥</strong>的量。信号量分为单值和多值两种，前者只能被一个线程获得，后者可以被若干个线程获得。与互斥对象相比，信号量就好比是可以容纳N多个人的房子允许多个人同时进入（数量有限制而已），而互斥对象就只能容纳一个人的小房子，同一时刻只能一个人使用。</p>
+<p>　　Windows环境下的信号量操作接口包括：</p>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs c">CreateSemaphore<br>OpenSemaphore<br>ReleaseSemaphore<br></code></pre></td></tr></table></figure>
+
+<p> 　　信号量的使用方式与互斥对象差不多，只不过在初始化的时候需要指定信号的个数：</p>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs c">WaitForSingleObject(<span class="hljs-comment">/*...*/</span>);<br>    do_something();<br>ReleaseSemaphore(<span class="hljs-comment">/*...*/</span>);<br></code></pre></td></tr></table></figure>
+
+<p> <strong>（4）事件对象（Event）</strong></p>
+<p>　　 Event对象是Windows下面很有趣的一种锁结果。从某种意义上说，它和互斥锁很相近，但是又不一样。因为在线程获得锁的使用权之前，常常需要某一个线程（可能是主线程也可能是其他线程）调用SetEvent设置一下才行。关键是，在线程结束之前，我们也不清楚当前线程获得Event之后执行到哪了。所以使用起来，要特别小心。常用的Event对象操作有：</p>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs c">CreateEvent<br>OpenEvent<br>PulseEvent<br>ResetEvent<br>SetEvent<br></code></pre></td></tr></table></figure>
+
+<p> 　　主线程一般可以这样做：</p>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c">CreateEvent(<span class="hljs-comment">/*...*/</span>);    <span class="hljs-comment">// 创建事件对象</span><br>SetEvent(<span class="hljs-comment">/*...*/</span>);       <span class="hljs-comment">// 设置信号</span><br>WaitForMultiObjects(hThread, <span class="hljs-comment">/*...*/</span>);    <span class="hljs-comment">// 等待线程结束</span><br>CloseHandle(<span class="hljs-comment">/*...*/</span>);    <span class="hljs-comment">// 关闭线程句柄</span><br></code></pre></td></tr></table></figure>
+
+<p> 　　而被启动的线程一般要等待某个事件再进行动作：</p>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-keyword">while</span>(<span class="hljs-number">1</span>)&#123;<br>    WaitForSingleObject(<span class="hljs-comment">/*...*/</span>);    <span class="hljs-comment">// 等待事件</span><br>    <span class="hljs-comment">/*...*/</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><strong>总结：</strong><br>（1）关于<a target="_blank" rel="noopener" href="http://msdn.microsoft.com/en-us/library/ms686908(v=VS.85).aspx">临界区</a>、<a target="_blank" rel="noopener" href="http://msdn.microsoft.com/en-us/library/ms686927(v=VS.85).aspx">互斥区</a>、<a target="_blank" rel="noopener" href="http://msdn.microsoft.com/en-us/library/ms686946(v=VS.85).aspx">信号量</a>、<a target="_blank" rel="noopener" href="http://msdn.microsoft.com/en-us/library/ms686915(v=VS.85).aspx">E</a><a target="_blank" rel="noopener" href="http://msdn.microsoft.com/en-us/library/ms686915(v=VS.85).aspx">vent</a>在msdn上均有示例代码；</p>
+<p>（2）一般来说，使用频率上<strong>信号量 &gt; 互斥对象 &gt; 临界区 &gt; 事件对象</strong></p>
+<p>（3）信号量可以实现其他三种锁的功能，学习上应有所侧重</p>
+<p>（4）纸上得来终觉浅，多实践才能掌握它们之间的区别 *    *</p>
+
+    </main>
+    <footer class="post-footer">
+      
+    </footer>
+  </article>
+  
+  
+  <nav class="page-nav">
+    <div class="page-nav-next page-nav-item">
+      
+      <a href="/2022/09/19/language/c++/network/" rel="next" title=""><i class="fas fa-angle-left"></i><span class="nav-title"></span></a>
+      
+    </div>
+    <div class="page-nav-prev page-nav-item">
+      
+      <a href="/2022/09/19/language/c++/unlock_queue/" rel="prev" title=""><span class="nav-title"></span><i class="fas fa-angle-right"></i></a>
+      
+    </div>
+  </nav>
+  
+  
+  
+
+<div class="comments" id="comments">
+  
+  
+  <div class="commentjs" id="comment-thread"></div>
+  <link rel="stylesheet" href="/css/commentjs.css">
+  <script defer type="text/javascript" src="/js/marked.min.js"></script>
+  <script defer type="text/javascript" src="/js/timeago.min.js"></script>
+  <script defer type="text/javascript" src="/js/highlight.min.js"></script>
+  <script defer type="text/javascript" src="/js/commentjs.js"></script>
+  <script type="text/javascript">
+  $(document).ready(function () {
+    getComments({
+      "type": "github",
+      "user": "leinlin",
+      "repo": "leinlin.github.io",
+      "client_id": "aee134bdfb54c4ef5826",
+      "client_secret": "4af1d3f2b82dccc028c49715becc01e611afbe43",
+      "no_comment": "这个页面还没有评论，现在就去评论吧！",
+      "go_to_comment": "去评论",
+      "issue_title": "",
+      "btn_class": "button",
+      "comments_target": "#comment-thread"
+    });
+    marked.setOptions({
+      "highlight": function (code, lang) {
+        return hljs.highlightAuto(code).value;
+      }
+    });
+    function mark() {
+      var markdowns = document.getElementsByClassName("markdown");
+      for (var i = 0; i < markdowns.length; ++i){
+        if (markdowns[i].innerHTML) {
+          markdowns[i].innerHTML = marked(markdowns[i].innerHTML);
+        }
+      }
+    }
+    window.addEventListener("DOMContentLoaded", mark, false);
+    window.addEventListener("load", mark, false);
+  });
+  </script>
+  
+  
+</div>
+
+
+
+  
+</div>
+
+          </div>
+          
+          
+          
+<aside class="sidebar" id="sidebar" style="background: url(/images/background.png);">
+  
+  <div class="search">
+    <div class="form-group">
+      <i class="fas fa-search"></i><input type="search" id="search-input" name="q" results="0" placeholder="搜索" class="form-control"/>
+    </div>
+  </div>
+  <div class="search-result-box" id="search-result"></div>
+  
+  
+<div class="info sidebar-item" id="info">
+  
+  <img class="author-avatar" src="/images/avatar.jpg" alt="leinlin">
+  
+  <h1 class="author-name">leinlin</h1>
+  <h2 class="author-description"></h2>
+  <div class="site-count">
+    
+    
+    
+    
+    <div class="categories-count count-block">
+      <div class="site-count-title">分类</div>
+      <div><a href="/categories/">11</a></div>
+    </div>
+    
+    
+  </div>
+  
+  <div class="rss">
+    <a class="rss-link button sidebar-item" href="/atom.xml"><i class="fas fa-rss"></i>RSS</a>
+  </div>
+  
+</div>
+
+
+  <div class="sidebar-sticky">
+    
+    
+    
+    
+    
+    <hr>
+    <div class="post-toc sidebar-item" id="toc-div">
+      <div><i class="fas fa-list-ol"></i>文章目录</div>
+      <div class="post-toc-content"><ol class="list-group toc"><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#%E4%BA%92%E6%96%A5%E9%94%81%E5%92%8C%E9%98%BB%E5%A1%9E%E4%BF%A1%E5%8F%B7"><span class="toc-text">互斥锁和阻塞信号</span></a></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#%E5%A4%9A%E7%BA%BF%E7%A8%8B%E7%BC%96%E7%A8%8B%E4%B9%8BWindows%E5%90%8C%E6%AD%A5%E6%96%B9%E5%BC%8F"><span class="toc-text">多线程编程之Windows同步方式</span></a></li></ol></div>
+    </div>
+    
+    
+    
+    <hr>
+    <div class="social-link sidebar-item">
+      <div><i class="far fa-address-card"></i>社交链接</p></div>
+      <ul>
+        
+        <li><i class="fab fa-github"></i><a href="https://leinlin.github.com/" target="_blank">GitHub</a></li>
+        
+      </ul>
+    </div>
+    
+    
+  </div>
+</aside>
+
+
+          
+        </div>
+      </div>
+    </main>
+    
+<footer id="footer" class="footer" style="background: #33363b;">
+  <div class="container">
+    <div class="back-to-top">
+      <button id="back-to-top"><i class="fas fa-angle-double-up" aria-label="回到顶部"></i></button>
+    </div>
+    <div class="footer-container">
+      <div class="footer-left">
+        <div class="copyright">
+          <span class="author">leinlin</span><span class="year"><i class="far fa-copyright"></i>2022</span>
+        </div>
+        
+        <div class="busuanzi">
+          <span id="busuanzi_container_site_pv"><i class="fas fa-eye" aria-label="站点点击量" aria-hidden="false"></i><span id="busuanzi_value_site_pv"></span></span><span id="busuanzi_container_site_uv"><i class="fas fa-user" aria-label="站点用户数" aria-hidden="false"></i><span id="busuanzi_value_site_uv"></span></span><span id="busuanzi_container_page_pv"><i class="far fa-file-alt"></i><span id="busuanzi_value_page_pv" aria-label="页面点击量" aria-hidden="false"></span></span>
+        </div>
+        
+      </div>
+      <div class="footer-right">
+        <div class="custom-info">
+          
+          托管于<i class="fab fa-github-alt"></i><a href="https://pages.github.com/" target="_blank">GitHub Pages</a>
+          
+        </div>
+        <div class="powered-by">
+          由 <a href="https://hexo.io/" target="_blank">Hexo</a> 强力驱动 | 主题 <a href="https://github.com/AlynxZhou/hexo-theme-aria/" target="_blank">ARIA</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+  <script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

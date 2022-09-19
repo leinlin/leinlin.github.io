@@ -204,7 +204,7 @@
   
   <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
     <div class="post-block">
-      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/07/09/GPUAartch/%E5%85%B3%E4%BA%8ECuda%E3%80%81Shader%E4%B8%ADif%E8%AF%AD%E5%8F%A5%E6%89%A7%E8%A1%8C%E5%8E%9F%E7%90%86/">
+      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/09/19/Unity/Shader%E5%BD%93%E4%B8%AD%E7%9A%84%E5%9D%90%E6%A0%87%E5%8F%98%E5%8C%96/">
       <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
         <meta itemprop="name" content="leinlin">
         <meta itemprop="description" content="">
@@ -216,12 +216,12 @@
     </div>
     <header class="post-header">
       <h1 class="post-title" itemprop="name headline">
-        <a class="post-title-link post-title-link-external" href="/2022/07/09/GPUAartch/%E5%85%B3%E4%BA%8ECuda%E3%80%81Shader%E4%B8%ADif%E8%AF%AD%E5%8F%A5%E6%89%A7%E8%A1%8C%E5%8E%9F%E7%90%86/" itemprop="url"></a>
+        <a class="post-title-link post-title-link-external" href="/2022/09/19/Unity/Shader%E5%BD%93%E4%B8%AD%E7%9A%84%E5%9D%90%E6%A0%87%E5%8F%98%E5%8C%96/" itemprop="url"></a>
       </h1>
       <div class="post-meta">
         
         <span class="post-date">
-          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2022-07-09T19:34:20+08:00">2022-07-09 19:34:20</time></span>
+          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2022-09-19T19:53:47+08:00">2022-09-19 19:53:47</time></span>
         </span>
         
         
@@ -232,355 +232,105 @@
     </header>
     <main class="post-main" itemprop="articleBody">
       
-      <h1 id="关于Cuda-Shader中if语句执行原理"><a href="#关于Cuda-Shader中if语句执行原理" class="headerlink" title="关于Cuda\Shader中if语句执行原理"></a>关于Cuda\Shader中if语句执行原理</h1><p>目前大部分人认为：shader当中动态if判断性能很低，只是用来做条件判断的，要避免使用。实际上if语句是可以用来做性能优化的。</p>
-<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p>主要来自于几个文档：</p>
-<ol start="0">
-<li><p><a target="_blank" rel="noopener" href="http://haifux.org/lectures/267/Introduction-to-GPUs.pdf">http://haifux.org/lectures/267/Introduction-to-GPUs.pdf</a> 直接说明了GPU分支是如何工作的。</p>
+      <h2 id="1-旋向性"><a href="#1-旋向性" class="headerlink" title="1 旋向性"></a>1 旋向性</h2><p>两个坐标轴有相同的旋向性：可以通过旋转让两个坐标轴重合。</p>
+<p>左右手坐标系有不同的选项性。</p>
+<h2 id="2-左右手坐标系"><a href="#2-左右手坐标系" class="headerlink" title="2 左右手坐标系"></a>2 左右手坐标系</h2><p>拇指、食指、中指分别代表，+x +y +z轴。由此左右手会产生两个不同的坐标系。</p>
+<h2 id="3-左右手法则"><a href="#3-左右手法则" class="headerlink" title="3 左右手法则"></a>3 左右手法则</h2><p>在cross叉乘中，需要通过正旋向来确定结果轴的指向：</p>
+<p><strong>在左右坐标系中，用左手，在右手坐标系中用右手。</strong></p>
+<h2 id="4-unity的坐标系"><a href="#4-unity的坐标系" class="headerlink" title="4 unity的坐标系"></a>4 unity的坐标系</h2><p>模型空间和世界空间是左手坐标系。</p>
+<p>相机空间是右手坐标系。这相机对准了z轴负方向。也就是说z轴坐标的减少意味着场景深度的增加。</p>
+<h2 id="5-矩阵操作："><a href="#5-矩阵操作：" class="headerlink" title="5. 矩阵操作："></a>5. 矩阵操作：</h2><p>UNITY_MATRIX_P 等价于 <a target="_blank" rel="noopener" href="http://resetoter.cn/UnityDoc/ScriptReference/GL.html">GL</a>.GetGPUProjectionMatrix</p>
+<p>Camera.worldToCameraMatrix  ：Note that camera space matches OpenGL convention: camera’s forward is the negative Z axis. This is different from Unity’s convention, where forward is the positive Z axis.</p>
+<p>Camera.cameraToWorldMatrix：Note that camera space matches OpenGL convention: camera’s forward is the negative Z axis. This is different from Unity’s convention, where forward is the positive Z axis.</p>
+<figure class="hljs highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">UNITY_MATRIX_M<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>This is identical to <code>unity_ObjectToWorld</code>, also called the Model transform</li>
+</ul>
+<h2 id="6-unity-XX矩阵"><a href="#6-unity-XX矩阵" class="headerlink" title="6. unity_XX矩阵"></a>6. unity_XX矩阵</h2><p>shader当中unity_XX（Camera相关）开头的矩阵不一定是当前摄像机矩阵，在官方文档当中也没有提到。</p>
+<ol>
+<li><p>根据实验unity_WorldToCamera 和 UNITY_MATRIX_V 的区别在于：</p>
+<p>而UNITY_MATRIX_V改变了旋向性，第三行z值取反了。</p>
+<p>也就是说unity_WorldToCamera 没有改变旋向性。</p>
 </li>
-<li><p>第一个是GPU Gems 2当中提到的流控制<a target="_blank" rel="noopener" href="https://developer.nvidia.com/gpugems/GPUGems2/gpugems2_chapter34.html">Chapter 34. GPU Flow-Control Idioms</a></p>
+<li><p>这个时候UNITY_MATRIX_P（glstate_matrix_projection）是根据平台特殊处理的矩阵。</p>
 </li>
 </ol>
-<p>里面提到了对于Z-cull来说分支和warp分布的关系。</p>
+<p>而unity_CameraProjcetion是按照正常的流程的的矩阵。</p>
+<p>unity c#的代码中通过 GL.get…接口的到的矩阵等价于UNITY_MATRIX_P（glstate_matrix_projection）：省略旋向性改变。约束y方向、约束z方向。更加复杂。</p>
+<p>通过Camera.projectionMatrix得到的是一般投影矩阵unity_CamearaProjection。</p>
+
+      
+      <p align="right"><a class="morebtn" href="/2022/09/19/Unity/Shader%E5%BD%93%E4%B8%AD%E7%9A%84%E5%9D%90%E6%A0%87%E5%8F%98%E5%8C%96/" title="">阅读全文</a></p>
+    </main>
+    <footer class="post-footer">
+      
+    </footer>
+  </article>
+  
+  <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
+    <div class="post-block">
+      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/09/19/Unity/SetRenderTarget/">
+      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <meta itemprop="name" content="leinlin">
+        <meta itemprop="description" content="">
+        <meta itemprop="image" content="/images/avatar.jpg">
+      </span>
+      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+        <meta itemprop="name" content="leinlin的小笔记">
+      </span>
+    </div>
+    <header class="post-header">
+      <h1 class="post-title" itemprop="name headline">
+        <a class="post-title-link post-title-link-external" href="/2022/09/19/Unity/SetRenderTarget/" itemprop="url"></a>
+      </h1>
+      <div class="post-meta">
+        
+        <span class="post-date">
+          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2022-09-19T19:53:46+08:00">2022-09-19 19:53:46</time></span>
+        </span>
+        
+        
+        
+        
+        
+      </div>
+    </header>
+    <main class="post-main" itemprop="articleBody">
+      
+      <p>在Unity官方文档的介绍中，SetRenderTarget可以设置渲染目标。</p>
+<ol>
+<li>屏幕的渲染目标可以通过Graphics.activeColorBuffer和Graphics.activeDepthBuffer获取。</li>
+</ol>
+<p>其中Graphics.activeDepthBuffer当中包括了stencilbuffer和depthbuffer。</p>
 <ol start="2">
-<li><p>和GPU分支优化相关的文章：[Reducing_branch_divergence_in_GPU_programs]，上面也提到了分支发散，并且提到了：</p>
-<p>In the presence of a datadependent branch that causes diﬀerent threads in the same warp to follow diﬀerent paths (also known as branch divergence), the warp serially executes each branch path taken, disabling threads that are not on that path.</p>
-<p>说明如果一个Warp没有进行分支发散，是所有warp只走一个分支的。</p>
-</li>
-<li><p>手机部分GPU架构主要是高通和AMD，目前找到了高通的资料：<a href="%5Bfile:///C:/Users/liangzhe/Desktop/80-nb295-11_a.pdf%5D(file:///C:/Users/liangzhe/Desktop/80-nb295-11_a.pdf)">Qualcomm® Snapdragon™ Mobile Platform OpenCL General Programming and Optimization</a></p>
-<p>这里面提到了避免分支发散（Avoid branch divergence）可以从文本中推测出，手机的GPU架构和PC是一样的，有同Warp优化功能，并不会两个分支都走。</p>
-</li>
-<li><p>《GPU编程与优化》当中提到没有分支的Warp可以省略空跑分支。</p>
-      
-      <p align="right"><a class="morebtn" href="/2022/07/09/GPUAartch/%E5%85%B3%E4%BA%8ECuda%E3%80%81Shader%E4%B8%ADif%E8%AF%AD%E5%8F%A5%E6%89%A7%E8%A1%8C%E5%8E%9F%E7%90%86/" title="">阅读全文</a></p>
-    </main>
-    <footer class="post-footer">
-      
-    </footer>
-  </article>
-  
-  <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
-    <div class="post-block">
-      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/07/09/GPUAartch/TeraScale%E6%9E%B6%E6%9E%84%E6%B5%85%E6%9E%90/">
-      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-        <meta itemprop="name" content="leinlin">
-        <meta itemprop="description" content="">
-        <meta itemprop="image" content="/images/avatar.jpg">
-      </span>
-      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-        <meta itemprop="name" content="leinlin的小笔记">
-      </span>
-    </div>
-    <header class="post-header">
-      <h1 class="post-title" itemprop="name headline">
-        <a class="post-title-link post-title-link-external" href="/2022/07/09/GPUAartch/TeraScale%E6%9E%B6%E6%9E%84%E6%B5%85%E6%9E%90/" itemprop="url"></a>
-      </h1>
-      <div class="post-meta">
-        
-        <span class="post-date">
-          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2022-07-09T19:34:20+08:00">2022-07-09 19:34:20</time></span>
-        </span>
-        
-        
-        
-        
-        
-      </div>
-    </header>
-    <main class="post-main" itemprop="articleBody">
-      
-      <h1 id="TeraScale"><a href="#TeraScale" class="headerlink" title="TeraScale"></a>TeraScale</h1><p>TeraScale架构是AMD公司在2011年之前的早期GPU架构。</p>
-<p>TeraScale使用超长指令字架构。</p>
-<p>使用TeraScale的图形显卡: HD 2000 - 6000 </p>
-<h2 id="架构拆解"><a href="#架构拆解" class="headerlink" title="架构拆解"></a>架构拆解</h2><p>TeraScale的结构如下图：</p>
-<p><img src="/../../images/img/TelascaleArch.jpg" alt="TelascaleArch"></p>
-<p>上面的架构：</p>
-<ol>
-<li><p>包含10个SIMD核心，每一个包括了32个32bit流处理单元，总共320个。</p>
-</li>
-<li><p>包括4个纹理单元。</p>
-</li>
+<li>commandbuffer当中同样可以使用BuiltinRenderTextureType.Color和BuiltinRenderTextureType.depth来访问对应的渲染目标，但是<strong>BuiltinRenderTextureType.depth是不包括stencilbuffer</strong>的。</li>
+<li>如果想要复用包含stencilbuffer的Graphics.activeDepthBuffer，是不能通过SetRenderTarget和自定义的ColorBuffer组合的，会报错。<strong>因为screen的buffer和rendertarget的buffer不能混合使用</strong>。</li>
+<li>如果只需要复用同一张depth，只需要使用BuiltinRenderTextureType.depth和自定义的colorbuffer即可。</li>
+<li>如果需要复用同一张depth&#x2F;stencil，必须要在一开始修改渲染目标为自定义的RenderTarget，例如：SetRenderTarget(selfColorBuffer, selfDepthBuffer) ,同时selfDepthBuffer的深度位数<strong>必须为24或32</strong>.  如果是16 则不支持stencilbuffer。</li>
 </ol>
-<p>一个SIMD core结构示意图：</p>
-<p><img src="/../../images/img/SIMDcore.jpg" alt="SIMDcore"></p>
-<p>上面的SIMD core：</p>
+<p>关于延迟渲染（deferred）渲染目标（RenderTexture）的问题</p>
 <ol>
-<li><p>包括了16个Stream Processing Units（标量流处理单元），和16KB的本地数据共享存储器。</p>
-</li>
-<li><p>有一组运行的线程共享一个逻辑控制单元。</p>
-</li>
-<li><p>四个专用纹理单元和L1 Cache。</p>
-</li>
+<li>延迟渲染的RenderTarget目前没有找到方法设置。</li>
+<li>延迟渲染的内容可以通过commandbuffer通过BuiltinRenderTextureType.Gbuffer获取出来。</li>
+<li>BuiltinRenderTextureType.Gbuffer3当中保存了整个渲染流程的结果，包括了Forwardpass。</li>
+<li>在渲染结束后，会将BuiltinRenderTextureType.Gbuffer3当中的内容拷贝到最终渲染目标当中。</li>
+<li>SetRenderBuffers()中的多个渲染目标并不是Gbuffer，而是从shader直接输出的内容。</li>
+<li>CameraEvent.beforelighting可以看到Gbuffer3组合了无光照内容和自发光内容和全局光照，还没有环境反射，不过在AfterGbuffer时还没有自发光内容。</li>
+<li>延迟渲染的环境反射是在完成渲染目标切换之后，才进行渲染的，比天空球还晚。（前向渲染是伴随物体光照同时计算的）</li>
 </ol>
-<p>下面是一组Stream Processing Units结构：</p>
-<p><img src="/../../images/img/StreamProcessingUnits.jpg" alt="StreamProcessingUnits"></p>
-<p>对于Stream Processing Units：</p>
+<p>延迟渲染过程中的深度提取</p>
 <ol>
-<li>有自己的通用寄存器</li>
-<li>我的猜测四个小的黄色格子应该就是ALU。产生指令流水。
-      
-      <p align="right"><a class="morebtn" href="/2022/07/09/GPUAartch/TeraScale%E6%9E%B6%E6%9E%84%E6%B5%85%E6%9E%90/" title="">阅读全文</a></p>
-    </main>
-    <footer class="post-footer">
-      
-    </footer>
-  </article>
-  
-  <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
-    <div class="post-block">
-      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/07/09/GPUAartch/Partial_Derivatives(DDX)%E5%8E%9F%E7%90%86%E4%B8%8E%E8%AE%BE%E5%A4%87%E5%AE%9E%E7%8E%B0%E5%B7%AE%E5%BC%82/">
-      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-        <meta itemprop="name" content="leinlin">
-        <meta itemprop="description" content="">
-        <meta itemprop="image" content="/images/avatar.jpg">
-      </span>
-      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-        <meta itemprop="name" content="leinlin的小笔记">
-      </span>
-    </div>
-    <header class="post-header">
-      <h1 class="post-title" itemprop="name headline">
-        <a class="post-title-link post-title-link-external" href="/2022/07/09/GPUAartch/Partial_Derivatives(DDX)%E5%8E%9F%E7%90%86%E4%B8%8E%E8%AE%BE%E5%A4%87%E5%AE%9E%E7%8E%B0%E5%B7%AE%E5%BC%82/" itemprop="url"></a>
-      </h1>
-      <div class="post-meta">
-        
-        <span class="post-date">
-          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2022-07-09T19:34:20+08:00">2022-07-09 19:34:20</time></span>
-        </span>
-        
-        
-        
-        
-        
-      </div>
-    </header>
-    <main class="post-main" itemprop="articleBody">
-      
-      <h1 id="Partial-Derivatives-DDX-原理与设备实现差异"><a href="#Partial-Derivatives-DDX-原理与设备实现差异" class="headerlink" title="Partial_Derivatives(DDX)原理与设备实现差异"></a>Partial_Derivatives(DDX)原理与设备实现差异</h1><h2 id="DDX-DDY的硬件条件"><a href="#DDX-DDY的硬件条件" class="headerlink" title="DDX\DDY的硬件条件"></a>DDX\DDY的硬件条件</h2><p>​	“导数”意思是在某一点上“函数的变化”。在图形处理当中，指的是相邻像素之间的变化。</p>
-<p>​	ddx和ddy是常用的简单的图像导数，它们比较相邻的两个像素的垂直或水平值。具体的实现方法以及<strong>结果</strong>依赖于GPU的特殊架构结构细节。</p>
-<p>​	在图形计算过程中，像素着色阶段的最小调度单元是一个warp，一个warp执行同一段程序，包括了最少32个线程。但是最小的执行单元是一个quad。也就是说一次最少需要执行一个2 * 2的像素，而不需要的像素会被丢弃掉。</p>
-<p>​	这4个像素也就对应了四个线程，他们共同申请使用设备上下文，也就是说可以在硬件上，方便的访问到隔壁像素的数据。</p>
-<p>​	根据硬件这一特性，我们可以利用ddx、ddy获取到更多的信息。</p>
-      
-      <p align="right"><a class="morebtn" href="/2022/07/09/GPUAartch/Partial_Derivatives(DDX)%E5%8E%9F%E7%90%86%E4%B8%8E%E8%AE%BE%E5%A4%87%E5%AE%9E%E7%8E%B0%E5%B7%AE%E5%BC%82/" title="">阅读全文</a></p>
-    </main>
-    <footer class="post-footer">
-      
-    </footer>
-  </article>
-  
-  <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
-    <div class="post-block">
-      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/07/09/GPUAartch/GPU%E6%9E%B6%E6%9E%84%E7%B1%BB%E5%9E%8B%E6%95%B4%E5%90%88/">
-      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-        <meta itemprop="name" content="leinlin">
-        <meta itemprop="description" content="">
-        <meta itemprop="image" content="/images/avatar.jpg">
-      </span>
-      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-        <meta itemprop="name" content="leinlin的小笔记">
-      </span>
-    </div>
-    <header class="post-header">
-      <h1 class="post-title" itemprop="name headline">
-        <a class="post-title-link post-title-link-external" href="/2022/07/09/GPUAartch/GPU%E6%9E%B6%E6%9E%84%E7%B1%BB%E5%9E%8B%E6%95%B4%E5%90%88/" itemprop="url"></a>
-      </h1>
-      <div class="post-meta">
-        
-        <span class="post-date">
-          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2022-07-09T19:34:20+08:00">2022-07-09 19:34:20</time></span>
-        </span>
-        
-        
-        
-        
-        
-      </div>
-    </header>
-    <main class="post-main" itemprop="articleBody">
-      
-      <h1 id="GPU架构整合"><a href="#GPU架构整合" class="headerlink" title="GPU架构整合"></a>GPU架构整合</h1><p>AMD公司GPU芯片架构:</p>
-<table>
-<thead>
-<tr>
-<th align="center">Microarchitecture</th>
-<th align="center">GPUs</th>
-<th align="center">Graphic cards &#x2F; SoCs</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="center">GCN 5th</td>
-<td align="center">Vega 10</td>
-<td align="center">Radeon Rx Vega series</td>
-</tr>
-<tr>
-<td align="center">GCN 4th</td>
-<td align="center">Polaris 10, Polaris 11, Polaris 12</td>
-<td align="center">Radeon Rx 400 series Radeon_500_series</td>
-</tr>
-<tr>
-<td align="center">GCN 3rd</td>
-<td align="center">Tonga, Fiji, Carrizo</td>
-<td align="center">Radeon R9 Series</td>
-</tr>
-<tr>
-<td align="center">GCN 2nd</td>
-<td align="center">Bonaire, Hawaii, Kaveri, Kabini, Temash, Mullins, Beema, Carrizo-L</td>
-<td align="center">Radeon HD 7790, <strong>PlayStation 4</strong>, Xbox One</td>
-</tr>
-<tr>
-<td align="center">GCN 1st</td>
-<td align="center">Oland, Cape Verde, Pitcairn, Tahiti</td>
-<td align="center">Radeon HD 77xx–7900 Series</td>
-</tr>
-<tr>
-<td align="center">TeraScale 3</td>
-<td align="center">Cayman, Trinity&#x2F;Richland</td>
-<td align="center">Radeon HD 69xx Series, Radeon HD 7xxx–76xx Series</td>
-</tr>
-<tr>
-<td align="center">TeraScale 2</td>
-<td align="center">Cedar, Cypress, Juniper, Redwood, Palm, Sumo</td>
-<td align="center">Radeon HD 5000 Series, Radeon HD 6350, Radeon HD 64xx–68xx Series</td>
-</tr>
-<tr>
-<td align="center">TeraScale 1</td>
-<td align="center">R600, RV630, RV610, RV790, RV770, …</td>
-<td align="center">Radeon HD 2000 Series, HD 3000, HD 4000</td>
-</tr>
-</tbody></table>
-      
-      <p align="right"><a class="morebtn" href="/2022/07/09/GPUAartch/GPU%E6%9E%B6%E6%9E%84%E7%B1%BB%E5%9E%8B%E6%95%B4%E5%90%88/" title="">阅读全文</a></p>
-    </main>
-    <footer class="post-footer">
-      
-    </footer>
-  </article>
-  
-  <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
-    <div class="post-block">
-      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/07/09/GPUAartch/GPU%E6%9E%B6%E6%9E%84/">
-      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-        <meta itemprop="name" content="leinlin">
-        <meta itemprop="description" content="">
-        <meta itemprop="image" content="/images/avatar.jpg">
-      </span>
-      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-        <meta itemprop="name" content="leinlin的小笔记">
-      </span>
-    </div>
-    <header class="post-header">
-      <h1 class="post-title" itemprop="name headline">
-        <a class="post-title-link post-title-link-external" href="/2022/07/09/GPUAartch/GPU%E6%9E%B6%E6%9E%84/" itemprop="url"></a>
-      </h1>
-      <div class="post-meta">
-        
-        <span class="post-date">
-          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2022-07-09T19:34:20+08:00">2022-07-09 19:34:20</time></span>
-        </span>
-        
-        
-        
-        
-        
-      </div>
-    </header>
-    <main class="post-main" itemprop="articleBody">
-      
-      <h1 id="GPU架构"><a href="#GPU架构" class="headerlink" title="GPU架构"></a>GPU架构</h1><p>参考资料:</p>
-<p><a target="_blank" rel="noopener" href="http://haifux.org/lectures/267/Introduction-to-GPUs.pdf">Introduction to GPU Architecture</a></p>
-<p><a target="_blank" rel="noopener" href="https://www.amd.com/Documents/GCN_Architecture_whitepaper.pdf">GCN_Architecture</a></p>
-<p><a target="_blank" rel="noopener" href="https://anteru.net/blog/2018/intro-to-compute-shaders/index.html">Compute Shader</a></p>
-<h2 id="概要"><a href="#概要" class="headerlink" title="概要"></a>概要</h2><p>主要简单介绍GPU架构，已经架构带来的性能优化代码编写问题。</p>
-<h2 id="概念"><a href="#概念" class="headerlink" title="概念"></a>概念</h2><p>同过总结上面的资料，大概梳理了相关内容。</p>
-      
-      <p align="right"><a class="morebtn" href="/2022/07/09/GPUAartch/GPU%E6%9E%B6%E6%9E%84/" title="">阅读全文</a></p>
-    </main>
-    <footer class="post-footer">
-      
-    </footer>
-  </article>
-  
-  <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
-    <div class="post-block">
-      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/07/09/GPUAartch/GPU%E5%88%86%E6%94%AF%E8%AF%AD%E5%8F%A5%E6%80%A7%E8%83%BD/">
-      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-        <meta itemprop="name" content="leinlin">
-        <meta itemprop="description" content="">
-        <meta itemprop="image" content="/images/avatar.jpg">
-      </span>
-      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-        <meta itemprop="name" content="leinlin的小笔记">
-      </span>
-    </div>
-    <header class="post-header">
-      <h1 class="post-title" itemprop="name headline">
-        <a class="post-title-link post-title-link-external" href="/2022/07/09/GPUAartch/GPU%E5%88%86%E6%94%AF%E8%AF%AD%E5%8F%A5%E6%80%A7%E8%83%BD/" itemprop="url"></a>
-      </h1>
-      <div class="post-meta">
-        
-        <span class="post-date">
-          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2022-07-09T19:34:20+08:00">2022-07-09 19:34:20</time></span>
-        </span>
-        
-        
-        
-        
-        
-      </div>
-    </header>
-    <main class="post-main" itemprop="articleBody">
-      
-      <p>下面就是一组线程同时执行，*表示空跑，&#x3D;表示执行。可以看到他们是同时完成的。一个计算单元的所有线程结束以后，可以开始下一组。</p>
-<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs c">线程A:  =========<span class="hljs-keyword">if</span>==============<span class="hljs-keyword">else</span>**********endif===========<br>线程B:  =========<span class="hljs-keyword">if</span>**************<span class="hljs-keyword">else</span>==========endif===========<br></code></pre></td></tr></table></figure>
-
-<p>就可以理解为判断只会产生一个遮罩，这个遮罩会决定我这段代码是不是空跑。GPU的计算资源十分紧俏，空跑越多就是我们说的开销大。例如32个线程，每一个都跑不通的分支，那么就相当于性能下降到了1&#x2F;32。这里的开销是利用率降低而不是时间变长。</p>
-<p>关于跑完会等待的。。。GPU一般不会阻塞等待别的线程的（有例外），假如w表示等待。下面的状态是不对的</p>
-<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs c">线程A:  =========<span class="hljs-keyword">if</span>==============<span class="hljs-keyword">else</span> endif===========<br><br>线程B:  =========<span class="hljs-keyword">if</span> <span class="hljs-keyword">else</span>=======endif===========wwwwwww<br></code></pre></td></tr></table></figure>
-      
-      <p align="right"><a class="morebtn" href="/2022/07/09/GPUAartch/GPU%E5%88%86%E6%94%AF%E8%AF%AD%E5%8F%A5%E6%80%A7%E8%83%BD/" title="">阅读全文</a></p>
-    </main>
-    <footer class="post-footer">
-      
-    </footer>
-  </article>
-  
-  <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
-    <div class="post-block">
-      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/07/09/GPUAartch/GCN%E6%9E%B6%E6%9E%84%E6%B5%85%E6%9E%90/">
-      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-        <meta itemprop="name" content="leinlin">
-        <meta itemprop="description" content="">
-        <meta itemprop="image" content="/images/avatar.jpg">
-      </span>
-      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-        <meta itemprop="name" content="leinlin的小笔记">
-      </span>
-    </div>
-    <header class="post-header">
-      <h1 class="post-title" itemprop="name headline">
-        <a class="post-title-link post-title-link-external" href="/2022/07/09/GPUAartch/GCN%E6%9E%B6%E6%9E%84%E6%B5%85%E6%9E%90/" itemprop="url"></a>
-      </h1>
-      <div class="post-meta">
-        
-        <span class="post-date">
-          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2022-07-09T19:34:20+08:00">2022-07-09 19:34:20</time></span>
-        </span>
-        
-        
-        
-        
-        
-      </div>
-    </header>
-    <main class="post-main" itemprop="articleBody">
-      
-      <h1 id="Graphics-Core-Next"><a href="#Graphics-Core-Next" class="headerlink" title="Graphics Core Next"></a>Graphics Core Next</h1><p>GCN是2012年之后的GPU架构。</p>
-<p>使用了精简指令集合。</p>
-<p>GCN架构同时用到了PS4和XboxOne APU的图形部分。</p>
-<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Graphics_Core_Next#cite_note-24">Wiki Graphics_Core_Next</a></p>
+<li>如果使用BuiltinRenderTextureType.Depth无法获取到stencil纹理，在deferred当中无存在，如果使用会报错：built-in renderTexture type3 not found…</li>
+<li>deferred过程需要使用BuiltinRenderTextureType.ReolvedDepth，不过使用默认深度和自定义 深度大小很容易不匹配</li>
+<li>在ResolvedDepth中存在完整的深度信息。在deferred第一步先计算延迟物体深度（也就是Gbuffer填充阶段），然后计算前向物体深度，当在延迟渲染中设置depthbuffer时，代替的就是ResolvedDepth。</li>
+<li>ResolvedDepth中的Stencil，延迟光照阶段最多会使用高四位，并且进入前向阶段后不会清零。</li>
+<li>在延迟渲染阶段，前向物体深度计算时会在stencilbuffer当中以207为mask写入内容。这表示高两位和第四位是都可以用的。并且Stencil写入和深度写入在同一个阶段。</li>
+</ol>
+<p>*注：当使用commandbuffer绘制一般的物体时，目前的CameraEvent都是不包含光照信息的，所以绘制出来的内容始终是黑色的。</p>
 
       
-      <p align="right"><a class="morebtn" href="/2022/07/09/GPUAartch/GCN%E6%9E%B6%E6%9E%84%E6%B5%85%E6%9E%90/" title="">阅读全文</a></p>
+      <p align="right"><a class="morebtn" href="/2022/09/19/Unity/SetRenderTarget/" title="">阅读全文</a></p>
     </main>
     <footer class="post-footer">
       
@@ -589,7 +339,7 @@
   
   <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
     <div class="post-block">
-      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/07/09/GPUAartch/HDR%E7%A1%AC%E4%BB%B6%E5%B1%82Framebuffer%E6%A0%BC%E5%BC%8F%E6%A0%87%E5%87%86%E4%B8%8E%E6%B8%B2%E6%9F%93%E9%98%B6%E6%AE%B5%E7%9A%84%E5%85%B3%E7%B3%BB/">
+      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/09/19/Unity/Occluded%20Culling/">
       <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
         <meta itemprop="name" content="leinlin">
         <meta itemprop="description" content="">
@@ -601,12 +351,12 @@
     </div>
     <header class="post-header">
       <h1 class="post-title" itemprop="name headline">
-        <a class="post-title-link post-title-link-external" href="/2022/07/09/GPUAartch/HDR%E7%A1%AC%E4%BB%B6%E5%B1%82Framebuffer%E6%A0%BC%E5%BC%8F%E6%A0%87%E5%87%86%E4%B8%8E%E6%B8%B2%E6%9F%93%E9%98%B6%E6%AE%B5%E7%9A%84%E5%85%B3%E7%B3%BB/" itemprop="url"></a>
+        <a class="post-title-link post-title-link-external" href="/2022/09/19/Unity/Occluded%20Culling/" itemprop="url"></a>
       </h1>
       <div class="post-meta">
         
         <span class="post-date">
-          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2022-07-09T19:21:00+08:00">2022-07-09 19:21:00</time></span>
+          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2022-09-19T19:53:46+08:00">2022-09-19 19:53:46</time></span>
         </span>
         
         
@@ -617,126 +367,527 @@
     </header>
     <main class="post-main" itemprop="articleBody">
       
-      <h1 id="HDR硬件层Framebuffer格式标准与渲染阶段的关系"><a href="#HDR硬件层Framebuffer格式标准与渲染阶段的关系" class="headerlink" title="HDR硬件层Framebuffer格式标准与渲染阶段的关系"></a>HDR硬件层Framebuffer格式标准与渲染阶段的关系</h1><p>这里主要探讨的是<strong>SwapChain的格式</strong>、<strong>写入其中的数据</strong>以及<strong>屏幕实际亮度</strong>之间的关系。</p>
-<h2 id="SDR格式"><a href="#SDR格式" class="headerlink" title="SDR格式"></a>SDR格式</h2><p>对于SDR屏幕 Buffer主要有：</p>
-<p>R8G8B8A8_UNORM：首先屏幕的eotf曲线是始终存在的，这种格式输入的颜色，图像接口不会进行任何处理，需要我们自己在shader中进行sRGB编码。</p>
-<p>R8G8B8A8_SNORM：这种格式输入的颜色在显示之前会自动编码到SRGB空间（自动Gamma矫正），所以我们不需要进行处理，也就是说shader当中直接写出线性颜色即可。A通道是线性的。</p>
-<blockquote>
-<p>  Vulkan的解释：</p>
-<p>  specifies a four-component, 32-bit unsigned normalized format that has an 8-bit B component stored with sRGB nonlinear encoding in byte 0, an 8-bit G component stored with sRGB nonlinear encoding in byte 1, an 8-bit R component stored with sRGB nonlinear encoding in byte 2, and an 8-bit A component in byte 3.</p>
-<p>  On the other hand, <strong>non-*_SRGB formats</strong> will be very likely exposed in pair with a <strong>SRGB color space.</strong> <strong>This means, the hardware will not apply any transfer function when reading from or writing to such images, yet they will still be presented on a device with sRGB display characteristics</strong>。（即使使用非SRGB的format，仍然可以使用 SRGB的colorSpace），这意味着硬件不会帮助进行自动的空间转换（在读写buffer时），但是仍然使用srgb的eotf的显示特性。</p>
-</blockquote>
-<p>SRGB的进一步说明：</p>
-<p><a target="_blank" rel="noopener" href="https://docs.rs/vulkano/0.7.2/vulkano/swapchain/enum.ColorSpace.html">https://docs.rs/vulkano/0.7.2/vulkano/swapchain/enum.ColorSpace.html</a></p>
-<p><img src="/../../images/HDR%E7%A1%AC%E4%BB%B6%E5%B1%82Framebuffer%E6%A0%BC%E5%BC%8F%E6%A0%87%E5%87%86%E4%B8%8E%E6%B8%B2%E6%9F%93%E9%98%B6%E6%AE%B5%E7%9A%84%E5%85%B3%E7%B3%BB/1590989148165.png" alt="1590989148165"></p>
-      
-      <p align="right"><a class="morebtn" href="/2022/07/09/GPUAartch/HDR%E7%A1%AC%E4%BB%B6%E5%B1%82Framebuffer%E6%A0%BC%E5%BC%8F%E6%A0%87%E5%87%86%E4%B8%8E%E6%B8%B2%E6%9F%93%E9%98%B6%E6%AE%B5%E7%9A%84%E5%85%B3%E7%B3%BB/" title="">阅读全文</a></p>
-    </main>
-    <footer class="post-footer">
-      
-    </footer>
-  </article>
-  
-  <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
-    <div class="post-block">
-      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/07/09/3DBasic/FBXFileFormat/">
-      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-        <meta itemprop="name" content="leinlin">
-        <meta itemprop="description" content="">
-        <meta itemprop="image" content="/images/avatar.jpg">
-      </span>
-      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-        <meta itemprop="name" content="leinlin的小笔记">
-      </span>
-    </div>
-    <header class="post-header">
-      <h1 class="post-title" itemprop="name headline">
-        <a class="post-title-link post-title-link-external" href="/2022/07/09/3DBasic/FBXFileFormat/" itemprop="url">FBXFileFormat</a>
-      </h1>
-      <div class="post-meta">
-        
-        <span class="post-date">
-          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2022-07-09T12:00:14+08:00">2022-07-09 12:00:14</time></span>
-        </span>
-        
-        
-        
-        <span class="post-meta-divider divider">|</span>
-        
-        <span class="post-categories">
-          
-          <i class="far fa-folder-open"></i><span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/3DBasic/" itemprop="url" rel="index"><span itemprop="name">3DBasic</span></a></span>
-        </span>
-        
-        
-        
-        
-      </div>
-    </header>
-    <main class="post-main" itemprop="articleBody">
-      
-      <h1 id="FBX-test-version-file-format-specification"><a href="#FBX-test-version-file-format-specification" class="headerlink" title="FBX test version file format specification"></a>FBX test version file format specification</h1><p><em>This post is extract from <a target="_blank" rel="noopener" href="https://archive.blender.org/wiki/index.php/User:Mont29/Foundation/FBX_File_Structure/">blender Doc :FBX File Structure</a>.</em></p>
-<h2 id="Generalities"><a href="#Generalities" class="headerlink" title="Generalities"></a>Generalities</h2><p>FBX is a nodal format, with a root element (which is never explicitly written) and a tree of children.</p>
-<p>Each element has an id (byte string), and can have data and children elements.</p>
-<p>Data are a set of (values, type) tuples, available types are: bool, short, int, long, float, double, bytes, string, and arrays of those types.</p>
-<p>Here is a (JSON) representation of an element:</p>
-<figure class="hljs highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs json"><span class="hljs-punctuation">[</span><span class="hljs-string">&quot;Element_ID&quot;</span><span class="hljs-punctuation">,</span>                         # ID<br>     <span class="hljs-punctuation">[</span><span class="hljs-string">&quot;data_string&quot;</span><span class="hljs-punctuation">,</span> <span class="hljs-number">13</span><span class="hljs-punctuation">]</span><span class="hljs-punctuation">,</span>              # Data<br>     <span class="hljs-string">&quot;SI&quot;</span><span class="hljs-punctuation">,</span>                             # Data types<span class="hljs-punctuation">,</span> as single-char codes (S for String<span class="hljs-punctuation">,</span> I for Integer<span class="hljs-punctuation">,</span> etc.)<br>     <span class="hljs-punctuation">[</span>__other_children_elements__<span class="hljs-punctuation">]</span><br><span class="hljs-punctuation">]</span><br></code></pre></td></tr></table></figure>
-
-<p>Everything is based on this simple schema.</p>
-      
-      <p align="right"><a class="morebtn" href="/2022/07/09/3DBasic/FBXFileFormat/" title="FBXFileFormat">阅读全文</a></p>
-    </main>
-    <footer class="post-footer">
-      
-    </footer>
-  </article>
-  
-  <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
-    <div class="post-block">
-      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/07/09/Art/ColorGrading%E4%B8%ADLUT%E7%9A%84%E7%94%9F%E6%88%90%E4%B8%8E%E4%BD%BF%E7%94%A8/">
-      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-        <meta itemprop="name" content="leinlin">
-        <meta itemprop="description" content="">
-        <meta itemprop="image" content="/images/avatar.jpg">
-      </span>
-      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-        <meta itemprop="name" content="leinlin的小笔记">
-      </span>
-    </div>
-    <header class="post-header">
-      <h1 class="post-title" itemprop="name headline">
-        <a class="post-title-link post-title-link-external" href="/2022/07/09/Art/ColorGrading%E4%B8%ADLUT%E7%9A%84%E7%94%9F%E6%88%90%E4%B8%8E%E4%BD%BF%E7%94%A8/" itemprop="url">ColorGrading中LUT的生成与使用</a>
-      </h1>
-      <div class="post-meta">
-        
-        <span class="post-date">
-          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2022-07-09T12:00:14+08:00">2022-07-09 12:00:14</time></span>
-        </span>
-        
-        
-        
-        <span class="post-meta-divider divider">|</span>
-        
-        <span class="post-categories">
-          
-          <i class="far fa-folder-open"></i><span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Art/" itemprop="url" rel="index"><span itemprop="name">Art</span></a></span>
-        </span>
-        
-        
-        
-        
-      </div>
-    </header>
-    <main class="post-main" itemprop="articleBody">
-      
-      <h1 id="ColorGrading中LUT的生成与使用"><a href="#ColorGrading中LUT的生成与使用" class="headerlink" title="ColorGrading中LUT的生成与使用"></a>ColorGrading中LUT的生成与使用</h1><p>场景的LUT贴图有两种生成方式：</p>
+      <p>主要介绍unity遮挡剔除功能</p>
+<p>#1.Unity build-in插件：Umbra</p>
+<p>##1.1具体原理</p>
+<p><a target="_blank" rel="noopener" href="https://blogs.unity3d.com/cn/2013/12/02/occlusion-culling-in-unity-4-3-the-basics/">原文链接</a>：</p>
+<p>​	Umbra’s occlusion culling process can be roughly divided into two distinct stages. In the editor, Umbra processes the game scene so that visibility queries can be performed in the game runtime, in the player. So first, Umbra needs to take the game scene as its input and <strong>bake</strong> it into a lightweight data structure. During the bake, Umbra first <strong>voxelizes</strong> the scene, then groups the voxels into cells and combines these cells with <strong>portals</strong>. This data, in addition to a few other important bits is referred to as <strong>occlusion data</strong> in Unity.</p>
+<p>​	In the runtime, Umbra then performs <strong>software portal rasterization</strong> into a <strong>depth buffer</strong>, against which <strong>object visibility</strong> can be tested. In practice, Unity gives Umbra a camera position, and Umbra gives back a list of visible objects. The visibility queries are always <strong>conservative</strong>, which means that false negatives are never returned. On the other hand, some objects may be deemed visible by Umbra even though in reality they appear not to be.	</p>
+<h2 id="1-1-编辑阶段"><a href="#1-1-编辑阶段" class="headerlink" title="1.1 编辑阶段"></a>1.1 编辑阶段</h2><h3 id="1-1-1-voxelizes-the-scene："><a href="#1-1-1-voxelizes-the-scene：" class="headerlink" title="1.1.1 voxelizes the scene："></a>1.1.1 <strong>voxelizes</strong> the scene：</h3><p>​	使用八叉树将整个场景体素化。每一个正方体体素顶点都会对齐到世界坐标。根据场景中所有需要进行剔除的物体（被Culling Area包裹和被设置为Occlude或（和）Occluder的物体）会计算整个八叉树对场景的覆盖范围，然后细分，。</p>
+<h3 id="1-1-2-groups-the-voxels-into-cells："><a href="#1-1-2-groups-the-voxels-into-cells：" class="headerlink" title="1.1.2 groups the voxels into cells："></a>1.1.2 groups the voxels into cells：</h3><p>​	将空的体素Cell合并成一个大的空的正方体。</p>
+<h3 id="1-1-3-combines-these-cells-with-portals"><a href="#1-1-3-combines-these-cells-with-portals" class="headerlink" title="1.1.3 combines these cells with portals"></a>1.1.3 combines these cells with <strong>portals</strong></h3><p>​	将所有的Cell合并成一portals，根据Occlusion Culling视图可以看出来，portal实际上是包裹各个Cell边界的长方体。只是包裹Cell正方体的一个面的长方体，而不是包裹整个Cells。现在得到的只是一个场景的划分数据。</p>
+<h3 id="1-1-4-摄像机"><a href="#1-1-4-摄像机" class="headerlink" title="1.1.4 摄像机"></a>1.1.4 摄像机</h3><p>​	前面完成了场景划分，接下来需要进行摄像机可行区域设置，也就是需要接一下occlusion area把所有的摄像机可行区域覆盖，同时需要标记为is view area。只有这些区域才会得到正确的摄像机剪裁结果，同时只会为这些区域计算遮挡。通过实验可以看到结果：设置一个场景，和唯一一个oa，并且标记为is view Volume随着这个取悦变大生成的数据也会越来越大。</p>
+<p>​	其他区域一般情况下也可能进行遮挡剔除。当时查询数据还是不准确的，很可能产生不能确定的结果。</p>
+<h3 id="1-1-5-区域划分：occlusion-portal-和occlusion-area"><a href="#1-1-5-区域划分：occlusion-portal-和occlusion-area" class="headerlink" title="1.1.5 区域划分：occlusion portal 和occlusion area"></a>1.1.5 区域划分：occlusion portal 和occlusion area</h3><p>op有一个用处，就是统一的控制其包裹的所有occlusion static 物体是否显示。不会印象内部的动态物体。</p>
+<p>oa有两个用处：</p>
 <ol>
-<li>通常DaVinCi生成的是.cube文件，需要用cube文件转换。</li>
-<li>直接在PS当中调整。</li>
+<li>勾选了 is view area 用来标记是否是摄像机可行区域。</li>
+<li>没有勾选is view area 用来包裹一个区域内的非occlusion static 物体，如果这个area被完全遮挡，内部的物体也会被隐藏。</li>
 </ol>
-<h2 id="PS直接调整"><a href="#PS直接调整" class="headerlink" title="PS直接调整"></a>PS直接调整</h2><p>对于用ps直接调整来说，只要把参考图片和Natural LUT一起调整即可，最终Natural LUT的结果就是我们要的LUT。</p>
+<h3 id="1-1-6-异常情况"><a href="#1-1-6-异常情况" class="headerlink" title="1.1.6 异常情况"></a>1.1.6 异常情况</h3><p>静态物体和摄像机之间 不能隔着 关闭的op 不然会出错。</p>
+<p>编辑阶段就会产生上述内容。</p>
+<h2 id="1-2-运行阶段"><a href="#1-2-运行阶段" class="headerlink" title="1.2 运行阶段"></a>1.2 运行阶段</h2><p>游戏运行阶段就是直接根据portal来计算这个Cell当中有没有内容被遮挡。</p>
+<p>具体方法就是计算渲染所有portal后的深度，和每一个cell的深度。判断cell当中的物体是否需要被去掉。</p>
+
       
-      <p align="right"><a class="morebtn" href="/2022/07/09/Art/ColorGrading%E4%B8%ADLUT%E7%9A%84%E7%94%9F%E6%88%90%E4%B8%8E%E4%BD%BF%E7%94%A8/" title="ColorGrading中LUT的生成与使用">阅读全文</a></p>
+      <p align="right"><a class="morebtn" href="/2022/09/19/Unity/Occluded%20Culling/" title="">阅读全文</a></p>
+    </main>
+    <footer class="post-footer">
+      
+    </footer>
+  </article>
+  
+  <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
+    <div class="post-block">
+      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/09/19/Unity/Linear%20And%20Gamma/">
+      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <meta itemprop="name" content="leinlin">
+        <meta itemprop="description" content="">
+        <meta itemprop="image" content="/images/avatar.jpg">
+      </span>
+      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+        <meta itemprop="name" content="leinlin的小笔记">
+      </span>
+    </div>
+    <header class="post-header">
+      <h1 class="post-title" itemprop="name headline">
+        <a class="post-title-link post-title-link-external" href="/2022/09/19/Unity/Linear%20And%20Gamma/" itemprop="url"></a>
+      </h1>
+      <div class="post-meta">
+        
+        <span class="post-date">
+          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2022-09-19T19:53:46+08:00">2022-09-19 19:53:46</time></span>
+        </span>
+        
+        
+        
+        
+        
+      </div>
+    </header>
+    <main class="post-main" itemprop="articleBody">
+      
+      <p>##线性空间、GAMMA空间和HDR、纹理</p>
+<h3 id="sRGB"><a href="#sRGB" class="headerlink" title="sRGB"></a>sRGB</h3><p>sRGB是一个纹理的标记，也是一种<strong>数据保存格式</strong>。在对纹理采样和写入纹理内容时产生作用。如果开启sRGB，那么在采样时会自动的对采样得到的值进行sRGB解码，写入时会对写入的值进行sRGB编码，然后再写入。</p>
+<p>(When calculating lighting on older hardware restricted to 8 bits per channel for the framebuffer format, using a gamma curve provides more precision in the human-perceivable range. More bits are used in the range where the human eye is the most sensitive.</p>
+<p>Even though monitors today are digital, they still take a gamma-encoded signal as input. Image files and video files are explicitly encoded to be in gamma space (meaning they carry gamma-encoded values, not linear intensities). This is the standard; everything is in gamma space.) 所以视频的录制结果，PS，SP制作内容的保存一般应该都是sRGB格式。</p>
+<p>unity中如果使用<strong>Gamma空间</strong>，sRGB的<strong>设置失效</strong>。</p>
+<p>(When using Gamma color space, no conversions are done of any kind, and this setting is not used.)</p>
+<p>sRGB (Color Texture)设置的意义：Check this box to specify that the Texture is stored in gamma space. This should always be checked for non-HDR color Textures (such as Albedo and Specular Color)（只有UI和Default会有这个选项, 至于HDR color Textures应该是PS输出的浮点格式纹理）. If the Texture stores information that has a specific meaning, and you need the exact values in the Shader (for example, the smoothness or the metalness), uncheck this box. This box is checked by default.</p>
+<h3 id="Gamma矫正"><a href="#Gamma矫正" class="headerlink" title="Gamma矫正"></a>Gamma矫正</h3><p>如果显示设备按照线性亮度显示内容，人眼的感受会觉得很奇怪。</p>
+<p>所以显示设备需要显示进过Gamma矫正的内容，以符合人眼感受习惯（More bits are used in the range where the human eye is the most sensitive.）。录制设置完成录制后保存的也是经过Gamma矫正的内容。</p>
+<p><strong>目前，各种设备的输入、保存、输出格式都是在Gamma空间的。</strong></p>
+<p>目前sRGB格式就是Gamma空间的标准。(The accepted standard for gamma space is called sRGB )</p>
+<p>**This is the standard; everything is in gamma space.**也就是说一般情况（录制、显示、保存）下都不存在Linear空间。</p>
+<p>所以根据纹理内容需要合理的设置纹理的sRGB标记。（如果是法线或者Mask）则Unity 不会进行任何编码解码操作，直接作为数据来处理。针对的只是颜色纹理（Color RenderTexture）.</p>
+<h3 id="线性空间和Gamma空间"><a href="#线性空间和Gamma空间" class="headerlink" title="线性空间和Gamma空间"></a>线性空间和Gamma空间</h3><p>显示、录制、保存都是Gamma空间，但是当纹理颜色参与计算时，为了精确度，需要在线性空间计算。</p>
+<p>Unity提供了线性空间处理选项:在每一个渲染过程中，<strong>输入需要进行sRGB的解码，输出时在进行sRGB编码</strong>。（To overcome this, you can set Unity to use an RGB sampler to cross over from gamma to linear sampling. This ensures a linear workflow with all inputs and outputs of a Shader in the correct color space, resulting in a correct outcome.）</p>
+<p>设置线性空间方法（go to <strong>Edit</strong> &gt; <strong>Project Settings</strong> &gt; <strong>Player</strong> and open <strong>Player Settings</strong>. Go to <strong>Other Settings</strong> &gt; <strong>Rendering</strong> and change the <strong>Color Space</strong> to <strong>Linear</strong> or <strong>Gamma</strong>, depending on your preference.）</p>
+<p><strong>如果不进行上述设置，Unity就不会进行格式的转化，采样到的就是保存值，输出的内容也会直接写入到纹理上。</strong></p>
+<p><em><strong>特例1</strong>:当使用</em><em>HDR<strong>的时候颜色校正的时机（只在linear空间有效），Shader结果输出到帧缓存中时并未进行Gamma矫正，而是在更晚的时候进行（这一帧完全渲染结束进行一次Gamma矫正）。如果</strong>Non-HDR*</em> 输出到帧缓存的结果就是Gamma矫正的结果。（When using HDR, rendering is performed in linear space into floating point buffers. These buffers have enough precision not to require conversion to and from gamma space whenever the buffer is accessed. This means that when rendering in linear mode, the framebuffers you use store the colors in linear space. Therefore, all blending and post process effects are implicitly performed in linear space. When the final backbuffer is written to, gamma correction is applied.）</p>
+<p><em><strong>特例2</strong>:光照贴图，无论颜色空间的设置，光照贴图永远执行的都是</em>*Linear Space的工作流**：The lighting <strong>calculations in the lightmapper are always done in linear space</strong> (see documentation on the <a target="_blank" rel="noopener" href="https://docs.unity3d.com/Manual/GlobalIllumination.html">Lighting Window</a> for more information). <strong>The lightmaps are always stored in gamma space</strong>. This means that the lightmap textures are identical no matter whether you’re in gamma or linear color space.</p>
+<p>*<strong>特例3</strong>:HDR中帧缓存的内容和颜色空间的关系. <strong>When linear color space is enabled and HDR is not enabled</strong>, a special framebuffer type is used that supports sRGB read and sRGB write (convert from gamma to linear when reading, convert from linear to gamma when writing). When this framebuffer is used for blending or it is bound as a Texture, the values are converted to linear space before being used. When these buffers are written to, the value that is being written is converted from linear space to gamma space. <strong>If you are rendering in linear mode and non-HDR mode</strong>, all post-process effects have their source and target buffers created with sRGB read and write enabled so that post-processing and post-process blending occur in linear space.</p>
+<p><em><strong>注</strong>：</em>*Gamma工作流**：读入、写出内容时都不进行Gamma矫正：Even though these values are in gamma space, all the Unity Editor’s Shader calculations still treat their inputs as if they were in linear space. To ensure an acceptable final result, the Editor makes an adjustment to deal with the mismatched formats when it writes the Shader outputs to a framebuffer and does not apply gamma correction to the final result.</p>
+<p>*<strong>注：</strong>一旦打开HDR所有的帧缓存就会从ARGB32(255的整型RGBA)变成ARGBHalf(16位的浮点数)。原本没有HDR时每次帧缓存的读写都会经历sRGB的解码编码。打开HDR后帧缓存的读写不再进行sRGB的编解码，而是在这一帧完全处理完成之后，从HDR转回正常颜色空间后在进行sRGB的编解码，ReadPixel也就是从这里读取纹理的。实际上我们可以在渲染过程中读取colorbuffer，例如渲染到RT当中，这个使用可以读取到没有经过编码颜色数据。</p>
+<h3 id="纹理颜色空间-sRGB选项控制"><a href="#纹理颜色空间-sRGB选项控制" class="headerlink" title="纹理颜色空间(sRGB选项控制)"></a>纹理颜色空间(sRGB选项控制)</h3><p>不同颜色空间的工作流只针对Non-Hdr的Color Texture 在Texture的Inspector当中可以看到。sprite和Default有sRGB的选项，其他没有的不会受到颜色空间设置的影响。</p>
+
+      
+      <p align="right"><a class="morebtn" href="/2022/09/19/Unity/Linear%20And%20Gamma/" title="">阅读全文</a></p>
+    </main>
+    <footer class="post-footer">
+      
+    </footer>
+  </article>
+  
+  <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
+    <div class="post-block">
+      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/09/19/Unity/Houdini%E5%AF%BC%E5%87%BAfbxUVz%E9%80%9A%E9%81%93/">
+      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <meta itemprop="name" content="leinlin">
+        <meta itemprop="description" content="">
+        <meta itemprop="image" content="/images/avatar.jpg">
+      </span>
+      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+        <meta itemprop="name" content="leinlin的小笔记">
+      </span>
+    </div>
+    <header class="post-header">
+      <h1 class="post-title" itemprop="name headline">
+        <a class="post-title-link post-title-link-external" href="/2022/09/19/Unity/Houdini%E5%AF%BC%E5%87%BAfbxUVz%E9%80%9A%E9%81%93/" itemprop="url"></a>
+      </h1>
+      <div class="post-meta">
+        
+        <span class="post-date">
+          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2022-09-19T19:53:46+08:00">2022-09-19 19:53:46</time></span>
+        </span>
+        
+        
+        
+        
+        
+      </div>
+    </header>
+    <main class="post-main" itemprop="articleBody">
+      
+      <h1 id="Houdini无法导出UV-z通道"><a href="#Houdini无法导出UV-z通道" class="headerlink" title="Houdini无法导出UV.z通道"></a>Houdini无法导出UV.z通道</h1><p>目前希望在Houdini当中写入一些控制参数，在Unity中读取出来进行一些操作。</p>
+<p>法线当在Houdini中给uv的z通道写入数据时，在Unity当中无法读取出来。</p>
+<p>通过检查Houdini的输出FBX文件，发现Houdini的ROP FBXexport导出结点无法导出uv的z通道。</p>
+<p>目前的解决方案就是不适用。</p>
+<p>之后的方案可以考虑使用Houdini的API进行修改导出设置。</p>
+
+      
+      <p align="right"><a class="morebtn" href="/2022/09/19/Unity/Houdini%E5%AF%BC%E5%87%BAfbxUVz%E9%80%9A%E9%81%93/" title="">阅读全文</a></p>
+    </main>
+    <footer class="post-footer">
+      
+    </footer>
+  </article>
+  
+  <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
+    <div class="post-block">
+      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/09/19/Unity/HDRP%E6%B7%B1%E5%BA%A6%E7%BA%B9%E7%90%86/">
+      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <meta itemprop="name" content="leinlin">
+        <meta itemprop="description" content="">
+        <meta itemprop="image" content="/images/avatar.jpg">
+      </span>
+      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+        <meta itemprop="name" content="leinlin的小笔记">
+      </span>
+    </div>
+    <header class="post-header">
+      <h1 class="post-title" itemprop="name headline">
+        <a class="post-title-link post-title-link-external" href="/2022/09/19/Unity/HDRP%E6%B7%B1%E5%BA%A6%E7%BA%B9%E7%90%86/" itemprop="url"></a>
+      </h1>
+      <div class="post-meta">
+        
+        <span class="post-date">
+          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2022-09-19T19:53:46+08:00">2022-09-19 19:53:46</time></span>
+        </span>
+        
+        
+        
+        
+        
+      </div>
+    </header>
+    <main class="post-main" itemprop="articleBody">
+      
+      <h1 id="HDRP深度纹理"><a href="#HDRP深度纹理" class="headerlink" title="HDRP深度纹理"></a>HDRP深度纹理</h1><figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">/**</span><br><span class="hljs-comment">Auther : LZ</span><br><span class="hljs-comment">Date   : 2018</span><br><span class="hljs-comment">Description</span><br><span class="hljs-comment">*/</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="引子"><a href="#引子" class="headerlink" title="引子"></a>引子</h2><p>HDPR在内置纹理采样上使用了新的方式，网上并没有给出正确答案。并HDRP使用了HLSL语法和以往CG不同，所以资料很少。</p>
+<p>这里主要讲解一下HDRP的内置深度纹理采样和相关的HLSL语法。</p>
+<h2 id="DepthPyramid"><a href="#DepthPyramid" class="headerlink" title="DepthPyramid"></a>DepthPyramid</h2><p>HDRP的沿用了Legacy的_CameraDepthTexture之类的内置纹理名字，方便我们进行迁移，但是和原本采样方法产生了很大出入，下面详细解释。</p>
+<p> <strong>为了支持新的渲染效果，HDRP生成了多分辨率版本的深度图（DepthPyramid）</strong> 。即为Depth生成一个DepthPyramid。</p>
+<p>这张DepthPayermid并不是类似mip的多分辨率版本纹理（类似通过lod参数对mip采样,如下<em>代码1</em>），而是<strong>直接扩展了DepthBuffer的像素大小，把多个分辨率版本放在一张图中</strong>。例如：原本Detph是1024 * 533，为了在DepthPayermid当中保存多个分辨率版本，需要把DepthPayermid扩展到 1024 * 1024。下图是完整的DepthPayermid，最下面的绿框就是真正的depthtexture。</p>
+<p><img src="/../../images/img/depthp.bmp"></p>
+<figure class="hljs highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs hlsl">tex2D（tex,float4(texcoord.xy,0,lod）；//代码1 ： 对mip采样<br></code></pre></td></tr></table></figure>
+
+<p><strong>HDRP的_CameraDepthTexture指的是DepthPyramid而非DepthTexture</strong>  ，这样会需要一个很严重的问题。我们按照Legacy版本计算的 **屏幕纹理坐标[0,1] 对应的是整个DepthPyramid **。如何从DepthPyramid拿出最高层的Depth。</p>
+<p>根据HDRP的Decal源代码和DepthPyramid生成代码可以发现两个地方。</p>
+<ol>
+<li><p>DepthPyramid的最高层（DepthTexture）保存在左下角</p>
+</li>
+<li><p>DepthPyramid中最高层的分辨率和原本DepthTexture是一样的</p>
+<p> 所以我们可以 ** 通过像素位置进行采样 ** 而不是纹理坐标，也就是说：Depth中[12,12]这个像素，刚好在DepthPyramid[12,12]这个位置上。</p>
+<p> HLSL语法为我们提供了这个采样函数，而CG是做不到的（当然也可以想办法计算一个比例）：</p>
+</li>
+</ol>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs C">tex.load(texcoord);	<span class="hljs-comment">//代码2 ： 对使用像素位置采样</span><br></code></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/windows/desktop/direct3dhlsl/t2d-load-float-int-uint-">Load的hlslAPI链接</a></p>
+<p>下面就是计算屏幕的像素位置（而不是纹理坐标），又刚好SV_POSITION语意，就是我们要的。</p>
+<p>所以深度图的采样方式就是：</p>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c">_CameraDepthTexture.Load(sampler2D_CameraDepthTexture,positionSV);<br><span class="hljs-comment">//使用HDRP提供的宏就是：</span><br>LOAD_TEXTURE2D(_CameraDetphTexture, positionSV).x;<br><span class="hljs-comment">//其中positionSV就是的SV_POSITION对呀的值。</span><br></code></pre></td></tr></table></figure>
+
+<p>注：这种采样方式有个好处就是在Computeshader中可以很方便的和线程ID对应。整数计算效率更高。</p>
+<h2 id="关于HLSL语法"><a href="#关于HLSL语法" class="headerlink" title="关于HLSL语法"></a>关于HLSL语法</h2><p>很多渲染语法是CG不支持的，其中有两点比较重要：</p>
+<ol>
+<li><p>cg语法中sampler和texture无法分离，而一般GPU支持128个texture，只支持16个sampler，如果无法分离就导致我们只能最多用16个纹理。</p>
+</li>
+<li><p>无法用整数采样器，就是上面的DepthPyramid的问题。</p>
+</li>
+</ol>
+<p>最重要的不同就是采样语法：</p>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">//========cg==========</span><br>sampler2D tex1;<br>sampler2D tex2;<br><span class="hljs-comment">// 采样</span><br>tex2D(tex1,coord);<br>tex2D(tex2,coord);<br><span class="hljs-comment">//=========hlsl========</span><br>SamplerState sampler_tex;<br>Texture2D tex；<br>Texture2D tex1；<br><span class="hljs-comment">// 采样</span><br>tex.sample(sampler_tex,coord);<br>tex1.sample(sampler_tex,coord); <span class="hljs-comment">//复用采样器</span><br><span class="hljs-comment">//</span><br>tex1.load(coord); <span class="hljs-comment">// 直接读取像素</span><br><br></code></pre></td></tr></table></figure>
+
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><p>关于深度金字塔似乎是一种叫做 Interleaved Sampling的技术。</p>
+
+      
+      <p align="right"><a class="morebtn" href="/2022/09/19/Unity/HDRP%E6%B7%B1%E5%BA%A6%E7%BA%B9%E7%90%86/" title="">阅读全文</a></p>
+    </main>
+    <footer class="post-footer">
+      
+    </footer>
+  </article>
+  
+  <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
+    <div class="post-block">
+      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/09/19/Unity/hdrp%E5%B0%8F%E9%97%AE%E9%A2%98/">
+      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <meta itemprop="name" content="leinlin">
+        <meta itemprop="description" content="">
+        <meta itemprop="image" content="/images/avatar.jpg">
+      </span>
+      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+        <meta itemprop="name" content="leinlin的小笔记">
+      </span>
+    </div>
+    <header class="post-header">
+      <h1 class="post-title" itemprop="name headline">
+        <a class="post-title-link post-title-link-external" href="/2022/09/19/Unity/hdrp%E5%B0%8F%E9%97%AE%E9%A2%98/" itemprop="url"></a>
+      </h1>
+      <div class="post-meta">
+        
+        <span class="post-date">
+          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2022-09-19T19:53:46+08:00">2022-09-19 19:53:46</time></span>
+        </span>
+        
+        
+        
+        
+        
+      </div>
+    </header>
+    <main class="post-main" itemprop="articleBody">
+      
+      <h1 id="1-UnlitShader使用"><a href="#1-UnlitShader使用" class="headerlink" title="1.UnlitShader使用"></a>1.UnlitShader使用</h1><ol>
+<li><p>目前UnlitGraph支持主要的纹理、向量、颜色、顶点色、屏幕空间位置等各种基础参数的计算。</p>
+</li>
+<li><p>通过宏来切换不同效果的部分需要手写谢。</p>
+</li>
+<li><p>同时支持透明和不透明两种模式。</p>
+</li>
+<li><p><strong>扭曲distort，默认的Unlit shader已经可以使用</strong>，但是UnlitGraph没有提供，LitGraph有这个功能，所以未来应该会提供。</p>
+</li>
+</ol>
+<p>使用方式：HDRP创建er默认材质，Shader改成Hdrp&#x2F;Unlit，材质选项中Surface Type改成Transparent。此时材质下方出现了新的选项Transprency Input。打开Distortion，给出一张扭曲纹理，然后调节参数就可以看到扭曲效果。</p>
+<p><strong>注意</strong>：扭曲和渲染顺序无关，所有和扭曲材质重叠切没有渲染深度的材质，都会被扭曲。</p>
+<h1 id="2-LitShader"><a href="#2-LitShader" class="headerlink" title="2.LitShader"></a>2.LitShader</h1><ol>
+<li><p>Lit一共有两种扭曲方式：Refraction折射和Distortion变形。LitGraph也可以使用这两个功能</p>
+</li>
+<li><p>支持折射、扭曲，但是会带上光照。</p>
+</li>
+<li><p>Refraction：透明的Lit物体可以用折射功能（Unlit物体只可以选择是否被折射）。Lit物体如果要折射其他物体就不能被其他的物体折射。不透明物体可以选择是否被折射。可以用来实现类似冰冻怪物的效果。</p>
+</li>
+<li><p>Distortion：Unlit和透明的Lit都可以用。有扭曲的Unlit材质会扭曲任何和他重叠的无深度物体。</p>
+</li>
+</ol>
+<h1 id="3-Unlit贴花"><a href="#3-Unlit贴花" class="headerlink" title="3.Unlit贴花"></a>3.Unlit贴花</h1><ol>
+<li><p>默认的功能无法实现Unlit效果。我们需要自己实现Unlit Decal，理论上只要能够正确读取深度就可以渲染，不过需要研究一下渲染输出的buffer、渲染队列、已经新的深度读取方式。</p>
+</li>
+<li><p><strong>内置贴花支持模型贴花</strong>，一个Decal模型可以贴附在另一个模型上，可以有自己的UV。</p>
+</li>
+</ol>
+<h1 id="4-天空球编程"><a href="#4-天空球编程" class="headerlink" title="4.天空球编程"></a>4.天空球编程</h1><p>参考链接：<a target="_blank" rel="noopener" href="https://github.com/Unity-Technologies/ScriptableRenderPipeline/wiki/Writing-A-Custom-Sky-Renderer">天空球编程</a>，可以自由实现想要的天空球。</p>
+<p>#5.HDRP 自带天空球混合</p>
+<p>Unity Volume源代码中有实现HDRI插值的计划，见：TODO注释：</p>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs c">public <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">CubemapParameter</span> :</span> VolumeParameter&lt;Cubemap&gt;<br>&#123;<br>     public <span class="hljs-title function_">CubemapParameter</span><span class="hljs-params">(Cubemap value, <span class="hljs-type">bool</span> overrideState = <span class="hljs-literal">false</span>)</span><br>     : <span class="hljs-title function_">base</span><span class="hljs-params">(value, overrideState)</span> &#123;&#125;<br>     <span class="hljs-comment">// <span class="hljs-doctag">TODO:</span> Cubemap interpolation</span><br>&#125;<br><br>public <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">NoInterpCubemapParameter</span> :</span> VolumeParameter&lt;Cubemap&gt;<br>&#123;<br>    public <span class="hljs-title function_">NoInterpCubemapParameter</span><span class="hljs-params">(Cubemap value, <span class="hljs-type">bool</span> overrideState = <span class="hljs-literal">false</span>)</span><br>    : <span class="hljs-title function_">base</span><span class="hljs-params">(value, overrideState)</span> &#123;&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>Volume当中的不同天空球都可以实现各自的混合效果，不过Hdri目前没有实现完（如果是其他两种类型的天空球，当前版本已经可以实现插值）。cubemap在混合时实时计算插值，有一部分开销需要考虑。在HDRP6.0.0当中也还是没有实现，不知道Unity是出于什么考虑，一直没有给出Cubemap混合的代码。</p>
+<p>目前，<strong>我们实现这部分代码就可以直接使用Volume当中的天空球插值</strong>。</p>
+<p>#6.关于特效和渲染队列</p>
+<p>之前美术手动调节了材质上的渲染队列来实现不同的特效。现在渲染队列的机制有一些改动，在不熟悉之前最好不要手动设置队列（默认材质都是不能调节的，只能修改<strong>渲染优先级Sort Priority</strong>），通过Shader Graph创建的可以手动设置。</p>
+<p>现在，在不透明物体渲染阶段，不会渲染2650以上的物体（看源代码得到的结果，在以前只要有队列，就会按照队列顺序渲染），反之亦然。</p>
+<p>HDRP理论上不建议手动调整材质顺序，因为这个顺序不在单纯的是顺序，还涉及到各种特殊的效果。</p>
+<p>2650-2850用来渲染被折射的透明物体，这个都是通过设置自动配置的，在不熟悉引擎之前不要修改材质队列。</p>
+<p>2900-3100是一把透明物体。</p>
+<p>2850到2900之间会出现奇怪的变化，Unity没有给出这部分渲染的是什么。</p>
+<p>2000到2500是不透明物体。这个队列以外的不透明物体不会渲染。</p>
+<p>2000以下什么都不会渲染（以前都是可以渲染的）。</p>
+<p><strong>现在的状态就是：如果没有把队列和物体类型匹配就会出现不可预知的结果。</strong></p>
+<p>下面是控制渲染队列的代码。</p>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><code class="hljs c">public <span class="hljs-class"><span class="hljs-keyword">enum</span> <span class="hljs-title">Priority</span></span><br><span class="hljs-class">        &#123;</span><br>            Background = UnityEngine.Rendering.RenderQueue.Background,<br>            Opaque = UnityEngine.Rendering.RenderQueue.Geometry,<br>            OpaqueAlphaTest = UnityEngine.Rendering.RenderQueue.AlphaTest,<br>            <span class="hljs-comment">// Warning: we must not change Geometry last value to stay compatible with occlusion</span><br>            OpaqueLast = UnityEngine.Rendering.RenderQueue.GeometryLast,<br>            <span class="hljs-comment">// For transparent pass we define a range of 200 value to define the priority</span><br>            <span class="hljs-comment">// Warning: Be sure no range are overlapping</span><br>            PreRefractionFirst = <span class="hljs-number">2750</span> - k_TransparentPriorityQueueRange,<br>            PreRefraction = <span class="hljs-number">2750</span>,<br>            PreRefractionLast = <span class="hljs-number">2750</span> + k_TransparentPriorityQueueRange,<br>            TransparentFirst = UnityEngine.Rendering.RenderQueue.Transparent - k_TransparentPriorityQueueRange,<br>            Transparent = UnityEngine.Rendering.RenderQueue.Transparent,<br>            TransparentLast = UnityEngine.Rendering.RenderQueue.Transparent + k_TransparentPriorityQueueRange,<br>            Overlay = UnityEngine.Rendering.RenderQueue.Overlay<br>        &#125;<br><br>RenderQueueRange k_RenderQueue_OpaqueNoAlphaTest = <br>    new RenderQueueRange &#123; min = (<span class="hljs-type">int</span>)Priority.Opaque, <br>                          max = (<span class="hljs-type">int</span>)Priority.OpaqueAlphaTest - <span class="hljs-number">1</span> &#125;;<br><br>RenderQueueRange k_RenderQueue_OpaqueAlphaTest = <br>    new RenderQueueRange &#123; min = (<span class="hljs-type">int</span>)Priority.OpaqueAlphaTest, <br>                          max = (<span class="hljs-type">int</span>)Priority.OpaqueLast &#125;;<br><br>RenderQueueRange k_RenderQueue_AllOpaque = new RenderQueueRange &#123; <br>    min = (<span class="hljs-type">int</span>)Priority.Opaque,<br>    max = (<span class="hljs-type">int</span>)Priority.OpaqueLast &#125;;<br><br>RenderQueueRange k_RenderQueue_PreRefraction = new RenderQueueRange &#123; <br>    min = (<span class="hljs-type">int</span>)Priority.PreRefractionFirst, <br>    max = (<span class="hljs-type">int</span>)Priority.PreRefractionLast &#125;;<br><br>RenderQueueRange k_RenderQueue_Transparent = new RenderQueueRange &#123; <br>    min = (<span class="hljs-type">int</span>)Priority.TransparentFirst, <br>    max = (<span class="hljs-type">int</span>)Priority.TransparentLast &#125;;<br><br>RenderQueueRange k_RenderQueue_AllTransparent = new RenderQueueRange &#123; <br>    min = (<span class="hljs-type">int</span>)Priority.PreRefractionFirst, <br>    max = (<span class="hljs-type">int</span>)Priority.TransparentLast &#125;;<br><br>RenderQueueRange k_RenderQueue_All = new RenderQueueRange &#123; min = <span class="hljs-number">0</span>, max = <span class="hljs-number">5000</span> &#125;;<br>    &#125;<br></code></pre></td></tr></table></figure>
+
+
+      
+      <p align="right"><a class="morebtn" href="/2022/09/19/Unity/hdrp%E5%B0%8F%E9%97%AE%E9%A2%98/" title="">阅读全文</a></p>
+    </main>
+    <footer class="post-footer">
+      
+    </footer>
+  </article>
+  
+  <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
+    <div class="post-block">
+      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/09/19/Unity/HDRP%E4%B8%ADShaderGraph%E7%94%9F%E6%88%90%E7%9A%84UnlitTransparent%E4%B8%8D%E6%8E%A5%E5%8F%97%E9%9B%BE/">
+      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <meta itemprop="name" content="leinlin">
+        <meta itemprop="description" content="">
+        <meta itemprop="image" content="/images/avatar.jpg">
+      </span>
+      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+        <meta itemprop="name" content="leinlin的小笔记">
+      </span>
+    </div>
+    <header class="post-header">
+      <h1 class="post-title" itemprop="name headline">
+        <a class="post-title-link post-title-link-external" href="/2022/09/19/Unity/HDRP%E4%B8%ADShaderGraph%E7%94%9F%E6%88%90%E7%9A%84UnlitTransparent%E4%B8%8D%E6%8E%A5%E5%8F%97%E9%9B%BE/" itemprop="url"></a>
+      </h1>
+      <div class="post-meta">
+        
+        <span class="post-date">
+          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2022-09-19T19:53:46+08:00">2022-09-19 19:53:46</time></span>
+        </span>
+        
+        
+        
+        
+        
+      </div>
+    </header>
+    <main class="post-main" itemprop="articleBody">
+      
+      <h1 id="HDRP中ShaderGraph生成的UnlitTransparent不接受雾"><a href="#HDRP中ShaderGraph生成的UnlitTransparent不接受雾" class="headerlink" title="HDRP中ShaderGraph生成的UnlitTransparent不接受雾"></a>HDRP中ShaderGraph生成的UnlitTransparent不接受雾</h1><h2 id="问题："><a href="#问题：" class="headerlink" title="问题："></a>问题：</h2><p>在开发UV云的过程中，使用了ShaderGraph来创建Shader。</p>
+<p>发现使用Unlit节点的Transparent模式，会出现物体不接收雾的情况（即使打开了Recive Fog）。</p>
+<p>但是Lit节点的Transparent模式是正常的。</p>
+<h2 id="解决方案："><a href="#解决方案：" class="headerlink" title="解决方案："></a>解决方案：</h2><p>通过阅读代码发现：</p>
+<p>雾的计算在文件AtmosphericScattering.hlsl中：</p>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs c">float4 <span class="hljs-title function_">EvaluateAtmosphericScattering</span><span class="hljs-params">(PositionInputs posInput, float3 V)</span><br>&#123;<br>    <span class="hljs-comment">// <span class="hljs-doctag">TODO:</span> do not recompute this, but rather pass it directly.</span><br>    <span class="hljs-type">float</span> fragDist = distance(posInput.positionWS, GetCurrentViewPosition());<br><br>    ...<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>这里最重要的内容是posInput.positionWS。出错的原因就是posInput.positionWS当中没有值。</p>
+<p>所以导致计算雾深度的时候结果是0。</p>
+<p>ShaderGraph生成的代码当中，在Vertex片段中VertMesh函数（所有的HDRP内置shader都走这个shader函数计算vertex信息）已经计算了世界坐标，但是没有被传递到Fragment当中。因为ShaderGraph当中判断他不需要世界坐标。</p>
+<p>VertMesh函数位于VertMesh.hlsl当中：</p>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs c"><br>VaryingsMeshType <span class="hljs-title function_">VertMesh</span><span class="hljs-params">(AttributesMesh input)</span><br>&#123;<br>    VaryingsMeshType output;<br>	...<br>    <span class="hljs-comment">// This return the camera relative position (if enable)</span><br>    float3 positionRWS = TransformObjectToWorld(input.positionOS);<br>    ...<br>    <br><span class="hljs-meta">#<span class="hljs-keyword">ifdef</span> TESSELLATION_ON</span><br>    output.positionRWS = positionRWS;<br>	...<br><span class="hljs-meta">#<span class="hljs-keyword">else</span></span><br>    <span class="hljs-meta">#<span class="hljs-keyword">ifdef</span> VARYINGS_NEED_POSITION_WS</span><br>    output.positionRWS = positionRWS;<br>    <span class="hljs-meta">#<span class="hljs-keyword">endif</span></span><br>    output.positionCS = TransformWorldToHClip(positionRWS);<br>	...<br><span class="hljs-meta">#<span class="hljs-keyword">endif</span></span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>下面是ShaderGraph生成的传递函数和结构体，法线并没有世界坐标：</p>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// Generated Type: VaryingsMeshToPS</span><br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">VaryingsMeshToPS</span> &#123;</span><br>    float4 positionCS : SV_Position;<br>    <span class="hljs-meta">#<span class="hljs-keyword">if</span> UNITY_ANY_INSTANCING_ENABLED</span><br>    uint instanceID : CUSTOM_INSTANCE_ID;<br>    <span class="hljs-meta">#<span class="hljs-keyword">endif</span> <span class="hljs-comment">// UNITY_ANY_INSTANCING_ENABLED</span></span><br>&#125;;<br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">PackedVaryingsMeshToPS</span> &#123;</span><br>    float4 positionCS : SV_Position; <span class="hljs-comment">// unpacked</span><br>    <span class="hljs-meta">#<span class="hljs-keyword">if</span> UNITY_ANY_INSTANCING_ENABLED</span><br>    uint instanceID : CUSTOM_INSTANCE_ID; <span class="hljs-comment">// unpacked</span><br>    <span class="hljs-meta">#<span class="hljs-keyword">endif</span> <span class="hljs-comment">// UNITY_ANY_INSTANCING_ENABLED</span></span><br>&#125;;<br>PackedVaryingsMeshToPS <span class="hljs-title function_">PackVaryingsMeshToPS</span><span class="hljs-params">(VaryingsMeshToPS input)</span><br>&#123;<br>    PackedVaryingsMeshToPS output;<br>    output.positionCS = input.positionCS;<br>    <span class="hljs-meta">#<span class="hljs-keyword">if</span> UNITY_ANY_INSTANCING_ENABLED</span><br>    output.instanceID = input.instanceID;<br>    <span class="hljs-meta">#<span class="hljs-keyword">endif</span> <span class="hljs-comment">// UNITY_ANY_INSTANCING_ENABLED</span></span><br>    <span class="hljs-keyword">return</span> output;<br>&#125;<br>VaryingsMeshToPS <span class="hljs-title function_">UnpackVaryingsMeshToPS</span><span class="hljs-params">(PackedVaryingsMeshToPS input)</span><br>&#123;<br>    VaryingsMeshToPS output;<br>    output.positionCS = input.positionCS;<br>    <span class="hljs-meta">#<span class="hljs-keyword">if</span> UNITY_ANY_INSTANCING_ENABLED</span><br>    output.instanceID = input.instanceID;<br>    <span class="hljs-meta">#<span class="hljs-keyword">endif</span> <span class="hljs-comment">// UNITY_ANY_INSTANCING_ENABLED</span></span><br>    <span class="hljs-keyword">return</span> output;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>在ShaderGraph当中使用一次世界坐标：</p>
+<p><img src="/img/201975-114401.jpg" alt="201975-114401"></p>
+<p>然后在观察生成的代码，出现了世界坐标，再看场景雾就正常了：</p>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// Generated Type: VaryingsMeshToPS</span><br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">VaryingsMeshToPS</span> &#123;</span><br>    float4 positionCS : SV_Position;<br>    float3 positionRWS; <span class="hljs-comment">// optional</span><br>    <span class="hljs-meta">#<span class="hljs-keyword">if</span> UNITY_ANY_INSTANCING_ENABLED</span><br>    uint instanceID : CUSTOM_INSTANCE_ID;<br>    <span class="hljs-meta">#<span class="hljs-keyword">endif</span> <span class="hljs-comment">// UNITY_ANY_INSTANCING_ENABLED</span></span><br>&#125;;<br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">PackedVaryingsMeshToPS</span> &#123;</span><br>    float3 interp00 : TEXCOORD0; <span class="hljs-comment">// auto-packed</span><br>    float4 positionCS : SV_Position; <span class="hljs-comment">// unpacked</span><br>    <span class="hljs-meta">#<span class="hljs-keyword">if</span> UNITY_ANY_INSTANCING_ENABLED</span><br>    uint instanceID : CUSTOM_INSTANCE_ID; <span class="hljs-comment">// unpacked</span><br>    <span class="hljs-meta">#<span class="hljs-keyword">endif</span> <span class="hljs-comment">// UNITY_ANY_INSTANCING_ENABLED</span></span><br>&#125;;<br>PackedVaryingsMeshToPS <span class="hljs-title function_">PackVaryingsMeshToPS</span><span class="hljs-params">(VaryingsMeshToPS input)</span><br>&#123;<br>    PackedVaryingsMeshToPS output;<br>    output.positionCS = input.positionCS;<br>    output.interp00.xyz = input.positionRWS;<br>    <span class="hljs-meta">#<span class="hljs-keyword">if</span> UNITY_ANY_INSTANCING_ENABLED</span><br>    output.instanceID = input.instanceID;<br>    <span class="hljs-meta">#<span class="hljs-keyword">endif</span> <span class="hljs-comment">// UNITY_ANY_INSTANCING_ENABLED</span></span><br>    <span class="hljs-keyword">return</span> output;<br>&#125;<br>VaryingsMeshToPS <span class="hljs-title function_">UnpackVaryingsMeshToPS</span><span class="hljs-params">(PackedVaryingsMeshToPS input)</span><br>&#123;<br>    VaryingsMeshToPS output;<br>    output.positionCS = input.positionCS;<br>    output.positionRWS = input.interp00.xyz;<br>    <span class="hljs-meta">#<span class="hljs-keyword">if</span> UNITY_ANY_INSTANCING_ENABLED</span><br>    output.instanceID = input.instanceID;<br>    <span class="hljs-meta">#<span class="hljs-keyword">endif</span> <span class="hljs-comment">// UNITY_ANY_INSTANCING_ENABLED</span></span><br>    <span class="hljs-keyword">return</span> output;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h2><p>shader代码hlsl的包含调用关系比较复杂。</p>
+
+      
+      <p align="right"><a class="morebtn" href="/2022/09/19/Unity/HDRP%E4%B8%ADShaderGraph%E7%94%9F%E6%88%90%E7%9A%84UnlitTransparent%E4%B8%8D%E6%8E%A5%E5%8F%97%E9%9B%BE/" title="">阅读全文</a></p>
+    </main>
+    <footer class="post-footer">
+      
+    </footer>
+  </article>
+  
+  <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
+    <div class="post-block">
+      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/09/19/Unity/HDRP%E4%B8%ADHairShader%E4%BB%A3%E7%A0%81%E7%BB%93%E6%9E%842/">
+      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <meta itemprop="name" content="leinlin">
+        <meta itemprop="description" content="">
+        <meta itemprop="image" content="/images/avatar.jpg">
+      </span>
+      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+        <meta itemprop="name" content="leinlin的小笔记">
+      </span>
+    </div>
+    <header class="post-header">
+      <h1 class="post-title" itemprop="name headline">
+        <a class="post-title-link post-title-link-external" href="/2022/09/19/Unity/HDRP%E4%B8%ADHairShader%E4%BB%A3%E7%A0%81%E7%BB%93%E6%9E%842/" itemprop="url"></a>
+      </h1>
+      <div class="post-meta">
+        
+        <span class="post-date">
+          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2022-09-19T19:53:46+08:00">2022-09-19 19:53:46</time></span>
+        </span>
+        
+        
+        
+        
+        
+      </div>
+    </header>
+    <main class="post-main" itemprop="articleBody">
+      
+      <h3 id="HairShader光照模型"><a href="#HairShader光照模型" class="headerlink" title="HairShader光照模型"></a>HairShader光照模型</h3><p>创建ShaderGraph:</p>
+<p>定义的内容</p>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">define</span> SHADERPASS SHADERPASS_FORWARD</span><br><span class="hljs-meta">#<span class="hljs-keyword">pragma</span> multi_compile _ DEBUG_DISPLAY</span><br><span class="hljs-meta">#<span class="hljs-keyword">pragma</span> multi_compile _ LIGHTMAP_ON</span><br><span class="hljs-meta">#<span class="hljs-keyword">pragma</span> multi_compile _ DIRLIGHTMAP_COMBINED</span><br><span class="hljs-meta">#<span class="hljs-keyword">pragma</span> multi_compile _ DYNAMICLIGHTMAP_ON</span><br><span class="hljs-meta">#<span class="hljs-keyword">pragma</span> multi_compile _ SHADOWS_SHADOWMASK</span><br><span class="hljs-meta">#<span class="hljs-keyword">pragma</span> multi_compile DECALS_OFF DECALS_3RT DECALS_4RT</span><br><span class="hljs-meta">#<span class="hljs-keyword">pragma</span> multi_compile USE_FPTL_LIGHTLIST USE_CLUSTERED_LIGHTLIST</span><br><span class="hljs-meta">#<span class="hljs-keyword">pragma</span> multi_compile SHADOW_LOW SHADOW_MEDIUM SHADOW_HIGH SHADOW_VERY_HIGH</span><br></code></pre></td></tr></table></figure>
+
+<p>include文件</p>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;Packages/com.unity.render-pipelines.core/ShaderLibrary/Common.hlsl&quot;</span></span><br>        <br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;Packages/com.unity.render-pipelines.core/ShaderLibrary/NormalSurfaceGradient.hlsl&quot;</span></span><br>        <br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;Packages/com.unity.render-pipelines.high-definition/Runtime/RenderPipeline/ShaderPass/FragInputs.hlsl&quot;</span></span><br><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;Packages/com.unity.render-pipelines.high-definition/Runtime/RenderPipeline/ShaderPass/ShaderPass.cs.hlsl&quot;</span></span><br><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;Packages/com.unity.render-pipelines.high-definition/Runtime/ShaderLibrary/ShaderVariables.hlsl&quot;</span></span><br><br><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;Packages/com.unity.render-pipelines.high-definition/Runtime/Material/Material.hlsl&quot;</span></span><br><br><span class="hljs-comment">// 这个在前面定义了</span><br><span class="hljs-meta">#<span class="hljs-keyword">if</span> (SHADERPASS == SHADERPASS_FORWARD)</span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;Packages/com.unity.render-pipelines.high-definition/Runtime/Lighting/Lighting.hlsl&quot;</span></span><br><br>    <span class="hljs-meta">#<span class="hljs-keyword">define</span> HAS_LIGHTLOOP</span><br><br>    <span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;Packages/com.unity.render-pipelines.high-definition/Runtime/Lighting/LightLoop/LightLoopDef.hlsl&quot;</span></span><br>    <span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;Packages/com.unity.render-pipelines.high-definition/Runtime/Material/Hair/Hair.hlsl&quot;</span></span><br>    <span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;Packages/com.unity.render-pipelines.high-definition/Runtime/Lighting/LightLoop/LightLoop.hlsl&quot;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">else</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;Packages/com.unity.render-pipelines.high-definition/Runtime/Material/Hair/Hair.hlsl&quot;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">endif</span></span><br><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;Packages/com.unity.render-pipelines.high-definition/Runtime/Material/BuiltinUtilities.hlsl&quot;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;Packages/com.unity.render-pipelines.high-definition/Runtime/Material/MaterialUtilities.hlsl&quot;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;Packages/com.unity.render-pipelines.high-definition/Runtime/Material/Decal/DecalUtilities.hlsl&quot;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;Packages/com.unity.render-pipelines.high-definition/Runtime/ShaderLibrary/ShaderGraphFunctions.hlsl&quot;</span></span><br></code></pre></td></tr></table></figure>
+
+<p>和头发表面相关的参数，这个函数主要是ShaderGraph的输入</p>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs c">SurfaceDescription <span class="hljs-title function_">SurfaceDescriptionFunction</span><span class="hljs-params">(SurfaceDescriptionInputs IN)</span><br>&#123;<br>    SurfaceDescription surface = (SurfaceDescription)<span class="hljs-number">0</span>;<br>    surface.Albedo = float3(<span class="hljs-number">0.7353569</span>, <span class="hljs-number">0.7353569</span>, <span class="hljs-number">0.7353569</span>);<br>    surface.Normal = IN.TangentSpaceNormal;<br>    surface.BentNormal = IN.TangentSpaceNormal;<br>    surface.HairStrandDirection = float3 (<span class="hljs-number">0</span>,<span class="hljs-number">-1</span>,<span class="hljs-number">0</span>); <span class="hljs-comment">//头发走向</span><br>    surface.Occlusion = <span class="hljs-number">1</span>;<br>    surface.Alpha = <span class="hljs-number">1</span>;<br>    <br>    <span class="hljs-comment">// 用于就算高光的内容：高光的颜色，粗糙的，高光的Shift</span><br>    surface.SpecularTint = float3(<span class="hljs-number">1</span>, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>);<br>    surface.Smoothness = <span class="hljs-number">0.5</span>;<br>    surface.SpecularShift = <span class="hljs-number">0.1</span>;<br>    <br>    surface.SecondarySpecularTint =  float3(<span class="hljs-number">0.5</span>, <span class="hljs-number">0.5</span>, <span class="hljs-number">0.5</span>) ;<br>    surface.SecondarySmoothness = <span class="hljs-number">0.5</span>;<br>    surface.SecondarySpecularShift = <span class="hljs-number">-0.1</span>;<br>    <span class="hljs-keyword">return</span> surface;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>上面的的函数在GetSurfaceAndBuiltinData函数当中调用。</p>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">void</span> <span class="hljs-title function_">GetSurfaceAndBuiltinData</span><span class="hljs-params">(FragInputs fragInputs, inout SurfaceDescription surfaceDescription, float3 V, PositionInputs posInput, out SurfaceData surfaceData, out float3 bentNormalWS)</span><br>&#123;<br>    ...<br>	<br>    <span class="hljs-comment">// 双面处理</span><br>    float3 doubleSidedConstants = float3(<span class="hljs-number">1.0</span>, <span class="hljs-number">1.0</span>, <span class="hljs-number">1.0</span>);<br>    ApplyDoubleSidedFlipOrMirror(fragInputs, doubleSidedConstants);<br>	<br>    <span class="hljs-comment">// 基本的Normal 切线之类的</span><br>    SurfaceDescriptionInputs surfaceDescriptionInputs = FragInputsToSurfaceDescriptionInputs(fragInputs, V);<br>    <br>    <span class="hljs-comment">// 表面信息 高光 粗糙度 从Graph当中读取</span><br>    SurfaceDescription surfaceDescription = SurfaceDescriptionFunction(surfaceDescriptionInputs);<br><br>    <span class="hljs-comment">// 将信息写入到 需要计算的两个结构体当中</span><br>    float3 bentNormalWS;<br>    BuildSurfaceData(fragInputs, surfaceDescription, V, posInput, surfaceData, bentNormalWS);<br><br>    <span class="hljs-comment">// Builtin Data</span><br>    <span class="hljs-comment">// For back lighting we use the oposite vertex normal  背面的光使用相反的法线，主要用来采样GI？</span><br>    InitBuiltinData(surfaceDescription.Alpha, bentNormalWS, -fragInputs.worldToTangent[<span class="hljs-number">2</span>]<span class="hljs-comment">/*这部分内容是反向法线*/</span>, fragInputs.positionRWS, fragInputs.texCoord1, fragInputs.texCoord2, builtinData);<br>        <br><br>    PostInitBuiltinData(V, posInput, surfaceData, builtinData);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<p>BuilSurfaceData()</p>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">void</span> <span class="hljs-title function_">BuildSurfaceData</span><span class="hljs-params">(FragInputs fragInputs, inout SurfaceDescription surfaceDescription, float3 V, PositionInputs posInput, out SurfaceData surfaceData, out float3 bentNormalWS)</span><br>&#123;<br>   	<span class="hljs-comment">// 初始化</span><br>    ZERO_INITIALIZE(SurfaceData, surfaceData);<br><br>    <span class="hljs-comment">// copy across graph values, if defined 直接复制ShaderGraph的内容</span><br>    surfaceData.diffuseColor =                  surfaceDescription.Albedo;<br>    surfaceData.ambientOcclusion =              surfaceDescription.Occlusion; <span class="hljs-comment">// AO</span><br><br>    <span class="hljs-comment">// 两组高光相关的内容</span><br>    surfaceData.perceptualSmoothness =          surfaceDescription.Smoothness; <span class="hljs-comment">// 粗糙度 </span><br>    surfaceData.specularTint =                  surfaceDescription.SpecularTint;<br>    surfaceData.specularShift =                 surfaceDescription.SpecularShift;<br><br>    surfaceData.secondaryPerceptualSmoothness = surfaceDescription.SecondarySmoothness;<br>    surfaceData.secondarySpecularTint =         surfaceDescription.SecondarySpecularTint;<br>    surfaceData.secondarySpecularShift =        surfaceDescription.SecondarySpecularShift;<br><br>    <span class="hljs-comment">// These static material feature allow compile time optimization</span><br>    surfaceData.materialFeatures = <span class="hljs-number">0</span>;<br><br>    <span class="hljs-comment">// 材质特性：头发的透光以及头发的 SSS效果</span><br>    <span class="hljs-meta">#<span class="hljs-keyword">ifdef</span> _MATERIAL_FEATURE_HAIR_KAJIYA_KAY</span><br>    surfaceData.materialFeatures = MATERIALFEATUREFLAGS_HAIR_KAJIYA_KAY;<br>    <span class="hljs-meta">#<span class="hljs-keyword">endif</span></span><br><br>    <span class="hljs-meta">#<span class="hljs-keyword">ifdef</span> _MATERIAL_FEATURE_SUBSURFACE_SCATTERING</span><br>    surfaceData.materialFeatures |= MATERIALFEATUREFLAGS_HAIR_SUBSURFACE_SCATTERING;<br>    <span class="hljs-meta">#<span class="hljs-keyword">endif</span></span><br><br>    <span class="hljs-meta">#<span class="hljs-keyword">ifdef</span> _MATERIAL_FEATURE_TRANSMISSION</span><br>    surfaceData.materialFeatures |= MATERIALFEATUREFLAGS_HAIR_TRANSMISSION;<br>    <span class="hljs-meta">#<span class="hljs-keyword">endif</span></span><br>    <br><br>    <span class="hljs-comment">// 法线 切线</span><br>    float3 doubleSidedConstants = float3(<span class="hljs-number">1.0</span>, <span class="hljs-number">1.0</span>, <span class="hljs-number">1.0</span>);<br>    <span class="hljs-comment">// tangent-space normal</span><br>    float3 normalTS = float3(<span class="hljs-number">0.0f</span>, <span class="hljs-number">0.0f</span>, <span class="hljs-number">1.0f</span>);<br>    normalTS = surfaceDescription.Normal;<br>    <span class="hljs-comment">// compute world space normal</span><br>    GetNormalWS(fragInputs, normalTS, surfaceData.normalWS, doubleSidedConstants);<br>    bentNormalWS = surfaceData.normalWS;<br>    surfaceData.geomNormalWS = fragInputs.worldToTangent[<span class="hljs-number">2</span>];<br><br>    <span class="hljs-comment">// For a typical Unity quad, you have tangent vectors pointing to the right (X axis),</span><br>    <span class="hljs-comment">// and bitangent vectors pointing up (Y axis).</span><br>    <span class="hljs-comment">// The current hair setup uses mesh cards (e.g. quads).</span><br>    <span class="hljs-comment">// Hair is usually painted top-down, from the root to the tip.</span><br>    <span class="hljs-comment">// Therefore, DefaultHairStrandTangent = -MeshCardBitangent. // &lt;==这句话关键</span><br>    <span class="hljs-comment">// Both the SurfaceData and the BSDFData store the hair tangent</span><br>    <span class="hljs-comment">// (which represents the hair strand direction, root to tip). // 头发的方向</span><br>    surfaceData.hairStrandDirectionWS = -fragInputs.worldToTangent[<span class="hljs-number">1</span>].xyz;<br>    <span class="hljs-comment">// The hair strand direction texture contains tangent-space vectors.</span><br>    <span class="hljs-comment">// We use the same convention for the texture, which means that</span><br>    <span class="hljs-comment">// to get the default behavior (DefaultHairStrandTangent = -MeshCardBitangent),</span><br>    <span class="hljs-comment">// the artist has to paint (0, -1, 0).</span><br>    <span class="hljs-comment">// <span class="hljs-doctag">TODO:</span> pending artist feedback...</span><br>    <span class="hljs-comment">// The original Kajiya-Kay BRDF model expects an orthonormal TN frame.</span><br>    <span class="hljs-comment">// Since we use the tangent shift hack </span><br>    <br>    <span class="hljs-comment">// 这个文档需要看一下</span><br>    <span class="hljs-comment">// (http://web.engr.oregonstate.edu/~mjb/cs519/Projects/Papers/HairRendering.pdf),</span><br>    <span class="hljs-comment">// we may as well not bother to orthonormalize anymore.</span><br>    <span class="hljs-comment">// The tangent should still be a unit vector, though.</span><br>    surfaceData.hairStrandDirectionWS = normalize(surfaceData.hairStrandDirectionWS);<br><br>    <span class="hljs-comment">// By default we use the ambient occlusion with Tri-ace trick (apply outside) for specular occlusion.</span><br>    <span class="hljs-comment">// If user provide bent normal then we process a better term</span><br>    surfaceData.specularOcclusion = <span class="hljs-number">1.0</span>;<br>	<br>    <span class="hljs-comment">// 下面有一部分是计算 specularOcclusion的</span><br>	..........<br>        <br>    <span class="hljs-comment">// 下面是计算GAA的，后面需要看一下</span><br><br>    <span class="hljs-comment">// Propagate the geometry normal</span><br>    surfaceData.geomNormalWS = fragInputs.worldToTangent[<span class="hljs-number">2</span>];<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>其他部分的计算最终都会归结到BSDF函数</p>
+<figure class="hljs highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">void BSDF(  float3 V, float3 L, float NdotL, float3 positionWS, PreLightData preLightData, BSDFData bsdfData,<br>            out float3 diffuseLighting,<br>            out float3 specularLighting)<br>&#123;<br>	//preLightData	当中比较重要的就用到了NdotV<br>    float LdotV, NdotH, LdotH, NdotV, invLenLV;<br>    GetBSDFAngle(V, L, NdotL, preLightData.NdotV, LdotV, NdotH, LdotH, NdotV, invLenLV);<br><br>    if (HasFlag(bsdfData.materialFeatures, MATERIALFEATUREFLAGS_HAIR_KAJIYA_KAY))<br>    &#123;<br>    	// 颜色以高光为主<br>        float3 t1 = ShiftTangent(bsdfData.hairStrandDirectionWS, bsdfData.normalWS, bsdfData.specularShift);<br>        float3 t2 = ShiftTangent(bsdfData.hairStrandDirectionWS, bsdfData.normalWS, bsdfData.secondarySpecularShift);<br><br>        float3 H = (L + V) * invLenLV;<br><br>        float3 hairSpec1 = bsdfData.specularTint * D_KajiyaKay(t1, H, bsdfData.specularExponent);<br>        float3 hairSpec2 = bsdfData.secondarySpecularTint * D_KajiyaKay(t2, H, bsdfData.secondarySpecularExponent);<br><br>        float3 F = F_Schlick(bsdfData.fresnel0, LdotH);<br>        specularLighting = F * (hairSpec1 + hairSpec2);<br><br>        // Diffuse lighting<br>        // #define INV_PI      0.31830988618379067154<br>        float diffuseTerm = Lambert();  // 漫反射项的强度<br>        diffuseLighting = diffuseTerm;<br>    &#125;<br>    else<br>    &#123;<br>        specularLighting = float3(0.0, 0.0, 0.0);<br>        diffuseLighting = float3(0.0, 0.0, 0.0);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>高光</p>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs c">float3 <span class="hljs-title function_">D_KajiyaKay</span><span class="hljs-params">(float3 T, float3 H, <span class="hljs-type">float</span> specularExponent)</span><br>&#123;<br>    <span class="hljs-type">float</span> TdotH = dot(T, H);<br>    <span class="hljs-type">float</span> sinTHSq = saturate(<span class="hljs-number">1.0</span> - (TdotH * TdotH));<br><br>    <span class="hljs-type">float</span> dirAttn = saturate(TdotH + <span class="hljs-number">1.0</span>);<br><br>    <span class="hljs-keyword">return</span> dirAttn * PositivePow(sinTHSq, specularExponent);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>和BSDF相关的内容</p>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// return usual BSDF angle</span><br><span class="hljs-type">void</span> <span class="hljs-title function_">GetBSDFAngle</span><span class="hljs-params">(float3 V, float3 L, <span class="hljs-type">float</span> NdotL, <span class="hljs-type">float</span> unclampNdotV, out <span class="hljs-type">float</span> LdotV, out <span class="hljs-type">float</span> NdotH, out <span class="hljs-type">float</span> LdotH, out <span class="hljs-type">float</span> clampNdotV, out <span class="hljs-type">float</span> invLenLV)</span><br>&#123;<br>    <span class="hljs-comment">// Optimized math. Ref: PBR Diffuse Lighting for GGX + Smith Microsurfaces (slide 114).</span><br>    LdotV = dot(L, V);<br>    invLenLV = rsqrt(max(<span class="hljs-number">2.0</span> * LdotV + <span class="hljs-number">2.0</span>, FLT_EPS));    <span class="hljs-comment">// invLenLV = rcp(length(L + V)), clamp to avoid rsqrt(0) = inf, inf * 0 = NaN</span><br>    NdotH = saturate((NdotL + unclampNdotV) * invLenLV);        <span class="hljs-comment">// Do not clamp NdotV here</span><br>    LdotH = saturate(invLenLV * LdotV + invLenLV);<br>    clampNdotV = ClampNdotV(unclampNdotV);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// 平滑度到粗糙度</span><br>real <span class="hljs-title function_">PerceptualSmoothnessToPerceptualRoughness</span><span class="hljs-params">(real perceptualSmoothness)</span><br>&#123;<br>    <span class="hljs-keyword">return</span> (<span class="hljs-number">1.0</span> - perceptualSmoothness);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c">real <span class="hljs-title function_">PerceptualRoughnessToRoughness</span><span class="hljs-params">(real perceptualRoughness)</span><br>&#123;<br>    <span class="hljs-keyword">return</span> perceptualRoughness * perceptualRoughness;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>Bsdf数据当中需要的内容“</p>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><code class="hljs c"><br>BSDFData <span class="hljs-title function_">ConvertSurfaceDataToBSDFData</span><span class="hljs-params">(uint2 positionSS, SurfaceData surfaceData)</span><br>&#123;<br>    BSDFData bsdfData;<br>    ZERO_INITIALIZE(BSDFData, bsdfData);<br><br>    <span class="hljs-comment">// IMPORTANT: All enable flags are statically know at compile time, so the compiler can do compile time optimization</span><br>    bsdfData.materialFeatures = surfaceData.materialFeatures;<br><br>    bsdfData.ambientOcclusion = surfaceData.ambientOcclusion;<br>    bsdfData.specularOcclusion = surfaceData.specularOcclusion;<br><br>    bsdfData.diffuseColor = surfaceData.diffuseColor;<br><br>    bsdfData.normalWS = surfaceData.normalWS;<br>    bsdfData.geomNormalWS = surfaceData.geomNormalWS;<br>    bsdfData.perceptualRoughness = PerceptualSmoothnessToPerceptualRoughness(surfaceData.perceptualSmoothness);<br><br>    <span class="hljs-comment">// This value will be override by the value in diffusion profile</span><br>    bsdfData.fresnel0 = DEFAULT_HAIR_SPECULAR_VALUE;<br><br>    <span class="hljs-comment">// Note: we have ZERO_INITIALIZE the struct so bsdfData.anisotropy == 0.0</span><br>    <span class="hljs-comment">// Note: DIFFUSION_PROFILE_NEUTRAL_ID is 0</span><br>    <br>    bsdfData.diffusionProfileIndex = FindDiffusionProfileIndex(surfaceData.diffusionProfileHash);<br><br>    <span class="hljs-keyword">if</span> (HasFlag(surfaceData.materialFeatures, MATERIALFEATUREFLAGS_HAIR_SUBSURFACE_SCATTERING))<br>    &#123;<br>        <span class="hljs-comment">// Assign profile id and overwrite fresnel0</span><br>        FillMaterialSSS(bsdfData.diffusionProfileIndex, surfaceData.subsurfaceMask, bsdfData);<br>    &#125;<br><br>    <span class="hljs-keyword">if</span> (HasFlag(surfaceData.materialFeatures, MATERIALFEATUREFLAGS_HAIR_TRANSMISSION))<br>    &#123;<br>        <span class="hljs-comment">// Assign profile id and overwrite fresnel0</span><br>        FillMaterialTransmission(bsdfData.diffusionProfileIndex, surfaceData.thickness, bsdfData);<br>    &#125;<br><br>    <span class="hljs-comment">// This is the hair tangent (which represents the hair strand direction, root to tip).</span><br>    bsdfData.hairStrandDirectionWS = surfaceData.hairStrandDirectionWS;<br><br>    <span class="hljs-comment">// Kajiya kay</span><br>    <span class="hljs-keyword">if</span> (HasFlag(surfaceData.materialFeatures, MATERIALFEATUREFLAGS_HAIR_KAJIYA_KAY))<br>    &#123;<br>        bsdfData.secondaryPerceptualRoughness = PerceptualSmoothnessToPerceptualRoughness(surfaceData.secondaryPerceptualSmoothness);        <br>        bsdfData.specularTint = surfaceData.specularTint;<br>        bsdfData.secondarySpecularTint = surfaceData.secondarySpecularTint;<br>        bsdfData.specularShift = surfaceData.specularShift;<br>        bsdfData.secondarySpecularShift = surfaceData.secondarySpecularShift;<br><br>        <span class="hljs-comment">// We can rewrite specExp from exp2(10 * (1.0 - roughness)) in order</span><br>        <span class="hljs-comment">// to remove the need to take the square root of sinTH</span><br>        <span class="hljs-comment">// 这里是通过粗糙度计算曝光信息</span><br>        bsdfData.specularExponent = exp2(<span class="hljs-number">9.0</span> - <span class="hljs-number">10.0</span> * PerceptualRoughnessToRoughness(bsdfData.perceptualRoughness));<br>        bsdfData.secondarySpecularExponent = exp2(<span class="hljs-number">9.0</span> - <span class="hljs-number">10.0</span> * PerceptualRoughnessToRoughness(bsdfData.secondaryPerceptualRoughness));<br><br>        bsdfData.anisotropy = <span class="hljs-number">0.8</span>; <span class="hljs-comment">// For hair we fix the anisotropy</span><br>    &#125;<br><br>    ApplyDebugToBSDFData(bsdfData);<br><br>    <span class="hljs-keyword">return</span> bsdfData;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      
+      <p align="right"><a class="morebtn" href="/2022/09/19/Unity/HDRP%E4%B8%ADHairShader%E4%BB%A3%E7%A0%81%E7%BB%93%E6%9E%842/" title="">阅读全文</a></p>
+    </main>
+    <footer class="post-footer">
+      
+    </footer>
+  </article>
+  
+  <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
+    <div class="post-block">
+      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/09/19/Unity/HDRP%E4%B8%ADHairShader%E4%BB%A3%E7%A0%81%E7%BB%93%E6%9E%84/">
+      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <meta itemprop="name" content="leinlin">
+        <meta itemprop="description" content="">
+        <meta itemprop="image" content="/images/avatar.jpg">
+      </span>
+      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+        <meta itemprop="name" content="leinlin的小笔记">
+      </span>
+    </div>
+    <header class="post-header">
+      <h1 class="post-title" itemprop="name headline">
+        <a class="post-title-link post-title-link-external" href="/2022/09/19/Unity/HDRP%E4%B8%ADHairShader%E4%BB%A3%E7%A0%81%E7%BB%93%E6%9E%84/" itemprop="url"></a>
+      </h1>
+      <div class="post-meta">
+        
+        <span class="post-date">
+          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2022-09-19T19:53:46+08:00">2022-09-19 19:53:46</time></span>
+        </span>
+        
+        
+        
+        
+        
+      </div>
+    </header>
+    <main class="post-main" itemprop="articleBody">
+      
+      <h1 id="HDRP-HairShader代码结构"><a href="#HDRP-HairShader代码结构" class="headerlink" title="HDRP HairShader代码结构"></a>HDRP HairShader代码结构</h1><p>Hair只能在前向渲染阶段渲染，使用下面两个Pass：</p>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c">&#123;<br>    LightMode = DepthForwardOnly<br>    LightMode = ForwardOnly<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>头发有一个特殊的Stencil</p>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs c">Stencil<br>&#123;<br>   WriteMask <span class="hljs-number">7</span><br>   Ref  <span class="hljs-number">2</span><br>   Comp Always<br>   Pass Replace<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>##透明和不透明有所区别</p>
+<p>混合方式上的区别</p>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">//透明</span><br>            Blend One OneMinusSrcAlpha <br>            ZTest LEqual <span class="hljs-comment">// 正常的深度渲染，注意这个时候也可以提前绘制深度。</span><br>            ZWrite Off<br><span class="hljs-comment">//不透明</span><br>            Blend One Zero  <span class="hljs-comment">// 直接覆盖</span><br>            ZTest Equal  <span class="hljs-comment">// 因为会提前绘制深度，所以需要和原本深度值相等才能绘制</span><br>            ZWrite On<br><span class="hljs-comment">// 在原本的shader当中如果开启blend默认编程了透明？</span><br></code></pre></td></tr></table></figure>
+
+<p>透明不透明的宏定义区别</p>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// 透明加不透明</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> _MATERIAL_FEATURE_HAIR_KAJIYA_KAY 1</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> _SURFACE_TYPE_TRANSPARENT 1</span><br><span class="hljs-comment">// 透明部分</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> _BLENDMODE_ALPHA 1   <span class="hljs-comment">// 开启 混合</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> _BLENDMODE_PRESERVE_SPECULAR_LIGHTING 1  <span class="hljs-comment">// ??</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> _ENABLE_FOG_ON_TRANSPARENT 1  <span class="hljs-comment">// 开启透明物体上的雾</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> _SPECULAR_OCCLUSION_FROM_AO 1 <span class="hljs-comment">// AO 对高光生效</span></span><br></code></pre></td></tr></table></figure>
+
+<p>下面是关于分割光线的 split Lighting 是什么</p>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// If we use subsurface scattering, enable output split lighting (for forward pass)</span><br><span class="hljs-meta">#<span class="hljs-keyword">if</span> defined(_MATERIAL_FEATURE_SUBSURFACE_SCATTERING) &amp;&amp; !defined(_SURFACE_TYPE_TRANSPARENT) <span class="hljs-comment">// 子表面散射 并且不是半透明物体</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> OUTPUT_SPLIT_LIGHTING  <span class="hljs-comment">// 分割光线？？？</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">endif</span></span><br></code></pre></td></tr></table></figure>
+
+<h2 id="头发渲染部分代码"><a href="#头发渲染部分代码" class="headerlink" title="头发渲染部分代码"></a>头发渲染部分代码</h2><h3 id="Shader-Pass-Forward"><a href="#Shader-Pass-Forward" class="headerlink" title="Shader Pass Forward"></a>Shader Pass Forward</h3><p>头发的Pass文件：</p>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;Packages/com.unity.render-pipelines.high-definition/Runtime/RenderPipeline/ShaderPass/ShaderPassForward.hlsl&quot;</span></span><br></code></pre></td></tr></table></figure>
+
+<p>也就是说头发使用的事一般的前向渲染的Pass描述。</p>
+<p>####Vert</p>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">//这部分是通用的代码</span><br>PackedVaryingsType <span class="hljs-title function_">Vert</span><span class="hljs-params">(AttributesMesh inputMesh)</span><br>&#123;<br>    VaryingsType varyingsType;<br>    varyingsType.vmesh = VertMesh(inputMesh);<br>    <span class="hljs-keyword">return</span> PackVaryingsType(varyingsType);<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;Packages/com.unity.render-pipelines.high-definition/Runtime/RenderPipeline/ShaderPass/VertMesh.hlsl&quot;</span></span><br><span class="hljs-comment">//使用的上面的内容用来计算Vert当中的参数。</span><br></code></pre></td></tr></table></figure>
+
+<p>####Frag</p>
+<p>下面是去掉了debug信息的Frag代码：</p>
+<p>如果使用了SSS效果并且没有使用半透则会进入OUTPUT_SPLIT_LIGHTING的部分，看起来是分开了高光和漫反射颜色，以及SSS的某个特殊buffer。</p>
+<p>否则就是用一个单独的颜色。</p>
+<p>这里有个_DEPTHOFFSET_ON，暂时不考虑。</p>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">void</span> <span class="hljs-title function_">Frag</span><span class="hljs-params">(PackedVaryingsToPS packedInput,</span><br><span class="hljs-params">        #ifdef OUTPUT_SPLIT_LIGHTING  <span class="hljs-comment">//使用分割光线</span></span><br><span class="hljs-params">            out float4 outColor : SV_Target0,  <span class="hljs-comment">// outSpecularLighting</span></span><br><span class="hljs-params">            out float4 outDiffuseLighting : SV_Target1,</span><br><span class="hljs-params">            OUTPUT_SSSBUFFER(outSSSBuffer)</span><br><span class="hljs-params">        #<span class="hljs-keyword">else</span></span><br><span class="hljs-params">            out float4 outColor : SV_Target0  <span class="hljs-comment">// 没有SSS效果的一个输出颜色。</span></span><br><span class="hljs-params">        #endif</span><br><span class="hljs-params">        #ifdef _DEPTHOFFSET_ON</span><br><span class="hljs-params">            , out <span class="hljs-type">float</span> outputDepth : SV_Depth</span><br><span class="hljs-params">        #endif</span><br><span class="hljs-params">          )</span><br>&#123;<br>    UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(packedInput);<br>    FragInputs input = UnpackVaryingsMeshToFragInputs(packedInput.vmesh);<br><br>    uint2 tileIndex = uint2(input.positionSS.xy) / GetTileSize();<br><span class="hljs-meta">#<span class="hljs-keyword">if</span> defined(UNITY_SINGLE_PASS_STEREO)</span><br>    tileIndex.x -= unity_StereoEyeIndex * _NumTileClusteredX;<br><span class="hljs-meta">#<span class="hljs-keyword">endif</span></span><br><br>    <span class="hljs-comment">// input.positionSS is SV_Position</span><br>    PositionInputs posInput = GetPositionInput_Stereo(input.positionSS.xy, _ScreenSize.zw, input.positionSS.z, input.positionSS.w, input.positionRWS.xyz, tileIndex, unity_StereoEyeIndex); <span class="hljs-comment">// 计算屏幕坐标 视口坐标 纹理坐标等内容（ComputeShader也会用这个函数）。</span><br><br><span class="hljs-meta">#<span class="hljs-keyword">ifdef</span> VARYINGS_NEED_POSITION_WS</span><br>    float3 V = GetWorldSpaceNormalizeViewDir(input.positionRWS);<br><span class="hljs-meta">#<span class="hljs-keyword">else</span></span><br>    <span class="hljs-comment">// Unused</span><br>    float3 V = float3(<span class="hljs-number">1.0</span>, <span class="hljs-number">1.0</span>, <span class="hljs-number">1.0</span>); <span class="hljs-comment">// Avoid the division by 0</span><br><span class="hljs-meta">#<span class="hljs-keyword">endif</span></span><br><br>    SurfaceData surfaceData;<br>    BuiltinData builtinData;<br>    <br>    <span class="hljs-comment">// 纹理属性的计算</span><br>    GetSurfaceAndBuiltinData(input, V, posInput, surfaceData, builtinData);<br>	<span class="hljs-comment">// 材质参数计算</span><br>    BSDFData bsdfData = ConvertSurfaceDataToBSDFData(input.positionSS.xy, surfaceData);<br><br>    PreLightData preLightData = GetPreLightData(V, posInput, bsdfData);<br>	<span class="hljs-comment">// 定义输出颜色</span><br>    outColor = float4(<span class="hljs-number">0.0</span>, <span class="hljs-number">0.0</span>, <span class="hljs-number">0.0</span>, <span class="hljs-number">0.0</span>);<br><br><br>    &#123;<br>    <span class="hljs-comment">//透明和不透明物体单独处理</span><br><span class="hljs-meta">#<span class="hljs-keyword">ifdef</span> _SURFACE_TYPE_TRANSPARENT</span><br>        uint featureFlags = LIGHT_FEATURE_MASK_FLAGS_TRANSPARENT;<br><span class="hljs-meta">#<span class="hljs-keyword">else</span></span><br>        uint featureFlags = LIGHT_FEATURE_MASK_FLAGS_OPAQUE;<br><span class="hljs-meta">#<span class="hljs-keyword">endif</span></span><br>	<span class="hljs-comment">// 将要分别计算的高光和漫反射光</span><br>        float3 diffuseLighting;<br>        float3 specularLighting;<br>	<br>	<span class="hljs-comment">// 进入光照循环计算光照</span><br>        LightLoop(V, posInput, preLightData, bsdfData, builtinData, featureFlags, diffuseLighting, specularLighting);<br>	<span class="hljs-comment">// 此时就返回了计算好的高光和 漫反射光</span><br>	<span class="hljs-comment">// 进行全局的缩放</span><br>        diffuseLighting *= GetCurrentExposureMultiplier();<br>        specularLighting *= GetCurrentExposureMultiplier();<br>	<br><span class="hljs-meta">#<span class="hljs-keyword">ifdef</span> OUTPUT_SPLIT_LIGHTING</span><br>	<span class="hljs-comment">// 如果开启SSS 并且需要分割光照（通过参数判断），则把两个光照分开。</span><br>        <span class="hljs-keyword">if</span> (_EnableSubsurfaceScattering != <span class="hljs-number">0</span> &amp;&amp; ShouldOutputSplitLighting(bsdfData))<br>        &#123;<br>            outColor = float4(specularLighting, <span class="hljs-number">1.0</span>);<br>            outDiffuseLighting = float4(TagLightingForSSS(diffuseLighting), <span class="hljs-number">1.0</span>);<br>        &#125;<br>        <span class="hljs-keyword">else</span><br>        &#123;<br>        	<span class="hljs-comment">//如果不需要SSS，或者不需要分割光照，就把两个颜色都合并到Specular里面。</span><br>            outColor = float4(diffuseLighting + specularLighting, <span class="hljs-number">1.0</span>);<br>            outDiffuseLighting = <span class="hljs-number">0</span>;<br>        &#125;<br>        <span class="hljs-comment">// 这里面写入一些 SSS需要用到的属性。</span><br>        ENCODE_INTO_SSSBUFFER(surfaceData, posInput.positionSS, outSSSBuffer);<br>        <span class="hljs-comment">// 如果分割颜色就，在Gbuffer结束时统一计算大气散射。</span><br><span class="hljs-meta">#<span class="hljs-keyword">else</span></span><br>        outColor = ApplyBlendMode(diffuseLighting, specularLighting, builtinData.opacity);<br>        <br>        <span class="hljs-comment">// 如果不分割颜色 就直接计算大气散射。</span><br>        outColor = EvaluateAtmosphericScattering(posInput, V, outColor);<br><span class="hljs-meta">#<span class="hljs-keyword">endif</span></span><br>    &#125;<br><br><span class="hljs-comment">// 忽略</span><br><span class="hljs-meta">#<span class="hljs-keyword">ifdef</span> _DEPTHOFFSET_ON</span><br>    outputDepth = posInput.deviceDepth;<br><span class="hljs-meta">#<span class="hljs-keyword">endif</span></span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="LightLoop"><a href="#LightLoop" class="headerlink" title="LightLoop"></a>LightLoop</h4><p>具体Shader的光照循环部分，参见光照循环文档</p>
+
+      
+      <p align="right"><a class="morebtn" href="/2022/09/19/Unity/HDRP%E4%B8%ADHairShader%E4%BB%A3%E7%A0%81%E7%BB%93%E6%9E%84/" title="">阅读全文</a></p>
     </main>
     <footer class="post-footer">
       
@@ -745,7 +896,7 @@
   
   
   <nav class="pagination">
-    <a class="extend prev" rel="prev" href="/"><i class="fas fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/3/"><i class="fas fa-angle-right" aria-label="下一页"></i></a>
+    <a class="extend prev" rel="prev" href="/"><i class="fas fa-angle-left" aria-label="上一页"></i></a><a class="page-number" href="/">1</a><span class="page-number current">2</span><a class="page-number" href="/page/3/">3</a><span class="space">&hellip;</span><a class="page-number" href="/page/16/">16</a><a class="extend next" rel="next" href="/page/3/"><i class="fas fa-angle-right" aria-label="下一页"></i></a>
   </nav>
   
   
@@ -789,7 +940,7 @@
     
     <div class="categories-count count-block">
       <div class="site-count-title">分类</div>
-      <div><a href="/categories/">7</a></div>
+      <div><a href="/categories/">11</a></div>
     </div>
     
     

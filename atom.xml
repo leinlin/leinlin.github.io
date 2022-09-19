@@ -6,7 +6,7 @@
   <link href="http://leinlin.github.io/atom.xml" rel="self"/>
   
   <link href="http://leinlin.github.io/"/>
-  <updated>2022-08-03T12:50:40.896Z</updated>
+  <updated>2022-09-19T12:36:56.386Z</updated>
   <id>http://leinlin.github.io/</id>
   
   <author>
@@ -17,208 +17,18 @@
   <generator uri="https://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>在unity的IL2CPP中接入FASTBuild</title>
-    <link href="http://leinlin.github.io/2022/08/03/Unity/il2cpp_fastbuild/"/>
-    <id>http://leinlin.github.io/2022/08/03/Unity/il2cpp_fastbuild/</id>
-    <published>2022-08-03T00:17:00.000Z</published>
-    <updated>2022-08-03T12:50:40.896Z</updated>
-    
-    
-    <summary type="html">&lt;h1 id=&quot;在unity的IL2CPP中接入FASTBuild&quot;&gt;&lt;a href=&quot;#在unity的IL2CPP中接入FASTBuild&quot; class=&quot;headerlink&quot; title=&quot;在unity的IL2CPP中接入FASTBuild&quot;&gt;&lt;/a&gt;在unity的IL2CPP中接入FASTBuild&lt;/h1&gt;&lt;h2 id=&quot;如何编译IL2CPP-exe&quot;&gt;&lt;a href=&quot;#如何编译IL2CPP-exe&quot; class=&quot;headerlink&quot; title=&quot;如何编译IL2CPP.exe&quot;&gt;&lt;/a&gt;如何编译IL2CPP.exe&lt;/h2&gt;&lt;figure class=&quot;highlight plaintext&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;code class=&quot;hljs plaintext&quot;&gt;jam WinEditor&lt;br&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-
-&lt;h2 id=&quot;如何调试IL2CPP-exe&quot;&gt;&lt;a href=&quot;#如何调试IL2CPP-exe&quot; class=&quot;headerlink&quot; title=&quot;如何调试IL2CPP.exe&quot;&gt;&lt;/a&gt;如何调试IL2CPP.exe&lt;/h2&gt;&lt;p&gt;用vs2017我研究了一天没有成功，改用rider进行附加调试。第一步加入一个ReadKey的指令，等待附加&lt;/p&gt;
-&lt;figure class=&quot;highlight plaintext&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;6&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;7&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;8&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;9&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;10&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;11&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;12&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;13&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;14&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;15&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;16&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;17&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;18&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;19&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;20&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;21&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;22&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;23&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;code class=&quot;hljs plaintext&quot;&gt;public static int Main(string[] args)&lt;br&gt;&amp;#123;&lt;br&gt;    // 这里是等待附加的代码&lt;br&gt;    ConsoleKey key = Console.ReadKey().Key;&lt;br&gt;    int exitCode;&lt;br&gt;    try&lt;br&gt;    &amp;#123;&lt;br&gt;        exitCode = Run(args, true);&lt;br&gt;    &amp;#125;&lt;br&gt;    catch (PathTooLongException e)&lt;br&gt;    &amp;#123;&lt;br&gt;        Console.WriteLine(&amp;quot;IL2CPP error: The specified output path is too long to write generated files. Please choose a location with a shorter path.&amp;quot;);&lt;br&gt;        Console.WriteLine(e);&lt;br&gt;        throw;&lt;br&gt;    &amp;#125;&lt;br&gt;    catch (Exception e)&lt;br&gt;    &amp;#123;&lt;br&gt;        Console.WriteLine(&amp;quot;il2cpp.exe didn&amp;#x27;t catch exception: &amp;quot; + e.StackTrace);&lt;br&gt;        throw;&lt;br&gt;    &amp;#125;&lt;br&gt;&lt;br&gt;    return exitCode;&lt;br&gt;&amp;#125;&lt;br&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;</summary>
-    
-    
-    
-    <category term="FASTBUILD" scheme="http://leinlin.github.io/categories/FASTBUILD/"/>
-    
-    
-    <category term="IL2CPP" scheme="http://leinlin.github.io/tags/IL2CPP/"/>
-    
-    <category term="FASTBUILD" scheme="http://leinlin.github.io/tags/FASTBUILD/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>snp Profiler</title>
-    <link href="http://leinlin.github.io/2022/07/18/Unity/profiler/"/>
-    <id>http://leinlin.github.io/2022/07/18/Unity/profiler/</id>
-    <published>2022-07-18T00:17:00.000Z</published>
-    <updated>2022-07-21T07:33:33.516Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;p&gt;&lt;img</summary>
-        
-      
-    
-    
-    
-    
-    <category term="snp" scheme="http://leinlin.github.io/tags/snp/"/>
-    
-    <category term="android" scheme="http://leinlin.github.io/tags/android/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>textmesh-pro 压缩通道</title>
-    <link href="http://leinlin.github.io/2022/07/18/Unity/textmeshpro/"/>
-    <id>http://leinlin.github.io/2022/07/18/Unity/textmeshpro/</id>
-    <published>2022-07-18T00:17:00.000Z</published>
-    <updated>2022-08-03T12:48:11.455Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h2 id=&quot;把Alpha-8改为4通道的RGBA&quot;&gt;&lt;a href=&quot;#把Alpha-8改为4通道的RGBA&quot; class=&quot;headerlink&quot; title=&quot;把Alpha 8改为4通道的RGBA&quot;&gt;&lt;/a&gt;把Alpha 8改为4通道的RGBA&lt;/h2&gt;&lt;p&gt;&lt;img</summary>
-        
-      
-    
-    
-    
-    
-    <category term="textmesh-pro" scheme="http://leinlin.github.io/tags/textmesh-pro/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>IDVS shader variants</title>
-    <link href="http://leinlin.github.io/2022/07/13/ARM/IDVS-shader-variants/"/>
-    <id>http://leinlin.github.io/2022/07/13/ARM/IDVS-shader-variants/</id>
-    <published>2022-07-12T22:57:19.000Z</published>
-    <updated>2022-07-20T09:37:17.645Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h1 id=&quot;IDVS-shader-variants&quot;&gt;&lt;a href=&quot;#IDVS-shader-variants&quot; class=&quot;headerlink&quot; title=&quot;IDVS shader variants&quot;&gt;&lt;/a&gt;IDVS shader</summary>
-        
-      
-    
-    
-    
-    <category term="mali gpu" scheme="http://leinlin.github.io/categories/mali-gpu/"/>
-    
-    
-    <category term="mali" scheme="http://leinlin.github.io/tags/mali/"/>
-    
-    <category term="IDVS" scheme="http://leinlin.github.io/tags/IDVS/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>Mali Bifrost Family Performance Counters</title>
-    <link href="http://leinlin.github.io/2022/07/11/ARM/mali-bifrost-family-performance-counters/"/>
-    <id>http://leinlin.github.io/2022/07/11/ARM/mali-bifrost-family-performance-counters/</id>
-    <published>2022-07-11T01:57:19.000Z</published>
-    <updated>2022-07-13T06:43:36.040Z</updated>
-    
-    
-    <summary type="html">&lt;h1 id=&quot;Mali-Bifrost-Family-Performance-Counters&quot;&gt;&lt;a href=&quot;#Mali-Bifrost-Family-Performance-Counters&quot; class=&quot;headerlink&quot; title=&quot;Mali Bifrost Family Performance Counters&quot;&gt;&lt;/a&gt;Mali Bifrost Family Performance Counters&lt;/h1&gt;&lt;p&gt;Analysis and optimization of graphics and compute content running on a GPU is an important task when trying to build a top quality system integration, or a compelling high performance application. For developers working with the public APIs, such as OpenGL ES and OpenCL, the GPU is a black box which is very difficult to analyze based solely on the API visible behaviors. Frame pipelining and asynchronous processing of submitted work effectively decouple the application’s visible performance from the API calls which define the workload being executed, making analysis of performance an activity based on expert knowledge and intuition rather than direct measurement.&lt;/p&gt;
-&lt;p&gt;Tools such as ARM DS-5 Streamline provide developers access to the GPU hardware performance counters, the principle means to determine the behavior inside the black box beneath the API and identify any problem areas which need optimization. This work guide assumes that DS-5 Streamline is the tool being used for performance analysis, and follows the DS-5 naming conventions for the counters.&lt;/p&gt;
-&lt;h2 id=&quot;1-Performance-Counter-Infrastructure&quot;&gt;&lt;a href=&quot;#1-Performance-Counter-Infrastructure&quot; class=&quot;headerlink&quot; title=&quot;1 Performance Counter Infrastructure&quot;&gt;&lt;/a&gt;1 Performance Counter Infrastructure&lt;/h2&gt;&lt;p&gt;The Bifrost GPU family supports many performance counters which can all be captured simultaneously. Performance counters are provided for each functional block in the design:&lt;/p&gt;
-&lt;p&gt;Job Manager&lt;br&gt;Tiler&lt;br&gt;Shader core(s)&lt;br&gt;L2 cache(s)&lt;br&gt;See my earlier blog series for an introduction to the Bifrost GPU architecture - it introduces some of the fundamental concepts which are important to understand, and which place the more detailed information in this document in context.&lt;/p&gt;
-&lt;p&gt;The Mali GPU: An Abstract Machine, Part 1 - Frame Pipelining&lt;br&gt;The Mali GPU: An Abstract Machine, Part 2 - Tile-based Rendering&lt;br&gt;The Mali GPU: An Abstract Machine, Part 4 - The Bifrost Shader Core&lt;/p&gt;
-&lt;h3 id=&quot;1-1-Supported-Counters&quot;&gt;&lt;a href=&quot;#1-1-Supported-Counters&quot; class=&quot;headerlink&quot; title=&quot;1.1 Supported Counters&quot;&gt;&lt;/a&gt;1.1 Supported Counters&lt;/h3&gt;&lt;p&gt;The GPUs in the Bifrost family implement a large number of performance counters natively in the hardware, and it is also generally useful to generate some derived counters by combining one or more of the raw hardware counters in useful and interesting ways. This document will describe all of the counters exported from DS-5 Streamline, and some of the useful derived counters which can be derived from them. DS-5 Streamline allows custom performance counter graphs to be created using equations, so all of these performance counters can be directly visualized in the GUI.&lt;/p&gt;
-&lt;h3 id=&quot;1-2-Counter-Implementation-Caveats&quot;&gt;&lt;a href=&quot;#1-2-Counter-Implementation-Caveats&quot; class=&quot;headerlink&quot; title=&quot;1.2 Counter Implementation Caveats&quot;&gt;&lt;/a&gt;1.2 Counter Implementation Caveats&lt;/h3&gt;&lt;p&gt;The hardware counter implementation in the GPU is designed to be low cost, such that it has minimal impact on performance and power. Many of the counters are close approximations of the behavior described in this document in order to minimize the amount of additional hardware logic required to generate the counter signals, so some small deviations from what you may expect may be encountered.&lt;/p&gt;</summary>
-    
-    
-    
-    <category term="mali gpu" scheme="http://leinlin.github.io/categories/mali-gpu/"/>
-    
-    
-    <category term="mali" scheme="http://leinlin.github.io/tags/mali/"/>
-    
-    <category term="Gpu Counters" scheme="http://leinlin.github.io/tags/Gpu-Counters/"/>
-    
-    <category term="Bifrost" scheme="http://leinlin.github.io/tags/Bifrost/"/>
-    
-  </entry>
-  
-  <entry>
     <title></title>
-    <link href="http://leinlin.github.io/2022/07/09/GPUAartch/%E4%B8%80%E4%B8%AA%E4%B8%89%E8%A7%92%E5%BD%A2%E5%9C%A8GPU%E4%B8%AD%E7%9A%84%E4%B8%80%E7%94%9F/"/>
-    <id>http://leinlin.github.io/2022/07/09/GPUAartch/%E4%B8%80%E4%B8%AA%E4%B8%89%E8%A7%92%E5%BD%A2%E5%9C%A8GPU%E4%B8%AD%E7%9A%84%E4%B8%80%E7%94%9F/</id>
-    <published>2022-07-09T11:34:20.502Z</published>
-    <updated>2022-07-09T12:04:26.229Z</updated>
-    
-    
-    <summary type="html">&lt;h1 id=&quot;一个三角形在GPU中的一生&quot;&gt;&lt;a href=&quot;#一个三角形在GPU中的一生&quot; class=&quot;headerlink&quot; title=&quot;一个三角形在GPU中的一生&quot;&gt;&lt;/a&gt;一个三角形在GPU中的一生&lt;/h1&gt;&lt;p&gt;这篇笔记总结自&lt;a href=&quot;https://developer.nvidia.com/content/life-triangle-nvidias-logical-pipeline&quot;&gt;Life of a triangle - NVIDIA’s logical pipeline&lt;/a&gt; 和知乎文章&lt;a href=&quot;https://blog.uwa4d.com/archives/USparkle_GPU.html&quot;&gt;渲染优化-从GPU的结构谈起&lt;/a&gt;。&lt;/p&gt;
-&lt;p&gt;主要记录了GPU硬件是如何详细的工作的。另外附加了一些笔记和自己的理解。&lt;/p&gt;
-&lt;h2 id=&quot;前言&quot;&gt;&lt;a href=&quot;#前言&quot; class=&quot;headerlink&quot; title=&quot;前言&quot;&gt;&lt;/a&gt;前言&lt;/h2&gt;&lt;p&gt;先进的Fermi架构已经发布十年了（2010年左右发布），现在是时候更新它的基础图形架构了。&lt;/p&gt;
-&lt;p&gt;Fermi是Nvidia的第一个实现了完全可扩展的图形引擎（fully scalable graphics engine的概念请查阅wiki，有说明），在Kepler和Maxwell架构当中也能找到他的影子。&lt;/p&gt;
-&lt;p&gt;下面的文章，特别是下面的“精简的管道知识”图片，应该作为各种学习材料的。这篇文章主要从图形的角度讨论GPU是如何工作的，尤其是一些原则，比如：着色程序代码是如何执行的，对于计算来说是一样的。&lt;/p&gt;
-&lt;h2 id=&quot;GPU管线架构&quot;&gt;&lt;a href=&quot;#GPU管线架构&quot; class=&quot;headerlink&quot; title=&quot;GPU管线架构&quot;&gt;&lt;/a&gt;GPU管线架构&lt;/h2&gt;&lt;p&gt;下面是一张涵盖了整个GPU架构的图片，后面会详细分开讲解。&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;/../../images/%E4%B8%80%E4%B8%AA%E4%B8%89%E8%A7%92%E5%BD%A2%E5%9C%A8GPU%E4%B8%AD%E7%9A%84%E4%B8%80%E7%94%9F/fermipipeline.png&quot; alt=&quot;NVIDIA&amp;#39;s logical pipeline&quot;&gt;&lt;/p&gt;</summary>
-    
-    
-    
-    
-  </entry>
-  
-  <entry>
-    <title></title>
-    <link href="http://leinlin.github.io/2022/07/09/GPUAartch/%E7%BA%B9%E7%90%86%E7%BC%93%E5%AD%98/"/>
-    <id>http://leinlin.github.io/2022/07/09/GPUAartch/%E7%BA%B9%E7%90%86%E7%BC%93%E5%AD%98/</id>
-    <published>2022-07-09T11:34:20.499Z</published>
-    <updated>2022-07-20T09:52:12.022Z</updated>
-    
-    
-    <summary type="html">&lt;h1 id=&quot;纹理缓存&quot;&gt;&lt;a href=&quot;#纹理缓存&quot; class=&quot;headerlink&quot; title=&quot;纹理缓存&quot;&gt;&lt;/a&gt;纹理缓存&lt;/h1&gt;&lt;p&gt;参考文献：&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;/../../images/%E7%BA%B9%E7%90%86%E7%BC%93%E5%AD%98/1574825701596.png&quot; alt=&quot;1574825701596&quot;&gt;&lt;br&gt;&lt;a href=&quot;https://fileadmin.cs.lth.se/cs/Personal/Michael_Doggett/pubs/doggett12-tc.pdf&quot;&gt;https://fileadmin.cs.lth.se/cs/Personal/Michael_Doggett/pubs/doggett12-tc.pdf&lt;/a&gt;&lt;/p&gt;
-&lt;h2 id=&quot;介绍&quot;&gt;&lt;a href=&quot;#介绍&quot; class=&quot;headerlink&quot; title=&quot;介绍&quot;&gt;&lt;/a&gt;介绍&lt;/h2&gt;&lt;p&gt;纹理缓存是现代GPU的基础组件，是实现实时渲染的性能的重要部分。&lt;/p&gt;
-&lt;p&gt;纹理缓存对GPU来说是Read-Only的。主要在texture-mapping阶段由GPU程序读取。&lt;/p&gt;
-&lt;p&gt;纹理缓存有很高的命中率，因为相邻像素之间有大量的重用，而且通常位于着色器处理器附近，所以纹理数据具有高吞吐量和低读延迟。&lt;/p&gt;
-&lt;p&gt;GPU的架构对程序员是不可见的，特备隐藏在API之下，这些架构包括纹理缓存被频繁的更新，基础的架构如图所示,L1和L2共同构成了GPU的分级内存：&lt;img src=&quot;/../../images/%E7%BA%B9%E7%90%86%E7%BC%93%E5%AD%98/1573179467830.png&quot; alt=&quot;1573179467830&quot;&gt;&lt;/p&gt;
-&lt;p&gt;关于上图的描述：&lt;/p&gt;
-&lt;p&gt;紫色的部分是Texture Cache。&lt;br&gt;从最上边开始看，Thread Scheduler为不同的图形处理阶段收集任务。然后把任务安排到不同的Graphic Core上。&lt;br&gt;Graphic Core有一些固定功能的图像逻辑（Geometr，Raster），包括了几个处理功能和光栅化功能。&lt;br&gt;接着是Shader，包括了逻辑控制和ALU单元阵列，用于以SIMD的方式处理shader程序。Shader执行阶段使用了L1 数据指令Cache、texture mapping和与其关联的L1Texture Cache。Shader的输出和L1和L2之间需要通过crossbar来传输。&lt;br&gt;Crossbar连接了各种内存单元，包括L2Cache、ROP和内存控制器。内存控制器链接在了保存了framebuffer的外部内存上。大部分相邻的blocks是彼此链接的。&lt;/p&gt;
-&lt;p&gt;为了理解对纹理缓存的需求，我们首先要了解影响纹理缓存的功能：texture mapping和rasterization. &lt;/p&gt;</summary>
-    
-    
-    
-    
-  </entry>
-  
-  <entry>
-    <title></title>
-    <link href="http://leinlin.github.io/2022/07/09/GPUAartch/%E8%B0%88%E8%B0%88%E9%82%A3%E4%BA%9Bearly_depth_testing%E6%8A%80%E6%9C%AF/"/>
-    <id>http://leinlin.github.io/2022/07/09/GPUAartch/%E8%B0%88%E8%B0%88%E9%82%A3%E4%BA%9Bearly_depth_testing%E6%8A%80%E6%9C%AF/</id>
-    <published>2022-07-09T11:34:20.496Z</published>
-    <updated>2022-07-09T12:04:12.312Z</updated>
-    
-    
-    <summary type="html">&lt;h1 id=&quot;谈谈那些early-depth-testing技术（草拟）&quot;&gt;&lt;a href=&quot;#谈谈那些early-depth-testing技术（草拟）&quot; class=&quot;headerlink&quot; title=&quot;谈谈那些early_depth_testing技术（草拟）&quot;&gt;&lt;/a&gt;谈谈那些early_depth_testing技术（草拟）&lt;/h1&gt;&lt;h2 id=&quot;Early-Z（Immediate-Mode-Renderers-IMRs-：Nvidia-：-GeForces-and-Radeons）&quot;&gt;&lt;a href=&quot;#Early-Z（Immediate-Mode-Renderers-IMRs-：Nvidia-：-GeForces-and-Radeons）&quot; class=&quot;headerlink&quot; title=&quot;Early Z（Immediate Mode Renderers (IMRs) ：Nvidia ： GeForces and Radeons）&quot;&gt;&lt;/a&gt;Early Z（Immediate Mode Renderers (IMRs) ：Nvidia ： GeForces and Radeons）&lt;/h2&gt;&lt;p&gt;在OPengl 4.5 强制开启下面是原文。&lt;/p&gt;
-&lt;h2 id=&quot;Optimization&quot;&gt;&lt;a href=&quot;#Optimization&quot; class=&quot;headerlink&quot; title=&quot;Optimization&quot;&gt;&lt;/a&gt;Optimization&lt;/h2&gt;&lt;p&gt;Early fragment tests, as an optimization, exist to prevent unnecessary executions of the &lt;a href=&quot;https://www.khronos.org/opengl/wiki/Fragment_Shader&quot;&gt;Fragment Shader&lt;/a&gt;. If a fragment will be discarded based on the &lt;a href=&quot;https://www.khronos.org/opengl/wiki/Depth_Test&quot;&gt;Depth Test&lt;/a&gt; (due perhaps to being behind other geometry), it saves performance to avoid executing the fragment shader. There is specialized hardware that makes this particularly efficient in many GPUs.&lt;/p&gt;
-&lt;p&gt;The most effective way to use early depth test hardware is to run a depth-only pre-processing pass. This means to render all available geometry, using minimal shaders and a rendering pipeline that &lt;a href=&quot;https://www.khronos.org/opengl/wiki/Write_Mask&quot;&gt;only writes to the depth buffer&lt;/a&gt;. The &lt;a href=&quot;https://www.khronos.org/opengl/wiki/Vertex_Shader&quot;&gt;Vertex Shader&lt;/a&gt;should do nothing more than transform positions, and the &lt;a href=&quot;https://www.khronos.org/opengl/wiki/Fragment_Shader#Optional&quot;&gt;Fragment Shader does not even need to exist&lt;/a&gt;.&lt;/p&gt;
-&lt;p&gt;This provides the best performance gain if the fragment shader is expensive, or if you intend to use multiple passes across the geometry.&lt;/p&gt;</summary>
-    
-    
-    
-    
-  </entry>
-  
-  <entry>
-    <title></title>
-    <link href="http://leinlin.github.io/2022/07/09/GPUAartch/%E6%89%8B%E6%B8%B8GPU%E6%9E%B6%E6%9E%84%E4%B8%8E%E4%BC%98%E5%8C%96%E4%B9%8BUnifiedShaderCore/"/>
-    <id>http://leinlin.github.io/2022/07/09/GPUAartch/%E6%89%8B%E6%B8%B8GPU%E6%9E%B6%E6%9E%84%E4%B8%8E%E4%BC%98%E5%8C%96%E4%B9%8BUnifiedShaderCore/</id>
-    <published>2022-07-09T11:34:20.491Z</published>
-    <updated>2022-07-09T04:53:34.647Z</updated>
+    <link href="http://leinlin.github.io/2022/09/19/UnityEffect/%E5%9C%A8Polygon%E6%B8%B2%E6%9F%93%E5%BD%93%E4%B8%AD%E4%BD%BF%E7%94%A8SDF%E6%95%88%E6%9E%9C/"/>
+    <id>http://leinlin.github.io/2022/09/19/UnityEffect/%E5%9C%A8Polygon%E6%B8%B2%E6%9F%93%E5%BD%93%E4%B8%AD%E4%BD%BF%E7%94%A8SDF%E6%95%88%E6%9E%9C/</id>
+    <published>2022-09-19T11:53:50.031Z</published>
+    <updated>2022-09-19T12:36:56.386Z</updated>
     
     
       
       
         
         
-    <summary type="html">&lt;h1 id=&quot;手游GPU架构与优化之UnifiedShaderCore&quot;&gt;&lt;a href=&quot;#手游GPU架构与优化之UnifiedShaderCore&quot; class=&quot;headerlink&quot;</summary>
+    <summary type="html">&lt;h1 id=&quot;在Unity渲染当中使用SDF&quot;&gt;&lt;a href=&quot;#在Unity渲染当中使用SDF&quot; class=&quot;headerlink&quot;</summary>
         
       
     
@@ -229,23 +39,19 @@
   
   <entry>
     <title></title>
-    <link href="http://leinlin.github.io/2022/07/09/GPUAartch/%E6%89%8B%E6%9C%BAGPU%E6%9E%B6%E6%9E%84%E4%B8%8E%E4%BC%98%E5%8C%96/"/>
-    <id>http://leinlin.github.io/2022/07/09/GPUAartch/%E6%89%8B%E6%9C%BAGPU%E6%9E%B6%E6%9E%84%E4%B8%8E%E4%BC%98%E5%8C%96/</id>
-    <published>2022-07-09T11:34:20.488Z</published>
-    <updated>2022-07-09T12:04:05.312Z</updated>
+    <link href="http://leinlin.github.io/2022/09/19/UnityEffect/%E4%BF%AE%E6%94%B9UnityHDRP%E7%AE%A1%E7%BA%BF%E6%9D%A5%E5%AE%9E%E7%8E%B0%E6%80%AA%E7%89%A9%E7%8C%8E%E4%BA%BA%E4%B8%96%E7%95%8C%E4%B8%AD%E5%AE%A0%E7%89%A9%E6%AF%9B%E5%8F%91%E6%95%88%E6%9E%9C/"/>
+    <id>http://leinlin.github.io/2022/09/19/UnityEffect/%E4%BF%AE%E6%94%B9UnityHDRP%E7%AE%A1%E7%BA%BF%E6%9D%A5%E5%AE%9E%E7%8E%B0%E6%80%AA%E7%89%A9%E7%8C%8E%E4%BA%BA%E4%B8%96%E7%95%8C%E4%B8%AD%E5%AE%A0%E7%89%A9%E6%AF%9B%E5%8F%91%E6%95%88%E6%9E%9C/</id>
+    <published>2022-09-19T11:53:49.641Z</published>
+    <updated>2022-09-19T12:36:12.615Z</updated>
     
     
-    <summary type="html">&lt;h1 id=&quot;手机图形硬件工作方式&quot;&gt;&lt;a href=&quot;#手机图形硬件工作方式&quot; class=&quot;headerlink&quot; title=&quot;手机图形硬件工作方式&quot;&gt;&lt;/a&gt;手机图形硬件工作方式&lt;/h1&gt;&lt;p&gt;这部分内容参考SIGGRAPH 2016，Computer Graphics&amp;amp;Interactive Technique. Course.&lt;/p&gt;
-&lt;p&gt;这部分主要是总结&lt;strong&gt;手机硬件的工作方式&lt;/strong&gt;以及&lt;strong&gt;如何来让手机硬件发挥出更高的性能&lt;/strong&gt;。由于没有做过手机开发，所以看完资料在总结上来可能不是很准确。这里只了解了一小部分，后面涉及到再补全。&lt;/p&gt;
-&lt;p&gt;首先是在任何平台上面都适用的方法：减少在屏幕上绘制物体的数量：&lt;strong&gt;降低帧率、降低分辨率、只有在需要重新绘制的时候才绘制。这些不在这里讨论&lt;/strong&gt;。&lt;/p&gt;
-&lt;p&gt;这里讨论的是如何进行&lt;strong&gt;高性能的3D渲染。&lt;/strong&gt;&lt;/p&gt;
-&lt;h2 id=&quot;手机芯片&quot;&gt;&lt;a href=&quot;#手机芯片&quot; class=&quot;headerlink&quot; title=&quot;手机芯片&quot;&gt;&lt;/a&gt;手机芯片&lt;/h2&gt;&lt;p&gt;下面是手机架构的一个简介：&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;/../../images/img/MobleArchitecture.jpg&quot; alt=&quot;MobleArchitecture&quot;&gt;&lt;/p&gt;
-&lt;p&gt;手机的GPU设计通常和PC完全不同。&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;手机的GPU通常来说是tiling的（也有例外），有多个Tilers（不知道怎么翻译），PC通常是立即渲染模式（Immediate-mode renderers）。&lt;/li&gt;
-&lt;li&gt;手机使用的是系统RAM，而PC使用的是分离的local memory和一个链接到GPU的总线，应该是PCI。&lt;/li&gt;
-&lt;li&gt;手机有多核处理器（但是没有太多的超线程技术），大部分为了低能耗做了优化而非高性能。</summary>
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;修改UnityHDRP管线来实现怪物猎人世界中宠物毛发效果&quot;&gt;&lt;a href=&quot;#修改UnityHDRP管线来实现怪物猎人世界中宠物毛发效果&quot; class=&quot;headerlink&quot;</summary>
+        
+      
     
     
     
@@ -254,30 +60,20 @@
   
   <entry>
     <title></title>
-    <link href="http://leinlin.github.io/2022/07/09/GPUAartch/%E5%85%B3%E4%BA%8ECuda%E3%80%81Shader%E4%B8%ADif%E8%AF%AD%E5%8F%A5%E6%89%A7%E8%A1%8C%E5%8E%9F%E7%90%86/"/>
-    <id>http://leinlin.github.io/2022/07/09/GPUAartch/%E5%85%B3%E4%BA%8ECuda%E3%80%81Shader%E4%B8%ADif%E8%AF%AD%E5%8F%A5%E6%89%A7%E8%A1%8C%E5%8E%9F%E7%90%86/</id>
-    <published>2022-07-09T11:34:20.485Z</published>
-    <updated>2022-07-09T12:04:01.862Z</updated>
+    <link href="http://leinlin.github.io/2022/09/19/Unity/%E6%B8%B2%E6%9F%93%E8%BF%87%E7%A8%8B%E4%B8%ADbuffer%E7%9A%84%E5%8F%98%E5%8C%96/"/>
+    <id>http://leinlin.github.io/2022/09/19/Unity/%E6%B8%B2%E6%9F%93%E8%BF%87%E7%A8%8B%E4%B8%ADbuffer%E7%9A%84%E5%8F%98%E5%8C%96/</id>
+    <published>2022-09-19T11:53:47.891Z</published>
+    <updated>2022-07-09T04:53:35.040Z</updated>
     
     
-    <summary type="html">&lt;h1 id=&quot;关于Cuda-Shader中if语句执行原理&quot;&gt;&lt;a href=&quot;#关于Cuda-Shader中if语句执行原理&quot; class=&quot;headerlink&quot; title=&quot;关于Cuda\Shader中if语句执行原理&quot;&gt;&lt;/a&gt;关于Cuda\Shader中if语句执行原理&lt;/h1&gt;&lt;p&gt;目前大部分人认为：shader当中动态if判断性能很低，只是用来做条件判断的，要避免使用。实际上if语句是可以用来做性能优化的。&lt;/p&gt;
-&lt;h2 id=&quot;参考资料&quot;&gt;&lt;a href=&quot;#参考资料&quot; class=&quot;headerlink&quot; title=&quot;参考资料&quot;&gt;&lt;/a&gt;参考资料&lt;/h2&gt;&lt;p&gt;主要来自于几个文档：&lt;/p&gt;
-&lt;ol start=&quot;0&quot;&gt;
-&lt;li&gt;&lt;p&gt;&lt;a href=&quot;http://haifux.org/lectures/267/Introduction-to-GPUs.pdf&quot;&gt;http://haifux.org/lectures/267/Introduction-to-GPUs.pdf&lt;/a&gt; 直接说明了GPU分支是如何工作的。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;第一个是GPU Gems 2当中提到的流控制&lt;a href=&quot;https://developer.nvidia.com/gpugems/GPUGems2/gpugems2_chapter34.html&quot;&gt;Chapter 34. GPU Flow-Control Idioms&lt;/a&gt;&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;里面提到了对于Z-cull来说分支和warp分布的关系。&lt;/p&gt;
-&lt;ol start=&quot;2&quot;&gt;
-&lt;li&gt;&lt;p&gt;和GPU分支优化相关的文章：[Reducing_branch_divergence_in_GPU_programs]，上面也提到了分支发散，并且提到了：&lt;/p&gt;
-&lt;p&gt;In the presence of a datadependent branch that causes diﬀerent threads in the same warp to follow diﬀerent paths (also known as branch divergence), the warp serially executes each branch path taken, disabling threads that are not on that path.&lt;/p&gt;
-&lt;p&gt;说明如果一个Warp没有进行分支发散，是所有warp只走一个分支的。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;手机部分GPU架构主要是高通和AMD，目前找到了高通的资料：&lt;a href=&quot;%5Bfile:///C:/Users/liangzhe/Desktop/80-nb295-11_a.pdf%5D(file:///C:/Users/liangzhe/Desktop/80-nb295-11_a.pdf)&quot;&gt;Qualcomm® Snapdragon™ Mobile Platform OpenCL General Programming and Optimization&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;这里面提到了避免分支发散（Avoid branch divergence）可以从文本中推测出，手机的GPU架构和PC是一样的，有同Warp优化功能，并不会两个分支都走。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;《GPU编程与优化》当中提到没有分支的Warp可以省略空跑分支。&lt;/p&gt;</summary>
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;无论在Deferred还是Forward，在AfterForwardAplha阶段深度就已经清除了&lt;/p&gt;
+&lt;p&gt;Resolve Depth</summary>
+        
+      
     
     
     
@@ -286,183 +82,192 @@
   
   <entry>
     <title></title>
-    <link href="http://leinlin.github.io/2022/07/09/GPUAartch/TeraScale%E6%9E%B6%E6%9E%84%E6%B5%85%E6%9E%90/"/>
-    <id>http://leinlin.github.io/2022/07/09/GPUAartch/TeraScale%E6%9E%B6%E6%9E%84%E6%B5%85%E6%9E%90/</id>
-    <published>2022-07-09T11:34:20.482Z</published>
-    <updated>2022-07-09T12:05:08.235Z</updated>
+    <link href="http://leinlin.github.io/2022/09/19/Unity/%E6%B7%B1%E5%BA%A6%E4%BF%A1%E6%81%AF/"/>
+    <id>http://leinlin.github.io/2022/09/19/Unity/%E6%B7%B1%E5%BA%A6%E4%BF%A1%E6%81%AF/</id>
+    <published>2022-09-19T11:53:47.760Z</published>
+    <updated>2022-09-19T12:31:52.118Z</updated>
     
     
-    <summary type="html">&lt;h1 id=&quot;TeraScale&quot;&gt;&lt;a href=&quot;#TeraScale&quot; class=&quot;headerlink&quot; title=&quot;TeraScale&quot;&gt;&lt;/a&gt;TeraScale&lt;/h1&gt;&lt;p&gt;TeraScale架构是AMD公司在2011年之前的早期GPU架构。&lt;/p&gt;
-&lt;p&gt;TeraScale使用超长指令字架构。&lt;/p&gt;
-&lt;p&gt;使用TeraScale的图形显卡: HD 2000 - 6000 &lt;/p&gt;
-&lt;h2 id=&quot;架构拆解&quot;&gt;&lt;a href=&quot;#架构拆解&quot; class=&quot;headerlink&quot; title=&quot;架构拆解&quot;&gt;&lt;/a&gt;架构拆解&lt;/h2&gt;&lt;p&gt;TeraScale的结构如下图：&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;/../../images/img/TelascaleArch.jpg&quot; alt=&quot;TelascaleArch&quot;&gt;&lt;/p&gt;
-&lt;p&gt;上面的架构：&lt;/p&gt;
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;深度&quot;&gt;&lt;a href=&quot;#深度&quot; class=&quot;headerlink&quot; title=&quot;深度&quot;&gt;&lt;/a&gt;深度&lt;/h1&gt;&lt;p&gt;在unity当中所有的不透明物体都需要使用深度(Zbuffer)做深度剔除：ZWtire</summary>
+        
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title></title>
+    <link href="http://leinlin.github.io/2022/09/19/Unity/%E4%B8%96%E7%95%8C%E5%9D%90%E6%A0%87%E6%81%A2%E5%A4%8D/"/>
+    <id>http://leinlin.github.io/2022/09/19/Unity/%E4%B8%96%E7%95%8C%E5%9D%90%E6%A0%87%E6%81%A2%E5%A4%8D/</id>
+    <published>2022-09-19T11:53:47.664Z</published>
+    <updated>2022-07-09T04:53:35.040Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;世界坐标恢复&quot;&gt;&lt;a href=&quot;#世界坐标恢复&quot; class=&quot;headerlink&quot;</summary>
+        
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title></title>
+    <link href="http://leinlin.github.io/2022/09/19/Unity/UV%E4%BA%91%E8%A2%AB%E8%A3%81%E5%87%8F%E9%97%AE%E9%A2%98/"/>
+    <id>http://leinlin.github.io/2022/09/19/Unity/UV%E4%BA%91%E8%A2%AB%E8%A3%81%E5%87%8F%E9%97%AE%E9%A2%98/</id>
+    <published>2022-09-19T11:53:47.525Z</published>
+    <updated>2022-07-09T04:53:35.019Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;UV云或阴影被远近剪裁面Clip的问题&quot;&gt;&lt;a href=&quot;#UV云或阴影被远近剪裁面Clip的问题&quot; class=&quot;headerlink&quot;</summary>
+        
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title></title>
+    <link href="http://leinlin.github.io/2022/09/19/Unity/Unity%E8%B4%B4%E5%9B%BE%E5%8E%8B%E7%BC%A9/"/>
+    <id>http://leinlin.github.io/2022/09/19/Unity/Unity%E8%B4%B4%E5%9B%BE%E5%8E%8B%E7%BC%A9/</id>
+    <published>2022-09-19T11:53:47.475Z</published>
+    <updated>2022-07-09T04:53:35.019Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;贴图大小涉及到硬盘空间、内存空间。&lt;/p&gt;
+&lt;p&gt;目前可选泽的压缩格式包括：ETC1, ETC2, DXT1,, DXT3, DXT5，还有对于法线的&lt;/p&gt;
+&lt;p&gt;参考内容:&lt;a</summary>
+        
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title></title>
+    <link href="http://leinlin.github.io/2022/09/19/Unity/UnityTextureStreaming/"/>
+    <id>http://leinlin.github.io/2022/09/19/Unity/UnityTextureStreaming/</id>
+    <published>2022-09-19T11:53:47.430Z</published>
+    <updated>2022-07-09T04:53:35.019Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;Texture-Streaming&quot;&gt;&lt;a href=&quot;#Texture-Streaming&quot; class=&quot;headerlink&quot; title=&quot;Texture Streaming&quot;&gt;&lt;/a&gt;Texture Streaming&lt;/h1&gt;&lt;p&gt;&lt;a</summary>
+        
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title></title>
+    <link href="http://leinlin.github.io/2022/09/19/Unity/SPR%E5%AE%98%E6%96%B9%E4%BB%8B%E7%BB%8D/"/>
+    <id>http://leinlin.github.io/2022/09/19/Unity/SPR%E5%AE%98%E6%96%B9%E4%BB%8B%E7%BB%8D/</id>
+    <published>2022-09-19T11:53:47.336Z</published>
+    <updated>2022-07-09T04:53:35.018Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;链接：&lt;a href=&quot;https://blogs.unity3d.com/cn/2018/01/31/srp-overview/&quot;&gt;Scriptable Render Pipeline Overview&lt;/a&gt;&lt;/p&gt;
+&lt;h1</summary>
+        
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title></title>
+    <link href="http://leinlin.github.io/2022/09/19/Unity/Shader%E6%89%93%E5%8C%85/"/>
+    <id>http://leinlin.github.io/2022/09/19/Unity/Shader%E6%89%93%E5%8C%85/</id>
+    <published>2022-09-19T11:53:47.288Z</published>
+    <updated>2022-07-09T04:53:35.018Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;Shader打包&quot;&gt;&lt;a href=&quot;#Shader打包&quot; class=&quot;headerlink&quot;</summary>
+        
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title></title>
+    <link href="http://leinlin.github.io/2022/09/19/Unity/Shader%E5%BD%93%E4%B8%AD%E7%9A%84%E5%9D%90%E6%A0%87%E5%8F%98%E5%8C%96/"/>
+    <id>http://leinlin.github.io/2022/09/19/Unity/Shader%E5%BD%93%E4%B8%AD%E7%9A%84%E5%9D%90%E6%A0%87%E5%8F%98%E5%8C%96/</id>
+    <published>2022-09-19T11:53:47.218Z</published>
+    <updated>2022-07-09T04:53:35.018Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h2 id=&quot;1-旋向性&quot;&gt;&lt;a href=&quot;#1-旋向性&quot; class=&quot;headerlink&quot; title=&quot;1 旋向性&quot;&gt;&lt;/a&gt;1</summary>
+        
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title></title>
+    <link href="http://leinlin.github.io/2022/09/19/Unity/SetRenderTarget/"/>
+    <id>http://leinlin.github.io/2022/09/19/Unity/SetRenderTarget/</id>
+    <published>2022-09-19T11:53:46.960Z</published>
+    <updated>2022-07-09T04:53:35.018Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;在Unity官方文档的介绍中，SetRenderTarget可以设置渲染目标。&lt;/p&gt;
 &lt;ol&gt;
-&lt;li&gt;&lt;p&gt;包含10个SIMD核心，每一个包括了32个32bit流处理单元，总共320个。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;包括4个纹理单元。&lt;/p&gt;
-&lt;/li&gt;
+&lt;li&gt;屏幕的渲染目标可以通过Graphics.activeColorBuffer和Graphics.activeDepthBuffer获取。&lt;/li&gt;
 &lt;/ol&gt;
-&lt;p&gt;一个SIMD core结构示意图：&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;/../../images/img/SIMDcore.jpg&quot; alt=&quot;SIMDcore&quot;&gt;&lt;/p&gt;
-&lt;p&gt;上面的SIMD core：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;&lt;p&gt;包括了16个Stream Processing Units（标量流处理单元），和16KB的本地数据共享存储器。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;有一组运行的线程共享一个逻辑控制单元。&lt;/p&gt;
-&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;四个专用纹理单元和L1 Cache。&lt;/p&gt;
-&lt;/li&gt;
-&lt;/ol&gt;
-&lt;p&gt;下面是一组Stream Processing Units结构：&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;/../../images/img/StreamProcessingUnits.jpg&quot; alt=&quot;StreamProcessingUnits&quot;&gt;&lt;/p&gt;
-&lt;p&gt;对于Stream Processing Units：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;有自己的通用寄存器&lt;/li&gt;
-&lt;li&gt;我的猜测四个小的黄色格子应该就是ALU。产生指令流水。</summary>
-    
-    
-    
-    
-  </entry>
-  
-  <entry>
-    <title></title>
-    <link href="http://leinlin.github.io/2022/07/09/GPUAartch/Partial_Derivatives(DDX)%E5%8E%9F%E7%90%86%E4%B8%8E%E8%AE%BE%E5%A4%87%E5%AE%9E%E7%8E%B0%E5%B7%AE%E5%BC%82/"/>
-    <id>http://leinlin.github.io/2022/07/09/GPUAartch/Partial_Derivatives(DDX)%E5%8E%9F%E7%90%86%E4%B8%8E%E8%AE%BE%E5%A4%87%E5%AE%9E%E7%8E%B0%E5%B7%AE%E5%BC%82/</id>
-    <published>2022-07-09T11:34:20.476Z</published>
-    <updated>2022-07-09T12:05:03.143Z</updated>
-    
-    
-    <summary type="html">&lt;h1 id=&quot;Partial-Derivatives-DDX-原理与设备实现差异&quot;&gt;&lt;a href=&quot;#Partial-Derivatives-DDX-原理与设备实现差异&quot; class=&quot;headerlink&quot; title=&quot;Partial_Derivatives(DDX)原理与设备实现差异&quot;&gt;&lt;/a&gt;Partial_Derivatives(DDX)原理与设备实现差异&lt;/h1&gt;&lt;h2 id=&quot;DDX-DDY的硬件条件&quot;&gt;&lt;a href=&quot;#DDX-DDY的硬件条件&quot; class=&quot;headerlink&quot; title=&quot;DDX\DDY的硬件条件&quot;&gt;&lt;/a&gt;DDX\DDY的硬件条件&lt;/h2&gt;&lt;p&gt;​	“导数”意思是在某一点上“函数的变化”。在图形处理当中，指的是相邻像素之间的变化。&lt;/p&gt;
-&lt;p&gt;​	ddx和ddy是常用的简单的图像导数，它们比较相邻的两个像素的垂直或水平值。具体的实现方法以及&lt;strong&gt;结果&lt;/strong&gt;依赖于GPU的特殊架构结构细节。&lt;/p&gt;
-&lt;p&gt;​	在图形计算过程中，像素着色阶段的最小调度单元是一个warp，一个warp执行同一段程序，包括了最少32个线程。但是最小的执行单元是一个quad。也就是说一次最少需要执行一个2 * 2的像素，而不需要的像素会被丢弃掉。&lt;/p&gt;
-&lt;p&gt;​	这4个像素也就对应了四个线程，他们共同申请使用设备上下文，也就是说可以在硬件上，方便的访问到隔壁像素的数据。&lt;/p&gt;
-&lt;p&gt;​	根据硬件这一特性，我们可以利用ddx、ddy获取到更多的信息。&lt;/p&gt;</summary>
-    
-    
-    
-    
-  </entry>
-  
-  <entry>
-    <title></title>
-    <link href="http://leinlin.github.io/2022/07/09/GPUAartch/GPU%E6%9E%B6%E6%9E%84%E7%B1%BB%E5%9E%8B%E6%95%B4%E5%90%88/"/>
-    <id>http://leinlin.github.io/2022/07/09/GPUAartch/GPU%E6%9E%B6%E6%9E%84%E7%B1%BB%E5%9E%8B%E6%95%B4%E5%90%88/</id>
-    <published>2022-07-09T11:34:20.471Z</published>
-    <updated>2022-07-09T12:04:53.008Z</updated>
-    
-    
-    <summary type="html">&lt;h1 id=&quot;GPU架构整合&quot;&gt;&lt;a href=&quot;#GPU架构整合&quot; class=&quot;headerlink&quot; title=&quot;GPU架构整合&quot;&gt;&lt;/a&gt;GPU架构整合&lt;/h1&gt;&lt;p&gt;AMD公司GPU芯片架构:&lt;/p&gt;
-&lt;table&gt;
-&lt;thead&gt;
-&lt;tr&gt;
-&lt;th align=&quot;center&quot;&gt;Microarchitecture&lt;/th&gt;
-&lt;th align=&quot;center&quot;&gt;GPUs&lt;/th&gt;
-&lt;th align=&quot;center&quot;&gt;Graphic cards &amp;#x2F; SoCs&lt;/th&gt;
-&lt;/tr&gt;
-&lt;/thead&gt;
-&lt;tbody&gt;&lt;tr&gt;
-&lt;td align=&quot;center&quot;&gt;GCN 5th&lt;/td&gt;
-&lt;td align=&quot;center&quot;&gt;Vega 10&lt;/td&gt;
-&lt;td align=&quot;center&quot;&gt;Radeon Rx Vega series&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td align=&quot;center&quot;&gt;GCN 4th&lt;/td&gt;
-&lt;td align=&quot;center&quot;&gt;Polaris 10, Polaris 11, Polaris 12&lt;/td&gt;
-&lt;td align=&quot;center&quot;&gt;Radeon Rx 400 series Radeon_500_series&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td align=&quot;center&quot;&gt;GCN 3rd&lt;/td&gt;
-&lt;td align=&quot;center&quot;&gt;Tonga, Fiji, Carrizo&lt;/td&gt;
-&lt;td align=&quot;center&quot;&gt;Radeon R9 Series&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td align=&quot;center&quot;&gt;GCN 2nd&lt;/td&gt;
-&lt;td align=&quot;center&quot;&gt;Bonaire, Hawaii, Kaveri, Kabini, Temash, Mullins, Beema, Carrizo-L&lt;/td&gt;
-&lt;td align=&quot;center&quot;&gt;Radeon HD 7790, &lt;strong&gt;PlayStation 4&lt;/strong&gt;, Xbox One&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td align=&quot;center&quot;&gt;GCN 1st&lt;/td&gt;
-&lt;td align=&quot;center&quot;&gt;Oland, Cape Verde, Pitcairn, Tahiti&lt;/td&gt;
-&lt;td align=&quot;center&quot;&gt;Radeon HD 77xx–7900 Series&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td align=&quot;center&quot;&gt;TeraScale 3&lt;/td&gt;
-&lt;td align=&quot;center&quot;&gt;Cayman, Trinity&amp;#x2F;Richland&lt;/td&gt;
-&lt;td align=&quot;center&quot;&gt;Radeon HD 69xx Series, Radeon HD 7xxx–76xx Series&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td align=&quot;center&quot;&gt;TeraScale 2&lt;/td&gt;
-&lt;td align=&quot;center&quot;&gt;Cedar, Cypress, Juniper, Redwood, Palm, Sumo&lt;/td&gt;
-&lt;td align=&quot;center&quot;&gt;Radeon HD 5000 Series, Radeon HD 6350, Radeon HD 64xx–68xx Series&lt;/td&gt;
-&lt;/tr&gt;
-&lt;tr&gt;
-&lt;td align=&quot;center&quot;&gt;TeraScale 1&lt;/td&gt;
-&lt;td align=&quot;center&quot;&gt;R600, RV630, RV610, RV790, RV770, …&lt;/td&gt;
-&lt;td align=&quot;center&quot;&gt;Radeon HD 2000 Series, HD 3000, HD 4000&lt;/td&gt;
-&lt;/tr&gt;
-&lt;/tbody&gt;&lt;/table&gt;</summary>
-    
-    
-    
-    
-  </entry>
-  
-  <entry>
-    <title></title>
-    <link href="http://leinlin.github.io/2022/07/09/GPUAartch/GPU%E6%9E%B6%E6%9E%84/"/>
-    <id>http://leinlin.github.io/2022/07/09/GPUAartch/GPU%E6%9E%B6%E6%9E%84/</id>
-    <published>2022-07-09T11:34:20.468Z</published>
-    <updated>2022-07-09T12:04:48.250Z</updated>
-    
-    
-    <summary type="html">&lt;h1 id=&quot;GPU架构&quot;&gt;&lt;a href=&quot;#GPU架构&quot; class=&quot;headerlink&quot; title=&quot;GPU架构&quot;&gt;&lt;/a&gt;GPU架构&lt;/h1&gt;&lt;p&gt;参考资料:&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;http://haifux.org/lectures/267/Introduction-to-GPUs.pdf&quot;&gt;Introduction to GPU Architecture&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;https://www.amd.com/Documents/GCN_Architecture_whitepaper.pdf&quot;&gt;GCN_Architecture&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;https://anteru.net/blog/2018/intro-to-compute-shaders/index.html&quot;&gt;Compute Shader&lt;/a&gt;&lt;/p&gt;
-&lt;h2 id=&quot;概要&quot;&gt;&lt;a href=&quot;#概要&quot; class=&quot;headerlink&quot; title=&quot;概要&quot;&gt;&lt;/a&gt;概要&lt;/h2&gt;&lt;p&gt;主要简单介绍GPU架构，已经架构带来的性能优化代码编写问题。&lt;/p&gt;
-&lt;h2 id=&quot;概念&quot;&gt;&lt;a href=&quot;#概念&quot; class=&quot;headerlink&quot; title=&quot;概念&quot;&gt;&lt;/a&gt;概念&lt;/h2&gt;&lt;p&gt;同过总结上面的资料，大概梳理了相关内容。&lt;/p&gt;</summary>
-    
-    
-    
-    
-  </entry>
-  
-  <entry>
-    <title></title>
-    <link href="http://leinlin.github.io/2022/07/09/GPUAartch/GPU%E5%88%86%E6%94%AF%E8%AF%AD%E5%8F%A5%E6%80%A7%E8%83%BD/"/>
-    <id>http://leinlin.github.io/2022/07/09/GPUAartch/GPU%E5%88%86%E6%94%AF%E8%AF%AD%E5%8F%A5%E6%80%A7%E8%83%BD/</id>
-    <published>2022-07-09T11:34:20.464Z</published>
-    <updated>2022-07-09T12:04:35.672Z</updated>
-    
-    
-    <summary type="html">&lt;p&gt;下面就是一组线程同时执行，*表示空跑，&amp;#x3D;表示执行。可以看到他们是同时完成的。一个计算单元的所有线程结束以后，可以开始下一组。&lt;/p&gt;
-&lt;figure class=&quot;highlight c&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;code class=&quot;hljs c&quot;&gt;线程A:  =========&lt;span class=&quot;hljs-keyword&quot;&gt;if&lt;/span&gt;==============&lt;span class=&quot;hljs-keyword&quot;&gt;else&lt;/span&gt;**********endif===========&lt;br&gt;线程B:  =========&lt;span class=&quot;hljs-keyword&quot;&gt;if&lt;/span&gt;**************&lt;span class=&quot;hljs-keyword&quot;&gt;else&lt;/span&gt;==========endif===========&lt;br&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-
-&lt;p&gt;就可以理解为判断只会产生一个遮罩，这个遮罩会决定我这段代码是不是空跑。GPU的计算资源十分紧俏，空跑越多就是我们说的开销大。例如32个线程，每一个都跑不通的分支，那么就相当于性能下降到了1&amp;#x2F;32。这里的开销是利用率降低而不是时间变长。&lt;/p&gt;
-&lt;p&gt;关于跑完会等待的。。。GPU一般不会阻塞等待别的线程的（有例外），假如w表示等待。下面的状态是不对的&lt;/p&gt;
-&lt;figure class=&quot;highlight c&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;code class=&quot;hljs c&quot;&gt;线程A:  =========&lt;span class=&quot;hljs-keyword&quot;&gt;if&lt;/span&gt;==============&lt;span class=&quot;hljs-keyword&quot;&gt;else&lt;/span&gt; endif===========&lt;br&gt;&lt;br&gt;线程B:  =========&lt;span class=&quot;hljs-keyword&quot;&gt;if&lt;/span&gt; &lt;span class=&quot;hljs-keyword&quot;&gt;else&lt;/span&gt;=======endif===========wwwwwww&lt;br&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;</summary>
-    
-    
-    
-    
-  </entry>
-  
-  <entry>
-    <title></title>
-    <link href="http://leinlin.github.io/2022/07/09/GPUAartch/GCN%E6%9E%B6%E6%9E%84%E6%B5%85%E6%9E%90/"/>
-    <id>http://leinlin.github.io/2022/07/09/GPUAartch/GCN%E6%9E%B6%E6%9E%84%E6%B5%85%E6%9E%90/</id>
-    <published>2022-07-09T11:34:20.461Z</published>
-    <updated>2022-07-09T04:53:34.609Z</updated>
-    
-    
-      
-      
-        
-        
-    <summary type="html">&lt;h1 id=&quot;Graphics-Core-Next&quot;&gt;&lt;a href=&quot;#Graphics-Core-Next&quot; class=&quot;headerlink&quot; title=&quot;Graphics Core Next&quot;&gt;&lt;/a&gt;Graphics Core</summary>
+&lt;p&gt;其中</summary>
         
       
     
@@ -473,24 +278,22 @@
   
   <entry>
     <title></title>
-    <link href="http://leinlin.github.io/2022/07/09/GPUAartch/HDR%E7%A1%AC%E4%BB%B6%E5%B1%82Framebuffer%E6%A0%BC%E5%BC%8F%E6%A0%87%E5%87%86%E4%B8%8E%E6%B8%B2%E6%9F%93%E9%98%B6%E6%AE%B5%E7%9A%84%E5%85%B3%E7%B3%BB/"/>
-    <id>http://leinlin.github.io/2022/07/09/GPUAartch/HDR%E7%A1%AC%E4%BB%B6%E5%B1%82Framebuffer%E6%A0%BC%E5%BC%8F%E6%A0%87%E5%87%86%E4%B8%8E%E6%B8%B2%E6%9F%93%E9%98%B6%E6%AE%B5%E7%9A%84%E5%85%B3%E7%B3%BB/</id>
-    <published>2022-07-09T11:21:00.755Z</published>
-    <updated>2022-07-09T12:04:56.976Z</updated>
+    <link href="http://leinlin.github.io/2022/09/19/Unity/Occluded%20Culling/"/>
+    <id>http://leinlin.github.io/2022/09/19/Unity/Occluded%20Culling/</id>
+    <published>2022-09-19T11:53:46.936Z</published>
+    <updated>2022-07-09T04:53:35.018Z</updated>
     
     
-    <summary type="html">&lt;h1 id=&quot;HDR硬件层Framebuffer格式标准与渲染阶段的关系&quot;&gt;&lt;a href=&quot;#HDR硬件层Framebuffer格式标准与渲染阶段的关系&quot; class=&quot;headerlink&quot; title=&quot;HDR硬件层Framebuffer格式标准与渲染阶段的关系&quot;&gt;&lt;/a&gt;HDR硬件层Framebuffer格式标准与渲染阶段的关系&lt;/h1&gt;&lt;p&gt;这里主要探讨的是&lt;strong&gt;SwapChain的格式&lt;/strong&gt;、&lt;strong&gt;写入其中的数据&lt;/strong&gt;以及&lt;strong&gt;屏幕实际亮度&lt;/strong&gt;之间的关系。&lt;/p&gt;
-&lt;h2 id=&quot;SDR格式&quot;&gt;&lt;a href=&quot;#SDR格式&quot; class=&quot;headerlink&quot; title=&quot;SDR格式&quot;&gt;&lt;/a&gt;SDR格式&lt;/h2&gt;&lt;p&gt;对于SDR屏幕 Buffer主要有：&lt;/p&gt;
-&lt;p&gt;R8G8B8A8_UNORM：首先屏幕的eotf曲线是始终存在的，这种格式输入的颜色，图像接口不会进行任何处理，需要我们自己在shader中进行sRGB编码。&lt;/p&gt;
-&lt;p&gt;R8G8B8A8_SNORM：这种格式输入的颜色在显示之前会自动编码到SRGB空间（自动Gamma矫正），所以我们不需要进行处理，也就是说shader当中直接写出线性颜色即可。A通道是线性的。&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;  Vulkan的解释：&lt;/p&gt;
-&lt;p&gt;  specifies a four-component, 32-bit unsigned normalized format that has an 8-bit B component stored with sRGB nonlinear encoding in byte 0, an 8-bit G component stored with sRGB nonlinear encoding in byte 1, an 8-bit R component stored with sRGB nonlinear encoding in byte 2, and an 8-bit A component in byte 3.&lt;/p&gt;
-&lt;p&gt;  On the other hand, &lt;strong&gt;non-*_SRGB formats&lt;/strong&gt; will be very likely exposed in pair with a &lt;strong&gt;SRGB color space.&lt;/strong&gt; &lt;strong&gt;This means, the hardware will not apply any transfer function when reading from or writing to such images, yet they will still be presented on a device with sRGB display characteristics&lt;/strong&gt;。（即使使用非SRGB的format，仍然可以使用 SRGB的colorSpace），这意味着硬件不会帮助进行自动的空间转换（在读写buffer时），但是仍然使用srgb的eotf的显示特性。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;SRGB的进一步说明：&lt;/p&gt;
-&lt;p&gt;&lt;a href=&quot;https://docs.rs/vulkano/0.7.2/vulkano/swapchain/enum.ColorSpace.html&quot;&gt;https://docs.rs/vulkano/0.7.2/vulkano/swapchain/enum.ColorSpace.html&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;/../../images/HDR%E7%A1%AC%E4%BB%B6%E5%B1%82Framebuffer%E6%A0%BC%E5%BC%8F%E6%A0%87%E5%87%86%E4%B8%8E%E6%B8%B2%E6%9F%93%E9%98%B6%E6%AE%B5%E7%9A%84%E5%85%B3%E7%B3%BB/1590989148165.png&quot; alt=&quot;1590989148165&quot;&gt;&lt;/p&gt;</summary>
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;主要介绍unity遮挡剔除功能&lt;/p&gt;
+&lt;p&gt;#1.Unity build-in插件：Umbra&lt;/p&gt;
+&lt;p&gt;##1.1具体原理&lt;/p&gt;
+&lt;p&gt;&lt;a</summary>
+        
+      
     
     
     
@@ -498,47 +301,149 @@
   </entry>
   
   <entry>
-    <title>FBXFileFormat</title>
-    <link href="http://leinlin.github.io/2022/07/09/3DBasic/FBXFileFormat/"/>
-    <id>http://leinlin.github.io/2022/07/09/3DBasic/FBXFileFormat/</id>
-    <published>2022-07-09T04:00:14.000Z</published>
-    <updated>2022-07-09T12:12:37.846Z</updated>
+    <title></title>
+    <link href="http://leinlin.github.io/2022/09/19/Unity/Linear%20And%20Gamma/"/>
+    <id>http://leinlin.github.io/2022/09/19/Unity/Linear%20And%20Gamma/</id>
+    <published>2022-09-19T11:53:46.912Z</published>
+    <updated>2022-07-09T04:53:35.017Z</updated>
     
     
-    <summary type="html">&lt;h1 id=&quot;FBX-test-version-file-format-specification&quot;&gt;&lt;a href=&quot;#FBX-test-version-file-format-specification&quot; class=&quot;headerlink&quot; title=&quot;FBX test version file format specification&quot;&gt;&lt;/a&gt;FBX test version file format specification&lt;/h1&gt;&lt;p&gt;&lt;em&gt;This post is extract from &lt;a href=&quot;https://archive.blender.org/wiki/index.php/User:Mont29/Foundation/FBX_File_Structure/&quot;&gt;blender Doc :FBX File Structure&lt;/a&gt;.&lt;/em&gt;&lt;/p&gt;
-&lt;h2 id=&quot;Generalities&quot;&gt;&lt;a href=&quot;#Generalities&quot; class=&quot;headerlink&quot; title=&quot;Generalities&quot;&gt;&lt;/a&gt;Generalities&lt;/h2&gt;&lt;p&gt;FBX is a nodal format, with a root element (which is never explicitly written) and a tree of children.&lt;/p&gt;
-&lt;p&gt;Each element has an id (byte string), and can have data and children elements.&lt;/p&gt;
-&lt;p&gt;Data are a set of (values, type) tuples, available types are: bool, short, int, long, float, double, bytes, string, and arrays of those types.&lt;/p&gt;
-&lt;p&gt;Here is a (JSON) representation of an element:&lt;/p&gt;
-&lt;figure class=&quot;highlight json&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;span class=&quot;line&quot;&gt;1&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;2&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;3&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;4&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;line&quot;&gt;5&lt;/span&gt;&lt;br&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;code class=&quot;hljs json&quot;&gt;&lt;span class=&quot;hljs-punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;hljs-string&quot;&gt;&amp;quot;Element_ID&amp;quot;&lt;/span&gt;&lt;span class=&quot;hljs-punctuation&quot;&gt;,&lt;/span&gt;                         # ID&lt;br&gt;     &lt;span class=&quot;hljs-punctuation&quot;&gt;[&lt;/span&gt;&lt;span class=&quot;hljs-string&quot;&gt;&amp;quot;data_string&amp;quot;&lt;/span&gt;&lt;span class=&quot;hljs-punctuation&quot;&gt;,&lt;/span&gt; &lt;span class=&quot;hljs-number&quot;&gt;13&lt;/span&gt;&lt;span class=&quot;hljs-punctuation&quot;&gt;]&lt;/span&gt;&lt;span class=&quot;hljs-punctuation&quot;&gt;,&lt;/span&gt;              # Data&lt;br&gt;     &lt;span class=&quot;hljs-string&quot;&gt;&amp;quot;SI&amp;quot;&lt;/span&gt;&lt;span class=&quot;hljs-punctuation&quot;&gt;,&lt;/span&gt;                             # Data types&lt;span class=&quot;hljs-punctuation&quot;&gt;,&lt;/span&gt; as single-char codes (S for String&lt;span class=&quot;hljs-punctuation&quot;&gt;,&lt;/span&gt; I for Integer&lt;span class=&quot;hljs-punctuation&quot;&gt;,&lt;/span&gt; etc.)&lt;br&gt;     &lt;span class=&quot;hljs-punctuation&quot;&gt;[&lt;/span&gt;__other_children_elements__&lt;span class=&quot;hljs-punctuation&quot;&gt;]&lt;/span&gt;&lt;br&gt;&lt;span class=&quot;hljs-punctuation&quot;&gt;]&lt;/span&gt;&lt;br&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-
-&lt;p&gt;Everything is based on this simple schema.&lt;/p&gt;</summary>
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;##线性空间、GAMMA空间和HDR、纹理&lt;/p&gt;
+&lt;h3 id=&quot;sRGB&quot;&gt;&lt;a href=&quot;#sRGB&quot; class=&quot;headerlink&quot;</summary>
+        
+      
     
     
-    
-    <category term="3DBasic" scheme="http://leinlin.github.io/categories/3DBasic/"/>
     
     
   </entry>
   
   <entry>
-    <title>ColorGrading中LUT的生成与使用</title>
-    <link href="http://leinlin.github.io/2022/07/09/Art/ColorGrading%E4%B8%ADLUT%E7%9A%84%E7%94%9F%E6%88%90%E4%B8%8E%E4%BD%BF%E7%94%A8/"/>
-    <id>http://leinlin.github.io/2022/07/09/Art/ColorGrading%E4%B8%ADLUT%E7%9A%84%E7%94%9F%E6%88%90%E4%B8%8E%E4%BD%BF%E7%94%A8/</id>
-    <published>2022-07-09T04:00:14.000Z</published>
-    <updated>2022-07-09T12:11:02.308Z</updated>
+    <title></title>
+    <link href="http://leinlin.github.io/2022/09/19/Unity/Houdini%E5%AF%BC%E5%87%BAfbxUVz%E9%80%9A%E9%81%93/"/>
+    <id>http://leinlin.github.io/2022/09/19/Unity/Houdini%E5%AF%BC%E5%87%BAfbxUVz%E9%80%9A%E9%81%93/</id>
+    <published>2022-09-19T11:53:46.897Z</published>
+    <updated>2022-07-09T04:53:35.017Z</updated>
     
     
-    <summary type="html">&lt;h1 id=&quot;ColorGrading中LUT的生成与使用&quot;&gt;&lt;a href=&quot;#ColorGrading中LUT的生成与使用&quot; class=&quot;headerlink&quot; title=&quot;ColorGrading中LUT的生成与使用&quot;&gt;&lt;/a&gt;ColorGrading中LUT的生成与使用&lt;/h1&gt;&lt;p&gt;场景的LUT贴图有两种生成方式：&lt;/p&gt;
-&lt;ol&gt;
-&lt;li&gt;通常DaVinCi生成的是.cube文件，需要用cube文件转换。&lt;/li&gt;
-&lt;li&gt;直接在PS当中调整。&lt;/li&gt;
-&lt;/ol&gt;
-&lt;h2 id=&quot;PS直接调整&quot;&gt;&lt;a href=&quot;#PS直接调整&quot; class=&quot;headerlink&quot; title=&quot;PS直接调整&quot;&gt;&lt;/a&gt;PS直接调整&lt;/h2&gt;&lt;p&gt;对于用ps直接调整来说，只要把参考图片和Natural LUT一起调整即可，最终Natural LUT的结果就是我们要的LUT。&lt;/p&gt;</summary>
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;Houdini无法导出UV-z通道&quot;&gt;&lt;a href=&quot;#Houdini无法导出UV-z通道&quot; class=&quot;headerlink&quot;</summary>
+        
+      
     
     
     
-    <category term="Art" scheme="http://leinlin.github.io/categories/Art/"/>
+    
+  </entry>
+  
+  <entry>
+    <title></title>
+    <link href="http://leinlin.github.io/2022/09/19/Unity/HDRP%E6%B7%B1%E5%BA%A6%E7%BA%B9%E7%90%86/"/>
+    <id>http://leinlin.github.io/2022/09/19/Unity/HDRP%E6%B7%B1%E5%BA%A6%E7%BA%B9%E7%90%86/</id>
+    <published>2022-09-19T11:53:46.864Z</published>
+    <updated>2022-09-19T12:33:42.515Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;HDRP深度纹理&quot;&gt;&lt;a href=&quot;#HDRP深度纹理&quot; class=&quot;headerlink&quot; title=&quot;HDRP深度纹理&quot;&gt;&lt;/a&gt;HDRP深度纹理&lt;/h1&gt;&lt;figure class=&quot;highlight c&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td</summary>
+        
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title></title>
+    <link href="http://leinlin.github.io/2022/09/19/Unity/hdrp%E5%B0%8F%E9%97%AE%E9%A2%98/"/>
+    <id>http://leinlin.github.io/2022/09/19/Unity/hdrp%E5%B0%8F%E9%97%AE%E9%A2%98/</id>
+    <published>2022-09-19T11:53:46.824Z</published>
+    <updated>2022-07-09T04:53:35.020Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;1-UnlitShader使用&quot;&gt;&lt;a href=&quot;#1-UnlitShader使用&quot; class=&quot;headerlink&quot;</summary>
+        
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title></title>
+    <link href="http://leinlin.github.io/2022/09/19/Unity/HDRP%E4%B8%ADShaderGraph%E7%94%9F%E6%88%90%E7%9A%84UnlitTransparent%E4%B8%8D%E6%8E%A5%E5%8F%97%E9%9B%BE/"/>
+    <id>http://leinlin.github.io/2022/09/19/Unity/HDRP%E4%B8%ADShaderGraph%E7%94%9F%E6%88%90%E7%9A%84UnlitTransparent%E4%B8%8D%E6%8E%A5%E5%8F%97%E9%9B%BE/</id>
+    <published>2022-09-19T11:53:46.634Z</published>
+    <updated>2022-07-09T04:53:35.017Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;HDRP中ShaderGraph生成的UnlitTransparent不接受雾&quot;&gt;&lt;a href=&quot;#HDRP中ShaderGraph生成的UnlitTransparent不接受雾&quot; class=&quot;headerlink&quot;</summary>
+        
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title></title>
+    <link href="http://leinlin.github.io/2022/09/19/Unity/HDRP%E4%B8%ADHairShader%E4%BB%A3%E7%A0%81%E7%BB%93%E6%9E%842/"/>
+    <id>http://leinlin.github.io/2022/09/19/Unity/HDRP%E4%B8%ADHairShader%E4%BB%A3%E7%A0%81%E7%BB%93%E6%9E%842/</id>
+    <published>2022-09-19T11:53:46.496Z</published>
+    <updated>2022-07-09T04:53:35.016Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h3 id=&quot;HairShader光照模型&quot;&gt;&lt;a href=&quot;#HairShader光照模型&quot; class=&quot;headerlink&quot;</summary>
+        
+      
+    
+    
+    
+    
+  </entry>
+  
+  <entry>
+    <title></title>
+    <link href="http://leinlin.github.io/2022/09/19/Unity/HDRP%E4%B8%ADHairShader%E4%BB%A3%E7%A0%81%E7%BB%93%E6%9E%84/"/>
+    <id>http://leinlin.github.io/2022/09/19/Unity/HDRP%E4%B8%ADHairShader%E4%BB%A3%E7%A0%81%E7%BB%93%E6%9E%84/</id>
+    <published>2022-09-19T11:53:46.376Z</published>
+    <updated>2022-07-09T04:53:35.016Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;h1 id=&quot;HDRP-HairShader代码结构&quot;&gt;&lt;a href=&quot;#HDRP-HairShader代码结构&quot; class=&quot;headerlink&quot; title=&quot;HDRP HairShader代码结构&quot;&gt;&lt;/a&gt;HDRP</summary>
+        
+      
+    
+    
     
     
   </entry>

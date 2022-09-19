@@ -1,0 +1,485 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#33363b">
+    <meta name="msapplication-TileColor" content="#33363b">
+    
+    
+    
+    
+    <meta name="keywords" content="leinlin, ARIA, Hexo">
+    
+    
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png">
+    
+    
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicons/android-chrome-192x192.png">
+    
+    
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png">
+    
+    
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png">
+    
+    
+    <link rel="mask-icon" href="/favicons/safari-pinned-tab.svg" color="#33363b">
+    
+    
+    <link rel="manifest" href="/favicons/site.webmanifest">
+    
+    
+    <meta name="msapplication-config" content="/favicons/browserconfig.xml">
+    
+    
+    <link rel="alternate" href="/atom.xml" title="leinlin的小笔记" type="application/atom+xml" />
+    
+    
+    <link rel="shortcut icon" type="image/x-icon" href="/favicons/favicon.ico">
+    
+    
+    <link rel="stylesheet" type="text/css" href="/css/normalize.css">
+    <link rel="stylesheet" type="text/css" href="/css/index.css">
+    
+    <link rel="stylesheet" type="text/css" href="/css/sidebar.css">
+    
+    
+<link rel="stylesheet" type="text/css" href="/css/page.css">
+<link rel="stylesheet" type="text/css" href="/css/post.css">
+
+    <link rel="stylesheet" type="text/css" href="/css/custom.css">
+    <link rel="stylesheet" type="text/css" href="/css/atom-one-light.css">
+    <link rel="stylesheet" type="text/css" href="/css/lightgallery.min.css">
+    <script type="text/javascript" src="/js/jquery.min.js"></script>
+    <script defer type="text/javascript" src="/js/util.js"></script>
+    <script defer type="text/javascript" src="/js/clipboard.min.js"></script>
+    <script defer type="text/javascript" src="/js/scrollspy.js"></script>
+    <script defer type="text/javascript" src="/js/fontawesome-all.min.js"></script>
+    <script defer type="text/javascript" src="/js/lightgallery.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-fullscreen.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-hash.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-pager.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-thumbnail.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-zoom.min.js"></script>
+    
+    <script defer src="/js/busuanzi.pure.mini.js"></script>
+    
+    
+    <script defer type="text/javascript" src="/js/search.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function () {
+      var searchPath = "search.xml";
+      if (searchPath.length === 0) {
+        searchPath = "search.xml";
+      }
+      var path = "/" + searchPath;
+      searchFunc(path, "search-input", "search-result");
+    });
+    </script>
+    
+    
+    
+    <script defer type="text/javascript" src="https://cdn.staticfile.org/MathJax/MathJax-2.6-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ["$","$"], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ["script", "noscript", "style", "textarea", "pre", "code"]
+      }
+    });
+    </script>
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for (i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += " has-jax";
+      }
+    });
+    </script>
+    
+    
+    <script defer type="text/javascript" src="/js/index.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function () {
+      var cb = null;
+      var els = $(".post figure.highlight");
+      if (els.length) {
+        // Enabled Hexo highlight line number.
+        $(els).each(function (i, e) {
+          // $(e).before("<button class=\"copy button\">复制</button>");
+          $(e).before([
+            "<div class=\"code-titlebar\">",
+              "<div class=\"titlebar-left\">",
+                "<button class=\"copy\">复制</button>",
+              "</div>",
+            "</div>"
+          ].join(""));
+        });
+        cb = new ClipboardJS("button.copy", {
+          "target": function (trigger) {
+              // Get target element by DOM API.
+              return trigger.parentNode.parentNode.nextElementSibling.firstChild.firstChild.firstChild.lastChild.firstChild.firstChild;
+          }
+        });
+      } else {
+        // Disabled Hexo highlight line number.
+        els = $(".post pre code");
+        $(els).each(function (i, e) {
+          // Add button before pre, not code.
+          // $(e).parent().before("<button class=\"copy button\">复制</button>");
+          $(e).before([
+            "<div class=\"code-titlebar\">",
+              "<div class=\"titlebar-left\">",
+                "<button class=\"copy\" >复制</button>",
+              "</div>",
+              "<div class=\"titlebar-right\">",
+                "<button class=\"button-dot dot-minimize\" aria-label=\"Decoration\"></button>",
+                "<button class=\"button-dot dot-maximize\" aria-label=\"Decoration\"></button>",
+                "<button class=\"button-dot dot-close\" aria-label=\"Decoration\"></button>",
+              "</div>",
+            "</div>"
+          ].join(""));
+        });
+        cb = new ClipboardJS("button.copy", {
+          "target": function (trigger) {
+              // Get target element by DOM API.
+              return trigger.parentNode.parentNode.nextElementSibling;
+          }
+        });
+      }
+      cb.on("success", function (e) {
+        e.clearSelection();
+        var trigger = e.trigger;
+        // Change button text as a user tip.
+        trigger.innerHTML = "已复制";
+        $(trigger).addClass("copied");
+        // Change button text back;
+        setTimeout(function () {
+          trigger.innerHTML = "复制";
+          $(trigger).removeClass("copied");
+        }, 1500);
+      });
+    });
+    </script>
+    
+    <script defer type="text/javascript" src="/js/custom.js"></script>
+    <title> | leinlin的小笔记</title>
+  <meta name="generator" content="Hexo 6.2.0"></head>
+  <body itemscope itemtype="http://schema.org/WebPage" lang="zh_CN"  data-spy="scroll" data-target=".list-group">
+    
+<header id="header" class="header" style="background: #33363b;">
+  <div class="container">
+    <div class="header-container">
+      <div class="header-title">
+        <h1 class="title"><a href="/">leinlin的小笔记</a></h1>
+        <h2 class="subtitle"></h2>
+      </div>
+      
+    </div>
+    <nav id="nav" class="nav">
+      <a id="nav-toggle" class="nav-toggle" aria-hidden="true"><i class="fas fa-bars" aria-label="切换导航栏"></i></a>
+      <ul id="menu" role="menubar" aria-hidden="false">
+        
+        <li role="menuitem"><a href="/"><i class="fas fa-home"></i><span class="menu-text">首页</span></a></li>
+        
+        <li role="menuitem"><a href="/categories/"><i class="fas fa-th-list"></i><span class="menu-text">分类</span></a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</header>
+
+
+    <main id="main" class="main">
+      <div class="container">
+        <div class="main-container">
+          <div class="content">
+            
+<div id="post" class="page">
+  
+  <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
+    <div class="post-block">
+      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/09/19/HDRPartist/%E5%9C%BA%E6%99%AF%E7%BE%8E%E6%9C%AF%E8%B5%84%E6%BA%90%E4%BC%98%E5%8C%96%E6%80%9D%E8%B7%AF/">
+      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+       <meta itemprop="name" content="leinlin">
+       <meta itemprop="description" content="">
+       <meta itemprop="image" content="/images/avatar.jpg">
+      </span>
+      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+       <meta itemprop="name" content="leinlin的小笔记">
+      </span>
+    </div>
+    <header class="post-header">
+      <h1 class="post-title" itemprop="name headline"></h1>
+      <div class="post-meta">
+        
+        <span class="post-date">
+          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2022-09-19T19:47:59+08:00">2022-09-19 19:47:59</time></span>
+        </span>
+        
+        
+        
+        
+        
+      </div>
+    </header>
+    <main class="post-main" itemprop="articleBody">
+      <h1 id="美术资源优化思路与原理"><a href="#美术资源优化思路与原理" class="headerlink" title="美术资源优化思路与原理"></a>美术资源优化思路与原理</h1><h2 id="美术资源可能带来的性能问题"><a href="#美术资源可能带来的性能问题" class="headerlink" title="美术资源可能带来的性能问题"></a>美术资源可能带来的性能问题</h2><ol>
+<li><p>游戏内存： 场景当中要绘制的所有东西都需要保存到内存中，其中最重要的就是：<strong>模型、贴图</strong>。</p>
+</li>
+<li><p>drawcall：每绘制一种东西（不同的模型：即使是相同的材质球也算不同的模型，除非合并他们的mesh），<strong>内存都需要把相关的渲染参数、模型数据、贴图数据传递到GPU</strong>，这个速度非常慢，所以看到的模型越多，drawcall越多。</p>
+</li>
+<li><p>GPU渲染速度：模型的材质越复杂，渲染越慢。这个靠TA来制定标准即可。</p>
+</li>
+</ol>
+<p>美术制作资源是需要关注前两点。</p>
+<h2 id="场景美术资源优化策略"><a href="#场景美术资源优化策略" class="headerlink" title="场景美术资源优化策略"></a>场景美术资源优化策略</h2><p>场景美术资源优化主要有个以下方面：</p>
+<ol>
+<li><p>模型拆分，模型组件复用：美术制作场景时，复用模型资源进行摆放。<strong>只是为了提升工作效率，拆分之后还是需要尽可能使用相同材质，最终还是要合并。</strong></p>
+</li>
+<li><p>贴图Tiling，贴图复用：能够直接降低内存开销。<strong>为了效果可以使用更少、分辨率更高的贴图。</strong></p>
+</li>
+<li><p>材质复用：不同的模型使用同一个材质球（必须是同一个材质球，而不是不同的材质球同一个参数。）<strong>材质复用的目的，是最终要合并网格以减少drawcall，如果不合并那么材质复用就没有意义。</strong> <strong>Dynamic Batch</strong> 就是这个原理，但是他会在内存生成一份合并后的mesh，相当于内存占用翻倍，浪费内存。<strong>Static Batch</strong>也是一样，只不过是静态合并好。但是合并的物体覆盖全场景。还会导致遮挡剔除失效，同样占内存。</p>
+</li>
+<li><p>Prefab复用（包括组件的Prefab，完整模型的Prefab）：直接提升资源利用率。这种服用就是一模一样的mesh和材质，可以直接合并。</p>
+</li>
+</ol>
+<h3 id="游戏性能瓶颈：模型"><a href="#游戏性能瓶颈：模型" class="headerlink" title="游戏性能瓶颈：模型"></a>游戏性能瓶颈：模型</h3><p>由于场景资源复杂，可能遇到的性能瓶颈：</p>
+<ol>
+<li><p>模型数量：模型数量越多（ 一个submesh算一个模型 ）drawcall越多，成正比。</p>
+</li>
+<li><p>一个模型的面数：模型越大，越占内存。（不使用static batch的原因）。</p>
+</li>
+<li><p>模型属性太多（比如各个uv通道全部使用，normal、tangent全部使用）：属性使用的越多，越占内存。</p>
+</li>
+</ol>
+<p><strong>模型的内存开销&#x3D;模型数量 * 一个模型的面数 * 模型属性</strong></p>
+<p><strong>模型的drawcall 开销&#x3D; 场景中的模型数量。</strong></p>
+<h3 id="游戏性能优化：模型"><a href="#游戏性能优化：模型" class="headerlink" title="游戏性能优化：模型"></a>游戏性能优化：模型</h3><ol>
+<li><p>美术在3Dmax当中合并不同的mesh。（相同材质的合并，通过合理分布uv可以让大部分mesh复用同一个材质）。<strong>能够在模型总内存消耗不变的情况下降低drawcall。</strong></p>
+</li>
+<li><p>如果材质的属性不使用，就不要输出，例如：第二套uv，顶点色，切线信息。<strong>直接降低内存开销。</strong></p>
+</li>
+<li><p>控制模型面数，场景当中看不到的面裁切掉。<strong>直接降低内存开销。</strong></p>
+</li>
+</ol>
+<h3 id="游戏性能瓶颈：贴图"><a href="#游戏性能瓶颈：贴图" class="headerlink" title="游戏性能瓶颈：贴图"></a>游戏性能瓶颈：贴图</h3><ol>
+<li><p><strong>场景中涉及到的</strong>贴图数量越多，内存占用越大。（例如：一张1024*1024的三通道贴图，相当于一个100万点的只记录了顶点位置的模型，相当于10万顶点并记录了顶点色的模型），美术需要考虑模型和贴图之间的平衡。</p>
+</li>
+<li><p><strong>场景中涉及到的</strong>贴图越大，内存占用越多。</p>
+</li>
+<li><p><strong>场景中涉及到的</strong>贴图开启mipmap占用内存越多。</p>
+</li>
+<li><p>如果贴图不在场景中，那他就只是占用内存而已。</p>
+</li>
+</ol>
+<p><strong>贴图内存开销&#x3D; 贴图数量 * 贴图大小。</strong></p>
+<p><strong>贴图drawcall开销 &#x3D; 基本只和内存有关。</strong></p>
+<p>*<strong>注：</strong>“场景当中涉及到的”指的是客户端从硬盘加载到内存的场景数据。</p>
+<h3 id="游戏性能优化：贴图"><a href="#游戏性能优化：贴图" class="headerlink" title="游戏性能优化：贴图"></a>游戏性能优化：贴图</h3><p><strong>贴图内存开销&#x3D; 贴图数量 * 贴图大小。</strong></p>
+<ol>
+<li><p>使用Tiling方式的贴图。<strong>减小贴图大小。</strong></p>
+</li>
+<li><p>提高利用率。<strong>减少贴图数量。</strong></p>
+</li>
+</ol>
+<h3 id="游戏性能瓶颈：材质"><a href="#游戏性能瓶颈：材质" class="headerlink" title="游戏性能瓶颈：材质"></a>游戏性能瓶颈：材质</h3><ol>
+<li><p><strong>场景中涉及到的材质</strong>数量越多drawcall越多。</p>
+</li>
+<li><p><strong>场景中涉及到的材质</strong>使用的贴图越多占用内存越多。</p>
+</li>
+</ol>
+<p>材质内存开销 &#x3D;  几乎不考虑。</p>
+<p>材质drawcall开销&#x3D; 主要看mesh，因为如果同一个mesh 使用不同的材质，那么drawcall还是两个。</p>
+<p><strong>材质复用的真正目的是为了能够合并场景中使用相同材质的mesh。以直接减少drawcall。</strong></p>
+<h3 id="游戏性能优化：材质"><a href="#游戏性能优化：材质" class="headerlink" title="游戏性能优化：材质"></a>游戏性能优化：材质</h3><p><strong>材质复用的真正目的：为了能够合并场景中使用相同材质的mesh，以直接减少drawcall。</strong></p>
+<ol>
+<li><p><strong>使用相同的材质 + 不同的mesh</strong> 的策略来实现丰富的表现，方便合并。例如：用刷顶点色，代替mask贴图。</p>
+</li>
+<li><p>材质复用优先于mesh复用：如果mesh复用，而使用了不同的材质，那么drawcall不能再减少了。如果复用了材质（同一个材质球），而使用了不同的mesh，那么有很多方法来合并mesh以减少drawcall。</p>
+</li>
+</ol>
+
+    </main>
+    <footer class="post-footer">
+      
+    </footer>
+  </article>
+  
+  
+  <nav class="page-nav">
+    <div class="page-nav-next page-nav-item">
+      
+      <a href="/2022/09/19/HDRPartist/%E5%9C%BA%E6%99%AF%E5%8F%8D%E5%B0%84%E7%AD%96%E7%95%A5/" rel="next" title=""><i class="fas fa-angle-left"></i><span class="nav-title"></span></a>
+      
+    </div>
+    <div class="page-nav-prev page-nav-item">
+      
+      <a href="/2022/09/19/HDRPartist/%E6%B3%95%E7%BA%BF%E8%B4%B4%E5%9B%BE%E6%97%8B%E8%BD%AC/" rel="prev" title=""><span class="nav-title"></span><i class="fas fa-angle-right"></i></a>
+      
+    </div>
+  </nav>
+  
+  
+  
+
+<div class="comments" id="comments">
+  
+  
+  <div class="commentjs" id="comment-thread"></div>
+  <link rel="stylesheet" href="/css/commentjs.css">
+  <script defer type="text/javascript" src="/js/marked.min.js"></script>
+  <script defer type="text/javascript" src="/js/timeago.min.js"></script>
+  <script defer type="text/javascript" src="/js/highlight.min.js"></script>
+  <script defer type="text/javascript" src="/js/commentjs.js"></script>
+  <script type="text/javascript">
+  $(document).ready(function () {
+    getComments({
+      "type": "github",
+      "user": "leinlin",
+      "repo": "leinlin.github.io",
+      "client_id": "aee134bdfb54c4ef5826",
+      "client_secret": "4af1d3f2b82dccc028c49715becc01e611afbe43",
+      "no_comment": "这个页面还没有评论，现在就去评论吧！",
+      "go_to_comment": "去评论",
+      "issue_title": "",
+      "btn_class": "button",
+      "comments_target": "#comment-thread"
+    });
+    marked.setOptions({
+      "highlight": function (code, lang) {
+        return hljs.highlightAuto(code).value;
+      }
+    });
+    function mark() {
+      var markdowns = document.getElementsByClassName("markdown");
+      for (var i = 0; i < markdowns.length; ++i){
+        if (markdowns[i].innerHTML) {
+          markdowns[i].innerHTML = marked(markdowns[i].innerHTML);
+        }
+      }
+    }
+    window.addEventListener("DOMContentLoaded", mark, false);
+    window.addEventListener("load", mark, false);
+  });
+  </script>
+  
+  
+</div>
+
+
+
+  
+</div>
+
+          </div>
+          
+          
+          
+<aside class="sidebar" id="sidebar" style="background: url(/images/background.png);">
+  
+  <div class="search">
+    <div class="form-group">
+      <i class="fas fa-search"></i><input type="search" id="search-input" name="q" results="0" placeholder="搜索" class="form-control"/>
+    </div>
+  </div>
+  <div class="search-result-box" id="search-result"></div>
+  
+  
+<div class="info sidebar-item" id="info">
+  
+  <img class="author-avatar" src="/images/avatar.jpg" alt="leinlin">
+  
+  <h1 class="author-name">leinlin</h1>
+  <h2 class="author-description"></h2>
+  <div class="site-count">
+    
+    
+    
+    
+    <div class="categories-count count-block">
+      <div class="site-count-title">分类</div>
+      <div><a href="/categories/">11</a></div>
+    </div>
+    
+    
+  </div>
+  
+  <div class="rss">
+    <a class="rss-link button sidebar-item" href="/atom.xml"><i class="fas fa-rss"></i>RSS</a>
+  </div>
+  
+</div>
+
+
+  <div class="sidebar-sticky">
+    
+    
+    
+    
+    
+    <hr>
+    <div class="post-toc sidebar-item" id="toc-div">
+      <div><i class="fas fa-list-ol"></i>文章目录</div>
+      <div class="post-toc-content"><ol class="list-group toc"><li class="toc-item toc-level-1"><a class="list-group-item toc-link" href="#%E7%BE%8E%E6%9C%AF%E8%B5%84%E6%BA%90%E4%BC%98%E5%8C%96%E6%80%9D%E8%B7%AF%E4%B8%8E%E5%8E%9F%E7%90%86"><span class="toc-text">美术资源优化思路与原理</span></a><ol class="list-group toc-child"><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#%E7%BE%8E%E6%9C%AF%E8%B5%84%E6%BA%90%E5%8F%AF%E8%83%BD%E5%B8%A6%E6%9D%A5%E7%9A%84%E6%80%A7%E8%83%BD%E9%97%AE%E9%A2%98"><span class="toc-text">美术资源可能带来的性能问题</span></a></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#%E5%9C%BA%E6%99%AF%E7%BE%8E%E6%9C%AF%E8%B5%84%E6%BA%90%E4%BC%98%E5%8C%96%E7%AD%96%E7%95%A5"><span class="toc-text">场景美术资源优化策略</span></a><ol class="list-group toc-child"><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#%E6%B8%B8%E6%88%8F%E6%80%A7%E8%83%BD%E7%93%B6%E9%A2%88%EF%BC%9A%E6%A8%A1%E5%9E%8B"><span class="toc-text">游戏性能瓶颈：模型</span></a></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#%E6%B8%B8%E6%88%8F%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%EF%BC%9A%E6%A8%A1%E5%9E%8B"><span class="toc-text">游戏性能优化：模型</span></a></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#%E6%B8%B8%E6%88%8F%E6%80%A7%E8%83%BD%E7%93%B6%E9%A2%88%EF%BC%9A%E8%B4%B4%E5%9B%BE"><span class="toc-text">游戏性能瓶颈：贴图</span></a></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#%E6%B8%B8%E6%88%8F%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%EF%BC%9A%E8%B4%B4%E5%9B%BE"><span class="toc-text">游戏性能优化：贴图</span></a></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#%E6%B8%B8%E6%88%8F%E6%80%A7%E8%83%BD%E7%93%B6%E9%A2%88%EF%BC%9A%E6%9D%90%E8%B4%A8"><span class="toc-text">游戏性能瓶颈：材质</span></a></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#%E6%B8%B8%E6%88%8F%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%EF%BC%9A%E6%9D%90%E8%B4%A8"><span class="toc-text">游戏性能优化：材质</span></a></li></ol></li></ol></li></ol></div>
+    </div>
+    
+    
+    
+    <hr>
+    <div class="social-link sidebar-item">
+      <div><i class="far fa-address-card"></i>社交链接</p></div>
+      <ul>
+        
+        <li><i class="fab fa-github"></i><a href="https://leinlin.github.com/" target="_blank">GitHub</a></li>
+        
+      </ul>
+    </div>
+    
+    
+  </div>
+</aside>
+
+
+          
+        </div>
+      </div>
+    </main>
+    
+<footer id="footer" class="footer" style="background: #33363b;">
+  <div class="container">
+    <div class="back-to-top">
+      <button id="back-to-top"><i class="fas fa-angle-double-up" aria-label="回到顶部"></i></button>
+    </div>
+    <div class="footer-container">
+      <div class="footer-left">
+        <div class="copyright">
+          <span class="author">leinlin</span><span class="year"><i class="far fa-copyright"></i>2022</span>
+        </div>
+        
+        <div class="busuanzi">
+          <span id="busuanzi_container_site_pv"><i class="fas fa-eye" aria-label="站点点击量" aria-hidden="false"></i><span id="busuanzi_value_site_pv"></span></span><span id="busuanzi_container_site_uv"><i class="fas fa-user" aria-label="站点用户数" aria-hidden="false"></i><span id="busuanzi_value_site_uv"></span></span><span id="busuanzi_container_page_pv"><i class="far fa-file-alt"></i><span id="busuanzi_value_page_pv" aria-label="页面点击量" aria-hidden="false"></span></span>
+        </div>
+        
+      </div>
+      <div class="footer-right">
+        <div class="custom-info">
+          
+          托管于<i class="fab fa-github-alt"></i><a href="https://pages.github.com/" target="_blank">GitHub Pages</a>
+          
+        </div>
+        <div class="powered-by">
+          由 <a href="https://hexo.io/" target="_blank">Hexo</a> 强力驱动 | 主题 <a href="https://github.com/AlynxZhou/hexo-theme-aria/" target="_blank">ARIA</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+  <script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

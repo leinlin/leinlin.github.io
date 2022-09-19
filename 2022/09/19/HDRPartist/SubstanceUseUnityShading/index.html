@@ -1,0 +1,425 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#33363b">
+    <meta name="msapplication-TileColor" content="#33363b">
+    
+    
+    
+    
+    <meta name="keywords" content="leinlin, ARIA, Hexo">
+    
+    
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png">
+    
+    
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicons/android-chrome-192x192.png">
+    
+    
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png">
+    
+    
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png">
+    
+    
+    <link rel="mask-icon" href="/favicons/safari-pinned-tab.svg" color="#33363b">
+    
+    
+    <link rel="manifest" href="/favicons/site.webmanifest">
+    
+    
+    <meta name="msapplication-config" content="/favicons/browserconfig.xml">
+    
+    
+    <link rel="alternate" href="/atom.xml" title="leinlin的小笔记" type="application/atom+xml" />
+    
+    
+    <link rel="shortcut icon" type="image/x-icon" href="/favicons/favicon.ico">
+    
+    
+    <link rel="stylesheet" type="text/css" href="/css/normalize.css">
+    <link rel="stylesheet" type="text/css" href="/css/index.css">
+    
+    <link rel="stylesheet" type="text/css" href="/css/sidebar.css">
+    
+    
+<link rel="stylesheet" type="text/css" href="/css/page.css">
+<link rel="stylesheet" type="text/css" href="/css/post.css">
+
+    <link rel="stylesheet" type="text/css" href="/css/custom.css">
+    <link rel="stylesheet" type="text/css" href="/css/atom-one-light.css">
+    <link rel="stylesheet" type="text/css" href="/css/lightgallery.min.css">
+    <script type="text/javascript" src="/js/jquery.min.js"></script>
+    <script defer type="text/javascript" src="/js/util.js"></script>
+    <script defer type="text/javascript" src="/js/clipboard.min.js"></script>
+    <script defer type="text/javascript" src="/js/scrollspy.js"></script>
+    <script defer type="text/javascript" src="/js/fontawesome-all.min.js"></script>
+    <script defer type="text/javascript" src="/js/lightgallery.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-fullscreen.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-hash.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-pager.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-thumbnail.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-zoom.min.js"></script>
+    
+    <script defer src="/js/busuanzi.pure.mini.js"></script>
+    
+    
+    <script defer type="text/javascript" src="/js/search.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function () {
+      var searchPath = "search.xml";
+      if (searchPath.length === 0) {
+        searchPath = "search.xml";
+      }
+      var path = "/" + searchPath;
+      searchFunc(path, "search-input", "search-result");
+    });
+    </script>
+    
+    
+    
+    <script defer type="text/javascript" src="https://cdn.staticfile.org/MathJax/MathJax-2.6-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ["$","$"], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ["script", "noscript", "style", "textarea", "pre", "code"]
+      }
+    });
+    </script>
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for (i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += " has-jax";
+      }
+    });
+    </script>
+    
+    
+    <script defer type="text/javascript" src="/js/index.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function () {
+      var cb = null;
+      var els = $(".post figure.highlight");
+      if (els.length) {
+        // Enabled Hexo highlight line number.
+        $(els).each(function (i, e) {
+          // $(e).before("<button class=\"copy button\">复制</button>");
+          $(e).before([
+            "<div class=\"code-titlebar\">",
+              "<div class=\"titlebar-left\">",
+                "<button class=\"copy\">复制</button>",
+              "</div>",
+            "</div>"
+          ].join(""));
+        });
+        cb = new ClipboardJS("button.copy", {
+          "target": function (trigger) {
+              // Get target element by DOM API.
+              return trigger.parentNode.parentNode.nextElementSibling.firstChild.firstChild.firstChild.lastChild.firstChild.firstChild;
+          }
+        });
+      } else {
+        // Disabled Hexo highlight line number.
+        els = $(".post pre code");
+        $(els).each(function (i, e) {
+          // Add button before pre, not code.
+          // $(e).parent().before("<button class=\"copy button\">复制</button>");
+          $(e).before([
+            "<div class=\"code-titlebar\">",
+              "<div class=\"titlebar-left\">",
+                "<button class=\"copy\" >复制</button>",
+              "</div>",
+              "<div class=\"titlebar-right\">",
+                "<button class=\"button-dot dot-minimize\" aria-label=\"Decoration\"></button>",
+                "<button class=\"button-dot dot-maximize\" aria-label=\"Decoration\"></button>",
+                "<button class=\"button-dot dot-close\" aria-label=\"Decoration\"></button>",
+              "</div>",
+            "</div>"
+          ].join(""));
+        });
+        cb = new ClipboardJS("button.copy", {
+          "target": function (trigger) {
+              // Get target element by DOM API.
+              return trigger.parentNode.parentNode.nextElementSibling;
+          }
+        });
+      }
+      cb.on("success", function (e) {
+        e.clearSelection();
+        var trigger = e.trigger;
+        // Change button text as a user tip.
+        trigger.innerHTML = "已复制";
+        $(trigger).addClass("copied");
+        // Change button text back;
+        setTimeout(function () {
+          trigger.innerHTML = "复制";
+          $(trigger).removeClass("copied");
+        }, 1500);
+      });
+    });
+    </script>
+    
+    <script defer type="text/javascript" src="/js/custom.js"></script>
+    <title> | leinlin的小笔记</title>
+  <meta name="generator" content="Hexo 6.2.0"></head>
+  <body itemscope itemtype="http://schema.org/WebPage" lang="zh_CN"  data-spy="scroll" data-target=".list-group">
+    
+<header id="header" class="header" style="background: #33363b;">
+  <div class="container">
+    <div class="header-container">
+      <div class="header-title">
+        <h1 class="title"><a href="/">leinlin的小笔记</a></h1>
+        <h2 class="subtitle"></h2>
+      </div>
+      
+    </div>
+    <nav id="nav" class="nav">
+      <a id="nav-toggle" class="nav-toggle" aria-hidden="true"><i class="fas fa-bars" aria-label="切换导航栏"></i></a>
+      <ul id="menu" role="menubar" aria-hidden="false">
+        
+        <li role="menuitem"><a href="/"><i class="fas fa-home"></i><span class="menu-text">首页</span></a></li>
+        
+        <li role="menuitem"><a href="/categories/"><i class="fas fa-th-list"></i><span class="menu-text">分类</span></a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</header>
+
+
+    <main id="main" class="main">
+      <div class="container">
+        <div class="main-container">
+          <div class="content">
+            
+<div id="post" class="page">
+  
+  <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
+    <div class="post-block">
+      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/09/19/HDRPartist/SubstanceUseUnityShading/">
+      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+       <meta itemprop="name" content="leinlin">
+       <meta itemprop="description" content="">
+       <meta itemprop="image" content="/images/avatar.jpg">
+      </span>
+      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+       <meta itemprop="name" content="leinlin的小笔记">
+      </span>
+    </div>
+    <header class="post-header">
+      <h1 class="post-title" itemprop="name headline"></h1>
+      <div class="post-meta">
+        
+        <span class="post-date">
+          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2022-09-19T19:47:59+08:00">2022-09-19 19:47:59</time></span>
+        </span>
+        
+        
+        
+        
+        
+      </div>
+    </header>
+    <main class="post-main" itemprop="articleBody">
+      <h1 id="在Substance当中使用Unity的Shading模型"><a href="#在Substance当中使用Unity的Shading模型" class="headerlink" title="在Substance当中使用Unity的Shading模型"></a>在Substance当中使用Unity的Shading模型</h1><p>​	在PBR的游戏资源制作中，最常用的贴图绘制工具就是Substance Painter。</p>
+<p>​	一般的流程是在SP当中绘制到模型贴图然后在导入到unity当中。</p>
+<p>​	在这个过程中美术会遇到很严重的效果不匹配的问题，在Unity中效果不理想就需要返回SP当中重新调整。因为SP的光照模型和Unity的光照模型不同，尤其是在Unity升级了HDRP以后光照计算再次出现了变化。<strong>为了能够让贴图绘制人员能够在SP和Unity当中看到的效果一致，我们需要重写SP的光照计算Shader。</strong></p>
+<p>​	SP提供了这个功能，参考的文件夹位于：</p>
+<figure class="hljs highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">Substance Painter\resources\shelf\allegorithmic\shaders<br></code></pre></td></tr></table></figure>
+
+<p>​	这个目录下面有很多glsl文件，语法使用glsl语法，能够控制的部分类似于Unity Legac的Surface Shader。 </p>
+<p>​	下面是我实现的SPShader，使用了和Unity一样的光照模型，支持<strong>Substance Painter 2019.1.0</strong>：</p>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">//- Allegorithmic Metal/Rough PBR shader</span><br><span class="hljs-comment">//- ====================================</span><br><span class="hljs-comment">//-</span><br><span class="hljs-comment">//- Import from libraries.</span><br>import lib-sss.glsl<br>import lib-pbr.glsl<br>import lib-emissive.glsl<br>import lib-pom.glsl<br>import lib-utils.glsl<br><br><span class="hljs-comment">//- Declare the iray mdl material to use with this shader.</span><br><span class="hljs-comment">//: metadata &#123;</span><br><span class="hljs-comment">//:   &quot;mdl&quot;:&quot;mdl::alg::materials::skin_metallic_roughness::skin_metallic_roughness&quot;</span><br><span class="hljs-comment">//: &#125;</span><br><br><span class="hljs-comment">//- Channels needed for metal/rough workflow are bound here.</span><br><span class="hljs-comment">//: param auto channel_basecolor</span><br>uniform SamplerSparse basecolor_tex;<br><span class="hljs-comment">//: param auto channel_roughness</span><br>uniform SamplerSparse roughness_tex;<br><span class="hljs-comment">//: param auto channel_metallic</span><br>uniform SamplerSparse metallic_tex;<br><span class="hljs-comment">//: param auto channel_specularlevel</span><br>uniform SamplerSparse specularlevel_tex;<br><br><span class="hljs-comment">// -----------------------------------------------------------------------------</span><br><span class="hljs-comment">// Constants</span><br><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> HALF_MAX        65504.0 <span class="hljs-comment">// (2 - 2^-10) * 2^15</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> HALF_MAX_MINUS1 65472.0 <span class="hljs-comment">// (2 - 2^-9) * 2^15</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> EPSILON         1.0e-4</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> PI              3.14159265359</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> TWO_PI          6.28318530718</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> FOUR_PI         12.56637061436</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> INV_PI          0.31830988618</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> INV_TWO_PI      0.15915494309</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> INV_FOUR_PI     0.07957747155</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> HALF_PI         1.57079632679</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> INV_HALF_PI     0.636619772367</span><br><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> FLT_EPSILON     1.192092896e-07 <span class="hljs-comment">// Smallest positive number, such that 1.0 + FLT_EPSILON != 1.0</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> FLT_MIN         1.175494351e-38 <span class="hljs-comment">// Minimum representable positive floating-point number</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> FLT_MAX         3.402823466e+38 <span class="hljs-comment">// Maximum representable floating-point number</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> DEFAULT_SPECULAR_VALUE 0.04</span><br><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> FLT_INF  asfloat(0x7F800000)</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> FLT_EPS  5.960464478e-8  <span class="hljs-comment">// 2^-24, machine epsilon: 1 + EPS = 1 (half of the ULP for 1.0f)</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> HALF_MIN 6.103515625e-5  <span class="hljs-comment">// 2^-14, the same value for 10, 11 and 16-bit: https://www.khronos.org/opengl/wiki/Small_Float_Formats</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> HALF_MAX 65504.0</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> UINT_MAX 0xFFFFFFFFu</span><br><br><span class="hljs-comment">// HDRP模拟光源</span><br><br><span class="hljs-comment">//: param custom &#123; &quot;default&quot;: [10.0, 10.0, 10.0], &quot;label&quot;: &quot;Light Direction&quot;, &quot;min&quot;: -20, &quot;max&quot;: 20 &#125;</span><br>uniform vec3 lightDir;<br><span class="hljs-comment">//: param custom &#123; &quot;default&quot;: 1.0, &quot;label&quot;: &quot;Light Color&quot;, &quot;widget&quot;: &quot;color&quot; &#125;</span><br>uniform vec3 lightColor;<br><span class="hljs-comment">//: param custom &#123; &quot;default&quot;: 1.0, &quot;label&quot;: &quot;Diffuse Dimmer&quot;, &quot;min&quot;: 0.0, &quot;max&quot;: 32.0 &#125;</span><br>uniform <span class="hljs-type">float</span> diffuseDimmer;<br><span class="hljs-comment">//: param custom &#123; &quot;default&quot;: 1.0, &quot;label&quot;: &quot;Specular Dimmer&quot;, &quot;min&quot;: 0.0, &quot;max&quot;: 32.0 &#125;</span><br>uniform <span class="hljs-type">float</span> specularDimmer;<br><br><span class="hljs-comment">//: param custom &#123; &quot;default&quot;: 1.0, &quot;label&quot;: &quot;Lihgt Intensity&quot;, &quot;min&quot;: 0.0, &quot;max&quot;: 32.0 &#125;</span><br>uniform <span class="hljs-type">float</span> lightIntensity;<br><br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">DirectLighting</span></span><br><span class="hljs-class">&#123;</span><br>    vec3 diffuse;<br>    vec3 specular;<br>&#125;;<br><br><span class="hljs-type">float</span> <span class="hljs-title function_">F_Schlick</span><span class="hljs-params">(<span class="hljs-type">float</span> f0, <span class="hljs-type">float</span> f90, <span class="hljs-type">float</span> u)</span><br>&#123;<br>    <span class="hljs-type">float</span> x = <span class="hljs-number">1.0</span> - u;<br>    <span class="hljs-type">float</span> x2 = x * x;<br>    <span class="hljs-type">float</span> x5 = x * x2 * x2;<br>    <span class="hljs-keyword">return</span> (f90 - f0) * x5 + f0;                <span class="hljs-comment">// sub mul mul mul sub mad</span><br>&#125;<br><br><span class="hljs-type">float</span> <span class="hljs-title function_">F_Schlick</span><span class="hljs-params">(<span class="hljs-type">float</span> f0, <span class="hljs-type">float</span> u)</span><br>&#123;<br>    <span class="hljs-keyword">return</span> F_Schlick(f0, <span class="hljs-number">1.0</span>, u);               <span class="hljs-comment">// sub mul mul mul sub mad</span><br>&#125;<br><br>vec3 <span class="hljs-title function_">F_Schlick</span><span class="hljs-params">(vec3 f0, <span class="hljs-type">float</span> f90, <span class="hljs-type">float</span> u)</span><br>&#123;<br>    <span class="hljs-type">float</span> x = <span class="hljs-number">1.0</span> - u;<br>    <span class="hljs-type">float</span> x2 = x * x;<br>    <span class="hljs-type">float</span> x5 = x * x2 * x2;<br>    <span class="hljs-keyword">return</span> f0 * (<span class="hljs-number">1.0</span> - x5) + (f90 * x5);        <span class="hljs-comment">// sub mul mul mul sub mul mad*3</span><br>&#125;<br><br>vec3 <span class="hljs-title function_">F_Schlick</span><span class="hljs-params">(vec3 f0, <span class="hljs-type">float</span> u)</span><br>&#123;<br>    <span class="hljs-keyword">return</span> F_Schlick(f0, <span class="hljs-number">1.0</span>, u);               <span class="hljs-comment">// sub mul mul mul sub mad*3</span><br>&#125;<br><br><br><span class="hljs-type">float</span> <span class="hljs-title function_">DV_SmithJointGGX</span><span class="hljs-params">(<span class="hljs-type">float</span> NdotH, <span class="hljs-type">float</span> NdotL, <span class="hljs-type">float</span> NdotV, <span class="hljs-type">float</span> roughness, <span class="hljs-type">float</span> partLambdaV)</span><br>&#123;<br>    <span class="hljs-type">float</span> a2 = (roughness * roughness);<br>    <span class="hljs-type">float</span> s = (NdotH * a2 - NdotH) * NdotH + <span class="hljs-number">1.0</span>;<br><br>    <span class="hljs-type">float</span> lambdaV = NdotL * partLambdaV;<br>    <span class="hljs-type">float</span> lambdaL = NdotV * <span class="hljs-built_in">sqrt</span>((-NdotL * a2 + NdotL) * NdotL + a2);<br><br>    vec2 D = vec2(a2, s * s);            <span class="hljs-comment">// Fraction without the multiplier (1/Pi)</span><br>    vec2 G = vec2(<span class="hljs-number">1</span>, lambdaV + lambdaL); <span class="hljs-comment">// Fraction without the multiplier (1/2)</span><br><br>    <span class="hljs-comment">// This function is only used for direct lighting.</span><br>    <span class="hljs-comment">// If roughness is 0, the probability of hitting a punctual or directional light is also 0.</span><br>    <span class="hljs-comment">// Therefore, we return 0. The most efficient way to do it is with a max().</span><br>    <span class="hljs-keyword">return</span> INV_PI * <span class="hljs-number">0.5</span> * (D.x * G.x) / max(D.y * G.y, FLT_MIN);<br>&#125;<br><br><span class="hljs-type">float</span> <span class="hljs-title function_">DisneyDiffuseNoPI</span><span class="hljs-params">(<span class="hljs-type">float</span> NdotV, <span class="hljs-type">float</span> NdotL, <span class="hljs-type">float</span> LdotV, <span class="hljs-type">float</span> perceptualRoughness)</span><br>&#123;<br>    <span class="hljs-comment">// (2 * LdotH * LdotH) = 1 + LdotV</span><br>    <span class="hljs-comment">// float fd90 = 0.5 + 2 * LdotH * LdotH * perceptualRoughness;</span><br>    <span class="hljs-type">float</span> fd90 = <span class="hljs-number">0.5</span> + (perceptualRoughness + perceptualRoughness * LdotV);<br>    <span class="hljs-comment">// Two schlick fresnel term</span><br>    <span class="hljs-type">float</span> lightScatter = F_Schlick(<span class="hljs-number">1.0</span>, fd90, NdotL);<br>    <span class="hljs-type">float</span> viewScatter = F_Schlick(<span class="hljs-number">1.0</span>, fd90, NdotV);<br><br>    <span class="hljs-comment">// Normalize the BRDF for polar view angles of up to (Pi/4).</span><br>    <span class="hljs-comment">// We use the worst case of (roughness = albedo = 1), and, for each view angle,</span><br>    <span class="hljs-comment">// integrate (brdf * cos(theta_light)) over all light directions.</span><br>    <span class="hljs-comment">// The resulting value is for (theta_view = 0), which is actually a little bit larger</span><br>    <span class="hljs-comment">// than the value of the integral for (theta_view = Pi/4).</span><br>    <span class="hljs-comment">// Hopefully, the compiler folds the constant together with (1/Pi).</span><br>    <span class="hljs-keyword">return</span> (<span class="hljs-number">1</span> / <span class="hljs-number">1.03571</span>) * (lightScatter * viewScatter);<br>&#125;<br><br><span class="hljs-type">float</span> <span class="hljs-title function_">DisneyDiffuse</span><span class="hljs-params">(<span class="hljs-type">float</span> NdotV, <span class="hljs-type">float</span> NdotL, <span class="hljs-type">float</span> LdotV, <span class="hljs-type">float</span> perceptualRoughness)</span><br>&#123;<br>    <span class="hljs-keyword">return</span> INV_PI * DisneyDiffuseNoPI(NdotV, NdotL, LdotV, perceptualRoughness);<br>&#125;<br><br><span class="hljs-type">float</span> <span class="hljs-title function_">GetSmithJointGGXPartLambdaV</span><span class="hljs-params">(<span class="hljs-type">float</span> NdotV, <span class="hljs-type">float</span> roughness)</span><br>&#123;<br>    <span class="hljs-type">float</span> a2 = (roughness * roughness);<br>    <span class="hljs-keyword">return</span> <span class="hljs-built_in">sqrt</span>((-NdotV * a2 + NdotV) * NdotV + a2);<br>&#125;<br><br><span class="hljs-type">void</span> <span class="hljs-title function_">BSDF</span><span class="hljs-params">(  vec3 V, </span><br><span class="hljs-params">            vec3 L, </span><br><span class="hljs-params">            <span class="hljs-type">float</span> NdotL, </span><br><span class="hljs-params">            <span class="hljs-type">float</span> unclampNdotV, </span><br><span class="hljs-params">            vec3 fresnel0, </span><br><span class="hljs-params">            <span class="hljs-type">float</span> roughness, </span><br><span class="hljs-params">            <span class="hljs-type">float</span> perceptualRoughness,</span><br><span class="hljs-params">            out vec3 diffuseLighting,</span><br><span class="hljs-params">            out vec3 specularLighting)</span><br>&#123;<br>    <span class="hljs-type">float</span> LdotV, NdotH, LdotH, NdotV, invLenLV;<br>    LdotV = dot(L, V);<br>    invLenLV = inversesqrt(max(<span class="hljs-number">2.0</span> * LdotV + <span class="hljs-number">2.0</span>, FLT_EPS));<br>    NdotH = clamp((NdotL + unclampNdotV) * invLenLV,<span class="hljs-number">0</span>,<span class="hljs-number">1</span>); <br>    LdotH = clamp(invLenLV * LdotV + invLenLV,<span class="hljs-number">0</span>,<span class="hljs-number">1</span>);<br>    NdotV = max(unclampNdotV, <span class="hljs-number">0.0001</span>);<br><br>    vec3 F = F_Schlick(fresnel0, LdotH);<br><br>    <span class="hljs-type">float</span> partLambdaV = GetSmithJointGGXPartLambdaV(NdotV, roughness);<br>    <span class="hljs-type">float</span> DV = DV_SmithJointGGX(NdotH, NdotL, NdotV, roughness, partLambdaV);<br>    <br>    specularLighting = F * DV;<br><br>    <span class="hljs-comment">//float  diffuseTerm = Lambert();</span><br>    <span class="hljs-type">float</span> diffuseTerm = DisneyDiffuse(NdotV, NdotL, LdotV, perceptualRoughness);<br><br>    diffuseLighting = vec3(diffuseTerm,diffuseTerm,diffuseTerm);<br>&#125;<br><br><br><br>DirectLighting <span class="hljs-title function_">ShadeSurface_Directional</span><span class="hljs-params">(vec3 baseColor,</span><br><span class="hljs-params">                                        <span class="hljs-type">float</span> roughness,</span><br><span class="hljs-params">                                        <span class="hljs-type">float</span> metallic,</span><br><span class="hljs-params">                                        vec3 fresnel0,</span><br><span class="hljs-params">                                        vec3 N, </span><br><span class="hljs-params">                                        vec3 V)</span><br>&#123;<br>    DirectLighting lighting;<br>    <span class="hljs-comment">//ZERO_INITIALIZE(DirectLighting, lighting);</span><br><br>    vec3 L     = normalize(lightDir); <span class="hljs-comment">// 光线方向</span><br>    vec3 color = lightIntensity *lightColor;<br><br>    <span class="hljs-type">float</span>  NdotL = dot(N, L); <span class="hljs-comment">// Do not saturate</span><br>    <span class="hljs-type">float</span>  NdotV = dot(N, V);<br><br>    vec3 diffuseBsdf, specularBsdf;<br>    BSDF(V, L, NdotL, NdotV, fresnel0, roughness*roughness, roughness,diffuseBsdf, specularBsdf);<br><br>    <span class="hljs-type">float</span> intensity =  max(NdotL,<span class="hljs-number">0</span>);<br><br>    lighting.diffuse  = diffuseBsdf  * (intensity * diffuseDimmer);<br>    lighting.specular = specularBsdf * (intensity * specularDimmer);<br>  <br>    lighting.diffuse  *= color * baseColor;<br>    lighting.specular *= color * baseColor;<br><br><br>    <span class="hljs-keyword">return</span> lighting;<br>&#125;<br><br>vec3 <span class="hljs-title function_">ComputeFresnel0</span><span class="hljs-params">(vec3 baseColor, <span class="hljs-type">float</span> metallic, <span class="hljs-type">float</span> dielectricF0)</span><br>&#123;<br>    <span class="hljs-keyword">return</span> mix(vec3(dielectricF0,dielectricF0,dielectricF0), baseColor, metallic);<br>&#125;<br><span class="hljs-comment">//- Shader entry point.</span><br><span class="hljs-type">void</span> <span class="hljs-title function_">shade</span><span class="hljs-params">(V2F inputs)</span><br>&#123;<br>  <span class="hljs-comment">// Apply parallax occlusion mapping if possible</span><br>  vec3 viewTS = worldSpaceToTangentSpace(getEyeVec(inputs.position), inputs);<br>  applyParallaxOffset(inputs, viewTS);<br><br>  <span class="hljs-comment">// Fetch material parameters, and conversion to the specular/roughness model</span><br>  <span class="hljs-type">float</span> roughness = getRoughness(roughness_tex, inputs.sparse_coord);<br>  vec3 baseColor = getBaseColor(basecolor_tex, inputs.sparse_coord);<br>  <span class="hljs-type">float</span> metallic = getMetallic(metallic_tex, inputs.sparse_coord);<br>  <span class="hljs-type">float</span> specularLevel = getSpecularLevel(specularlevel_tex, inputs.sparse_coord);<br><br><br>  vec3 diffColor = generateDiffuseColor(baseColor, metallic);<br>  vec3 specColor = generateSpecularColor(specularLevel, baseColor, metallic);<br>  <span class="hljs-type">float</span> occlusion = getAO(inputs.sparse_coord) * getShadowFactor();<br>  <span class="hljs-type">float</span> specOcclusion = specularOcclusionCorrection(occlusion, metallic, roughness);<br><br>  LocalVectors vectors = computeLocalFrame(inputs);<br>  vec3 fresnel0 = ComputeFresnel0(baseColor, metallic, DEFAULT_SPECULAR_VALUE);<br><br><br>  <span class="hljs-comment">//HDRP光照计算部分</span><br>  DirectLighting lighting = ShadeSurface_Directional(   baseColor,<br>                                                        roughness,<br>                                                        metallic,<br>                                                        fresnel0,<br>                                                        vectors.normal, <br>                                                        vectors.eye);<br><br>  <span class="hljs-comment">// Feed parameters for a physically based BRDF integration</span><br>  <span class="hljs-comment">//emissiveColorOutput(pbrComputeEmissive(emissive_tex, inputs.sparse_coord));</span><br>  <span class="hljs-comment">//albedoOutput(diffColor);</span><br>  <span class="hljs-comment">//diffuseShadingOutput(occlusion * envIrradiance(vectors.normal));</span><br>  diffuseShadingOutput(lighting.diffuse * getShadowFactor());<br>  specularShadingOutput(lighting.specular * getShadowFactor());<br>  <span class="hljs-comment">//sssCoefficientsOutput(getSSSCoefficients(inputs.sparse_coord));</span><br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+<p>上面的是SP的glslShader。为了能够更好的理解Unity HDRP的光照模型，我用unity的格式写了一个直线光计算的Shader，提取自Lit.Shader代码。下面的文件是Unity的hlsl语法Shader，比较重要的部分就是bsdf函数，可以直接放在HDRP5.10.0版本以上使用：</p>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br><span class="line">200</span><br><span class="line">201</span><br><span class="line">202</span><br><span class="line">203</span><br><span class="line">204</span><br><span class="line">205</span><br><span class="line">206</span><br><span class="line">207</span><br><span class="line">208</span><br><span class="line">209</span><br><span class="line">210</span><br><span class="line">211</span><br><span class="line">212</span><br><span class="line">213</span><br><span class="line">214</span><br><span class="line">215</span><br><span class="line">216</span><br><span class="line">217</span><br><span class="line">218</span><br><span class="line">219</span><br><span class="line">220</span><br><span class="line">221</span><br><span class="line">222</span><br><span class="line">223</span><br><span class="line">224</span><br><span class="line">225</span><br><span class="line">226</span><br><span class="line">227</span><br><span class="line">228</span><br><span class="line">229</span><br><span class="line">230</span><br><span class="line">231</span><br><span class="line">232</span><br><span class="line">233</span><br><span class="line">234</span><br><span class="line">235</span><br><span class="line">236</span><br><span class="line">237</span><br><span class="line">238</span><br><span class="line">239</span><br><span class="line">240</span><br><span class="line">241</span><br><span class="line">242</span><br><span class="line">243</span><br><span class="line">244</span><br><span class="line">245</span><br><span class="line">246</span><br><span class="line">247</span><br><span class="line">248</span><br><span class="line">249</span><br><span class="line">250</span><br><span class="line">251</span><br><span class="line">252</span><br><span class="line">253</span><br><span class="line">254</span><br><span class="line">255</span><br><span class="line">256</span><br><span class="line">257</span><br><span class="line">258</span><br><span class="line">259</span><br><span class="line">260</span><br><span class="line">261</span><br><span class="line">262</span><br><span class="line">263</span><br><span class="line">264</span><br><span class="line">265</span><br><span class="line">266</span><br><span class="line">267</span><br><span class="line">268</span><br><span class="line">269</span><br><span class="line">270</span><br><span class="line">271</span><br><span class="line">272</span><br><span class="line">273</span><br><span class="line">274</span><br><span class="line">275</span><br><span class="line">276</span><br><span class="line">277</span><br><span class="line">278</span><br><span class="line">279</span><br><span class="line">280</span><br><span class="line">281</span><br><span class="line">282</span><br><span class="line">283</span><br><span class="line">284</span><br><span class="line">285</span><br><span class="line">286</span><br><span class="line">287</span><br><span class="line">288</span><br><span class="line">289</span><br><span class="line">290</span><br><span class="line">291</span><br><span class="line">292</span><br><span class="line">293</span><br><span class="line">294</span><br><span class="line">295</span><br><span class="line">296</span><br><span class="line">297</span><br><span class="line">298</span><br><span class="line">299</span><br><span class="line">300</span><br><span class="line">301</span><br><span class="line">302</span><br><span class="line">303</span><br><span class="line">304</span><br><span class="line">305</span><br><span class="line">306</span><br><span class="line">307</span><br><span class="line">308</span><br><span class="line">309</span><br><span class="line">310</span><br><span class="line">311</span><br><span class="line">312</span><br></pre></td><td class="code"><pre><code class="hljs c">Shader <span class="hljs-string">&quot;Unlit/SubstacnePainter&quot;</span><br>&#123;<br>    Properties<br>    &#123;<br>        baseColor (<span class="hljs-string">&quot;baseColor&quot;</span>, Color) = (<span class="hljs-number">1</span>,<span class="hljs-number">1</span>,<span class="hljs-number">1</span>,<span class="hljs-number">1</span>)<br>        roughness (<span class="hljs-string">&quot;roughness&quot;</span>, Range(<span class="hljs-number">0</span>,<span class="hljs-number">1</span>)) = <span class="hljs-number">1</span><br>        metallic (<span class="hljs-string">&quot;metallic&quot;</span>, Range(<span class="hljs-number">0</span>,<span class="hljs-number">1</span>)) = <span class="hljs-number">1</span><br><br><br>        diffuseDimmer (<span class="hljs-string">&quot;diffuseDimmer&quot;</span>, Float) = <span class="hljs-number">1</span><br>        specularDimmer (<span class="hljs-string">&quot;specularDimmer&quot;</span>, Float) = <span class="hljs-number">1</span><br>        <br><br>        lightColor (<span class="hljs-string">&quot;lightColor&quot;</span>, Color) = (<span class="hljs-number">1</span>,<span class="hljs-number">1</span>,<span class="hljs-number">1</span>,<span class="hljs-number">1</span>)<br>        lightIntensity (<span class="hljs-string">&quot;lightIntensity&quot;</span>, Float) = <span class="hljs-number">1</span><br><br>                                                    <br>    &#125;<br>    SubShader<br>    &#123;<br>        Tags &#123; <span class="hljs-string">&quot;RenderType&quot;</span>=<span class="hljs-string">&quot;Opaque&quot;</span> &#125;<br>        LOD <span class="hljs-number">100</span><br><br>        Pass<br>        &#123;<br>            HLSLPROGRAM<br>            <span class="hljs-meta">#<span class="hljs-keyword">pragma</span> vertex vert</span><br>            <span class="hljs-meta">#<span class="hljs-keyword">pragma</span> fragment frag</span><br> <br>            <span class="hljs-keyword">struct</span> appdata<br>            &#123;<br>                float4 vertex : POSITION;<br>                float2 uv : TEXCOORD0;<br>                float3 normal : NORMAL;<br>            &#125;;<br><br>            <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">v2f</span></span><br><span class="hljs-class">            &#123;</span><br>                float2 uv : TEXCOORD0;<br>                float4 vertex : SV_POSITION;<br>                float3 worldPos : TEXCOORD1;<br>                float3 worldNormal : TEXCOORD2;<br>            &#125;;<br><br>            float4 baseColor;<br>            float4 lightColor;<br><br>            <span class="hljs-type">float</span> roughness;<br>            <span class="hljs-type">float</span> metallic;<br><br>            uniform <span class="hljs-type">float</span> diffuseDimmer;<br>            uniform <span class="hljs-type">float</span> specularDimmer;<br><br><br>            uniform float3 lightDir;<br>            uniform <span class="hljs-type">float</span> lightIntensity;<br><br><br><br>            <span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;Packages/com.unity.render-pipelines.core/ShaderLibrary/Common.hlsl&quot;</span></span><br>            <span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;Packages/com.unity.render-pipelines.high-definition/Runtime/ShaderLibrary/ShaderVariables.hlsl&quot;</span></span><br><br>            <span class="hljs-comment">// -----------------------------------------------------------------------------</span><br>            <span class="hljs-comment">// Constants</span><br><br>            <span class="hljs-meta">#<span class="hljs-keyword">define</span> HALF_MAX        65504.0 <span class="hljs-comment">// (2 - 2^-10) * 2^15</span></span><br>            <span class="hljs-meta">#<span class="hljs-keyword">define</span> HALF_MAX_MINUS1 65472.0 <span class="hljs-comment">// (2 - 2^-9) * 2^15</span></span><br>            <span class="hljs-meta">#<span class="hljs-keyword">define</span> EPSILON         1.0e-4</span><br>            <span class="hljs-meta">#<span class="hljs-keyword">define</span> PI              3.14159265359</span><br>            <span class="hljs-meta">#<span class="hljs-keyword">define</span> TWO_PI          6.28318530718</span><br>            <span class="hljs-meta">#<span class="hljs-keyword">define</span> FOUR_PI         12.56637061436</span><br>            <span class="hljs-meta">#<span class="hljs-keyword">define</span> INV_PI          0.31830988618</span><br>            <span class="hljs-meta">#<span class="hljs-keyword">define</span> INV_TWO_PI      0.15915494309</span><br>            <span class="hljs-meta">#<span class="hljs-keyword">define</span> INV_FOUR_PI     0.07957747155</span><br>            <span class="hljs-meta">#<span class="hljs-keyword">define</span> HALF_PI         1.57079632679</span><br>            <span class="hljs-meta">#<span class="hljs-keyword">define</span> INV_HALF_PI     0.636619772367</span><br><br>            <span class="hljs-meta">#<span class="hljs-keyword">define</span> FLT_EPSILON     1.192092896e-07 <span class="hljs-comment">// Smallest positive number, such that 1.0 + FLT_EPSILON != 1.0</span></span><br>            <span class="hljs-meta">#<span class="hljs-keyword">define</span> FLT_MIN         1.175494351e-38 <span class="hljs-comment">// Minimum representable positive floating-point number</span></span><br>            <span class="hljs-meta">#<span class="hljs-keyword">define</span> FLT_MAX         3.402823466e+38 <span class="hljs-comment">// Maximum representable floating-point number</span></span><br>            <span class="hljs-meta">#<span class="hljs-keyword">define</span> DEFAULT_SPECULAR_VALUE 0.04</span><br><br>            <span class="hljs-meta">#<span class="hljs-keyword">define</span> FLT_INF  asfloat(0x7F800000)</span><br>            <span class="hljs-meta">#<span class="hljs-keyword">define</span> FLT_EPS  5.960464478e-8  <span class="hljs-comment">// 2^-24, machine epsilon: 1 + EPS = 1 (half of the ULP for 1.0f)</span></span><br>            <span class="hljs-meta">#<span class="hljs-keyword">define</span> HALF_MIN 6.103515625e-5  <span class="hljs-comment">// 2^-14, the same value for 10, 11 and 16-bit: https://www.khronos.org/opengl/wiki/Small_Float_Formats</span></span><br>            <span class="hljs-meta">#<span class="hljs-keyword">define</span> HALF_MAX 65504.0</span><br>            <span class="hljs-meta">#<span class="hljs-keyword">define</span> UINT_MAX 0xFFFFFFFFu</span><br><br>            <span class="hljs-comment">// HDRP模拟光源</span><br><br><br>            <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">DirectLighting</span></span><br><span class="hljs-class">            &#123;</span><br>                float3 diffuse;<br>                float3 specular;<br>            &#125;;<br><br>            <span class="hljs-type">float</span> <span class="hljs-title function_">F_Schlick</span><span class="hljs-params">(<span class="hljs-type">float</span> f0, <span class="hljs-type">float</span> f90, <span class="hljs-type">float</span> u)</span><br>            &#123;<br>                <span class="hljs-type">float</span> x = <span class="hljs-number">1.0</span> - u;<br>                <span class="hljs-type">float</span> x2 = x * x;<br>                <span class="hljs-type">float</span> x5 = x * x2 * x2;<br>                <span class="hljs-keyword">return</span> (f90 - f0) * x5 + f0;                <span class="hljs-comment">// sub mul mul mul sub mad</span><br>            &#125;<br><br>            <span class="hljs-type">float</span> <span class="hljs-title function_">F_Schlick</span><span class="hljs-params">(<span class="hljs-type">float</span> f0, <span class="hljs-type">float</span> u)</span><br>            &#123;<br>                <span class="hljs-keyword">return</span> F_Schlick(f0, <span class="hljs-number">1.0</span>, u);               <span class="hljs-comment">// sub mul mul mul sub mad</span><br>            &#125;<br><br>            float3 <span class="hljs-title function_">F_Schlick</span><span class="hljs-params">(float3 f0, <span class="hljs-type">float</span> f90, <span class="hljs-type">float</span> u)</span><br>            &#123;<br>                <span class="hljs-type">float</span> x = <span class="hljs-number">1.0</span> - u;<br>                <span class="hljs-type">float</span> x2 = x * x;<br>                <span class="hljs-type">float</span> x5 = x * x2 * x2;<br>                <span class="hljs-keyword">return</span> f0 * (<span class="hljs-number">1.0</span> - x5) + (f90 * x5);        <span class="hljs-comment">// sub mul mul mul sub mul mad*3</span><br>            &#125;<br><br>            float3 <span class="hljs-title function_">F_Schlick</span><span class="hljs-params">(float3 f0, <span class="hljs-type">float</span> u)</span><br>            &#123;<br>                <span class="hljs-keyword">return</span> F_Schlick(f0, <span class="hljs-number">1.0</span>, u);               <span class="hljs-comment">// sub mul mul mul sub mad*3</span><br>            &#125;<br><br>            float3 <span class="hljs-title function_">ComputeFresnel0</span><span class="hljs-params">(float3 baseColor, <span class="hljs-type">float</span> metallic, <span class="hljs-type">float</span> dielectricF0)</span><br>            &#123;<br>                <span class="hljs-keyword">return</span> lerp(dielectricF0.xxx, baseColor, metallic);<br>            &#125;<br><br><br>            <span class="hljs-type">float</span> <span class="hljs-title function_">DV_SmithJointGGX</span><span class="hljs-params">(<span class="hljs-type">float</span> NdotH, <span class="hljs-type">float</span> NdotL, <span class="hljs-type">float</span> NdotV, <span class="hljs-type">float</span> roughness, <span class="hljs-type">float</span> partLambdaV)</span><br>            &#123;<br>                <span class="hljs-type">float</span> a2 = (roughness * roughness);<br>                <span class="hljs-type">float</span> s = (NdotH * a2 - NdotH) * NdotH + <span class="hljs-number">1.0</span>;<br><br>                <span class="hljs-type">float</span> lambdaV = NdotL * partLambdaV;<br>                <span class="hljs-type">float</span> lambdaL = NdotV * <span class="hljs-built_in">sqrt</span>((-NdotL * a2 + NdotL) * NdotL + a2);<br><br>                float2 D = float2(a2, s * s);            <span class="hljs-comment">// Fraction without the multiplier (1/Pi)</span><br>                float2 G = float2(<span class="hljs-number">1</span>, lambdaV + lambdaL); <span class="hljs-comment">// Fraction without the multiplier (1/2)</span><br><br>                <span class="hljs-comment">// This function is only used for direct lighting.</span><br>                <span class="hljs-comment">// If roughness is 0, the probability of hitting a punctual or directional light is also 0.</span><br>                <span class="hljs-comment">// Therefore, we return 0. The most efficient way to do it is with a max().</span><br>                <span class="hljs-keyword">return</span> INV_PI * <span class="hljs-number">0.5</span> * (D.x * G.x) / max(D.y * G.y, FLT_MIN);<br>            &#125;<br><br>            <span class="hljs-type">float</span> <span class="hljs-title function_">DisneyDiffuseNoPI</span><span class="hljs-params">(<span class="hljs-type">float</span> NdotV, <span class="hljs-type">float</span> NdotL, <span class="hljs-type">float</span> LdotV, <span class="hljs-type">float</span> perceptualRoughness)</span><br>            &#123;<br>                <span class="hljs-comment">// (2 * LdotH * LdotH) = 1 + LdotV</span><br>                <span class="hljs-comment">// float fd90 = 0.5 + 2 * LdotH * LdotH * perceptualRoughness;</span><br>                <span class="hljs-type">float</span> fd90 = <span class="hljs-number">0.5</span> + (perceptualRoughness + perceptualRoughness * LdotV);<br>                <span class="hljs-comment">// Two schlick fresnel term</span><br>                <span class="hljs-type">float</span> lightScatter = F_Schlick(<span class="hljs-number">1.0</span>, fd90, NdotL);<br>                <span class="hljs-type">float</span> viewScatter = F_Schlick(<span class="hljs-number">1.0</span>, fd90, NdotV);<br><br>                <span class="hljs-comment">// Normalize the BRDF for polar view angles of up to (Pi/4).</span><br>                <span class="hljs-comment">// We use the worst case of (roughness = albedo = 1), and, for each view angle,</span><br>                <span class="hljs-comment">// integrate (brdf * cos(theta_light)) over all light directions.</span><br>                <span class="hljs-comment">// The resulting value is for (theta_view = 0), which is actually a little bit larger</span><br>                <span class="hljs-comment">// than the value of the integral for (theta_view = Pi/4).</span><br>                <span class="hljs-comment">// Hopefully, the compiler folds the constant together with (1/Pi).</span><br>                <span class="hljs-keyword">return</span> (<span class="hljs-number">1</span> / <span class="hljs-number">1.03571</span>) * (lightScatter * viewScatter);<br>            &#125;<br><br>            <span class="hljs-type">float</span> <span class="hljs-title function_">DisneyDiffuse</span><span class="hljs-params">(<span class="hljs-type">float</span> NdotV, <span class="hljs-type">float</span> NdotL, <span class="hljs-type">float</span> LdotV, <span class="hljs-type">float</span> perceptualRoughness)</span><br>            &#123;<br>                <span class="hljs-keyword">return</span> INV_PI * DisneyDiffuseNoPI(NdotV, NdotL, LdotV, perceptualRoughness);<br>            &#125;<br><br>            <span class="hljs-type">float</span> <span class="hljs-title function_">GetSmithJointGGXPartLambdaV</span><span class="hljs-params">(<span class="hljs-type">float</span> NdotV, <span class="hljs-type">float</span> roughness)</span><br>            &#123;<br>                <span class="hljs-type">float</span> a2 = (roughness * roughness);<br>                <span class="hljs-keyword">return</span> <span class="hljs-built_in">sqrt</span>((-NdotV * a2 + NdotV) * NdotV + a2);<br>            &#125;<br><br>            <span class="hljs-type">void</span> <span class="hljs-title function_">BSDF</span><span class="hljs-params">(  float3 V, </span><br><span class="hljs-params">                        float3 L, </span><br><span class="hljs-params">                        <span class="hljs-type">float</span> NdotL, </span><br><span class="hljs-params">                        <span class="hljs-type">float</span> unclampNdotV, </span><br><span class="hljs-params">                        float3 fresnel0, </span><br><span class="hljs-params">                        <span class="hljs-type">float</span> roughness, </span><br><span class="hljs-params">                        <span class="hljs-type">float</span> perceptualRoughness,</span><br><span class="hljs-params">                        out float3 diffuseLighting,</span><br><span class="hljs-params">                        out float3 specularLighting)</span><br>            &#123;<br>                <span class="hljs-type">float</span> LdotV, NdotH, LdotH, NdotV, invLenLV;<br><br>                <span class="hljs-comment">/*</span><br><span class="hljs-comment">                GetBSDFAngle(V, L, NdotL, preLightData.NdotV, LdotV, NdotH, LdotH, NdotV, invLenLV);</span><br><span class="hljs-comment">                */</span><br>                LdotV = dot(L, V);<br>                invLenLV = rsqrt(max(<span class="hljs-number">2.0</span> * LdotV + <span class="hljs-number">2.0</span>, FLT_EPS));<br>                NdotH = clamp((NdotL + unclampNdotV) * invLenLV, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>); <br>                LdotH = clamp(invLenLV * LdotV + invLenLV, <span class="hljs-number">0</span>, <span class="hljs-number">1</span>);<br>                NdotV = max(unclampNdotV, <span class="hljs-number">0.0001</span>);<br><br>                float3 F = F_Schlick(fresnel0, LdotH);<br><br>                <span class="hljs-comment">/*</span><br><span class="hljs-comment">                计算彩虹色</span><br><span class="hljs-comment">                if (HasFlag(bsdfData.materialFeatures, MATERIALFEATUREFLAGS_LIT_IRIDESCENCE))</span><br><span class="hljs-comment">                &#123;</span><br><span class="hljs-comment">                    F = lerp(F, bsdfData.fresnel0, bsdfData.iridescenceMask);</span><br><span class="hljs-comment">                &#125;</span><br><span class="hljs-comment">                */</span><br>                <span class="hljs-type">float</span> partLambdaV = GetSmithJointGGXPartLambdaV(NdotV, roughness);<br>                <span class="hljs-type">float</span> DV = DV_SmithJointGGX(NdotH, NdotL, NdotV, roughness, partLambdaV);<br>                <br>                specularLighting = F * DV;<br><br>                <span class="hljs-comment">//float  diffuseTerm = Lambert();</span><br>                <span class="hljs-type">float</span> diffuseTerm = DisneyDiffuse(NdotV, NdotL, LdotV, perceptualRoughness);<br><br>                diffuseLighting = float3(diffuseTerm,diffuseTerm,diffuseTerm);<br>            &#125;<br><br><br><br>            DirectLighting <span class="hljs-title function_">ShadeSurface_Directional</span><span class="hljs-params">(float3 baseColor,</span><br><span class="hljs-params">                                                    <span class="hljs-type">float</span> roughness,</span><br><span class="hljs-params">                                                    <span class="hljs-type">float</span> metallic,</span><br><span class="hljs-params">                                                    float3 fresnel0,</span><br><span class="hljs-params">                                                    float3 N, </span><br><span class="hljs-params">                                                    float3 V)</span><br>            &#123;<br>                DirectLighting lighting;<br>                <span class="hljs-comment">//ZERO_INITIALIZE(DirectLighting, lighting);</span><br><br>                float3 L     = normalize(-lightDir); <span class="hljs-comment">// 光线方向</span><br>                float3 color = lightIntensity * lightColor;<br><br>                <span class="hljs-type">float</span>  NdotL = dot(N, L); <span class="hljs-comment">// Do not saturate</span><br>                <span class="hljs-type">float</span>  NdotV = dot(N, V);<br><br>                <span class="hljs-comment">/*</span><br><span class="hljs-comment">                计算阴影和光照衰减</span><br><span class="hljs-comment">                float attenuation;</span><br><span class="hljs-comment">                EvaluateLight_Directional(lightLoopContext, posInput, light, builtinData, N, L, NdotL, color, attenuation);</span><br><span class="hljs-comment">                */</span><br><br>                <span class="hljs-comment">//ClampRoughness(roughness, light.minRoughness);</span><br>                roughness = max(roughness, <span class="hljs-number">0.001225</span>);  <br><br>                float3 diffuseBsdf, specularBsdf;<br>                BSDF(V, L, NdotL, NdotV, fresnel0, roughness*roughness, roughness,diffuseBsdf, specularBsdf);<br><br>                <span class="hljs-comment">/*</span><br><span class="hljs-comment">                计算反射透射</span><br><span class="hljs-comment">                bool surfaceReflection = NdotL &gt; 0;</span><br><span class="hljs-comment">                if (surfaceReflection)</span><br><span class="hljs-comment">                &#123;</span><br><span class="hljs-comment">                */</span><br>                <span class="hljs-comment">// so there NdotL must be bigger than 0</span><br>                <span class="hljs-type">float</span> intensity =  saturate(NdotL);<br><br>                lighting.diffuse  = diffuseBsdf  * (intensity * diffuseDimmer);<br>                lighting.specular = specularBsdf * (intensity * specularDimmer);<br>              <br>                lighting.diffuse  *= color * baseColor;<br>                lighting.specular *= color * baseColor;<br><br>                <span class="hljs-comment">/*</span><br><span class="hljs-comment">                计算透射</span><br><span class="hljs-comment">                &#125;</span><br><span class="hljs-comment">                else if (MaterialSupportsTransmission(bsdfData))</span><br><span class="hljs-comment">                &#123;</span><br><span class="hljs-comment">                     // Apply wrapped lighting to better handle thin objects at grazing angles.</span><br><span class="hljs-comment">                    float wrapNdotL = ComputeWrappedDiffuseLighting(NdotL, TRANSMISSION_WRAP_LIGHT);</span><br><span class="hljs-comment">                    float intensity = attenuation * wrapNdotL;</span><br><span class="hljs-comment"></span><br><span class="hljs-comment">                    // We use diffuse lighting for accumulation since it is going to be blurred during the SSS pass.</span><br><span class="hljs-comment">                    // Note: Disney&#x27;s LdoV term in &#x27;diffuseBsdf&#x27; does not hold a meaningful value</span><br><span class="hljs-comment">                    // in the context of transmission, but we keep it unaltered for performance reasons.</span><br><span class="hljs-comment">                    lighting.diffuse  = transmittance * (diffuseBsdf * (intensity * light.diffuseDimmer));</span><br><span class="hljs-comment">                    lighting.specular = 0; // No spec trans, the compiler should optimize</span><br><span class="hljs-comment">                &#125;</span><br><span class="hljs-comment">                */</span><br><br>                <span class="hljs-keyword">return</span> lighting;<br>            &#125;<br><br>            v2f <span class="hljs-title function_">vert</span> <span class="hljs-params">(appdata v)</span><br>            &#123;<br>                v2f o;<br>                o.vertex = mul(UNITY_MATRIX_VP,mul(UNITY_MATRIX_M,v.vertex));<br>                o.worldPos = GetAbsolutePositionWS(mul(UNITY_MATRIX_M, v.vertex));<br>                o.worldNormal = TransformObjectToWorldNormal(v.normal);<br><br>                o.uv = v.uv;<br>                <span class="hljs-keyword">return</span> o;<br>            &#125;<br><br>            float4 <span class="hljs-title function_">frag</span> <span class="hljs-params">(v2f i)</span> : SV_Target<br>            &#123;<br>                float3 fresnel0 = ComputeFresnel0(baseColor, metallic, DEFAULT_SPECULAR_VALUE);<br>                float3 V = normalize(_WorldSpaceCameraPos.xyz - i.worldPos);<br>                float3 N = normalize(i.worldNormal);<br>                <span class="hljs-comment">//HDRP光照计算部分</span><br>                DirectLighting lighting = ShadeSurface_Directional( baseColor,<br>                                                                    roughness,<br>                                                                    metallic,<br>                                                                    fresnel0,<br>                                                                    N, <br>                                                                    V);<br><br>                <span class="hljs-keyword">return</span> float4(lighting.diffuse.xyz + lighting.specular.xyz,<span class="hljs-number">1</span>);<br>            &#125;<br>            ENDHLSL<br>        &#125;<br>    &#125;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+<p>下面就是Unity和SubstancePainter的光照结果对比。</p>
+<p><img src="/../../images/img/UnityLightModeForSP.jpg" alt="UnityLightModeForSP"></p>
+
+    </main>
+    <footer class="post-footer">
+      
+    </footer>
+  </article>
+  
+  
+  <nav class="page-nav">
+    <div class="page-nav-next page-nav-item">
+      
+      <a href="/2022/09/19/HDRPartist/Shader%20Graph/" rel="next" title=""><i class="fas fa-angle-left"></i><span class="nav-title"></span></a>
+      
+    </div>
+    <div class="page-nav-prev page-nav-item">
+      
+      <a href="/2022/09/19/HDRPartist/TA%E5%B7%A5%E4%BD%9C%E5%86%85%E5%AE%B9/" rel="prev" title=""><span class="nav-title"></span><i class="fas fa-angle-right"></i></a>
+      
+    </div>
+  </nav>
+  
+  
+  
+
+<div class="comments" id="comments">
+  
+  
+  <div class="commentjs" id="comment-thread"></div>
+  <link rel="stylesheet" href="/css/commentjs.css">
+  <script defer type="text/javascript" src="/js/marked.min.js"></script>
+  <script defer type="text/javascript" src="/js/timeago.min.js"></script>
+  <script defer type="text/javascript" src="/js/highlight.min.js"></script>
+  <script defer type="text/javascript" src="/js/commentjs.js"></script>
+  <script type="text/javascript">
+  $(document).ready(function () {
+    getComments({
+      "type": "github",
+      "user": "leinlin",
+      "repo": "leinlin.github.io",
+      "client_id": "aee134bdfb54c4ef5826",
+      "client_secret": "4af1d3f2b82dccc028c49715becc01e611afbe43",
+      "no_comment": "这个页面还没有评论，现在就去评论吧！",
+      "go_to_comment": "去评论",
+      "issue_title": "",
+      "btn_class": "button",
+      "comments_target": "#comment-thread"
+    });
+    marked.setOptions({
+      "highlight": function (code, lang) {
+        return hljs.highlightAuto(code).value;
+      }
+    });
+    function mark() {
+      var markdowns = document.getElementsByClassName("markdown");
+      for (var i = 0; i < markdowns.length; ++i){
+        if (markdowns[i].innerHTML) {
+          markdowns[i].innerHTML = marked(markdowns[i].innerHTML);
+        }
+      }
+    }
+    window.addEventListener("DOMContentLoaded", mark, false);
+    window.addEventListener("load", mark, false);
+  });
+  </script>
+  
+  
+</div>
+
+
+
+  
+</div>
+
+          </div>
+          
+          
+          
+<aside class="sidebar" id="sidebar" style="background: url(/images/background.png);">
+  
+  <div class="search">
+    <div class="form-group">
+      <i class="fas fa-search"></i><input type="search" id="search-input" name="q" results="0" placeholder="搜索" class="form-control"/>
+    </div>
+  </div>
+  <div class="search-result-box" id="search-result"></div>
+  
+  
+<div class="info sidebar-item" id="info">
+  
+  <img class="author-avatar" src="/images/avatar.jpg" alt="leinlin">
+  
+  <h1 class="author-name">leinlin</h1>
+  <h2 class="author-description"></h2>
+  <div class="site-count">
+    
+    
+    
+    
+    <div class="categories-count count-block">
+      <div class="site-count-title">分类</div>
+      <div><a href="/categories/">11</a></div>
+    </div>
+    
+    
+  </div>
+  
+  <div class="rss">
+    <a class="rss-link button sidebar-item" href="/atom.xml"><i class="fas fa-rss"></i>RSS</a>
+  </div>
+  
+</div>
+
+
+  <div class="sidebar-sticky">
+    
+    
+    
+    
+    
+    <hr>
+    <div class="post-toc sidebar-item" id="toc-div">
+      <div><i class="fas fa-list-ol"></i>文章目录</div>
+      <div class="post-toc-content"><ol class="list-group toc"><li class="toc-item toc-level-1"><a class="list-group-item toc-link" href="#%E5%9C%A8Substance%E5%BD%93%E4%B8%AD%E4%BD%BF%E7%94%A8Unity%E7%9A%84Shading%E6%A8%A1%E5%9E%8B"><span class="toc-text">在Substance当中使用Unity的Shading模型</span></a></li></ol></div>
+    </div>
+    
+    
+    
+    <hr>
+    <div class="social-link sidebar-item">
+      <div><i class="far fa-address-card"></i>社交链接</p></div>
+      <ul>
+        
+        <li><i class="fab fa-github"></i><a href="https://leinlin.github.com/" target="_blank">GitHub</a></li>
+        
+      </ul>
+    </div>
+    
+    
+  </div>
+</aside>
+
+
+          
+        </div>
+      </div>
+    </main>
+    
+<footer id="footer" class="footer" style="background: #33363b;">
+  <div class="container">
+    <div class="back-to-top">
+      <button id="back-to-top"><i class="fas fa-angle-double-up" aria-label="回到顶部"></i></button>
+    </div>
+    <div class="footer-container">
+      <div class="footer-left">
+        <div class="copyright">
+          <span class="author">leinlin</span><span class="year"><i class="far fa-copyright"></i>2022</span>
+        </div>
+        
+        <div class="busuanzi">
+          <span id="busuanzi_container_site_pv"><i class="fas fa-eye" aria-label="站点点击量" aria-hidden="false"></i><span id="busuanzi_value_site_pv"></span></span><span id="busuanzi_container_site_uv"><i class="fas fa-user" aria-label="站点用户数" aria-hidden="false"></i><span id="busuanzi_value_site_uv"></span></span><span id="busuanzi_container_page_pv"><i class="far fa-file-alt"></i><span id="busuanzi_value_page_pv" aria-label="页面点击量" aria-hidden="false"></span></span>
+        </div>
+        
+      </div>
+      <div class="footer-right">
+        <div class="custom-info">
+          
+          托管于<i class="fab fa-github-alt"></i><a href="https://pages.github.com/" target="_blank">GitHub Pages</a>
+          
+        </div>
+        <div class="powered-by">
+          由 <a href="https://hexo.io/" target="_blank">Hexo</a> 强力驱动 | 主题 <a href="https://github.com/AlynxZhou/hexo-theme-aria/" target="_blank">ARIA</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+  <script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

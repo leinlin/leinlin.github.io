@@ -204,7 +204,7 @@
   
   <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
     <div class="post-block">
-      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/08/03/Unity/il2cpp_fastbuild/">
+      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/09/19/UnityEffect/%E5%9C%A8Polygon%E6%B8%B2%E6%9F%93%E5%BD%93%E4%B8%AD%E4%BD%BF%E7%94%A8SDF%E6%95%88%E6%9E%9C/">
       <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
         <meta itemprop="name" content="leinlin">
         <meta itemprop="description" content="">
@@ -216,22 +216,14 @@
     </div>
     <header class="post-header">
       <h1 class="post-title" itemprop="name headline">
-        <a class="post-title-link post-title-link-external" href="/2022/08/03/Unity/il2cpp_fastbuild/" itemprop="url">在unity的IL2CPP中接入FASTBuild</a>
+        <a class="post-title-link post-title-link-external" href="/2022/09/19/UnityEffect/%E5%9C%A8Polygon%E6%B8%B2%E6%9F%93%E5%BD%93%E4%B8%AD%E4%BD%BF%E7%94%A8SDF%E6%95%88%E6%9E%9C/" itemprop="url"></a>
       </h1>
       <div class="post-meta">
         
         <span class="post-date">
-          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2022-08-03T08:17:00+08:00">2022-08-03 08:17:00</time></span>
+          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2022-09-19T19:53:50+08:00">2022-09-19 19:53:50</time></span>
         </span>
         
-        
-        
-        <span class="post-meta-divider divider">|</span>
-        
-        <span class="post-categories">
-          
-          <i class="far fa-folder-open"></i><span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/FASTBUILD/" itemprop="url" rel="index"><span itemprop="name">FASTBUILD</span></a></span>
-        </span>
         
         
         
@@ -240,29 +232,28 @@
     </header>
     <main class="post-main" itemprop="articleBody">
       
-      <h1 id="在unity的IL2CPP中接入FASTBuild"><a href="#在unity的IL2CPP中接入FASTBuild" class="headerlink" title="在unity的IL2CPP中接入FASTBuild"></a>在unity的IL2CPP中接入FASTBuild</h1><h2 id="如何编译IL2CPP-exe"><a href="#如何编译IL2CPP-exe" class="headerlink" title="如何编译IL2CPP.exe"></a>如何编译IL2CPP.exe</h2><figure class="hljs highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">jam WinEditor<br></code></pre></td></tr></table></figure>
+      <h1 id="在Unity渲染当中使用SDF"><a href="#在Unity渲染当中使用SDF" class="headerlink" title="在Unity渲染当中使用SDF"></a>在Unity渲染当中使用SDF</h1><p>SDF通常是在光线追踪场景当中使用，不过最近尝试在unity当中使用这个技术。</p>
+<p>尝试的出发点就是：宇宙魔方。</p>
+<p><img src="/../../images/img/81a5d8936ced30636c3cf43e532234e3174375fd.jpg" alt="81a5d8936ced30636c3cf43e532234e3174375fd"></p>
+<p>他的效果就是正方体内部有一个可以看得到的球体。</p>
+<p>最简单的思路就是：使用一个透明的正方体，内部放一个自发光的球体。他的问题在于如果大量使用可能会提升overdraw和drawcall。如果想做扭曲和折射更是需要一个额外的grabpass或者别的渲染流程。如果遇到不透明的水晶，但是内部有自发光物质时。如何控制不透明物质漏出内部的自发光球体是很大的问题。</p>
+<p>所以，我尝试了SDF，结果如下：</p>
+<p><img src="/../../images/img/2019623-134856.jpg" alt="2019623-134856"></p>
+<p>我们可以看到，同一个材质可以应用到任何模型上，并且他们都是不透明物体，可以有自己的材质同时还能维持内部自发光效果。同时由于光线经过不同的表面产生的折射效果也很容易就可以实现。</p>
+<p>实现方式就是以物体表面为起点，沿视线方向（用法线扰动视线方向来模拟折射）进行SDF渲染，由于只有一个球体所以速度非常快。</p>
+<p>他的扩展就是可以使用不同的SDF函数来生成不同的基础图形。</p>
 
-<h2 id="如何调试IL2CPP-exe"><a href="#如何调试IL2CPP-exe" class="headerlink" title="如何调试IL2CPP.exe"></a>如何调试IL2CPP.exe</h2><p>用vs2017我研究了一天没有成功，改用rider进行附加调试。第一步加入一个ReadKey的指令，等待附加</p>
-<figure class="hljs highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">public static int Main(string[] args)<br>&#123;<br>    // 这里是等待附加的代码<br>    ConsoleKey key = Console.ReadKey().Key;<br>    int exitCode;<br>    try<br>    &#123;<br>        exitCode = Run(args, true);<br>    &#125;<br>    catch (PathTooLongException e)<br>    &#123;<br>        Console.WriteLine(&quot;IL2CPP error: The specified output path is too long to write generated files. Please choose a location with a shorter path.&quot;);<br>        Console.WriteLine(e);<br>        throw;<br>    &#125;<br>    catch (Exception e)<br>    &#123;<br>        Console.WriteLine(&quot;il2cpp.exe didn&#x27;t catch exception: &quot; + e.StackTrace);<br>        throw;<br>    &#125;<br><br>    return exitCode;<br>&#125;<br></code></pre></td></tr></table></figure>
       
-      <p align="right"><a class="morebtn" href="/2022/08/03/Unity/il2cpp_fastbuild/" title="在unity的IL2CPP中接入FASTBuild">阅读全文</a></p>
+      <p align="right"><a class="morebtn" href="/2022/09/19/UnityEffect/%E5%9C%A8Polygon%E6%B8%B2%E6%9F%93%E5%BD%93%E4%B8%AD%E4%BD%BF%E7%94%A8SDF%E6%95%88%E6%9E%9C/" title="">阅读全文</a></p>
     </main>
     <footer class="post-footer">
-      
-      <div class="post-tags">
-        
-        <a class="post-tag button" href="/tags/IL2CPP/" rel="tag"><i class="fas fa-tags"></i>IL2CPP</a>
-        
-        <a class="post-tag button" href="/tags/FASTBUILD/" rel="tag"><i class="fas fa-tags"></i>FASTBUILD</a>
-        
-      </div>
       
     </footer>
   </article>
   
   <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
     <div class="post-block">
-      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/07/18/Unity/profiler/">
+      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/09/19/UnityEffect/%E4%BF%AE%E6%94%B9UnityHDRP%E7%AE%A1%E7%BA%BF%E6%9D%A5%E5%AE%9E%E7%8E%B0%E6%80%AA%E7%89%A9%E7%8C%8E%E4%BA%BA%E4%B8%96%E7%95%8C%E4%B8%AD%E5%AE%A0%E7%89%A9%E6%AF%9B%E5%8F%91%E6%95%88%E6%9E%9C/">
       <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
         <meta itemprop="name" content="leinlin">
         <meta itemprop="description" content="">
@@ -274,12 +265,12 @@
     </div>
     <header class="post-header">
       <h1 class="post-title" itemprop="name headline">
-        <a class="post-title-link post-title-link-external" href="/2022/07/18/Unity/profiler/" itemprop="url">snp Profiler</a>
+        <a class="post-title-link post-title-link-external" href="/2022/09/19/UnityEffect/%E4%BF%AE%E6%94%B9UnityHDRP%E7%AE%A1%E7%BA%BF%E6%9D%A5%E5%AE%9E%E7%8E%B0%E6%80%AA%E7%89%A9%E7%8C%8E%E4%BA%BA%E4%B8%96%E7%95%8C%E4%B8%AD%E5%AE%A0%E7%89%A9%E6%AF%9B%E5%8F%91%E6%95%88%E6%9E%9C/" itemprop="url"></a>
       </h1>
       <div class="post-meta">
         
         <span class="post-date">
-          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2022-07-18T08:17:00+08:00">2022-07-18 08:17:00</time></span>
+          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2022-09-19T19:53:49+08:00">2022-09-19 19:53:49</time></span>
         </span>
         
         
@@ -290,27 +281,74 @@
     </header>
     <main class="post-main" itemprop="articleBody">
       
-      <p><img src="/../../images/2022-07-19-18-03-57.png"></p>
+      <h1 id="修改UnityHDRP管线来实现怪物猎人世界中宠物毛发效果"><a href="#修改UnityHDRP管线来实现怪物猎人世界中宠物毛发效果" class="headerlink" title="修改UnityHDRP管线来实现怪物猎人世界中宠物毛发效果"></a>修改UnityHDRP管线来实现怪物猎人世界中宠物毛发效果</h1><p>这里主要是以怪物猎人宠物毛发为例，介绍如何从美术需求分析开始，进行引擎修改工作。</p>
+<p>后边的内容重点介绍对于管线的修改方法，而具体的模糊算法和参数不做详细说明。</p>
+<h2 id="毛发实现分析"><a href="#毛发实现分析" class="headerlink" title="毛发实现分析"></a>毛发实现分析</h2><p>参考内容、需求只有下面的ppt： </p>
+<p><img src="/../../images/img/2019620-161347.jpg" alt="2019620-161347"></p>
+<p><img src="/../../images/img/2019620-161423.jpg" alt="2019620-161423"></p>
+<p>对其分析的结果：计算一张运动模糊的数据。对接结果进行模糊。</p>
+<ol start="0">
+<li><p>需要<strong>一张模糊走向图</strong>（毛发的走向）和<strong>一张黑色的噪点图</strong>（毛发的疏密、阴影）。</p>
+</li>
+<li><p>运动模糊不变，改变黑色噪点的tiling值可以改变他的毛发密度。</p>
+</li>
+<li><p>需要一个运动模糊的采样次数，控制毛发的精细度。</p>
+</li>
+<li><p>需要一个运动模糊的距离控制毛发长度。</p>
+</li>
+</ol>
+<p>所以需求分析的结果就是一套类似运动模糊的实现方案。后面介绍如何修改管线来实现这一套方案。</p>
+<h2 id="HDRP实现方案"><a href="#HDRP实现方案" class="headerlink" title="HDRP实现方案"></a>HDRP实现方案</h2><h3 id="HDRP-render当中添加渲染毛发走向"><a href="#HDRP-render当中添加渲染毛发走向" class="headerlink" title="HDRP render当中添加渲染毛发走向"></a>HDRP render当中添加渲染毛发走向</h3><p>首先在HDRP当中考虑添加一个专门绘制毛发的pass，类似MotionVector Pass。下面的代码需要添加到HDRenderPipeline.cs当中：</p>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">void</span> <span class="hljs-title function_">RenderObjectsFurVectors</span><span class="hljs-params">(CullingResults cullResults, HDCamera hdCamera, ScriptableRenderContext renderContext, CommandBuffer cmd)</span><br>&#123;<br>    using (new ProfilingSample(cmd, <span class="hljs-string">&quot;Objects Fur Vectors Rendering&quot;</span>, CustomSamplerId.ObjectsMotionVector.GetSampler()))<br>    &#123;<br>        <span class="hljs-comment">// 需要清理FurVectorbuffer</span><br>        HDUtils.SetRenderTarget(cmd, hdCamera, m_SharedRTManager.GetFurVectorsPassBuffersRTI(hdCamera.frameSettings), m_SharedRTManager.GetDepthStencilBuffer(), ClearFlag.Color, Color.clear);<br>        HDUtils.SetRenderTarget(cmd, hdCamera, m_SharedRTManager.GetFurVectorsPassBuffersRTI(hdCamera.frameSettings), m_SharedRTManager.GetDepthStencilBuffer(hdCamera.frameSettings.IsEnabled(FrameSettingsField.MSAA)));<br>        RenderOpaqueRenderList(cullResults, hdCamera, renderContext, cmd, HDShaderPassNames.s_FurVectorsName, PerObjectData.None);<br>    &#125;<br>&#125;<br><br>... ...<br>    <br><span class="hljs-comment">// 在正确的位置插入要渲染的内容</span><br><span class="hljs-keyword">if</span> (shouldRenderMotionVectorAfterGBuffer)<br>&#123;<br>    <span class="hljs-comment">// See the call RenderObjectsMotionVectors() above and comment</span><br>    RenderObjectsMotionVectors(cullingResults, hdCamera, renderContext, cmd);<br>&#125;<br>RenderObjectsFurVectors(cullingResults, hdCamera, renderContext, cmd); <span class="hljs-comment">// ++++++</span><br></code></pre></td></tr></table></figure>
+
+<p>加入记录渲染毛发走向的RT，在文件SharedRTManager.cs当中：</p>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><code class="hljs c">RTHandleSystem.RTHandle m_NormalRT = null;<br>RTHandleSystem.RTHandle m_FurVectorsRT = null; <span class="hljs-comment">//+++++++++</span><br>RTHandleSystem.RTHandle m_MotionVectorsRT = null;<br><br>... ...<br>    <br><span class="hljs-keyword">if</span> (m_MotionVectorsSupport)<br>&#123;<br>    ... ...<br>&#125;<br>m_FurVectorsRT = RTHandles.Alloc(Vector2.one, filterMode: FilterMode.Point, colorFormat: Builtin.GetMotionVectorFormat(), xrInstancing: <span class="hljs-literal">true</span>, useDynamicScale: <span class="hljs-literal">true</span>, name: <span class="hljs-string">&quot;FurVectors&quot;</span>);   <span class="hljs-comment">//+++++++++</span><br><br>... ...<br>    <br><span class="hljs-keyword">if</span> (m_MotionVectorsSupport)<br>&#123;<br>    RTHandles.Release(m_MotionVectorsRT);<br>    <span class="hljs-keyword">if</span> (m_MSAASupported)<br>    &#123;<br>        RTHandles.Release(m_MotionVectorsMSAART);<br>    &#125;<br>&#125;<br><br>RTHandles.Release(m_FurVectorsRT);  <span class="hljs-comment">//+++++++++</span><br><br>... ...<br>    <br>public RenderTargetIdentifier[] GetFurVectorsPassBuffersRTI(FrameSettings frameSettings)<br>&#123;<br>    m_RTIDs1[<span class="hljs-number">0</span>] = m_FurVectorsRT.nameID;<br>    <span class="hljs-keyword">return</span> m_RTIDs1;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>加入毛发渲染pass name, 在文件HDStringConstant.cs当中:</p>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs c">public <span class="hljs-type">static</span> readonly <span class="hljs-built_in">string</span> s_MotionVectorsStr = <span class="hljs-string">&quot;MotionVectors&quot;</span>;<br>public <span class="hljs-type">static</span> readonly <span class="hljs-built_in">string</span> s_FurVectorsStr = <span class="hljs-string">&quot;FurVectors&quot;</span>; <span class="hljs-comment">//+++++++++</span><br>... ...<br><br>public <span class="hljs-type">static</span> readonly ShaderTagId s_MotionVectorsName = new ShaderTagId(s_MotionVectorsStr);<br>public <span class="hljs-type">static</span> readonly ShaderTagId s_FurVectorsName = new ShaderTagId(s_FurVectorsStr);   <span class="hljs-comment">//+++++++++</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="添加渲染毛发走向的Shader"><a href="#添加渲染毛发走向的Shader" class="headerlink" title="添加渲染毛发走向的Shader"></a>添加渲染毛发走向的Shader</h3><p>因为毛发走向只需要一个向量，这里用最简单的Pass制作。</p>
+<p>需要加的就只是一个 LightMode&#x3D;FurVectors的pass</p>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><code class="hljs c">Pass&#123;<br>    Name <span class="hljs-string">&quot;FurVectors&quot;</span><br>    Tags &#123;<span class="hljs-string">&quot;LightMode&quot;</span> = <span class="hljs-string">&quot;FurVectors&quot;</span>&#125;  <span class="hljs-comment">// RenderPipeline通过LightMode来识别要渲染的pass</span><br><br>    Blend One Zero, One Zero<br>    Cull Back<br>    ZTest LEqual<br>	ZWrite On<br>	HLSLPROGRAM<br>    <span class="hljs-meta">#<span class="hljs-keyword">pragma</span> target 4.5</span><br>    <span class="hljs-meta">#<span class="hljs-keyword">pragma</span> only_renderers d3d11 ps4 xboxone vulkan metal switch</span><br>    <span class="hljs-meta">#<span class="hljs-keyword">pragma</span> multi_compile_instancing</span><br>    <span class="hljs-meta">#<span class="hljs-keyword">pragma</span> vertex Vert</span><br>    <span class="hljs-meta">#<span class="hljs-keyword">pragma</span> fragment Frag</span><br><br>    <span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;Packages/com.unity.render-pipelines.core/ShaderLibrary/Common.hlsl&quot;</span></span><br>    <span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;Packages/com.unity.render-pipelines.high-definition/Runtime/ShaderLibrary/ShaderVariables.hlsl&quot;</span></span><br><br>    <span class="hljs-keyword">struct</span> AttributesMesh<br>    &#123;<br>        float3 positionOS   : POSITION;<br>        float3 normalOS     : NORMAL;<br>        float2 uv0          : TEXCOORD0;<br>        UNITY_VERTEX_INPUT_INSTANCE_ID<br>    &#125;;<br><br>    <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">v2f</span></span><br><span class="hljs-class">    &#123;</span><br>        float4 position:SV_Position;<br>        float2 uv:TEXCOORD0;<br>        float3 furRootCS: TEXCOORD1;<br>        float3 furTailCS: TEXCOORD2;<br>    &#125;;<br>    <br>    v2f <span class="hljs-title function_">Vert</span><span class="hljs-params">( AttributesMesh v)</span><br>    &#123;<br>        v2f o = (v2f)<span class="hljs-number">0</span>;<br>        o.uv = v.uv0.xy;<br>        float3 normalWS =  TransformObjectToWorldNormal(v.normalOS);<br>        float3 positionRWS = TransformObjectToWorld(v.positionOS);<br>        o.position = TransformWorldToHClip(positionRWS);<br>		<span class="hljs-comment">// 为了测试，先沿法线向量计算模糊向量</span><br>        o.furRootCS = mul(_NonJitteredViewProjMatrix, float4(positionRWS, <span class="hljs-number">1.0</span>)).xyw;<br>        o.furTailCS = mul(_NonJitteredViewProjMatrix, float4(positionRWS + normalWS, <span class="hljs-number">1.0</span>)).xyw;<br>        <span class="hljs-keyword">return</span> o;<br>    &#125;<br><br>    real4 <span class="hljs-title function_">Frag</span><span class="hljs-params">(v2f i)</span>:SV_Target0&#123;<br>        float2 furRootCS = i.furRootCS.xy / i.furRootCS.z;<br>        float2 furTailCS = i.furTailCS.xy / i.furTailCS.z;<br>        real2 motionVec = (furRootCS.xy - furTailCS.xy);<br>        <span class="hljs-meta">#<span class="hljs-keyword">if</span> UNITY_UV_STARTS_AT_TOP</span><br>        motionVec.y = -motionVec.y;<br>        <span class="hljs-meta">#<span class="hljs-keyword">endif</span></span><br>        <span class="hljs-keyword">return</span> float4( motionVec * <span class="hljs-number">0.5</span> ,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>);<br>    &#125;<br>    ENDHLSL<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>把上面的Pass加到任意一个HDRP的shader当中并不会影响原始界面的显示，下面灰色物体是加入了FurVectorsPass的Unlit材质：</p>
+<p><img src="/../../images/img/2019620-195422.jpg" alt="2019620-195422"></p>
+<p>可以在FrameDebug当中看到渲染结果，多出了FurVectorsPass，并且还有SRP Batch加持：</p>
+<p><img src="/../../images/img/2019620-191918.jpg" alt="2019620-191918"></p>
+<p>可以看到他输出的内容是一个屏幕空间的向量，之后就可以直接用于毛发方向模糊的后处理：</p>
+<p><img src="/../../images/img/2019620-192742.jpg" alt="2019620-192742"></p>
+<p>最后为了在后处理中访问到，还需要把这个纹理设置成全局纹理，在HDStringConstants.cs中添加：</p>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs c">public <span class="hljs-type">static</span> readonly <span class="hljs-type">int</span> _CameraDepthTexture = Shader.PropertyToID(<span class="hljs-string">&quot;_CameraDepthTexture&quot;</span>);<br>public <span class="hljs-type">static</span> readonly <span class="hljs-type">int</span> _CameraMotionVectorsTexture = Shader.PropertyToID(<span class="hljs-string">&quot;_CameraMotionVectorsTexture&quot;</span>);<br>public <span class="hljs-type">static</span> readonly <span class="hljs-type">int</span> _CameraMotionVectorsSize = Shader.PropertyToID(<span class="hljs-string">&quot;_CameraMotionVectorsSize&quot;</span>);<br>public <span class="hljs-type">static</span> readonly <span class="hljs-type">int</span> _CameraMotionVectorsScale = Shader.PropertyToID(<span class="hljs-string">&quot;_CameraMotionVectorsScale&quot;</span>);<br>public <span class="hljs-type">static</span> readonly <span class="hljs-type">int</span> _FullScreenDebugMode = Shader.PropertyToID(<span class="hljs-string">&quot;_FullScreenDebugMode&quot;</span>);<br><br>public <span class="hljs-type">static</span> readonly <span class="hljs-type">int</span> _FurVectorsTexture = Shader.PropertyToID(<span class="hljs-string">&quot;_FurVectorsTexture&quot;</span>);<br></code></pre></td></tr></table></figure>
+
+<p>在HDRenderPipeline.cs的PushGlobalParams方法中添加：</p>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-keyword">if</span> (hdCamera.frameSettings.IsEnabled(FrameSettingsField.MotionVectors))<br>&#123;<br>   ... ...<br>&#125;<br><span class="hljs-keyword">else</span><br>&#123;<br>   ... ...<br>&#125;<br><br>cmd.SetGlobalTexture(HDShaderIDs._FurVectorsTexture,m_SharedRTManager.GetFurVectorsBuffer());  <span class="hljs-comment">// +++++++++++++++++++++++++++++++</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="使用毛发走向图进行方向模糊的后处理"><a href="#使用毛发走向图进行方向模糊的后处理" class="headerlink" title="使用毛发走向图进行方向模糊的后处理"></a>使用毛发走向图进行方向模糊的后处理</h3><p>这里直接进行简单的向量模糊处理，我们通过修改HDRP的PostSystem实现。这里使用computeShader进行计算。</p>
+<p>首先我们需要添加渲染毛发的compute Shader绘制代码：</p>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-keyword">if</span> (m_MotionBlur.IsActive() &amp;&amp; m_AnimatedMaterialsEnabled &amp;&amp; !m_ResetHistory)<br>&#123;<br>	... ...<br>&#125;<br><br><span class="hljs-comment">// 在motionblur后面添加</span><br><span class="hljs-keyword">if</span> (<span class="hljs-literal">true</span>)<br>&#123;<br>    using (new ProfilingSample(cmd, <span class="hljs-string">&quot;Fur Blur&quot;</span>, CustomSamplerId.FurBlur.GetSampler()))<br>    &#123;<br>        var destination = m_Pool.Get(Vector2.one, k_ColorFormat);<br>        DoFurBlur(cmd, camera, source, destination);<br>        PoolSource(ref source, destination);<br>    &#125;<br>&#125;<br><br>... ...<br><span class="hljs-meta">#region Fur Blur</span><br><span class="hljs-comment">// 下面的内容就可以将结果写入到最终位置上，这里还是一切从简，先不用特殊的参数，先把核心的模糊计算加上</span><br><span class="hljs-type">void</span> <span class="hljs-title function_">DoFurBlur</span><span class="hljs-params">(CommandBuffer cmd, HDCamera camera, RTHandle source, RTHandle destination)</span><br>&#123;<br>    var cs = m_Resources.shaders.furBlurCS;<br>    var kernel = cs.FindKernel(<span class="hljs-string">&quot;FurBlurKernel&quot;</span>);<br>    cmd.SetComputeTextureParam(cs, kernel, HDShaderIDs._InputTexture, source);<br>    cmd.SetComputeTextureParam(cs, kernel, HDShaderIDs._OutputTexture, destination);<br>    cmd.DispatchCompute(cs, kernel, (camera.actualWidth + <span class="hljs-number">7</span>) / <span class="hljs-number">8</span>, (camera.actualHeight + <span class="hljs-number">7</span>) / <span class="hljs-number">8</span>, camera.computePassCount);<br>&#125;<br><span class="hljs-meta">#endregion</span><br></code></pre></td></tr></table></figure>
+
+<p>添加Sampler, 在HDCustomSamplerId.cs当中：</p>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs c">DepthOfFieldGatherNear,<br>DepthOfFieldPreCombine,<br>DepthOfFieldCombine,<br>FurBlur, <span class="hljs-comment">// +++++++++++++</span><br>MotionBlur,<br></code></pre></td></tr></table></figure>
+
+<p>添加FurBlur的computeShader，在RenederPipelineResources中.cs</p>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c">[Reload(<span class="hljs-string">&quot;PostProcessing/Shaders/MotionBlur.compute&quot;</span>)]<br>public ComputeShader motionBlurCS;<br>[Reload(<span class="hljs-string">&quot;PostProcessing/Shaders/FurBlur.compute&quot;</span>)]<br>public ComputeShader furBlurCS;   <span class="hljs-comment">// +++++++++++++++</span><br></code></pre></td></tr></table></figure>
+
+<p>最后，还需要编写实际计算的computeShader：</p>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">pragma</span> kernel FurBlurKernel</span><br><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;Packages/com.unity.render-pipelines.core/ShaderLibrary/Common.hlsl&quot;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;Packages/com.unity.render-pipelines.high-definition/Runtime/ShaderLibrary/ShaderVariables.hlsl&quot;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;Packages/com.unity.render-pipelines.high-definition/Runtime/Material/Builtin/BuiltinData.hlsl&quot;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;Packages/com.unity.render-pipelines.high-definition/Runtime/PostProcessing/Shaders/FXAA.hlsl&quot;</span></span><br><br><br>RW_TEXTURE2D_X(float3, _OutputTexture);<br>TEXTURE2D_X(_InputTexture);<br>TEXTURE2D_X(_FurVectorsTexture);<br><br><span class="hljs-comment">/* </span><br><span class="hljs-comment">使用_FurVectorsTexture当中的向量对_InputTexture进行向量模糊处理。最终结果输出到_OutputTexture。</span><br><span class="hljs-comment">*/</span><br>[numthreads(<span class="hljs-number">8</span>,<span class="hljs-number">8</span>,<span class="hljs-number">1</span>)]<br><span class="hljs-type">void</span> <span class="hljs-title function_">FurBlurKernel</span><span class="hljs-params">(uint3 dispatchThreadId : SV_DispatchThreadID)</span><br>&#123;<br>    UNITY_STEREO_ASSIGN_COMPUTE_EYE_INDEX(dispatchThreadId.z);<br>    uint2 positionSS = dispatchThreadId.xy;<br>    float2 positionNDC = positionSS * _ScreenSize.zw + (<span class="hljs-number">0.5</span> * _ScreenSize.zw); <br>    float3 outColor = Load(_InputTexture, positionSS, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>);<br>    _OutputTexture[COORD_TEXTURE2D_X(positionSS)] = outColor;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>上面的代码稍作修改就能得到有毛发区域的模糊效果，至于具体控制参数、模糊算法细节并不难，这里略过。</p>
 
       
-      <p align="right"><a class="morebtn" href="/2022/07/18/Unity/profiler/" title="snp Profiler">阅读全文</a></p>
+      <p align="right"><a class="morebtn" href="/2022/09/19/UnityEffect/%E4%BF%AE%E6%94%B9UnityHDRP%E7%AE%A1%E7%BA%BF%E6%9D%A5%E5%AE%9E%E7%8E%B0%E6%80%AA%E7%89%A9%E7%8C%8E%E4%BA%BA%E4%B8%96%E7%95%8C%E4%B8%AD%E5%AE%A0%E7%89%A9%E6%AF%9B%E5%8F%91%E6%95%88%E6%9E%9C/" title="">阅读全文</a></p>
     </main>
     <footer class="post-footer">
-      
-      <div class="post-tags">
-        
-        <a class="post-tag button" href="/tags/snp/" rel="tag"><i class="fas fa-tags"></i>snp</a>
-        
-        <a class="post-tag button" href="/tags/android/" rel="tag"><i class="fas fa-tags"></i>android</a>
-        
-      </div>
       
     </footer>
   </article>
   
   <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
     <div class="post-block">
-      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/07/18/Unity/textmeshpro/">
+      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/09/19/Unity/%E6%B8%B2%E6%9F%93%E8%BF%87%E7%A8%8B%E4%B8%ADbuffer%E7%9A%84%E5%8F%98%E5%8C%96/">
       <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
         <meta itemprop="name" content="leinlin">
         <meta itemprop="description" content="">
@@ -322,12 +360,12 @@
     </div>
     <header class="post-header">
       <h1 class="post-title" itemprop="name headline">
-        <a class="post-title-link post-title-link-external" href="/2022/07/18/Unity/textmeshpro/" itemprop="url">textmesh-pro 压缩通道</a>
+        <a class="post-title-link post-title-link-external" href="/2022/09/19/Unity/%E6%B8%B2%E6%9F%93%E8%BF%87%E7%A8%8B%E4%B8%ADbuffer%E7%9A%84%E5%8F%98%E5%8C%96/" itemprop="url"></a>
       </h1>
       <div class="post-meta">
         
         <span class="post-date">
-          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2022-07-18T08:17:00+08:00">2022-07-18 08:17:00</time></span>
+          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2022-09-19T19:53:47+08:00">2022-09-19 19:53:47</time></span>
         </span>
         
         
@@ -338,385 +376,512 @@
     </header>
     <main class="post-main" itemprop="articleBody">
       
-      <h2 id="把Alpha-8改为4通道的RGBA"><a href="#把Alpha-8改为4通道的RGBA" class="headerlink" title="把Alpha 8改为4通道的RGBA"></a>把Alpha 8改为4通道的RGBA</h2><p><img src="/../../images/2022-07-21-17-44-41.png"></p>
-<h2 id="修改shader根据uv采样不同的通道"><a href="#修改shader根据uv采样不同的通道" class="headerlink" title="修改shader根据uv采样不同的通道"></a>修改shader根据uv采样不同的通道</h2><p><img src="/../../images/2022-07-21-17-45-35.png"></p>
-<h2 id="补充"><a href="#补充" class="headerlink" title="补充"></a>补充</h2><ul>
-<li><p>优化图集算法，不能让中间线切割字符，使一个字符分布到多个通道中</p>
+      <p>无论在Deferred还是Forward，在AfterForwardAplha阶段深度就已经清除了</p>
+<p>Resolve Depth 在Gbuffer填充时生效，在Gbuffer结束时，会拷贝的Depth纹理中</p>
+
+      
+      <p align="right"><a class="morebtn" href="/2022/09/19/Unity/%E6%B8%B2%E6%9F%93%E8%BF%87%E7%A8%8B%E4%B8%ADbuffer%E7%9A%84%E5%8F%98%E5%8C%96/" title="">阅读全文</a></p>
+    </main>
+    <footer class="post-footer">
+      
+    </footer>
+  </article>
+  
+  <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
+    <div class="post-block">
+      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/09/19/Unity/%E6%B7%B1%E5%BA%A6%E4%BF%A1%E6%81%AF/">
+      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <meta itemprop="name" content="leinlin">
+        <meta itemprop="description" content="">
+        <meta itemprop="image" content="/images/avatar.jpg">
+      </span>
+      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+        <meta itemprop="name" content="leinlin的小笔记">
+      </span>
+    </div>
+    <header class="post-header">
+      <h1 class="post-title" itemprop="name headline">
+        <a class="post-title-link post-title-link-external" href="/2022/09/19/Unity/%E6%B7%B1%E5%BA%A6%E4%BF%A1%E6%81%AF/" itemprop="url"></a>
+      </h1>
+      <div class="post-meta">
+        
+        <span class="post-date">
+          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2022-09-19T19:53:47+08:00">2022-09-19 19:53:47</time></span>
+        </span>
+        
+        
+        
+        
+        
+      </div>
+    </header>
+    <main class="post-main" itemprop="articleBody">
+      
+      <h1 id="深度"><a href="#深度" class="headerlink" title="深度"></a>深度</h1><p>在unity当中所有的不透明物体都需要使用深度(Zbuffer)做深度剔除：ZWtire ZTest</p>
+<p>深度信息保存在一张高精度的纹理当中。</p>
+<p><strong>Note:</strong> On DX11&#x2F;12, PS4, XboxOne and Metal, the <strong>Z buffer</strong> range is 1–0 and UNITY_REVERSED_Z is defined. On other platforms, the range is 0–1.（在一些平台，深度纹理从近到远是从1到0，并且定义了一个宏UNITY_REVERSED_Z ，在其他平台是从0到1）</p>
+<p>当shader打开ZWrite的时候，默认会 向Zbuffer写入内容，会通过特殊的编码，保证近处的精确度更高。范围在[0,1]之间。描述了远近剪裁面之间。</p>
+<p>注：有一个<strong>Linear01Depth</strong>宏，他会把深度从Zbuffer中的非线性[0,1]（或[1,0]）变成线性的[0,1].</p>
+<p><strong>COMPUTE_EYEDEPTH(i)</strong>:宏会计算观察空间的坐标，实际上就是观察空间的z值（原本是负数，输出之前进行了取反操作）输出到i。（只能在顶点程序中使用，内部使用的顶点shader的输入变量v.vertex）。</p>
+<p><strong>COMPUTE_DEPTH_01</strong>: 这个宏的结果就是一个0到1的深度变化，等于上一个宏 * _ProjectionParam.w（1&#x2F; far）。（也就是除了个远剪裁面）</p>
+<p>上面两个宏，针对的是当前顶点的局部坐标（v.vertex）.</p>
+<p><strong>LinearEyeDepth</strong>(i):  将Zbuffer（深度贴图）中的值转换到观察空间。 </p>
+<p>**Linear01Depth(i)**：将深度贴图的值转化到线性01范围。</p>
+<p>上面两个宏对应的是从深度贴图提取出来的值。</p>
+<p>注：_ProjectionParams <code>x</code> is 1.0 (or –1.0 if currently rendering with a <a target="_blank" rel="noopener" href="https://docs.unity3d.com/Manual/SL-PlatformDifferences.html">flipped projection matrix</a>), <code>y</code> is the camera’s near plane, <code>z</code> is the camera’s far plane and <code>w</code> is 1&#x2F;FarPlane.</p>
+<h1 id="渲染管线中深度的保存和计算原理"><a href="#渲染管线中深度的保存和计算原理" class="headerlink" title="渲染管线中深度的保存和计算原理"></a>渲染管线中深度的保存和计算原理</h1><p> 渲染管线过程会出现两次坐标系的选项性转换：</p>
+<ol>
+<li>世界空间&#x3D;&gt;观察空间 ： 左手变右手。</li>
+<li>观察空间&#x3D;&gt;剪裁空间：右手变左手。</li>
+</ol>
+<p>进入剪裁空间是为了方便摄像机剪裁而进行的一次对坐标系参数的<em><strong>缩放和偏移</strong></em>。</p>
+<p>进入剪裁空间后每一个点(x,y,z,w)只需要满足:<br>$$-w \le x  \le w$$</p>
+<p>$$-w \le y  \le w$$</p>
+<p>$$-w \le z  \le w (Opengl)$$ </p>
+<p>$$ 0 \le z  \le w(dx11)$$ </p>
+<h3 id="以DX11为例"><a href="#以DX11为例" class="headerlink" title="以DX11为例"></a>以DX11为例</h3><p>unity DX11的CullSpace的z值计算方式:</p>
+<p>$$     z_{cullspace} &#x3D;  \frac  {near} {far - near}  * z_{cameraspace} + \frac{far*near}{far -near}    $$</p>
+<p>unity对于深度缓存的编码方式：</p>
+<p>$$ z_{inzbuffer} &#x3D; ( - \frac 1 z_{cameraspace})(\frac {near* z_{cameraspace}}{far - near}- \frac{far*near}{far - near}) $$</p>
+<p>注：上面的$  z_{cameraspace}  $由于CameraSapce  所以始终是一个负数。</p>
+
+      
+      <p align="right"><a class="morebtn" href="/2022/09/19/Unity/%E6%B7%B1%E5%BA%A6%E4%BF%A1%E6%81%AF/" title="">阅读全文</a></p>
+    </main>
+    <footer class="post-footer">
+      
+    </footer>
+  </article>
+  
+  <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
+    <div class="post-block">
+      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/09/19/Unity/%E4%B8%96%E7%95%8C%E5%9D%90%E6%A0%87%E6%81%A2%E5%A4%8D/">
+      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <meta itemprop="name" content="leinlin">
+        <meta itemprop="description" content="">
+        <meta itemprop="image" content="/images/avatar.jpg">
+      </span>
+      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+        <meta itemprop="name" content="leinlin的小笔记">
+      </span>
+    </div>
+    <header class="post-header">
+      <h1 class="post-title" itemprop="name headline">
+        <a class="post-title-link post-title-link-external" href="/2022/09/19/Unity/%E4%B8%96%E7%95%8C%E5%9D%90%E6%A0%87%E6%81%A2%E5%A4%8D/" itemprop="url"></a>
+      </h1>
+      <div class="post-meta">
+        
+        <span class="post-date">
+          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2022-09-19T19:53:47+08:00">2022-09-19 19:53:47</time></span>
+        </span>
+        
+        
+        
+        
+        
+      </div>
+    </header>
+    <main class="post-main" itemprop="articleBody">
+      
+      <h1 id="世界坐标恢复"><a href="#世界坐标恢复" class="headerlink" title="世界坐标恢复"></a>世界坐标恢复</h1><p>在unity当中所有的屏幕空间技术都依赖于世界坐标恢复。例如：SSR屏幕空间反射，SSS屏幕空间阴影，ContactShadow细节阴影等。依赖于屏幕空间的Ray trace。</p>
+<p>这里主要是讨论如何从深度图中恢复世界坐标并进行使用。之后有时间会制作一些相关特效。</p>
+<h2 id="世界坐标恢复-1"><a href="#世界坐标恢复-1" class="headerlink" title="世界坐标恢复"></a>世界坐标恢复</h2><p>我们这里分析的是PostProcessing <a href="mailto:&#x56;&#x32;&#x40;&#50;&#46;&#49;&#52;">&#x56;&#x32;&#x40;&#50;&#46;&#49;&#52;</a>版本当中SSR。主要的代码在ScreenSpaceReflections.hlsl当中。</p>
+<p>具体步骤如下：</p>
+<p><strong>第一步</strong>，需要[0,1]区间的纹理坐标。</p>
+<p>这部分可以在顶点着色器当中设置。</p>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs c">VaryingsDefault <span class="hljs-title function_">VertDefault</span><span class="hljs-params">(AttributesDefault v)</span><br>&#123;<br>    VaryingsDefault o;<br>    o.vertex = float4(v.vertex.xy, <span class="hljs-number">0.0</span>, <span class="hljs-number">1.0</span>);<br>    o.texcoord = (v.vertex.xy + <span class="hljs-number">1.0</span>) * <span class="hljs-number">0.5</span>;<br>	<br>    <span class="hljs-comment">// 处理正反y轴</span><br>    <span class="hljs-meta">#<span class="hljs-keyword">if</span> UNITY_UV_STARTS_AT_TOP</span><br>    o.texcoord = o.texcoord * float2(<span class="hljs-number">1.0</span>, <span class="hljs-number">-1.0</span>) + float2(<span class="hljs-number">0.0</span>, <span class="hljs-number">1.0</span>);<br>    <span class="hljs-meta">#<span class="hljs-keyword">endif</span></span><br><br>    <span class="hljs-keyword">return</span> o;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><strong>第二步</strong>，需要根据<strong>屏幕uv坐标</strong>和<strong>深度值</strong>组成出标准设备坐标<strong>NDC</strong>，通过NDC和投影矩阵的逆矩阵就可以计算出摄像机坐标，下面是函数:</p>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs c">float3 <span class="hljs-title function_">GetViewSpacePosition</span><span class="hljs-params">(float2 uv)</span><br>&#123;<br>    <span class="hljs-comment">// 采样深度纹理，注意这里不是HDRP的采样方式</span><br>    <span class="hljs-type">float</span> depth = _CameraDepthTexture.SampleLevel(sampler_CameraDepthTexture, UnityStereoTransformScreenSpaceTex(uv), <span class="hljs-number">0</span>).r;<br>    <span class="hljs-comment">// 使用[-1 ,1]区间的uv坐标和，深度纹理当中的值，可以得到标准设备坐标NDC。</span><br>    <span class="hljs-comment">// 这里需要注意需要使用_InverseProjectionMatrix 投影矩阵的逆矩阵。</span><br>    float4 result = mul(_InverseProjectionMatrix, float4(<span class="hljs-number">2.0</span> * uv - <span class="hljs-number">1.0</span>, depth, <span class="hljs-number">1.0</span>));<br>    <span class="hljs-keyword">return</span> result.xyz / result.w;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>按照上面的步骤我们可以得到屏幕空间中，渲染过深度的物体的世界坐标。</p>
+<p>但是，非HDRP的渲染中我们没有内置的_InverseProjectionMatrix矩阵，这个矩阵是后处理代码中设置到shader里的。</p>
+<p>而在HDRP当中，代码如下：</p>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs c">real4 <span class="hljs-title function_">frag</span> <span class="hljs-params">(v2f i)</span> : SV_Target<br>&#123;<br>    real2 uv = i.uv * _ScreenParams.xy;<br>    <span class="hljs-comment">// 这个是HDRP读取深度图的方式</span><br>    real depthsrc = LOAD_TEXTURE2D(_CameraDepthTexture, uv).r;<br>	<span class="hljs-comment">// 构造标准设备坐标</span><br>    real4 cullPos = real4((i.uv.xy * <span class="hljs-number">2</span> - <span class="hljs-number">1</span>), depthsrc, <span class="hljs-number">1.0</span>);<br>    <span class="hljs-comment">// y坐标是坐下角转换到右上角</span><br>    cullPos.y =- cullPos.y;<br><br>    real4 viewPos = mul(UNITY_MATRIX_I_P,cullPos);<br>    viewPos = viewPos / viewPos.w;<br>    real4 worldPos = mul(unity_MatrixInvV,viewPos);<br><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>我们可以看到这里使用了UNITY_MATRIX_I_P矩阵，这个矩阵是UnityHDRP中新增加的。</p>
+<p>深度图的采样方式需要注意和原始方式不同。</p>
+<p>HDRP部分的语法用的是hlsl而非cg。</p>
+<h2 id="关于恢复原理的说明"><a href="#关于恢复原理的说明" class="headerlink" title="关于恢复原理的说明"></a>关于恢复原理的说明</h2><p> _InverseProjectionMatrix矩阵的来源：</p>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c">GL.GetGPUProjectionMatrix(context.camera.projectionMatrix, <span class="hljs-literal">false</span>).inverse;<br></code></pre></td></tr></table></figure>
+
+<p>UNITY_MATRIX_P 等价于 <a target="_blank" rel="noopener" href="http://resetoter.cn/UnityDoc/ScriptReference/GL.html">GL</a>.GetGPUProjectionMatrix，而UNITY_MATRIX_P 是根据平台进行了特殊调整的，目前还没有仔细研究。</p>
+<ol>
+<li><strong>假设投影变换会让坐标由(x,y,z,w)变成(x’,y’,z’,w’)。</strong></li>
+</ol>
+<p>我们知道投影矩阵会让w向量变成当前点所在的z向量（ w’ &#x3D; z ）。而x’，y’，z’需要在[-w’, w’]之间（也就是-z到z）来进行剪裁。</p>
+<p>也就是说投影矩阵会让w&#x3D;1 变成w’ &#x3D; z（当前点深度坐标）.</p>
+<p>所以逆矩阵会让w’&#x3D;1 变成 w &#x3D; 1 &#x2F; z.   x’[-1 1] &#x3D;&gt; x[x&#x2F;w]（正向：x[x]&#x3D;&gt;x[-w , w]）</p>
+<p>在xyz乘逆矩阵之后，我们得到的范围缩小了z所以需要乘上z，也就是除w。</p>
+<p>这样就恢复出了摄像机坐标。</p>
+<ol start="2">
+<li><strong>第二点，我们从摄像机坐标恢复到世界坐标的时候使用的矩阵是unity_MatrixInvV，而不是UNITY_MATRIX_I_V(_InvViewMatrix)。</strong></li>
+</ol>
+<h2 id="HDRP从深度图到世界坐标源代码"><a href="#HDRP从深度图到世界坐标源代码" class="headerlink" title="HDRP从深度图到世界坐标源代码"></a>HDRP从深度图到世界坐标源代码</h2><figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><code class="hljs c">Shader <span class="hljs-string">&quot;Unlit/RevertWorldPosition&quot;</span><br>&#123;<br>    SubShader<br>    &#123;<br>        Tags &#123; <span class="hljs-string">&quot;RenderType&quot;</span>=<span class="hljs-string">&quot;ForwardOnly&quot;</span> &#125;<br>        LOD <span class="hljs-number">100</span><br><br>        Pass<br>        &#123;<br>            HLSLPROGRAM<br>            <span class="hljs-meta">#<span class="hljs-keyword">pragma</span> target 4.5</span><br>            <span class="hljs-meta">#<span class="hljs-keyword">pragma</span> vertex vert</span><br>            <span class="hljs-meta">#<span class="hljs-keyword">pragma</span> fragment frag</span><br>            <span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;Packages/com.unity.render-pipelines.core/ShaderLibrary/Common.hlsl&quot;</span></span><br>            <span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;Packages/com.unity.render-pipelines.high-definition/Runtime/ShaderLibrary/ShaderVariables.hlsl&quot;</span></span><br><br>            <span class="hljs-keyword">struct</span> appdata<br>            &#123;<br>                real4 vertex : POSITION;<br>                real2 uv : TEXCOORD0;<br>            &#125;;<br><br>            <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">v2f</span></span><br><span class="hljs-class">            &#123;</span><br>                real2 uv : TEXCOORD0;<br>                real4 screenposition : TEXCOORD1;<br>                real4 vertex : SV_POSITION;<br>            &#125;;<br><br>            real _DistancePost;<br><br>            v2f <span class="hljs-title function_">vert</span> <span class="hljs-params">(appdata v)</span><br>            &#123;<br>                v2f o;<br>                o.vertex = mul(UNITY_MATRIX_VP,mul(UNITY_MATRIX_M,v.vertex));<br>                o.uv = v.uv;<br>                <span class="hljs-keyword">return</span> o;<br>            &#125;<br><br>            real4 <span class="hljs-title function_">frag</span> <span class="hljs-params">(v2f i)</span> : SV_Target<br>            &#123;<br>                real2 uv = i.uv * _ScreenParams.xy;<br>                real depthsrc = LOAD_TEXTURE2D(_CameraDepthTexture, uv).r;<br>                real depth = Linear01Depth(LOAD_TEXTURE2D(_CameraDepthTexture, uv), _ZBufferParams);<br><br>                real4 cullPos = real4((i.uv.xy * <span class="hljs-number">2</span> - <span class="hljs-number">1</span>), depthsrc, <span class="hljs-number">1.0</span>);<br>                cullPos.y =- cullPos.y;<br><br>                real4 viewPos = mul(UNITY_MATRIX_I_P,cullPos);<br>                viewPos = viewPos / viewPos.w;<br>                real4 worldPos = mul(unity_MatrixInvV,viewPos);<br>                real4 worldPos1 = mul(_InvViewMatrix,viewPos);<br>                real4 worldPos3 = mul(UNITY_MATRIX_M,viewPos);<br>                real4 worldPos2 = mul(UNITY_MATRIX_M,mul(UNITY_MATRIX_P,mul(UNITY_MATRIX_V,viewPos)));<br><br>                <span class="hljs-keyword">return</span> float4(worldPos.xyz,<span class="hljs-number">1</span>);<br>            &#125;<br>            ENDHLSL<br>        &#125;<br>    &#125;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+
+
+
+      
+      <p align="right"><a class="morebtn" href="/2022/09/19/Unity/%E4%B8%96%E7%95%8C%E5%9D%90%E6%A0%87%E6%81%A2%E5%A4%8D/" title="">阅读全文</a></p>
+    </main>
+    <footer class="post-footer">
+      
+    </footer>
+  </article>
+  
+  <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
+    <div class="post-block">
+      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/09/19/Unity/UV%E4%BA%91%E8%A2%AB%E8%A3%81%E5%87%8F%E9%97%AE%E9%A2%98/">
+      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <meta itemprop="name" content="leinlin">
+        <meta itemprop="description" content="">
+        <meta itemprop="image" content="/images/avatar.jpg">
+      </span>
+      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+        <meta itemprop="name" content="leinlin的小笔记">
+      </span>
+    </div>
+    <header class="post-header">
+      <h1 class="post-title" itemprop="name headline">
+        <a class="post-title-link post-title-link-external" href="/2022/09/19/Unity/UV%E4%BA%91%E8%A2%AB%E8%A3%81%E5%87%8F%E9%97%AE%E9%A2%98/" itemprop="url"></a>
+      </h1>
+      <div class="post-meta">
+        
+        <span class="post-date">
+          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2022-09-19T19:53:47+08:00">2022-09-19 19:53:47</time></span>
+        </span>
+        
+        
+        
+        
+        
+      </div>
+    </header>
+    <main class="post-main" itemprop="articleBody">
+      
+      <h1 id="UV云或阴影被远近剪裁面Clip的问题"><a href="#UV云或阴影被远近剪裁面Clip的问题" class="headerlink" title="UV云或阴影被远近剪裁面Clip的问题"></a>UV云或阴影被远近剪裁面Clip的问题</h1><p>在制作大世界的过程中，美术需要自己设计云的摆放，这样的云实际上就是一个摆放在天上的大透明面片。</p>
+<p>所有物体的渲染都需要经历一个硬件级别的剪裁，也就是ClipSpace的作用。但是考虑到场景中视距只有几百米，所以远剪裁面可能为500。这就导致云被clip掉了。</p>
+<p>硬件对顶点数据进行剪裁的依据也是clipspace坐标：</p>
+<p>在Unity当中：</p>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs c">v2f <span class="hljs-title function_">vert</span> <span class="hljs-params">(appdata v)</span><br>&#123;<br>    v2f o;<br>    o.vertex = UnityObjectToClipPos(v.vertex);<br>    <span class="hljs-keyword">return</span> o;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>clipspace.z 通常用来进行剪裁、进行深度测试、写入深度。同时依赖于clipspace.w.</p>
+<p>clipspace.xy 通常用来用作透视变换、视口变换、光栅化。同时依赖于clipspace.w.</p>
+<p>当渲染透明物体的时候，clipspace.z实际上就只用做了深度测试和剪裁。</p>
+<p>uv云不希望被剪裁掉，所以可以修改clipspace.z，让他在远近剪裁面之间。</p>
+<p>又由于uv云还是需要进行正确的深度测试，不能挡住不透明物体，所以需要放到远剪裁面上。</p>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs c">v2f <span class="hljs-title function_">vert</span> <span class="hljs-params">(appdata v)</span><br>&#123;<br>    v2f o;<br>    o.vertex = UnityObjectToClipPos(v.vertex);<br>    o.vertex.z =  <span class="hljs-number">1</span>;<br>    <span class="hljs-keyword">return</span> o;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>o.vertex.z 的远近剪裁面实际上和具体的图形接口有关，D3D和Opengl的远剪裁面值是不一样的。所以不能简单的设置成1.</p>
+<p>Unity当中就可以通过：</p>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">if</span> UNITY_REVERSED_Z</span><br>	<span class="hljs-comment">// 远处比较大</span><br><span class="hljs-meta">#<span class="hljs-keyword">else</span></span><br>	<span class="hljs-comment">// 近处深度大</span><br><span class="hljs-meta">#<span class="hljs-keyword">endif</span></span><br><br><span class="hljs-comment">// 远近剪裁面 API相关设置：</span><br>D3D11<br><span class="hljs-meta">#<span class="hljs-keyword">define</span> UNITY_REVERSED_Z 1</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> UNITY_NEAR_CLIP_VALUE (1.0)</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> UNITY_RAW_FAR_CLIP_VALUE (0.0)</span><br><br>GL<br><span class="hljs-meta">#<span class="hljs-keyword">define</span> UNITY_REVERSED_Z 0</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> UNITY_NEAR_CLIP_VALUE (-1.0)</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> UNITY_RAW_FAR_CLIP_VALUE (1.0)</span><br><br>PSSL<br><span class="hljs-meta">#<span class="hljs-keyword">define</span> UNITY_REVERSED_Z 1</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> UNITY_NEAR_CLIP_VALUE (1.0)</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> UNITY_RAW_FAR_CLIP_VALUE (0.0)</span><br><br><span class="hljs-comment">// 把clip限制在近剪裁面：</span><br><span class="hljs-meta">#<span class="hljs-keyword">if</span> defined(UNITY_REVERSED_Z)</span><br>    <span class="hljs-type">float</span> clamped = min(clipPos.z, clipPos.w*UNITY_NEAR_CLIP_VALUE);<span class="hljs-comment">// clipPos.z&lt;1</span><br><span class="hljs-meta">#<span class="hljs-keyword">else</span></span><br>    <span class="hljs-type">float</span> clamped = max(clipPos.z, clipPos.w*UNITY_NEAR_CLIP_VALUE);<span class="hljs-comment">// clipPos.z&gt;-1</span><br><span class="hljs-meta">#<span class="hljs-keyword">endif</span></span><br><br><span class="hljs-comment">// 把clip限制在远：</span><br><span class="hljs-meta">#<span class="hljs-keyword">if</span> defined(UNITY_REVERSED_Z)</span><br>    <span class="hljs-type">float</span> clamped = max(clipPos.z, UNITY_RAW_FAR_CLIP_VALUE);<span class="hljs-comment">// clipPos.z&gt;0</span><br><span class="hljs-meta">#<span class="hljs-keyword">else</span></span><br>    <span class="hljs-type">float</span> clamped = min(clipPos.z, UNITY_RAW_FAR_CLIP_VALUE);<span class="hljs-comment">// clipPos.z&lt;1</span><br><span class="hljs-meta">#<span class="hljs-keyword">endif</span></span><br></code></pre></td></tr></table></figure>
+
+
+
+      
+      <p align="right"><a class="morebtn" href="/2022/09/19/Unity/UV%E4%BA%91%E8%A2%AB%E8%A3%81%E5%87%8F%E9%97%AE%E9%A2%98/" title="">阅读全文</a></p>
+    </main>
+    <footer class="post-footer">
+      
+    </footer>
+  </article>
+  
+  <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
+    <div class="post-block">
+      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/09/19/Unity/Unity%E8%B4%B4%E5%9B%BE%E5%8E%8B%E7%BC%A9/">
+      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <meta itemprop="name" content="leinlin">
+        <meta itemprop="description" content="">
+        <meta itemprop="image" content="/images/avatar.jpg">
+      </span>
+      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+        <meta itemprop="name" content="leinlin的小笔记">
+      </span>
+    </div>
+    <header class="post-header">
+      <h1 class="post-title" itemprop="name headline">
+        <a class="post-title-link post-title-link-external" href="/2022/09/19/Unity/Unity%E8%B4%B4%E5%9B%BE%E5%8E%8B%E7%BC%A9/" itemprop="url"></a>
+      </h1>
+      <div class="post-meta">
+        
+        <span class="post-date">
+          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2022-09-19T19:53:47+08:00">2022-09-19 19:53:47</time></span>
+        </span>
+        
+        
+        
+        
+        
+      </div>
+    </header>
+    <main class="post-main" itemprop="articleBody">
+      
+      <p>贴图大小涉及到硬盘空间、内存空间。</p>
+<p>目前可选泽的压缩格式包括：ETC1, ETC2, DXT1,, DXT3, DXT5，还有对于法线的</p>
+<p>参考内容:<a target="_blank" rel="noopener" href="https://www.unity3dtips.com/unity-texture-compression-android-ios/">参考链接</a></p>
+
+      
+      <p align="right"><a class="morebtn" href="/2022/09/19/Unity/Unity%E8%B4%B4%E5%9B%BE%E5%8E%8B%E7%BC%A9/" title="">阅读全文</a></p>
+    </main>
+    <footer class="post-footer">
+      
+    </footer>
+  </article>
+  
+  <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
+    <div class="post-block">
+      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/09/19/Unity/UnityTextureStreaming/">
+      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <meta itemprop="name" content="leinlin">
+        <meta itemprop="description" content="">
+        <meta itemprop="image" content="/images/avatar.jpg">
+      </span>
+      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+        <meta itemprop="name" content="leinlin的小笔记">
+      </span>
+    </div>
+    <header class="post-header">
+      <h1 class="post-title" itemprop="name headline">
+        <a class="post-title-link post-title-link-external" href="/2022/09/19/Unity/UnityTextureStreaming/" itemprop="url"></a>
+      </h1>
+      <div class="post-meta">
+        
+        <span class="post-date">
+          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2022-09-19T19:53:47+08:00">2022-09-19 19:53:47</time></span>
+        </span>
+        
+        
+        
+        
+        
+      </div>
+    </header>
+    <main class="post-main" itemprop="articleBody">
+      
+      <h1 id="Texture-Streaming"><a href="#Texture-Streaming" class="headerlink" title="Texture Streaming"></a>Texture Streaming</h1><p><a target="_blank" rel="noopener" href="https://docs.unity3d.com/Manual/TextureStreaming.html">官方文档</a></p>
+<p>Texture Streaming 主要为了解决：</p>
+<p>​	当导入贴图的时候，会生成mipmap。导致贴图和mipmap加起来占用的空间变大。</p>
+<p>例如：大部分物体离得比较远，使用了贴图的LOD4。但是这个时候LOD0-3都会进入内存。</p>
+<p>Texture Streaming的作用就是在使用贴图的时候，只向内存传递需要的mipmap级别的贴图，降低内存占用，不过需要额外的CPU计算。</p>
+
+      
+      <p align="right"><a class="morebtn" href="/2022/09/19/Unity/UnityTextureStreaming/" title="">阅读全文</a></p>
+    </main>
+    <footer class="post-footer">
+      
+    </footer>
+  </article>
+  
+  <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
+    <div class="post-block">
+      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/09/19/Unity/SPR%E5%AE%98%E6%96%B9%E4%BB%8B%E7%BB%8D/">
+      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <meta itemprop="name" content="leinlin">
+        <meta itemprop="description" content="">
+        <meta itemprop="image" content="/images/avatar.jpg">
+      </span>
+      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+        <meta itemprop="name" content="leinlin的小笔记">
+      </span>
+    </div>
+    <header class="post-header">
+      <h1 class="post-title" itemprop="name headline">
+        <a class="post-title-link post-title-link-external" href="/2022/09/19/Unity/SPR%E5%AE%98%E6%96%B9%E4%BB%8B%E7%BB%8D/" itemprop="url"></a>
+      </h1>
+      <div class="post-meta">
+        
+        <span class="post-date">
+          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2022-09-19T19:53:47+08:00">2022-09-19 19:53:47</time></span>
+        </span>
+        
+        
+        
+        
+        
+      </div>
+    </header>
+    <main class="post-main" itemprop="articleBody">
+      
+      <p>链接：<a target="_blank" rel="noopener" href="https://blogs.unity3d.com/cn/2018/01/31/srp-overview/">Scriptable Render Pipeline Overview</a></p>
+<h1 id="Scriptable-Render-Pipeline-Overview"><a href="#Scriptable-Render-Pipeline-Overview" class="headerlink" title="Scriptable Render Pipeline Overview"></a>Scriptable Render Pipeline Overview</h1><pre><code>&gt;unity2018当中介绍了可编程的渲染管线（SRP）。SPR可以通过c#来控制unity中渲染的配置和实现。在了解用户可以定制的渲染管线之前，需要先知道我们所谈论的渲染管线是什么。
+</code></pre>
+<p>##什么是渲染管线</p>
+<p>​	渲染管线是一个概括性的术语，用来概括将对象（Object）绘制到屏幕上的一系列的技术。这是一个高度概括的概念，包括了：</p>
+<ul>
+<li><p>剪裁 </p>
 </li>
-<li><p>修改采样的shader</p>
+<li><p>对象渲染</p>
 </li>
-<li><p>稳定化debug</p>
+<li><p>后处理</p>
+<p>​除了这些抽象的概念之外，他们本身的功能还可以根据用户的需求进一步划分。</p>
+<p>​例如渲染对象可以通过以下方式实现：</p>
+</li>
+<li><p>Multi-pass rendering：每个pass渲染一个对象一个光照</p>
+</li>
+<li><p>Single-pass：每个对象使用一个pass</p>
+</li>
+<li><p>Deffered：将表面属性渲染到G-buffer，然后在屏幕空间实现光照</p>
+<p>当我们使用SRP的时候，就需要决定使用哪一种。不同的方式有不同的优缺点。</p>
 </li>
 </ul>
+<h2 id="渲染入口点（Rendering-entry-point）"><a href="#渲染入口点（Rendering-entry-point）" class="headerlink" title="渲染入口点（Rendering entry point）"></a>渲染入口点（Rendering entry point）</h2><p>​	使用SRP时，你需要定义一个类用来控制渲染；渲染管线就是通过这个类来创建的。入口点是对”Render”方法的一次调用，每一次渲染都有不同的渲染上下文（Render Context，下文解释）和需要渲染的摄像机。</p>
+<figure class="hljs highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs c#"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">BasicPipeInstance</span> : <span class="hljs-title">RenderPipeline</span><br>&#123;<br><span class="hljs-comment">//context 渲染上下文 ，cameras 摄像机列表</span><br>   <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">override</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Render</span>(<span class="hljs-params">ScriptableRenderContext context, Camera[] cameras</span>)</span>&#123;&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 
-      
-      <p align="right"><a class="morebtn" href="/2022/07/18/Unity/textmeshpro/" title="textmesh-pro 压缩通道">阅读全文</a></p>
-    </main>
-    <footer class="post-footer">
-      
-      <div class="post-tags">
-        
-        <a class="post-tag button" href="/tags/textmesh-pro/" rel="tag"><i class="fas fa-tags"></i>textmesh-pro</a>
-        
-      </div>
-      
-    </footer>
-  </article>
-  
-  <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
-    <div class="post-block">
-      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/07/13/ARM/IDVS-shader-variants/">
-      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-        <meta itemprop="name" content="leinlin">
-        <meta itemprop="description" content="">
-        <meta itemprop="image" content="/images/avatar.jpg">
-      </span>
-      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-        <meta itemprop="name" content="leinlin的小笔记">
-      </span>
-    </div>
-    <header class="post-header">
-      <h1 class="post-title" itemprop="name headline">
-        <a class="post-title-link post-title-link-external" href="/2022/07/13/ARM/IDVS-shader-variants/" itemprop="url">IDVS shader variants</a>
-      </h1>
-      <div class="post-meta">
-        
-        <span class="post-date">
-          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2022-07-13T06:57:19+08:00">2022-07-13 06:57:19</time></span>
-        </span>
-        
-        
-        
-        <span class="post-meta-divider divider">|</span>
-        
-        <span class="post-categories">
-          
-          <i class="far fa-folder-open"></i><span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/mali-gpu/" itemprop="url" rel="index"><span itemprop="name">mali gpu</span></a></span>
-        </span>
-        
-        
-        
-        
-      </div>
-    </header>
-    <main class="post-main" itemprop="articleBody">
-      
-      <h1 id="IDVS-shader-variants"><a href="#IDVS-shader-variants" class="headerlink" title="IDVS shader variants"></a>IDVS shader variants</h1><p>On Mali GPUs in the Bifrost and Valhall families, vertex shaders are executed using an optimized shading flow called Index-Driven Vertex Shading (IDVS).</p>
-<p>In the IDVS pipeline, vertex shaders are compiled into two binaries:</p>
+<h2 id="渲染管线上下文（Render-Pipeline-Context）"><a href="#渲染管线上下文（Render-Pipeline-Context）" class="headerlink" title="渲染管线上下文（Render Pipeline Context）"></a>渲染管线上下文（Render Pipeline Context）</h2><p>​	SPR（脚本化渲染管线）渲染使用了延迟执行的概念。首先建立一系列的命令，然后统一执行。通过ScriptableRenderContext类来建立这一系列命令。当用一系列操作填充了这个上下文对象之后，可以 通过“submit”方法，来一次性提交所有drawcall。</p>
+<p>​	例子：使用CommandBuffer清空渲染目标：</p>
+<figure class="hljs highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs c#"><span class="hljs-comment">// Create a new command buffer that can be used</span><br><span class="hljs-comment">// to issue commands to the render context</span><br><span class="hljs-keyword">var</span> cmd = <span class="hljs-keyword">new</span> CommandBuffer();<br><br><span class="hljs-comment">// issue a clear render target command</span><br>cmd.ClearRenderTarget(<span class="hljs-literal">true</span>, <span class="hljs-literal">false</span>, Color.green);<br><br><span class="hljs-comment">// queue the command buffer</span><br>context.ExecuteCommandBuffer(cmd);<br></code></pre></td></tr></table></figure>
+
+<h2 id="剪裁Culling"><a href="#剪裁Culling" class="headerlink" title="剪裁Culling"></a>剪裁Culling</h2><p>剪裁用来确定哪些内容需要渲染的屏幕上。</p>
+<p>Unity中剪裁包含：</p>
 <ul>
-<li>A position shader, which computes only position.</li>
-<li>A varying shader, which computes the remaining non-position vertex attribute outputs.</li>
+<li>视锥体剪裁：用摄像机的剪裁平面。</li>
+<li>遮挡剪裁：物体遮挡关系</li>
 </ul>
-<h2 id="Figure-2-1-IDVS-pipeline"><a href="#Figure-2-1-IDVS-pipeline" class="headerlink" title="Figure 2-1 IDVS pipeline"></a>Figure 2-1 IDVS pipeline</h2><p><img src="/../../images/2022-07-13-14-47-58.png"></p>
+<p>渲染开始时，需要决定哪些内容需要被渲染。这需要使用摄像机的透视图执行剪裁操作。剪裁结果是一个对象列表和光照列表。这些内容在接下来的渲染管线当中使用。</p>
+<h3 id="在SRP当中执行剪裁"><a href="#在SRP当中执行剪裁" class="headerlink" title="在SRP当中执行剪裁"></a>在SRP当中执行剪裁</h3><p>在SRP当中你通常需要摄像机的透视来完成渲染。unity内置的渲染也是使用同一个摄像机。SRP提供了一系列剪裁API。</p>
+<p>一般的剪裁流程：</p>
+<figure class="hljs highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs c#"><span class="hljs-comment">// Create an structure to hold the culling paramaters</span><br>ScriptableCullingParameters cullingParams;<br><br><span class="hljs-comment">//Populate the culling paramaters from the camera</span><br><span class="hljs-keyword">if</span> (!CullResults.GetCullingParameters(camera, stereoEnabled, <span class="hljs-keyword">out</span> cullingParams))<br>    <span class="hljs-keyword">continue</span>;<br><br><span class="hljs-comment">// if you like you can modify the culling paramaters here</span><br>cullingParams.isOrthographic = <span class="hljs-literal">true</span>;<br><br><span class="hljs-comment">// Create a structure to hold the cull results</span><br>CullResults cullResults = <span class="hljs-keyword">new</span> CullResults();<br><br><span class="hljs-comment">// Perform the culling operation</span><br>CullResults.Cull(<span class="hljs-keyword">ref</span> cullingParams, context, <span class="hljs-keyword">ref</span> cullResults);<br></code></pre></td></tr></table></figure>
 
-      
-      <p align="right"><a class="morebtn" href="/2022/07/13/ARM/IDVS-shader-variants/" title="IDVS shader variants">阅读全文</a></p>
-    </main>
-    <footer class="post-footer">
-      
-      <div class="post-tags">
-        
-        <a class="post-tag button" href="/tags/mali/" rel="tag"><i class="fas fa-tags"></i>mali</a>
-        
-        <a class="post-tag button" href="/tags/IDVS/" rel="tag"><i class="fas fa-tags"></i>IDVS</a>
-        
-      </div>
-      
-    </footer>
-  </article>
-  
-  <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
-    <div class="post-block">
-      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/07/11/ARM/mali-bifrost-family-performance-counters/">
-      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-        <meta itemprop="name" content="leinlin">
-        <meta itemprop="description" content="">
-        <meta itemprop="image" content="/images/avatar.jpg">
-      </span>
-      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-        <meta itemprop="name" content="leinlin的小笔记">
-      </span>
-    </div>
-    <header class="post-header">
-      <h1 class="post-title" itemprop="name headline">
-        <a class="post-title-link post-title-link-external" href="/2022/07/11/ARM/mali-bifrost-family-performance-counters/" itemprop="url">Mali Bifrost Family Performance Counters</a>
-      </h1>
-      <div class="post-meta">
-        
-        <span class="post-date">
-          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2022-07-11T09:57:19+08:00">2022-07-11 09:57:19</time></span>
-        </span>
-        
-        
-        
-        <span class="post-meta-divider divider">|</span>
-        
-        <span class="post-categories">
-          
-          <i class="far fa-folder-open"></i><span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/mali-gpu/" itemprop="url" rel="index"><span itemprop="name">mali gpu</span></a></span>
-        </span>
-        
-        
-        
-        
-      </div>
-    </header>
-    <main class="post-main" itemprop="articleBody">
-      
-      <h1 id="Mali-Bifrost-Family-Performance-Counters"><a href="#Mali-Bifrost-Family-Performance-Counters" class="headerlink" title="Mali Bifrost Family Performance Counters"></a>Mali Bifrost Family Performance Counters</h1><p>Analysis and optimization of graphics and compute content running on a GPU is an important task when trying to build a top quality system integration, or a compelling high performance application. For developers working with the public APIs, such as OpenGL ES and OpenCL, the GPU is a black box which is very difficult to analyze based solely on the API visible behaviors. Frame pipelining and asynchronous processing of submitted work effectively decouple the application’s visible performance from the API calls which define the workload being executed, making analysis of performance an activity based on expert knowledge and intuition rather than direct measurement.</p>
-<p>Tools such as ARM DS-5 Streamline provide developers access to the GPU hardware performance counters, the principle means to determine the behavior inside the black box beneath the API and identify any problem areas which need optimization. This work guide assumes that DS-5 Streamline is the tool being used for performance analysis, and follows the DS-5 naming conventions for the counters.</p>
-<h2 id="1-Performance-Counter-Infrastructure"><a href="#1-Performance-Counter-Infrastructure" class="headerlink" title="1 Performance Counter Infrastructure"></a>1 Performance Counter Infrastructure</h2><p>The Bifrost GPU family supports many performance counters which can all be captured simultaneously. Performance counters are provided for each functional block in the design:</p>
-<p>Job Manager<br>Tiler<br>Shader core(s)<br>L2 cache(s)<br>See my earlier blog series for an introduction to the Bifrost GPU architecture - it introduces some of the fundamental concepts which are important to understand, and which place the more detailed information in this document in context.</p>
-<p>The Mali GPU: An Abstract Machine, Part 1 - Frame Pipelining<br>The Mali GPU: An Abstract Machine, Part 2 - Tile-based Rendering<br>The Mali GPU: An Abstract Machine, Part 4 - The Bifrost Shader Core</p>
-<h3 id="1-1-Supported-Counters"><a href="#1-1-Supported-Counters" class="headerlink" title="1.1 Supported Counters"></a>1.1 Supported Counters</h3><p>The GPUs in the Bifrost family implement a large number of performance counters natively in the hardware, and it is also generally useful to generate some derived counters by combining one or more of the raw hardware counters in useful and interesting ways. This document will describe all of the counters exported from DS-5 Streamline, and some of the useful derived counters which can be derived from them. DS-5 Streamline allows custom performance counter graphs to be created using equations, so all of these performance counters can be directly visualized in the GUI.</p>
-<h3 id="1-2-Counter-Implementation-Caveats"><a href="#1-2-Counter-Implementation-Caveats" class="headerlink" title="1.2 Counter Implementation Caveats"></a>1.2 Counter Implementation Caveats</h3><p>The hardware counter implementation in the GPU is designed to be low cost, such that it has minimal impact on performance and power. Many of the counters are close approximations of the behavior described in this document in order to minimize the amount of additional hardware logic required to generate the counter signals, so some small deviations from what you may expect may be encountered.</p>
-      
-      <p align="right"><a class="morebtn" href="/2022/07/11/ARM/mali-bifrost-family-performance-counters/" title="Mali Bifrost Family Performance Counters">阅读全文</a></p>
-    </main>
-    <footer class="post-footer">
-      
-      <div class="post-tags">
-        
-        <a class="post-tag button" href="/tags/mali/" rel="tag"><i class="fas fa-tags"></i>mali</a>
-        
-        <a class="post-tag button" href="/tags/Gpu-Counters/" rel="tag"><i class="fas fa-tags"></i>Gpu Counters</a>
-        
-        <a class="post-tag button" href="/tags/Bifrost/" rel="tag"><i class="fas fa-tags"></i>Bifrost</a>
-        
-      </div>
-      
-    </footer>
-  </article>
-  
-  <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
-    <div class="post-block">
-      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/07/09/GPUAartch/%E4%B8%80%E4%B8%AA%E4%B8%89%E8%A7%92%E5%BD%A2%E5%9C%A8GPU%E4%B8%AD%E7%9A%84%E4%B8%80%E7%94%9F/">
-      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-        <meta itemprop="name" content="leinlin">
-        <meta itemprop="description" content="">
-        <meta itemprop="image" content="/images/avatar.jpg">
-      </span>
-      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-        <meta itemprop="name" content="leinlin的小笔记">
-      </span>
-    </div>
-    <header class="post-header">
-      <h1 class="post-title" itemprop="name headline">
-        <a class="post-title-link post-title-link-external" href="/2022/07/09/GPUAartch/%E4%B8%80%E4%B8%AA%E4%B8%89%E8%A7%92%E5%BD%A2%E5%9C%A8GPU%E4%B8%AD%E7%9A%84%E4%B8%80%E7%94%9F/" itemprop="url"></a>
-      </h1>
-      <div class="post-meta">
-        
-        <span class="post-date">
-          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2022-07-09T19:34:20+08:00">2022-07-09 19:34:20</time></span>
-        </span>
-        
-        
-        
-        
-        
-      </div>
-    </header>
-    <main class="post-main" itemprop="articleBody">
-      
-      <h1 id="一个三角形在GPU中的一生"><a href="#一个三角形在GPU中的一生" class="headerlink" title="一个三角形在GPU中的一生"></a>一个三角形在GPU中的一生</h1><p>这篇笔记总结自<a target="_blank" rel="noopener" href="https://developer.nvidia.com/content/life-triangle-nvidias-logical-pipeline">Life of a triangle - NVIDIA’s logical pipeline</a> 和知乎文章<a target="_blank" rel="noopener" href="https://blog.uwa4d.com/archives/USparkle_GPU.html">渲染优化-从GPU的结构谈起</a>。</p>
-<p>主要记录了GPU硬件是如何详细的工作的。另外附加了一些笔记和自己的理解。</p>
-<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>先进的Fermi架构已经发布十年了（2010年左右发布），现在是时候更新它的基础图形架构了。</p>
-<p>Fermi是Nvidia的第一个实现了完全可扩展的图形引擎（fully scalable graphics engine的概念请查阅wiki，有说明），在Kepler和Maxwell架构当中也能找到他的影子。</p>
-<p>下面的文章，特别是下面的“精简的管道知识”图片，应该作为各种学习材料的。这篇文章主要从图形的角度讨论GPU是如何工作的，尤其是一些原则，比如：着色程序代码是如何执行的，对于计算来说是一样的。</p>
-<h2 id="GPU管线架构"><a href="#GPU管线架构" class="headerlink" title="GPU管线架构"></a>GPU管线架构</h2><p>下面是一张涵盖了整个GPU架构的图片，后面会详细分开讲解。</p>
-<p><img src="/../../images/%E4%B8%80%E4%B8%AA%E4%B8%89%E8%A7%92%E5%BD%A2%E5%9C%A8GPU%E4%B8%AD%E7%9A%84%E4%B8%80%E7%94%9F/fermipipeline.png" alt="NVIDIA&#39;s logical pipeline"></p>
-      
-      <p align="right"><a class="morebtn" href="/2022/07/09/GPUAartch/%E4%B8%80%E4%B8%AA%E4%B8%89%E8%A7%92%E5%BD%A2%E5%9C%A8GPU%E4%B8%AD%E7%9A%84%E4%B8%80%E7%94%9F/" title="">阅读全文</a></p>
-    </main>
-    <footer class="post-footer">
-      
-    </footer>
-  </article>
-  
-  <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
-    <div class="post-block">
-      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/07/09/GPUAartch/%E7%BA%B9%E7%90%86%E7%BC%93%E5%AD%98/">
-      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-        <meta itemprop="name" content="leinlin">
-        <meta itemprop="description" content="">
-        <meta itemprop="image" content="/images/avatar.jpg">
-      </span>
-      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-        <meta itemprop="name" content="leinlin的小笔记">
-      </span>
-    </div>
-    <header class="post-header">
-      <h1 class="post-title" itemprop="name headline">
-        <a class="post-title-link post-title-link-external" href="/2022/07/09/GPUAartch/%E7%BA%B9%E7%90%86%E7%BC%93%E5%AD%98/" itemprop="url"></a>
-      </h1>
-      <div class="post-meta">
-        
-        <span class="post-date">
-          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2022-07-09T19:34:20+08:00">2022-07-09 19:34:20</time></span>
-        </span>
-        
-        
-        
-        
-        
-      </div>
-    </header>
-    <main class="post-main" itemprop="articleBody">
-      
-      <h1 id="纹理缓存"><a href="#纹理缓存" class="headerlink" title="纹理缓存"></a>纹理缓存</h1><p>参考文献：</p>
-<p><img src="/../../images/%E7%BA%B9%E7%90%86%E7%BC%93%E5%AD%98/1574825701596.png" alt="1574825701596"><br><a target="_blank" rel="noopener" href="https://fileadmin.cs.lth.se/cs/Personal/Michael_Doggett/pubs/doggett12-tc.pdf">https://fileadmin.cs.lth.se/cs/Personal/Michael_Doggett/pubs/doggett12-tc.pdf</a></p>
-<h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>纹理缓存是现代GPU的基础组件，是实现实时渲染的性能的重要部分。</p>
-<p>纹理缓存对GPU来说是Read-Only的。主要在texture-mapping阶段由GPU程序读取。</p>
-<p>纹理缓存有很高的命中率，因为相邻像素之间有大量的重用，而且通常位于着色器处理器附近，所以纹理数据具有高吞吐量和低读延迟。</p>
-<p>GPU的架构对程序员是不可见的，特备隐藏在API之下，这些架构包括纹理缓存被频繁的更新，基础的架构如图所示,L1和L2共同构成了GPU的分级内存：<img src="/../../images/%E7%BA%B9%E7%90%86%E7%BC%93%E5%AD%98/1573179467830.png" alt="1573179467830"></p>
-<p>关于上图的描述：</p>
-<p>紫色的部分是Texture Cache。<br>从最上边开始看，Thread Scheduler为不同的图形处理阶段收集任务。然后把任务安排到不同的Graphic Core上。<br>Graphic Core有一些固定功能的图像逻辑（Geometr，Raster），包括了几个处理功能和光栅化功能。<br>接着是Shader，包括了逻辑控制和ALU单元阵列，用于以SIMD的方式处理shader程序。Shader执行阶段使用了L1 数据指令Cache、texture mapping和与其关联的L1Texture Cache。Shader的输出和L1和L2之间需要通过crossbar来传输。<br>Crossbar连接了各种内存单元，包括L2Cache、ROP和内存控制器。内存控制器链接在了保存了framebuffer的外部内存上。大部分相邻的blocks是彼此链接的。</p>
-<p>为了理解对纹理缓存的需求，我们首先要了解影响纹理缓存的功能：texture mapping和rasterization. </p>
-      
-      <p align="right"><a class="morebtn" href="/2022/07/09/GPUAartch/%E7%BA%B9%E7%90%86%E7%BC%93%E5%AD%98/" title="">阅读全文</a></p>
-    </main>
-    <footer class="post-footer">
-      
-    </footer>
-  </article>
-  
-  <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
-    <div class="post-block">
-      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/07/09/GPUAartch/%E8%B0%88%E8%B0%88%E9%82%A3%E4%BA%9Bearly_depth_testing%E6%8A%80%E6%9C%AF/">
-      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-        <meta itemprop="name" content="leinlin">
-        <meta itemprop="description" content="">
-        <meta itemprop="image" content="/images/avatar.jpg">
-      </span>
-      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-        <meta itemprop="name" content="leinlin的小笔记">
-      </span>
-    </div>
-    <header class="post-header">
-      <h1 class="post-title" itemprop="name headline">
-        <a class="post-title-link post-title-link-external" href="/2022/07/09/GPUAartch/%E8%B0%88%E8%B0%88%E9%82%A3%E4%BA%9Bearly_depth_testing%E6%8A%80%E6%9C%AF/" itemprop="url"></a>
-      </h1>
-      <div class="post-meta">
-        
-        <span class="post-date">
-          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2022-07-09T19:34:20+08:00">2022-07-09 19:34:20</time></span>
-        </span>
-        
-        
-        
-        
-        
-      </div>
-    </header>
-    <main class="post-main" itemprop="articleBody">
-      
-      <h1 id="谈谈那些early-depth-testing技术（草拟）"><a href="#谈谈那些early-depth-testing技术（草拟）" class="headerlink" title="谈谈那些early_depth_testing技术（草拟）"></a>谈谈那些early_depth_testing技术（草拟）</h1><h2 id="Early-Z（Immediate-Mode-Renderers-IMRs-：Nvidia-：-GeForces-and-Radeons）"><a href="#Early-Z（Immediate-Mode-Renderers-IMRs-：Nvidia-：-GeForces-and-Radeons）" class="headerlink" title="Early Z（Immediate Mode Renderers (IMRs) ：Nvidia ： GeForces and Radeons）"></a>Early Z（Immediate Mode Renderers (IMRs) ：Nvidia ： GeForces and Radeons）</h2><p>在OPengl 4.5 强制开启下面是原文。</p>
-<h2 id="Optimization"><a href="#Optimization" class="headerlink" title="Optimization"></a>Optimization</h2><p>Early fragment tests, as an optimization, exist to prevent unnecessary executions of the <a target="_blank" rel="noopener" href="https://www.khronos.org/opengl/wiki/Fragment_Shader">Fragment Shader</a>. If a fragment will be discarded based on the <a target="_blank" rel="noopener" href="https://www.khronos.org/opengl/wiki/Depth_Test">Depth Test</a> (due perhaps to being behind other geometry), it saves performance to avoid executing the fragment shader. There is specialized hardware that makes this particularly efficient in many GPUs.</p>
-<p>The most effective way to use early depth test hardware is to run a depth-only pre-processing pass. This means to render all available geometry, using minimal shaders and a rendering pipeline that <a target="_blank" rel="noopener" href="https://www.khronos.org/opengl/wiki/Write_Mask">only writes to the depth buffer</a>. The <a target="_blank" rel="noopener" href="https://www.khronos.org/opengl/wiki/Vertex_Shader">Vertex Shader</a>should do nothing more than transform positions, and the <a target="_blank" rel="noopener" href="https://www.khronos.org/opengl/wiki/Fragment_Shader#Optional">Fragment Shader does not even need to exist</a>.</p>
-<p>This provides the best performance gain if the fragment shader is expensive, or if you intend to use multiple passes across the geometry.</p>
-      
-      <p align="right"><a class="morebtn" href="/2022/07/09/GPUAartch/%E8%B0%88%E8%B0%88%E9%82%A3%E4%BA%9Bearly_depth_testing%E6%8A%80%E6%9C%AF/" title="">阅读全文</a></p>
-    </main>
-    <footer class="post-footer">
-      
-    </footer>
-  </article>
-  
-  <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
-    <div class="post-block">
-      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/07/09/GPUAartch/%E6%89%8B%E6%B8%B8GPU%E6%9E%B6%E6%9E%84%E4%B8%8E%E4%BC%98%E5%8C%96%E4%B9%8BUnifiedShaderCore/">
-      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-        <meta itemprop="name" content="leinlin">
-        <meta itemprop="description" content="">
-        <meta itemprop="image" content="/images/avatar.jpg">
-      </span>
-      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-        <meta itemprop="name" content="leinlin的小笔记">
-      </span>
-    </div>
-    <header class="post-header">
-      <h1 class="post-title" itemprop="name headline">
-        <a class="post-title-link post-title-link-external" href="/2022/07/09/GPUAartch/%E6%89%8B%E6%B8%B8GPU%E6%9E%B6%E6%9E%84%E4%B8%8E%E4%BC%98%E5%8C%96%E4%B9%8BUnifiedShaderCore/" itemprop="url"></a>
-      </h1>
-      <div class="post-meta">
-        
-        <span class="post-date">
-          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2022-07-09T19:34:20+08:00">2022-07-09 19:34:20</time></span>
-        </span>
-        
-        
-        
-        
-        
-      </div>
-    </header>
-    <main class="post-main" itemprop="articleBody">
-      
-      <h1 id="手游GPU架构与优化之UnifiedShaderCore"><a href="#手游GPU架构与优化之UnifiedShaderCore" class="headerlink" title="手游GPU架构与优化之UnifiedShaderCore"></a>手游GPU架构与优化之UnifiedShaderCore</h1><p>在手游优化的过程中发现Metal当中出现了VSShder饱和PSShader等待的情况。</p>
-<p>这主要是由于当前的渲染是VS密集型的。</p>
-<p>但是在最新的GPU中已经使用了Unified Shader Cores。VS和PS应该可以进行统一的线程分配。</p>
-<p>为了了解这个问题进一步研究了手机架构。</p>
-<p>下面是ARM的图片，首先可以发现UTGARD基础架构的GPU还是Separate Shader Cores.也就是说会出现互相等待的情况。</p>
-<p><img src="https://images.anandtech.com/doci/10375/4.%20Tech%20Day%20Bifrost%20FINAL-04_575px.png" alt="img"></p>
-<p>使用ARM Mali芯片的主要是 联发科、华为海思、三星。</p>
-<p>开始使用USA(Unified Shading Architecture a hardware design by which all shader processing units of a piece of graphics hardware are capable of handling any type of shading tasks. )的：</p>
-<p>ATI架构在Radeon HD2000(PC)</p>
-<p>Nvidia从GeForce 8系列(PC) 使用Tesla架构</p>
-<p>高通Adreno 200 series  <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Adreno">wiki介绍</a></p>
-<p>Mali Midgrad</p>
-<p>PowerVR SGX</p>
-
-      
-      <p align="right"><a class="morebtn" href="/2022/07/09/GPUAartch/%E6%89%8B%E6%B8%B8GPU%E6%9E%B6%E6%9E%84%E4%B8%8E%E4%BC%98%E5%8C%96%E4%B9%8BUnifiedShaderCore/" title="">阅读全文</a></p>
-    </main>
-    <footer class="post-footer">
-      
-    </footer>
-  </article>
-  
-  <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
-    <div class="post-block">
-      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/07/09/GPUAartch/%E6%89%8B%E6%9C%BAGPU%E6%9E%B6%E6%9E%84%E4%B8%8E%E4%BC%98%E5%8C%96/">
-      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-        <meta itemprop="name" content="leinlin">
-        <meta itemprop="description" content="">
-        <meta itemprop="image" content="/images/avatar.jpg">
-      </span>
-      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-        <meta itemprop="name" content="leinlin的小笔记">
-      </span>
-    </div>
-    <header class="post-header">
-      <h1 class="post-title" itemprop="name headline">
-        <a class="post-title-link post-title-link-external" href="/2022/07/09/GPUAartch/%E6%89%8B%E6%9C%BAGPU%E6%9E%B6%E6%9E%84%E4%B8%8E%E4%BC%98%E5%8C%96/" itemprop="url"></a>
-      </h1>
-      <div class="post-meta">
-        
-        <span class="post-date">
-          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2022-07-09T19:34:20+08:00">2022-07-09 19:34:20</time></span>
-        </span>
-        
-        
-        
-        
-        
-      </div>
-    </header>
-    <main class="post-main" itemprop="articleBody">
-      
-      <h1 id="手机图形硬件工作方式"><a href="#手机图形硬件工作方式" class="headerlink" title="手机图形硬件工作方式"></a>手机图形硬件工作方式</h1><p>这部分内容参考SIGGRAPH 2016，Computer Graphics&amp;Interactive Technique. Course.</p>
-<p>这部分主要是总结<strong>手机硬件的工作方式</strong>以及<strong>如何来让手机硬件发挥出更高的性能</strong>。由于没有做过手机开发，所以看完资料在总结上来可能不是很准确。这里只了解了一小部分，后面涉及到再补全。</p>
-<p>首先是在任何平台上面都适用的方法：减少在屏幕上绘制物体的数量：<strong>降低帧率、降低分辨率、只有在需要重新绘制的时候才绘制。这些不在这里讨论</strong>。</p>
-<p>这里讨论的是如何进行<strong>高性能的3D渲染。</strong></p>
-<h2 id="手机芯片"><a href="#手机芯片" class="headerlink" title="手机芯片"></a>手机芯片</h2><p>下面是手机架构的一个简介：</p>
-<p><img src="/../../images/img/MobleArchitecture.jpg" alt="MobleArchitecture"></p>
-<p>手机的GPU设计通常和PC完全不同。</p>
+<p>之后可以进行下一步渲染。</p>
+<h2 id="Drawing-绘制"><a href="#Drawing-绘制" class="headerlink" title="Drawing 绘制"></a>Drawing 绘制</h2><p>现在的到了剪裁结果，可以进行进一步渲染。</p>
+<p>这里有很多种配置方法，有下面内容决定：</p>
 <ul>
-<li>手机的GPU通常来说是tiling的（也有例外），有多个Tilers（不知道怎么翻译），PC通常是立即渲染模式（Immediate-mode renderers）。</li>
-<li>手机使用的是系统RAM，而PC使用的是分离的local memory和一个链接到GPU的总线，应该是PCI。</li>
-<li>手机有多核处理器（但是没有太多的超线程技术），大部分为了低能耗做了优化而非高性能。
+<li><p>目标平台</p>
+</li>
+<li><p>特殊的效果</p>
+</li>
+<li><p>项目类型</p>
+<p>具体的例子。</p>
+</li>
+<li><p>HDR和LDR</p>
+</li>
+<li><p>Linear和Gamma</p>
+</li>
+<li><p>MSAA和后处理AA</p>
+</li>
+<li><p>PBR材质和一般材质</p>
+</li>
+<li><p>有无光照</p>
+</li>
+<li><p>光照技术</p>
+</li>
+<li><p>阴影基础</p>
+</li>
+</ul>
+<h3 id="过滤：桶和层"><a href="#过滤：桶和层" class="headerlink" title="过滤：桶和层"></a>过滤：桶和层</h3><p>不同的对象有不同的类型，可以是透明不透明等。Unity使用队列的概念来决定对象渲染的时机。这些队列构成了桶，渲染对象将会保存在桶中（类似桶排序）。当我们使用SRP时，我们可以决定哪个范围的桶可以被渲染。</p>
+<p>除了桶之外，标准的分层也可以用于过滤。</p>
+<p>例子：</p>
+<figure class="hljs highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs c#"><span class="hljs-comment">// Get the opaque rendering filter settings</span><br><span class="hljs-keyword">var</span> opaqueRange = <span class="hljs-keyword">new</span> FilterRenderersSettings();<br><br><span class="hljs-comment">//Set the range to be the opaque queues</span><br>opaqueRange.renderQueueRange = <span class="hljs-keyword">new</span> RenderQueueRange()<br>&#123;<br>    min = <span class="hljs-number">0</span>,<br>    max = (<span class="hljs-built_in">int</span>)UnityEngine.Rendering.RenderQueue.GeometryLast,<br>&#125;;<br><br><span class="hljs-comment">//Include all layers</span><br>opaqueRange.layerMask = ~<span class="hljs-number">0</span>;<br></code></pre></td></tr></table></figure>
+
+<h3 id="绘制设置：物体如何被绘制"><a href="#绘制设置：物体如何被绘制" class="headerlink" title="绘制设置：物体如何被绘制"></a>绘制设置：物体如何被绘制</h3><p>之前的过滤和剪裁都是决定了哪些内容需要被渲染。接下来决定这些物体如何被渲染。SRP提供了一系列的操作，对通过过滤的物体进行渲染配置。配置这些数据的结构是：DrawRenderSettings。这个结构允许以下内容的配置：</p>
+<ul>
+<li>Sorting - 物体绘制顺序。</li>
+<li>每个渲染标志 - 传递内部参数。</li>
+<li>渲染标志 - 动态合并实例化技术等等算法</li>
+<li>Shander Pass -当前的draw使用哪一个pass</li>
+</ul>
+<figure class="hljs highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs c#"><span class="hljs-comment">// Create the draw render settings</span><br><span class="hljs-comment">// note that it takes a shader pass name</span><br><span class="hljs-keyword">var</span> drs = <span class="hljs-keyword">new</span> DrawRendererSettings(Camera.current, <span class="hljs-keyword">new</span> ShaderPassName(<span class="hljs-string">&quot;Opaque&quot;</span>));<br> <br><span class="hljs-comment">// enable instancing for the draw call</span><br>drs.flags = DrawRendererFlags.EnableInstancing;<br> <br><span class="hljs-comment">// pass light probe and lightmap data to each renderer</span><br>drs.rendererConfiguration = RendererConfiguration.PerObjectLightProbe | RendererConfiguration.PerObjectLightmaps;<br> <br><span class="hljs-comment">// sort the objects like normal opaque objects</span><br>drs.sorting.flags = SortFlags.CommonOpaque;<br></code></pre></td></tr></table></figure>
+
+<h3 id="绘制"><a href="#绘制" class="headerlink" title="绘制"></a>绘制</h3><p>现在完成了：</p>
+<ul>
+<li>剪裁规则</li>
+<li>过滤规则</li>
+<li>绘制规则</li>
+</ul>
+<p>我们需要执行一个draw call。一个draw call就是对上下文的一次调用。在SRP中通常不渲染独立的网格，除非你需要一次性绘制很多。这减小了开销，同时保证了CPU的快速执行。</p>
+<p>发布draw call</p>
+<figure class="hljs highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs c#"><span class="hljs-comment">// draw all of the renderers</span><br>context.DrawRenderers(cullResults.visibleRenderers, <span class="hljs-keyword">ref</span> drs, opaqueRange);<br> <br><span class="hljs-comment">// submit the context, this will execute all of the queued up commands.</span><br>context.Submit();<br></code></pre></td></tr></table></figure>
+
+<p>这会把对象渲染到当前绑定的渲染目标。你可以使用一个command buffer来切换渲染目标。</p>
+
       
-      <p align="right"><a class="morebtn" href="/2022/07/09/GPUAartch/%E6%89%8B%E6%9C%BAGPU%E6%9E%B6%E6%9E%84%E4%B8%8E%E4%BC%98%E5%8C%96/" title="">阅读全文</a></p>
+      <p align="right"><a class="morebtn" href="/2022/09/19/Unity/SPR%E5%AE%98%E6%96%B9%E4%BB%8B%E7%BB%8D/" title="">阅读全文</a></p>
+    </main>
+    <footer class="post-footer">
+      
+    </footer>
+  </article>
+  
+  <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
+    <div class="post-block">
+      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/09/19/Unity/Shader%E6%89%93%E5%8C%85/">
+      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <meta itemprop="name" content="leinlin">
+        <meta itemprop="description" content="">
+        <meta itemprop="image" content="/images/avatar.jpg">
+      </span>
+      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+        <meta itemprop="name" content="leinlin的小笔记">
+      </span>
+    </div>
+    <header class="post-header">
+      <h1 class="post-title" itemprop="name headline">
+        <a class="post-title-link post-title-link-external" href="/2022/09/19/Unity/Shader%E6%89%93%E5%8C%85/" itemprop="url"></a>
+      </h1>
+      <div class="post-meta">
+        
+        <span class="post-date">
+          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2022-09-19T19:53:47+08:00">2022-09-19 19:53:47</time></span>
+        </span>
+        
+        
+        
+        
+        
+      </div>
+    </header>
+    <main class="post-main" itemprop="articleBody">
+      
+      <h1 id="Shader打包"><a href="#Shader打包" class="headerlink" title="Shader打包"></a>Shader打包</h1><p>总结shader打包过程当中遇到的shader重复，编译时间过长的问题。</p>
+<p>和shader相关的<strong>开销</strong>和以下几个方面有关：</p>
+<ul>
+<li>Other&#x2F;ShaderLab的大小：编译大小</li>
+<li>Asset&#x2F;Shader的大小和重复出现情况：资源当中shader数量</li>
+<li>Shader的编译时间：编译时间</li>
+</ul>
+<p>shader 的打包<strong>策略</strong>主要有一下几种：</p>
+<ul>
+<li>Shader单独打包</li>
+<li>Shader不打包，跟随依赖打入对其依赖资源的包：</li>
+<li>放置到Always Include中</li>
+</ul>
+<p>下面描述上面2、3两种打包策略可能会造成的<strong>问题</strong>：</p>
+<p>1.Always Include会造成<strong>大量的Shader编译时间</strong>(在build阶段），会编译所有的shader变体。<strong>ShaderLab很大。</strong></p>
+<p>2.Shader不打包可能会造成，Shader可能会存在多个版本，<strong>Asset&#x2F;Shader</strong>数量变多。但是一个材质也只会启用一两个变体（shader_feature），所以ShaderLab不会太大。</p>
+<p>不同shader打包策略的细节情况：</p>
+<ol>
+<li><p>如果Always include （无论shader是否打包）则在<strong>打AB包时</strong>会编译所有变体。在<strong>build场景时</strong>也会编译所有变体（无论场景是否使用这个shader）。</p>
+<p>1.1 如果这个shader打了AB包，但是没有加载这个AB包。则<strong>Asset&#x2F;Shader</strong>中只有一份，<strong>ShaderLab</strong>包含了所有变体。</p>
+<p>1.2 如果这个shader打了AB包，同时加载了AB包（确实使用了，比如在材质中使用），则<strong>Asset&#x2F;Shader</strong>和<strong>ShaderLab</strong>都会翻一倍。</p>
+<p>1.3 如果没有打包，但是加载了对这个shader有依赖的内容，则有几个依赖会翻几倍（<strong>这个shader的全部变体都会翻倍</strong>）。<strong>结论</strong>：a.AlwayInclude会使shader_feature编程multicompile全部编译，b.同时不管依赖情况如何，所有变体都会编译。</p>
+</li>
+<li><p>如果不用Always Include，如果不对shader打包，则每一个依赖都会生成一份shader的<strong>Asset&#x2F;Shader</strong>，同时根据各自shader_feature的启用情况，生成各自所需要的<strong>ShaderLab</strong>的。</p>
+</li>
+<li><p>如果不用Always Include，如果对shader打包，则只生成一份shader的<strong>Asset&#x2F;Shader</strong>，他所需要的所有生效的shader_feature决定一份总的<strong>ShaderLab</strong>。</p>
+</li>
+</ol>
+<h2 id="关于FallBack依赖"><a href="#关于FallBack依赖" class="headerlink" title="关于FallBack依赖"></a>关于FallBack依赖</h2><ol>
+<li>如果Shader有多份（无论什么原因），FallBack Shader如果不打包，则FallBack Shader必定有多份。</li>
+<li>无论Shader在AB包中存在了多少份（单独打一个包或被依赖资源打入多个包），如果FallBack Shader打包，则AB包中的这个Shader使用的FallBackShader只有一份，但是如果这个Shader出现在场景中，则Shader会多一份，FallBack Shader会多一份。</li>
+</ol>
+<p>在实际打包过程中需要注意的是，我们无法对内置shader进行打包，只能使用AlwaysInclude所以需要。尤其是依赖的Shader版本，是否在工程中。</p>
+<h2 id="关于Dependency依赖"><a href="#关于Dependency依赖" class="headerlink" title="关于Dependency依赖"></a>关于Dependency依赖</h2><p>和FallBack一致</p>
+<p><strong>注：</strong></p>
+<ol>
+<li><p>场景当中DIsable的GameObject对应的Material的材质一样会被编译进入场景。</p>
+</li>
+<li><p><strong>多个独立打包的shader的同一个Fallback会产生多份。</strong>放在工程目录任何位置FallBack都会生效。</p>
+</li>
+</ol>
+<h1 id="地形shdaer的特殊依赖"><a href="#地形shdaer的特殊依赖" class="headerlink" title="地形shdaer的特殊依赖"></a>地形shdaer的特殊依赖</h1><p>1.如果把默认地形Shader放入AB包，不需要进行设置则可以自动使用本地的Shader</p>
+<p>​	针对Nature&#x2F;Terrain&#x2F;… shader</p>
+<p>2.如果AlwayInclude也可以达到一样的效果。</p>
+<p>3.一般Shader的FallBack直接放在工程里即可，但是地形Shader的Dependency 的Hidde&#x2F;***无法Alwaysinclude，单独打包也不会被引用。</p>
+<p>4.注意啊 如果Nature已经放入工程，则工程内的地形只会使用这个，在使用AlwayInlcude包括内置的Natureshadr就没有意义了。</p>
+
+      
+      <p align="right"><a class="morebtn" href="/2022/09/19/Unity/Shader%E6%89%93%E5%8C%85/" title="">阅读全文</a></p>
     </main>
     <footer class="post-footer">
       
@@ -725,7 +890,7 @@
   
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/"><i class="fas fa-angle-right" aria-label="下一页"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/16/">16</a><a class="extend next" rel="next" href="/page/2/"><i class="fas fa-angle-right" aria-label="下一页"></i></a>
   </nav>
   
   
@@ -769,7 +934,7 @@
     
     <div class="categories-count count-block">
       <div class="site-count-title">分类</div>
-      <div><a href="/categories/">7</a></div>
+      <div><a href="/categories/">11</a></div>
     </div>
     
     
