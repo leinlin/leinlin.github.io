@@ -489,7 +489,7 @@
   
   <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
     <div class="post-block">
-      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/09/19/SDF/SDFRenderFrameWork/">
+      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/09/19/RayTracingLearning/Install/">
       <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
         <meta itemprop="name" content="leinlin">
         <meta itemprop="description" content="">
@@ -501,86 +501,7 @@
     </div>
     <header class="post-header">
       <h1 class="post-title" itemprop="name headline">
-        <a class="post-title-link post-title-link-external" href="/2022/09/19/SDF/SDFRenderFrameWork/" itemprop="url"></a>
-      </h1>
-      <div class="post-meta">
-        
-        <span class="post-date">
-          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2022-09-19T19:53:44+08:00">2022-09-19 19:53:44</time></span>
-        </span>
-        
-        
-        
-        
-        
-      </div>
-    </header>
-    <main class="post-main" itemprop="articleBody">
-      
-      <h1 id="Unity-SRP实现SDF渲染框架"><a href="#Unity-SRP实现SDF渲染框架" class="headerlink" title="Unity SRP实现SDF渲染框架"></a>Unity SRP实现SDF渲染框架</h1><p>目前，接触到SDF和RayCasting相关的内容，花了一点时间通过SRP来构建一个SDF渲染pipeline。</p>
-<p>这里主要介绍一下大概的过程。</p>
-<p>目前的结果：</p>
-<p><img src="/../../images/img/SDF1.jpg" alt="SDF1"></p>
-<h2 id="SRP部分代码"><a href="#SRP部分代码" class="headerlink" title="SRP部分代码"></a>SRP部分代码</h2><p>全部代码如下，具体说明见注释：</p>
-<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br></pre></td><td class="code"><pre><code class="hljs c">using System.Collections;<br>using System.Collections.Generic;<br>using UnityEngine;<br>using UnityEngine.Rendering;<br>using UnityEngine.Experimental.Rendering;<br>using UnityEngine.Experimental.Rendering;<br><br>public <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">SDFPipeline</span> :</span> UnityEngine.Rendering.RenderPipeline<br>&#123;<br>    ShaderTagId forwardBase;<br>    <span class="hljs-comment">// 相关的Shader和数据存储在asset当中。</span><br>    private SDFPipelineAsset asset;<br>    private Material sdfMat;<br>    <span class="hljs-comment">// 需要初始化一个LightMode名字，这个名字主要用来指定要渲染的pass。</span><br>    public <span class="hljs-title function_">SDFPipeline</span><span class="hljs-params">(SDFPipelineAsset vasset)</span><br>    &#123;<br>        asset = vasset;<br>        sdfMat = new Material(asset.sdfRenderShader);<br>        forwardBase = new ShaderTagId(<span class="hljs-string">&quot;ForwardBase&quot;</span>);<br>    &#125;<br>	<br>	<span class="hljs-comment">// 渲染每一个Camera</span><br>    protected override <span class="hljs-type">void</span> <span class="hljs-title function_">Render</span><span class="hljs-params">(ScriptableRenderContext context, Camera[] cameras)</span><br>    &#123;<br>        foreach (var camera in cameras)<br>        &#123;<br>            Render(context, camera);<br>        &#125;<br><br>        context.Submit();<br>    &#125;<br><br>	<span class="hljs-comment">// 针对每一个Camera的渲染</span><br>    <span class="hljs-type">void</span> <span class="hljs-title function_">Render</span><span class="hljs-params">(ScriptableRenderContext context, Camera camera)</span><br>    &#123;<br>    	<span class="hljs-comment">// 进行模型剪裁。</span><br>        ScriptableCullingParameters cullingParameters;<br>        camera.TryGetCullingParameters(<span class="hljs-literal">false</span>, out cullingParameters);<br>        CullingResults cull = context.Cull(ref cullingParameters);<br>		<br>		<span class="hljs-comment">/*</span><br><span class="hljs-comment">        设置摄像机数据：其中的内容包括摄像机的unity_WorldToCamera,unity_CameraToWorld等矩阵</span><br><span class="hljs-comment">        */</span><br>        context.SetupCameraProperties(camera); <span class="hljs-comment">//设置Unity V  和 P矩阵</span><br>       <br>        var buffer = new CommandBuffer &#123; name = camera.name &#125;;<br>        CameraClearFlags clearFlags = camera.clearFlags;<br>        buffer.ClearRenderTarget(<br>                (clearFlags &amp; CameraClearFlags.Depth) != <span class="hljs-number">0</span>,<br>                (clearFlags &amp; CameraClearFlags.Color) != <span class="hljs-number">0</span>,<br>                camera.backgroundColor<br>            );<br>		<span class="hljs-comment">// </span><br>        sdfMat.shader = asset.sdfRenderShader;<br><br>        <span class="hljs-comment">// 获取SDF代理体数据</span><br>        <span class="hljs-type">int</span> count = <span class="hljs-number">0</span>;<br>        ComputeBuffer cb = SDFProxyObject.GetProxy(ref  count);<br>		<br>		<span class="hljs-comment">// 设置相关矩阵参数。</span><br>        buffer.SetGlobalBuffer(Shader.PropertyToID(<span class="hljs-string">&quot;SDFlist&quot;</span>),cb);<br>        buffer.SetGlobalInt(<span class="hljs-string">&quot;I_SDFCount&quot;</span>, count);<br>        buffer.SetGlobalMatrix(<span class="hljs-string">&quot;M_WorldToCamera&quot;</span>, camera.worldToCameraMatrix);<br>        buffer.SetGlobalMatrix(<span class="hljs-string">&quot;M_Inv_WorldToCamera&quot;</span>, camera.worldToCameraMatrix.inverse);<br>        buffer.SetGlobalMatrix(<span class="hljs-string">&quot;M_Projection&quot;</span>, GL.GetGPUProjectionMatrix(camera.projectionMatrix, camera.cameraType == CameraType.SceneView));<br>        buffer.SetGlobalMatrix(<span class="hljs-string">&quot;M_Inv_Projection&quot;</span>, GL.GetGPUProjectionMatrix(camera.projectionMatrix, camera.cameraType == CameraType.SceneView).inverse);<br>        buffer.SetGlobalVector(<span class="hljs-string">&quot;V_CameraWPos&quot;</span>, camera.transform.position);<br>        <br>        <span class="hljs-comment">// 进行SDF绘制，这里和HDRP的灯光一样一次性绘制所有的SDF数据。</span><br>        buffer.Blit(BuiltinRenderTextureType.None, camera.targetTexture, sdfMat);<br>       <br>        context.ExecuteCommandBuffer(buffer);<br>        buffer.Release();<br>		<br>		<span class="hljs-comment">// 后面的内容 就是要在编辑器模式绘制矩形，为了方便编辑。</span><br>        SortingSettings st = new SortingSettings(camera);<br>       <br>        DrawingSettings ds = new DrawingSettings(forwardBase, st);<br>        FilteringSettings fs = new FilteringSettings(new RenderQueueRange(<span class="hljs-number">0</span>, <span class="hljs-number">4000</span>));<br><br>        <span class="hljs-keyword">if</span>(camera.cameraType == CameraType.SceneView)<br>        &#123;<br>            context.DrawRenderers(<br>                cull, ref ds, ref fs<br>            );<br>        &#125;<br><br>        context.Submit();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<p>对应pipeline的asset。</p>
-<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs c">using System.Collections;<br>using System.Collections.Generic;<br>using UnityEngine;<br><br>using UnityEngine;<br>using UnityEngine.Experimental.Rendering;<br>using UnityEngine.Rendering;<br><br>[CreateAssetMenu(menuName = <span class="hljs-string">&quot;Rendering/SDFPipeline&quot;</span>)]<br>public <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">SDFPipelineAsset</span> :</span> RenderPipelineAsset, ISerializationCallbackReceiver<br>&#123;<br>    [SerializeField]<br>    public Shader sdfRenderShader;<br><br>    protected override UnityEngine.Rendering.RenderPipeline <span class="hljs-title function_">CreatePipeline</span><span class="hljs-params">()</span><br>    &#123;<br>       <span class="hljs-keyword">return</span> new SDFPipeline(this);<br>    &#125;<br><br>    <span class="hljs-type">void</span> ISerializationCallbackReceiver.OnAfterDeserialize()<br>    &#123;<br>        <span class="hljs-keyword">return</span>;<br>    &#125;<br><br>    <span class="hljs-type">void</span> ISerializationCallbackReceiver.OnBeforeSerialize()<br>    &#123;<br>        <span class="hljs-keyword">return</span>;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<p>为了能够更加容易编辑内容，所以需要在Scene视图当中绘制简单的物体,同时用GameObject表示出来：</p>
-<p><img src="/../../images/img/SDF2.jpg" alt="SDF2"></p>
-<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br></pre></td><td class="code"><pre><code class="hljs c">using System.Collections;<br>using System.Collections.Generic;<br>using UnityEngine;<br>public <span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">SDFProxy</span></span><br><span class="hljs-class">&#123;</span><br>    Matrix4x4 o2wMatrix;<br>    Vector4 param;<br>    public <span class="hljs-type">int</span> SDFtype;<br>	<span class="hljs-comment">// 每一个SDF的代理体都需要一个数据，保存位置、形状参数等。</span><br>    public <span class="hljs-title function_">SDFProxy</span><span class="hljs-params">(Matrix4x4 lTow, Vector4 lparam,<span class="hljs-type">int</span> type)</span><br>    &#123;<br>        o2wMatrix = lTow;<br>        SDFtype = type;<br>        param = lparam;<br>    &#125;<br>&#125;<br><br>[ExecuteInEditMode]<br>public <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">SDFProxyObject</span> :</span> MonoBehaviour<br>&#123;<br>    public <span class="hljs-type">static</span> List&lt;SDFProxyObject&gt; sdfObjlist;<br>    public <span class="hljs-type">static</span> List&lt;SDFProxy&gt; sdflist;<br><br>    <span class="hljs-type">static</span> ComputeBuffer cb;<br><br>    public <span class="hljs-type">int</span> proxytype;<br>    public Vector4 param;<br><br>	<span class="hljs-comment">// 获取代理体的方法</span><br>    public <span class="hljs-type">static</span> ComputeBuffer <span class="hljs-title function_">GetProxy</span><span class="hljs-params">(ref <span class="hljs-type">int</span> count)</span><br>    &#123;<br>        <span class="hljs-keyword">if</span> (sdfObjlist ==null)<br>            sdfObjlist = new List&lt;SDFProxyObject&gt;();<br><br>        <span class="hljs-keyword">if</span> (sdflist == null)<br>            sdflist = new List&lt;SDFProxy&gt;();<br>        sdflist.Clear();<br>        <br>        <span class="hljs-keyword">if</span>(cb == null)<br>        cb = new ComputeBuffer(<span class="hljs-number">10000</span>,System.Runtime.InteropServices.Marshal.SizeOf(typeof(SDFProxy)));<br>        <br>        foreach (var obj in sdfObjlist)<br>        &#123;<br>            sdflist.Add(new SDFProxy(obj.transform.worldToLocalMatrix, obj.param, obj.proxytype));<br>        &#125;<br><br>        <span class="hljs-comment">//性能提升 ：提前排序減少分支，和HDRP一样</span><br>        sdflist.Sort((d1, d2) =&gt; d1.SDFtype.CompareTo(d2.SDFtype));<br><br>        cb.SetData&lt;SDFProxy&gt;(sdflist);<br>        count = sdflist.Count;<br>        <span class="hljs-keyword">return</span> cb;<br>    &#125;<br><br>    private <span class="hljs-type">void</span> <span class="hljs-title function_">OnEnable</span><span class="hljs-params">()</span><br>    &#123;<br>        <span class="hljs-keyword">if</span> (sdfObjlist == null)<br>            sdfObjlist = new List&lt;SDFProxyObject&gt;();<br>        sdfObjlist.Add(this);<br>    &#125;<br><br>    private <span class="hljs-type">void</span> <span class="hljs-title function_">OnDisable</span><span class="hljs-params">()</span><br>    &#123;<br>        <span class="hljs-keyword">if</span> (sdfObjlist == null)<br>            sdfObjlist = new List&lt;SDFProxyObject&gt;();<br>        sdfObjlist.Remove(this);<br>    &#125;<br>&#125;<br><br></code></pre></td></tr></table></figure>
-
-<p>目前，Scene视图当中使用的是一个黑色的盒子，用于观察位置、进行旋转等操作：</p>
-<p><img src="/../../images/img/SDF3.jpg" alt="SDF3"></p>
-<p>场景当中的灯光也需要设置，目前只设置了直线光，通过脚本把光照信息设置成全局的Shader变量：</p>
-<p><img src="/../../images/img/SDF4light.jpg" alt="SDF4light"></p>
-<h2 id="SDF渲染Shader"><a href="#SDF渲染Shader" class="headerlink" title="SDF渲染Shader"></a>SDF渲染Shader</h2><p>下面是SDF的Shader片段着色器代码，这里只放基础部分的代码，省略优化部分的代码。</p>
-<figure class="hljs highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">real4 frag (v2f i) : SV_Target<br>&#123;<br>    real3 rayDir = normalize(i.worldPos - V_CameraWPos);<br>    // 背景色<br>    real3 col = float3(0.1,0.1,0.2);  <br>    real t = 0;<br>    real Pnum = 1;<br><br>    for(int s = 0; s&lt; 100; s++)<br>    &#123;<br>        real d = 10;<br>        int interact_id = 0;<br>        // 遍历所有SDF数据，这部分可以预先计算相交，同时使用八叉树管理SDF代理体。<br>        for(int p = 0; p &lt; I_SDFCount; p++)<br>        &#123;<br>            SDFProxy currSdf = SDFlist[p];<br>            real3 raypos = t * rayDir+V_CameraWPos;<br><br>            d = min(d,sdf(raypos, currSdf));<br>            if(d &lt;= 0.0001)<br>            &#123;<br>                interact_id = p;<br>                break;<br>            &#125;<br>        &#125;<br><br>        if(d &gt; 0.0001)<br>        &#123;<br>        	t += d;<br>        &#125;<br>        else<br>        &#123;<br>        	// 相交后执行光照计算<br>            real3 raypos = t * rayDir + V_CameraWPos;<br>            col = saturate(dot(-rayDir, calcNormal(raypos, SDFlist[interact_id])));<br><br>            col = brdf(calcNormal(raypos, SDFlist[interact_id]), normalize(-rayDir), (-_LightDirection));<br>            break;     <br>        &#125;<br><br>        if(t &gt; 100)&#123;<br>        	break;<br>        &#125;<br>    &#125;<br>    return float4(col/ (1 + col), 1);<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<h3 id="SDF的BRDF"><a href="#SDF的BRDF" class="headerlink" title="SDF的BRDF"></a>SDF的BRDF</h3><figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;brdf.hlsl&quot;</span></span><br>real3 <span class="hljs-title function_">brdf</span><span class="hljs-params">(float3 N, float3 V, float3 L)</span><br>&#123;<br>    float3 diffuse = <span class="hljs-number">0</span>;<br>    float3 specular = <span class="hljs-number">0</span>; <br>    float3 H =  normalize(L + V);<br>    <span class="hljs-type">float</span> HdotN = dot(N,H);<br>    <span class="hljs-type">float</span> HdotL = dot(L,H);<br><br>    <span class="hljs-type">float</span> F0 = <span class="hljs-number">0.54</span>;<br>    <span class="hljs-comment">/*</span><br><span class="hljs-comment">                    float _Metallic;</span><br><span class="hljs-comment">                    float _Smoothness;</span><br><span class="hljs-comment">                    float3 _Diffuse;</span><br><span class="hljs-comment">                    float3 _LightPosition;</span><br><span class="hljs-comment">                    float3 _LightColor;</span><br><span class="hljs-comment">                */</span><br>    <span class="hljs-comment">// Fresnel 使用Schlick</span><br>    <span class="hljs-type">float</span> F = F_Schlick(F0 ,HdotL);<br>    <span class="hljs-comment">// 目前使用blinn Phong模型光照</span><br>    specular = F * _LightIntensity *<span class="hljs-built_in">pow</span>(saturate(dot(N,L)),<span class="hljs-number">5</span>); <br>    diffuse = _LightIntensity *_LightColor * _Diffuse * _LightColor * saturate(dot(N,L))/ <span class="hljs-number">3.14159</span>;<br>    <span class="hljs-keyword">return</span> diffuse * _DiffuseDimmer   +<br>        specular * _SpecularDimmer;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<h3 id="SDF的形状"><a href="#SDF的形状" class="headerlink" title="SDF的形状"></a>SDF的形状</h3><p>最后是SDF,,这部分内容来自<a target="_blank" rel="noopener" href="http://www.iquilezles.org/www/articles/distfunctions/distfunctions.htm">博客</a>：</p>
-<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br><span class="line">184</span><br><span class="line">185</span><br><span class="line">186</span><br><span class="line">187</span><br><span class="line">188</span><br><span class="line">189</span><br><span class="line">190</span><br><span class="line">191</span><br><span class="line">192</span><br><span class="line">193</span><br><span class="line">194</span><br><span class="line">195</span><br><span class="line">196</span><br><span class="line">197</span><br><span class="line">198</span><br><span class="line">199</span><br></pre></td><td class="code"><pre><code class="hljs c"><br><span class="hljs-type">float</span> <span class="hljs-title function_">dot2</span><span class="hljs-params">( in real3 v )</span> &#123; <span class="hljs-keyword">return</span> dot(v,v); &#125;<br><span class="hljs-type">float</span> <span class="hljs-title function_">dot2</span><span class="hljs-params">( in real2 v )</span> &#123; <span class="hljs-keyword">return</span> dot(v,v); &#125;<br><br><span class="hljs-type">float</span> <span class="hljs-title function_">sdSphere</span><span class="hljs-params">( real3 p, <span class="hljs-type">float</span> s )</span><br>&#123;<br>  <span class="hljs-keyword">return</span> length(p)-s;<br>&#125;<br><br><br><span class="hljs-type">float</span> <span class="hljs-title function_">sdBox</span><span class="hljs-params">( real3 p, real3 b )</span><br>&#123;<br>  real3 d = <span class="hljs-built_in">abs</span>(p) - b;<br>  <span class="hljs-keyword">return</span> length(max(d,<span class="hljs-number">0.0</span>))<br>         + min(max(d.x,max(d.y,d.z)),<span class="hljs-number">0.0</span>); <span class="hljs-comment">// remove this line for an only partially signed sdf </span><br>&#125;<br><br><span class="hljs-type">float</span> <span class="hljs-title function_">sdRoundBox</span><span class="hljs-params">( real3 p, real3 b, <span class="hljs-type">float</span> r )</span><br>&#123;<br>  real3 d = <span class="hljs-built_in">abs</span>(p) - b;<br>  <span class="hljs-keyword">return</span> length(max(d,<span class="hljs-number">0.0</span>)) - r<br>         + min(max(d.x,max(d.y,d.z)),<span class="hljs-number">0.0</span>); <span class="hljs-comment">// remove this line for an only partially signed sdf </span><br>&#125;<br><br><span class="hljs-type">float</span> <span class="hljs-title function_">sdTorus</span><span class="hljs-params">( real3 p, real2 t )</span><br>&#123;<br>  real2 q = real2(length(p.xz)-t.x,p.y);<br>  <span class="hljs-keyword">return</span> length(q)-t.y;<br>&#125;<br><br><span class="hljs-type">float</span> <span class="hljs-title function_">sdCappedTorus</span><span class="hljs-params">(in real3 p, in real2 sc, in <span class="hljs-type">float</span> ra, in <span class="hljs-type">float</span> rb)</span><br>&#123;<br>  p.x = <span class="hljs-built_in">abs</span>(p.x);<br>  <span class="hljs-type">float</span> k = (sc.y*p.x&gt;sc.x*p.y) ? dot(p.xy,sc) : length(p.xy);<br>  <span class="hljs-keyword">return</span> <span class="hljs-built_in">sqrt</span>( dot(p,p) + ra*ra - <span class="hljs-number">2.0</span>*ra*k ) - rb;<br>&#125;<br><br><span class="hljs-type">float</span> <span class="hljs-title function_">sdCylinder</span><span class="hljs-params">( real3 p, real3 c )</span><br>&#123;<br>  <span class="hljs-keyword">return</span> length(p.xz-c.xy)-c.z;<br>&#125;<br><br><span class="hljs-type">float</span> <span class="hljs-title function_">sdCone</span><span class="hljs-params">( real3 p, real2 c )</span><br>&#123;<br>    <span class="hljs-comment">// c must be normalized</span><br>    <span class="hljs-type">float</span> q = length(p.xy);<br>    <span class="hljs-keyword">return</span> dot(c,real2(q,p.z));<br>&#125;<br><br><br><span class="hljs-type">float</span> <span class="hljs-title function_">sdPlane</span><span class="hljs-params">( real3 p, real4 n )</span><br>&#123;<br>  <span class="hljs-comment">// n must be normalized</span><br>  <span class="hljs-keyword">return</span> dot(p,n.xyz) + n.w;<br>&#125;<br><br><span class="hljs-type">float</span> <span class="hljs-title function_">sdHexPrism</span><span class="hljs-params">( real3 p, real2 h )</span><br>&#123;<br>    <span class="hljs-type">const</span> real3 k = real3(<span class="hljs-number">-0.8660254</span>, <span class="hljs-number">0.5</span>, <span class="hljs-number">0.57735</span>);<br>    p = <span class="hljs-built_in">abs</span>(p);<br>    p.xy -= <span class="hljs-number">2.0</span>*min(dot(k.xy, p.xy), <span class="hljs-number">0.0</span>)*k.xy;<br>    real2 d = real2(<br>       length(p.xy-real2(clamp(p.x,-k.z*h.x,k.z*h.x), h.x))*sign(p.y-h.x),<br>       p.z-h.y );<br>    <span class="hljs-keyword">return</span> min(max(d.x,d.y),<span class="hljs-number">0.0</span>) + length(max(d,<span class="hljs-number">0.0</span>));<br>&#125;<br><br><span class="hljs-type">float</span> <span class="hljs-title function_">sdTriPrism</span><span class="hljs-params">( real3 p, real2 h )</span><br>&#123;<br>    real3 q = <span class="hljs-built_in">abs</span>(p);<br>    <span class="hljs-keyword">return</span> max(q.z-h.y,max(q.x*<span class="hljs-number">0.866025</span>+p.y*<span class="hljs-number">0.5</span>,-p.y)-h.x*<span class="hljs-number">0.5</span>);<br>&#125;<br><br><span class="hljs-type">float</span> <span class="hljs-title function_">sdCapsule</span><span class="hljs-params">( real3 p, real3 a, real3 b, <span class="hljs-type">float</span> r )</span><br>&#123;<br>    real3 pa = p - a, ba = b - a;<br>    <span class="hljs-type">float</span> h = clamp( dot(pa,ba)/dot(ba,ba), <span class="hljs-number">0.0</span>, <span class="hljs-number">1.0</span> );<br>    <span class="hljs-keyword">return</span> length( pa - ba*h ) - r;<br>&#125;<br><br><span class="hljs-type">float</span> <span class="hljs-title function_">sdVerticalCapsule</span><span class="hljs-params">( real3 p, <span class="hljs-type">float</span> h, <span class="hljs-type">float</span> r )</span><br>&#123;<br>    p.y -= clamp( p.y, <span class="hljs-number">0.0</span>, h );<br>    <span class="hljs-keyword">return</span> length( p ) - r;<br>&#125;<br><br><span class="hljs-type">float</span> <span class="hljs-title function_">sdCappedCylinder</span><span class="hljs-params">( real3 p, real2 h )</span><br>&#123;<br>  real2 d = <span class="hljs-built_in">abs</span>(real2(length(p.xz),p.y)) - h;<br>  <span class="hljs-keyword">return</span> min(max(d.x,d.y),<span class="hljs-number">0.0</span>) + length(max(d,<span class="hljs-number">0.0</span>));<br>&#125;<br><br><span class="hljs-type">float</span> <span class="hljs-title function_">sdRoundedCylinder</span><span class="hljs-params">( real3 p, <span class="hljs-type">float</span> ra, <span class="hljs-type">float</span> rb, <span class="hljs-type">float</span> h )</span><br>&#123;<br>    real2 d = real2( length(p.xz)<span class="hljs-number">-2.0</span>*ra+rb, <span class="hljs-built_in">abs</span>(p.y) - h );<br>    <span class="hljs-keyword">return</span> min(max(d.x,d.y),<span class="hljs-number">0.0</span>) + length(max(d,<span class="hljs-number">0.0</span>)) - rb;<br>&#125;<br><br><br><span class="hljs-type">float</span> <span class="hljs-title function_">sdCappedCone</span><span class="hljs-params">( in real3 p, in <span class="hljs-type">float</span> h, in <span class="hljs-type">float</span> r1, in <span class="hljs-type">float</span> r2 )</span><br>&#123;<br>    real2 q = real2( length(p.xz), p.y );<br>    <br>    real2 k1 = real2(r2,h);<br>    real2 k2 = real2(r2-r1,<span class="hljs-number">2.0</span>*h);<br>    real2 ca = real2(q.x-min(q.x,(q.y &lt; <span class="hljs-number">0.0</span>)?r1:r2), <span class="hljs-built_in">abs</span>(q.y)-h);<br>    real2 cb = q - k1 + k2*clamp( dot(k1-q,k2)/dot2(k2), <span class="hljs-number">0.0</span>, <span class="hljs-number">1.0</span> );<br>    <span class="hljs-type">float</span> s = (cb.x &lt; <span class="hljs-number">0.0</span> &amp;&amp; ca.y &lt; <span class="hljs-number">0.0</span>) ? <span class="hljs-number">-1.0</span> : <span class="hljs-number">1.0</span>;<br>    <span class="hljs-keyword">return</span> s*<span class="hljs-built_in">sqrt</span>( min(dot2(ca),dot2(cb)) );<br>&#125;<br><br><br><span class="hljs-type">float</span> <span class="hljs-title function_">sdRoundCone</span><span class="hljs-params">( in real3 p, in <span class="hljs-type">float</span> r1, <span class="hljs-type">float</span> r2, <span class="hljs-type">float</span> h )</span><br>&#123;<br>    real2 q = real2( length(p.xz), p.y );<br>    <br>    <span class="hljs-type">float</span> b = (r1-r2)/h;<br>    <span class="hljs-type">float</span> a = <span class="hljs-built_in">sqrt</span>(<span class="hljs-number">1.0</span>-b*b);<br>    <span class="hljs-type">float</span> k = dot(q,real2(-b,a));<br>    <br>    <span class="hljs-keyword">if</span>( k &lt; <span class="hljs-number">0.0</span> ) <span class="hljs-keyword">return</span> length(q) - r1;<br>    <span class="hljs-keyword">if</span>( k &gt; a*h ) <span class="hljs-keyword">return</span> length(q-real2(<span class="hljs-number">0.0</span>,h)) - r2;<br>        <br>    <span class="hljs-keyword">return</span> dot(q, real2(a,b) ) - r1;<br>&#125;<br><br><br><span class="hljs-type">float</span> <span class="hljs-title function_">sdEllipsoid</span><span class="hljs-params">( in real3 p, in real3 r )</span><br>&#123;<br>    <span class="hljs-type">float</span> k0 = length(p/r);<br>    <span class="hljs-type">float</span> k1 = length(p/(r*r));<br>    <span class="hljs-keyword">return</span> k0*(k0<span class="hljs-number">-1.0</span>)/k1;<br>&#125;<br><br><br><span class="hljs-type">float</span> <span class="hljs-title function_">sdOctahedron</span><span class="hljs-params">( in real3 p, in <span class="hljs-type">float</span> s)</span><br>&#123;<br>    p = <span class="hljs-built_in">abs</span>(p);<br>    <span class="hljs-type">float</span> m = p.x+p.y+p.z-s;<br>    real3 q;<br>         <span class="hljs-keyword">if</span>( <span class="hljs-number">3.0</span>*p.x &lt; m ) q = p.xyz;<br>    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>( <span class="hljs-number">3.0</span>*p.y &lt; m ) q = p.yzx;<br>    <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>( <span class="hljs-number">3.0</span>*p.z &lt; m ) q = p.zxy;<br>    <span class="hljs-keyword">else</span> <span class="hljs-keyword">return</span> m*<span class="hljs-number">0.57735027</span>;<br>    <br>    <span class="hljs-type">float</span> k = clamp(<span class="hljs-number">0.5</span>*(q.z-q.y+s),<span class="hljs-number">0.0</span>,s); <br>    <span class="hljs-keyword">return</span> length(real3(q.x,q.y-s+k,q.z-k)); <br>&#125;<br><br><span class="hljs-type">float</span> <span class="hljs-title function_">sdOctahedron_Bound</span><span class="hljs-params">( in real3 p, in <span class="hljs-type">float</span> s)</span><br>&#123;<br>    p = <span class="hljs-built_in">abs</span>(p);<br>    <span class="hljs-keyword">return</span> (p.x+p.y+p.z-s)*<span class="hljs-number">0.57735027</span>;<br>&#125;<br><br><br><span class="hljs-type">float</span> <span class="hljs-title function_">udTriangle</span><span class="hljs-params">( real3 p, real3 a, real3 b, real3 c )</span><br>&#123;<br>    real3 ba = b - a; real3 pa = p - a;<br>    real3 cb = c - b; real3 pb = p - b;<br>    real3 ac = a - c; real3 pc = p - c;<br>    real3 nor = cross( ba, ac );<br><br>    <span class="hljs-keyword">return</span> <span class="hljs-built_in">sqrt</span>(<br>    (sign(dot(cross(ba,nor),pa)) +<br>     sign(dot(cross(cb,nor),pb)) +<br>     sign(dot(cross(ac,nor),pc))&lt;<span class="hljs-number">2.0</span>)<br>     ?<br>     min( min(<br>     dot2(ba*clamp(dot(ba,pa)/dot2(ba),<span class="hljs-number">0.0</span>,<span class="hljs-number">1.0</span>)-pa),<br>     dot2(cb*clamp(dot(cb,pb)/dot2(cb),<span class="hljs-number">0.0</span>,<span class="hljs-number">1.0</span>)-pb) ),<br>     dot2(ac*clamp(dot(ac,pc)/dot2(ac),<span class="hljs-number">0.0</span>,<span class="hljs-number">1.0</span>)-pc) )<br>     :<br>     dot(nor,pa)*dot(nor,pa)/dot2(nor) );<br>&#125;<br><br><br><span class="hljs-type">float</span> <span class="hljs-title function_">udQuad</span><span class="hljs-params">( real3 p, real3 a, real3 b, real3 c, real3 d )</span><br>&#123;<br>    real3 ba = b - a; real3 pa = p - a;<br>    real3 cb = c - b; real3 pb = p - b;<br>    real3 dc = d - c; real3 pc = p - c;<br>    real3 ad = a - d; real3 pd = p - d;<br>    real3 nor = cross( ba, ad );<br><br>    <span class="hljs-keyword">return</span> <span class="hljs-built_in">sqrt</span>(<br>    (sign(dot(cross(ba,nor),pa)) +<br>     sign(dot(cross(cb,nor),pb)) +<br>     sign(dot(cross(dc,nor),pc)) +<br>     sign(dot(cross(ad,nor),pd))&lt;<span class="hljs-number">3.0</span>)<br>     ?<br>     min( min( min(<br>     dot2(ba*clamp(dot(ba,pa)/dot2(ba),<span class="hljs-number">0.0</span>,<span class="hljs-number">1.0</span>)-pa),<br>     dot2(cb*clamp(dot(cb,pb)/dot2(cb),<span class="hljs-number">0.0</span>,<span class="hljs-number">1.0</span>)-pb) ),<br>     dot2(dc*clamp(dot(dc,pc)/dot2(dc),<span class="hljs-number">0.0</span>,<span class="hljs-number">1.0</span>)-pc) ),<br>     dot2(ad*clamp(dot(ad,pd)/dot2(ad),<span class="hljs-number">0.0</span>,<span class="hljs-number">1.0</span>)-pd) )<br>     :<br>     dot(nor,pa)*dot(nor,pa)/dot2(nor) );<br>&#125;<br></code></pre></td></tr></table></figure>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-      
-      <p align="right"><a class="morebtn" href="/2022/09/19/SDF/SDFRenderFrameWork/" title="">阅读全文</a></p>
-    </main>
-    <footer class="post-footer">
-      
-    </footer>
-  </article>
-  
-  <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
-    <div class="post-block">
-      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/09/19/RTR/%E9%87%8D%E8%A6%81%E5%BA%A6%E9%87%87%E6%A0%B7/">
-      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-        <meta itemprop="name" content="leinlin">
-        <meta itemprop="description" content="">
-        <meta itemprop="image" content="/images/avatar.jpg">
-      </span>
-      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-        <meta itemprop="name" content="leinlin的小笔记">
-      </span>
-    </div>
-    <header class="post-header">
-      <h1 class="post-title" itemprop="name headline">
-        <a class="post-title-link post-title-link-external" href="/2022/09/19/RTR/%E9%87%8D%E8%A6%81%E5%BA%A6%E9%87%87%E6%A0%B7/" itemprop="url"></a>
+        <a class="post-title-link post-title-link-external" href="/2022/09/19/RayTracingLearning/Install/" itemprop="url"></a>
       </h1>
       <div class="post-meta">
         
@@ -596,454 +517,139 @@
     </header>
     <main class="post-main" itemprop="articleBody">
       
-      <h1 id="重要度采样"><a href="#重要度采样" class="headerlink" title="重要度采样"></a>重要度采样</h1><p>wiki解释：<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E9%87%8D%E8%A6%81%E6%80%A7%E9%87%87%E6%A0%B7">重要度采样</a></p>
-<p>主要：该方法从与原分布不同的另一个分布中采样，而对原先分布的性质进行估计</p>
-<h2 id="重要度采样的推导"><a href="#重要度采样的推导" class="headerlink" title="重要度采样的推导"></a>重要度采样的推导</h2><p>首先利用**一个随机变量$$X$$**的多个样本值$${x_i}$$，构造期望值估计：</p>
-<p>$$ \hat E[X,P] &#x3D; \frac{1}{n} \sum_{i&#x3D;1}^n  x_i $$</p>
-<p>$$ X $$:随机变量</p>
-<p>$$ x_i $$：$$X $$ 样本值。</p>
-<p>$$P$$:  $$X$$的分布。</p>
-<p>这个期望的<strong>精确度和$$X$$的方差</strong>有关：</p>
-<p>$$var [\hat E ; P] &#x3D; var [X;P]&#x2F;n $$</p>
-<p>为了降低方差，我们引入一个新的随机变量$$ L $$，保证$$ E[L;P]&#x3D;1$$得到：</p>
-<p>$$\hat E [X; P] &#x3D; \hat E [\frac{X}{L} ; P^{(L)}] $$</p>
-<p>$$L$$的作用就是降低对$$X$$的方差，来达到降低$$\hat E$$的误差的目的。</p>
-<p>最优的$$ L $$为 $$ L^* &#x3D; \frac{X}{E[X;P]}$$,也就是说，$$L$$把$$X$$变成了一个常量。</p>
-<p>此时，要求的期望值变为：</p>
-<p> $$E[X;P] &#x3D; \frac{X}{ L^*}$$</p>
-<p>但是理论上无法求得$$L*$$，所以需要进行估计，在很小的一段区间($$[a; a + da]$$)上$$L^*$$的概率为:</p>
-<p>$$P^{(L^*)}(X \in [a; a+ da]) &#x3D; \int_{w \in { X \in a;a+da } } \frac{X_w}{E[x;P]} dP(w)  $$</p>
-<p>实际过程我们无法的到最优化的 $$ L* $$，可以用如下方式逼近</p>
-<p>$$ &#x3D;  \frac{1}{E[X;P]} aP(X \in [a; a+ da]) $$ </p>
-<p>上式的意思是一段区间里面$$L^*$$的积分值。</p>
-<p>由于$$L^*$$的期望等于1：</p>
-<p>$$1  &#x3D; \int_{a &#x3D; -\infty}^{\infty}  \frac{1}{E[X;P]} aP(X \in [a; a+ da]) $$ </p>
-<p>此时期望变为：</p>
-<p> $$E[X;P]  &#x3D; \int_{a &#x3D; -\infty}^{\infty} aP(X \in [a; a+ da]) $$  </p>
-
-      
-      <p align="right"><a class="morebtn" href="/2022/09/19/RTR/%E9%87%8D%E8%A6%81%E5%BA%A6%E9%87%87%E6%A0%B7/" title="">阅读全文</a></p>
-    </main>
-    <footer class="post-footer">
-      
-    </footer>
-  </article>
-  
-  <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
-    <div class="post-block">
-      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/09/19/RTR/%E8%A1%A8%E9%9D%A2%E5%8F%8D%E5%B0%84%E6%A8%A1%E5%9E%8B/">
-      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-        <meta itemprop="name" content="leinlin">
-        <meta itemprop="description" content="">
-        <meta itemprop="image" content="/images/avatar.jpg">
-      </span>
-      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-        <meta itemprop="name" content="leinlin的小笔记">
-      </span>
-    </div>
-    <header class="post-header">
-      <h1 class="post-title" itemprop="name headline">
-        <a class="post-title-link post-title-link-external" href="/2022/09/19/RTR/%E8%A1%A8%E9%9D%A2%E5%8F%8D%E5%B0%84%E6%A8%A1%E5%9E%8B/" itemprop="url"></a>
-      </h1>
-      <div class="post-meta">
-        
-        <span class="post-date">
-          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2022-09-19T19:53:33+08:00">2022-09-19 19:53:33</time></span>
-        </span>
-        
-        
-        
-        
-        
-      </div>
-    </header>
-    <main class="post-main" itemprop="articleBody">
-      
-      <h1 id="表面反射模型基础推到"><a href="#表面反射模型基础推到" class="headerlink" title="表面反射模型基础推到"></a>表面反射模型基础推到</h1><p>这篇文章主要用来推导、描述表面反射模型：包括PBR的BRDF、BSSRDF、BSDF以及风格化渲染的反射模型、二次元渲染的反射模型等等内容。</p>
-<p>光线照射到物体表面，发生反射，之后反射光线进入人眼，最终形成人眼对物体的感觉。</p>
-<p><strong>所以最重要的就是光线如何在不同的材质上进行反射，也就是我们现在要研究的反射模型。</strong></p>
-<h2 id="BRDF"><a href="#BRDF" class="headerlink" title="BRDF"></a>BRDF</h2><p><strong>双向反射分布函数（BRDF）</strong>就是最常用的对表面反射的定义。</p>
-<p>BRDF描述的问题：当沿着$w_i$方向入射辐射度为$$ L_{(p,w_i)} $$时，朝向观察者且方向为$$ w_o $$的离开当前表面的辐射度。</p>
-<p>假设$ w_i $为微分方向视椎体，$$ p $$为入射点，则p处的微分入射辐射度为：</p>
-<p>$$ dE(p,w_i) &#x3D; L_i(p,w_i)cos(\theta_i)dw_i $$</p>
-<p>$ L_i(p,w_i) $ 单位辐射角入射光强度，$ cos(\theta_i) $法线和入射角夹角，$ dw_i $为微分方向视椎体</p>
-<p>我们很容易想到，反射光线和入射光线强度是成正比的：</p>
-<p>$$ dE(p,w_i) \propto dL_o(p,w_o) $$ </p>
-<p>所以当给定一对如何方向和反射方向，BDRF函数可以写作：</p>
-<p>$$ f_r(p,w_o,w_i) &#x3D; \frac{dL_o(p,w_o)}{dE(p,w_i)} &#x3D; \frac{dL_o(p,w_o)}{L_i(p,w_i)cos(\theta_i)dw_i} $$</p>
-<p>上面是BRDF函数，而物理的BRDF函数同时还需要满足：</p>
-<ul>
-<li><p>互易性：$$ f_r(p,w_o,w_i) &#x3D; f_r(p,w_i,w_o) $$</p>
-</li>
-<li><p>能量守恒。</p>
-</li>
+      <h2 id="How-to-Get-Started-with-DirectX-Raytracing"><a href="#How-to-Get-Started-with-DirectX-Raytracing" class="headerlink" title="How to Get Started with DirectX Raytracing?"></a><strong>How to Get Started with DirectX Raytracing?</strong></h2><ul>
+<li>An installation of <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Windows_10_version_history">Windows 10 RS4 (v.1803)</a> or higher</li>
 </ul>
-<p>最终的反射光为：</p>
-<p>$$ L_o{(p,w_o)} &#x3D; \int_{\cal H(n)} f_r(p,w_o,w_i)L_i(p,w_i)cos(\theta_i)dw_i $$</p>
-<p>上面的$$ w_o $$只局限在反射方向，就是法线方向的上半球$$ \cal H(n) $$。</p>
-<h2 id="BTDF"><a href="#BTDF" class="headerlink" title="BTDF"></a>BTDF</h2><p>而表面还可能有透视光线，即穿透到法线放线下半球的光线，我们用<strong>双向透射分布函数表述（BTDF）</strong>。$$ w_o $$和$$ w_i $$分布于法线两边。</p>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs c">DirectX Raytracing is experimental on RS4, so you need to enable Developer Mode.<br>On Windows <span class="hljs-number">10</span> RS5, DXR should be integrated which will simplify use.<br></code></pre></td></tr></table></figure>
+
 <ul>
-<li>BTDF不需要满足互易性：从物理意义上来说就是，透射两边的折射率不同。</li>
+<li>You will need GPU hardware and software drivers that support DXR.</li>
 </ul>
-<p>最终的透射光为：</p>
-<p>​			$$ L_o{(p,w_o)} &#x3D; \int_{\Theta(n)} f_t(p,w_o,w_i)L_i(p,w_i)|cos(\theta_i)|dw_i $$</p>
-<p>上面的$$w_o$$只局限在透射方向，就是法线方向的下半球$$ \Theta(n) $$。</p>
-<h2 id="BSSRDF"><a href="#BSSRDF" class="headerlink" title="BSSRDF"></a>BSSRDF</h2><p>很多材质还会表现出<strong>下表面的光线传输</strong>。<strong>双向散射表面反射分布函数（BSSRDF）</strong>。</p>
-<p>与反射分布函数和透射分布函数不同的是：<strong>散射的能量还需要考虑从其他附近入射点传递来的能量</strong>。</p>
-<p>此时，$$ f_r(p,w_o,w_i) &#x3D; \frac{dL_o(p,w_o)}{dE(p,w_i)}  $$  只考虑了当前点的入射，还需要考虑附近点的积累$$ S(p_o,w_o,p_i,w_i) &#x3D; \frac{dL_o(p_o,w_o)}{dE(p_i,w_i)}  $$。</p>
-<p>也就是说，在附近某一点$ p_i $ 处入射的能量与他最终离开$ p_o $点时能量的比例就是$$ S(p_o,w_o,p_i,w_i) $$。</p>
-<p>所以这个时候的积分需要考虑的不再是一个点，还需要考虑一片区域：</p>
-<p>​			$$  L_o{(p_o,w_o)} &#x3D; \int_A  \int_{\Theta(n)} S(p_o,w_o,p_i,w_i) L_i(p_i,w_i)|cos(\theta_i)|dw_i dA $$</p>
-<p>这个公式有如下特点：</p>
+<figure class="hljs highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">NVIDIA supports DXR on Volta GPUs with drivers 396.x and above.<br>NVIDIA supports DXR on Turing GPUs with drivers in the 400 series.<br>All DirectX 12 class GPUs can run DXR via Microsoft&#x27;s fallback layer<br>On Windows 10 RS4, this fallback uses a subtly different API, so not all tutorials support both hardware and fallback modes.<br></code></pre></td></tr></table></figure>
+
 <ul>
-<li>随着$p_o$和$ p_i$的距离增加S的值会变小</li>
-<li>通常算法会通过一个卷积（基于几何空间或者基于图片空间）来表述，周围表面受光对当前点的影响。</li>
+<li>For development on RS4, you need Microsoft’s <a target="_blank" rel="noopener" href="http://forums.directxtech.com/index.php?topic=5860.0">DXR installation package</a></li>
 </ul>
-<h1 id="辐射度理论"><a href="#辐射度理论" class="headerlink" title="辐射度理论"></a>辐射度理论</h1><p>为什么将辐射度理论，<strong>就是为了更好的理解光线的发射与吸收的多少。</strong></p>
-<p>辐射通量（$$ \Phi $$，也叫作功率）：单位时间内，穿过某一表面或空间的全部能量。</p>
-<p>辐射度（$$ W&#x2F;m^2 $$）：表示穿过某一表面的<strong>通量面密度</strong>（可以理解成穿过单位面积的光线数量，<strong>可以理解亮度、光照强度</strong>）。</p>
-<p>一个点光源发射光线，在具体他为r的位置，出辐射度为：</p>
-<p>$$ E &#x3D; \Phi &#x2F; 4\pi r^2 $$</p>
-<p>所以<strong>光照强度</strong>（就是单位面积光线数量，也就是<strong>通量面密度</strong>）按照距离的平方进行衰减的。</p>
-<h2 id="Lambertian定理"><a href="#Lambertian定理" class="headerlink" title="Lambertian定理"></a>Lambertian定理</h2><h3 id="入射辐射度"><a href="#入射辐射度" class="headerlink" title="入射辐射度"></a>入射辐射度</h3><p><strong>Lambertian定理：到达表面的光线数量正比与光线方向和法线方向夹角的余弦。</strong></p>
-<p>如下图，一个<strong>面光源</strong>以$\theta$角度照射表面，面光源面积为$ A $,辐射通量为$ \Phi $，对应接受光照的表面面积为$ A1 $。<strong>如果A足够的小</strong>（这一点非常重要），那么对于A1内的点，入辐射度<strong>约</strong>为 $$ E &#x3D; \frac{\Phi\cos(\theta)}{A} $$ 。</p>
-<p><img src="/../../images/img/brdf_inlight.jpg" alt="brdf_inlight"></p>
-<h3 id="出射辐射度"><a href="#出射辐射度" class="headerlink" title="出射辐射度"></a>出射辐射度</h3><p><strong>Lambertian反射</strong>：反射方向的单位<strong>辐射度</strong>均匀分布&#x3D; $$ \frac{接收的光线强度}{\pi} $$ </p>
-<p>如下图，假如A处的<strong>光线是按照各个方向平均反射</strong>的，那么A1和A2接收到的<strong>光线总数</strong>是一样多的。但是，由于A1和A2的<strong>面积不一样</strong>，所以他们的<strong>辐射度</strong>（<strong>光照强度</strong>，<strong>亮度</strong>）是不一样的！！！</p>
-<p><strong>而Lambertian反射要求的是辐射度一样</strong>，<strong>所以光线的反射数量与反射方向和法线方向夹角的余弦成正比。</strong></p>
-<p><img src="/../../images/img/brdf_outlight.jpg" alt="brdf_outlight"></p>
-<h1 id="表面反射函数实践"><a href="#表面反射函数实践" class="headerlink" title="表面反射函数实践"></a>表面反射函数实践</h1><p>首先BDRF的积分可以简化为求和，因为游戏引擎中光照都是通过有限个光源计算的，不在需要<strong>微分方向视椎体</strong>：</p>
-<p>$$ L_o{(p,w_o)} &#x3D; \int_{\cal H(n)} f_r(p,w_o,w_i)L_i(p,w_i)cos(\theta_i)dw_i $$</p>
-<p>变成：</p>
-<p>$$ L_o{(p,w_o)} &#x3D; \sum_{w_i} f_r(p,w_o,w_i)L_i(p,w_i)cos(\theta_i) $$</p>
-<p>$$ w_i $$ :为某个入射光方向。</p>
-<p>$$ L_i(p,w_i) $$  :  一般就是经过<strong>距离衰减</strong>和<strong>阴影遮挡</strong>计算之后的光亮度。</p>
-<p>$$ cos(\theta_i) $$ 	: 就是$$ dot(w_i,w_o) $$</p>
-<p>另一点需要注意的是，RGB通道的每个分量的颜色都是独立计算的。</p>
-<p>下面我们将讨论具体的$$  f_r(p,w_o,w_i) $$都是怎么计算的。</p>
-<h2 id="Lambertian反射"><a href="#Lambertian反射" class="headerlink" title="Lambertian反射"></a>Lambertian反射</h2><p>Lambertian模型可以作为最简单的BRDF模型，他是能量守恒的。</p>
-<p>$$ f_{Lambertian}(p,w_o,w_i) &#x3D; \frac{R}{\pi} $$</p>
-<p>$$ R $$  :表示的是表面反射率（Albedo\Diffuse），在实际中就是RGB通道的颜色值。</p>
-<h3 id="Lambertian为什么除-pi"><a href="#Lambertian为什么除-pi" class="headerlink" title="Lambertian为什么除$ \pi $"></a>Lambertian为什么除$ \pi $</h3><p>首先分析一种错误的理解：反射半球的表面积应该是$$ 2\pi r^2 $$，反射射光照总能量比例为$$R$$，各个方向平均反射，所以最终lambertian反射强度应该是:</p>
-<p>$$ \frac{R}{2\pi} $$</p>
-<p>这种理解错误的原因是：Lambertian考虑的是反射辐通量（光照强度）各个方向恒定，而不是反射总辐通量R被平均分。</p>
-<p>那么这个$$ \frac{R}{\pi} $$是怎么来的？</p>
-<p>对<strong>幅通量</strong>根据Lambertian定律（反射幅通量和$ cos(\theta) $成正比）进行半球积分得到表面接收的<strong>辐通量</strong>。</p>
-<p><img src="/../../images/img/Lamberts-cosine-law.png" alt="Lamberts-cosine-law"></p>
-<p>对所有方向的辐通量进行积分就可以得到反射全部的总辐射度：</p>
-<p>$$ L_o&#x3D; \int  f_{Lambertian}(p,w_o,w_i) cos\theta dw_o $$	</p>
-<p><strong>有一个需要理解的地方：因某个方向的出辐射度为X（面积小），那么对其贡献辐射度的表面上的辐射度为$Xcos\theta$（面积大所以贡献的辐射度少）。</strong></p>
-<p>因为，Lambertian的brdf($$ f_{Lambertian}(p,w_o,w_i) $$ )是常数：</p>
-<p>$$ L_o&#x3D; \int  f_{Lambertian}(p,w_o,w_i)  cos\theta dw_o $$	</p>
-<p>进行移项：</p>
-<p>$$ \frac{L_o}{f_{Lambertian}(p,w_o,w_i) } &#x3D; \int cos \theta dw_o $$</p>
-<p>下面对：反射半球半球积分$$ \int cos \theta dw_o $$ 进行拆解和仔细计算：</p>
-<p>$$ \int_0^{2\pi} \int_0^{\frac{\pi}{2} } cos \theta \ sin \theta d \theta d \phi   $$</p>
-<p>$$ &#x3D; 4  \int_0^{\frac{\pi}{2}}  \int_0^{\frac{\pi}{2} }  cos \theta  sin\theta d \theta d \phi $$</p>
-<p>$$ &#x3D;   \int_0^{\frac{\pi}{2}}  \int_0^{\frac{\pi}{2} }  sin 2\theta d 2\theta d \phi $$</p>
-<p>$$ &#x3D; \int_0^{\frac{\pi}{2}}  \int_0^{\frac{\pi}{2} }  d(-cos 2\theta  )d \phi $$</p>
-<p>$$ &#x3D;(-cos \pi + cos 0) *\frac{\pi}{2} $$</p>
-<p>$$ &#x3D;\pi $$</p>
-<p>所以：</p>
-<p>$$ \frac{L_o}{f_{Lambertian}(p,w_o,w_i)} &#x3D; \pi $$</p>
-<p>$$f_{Lambertian}(p,w_o,w_i)  &#x3D;  \frac{L_o}{ \pi} $$</p>
-<p>假设入射辐通量为1，表面反射率为R（入射光被反射的比例），则反射辐通量（反射之后分布到各个方向后的比例）为：</p>
-<p>$$f_{Lambertian}(p,w_o,w_i) &#x3D;  \frac{R}{ \pi} $$</p>
-<p>至此，推导完毕。</p>
-<h2 id="菲涅尔方程"><a href="#菲涅尔方程" class="headerlink" title="菲涅尔方程"></a>菲涅尔方程</h2><p>菲涅尔等式主要用来求解反射和透射系数。</p>
-<p>首先需要，两种材质的折射率$$ \eta_i $$和$$ \eta_t $$ ,一般情况下随着光的波长折射率会有变化。</p>
-<p>菲涅尔定律：</p>
-<p>$$ \eta_i \sin(\theta_i) &#x3D; \eta_t \sin(\theta_t) $$</p>
-<p>反射定律：</p>
-<p>$$\theta_i &#x3D; \theta_o$$</p>
-<h3 id="Unity-Fresnel"><a href="#Unity-Fresnel" class="headerlink" title="Unity Fresnel"></a>Unity Fresnel</h3><figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs c">real3 <span class="hljs-title function_">F_Schlick</span><span class="hljs-params">(real3 f0, real f90, real u)</span><br>&#123;<br>    real x = <span class="hljs-number">1.0</span> - u;<br>    real x2 = x * x;<br>    real x5 = x * x2 * x2;<br>    <span class="hljs-keyword">return</span> f0 * (<span class="hljs-number">1.0</span> - x5) + (f90 * x5);        <span class="hljs-comment">// sub mul mul mul sub mul mad*3</span><br>&#125;<br></code></pre></td></tr></table></figure>
-
-<h2 id="微表面模型-TODO"><a href="#微表面模型-TODO" class="headerlink" title="微表面模型 TODO"></a>微表面模型 TODO</h2><p>整体BRDF模型：</p>
-<p>$$f &#x3D; \frac{D()G()F()}{4cos\theta_o cos\theta_i}$$</p>
-<p>下面描述整体推到过程:</p>
-<h3 id="通量-Phi"><a href="#通量-Phi" class="headerlink" title="通量$ \Phi $"></a>通量$ \Phi $</h3><p>第一个概念是通量，单位时间穿过一个表面上光线的<strong>总量</strong>。（也就是功率）。</p>
-<h3 id="入射辐射度-L-i-和反射辐射度-L-o"><a href="#入射辐射度-L-i-和反射辐射度-L-o" class="headerlink" title="入射辐射度$ L_i $和反射辐射度$ L_o $"></a>入射辐射度$ L_i $和反射辐射度$ L_o $</h3><p>表示<strong>单位时间单位面积</strong>入射（反射）表面接受（反射）的光线量。</p>
-<p>如果入射表面面积为$$ A $$， 则：$$ L_i &#x3D; \frac{\Phi}{A} $$</p>
-<p>写成微分形式：$$ L_i &#x3D; \frac{d \Phi}{d A} $$</p>
-<h3 id="立体角-w-和光强"><a href="#立体角-w-和光强" class="headerlink" title="立体角$ w $和光强"></a>立体角$ w $和光强</h3><p>光线传过单位立体角的数量。就是光强。$$ E &#x3D; \frac{\Phi}{w} $$微分形式：$$ E &#x3D; \frac{d \Phi}{d w} $$</p>
-<h3 id="辐射度-L"><a href="#辐射度-L" class="headerlink" title="辐射度$ L $"></a>辐射度$ L $</h3><p>单位时间内传过单位立体角单位面积的光线量。</p>
-<p>$$ L &#x3D;\frac{d\Phi }{dw dA_{w} } $$         </p>
-<p>$$ d\Phi_i&#x3D;  L(w_i)dw_i cos \theta_i dA $$ </p>
-<p>$$ d\Phi_o&#x3D;  L(w_o)dw_o cos \theta_o dA $$ </p>
-<h3 id="菲涅尔公式F"><a href="#菲涅尔公式F" class="headerlink" title="菲涅尔公式F"></a>菲涅尔公式F</h3><p>表示某一角度下光线被反射、折射的比例。 $$ \Phi_i $$为入射通量，$$ \Phi_o $$反射通量。则：</p>
-<p>$$ \Phi_o &#x3D; F\Phi_i $$</p>
-<h3 id="BDRF公式"><a href="#BDRF公式" class="headerlink" title="BDRF公式"></a>BDRF公式</h3><p>​				$$ f_r(p,w_o,w_i) &#x3D; \frac{L_o(p,w_o)}{dE(p,w_i)} &#x3D; \frac{L_o(p,w_o)}{L_i(p,w_i)cos(\theta_i)dw_i} $$</p>
-<p>这里的$ L_o $ 没有积分符号，是因为我们现在计算的是某一条线如何光线与某一条反射光线。</p>
-<h3 id="BDRF推导"><a href="#BDRF推导" class="headerlink" title="BDRF推导"></a>BDRF推导</h3><p>在微面元理论中，我们的$ dA $由很多微面元组成，并且这些面元只有<strong>全镜面反射</strong>，只有满足$$ w_h &#x3D; w_n $$的表面才能被反射出去。我们<strong>用统计模型$$D(w_h) $$来描述某个角度的面片比例</strong>。 那么入射的辐通量就需要考虑面片分布。则：</p>
-<p>$$ d\Phi_i&#x3D;  L(w_i)dw_i D(w_h) dw_hcos \theta_o dA $$ </p>
-<p>半角向量和出射角向量微分的对应关系:</p>
-<p>$$dw_h &#x3D; \frac{dw_o}{4cos(\theta_o)}$$</p>
-<p><strong>1. 菲涅尔公式+BRDF公式：</strong></p>
-<p>$$ L(w_o)dw_o cos \theta_o dA &#x3D;  F L(w_i)dw_i D(w_h) dw_hcos \theta_o dA $$</p>
-<p><strong>2. 半角向量和出射角向量微分的对应关系:</strong></p>
-<p>$$ 4 cos \theta_o L(w_o) cos \theta_o &#x3D;  F L(w_i)dw_i D(w_h)cos \theta_h $$</p>
-<p><strong>3. 通过移项、约分构造brdf</strong></p>
-<p>$$ \frac{L_o(p,w_o)}{L_i(p,w_i)cos(\theta_i)dw_i}  &#x3D; \frac{ F D(w_h)  }{4  cos \theta_o cos \theta_i} $$</p>
-<p><strong>4.除了上面的F、D之外，由于几何结构，还有一些光线由于几何结构被：masking 和 shadowing。所以这个比例为G项。</strong></p>
-<p><strong>5.所以最终结果为：</strong></p>
-<p>$$ brdf &#x3D;  \frac{L_o(p,w_o)}{L_i(p,w_i)cos(\theta_i)dw_i}  &#x3D; \frac{ F D(w_h)  G}{4  cos \theta_o cos \theta_i} $$</p>
-<h3 id="法线分布函数：normal-distribution-function"><a href="#法线分布函数：normal-distribution-function" class="headerlink" title="法线分布函数：normal distribution function"></a>法线分布函数：normal distribution function</h3><p>D项：法线分布函数用来描述，法线方向在表面上的分布情况，积分结果为1。</p>
-<h3 id="几何衰减：Evaluate-shadowing-x2F-masking-term"><a href="#几何衰减：Evaluate-shadowing-x2F-masking-term" class="headerlink" title="几何衰减：Evaluate shadowing&#x2F;masking term"></a>几何衰减：Evaluate shadowing&#x2F;masking <strong>term</strong></h3><p>G项：用来描述Shadow和masking项。用来描述不同的几何结构有多少光线被遮挡。</p>
-<h3 id="菲涅尔项：Fresnel"><a href="#菲涅尔项：Fresnel" class="headerlink" title="菲涅尔项：Fresnel"></a>菲涅尔项：Fresnel</h3><p>F项：用来描述在不同材质，不同角度上，反射光线所占的比例。</p>
-<h2 id="unity中的实现"><a href="#unity中的实现" class="headerlink" title="unity中的实现"></a>unity中的实现</h2><h3 id="Unity-Specular-Term"><a href="#Unity-Specular-Term" class="headerlink" title="Unity Specular Term"></a>Unity Specular Term</h3><figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-keyword">case</span> <span class="hljs-number">0</span>: specularTerm = ComputeWard(H, LdotH, NdotL, NdotV, positionWS, preLightData, bsdfData); <span class="hljs-keyword">break</span>;<br><span class="hljs-keyword">case</span> <span class="hljs-number">1</span>: specularTerm = ComputeBlinnPhong(H, LdotH, NdotL, NdotV, positionWS, preLightData, bsdfData); <span class="hljs-keyword">break</span>;<br><span class="hljs-keyword">case</span> <span class="hljs-number">2</span>: specularTerm = ComputeCookTorrance(H, LdotH, NdotL, NdotV, positionWS, preLightData, bsdfData); <span class="hljs-keyword">break</span>;<br><span class="hljs-keyword">case</span> <span class="hljs-number">3</span>: specularTerm = ComputeGGX(H, LdotH, NdotL, NdotV, positionWS, preLightData, bsdfData); <span class="hljs-keyword">break</span>;<br><span class="hljs-keyword">case</span> <span class="hljs-number">4</span>: specularTerm = ComputePhong(H, LdotH, NdotL, NdotV, positionWS, preLightData, bsdfData); <span class="hljs-keyword">break</span>;<br></code></pre></td></tr></table></figure>
-
-<h3 id="Unity-Specular-Term-1"><a href="#Unity-Specular-Term-1" class="headerlink" title="Unity Specular Term"></a>Unity Specular Term</h3><figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs c">Lambert<br>OrenNayar<br></code></pre></td></tr></table></figure>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs c">Many of the tutorials above come with this package.<br>On RS5, this may be integrated with the standard Windows SDK<br></code></pre></td></tr></table></figure>
 
 
-      
-      <p align="right"><a class="morebtn" href="/2022/09/19/RTR/%E8%A1%A8%E9%9D%A2%E5%8F%8D%E5%B0%84%E6%A8%A1%E5%9E%8B/" title="">阅读全文</a></p>
-    </main>
-    <footer class="post-footer">
-      
-    </footer>
-  </article>
-  
-  <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
-    <div class="post-block">
-      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/09/19/RTR/%E8%92%99%E7%89%B9%E5%8D%A1%E6%B4%9B%E6%96%B9%E6%B3%95/">
-      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-        <meta itemprop="name" content="leinlin">
-        <meta itemprop="description" content="">
-        <meta itemprop="image" content="/images/avatar.jpg">
-      </span>
-      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-        <meta itemprop="name" content="leinlin的小笔记">
-      </span>
-    </div>
-    <header class="post-header">
-      <h1 class="post-title" itemprop="name headline">
-        <a class="post-title-link post-title-link-external" href="/2022/09/19/RTR/%E8%92%99%E7%89%B9%E5%8D%A1%E6%B4%9B%E6%96%B9%E6%B3%95/" itemprop="url"></a>
-      </h1>
-      <div class="post-meta">
-        
-        <span class="post-date">
-          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2022-09-19T19:53:33+08:00">2022-09-19 19:53:33</time></span>
-        </span>
-        
-        
-        
-        
-        
-      </div>
-    </header>
-    <main class="post-main" itemprop="articleBody">
-      
-      <h1 id="蒙特卡洛方法"><a href="#蒙特卡洛方法" class="headerlink" title="蒙特卡洛方法"></a>蒙特卡洛方法</h1><p>wiki解释:<a target="_blank" rel="noopener" href="https://zh.wikipedia.org/wiki/%E8%92%99%E5%9C%B0%E5%8D%A1%E7%BE%85%E6%96%B9%E6%B3%95">蒙特卡洛</a></p>
-<p>重点在于：蒙特卡罗方法在数学中的应用，下面摘要了关键的部分。</p>
-<h2 id="蒙特卡洛积分"><a href="#蒙特卡洛积分" class="headerlink" title="蒙特卡洛积分"></a>蒙特卡洛积分</h2><p>非权重蒙特卡罗积分，也称<strong>确定性抽样</strong>，是对被积函数<strong>变量区间</strong>进行<strong>随机均匀抽样</strong>，然后对抽样点的<strong>函数值求平均</strong>，从而可以得到<strong>函数积分的近似值</strong>。</p>
-<p>此种方法的正确性是基于<strong>概率论</strong>和<strong>中心极限定理</strong>)。</p>
-<p>当抽样点数为m时，使用此种方法所得近似解的统计误差只与m有关（与 $$\frac{1}{\sqrt m}$$正相关），不随积分维数的改变而改变。因此当积分维度较高时，蒙特卡罗方法相对于其他数值解法更优。</p>
-<h2 id="蒙脱卡洛方法推导"><a href="#蒙脱卡洛方法推导" class="headerlink" title="蒙脱卡洛方法推导"></a>蒙脱卡洛方法推导</h2><p>首先，有<strong>一组</strong>独立同分布的随机变量 $ { X_i } $ 。注意这是独立同分布的集合包括了多个随机变量。</p>
-<p>每一个随机变量 $ X_i $ 在 $ [a,b] $ 上服从分布 $  f_x $ （概率密度函数PDF，积分为1）。  </p>
-<p>我们构造一个新的函数 $ g^*(x) &#x3D; \frac{g(x)}{f_x{(x)}} $ ， 然后 $ g^*(X_i) $ 也是一个随机变量。</p>
-<p><em><em>关键： $ g^</em>(X_i ) $  的概率为 $ f_x(X_i) $ !!!</em>*</p>
-<p>我们现在计算这个新的随机变量的<strong>期望</strong>：</p>
-<p> $$ E[g^*(X_i)] &#x3D; \int _a^b g^*(x)f_x(x) dx  &#x3D; \int _a^b  g(x) d x &#x3D; I $$ </p>
-<p>根据<strong>强大数定理</strong>：</p>
-<p>$$ Pr(\lim_{N \to \infty } \frac {1}{N} \sum_{i&#x3D;1}^{N} g^*(X_i) &#x3D; I )&#x3D; 1 $$</p>
-<p>我们项构造一个平均值 $ \hat I  $ ，则 $ \hat I  $ 依1概率收敛到 $ I $ ：</p>
-<p>$$ \hat I &#x3D; \frac {1}{N} \sum_{i&#x3D;1}^{N} g^*(X_i)  $$</p>
-<p>在完成以上的准备条件之后，我们进行实际推导：</p>
-<p><strong>问题：</strong> 我们希望求解积分：</p>
-<p>$$  I &#x3D; \int_a^b g(x) dx $$</p>
-<p><strong>求解：</strong></p>
-<ol>
-<li><p>假设函数 $ g(x) $ 分布在 $ [a,b] $ 内可积。</p>
-</li>
-<li><p>构造任意一个概率密度函数 $ f_x (x) $. 满足：</p>
-<p>a.  当 $  g(x)  \neq 0 $ 时， $ f_x(x) \neq 0  $ , $ (a &lt; x &lt; b) $ .</p>
-<p>b.  $ \int_a^b f_x(x) dx &#x3D; 1 $.</p>
-</li>
-</ol>
-<p>引入上面条件,原积分（<strong>期望</strong>）可以写成：</p>
-<p>$ I &#x3D; \int_a^b g^*(x)f_x(x) dx $</p>
-<p>根据强大数定理得到的平均值（<strong>期望估计</strong>）变为：</p>
-<p>$ \hat I &#x3D; \frac {1}{N} \sum_{i&#x3D;1}^{N} g^*(X_i)  $</p>
-<p>根据之前的说明：随着采样次数增多 $ \hat I  $ 依概率1收敛到 $ I $ ：</p>
-<p><strong>所以 $ \hat I  $  可以作为 $ I $ 的一个估计。</strong></p>
-<p>如果 $ f_x $ 是 $ [a , b ] $ 上的一个<strong>均匀分布</strong>的话，那么积分就变成了:</p>
-<p>$ I &#x3D; (b - a) \int_a^b g(x) \frac{1}{b - a} dx $</p>
-<p>均值就变成了 （ $ f_x $ 消失了）：</p>
-<p>$$ \hat I &#x3D; \frac {b - a}{N} \sum_{i&#x3D;1}^{N} g(X_i)  $$</p>
-<p> $ \hat I  $ 就是 $ I $ 的估计，蒙特卡洛积分就是用<br> $$ \frac {b - a}{N} \sum_{i&#x3D;1}^{N} g(X_i) $$<br> 估计<br> $$  \int _a^b  g(x) d x  $$</p>
-<h2 id="蒙特卡洛在渲染当中的应用"><a href="#蒙特卡洛在渲染当中的应用" class="headerlink" title="蒙特卡洛在渲染当中的应用"></a>蒙特卡洛在渲染当中的应用</h2><p>这里主要来自一本书：</p>
-<p>《Monte Carlo Methods in Global Illumination - Photo-realistic Rendering with Randomization》</p>
-<p>主要用来用随机采样的方法解决全局光照渲染的问题。</p>
-<p>因为，全局光照的积分是一个难以求和的积分，刚好符合蒙特卡洛积分的思路。</p>
 
-      
-      <p align="right"><a class="morebtn" href="/2022/09/19/RTR/%E8%92%99%E7%89%B9%E5%8D%A1%E6%B4%9B%E6%96%B9%E6%B3%95/" title="">阅读全文</a></p>
-    </main>
-    <footer class="post-footer">
-      
-    </footer>
-  </article>
-  
-  <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
-    <div class="post-block">
-      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/09/19/RTR/%E7%90%83%E9%9D%A2%E8%B0%90%E6%B3%A2%E7%90%86%E8%AE%BA%E4%B8%8E%E5%BA%94%E7%94%A8/">
-      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-        <meta itemprop="name" content="leinlin">
-        <meta itemprop="description" content="">
-        <meta itemprop="image" content="/images/avatar.jpg">
-      </span>
-      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-        <meta itemprop="name" content="leinlin的小笔记">
-      </span>
-    </div>
-    <header class="post-header">
-      <h1 class="post-title" itemprop="name headline">
-        <a class="post-title-link post-title-link-external" href="/2022/09/19/RTR/%E7%90%83%E9%9D%A2%E8%B0%90%E6%B3%A2%E7%90%86%E8%AE%BA%E4%B8%8E%E5%BA%94%E7%94%A8/" itemprop="url"></a>
-      </h1>
-      <div class="post-meta">
-        
-        <span class="post-date">
-          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2022-09-19T19:53:33+08:00">2022-09-19 19:53:33</time></span>
-        </span>
-        
-        
-        
-        
-        
-      </div>
-    </header>
-    <main class="post-main" itemprop="articleBody">
-      
-      <h1 id="球面谐波的理论与实践"><a href="#球面谐波的理论与实践" class="headerlink" title="球面谐波的理论与实践"></a>球面谐波的理论与实践</h1><p>球谐光照就是用N个多项式拟合一个位置的低频光照函数。主要用到的就是球面谐波。</p>
-<p>下面详细分析球谐函数的推导。</p>
-<h2 id="球谐函数"><a href="#球谐函数" class="headerlink" title="球谐函数"></a>球谐函数</h2><p>下面先介绍几个和球谐相关的数学理论。</p>
-<h3 id="期望："><a href="#期望：" class="headerlink" title="期望："></a>期望：</h3><h3 id="蒙特卡洛："><a href="#蒙特卡洛：" class="headerlink" title="蒙特卡洛："></a>蒙特卡洛：</h3><h3 id="大数定理："><a href="#大数定理：" class="headerlink" title="大数定理："></a>大数定理：</h3><h3 id="随机数与球面坐标："><a href="#随机数与球面坐标：" class="headerlink" title="随机数与球面坐标："></a>随机数与球面坐标：</h3><h3 id="正交基函数："><a href="#正交基函数：" class="headerlink" title="正交基函数："></a>正交基函数：</h3><h3 id="正交多项式："><a href="#正交多项式：" class="headerlink" title="正交多项式："></a>正交多项式：</h3><h3 id="球谐："><a href="#球谐：" class="headerlink" title="球谐："></a>球谐：</h3><h3 id="球谐函数："><a href="#球谐函数：" class="headerlink" title="球谐函数："></a>球谐函数：</h3><h3 id="球谐投影："><a href="#球谐投影：" class="headerlink" title="球谐投影："></a>球谐投影：</h3><h3 id="球谐光照："><a href="#球谐光照：" class="headerlink" title="球谐光照："></a>球谐光照：</h3><h3 id="采样与计算"><a href="#采样与计算" class="headerlink" title="采样与计算:"></a>采样与计算:</h3>
-      
-      <p align="right"><a class="morebtn" href="/2022/09/19/RTR/%E7%90%83%E9%9D%A2%E8%B0%90%E6%B3%A2%E7%90%86%E8%AE%BA%E4%B8%8E%E5%BA%94%E7%94%A8/" title="">阅读全文</a></p>
-    </main>
-    <footer class="post-footer">
-      
-    </footer>
-  </article>
-  
-  <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
-    <div class="post-block">
-      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/09/19/RTR/%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF/">
-      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-        <meta itemprop="name" content="leinlin">
-        <meta itemprop="description" content="">
-        <meta itemprop="image" content="/images/avatar.jpg">
-      </span>
-      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-        <meta itemprop="name" content="leinlin的小笔记">
-      </span>
-    </div>
-    <header class="post-header">
-      <h1 class="post-title" itemprop="name headline">
-        <a class="post-title-link post-title-link-external" href="/2022/09/19/RTR/%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF/" itemprop="url"></a>
-      </h1>
-      <div class="post-meta">
-        
-        <span class="post-date">
-          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2022-09-19T19:53:33+08:00">2022-09-19 19:53:33</time></span>
-        </span>
-        
-        
-        
-        
-        
-      </div>
-    </header>
-    <main class="post-main" itemprop="articleBody">
-      
-      <h1 id="渲染管线"><a href="#渲染管线" class="headerlink" title="渲染管线"></a>渲染管线</h1><p>最近回顾了一下基础的图形学内容，发现很多都忘记了，现在认真的总结一下。主要内容都来自<a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/windows/desktop/direct3d11/overviews-direct3d-11-graphics-pipeline">d3d的官方文档当中提取的图形管线</a>当中。</p>
-<p>下图是一个总览的流程，这个流程主要是针对D3D API可配置的阶段：</p>
-<p><img src="/img/renderpipeline-d3d11-pipeline-stages.jpg" alt="d3d11-pipeline-stages"></p>
-<h2 id="渲染管线总览"><a href="#渲染管线总览" class="headerlink" title="渲染管线总览"></a>渲染管线总览</h2><p>D3D 10和更高级的API支持将渲染管线 划分成不同的功能阶段，下面是每一个阶段的主要描述：</p>
+
+
+<p><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Windows_10_version_history">Windows版本查看</a>，我们一般看到的是build版本。</p>
+<p>Win+R ，输入cmd在命令行最上方会显示，其中17763就是Build版本，可以看表得到对应的Version：</p>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c">Microsoft Windows [版本 <span class="hljs-number">10.0</span><span class="hljs-number">.17763</span><span class="hljs-number">.1577</span>]<br>(c) <span class="hljs-number">2018</span> Microsoft Corporation。保留所有权利。<br><br>C:\Users\User&gt;<br></code></pre></td></tr></table></figure>
+
+
+
+
+
+
 <table>
 <thead>
 <tr>
-<th align="left">Topic</th>
-<th align="left">Description</th>
+<th align="center">Version</th>
+<th align="center">Codename</th>
+<th align="center">Marketing name</th>
+<th align="center">Build</th>
+<th align="center">Release date</th>
 </tr>
 </thead>
 <tbody><tr>
-<td align="left">Input-Assembler Stage 输入装配阶段</td>
-<td align="left">the first stage in the pipeline is the input-assembler (IA) stage.第一个阶段是输入装配阶段。</td>
+<td align="center">HomePro Pro Education Pro for Workstations</td>
+<td align="center">Enterprise Education</td>
+<td align="center">LTSC</td>
+<td align="center">Mobile</td>
+<td align="center"></td>
 </tr>
 <tr>
-<td align="left">Vertex Shader Stage</td>
-<td align="left">The vertex-shader (VS) stage processes vertices from the input assembler, performing per-vertex operations such as transformations, skinning, morphing, and per-vertex lighting. （vertexShder阶段主要处理逐顶点操作，包括：transformation，顶点光照，变形，蒙皮等，他的数据来源于IA阶段。）Vertex shaders always operate on a single input vertex and produce a single output vertex（输入输出都是单独顶点）.</td>
+<td align="center">1507</td>
+<td align="center"><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Windows_10_version_history_(version_1507)">Threshold 1</a></td>
+<td align="center">N&#x2F;A</td>
+<td align="center">10240</td>
+<td align="center">July 29, 2015</td>
 </tr>
 <tr>
-<td align="left">Tessellation Stages</td>
-<td align="left">曲面细分，处理的是表面：三角形。</td>
+<td align="center">1511</td>
+<td align="center"><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Windows_10_version_history_(version_1511)">Threshold 2</a></td>
+<td align="center">November Update</td>
+<td align="center">10586</td>
+<td align="center">November 10, 2015</td>
 </tr>
 <tr>
-<td align="left">Geometry Shader Stage</td>
-<td align="left">处理一系列顶点输入，产生一系列顶点输出。</td>
+<td align="center">1607</td>
+<td align="center"><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Windows_10_version_history_(version_1607)">Redstone 1</a></td>
+<td align="center">Anniversary Update</td>
+<td align="center">14393</td>
+<td align="center">August 2, 2016</td>
 </tr>
 <tr>
-<td align="left">Stream-Output Stage</td>
-<td align="left">The purpose of the stream-output stage is to continuously output (or stream) vertex data from the geometry-shader stage (or the vertex-shader stage if the geometry-shader stage is inactive) to one or more buffers in memory (see <a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/windows/desktop/direct3d11/d3d10-graphics-programming-guide-output-stream-stage-getting-started">Getting Started with the Stream-Output Stage</a>).  将顶点处理的数据传送到一个或者多个内存？</td>
+<td align="center">1703</td>
+<td align="center"><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Windows_10_version_history_(version_1703)">Redstone 2</a></td>
+<td align="center">Creators Update</td>
+<td align="center">15063</td>
+<td align="center">April 5, 2017</td>
 </tr>
 <tr>
-<td align="left">Rasterizer Stage</td>
-<td align="left">The rasterization stage converts vector information (composed of shapes or primitives) into a raster image (composed of pixels) for the purpose of displaying real-time 3D graphics.  从顶点到图像。</td>
+<td align="center">1709</td>
+<td align="center"><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Windows_10_version_history_(version_1709)">Redstone 3</a></td>
+<td align="center">Fall Creators Update</td>
+<td align="center">16299</td>
+<td align="center">October 17, 2017</td>
 </tr>
 <tr>
-<td align="left">Pixel Shader Stage</td>
-<td align="left">The pixel-shader stage (PS) enables rich shading techniques such as per-pixel lighting and post-processing. <strong>A pixel shader is a program that combines constant variables, texture data, interpolated per-vertex values, and other data to produce per-pixel outputs.</strong> （pixel Shader主要将常量、纹理数据、逐顶点插值数据等内容来生成像素输出）The rasterizer stage invokes a pixel shader once for each pixel covered by a primitive, however, it is possible to specify a <strong>NULL</strong> shader to avoid running a shader. （光栅化阶段会为每一个被图元覆盖的像素执行一次pixelShader）</td>
+<td align="center">1803</td>
+<td align="center"><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Windows_10_version_history_(version_1803)">Redstone 4</a></td>
+<td align="center">April 2018 Update</td>
+<td align="center">17134</td>
+<td align="center">April 30, 2018</td>
 </tr>
 <tr>
-<td align="left">Output-Merger Stage</td>
-<td align="left">The output-merger (OM) stage generates the final rendered pixel color using a combination of pipeline state（OM阶段会根据渲染状态的组合生成最终的颜色：pixel Shader输出，渲染目标，深度&#x2F;stencil buffer内容）, the pixel data generated by the pixel shaders, the contents of the render targets, and the contents of the depth&#x2F;stencil buffers. The OM stage is the final step for determining which pixels are visible (with depth-stencil testing) and blending the final pixel colors**.(OM阶段决定哪个像素可见，深度和stencil测试和blend。）**</td>
+<td align="center">1809</td>
+<td align="center"><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Windows_10_version_history_(version_1809)">Redstone 5</a></td>
+<td align="center">October 2018 Update</td>
+<td align="center">17763</td>
+<td align="center">November 13, 2018</td>
+</tr>
+<tr>
+<td align="center">1903</td>
+<td align="center"><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Windows_10_version_history_(version_1903)">19H1</a></td>
+<td align="center">May 2019 Update</td>
+<td align="center">18362</td>
+<td align="center">May 21, 2019</td>
+</tr>
+<tr>
+<td align="center">1909</td>
+<td align="center"><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Windows_10_version_history_(version_1909)">19H2</a></td>
+<td align="center">November 2019 Update</td>
+<td align="center">18363</td>
+<td align="center">November 12, 2019</td>
+</tr>
+<tr>
+<td align="center">2004</td>
+<td align="center"><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Windows_10_version_history_(version_2004)">20H1</a></td>
+<td align="center">May 2020 Update</td>
+<td align="center">19041</td>
+<td align="center">May 27, 2020</td>
+</tr>
+<tr>
+<td align="center">20H2</td>
+<td align="center"><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Windows_10_version_history#Version_20H2_(October_2020_Update)">20H2</a></td>
+<td align="center">October 2020 Update</td>
+<td align="center">19042</td>
+<td align="center">October 20, 2020</td>
+</tr>
+<tr>
+<td align="center"><a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Windows_10_version_history#Dev_Channel">Dev Channel</a></td>
+<td align="center">20270</td>
+<td align="center">N&#x2F;A</td>
+<td align="center">Rolling Builds in Development</td>
+<td align="center"></td>
 </tr>
 </tbody></table>
-<h2 id="渲染阶段"><a href="#渲染阶段" class="headerlink" title="渲染阶段"></a>渲染阶段</h2><h3 id="Input-Assembler-Stage-IA-（未补全）"><a href="#Input-Assembler-Stage-IA-（未补全）" class="headerlink" title="Input-Assembler Stage(IA) （未补全）"></a>Input-Assembler Stage(IA) （未补全）</h3><p>简介：IA阶段的目的主要是从user-filled buffer当中读取图元数据（points, lines and&#x2F;or triangles），然后组合成在之后阶段需要使用的新的结构的图元数据。 AI阶段能够将顶点组合成不同的图元类型，组合过程需要读取相邻的数据，这部分数据只在Geometry Stage阶段可以。例如：如果一个几何着色器在三角形上被调用，那么他的输入就包括他自身的三个顶点，和相邻三角形的顶点数据。</p>
-<h4 id="IA阶段步骤总结"><a href="#IA阶段步骤总结" class="headerlink" title="IA阶段步骤总结"></a>IA阶段步骤总结</h4><ol>
-<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/windows/desktop/direct3d11/d3d10-graphics-programming-guide-input-assembler-stage-getting-started#create-input-buffers">Create Input Buffers</a>：使用输入的vertex data初始化input buffer。</li>
-<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/windows/desktop/direct3d11/d3d10-graphics-programming-guide-input-assembler-stage-getting-started#create-the-input-layout-object">Create the Input-Layout Object</a>：使用input layout object描述vertex buffer中的数据类型。</li>
-<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/windows/desktop/direct3d11/d3d10-graphics-programming-guide-input-assembler-stage-getting-started#bind-objects-to-the-input-assembler-stage">Bind Objects to the Input-Assembler Stage</a>：将vertex data buffer和layout object 绑定到IA阶段。</li>
-<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/windows/desktop/direct3d11/d3d10-graphics-programming-guide-input-assembler-stage-getting-started#specify-the-primitive-type">Specify the Primitive Type</a>：定义顶点数据如何组成图元。</li>
-<li><a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/windows/desktop/direct3d11/d3d10-graphics-programming-guide-input-assembler-stage-getting-started#call-draw-methods">Call Draw Methods</a>：调用绘制方法，将绑定到IA的数据传送到pipeline。</li>
-</ol>
-<h4 id="Create-Input-Buffers"><a href="#Create-Input-Buffers" class="headerlink" title="Create Input Buffers"></a>Create Input Buffers</h4><p>inpute buffer有两种：vertex buffer和index buffer。vertex buffer提供数据，index buffer提供数据索引，可以创建多个vertex buffer。可以创建一个index buffer。</p>
-<h3 id="Vertex-Shader-Stage"><a href="#Vertex-Shader-Stage" class="headerlink" title="Vertex Shader Stage"></a>Vertex Shader Stage</h3><p>vertex Shader的输入最多为16 个 32-bit的4维向量，输出也是一样。一个vertex shader必须至少有一个输入和一个输出（一个标量）。</p>
-<p>vertex Shader能够处理两个来自IA阶段的系统生成值：VertexID and InstanceID，他们只提供给vertex shader stage。</p>
-<p>vertex Shader在所有顶点上运行，包括有邻接拓扑关系的图元的相邻顶点。</p>
-<p>顶点着色器可以在不需要屏幕空间导数的情况下执行加载和纹理采样操作。（应该指的是类似Unity的Sample2D_Load操作）</p>
-<h3 id="Tessellation-Stages（未补全）"><a href="#Tessellation-Stages（未补全）" class="headerlink" title="Tessellation Stages（未补全）"></a>Tessellation Stages（未补全）</h3><h3 id="Geometry-Shader-Stage"><a href="#Geometry-Shader-Stage" class="headerlink" title="Geometry Shader Stage"></a>Geometry Shader Stage</h3><p>这部分没有太多特殊的内容，见<a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/windows/desktop/direct3d11/geometry-shader-stage">官方文档</a>。</p>
-<h3 id="Stream-Output-Stage"><a href="#Stream-Output-Stage" class="headerlink" title="Stream-Output Stage"></a>Stream-Output Stage</h3><p>连续的将顶点数据输出到内存的buffer当中。</p>
-<p><img src="/../../images/img/renderpipeline-d3d10-depth-stencil-test.png" alt="renderpipeline-d3d10-depth-stencil-test"></p>
-<p>When a triangle or line strip is bound to the input-assembler stage, each strip is converted into a list before they are streamed out。（<strong>所有的数据在输出之前，都是一个链表</strong>）The amount of data streamed out can vary（<strong>数据可以变化，例如：几何着色器会向链表插入数据</strong>，<em>几何、纹理、常量数据在整个渲染流程中如何存储需要研究一下</em>）。</p>
-<h3 id="Rasterizer-Stage"><a href="#Rasterizer-Stage" class="headerlink" title="Rasterizer Stage"></a>Rasterizer Stage</h3><p>将图元数据转化成光栅图像（像素），每个像素根据顶点进行插值。</p>
-<p>光栅化阶段包括：视椎体剪裁、透视变化（<strong>剪裁空间坐标除z（这里说的不是z分量，而是深度值，对应的是剪裁空间坐标中的w分量）</strong>）等。（Rasterization includes clipping vertices to the view frustum, performing a divide by z to provide perspective, mapping primitives to a 2D viewport, and determining how to invoke the pixel shader. ）</p>
-<p><strong>重点：为什么不一步变换到NDC呢？因为，视椎体剪裁需要在Clip-Space进行。当完成视椎体剪裁之后，才会进行透视变化，这个时候才会进行透视除法。以上两步都在光栅化阶段进行。所以Unity在Vertex Shader阶段输出的是Clip-Space坐标，是提供给这个阶段使用的。</strong></p>
-<p>进入光栅化阶段的顶点，被认为是在齐次坐标的剪裁空间的（x，y，z ，w），x正方向向右，Y正方向向上，Z正方向是摄像机前方。(Vertices (x,y,z,w), coming into the rasterizer stage are assumed to be in homogeneous clip-space. In this coordinate space the X axis points right, Y points up and Z points away from camera.)</p>
-<p>齐次坐标和NDC：</p>
-<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs c"> [x y z w]   →   [x/w y/w z/w]<br>homogeneous     normalized device<br>clip space      <span class="hljs-title function_">coordinates</span> <span class="hljs-params">(NDC)</span><br></code></pre></td></tr></table></figure>
-
-<p>Zbuffer优化：On hardware that implements <strong>hierarchical Z-buffer optimizations</strong>, you may enable preloading the z-buffer by setting the pixel shader stage to <strong>NULL</strong> while enabling depth and stencil testing.</p>
-<h3 id="Pixel-Shader-Stage"><a href="#Pixel-Shader-Stage" class="headerlink" title="Pixel Shader Stage"></a>Pixel Shader Stage</h3><p>在这个阶段进行丰富的着色、光照和后处理计算。这个阶段使用常量、纹理数据、插值数据和其他顶点程序输出的数据。光栅化阶段会为每一个被图元覆盖的区域执行一次Pixel Shader。</p>
-<p>Use the depth-write-enable state (in the output-merger stage) to control whether depth data gets written to a depth buffer (or use the discard instruction to discard data for that pixel). A pixel shader can also output an optional 32-bit, 1-component, floating-point, depth value for depth testing (using the SV_Depth semantic). The depth value is output in the oDepth register, and replaces the interpolated depth value for depth testing (assuming depth testing is enabled). There is no way to dynamically change between using fixed-function depth or shader oDepth。<strong>比较重要的部分是可以通过SV_Depth 语义来直接输出深度到深度贴图当中，这样可以直接代替来自Vertex Data的深度插值数据。不过这两种方式不能动态变化。目前没有在Unity当中尝试过。</strong></p>
-<h3 id="Output-Merger-Stage"><a href="#Output-Merger-Stage" class="headerlink" title="Output-Merger Stage"></a>Output-Merger Stage</h3><p>OM阶段会根据渲染状态的组合生成最终的颜色：pixel Shader输出，渲染目标，深度&#x2F;stencil buffer内容。</p>
-<h4 id="Depth-Stencil"><a href="#Depth-Stencil" class="headerlink" title="Depth-Stencil"></a>Depth-Stencil</h4><p>OM阶段的第一步就是Depth-Stencil Testing，这步骤依赖于一张Depth-Stencil buffer。Depth-Stencil是作为纹理资源创建的，他包括了深度信息和Stencil信息。</p>
-<p>深度信息用来决定哪些像素距离摄像机更近，Stencil数据用来当做Mask使用。他们在这个阶段使用用来决定这个像素是否被绘制。下图描述了Depth-Stencil是如何被使用的。</p>
-<p><img src="/../../images/img/renderpipeline-d3d10-depth-stencil-test.png" alt="renderpipeline-d3d10-depth-stencil-test"></p>
-<p>Depth-Stencil的状态如果没有被配置，那么久会使用默认参数。<strong>如果没有开启multisampling那么混合操作逐像素进行，如果开启，混合就在多个采样结果上进行。（这个内容我理解的是MSAA之类的操作）。</strong></p>
-<p>使用深度缓冲区来确定应该绘制哪个像素的过程称为depth-buffer，有时也称为z-buffer。</p>
-<h4 id="Blending"><a href="#Blending" class="headerlink" title="Blending"></a>Blending</h4><p>Blending的作用就是将一个或者多个像素颜色值混合作为最终的颜色输出。</p>
-<p><img src="/../../images/img/renderpipeline-d3d10-blend-state.png" alt="renderpipeline-d3d10-blend-state"></p>
-<p><strong>D3D文档里面说：Blend values (including BlendFactor) are always clamped to the range of the render-target format before blending. 。就是说所有混合的值会再blending阶段进行Clamp，但是我发现Unity如果使用负数的Alpha(Blend Factor)时并没有被Clamp</strong></p>
-<p><strong>另一个要点：When you use sRGB render targets, the runtime converts the render target color into linear space before it performs blending. The runtime converts the final blended value back into sRGB space before it saves the value back to the render target. 当使用sRGB的render targets的时候，在混合之前会转换到线性空间，混合结束之后再返回sRGB的render target。Unity当中的做法是只使用Linear的render targets。全部渲染完成之后再一次性转换会原始的sRGB。</strong></p>
-<h4 id="Multiple-RenderTargets"><a href="#Multiple-RenderTargets" class="headerlink" title="Multiple RenderTargets"></a>Multiple RenderTargets</h4><p>多个渲染目标。一个Pixel Shader能够同时渲染8个render target。所有的render target需要是同一种类型(buffer, Texture1D, Texture1DArray, and so on)，同一种尺寸 (width, height, depth, array size, sample counts)。但是可以有不同的数据格式（Each render target may have a different data format.）。例如：多个G-buffer在一个Pass完成，但根据存储数据的不同，使用了不同的数据格式。</p>
-<h4 id="Output-Write-Mask"><a href="#Output-Write-Mask" class="headerlink" title="Output-Write Mask"></a>Output-Write Mask</h4><p>Use an output-write mask to control (per component) what data can be written to a render target.</p>
-<p>这个没有在Unity当中找到对应物。</p>
-<h4 id="Sample-Mask"><a href="#Sample-Mask" class="headerlink" title="Sample Mask"></a>Sample Mask</h4><p>这个没有在Unity当中找到对应物。</p>
 
       
-      <p align="right"><a class="morebtn" href="/2022/09/19/RTR/%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF/" title="">阅读全文</a></p>
+      <p align="right"><a class="morebtn" href="/2022/09/19/RayTracingLearning/Install/" title="">阅读全文</a></p>
     </main>
     <footer class="post-footer">
       
@@ -1052,7 +658,7 @@
   
   <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
     <div class="post-block">
-      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/09/19/RTR/%E6%B3%95%E7%BA%BF%E7%A9%BA%E9%97%B4%E8%BD%AC%E6%8D%A2/">
+      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/09/19/language/lua/fast_learn_lua/">
       <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
         <meta itemprop="name" content="leinlin">
         <meta itemprop="description" content="">
@@ -1064,7 +670,7 @@
     </div>
     <header class="post-header">
       <h1 class="post-title" itemprop="name headline">
-        <a class="post-title-link post-title-link-external" href="/2022/09/19/RTR/%E6%B3%95%E7%BA%BF%E7%A9%BA%E9%97%B4%E8%BD%AC%E6%8D%A2/" itemprop="url"></a>
+        <a class="post-title-link post-title-link-external" href="/2022/09/19/language/lua/fast_learn_lua/" itemprop="url"></a>
       </h1>
       <div class="post-meta">
         
@@ -1080,24 +686,32 @@
     </header>
     <main class="post-main" itemprop="articleBody">
       
-      <h1 id="法线空间变换推导"><a href="#法线空间变换推导" class="headerlink" title="法线空间变换推导"></a>法线空间变换推导</h1><p>问题：法线在遇到非统一的缩放时会出现问题。</p>
-<p>解决方案：使用变化矩阵的逆转矩阵进行变换。</p>
-<p>推导：	$ M ​$ 为变换矩阵。$ t ​$ 切线。$ n ​$ 为法线。$ p $ 为模型坐标。</p>
-<p>​	         正常的模型变换为：  $$ p’ &#x3D; M * p ​$$</p>
-<p>​		 这个变换对切线也适用：$$ t’ &#x3D; M * t ​$$</p>
-<p>​		 而法线不行$ n’  \neq  M * n $。对于法线我们通过 $$ dot(n, t) &#x3D;  n^{T}  * t &#x3D;  0 $$  这个条件来推到用于法线变换的矩阵$ S $。</p>
-<p>*注：上面没有用$ dot ​$操作的$n​$和$t​$ 当做 $1 * 3​$的矩阵看待。</p>
-<p>​		 $$ 0 &#x3D; (n’)^T * t’  &#x3D; (Sn)^T * (Mt) &#x3D; n^T * S^T * M * t &#x3D; n^T * (S*M)*t$$ </p>
-<p>所以$I &#x3D; SM$ ,所以$S$是$M$的逆转矩阵.</p>
-<p>​		操作 $$n’ &#x3D; (M^T )^{-1}  * n  ​$$  </p>
-<p>​                       $$(n’)^t &#x3D; n^T * M^{-1}​$$ </p>
-<p>在Unity当中$mul$操作结束以后$ n’  $ 和 $(n’)^t$都是$float3$ </p>
-<p>所以：</p>
-<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c">n_WorldSpace = mul(n_ObjectSpace, unity_WorldToObejct) ;<br></code></pre></td></tr></table></figure>
+      <h1 id="Lua-语言-15-分钟快速入门"><a href="#Lua-语言-15-分钟快速入门" class="headerlink" title="Lua 语言 15 分钟快速入门"></a>Lua 语言 15 分钟快速入门</h1><p>本文来自<a target="_blank" rel="noopener" href="http://www.linuxidc.com/Linux/2013-06/86582.htm">oschina.net </a></p>
+<p><a href="../../../index.md">back</a></p>
+<p><a href="../lang_index.md">back to language</a></p>
+<h3 id="注释"><a href="#注释" class="headerlink" title="注释"></a>注释</h3><figure class="hljs highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs lua"><span class="hljs-comment">-- 两个横线开始单行的注释</span><br><span class="hljs-comment">--[[</span><br><span class="hljs-comment">    加上两个[和]表示</span><br><span class="hljs-comment">      多行的注释。</span><br><span class="hljs-comment"> --]]</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h3><figure class="hljs highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs lua">num = <span class="hljs-number">42</span>  <span class="hljs-comment">-- 所有的数字都是double。 </span><br><span class="hljs-comment">-- 别担心，double的64位中有52位用于 </span><br><span class="hljs-comment">-- 保存精确的int值; 对于需要52位以内的int值， </span><br><span class="hljs-comment">-- 机器的精度不是问题。</span><br><br>s = <span class="hljs-string">&#x27;walternate&#x27;</span>  <span class="hljs-comment">-- 像Python那样的不可变的字符串。 </span><br>t = <span class="hljs-string">&quot;双引号也可以&quot;</span> <br>u = <span class="hljs-string">[[ 两个方括号 </span><br><span class="hljs-string">      用于 </span><br><span class="hljs-string">      多行的字符串。]]</span> <br>t = <span class="hljs-literal">nil</span>  <span class="hljs-comment">-- 未定义的t; Lua 支持垃圾收集。</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="流控制"><a href="#流控制" class="headerlink" title="流控制"></a>流控制</h3><figure class="hljs highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><code class="hljs lua"><span class="hljs-comment">-- do/end之类的关键字标示出程序块： </span><br><span class="hljs-keyword">while</span> num &lt; <span class="hljs-number">50</span> <span class="hljs-keyword">do</span> <br>  num = num + <span class="hljs-number">1</span>  <span class="hljs-comment">-- 没有 ++ or += 运算符。 </span><br><span class="hljs-keyword">end</span><br><br><span class="hljs-comment">-- If语句： </span><br><span class="hljs-keyword">if</span> num &gt; <span class="hljs-number">40</span> <span class="hljs-keyword">then</span> <br>  <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;over 40&#x27;</span>) <br><span class="hljs-keyword">elseif</span> s ~= <span class="hljs-string">&#x27;walternate&#x27;</span> <span class="hljs-keyword">then</span>  <span class="hljs-comment">-- ~= 表示不等于。 </span><br>  <span class="hljs-comment">-- 像Python一样，== 表示等于；适用于字符串。 </span><br>  <span class="hljs-built_in">io</span>.<span class="hljs-built_in">write</span>(<span class="hljs-string">&#x27;not over 40\n&#x27;</span>)  <span class="hljs-comment">-- 默认输出到stdout。 </span><br><span class="hljs-keyword">else</span> <br>  <span class="hljs-comment">-- 默认变量都是全局的。 </span><br>  thisIsGlobal = <span class="hljs-number">5</span>  <span class="hljs-comment">-- 通常用驼峰式定义变量名。</span><br><br>  <span class="hljs-comment">-- 如何定义局部变量： </span><br>  <span class="hljs-keyword">local</span> line = <span class="hljs-built_in">io</span>.<span class="hljs-built_in">read</span>()  <span class="hljs-comment">-- 读取stdin的下一行。</span><br><br>  <span class="hljs-comment">-- ..操作符用于连接字符串： </span><br>  <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;Winter is coming, &#x27;</span> .. line) <br><span class="hljs-keyword">end</span><br><br><span class="hljs-comment">-- 未定义的变量返回nil。 </span><br><span class="hljs-comment">-- 这不会出错： </span><br>foo = anUnknownVariable  <span class="hljs-comment">-- 现在 foo = nil.</span><br><br>aBoolValue = <span class="hljs-literal">false</span><br><br><span class="hljs-comment">--只有nil和false是fals; 0和 &#x27;&#x27;都是true！ </span><br><span class="hljs-keyword">if</span> <span class="hljs-keyword">not</span> aBoolValue <span class="hljs-keyword">then</span> <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;twas false&#x27;</span>) <span class="hljs-keyword">end</span><br><br><span class="hljs-comment">-- &#x27;or&#x27;和 &#x27;and&#x27;都是可短路的（译者注：如果已足够进行条件判断则不计算后面的条件表达式）。 </span><br><span class="hljs-comment">-- 类似于C/js里的 a?b:c 操作符： </span><br>ans = aBoolValue <span class="hljs-keyword">and</span> <span class="hljs-string">&#x27;yes&#x27;</span> <span class="hljs-keyword">or</span> <span class="hljs-string">&#x27;no&#x27;</span>  <span class="hljs-comment">--&gt; &#x27;no&#x27;</span><br><br>karlSum = <span class="hljs-number">0</span> <br><span class="hljs-keyword">for</span> i = <span class="hljs-number">1</span>, <span class="hljs-number">100</span> <span class="hljs-keyword">do</span>  <span class="hljs-comment">-- 范围包括两端 </span><br>  karlSum = karlSum + i <br><span class="hljs-keyword">end</span><br><br><span class="hljs-comment">-- 使用 &quot;100, 1, -1&quot; 表示递减的范围： </span><br>fredSum = <span class="hljs-number">0</span> <br><span class="hljs-keyword">for</span> j = <span class="hljs-number">100</span>, <span class="hljs-number">1</span>, <span class="hljs-number">-1</span> <span class="hljs-keyword">do</span> fredSum = fredSum + j <span class="hljs-keyword">end</span><br><br><span class="hljs-comment">-- 通常，范围表达式为begin, end[, step].</span><br><br><span class="hljs-comment">-- 另一种循环表达方式： </span><br><span class="hljs-keyword">repeat</span> <br>  <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;the way of the future&#x27;</span>) <br>  num = num - <span class="hljs-number">1</span> <br><span class="hljs-keyword">until</span> num == <span class="hljs-number">0</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h3><figure class="hljs highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><code class="hljs lua"><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">fib</span><span class="hljs-params">(n)</span></span> <br>  <span class="hljs-keyword">if</span> n &lt; <span class="hljs-number">2</span> <span class="hljs-keyword">then</span> <span class="hljs-keyword">return</span> <span class="hljs-number">1</span> <span class="hljs-keyword">end</span> <br>  <span class="hljs-keyword">return</span> fib(n - <span class="hljs-number">2</span>) + fib(n - <span class="hljs-number">1</span>) <br><span class="hljs-keyword">end</span><br><br><span class="hljs-comment">-- 支持闭包及匿名函数： </span><br><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">adder</span><span class="hljs-params">(x)</span></span> <br>  <span class="hljs-comment">-- 调用adder时，会创建用于返回的函数，并且能记住变量x的值： </span><br>  <span class="hljs-keyword">return</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(y)</span></span> <span class="hljs-keyword">return</span> x + y <span class="hljs-keyword">end</span> <br><span class="hljs-keyword">end</span> <br>a1 = adder(<span class="hljs-number">9</span>) <br>a2 = adder(<span class="hljs-number">36</span>) <br><span class="hljs-built_in">print</span>(a1(<span class="hljs-number">16</span>))  <span class="hljs-comment">--&gt; 25 </span><br><span class="hljs-built_in">print</span>(a2(<span class="hljs-number">64</span>))  <span class="hljs-comment">--&gt; 100</span><br><br><span class="hljs-comment">-- 返回值、函数调用和赋值都可以使用长度不匹配的list。 </span><br><span class="hljs-comment">-- 不匹配的接收方会被赋为nil； </span><br><span class="hljs-comment">-- 不匹配的发送方会被忽略。</span><br><br>x, y, z = <span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span> <br><span class="hljs-comment">-- 现在x = 1, y = 2, z = 3, 而 4 会被丢弃。</span><br><br><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">bar</span><span class="hljs-params">(a, b, c)</span></span> <br>  <span class="hljs-built_in">print</span>(a, b, c) <br>  <span class="hljs-keyword">return</span> <span class="hljs-number">4</span>, <span class="hljs-number">8</span>, <span class="hljs-number">15</span>, <span class="hljs-number">16</span>, <span class="hljs-number">23</span>, <span class="hljs-number">42</span> <br><span class="hljs-keyword">end</span><br><br>x, y = bar(<span class="hljs-string">&#x27;zaphod&#x27;</span>)  <span class="hljs-comment">--&gt; prints &quot;zaphod  nil nil&quot; </span><br><span class="hljs-comment">-- 现在 x = 4, y = 8, 而值15..42被丢弃。</span><br><br><span class="hljs-comment">-- 函数是一等公民，可以是局部或者全局的。 </span><br><span class="hljs-comment">-- 下面是等价的： </span><br><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">f</span><span class="hljs-params">(x)</span></span> <span class="hljs-keyword">return</span> x * x <span class="hljs-keyword">end</span> <br>f = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(x)</span></span> <span class="hljs-keyword">return</span> x * x <span class="hljs-keyword">end</span><br><br><span class="hljs-comment">-- 这些也是等价的： </span><br><span class="hljs-keyword">local</span> <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">g</span><span class="hljs-params">(x)</span></span> <span class="hljs-keyword">return</span> <span class="hljs-built_in">math</span>.<span class="hljs-built_in">sin</span>(x) <span class="hljs-keyword">end</span> <br><span class="hljs-keyword">local</span> g; g  = <span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-params">(x)</span></span> <span class="hljs-keyword">return</span> <span class="hljs-built_in">math</span>.<span class="hljs-built_in">sin</span>(x) <span class="hljs-keyword">end</span> <br><span class="hljs-comment">-- &#x27;local g&#x27;可以支持g自引用。</span><br><br><span class="hljs-comment">-- 顺便提一下，三角函数是以弧度为单位的。</span><br><br><span class="hljs-comment">-- 用一个字符串参数调用函数，不需要括号： </span><br><span class="hljs-built_in">print</span> <span class="hljs-string">&#x27;hello&#x27;</span>  <span class="hljs-comment">--可以工作。</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="Table"><a href="#Table" class="headerlink" title="Table"></a>Table</h3><figure class="hljs highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><code class="hljs lua"><span class="hljs-comment">-- Table = Lua唯一的数据结构; </span><br><span class="hljs-comment">--        它们是关联数组。 </span><br><span class="hljs-comment">-- 类似于PHP的数组或者js的对象， </span><br><span class="hljs-comment">-- 它们是哈希查找表（dict），也可以按list去使用。</span><br><br><span class="hljs-comment">-- 按字典/map的方式使用Table：</span><br><br><span class="hljs-comment">-- Dict的迭代默认使用string类型的key： </span><br>t = &#123;key1 = <span class="hljs-string">&#x27;value1&#x27;</span>, key2 = <span class="hljs-literal">false</span>&#125;<br><br><span class="hljs-comment">-- String的key可以像js那样用点去引用： </span><br><span class="hljs-built_in">print</span>(t.key1)  <span class="hljs-comment">-- 打印 &#x27;value1&#x27;. </span><br>t.newKey = &#123;&#125;  <span class="hljs-comment">-- 添加新的 key/value 对。 </span><br>t.key2 = <span class="hljs-literal">nil</span>  <span class="hljs-comment">-- 从table删除 key2。</span><br><br><span class="hljs-comment">-- 使用任何非nil的值作为key： </span><br>u = &#123;[<span class="hljs-string">&#x27;@!#&#x27;</span>] = <span class="hljs-string">&#x27;qbert&#x27;</span>, [&#123;&#125;] = <span class="hljs-number">1729</span>, [<span class="hljs-number">6.28</span>] = <span class="hljs-string">&#x27;tau&#x27;</span>&#125; <br><span class="hljs-built_in">print</span>(u[<span class="hljs-number">6.28</span>])  <span class="hljs-comment">-- 打印 &quot;tau&quot;</span><br><br><span class="hljs-comment">-- 对于数字和字符串的key是按照值来匹配的，但是对于table则是按照id来匹配。 </span><br>a = u[<span class="hljs-string">&#x27;@!#&#x27;</span>]  <span class="hljs-comment">-- 现在 a = &#x27;qbert&#x27;. </span><br>b = u[&#123;&#125;]    <span class="hljs-comment">-- 我们期待的是 1729,  但是得到的是nil: </span><br><span class="hljs-comment">-- b = nil ，因为没有找到。 </span><br><span class="hljs-comment">-- 之所以没找到，是因为我们用的key与保存数据时用的不是同一个对象。 </span><br><span class="hljs-comment">-- 所以字符串和数字是可用性更好的key。</span><br><br><span class="hljs-comment">-- 只需要一个table参数的函数调用不需要括号： </span><br><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">h</span><span class="hljs-params">(x)</span></span> <span class="hljs-built_in">print</span>(x.key1) <span class="hljs-keyword">end</span> <br>h&#123;key1 = <span class="hljs-string">&#x27;Sonmi~451&#x27;</span>&#125;  <span class="hljs-comment">-- 打印&#x27;Sonmi~451&#x27;.</span><br><br><span class="hljs-keyword">for</span> key, val <span class="hljs-keyword">in</span> <span class="hljs-built_in">pairs</span>(u) <span class="hljs-keyword">do</span>  <span class="hljs-comment">-- Table 的遍历. </span><br>  <span class="hljs-built_in">print</span>(key, val) <br><span class="hljs-keyword">end</span><br><br><span class="hljs-comment">-- _G 是一个特殊的table，用于保存所有的全局变量 </span><br><span class="hljs-built_in">print</span>(<span class="hljs-built_in">_G</span>[<span class="hljs-string">&#x27;_G&#x27;</span>] == <span class="hljs-built_in">_G</span>)  <span class="hljs-comment">-- 打印&#x27;true&#x27;.</span><br><br><span class="hljs-comment">-- 按list/array的方式使用：</span><br><br><span class="hljs-comment">-- List 的迭代方式隐含会添加int的key： </span><br>v = &#123;<span class="hljs-string">&#x27;value1&#x27;</span>, <span class="hljs-string">&#x27;value2&#x27;</span>, <span class="hljs-number">1.21</span>, <span class="hljs-string">&#x27;gigawatts&#x27;</span>&#125; <br><span class="hljs-keyword">for</span> i = <span class="hljs-number">1</span>, #v <span class="hljs-keyword">do</span>  <span class="hljs-comment">-- #v 是list的size </span><br>  <span class="hljs-built_in">print</span>(v[i])  <span class="hljs-comment">-- 索引从 1 开始!! 太疯狂了！ </span><br><span class="hljs-keyword">end</span> <br><span class="hljs-comment">-- &#x27;list&#x27;并非真正的类型，v 还是一个table， </span><br><span class="hljs-comment">-- 只不过它有连续的整数作为key，可以像list那样去使用。</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="元表-metatable"><a href="#元表-metatable" class="headerlink" title="元表(metatable)"></a>元表(metatable)</h3><figure class="hljs highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><code class="hljs lua"><span class="hljs-comment">-- table的元表提供了一种机制，可以重定义table的一些操作。 </span><br><span class="hljs-comment">-- 之后我们会看到元表是如何支持类似js的prototype行为。</span><br><br>f1 = &#123;a = <span class="hljs-number">1</span>, b = <span class="hljs-number">2</span>&#125;  <span class="hljs-comment">-- 表示一个分数 a/b. </span><br>f2 = &#123;a = <span class="hljs-number">2</span>, b = <span class="hljs-number">3</span>&#125;<br><br><span class="hljs-comment">-- 这个是错误的： </span><br><span class="hljs-comment">-- s = f1 + f2</span><br><br>metafraction = &#123;&#125; <br><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">metafraction.__add</span><span class="hljs-params">(f1, f2)</span></span> <br>  sum = &#123;&#125; <br>  sum.b = f1.b * f2.b <br>  sum.a = f1.a * f2.b + f2.a * f1.b <br>  <span class="hljs-keyword">return</span> sum <br><span class="hljs-keyword">end</span><br><br><span class="hljs-built_in">setmetatable</span>(f1, metafraction) <br><span class="hljs-built_in">setmetatable</span>(f2, metafraction)<br><br>s = f1 + f2  <span class="hljs-comment">-- 调用在f1的元表上的__add(f1, f2) 方法</span><br><br><span class="hljs-comment">-- f1, f2 没有能访问它们元表的key，这与prototype不一样， </span><br><span class="hljs-comment">-- 所以你必须用getmetatable(f1)去获得元表。元表是一个普通的table， </span><br><span class="hljs-comment">-- Lua可以通过通常的方式去访问它的key，例如__add。</span><br><br><span class="hljs-comment">-- 不过下面的代码是错误的，因为s没有元表： </span><br><span class="hljs-comment">-- t = s + s </span><br><span class="hljs-comment">-- 下面的类形式的模式可以解决这个问题：</span><br><br><span class="hljs-comment">-- 元表的__index 可以重载点运算符的查找： </span><br>defaultFavs = &#123;animal = <span class="hljs-string">&#x27;gru&#x27;</span>, food = <span class="hljs-string">&#x27;donuts&#x27;</span>&#125; <br>myFavs = &#123;food = <span class="hljs-string">&#x27;pizza&#x27;</span>&#125; <br><span class="hljs-built_in">setmetatable</span>(myFavs, &#123;<span class="hljs-built_in">__index</span> = defaultFavs&#125;) <br>eatenBy = myFavs.animal  <span class="hljs-comment">-- 可以工作！这要感谢元表的支持</span><br><br><span class="hljs-comment">-- 如果在table中直接查找key失败，会使用元表的__index 继续查找，并且是递归的查找</span><br><br><span class="hljs-comment">-- __index的值也可以是函数function(tbl, key) ，这样可以支持更多的自定义的查找。</span><br><br><span class="hljs-comment">-- __index、__add等等，被称为元方法。 </span><br><span class="hljs-comment">-- 这里是table的元方法的全部清单：</span><br><br><span class="hljs-comment">-- __add(a, b)                    for a + b </span><br><span class="hljs-comment">-- __sub(a, b)                    for a - b </span><br><span class="hljs-comment">-- __mul(a, b)                    for a * b </span><br><span class="hljs-comment">-- __div(a, b)                    for a / b </span><br><span class="hljs-comment">-- __mod(a, b)                    for a % b </span><br><span class="hljs-comment">-- __pow(a, b)                    for a ^ b </span><br><span class="hljs-comment">-- __unm(a)                        for -a </span><br><span class="hljs-comment">-- __concat(a, b)                  for a .. b </span><br><span class="hljs-comment">-- __len(a)                        for #a </span><br><span class="hljs-comment">-- __eq(a, b)                      for a == b </span><br><span class="hljs-comment">-- __lt(a, b)                      for a &lt; b </span><br><span class="hljs-comment">-- __le(a, b)                      for a &lt;= b </span><br><span class="hljs-comment">-- __index(a, b)  &lt;fn or a table&gt;  for a.b </span><br><span class="hljs-comment">-- __newindex(a, b, c)            for a.b = c </span><br><span class="hljs-comment">-- __call(a, ...)                  for a(...)</span><br></code></pre></td></tr></table></figure>
+
+
+
+<h3 id="类风格的table"><a href="#类风格的table" class="headerlink" title="类风格的table"></a>类风格的table</h3><figure class="hljs highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><code class="hljs lua"><span class="hljs-comment">-- 类并不是内置的；有不同的方法通过表和元表来实现。</span><br><br><span class="hljs-comment">-- 下面是一个例子，后面是对例子的解释</span><br><br>Dog = &#123;&#125;                                  <span class="hljs-comment">-- 1.</span><br><br><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Dog:new</span><span class="hljs-params">()</span></span>                        <span class="hljs-comment">-- 2. </span><br>  newObj = &#123;sound = <span class="hljs-string">&#x27;woof&#x27;</span>&#125;                <span class="hljs-comment">-- 3. </span><br>  <span class="hljs-built_in">self</span>.<span class="hljs-built_in">__index</span> = <span class="hljs-built_in">self</span>                      <span class="hljs-comment">-- 4. </span><br>  <span class="hljs-keyword">return</span> <span class="hljs-built_in">setmetatable</span>(newObj, <span class="hljs-built_in">self</span>)        <span class="hljs-comment">-- 5. </span><br><span class="hljs-keyword">end</span><br><br><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">Dog:makeSound</span><span class="hljs-params">()</span></span>                  <span class="hljs-comment">-- 6. </span><br>  <span class="hljs-built_in">print</span>(<span class="hljs-string">&#x27;I say &#x27;</span> .. <span class="hljs-built_in">self</span>.sound) <br><span class="hljs-keyword">end</span><br><br>mrDog = Dog:new()                          <span class="hljs-comment">-- 7. </span><br>mrDog:makeSound()  <span class="hljs-comment">-- &#x27;I say woof&#x27;        -- 8.</span><br><br><span class="hljs-comment">-- 1. Dog看上去像一个类；其实它完全是一个table。 </span><br><span class="hljs-comment">-- 2. 函数tablename:fn(...) 与函数tablename.fn(self, ...) 是一样的 </span><br><span class="hljs-comment">--    冒号（:）只是添加了self作为第一个参数。 </span><br><span class="hljs-comment">--    下面的第7和第8条说明了self变量是如何得到其值的。 </span><br><span class="hljs-comment">-- 3. newObj是类Dog的一个实例。 </span><br><span class="hljs-comment">-- 4. self为初始化的类实例。通常self = Dog，不过继承关系可以改变这个。 </span><br><span class="hljs-comment">--    如果把newObj的元表和__index都设为self， </span><br><span class="hljs-comment">--    newObj就可以得到self的函数。 </span><br><span class="hljs-comment">-- 5. 记住：setmetatable返回其第一个参数。 </span><br><span class="hljs-comment">-- 6. 冒号（：）在第2条是工作的，不过这里我们期望 </span><br><span class="hljs-comment">--    self是一个实例，而不是类 </span><br><span class="hljs-comment">-- 7. 与Dog.new(Dog)类似，所以 self = Dog in new()。 </span><br><span class="hljs-comment">-- 8. 与mrDog.makeSound(mrDog)一样; self = mrDog。</span><br><br></code></pre></td></tr></table></figure>
+
+<h3 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h3><figure class="hljs highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs lua">LoudDog = Dog:new()                          <span class="hljs-comment">-- 1.</span><br><br><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">LoudDog:makeSound</span><span class="hljs-params">()</span></span> <br>  s = <span class="hljs-built_in">self</span>.sound .. <span class="hljs-string">&#x27; &#x27;</span>                      <span class="hljs-comment">-- 2. </span><br>  <span class="hljs-built_in">print</span>(s .. s .. s) <br><span class="hljs-keyword">end</span><br><br>seymour = LoudDog:new()                      <span class="hljs-comment">-- 3. </span><br>seymour:makeSound()  <span class="hljs-comment">-- &#x27;woof woof woof&#x27;      -- 4.</span><br><br><span class="hljs-comment">-- 1. LoudDog获得Dog的方法和变量列表。 </span><br><span class="hljs-comment">-- 2. 通过new()，self有一个&#x27;sound&#x27;的key from new()，参见第3条。 </span><br><span class="hljs-comment">-- 3. 与LoudDog.new(LoudDog)一样，并且被转换成 </span><br><span class="hljs-comment">--    Dog.new(LoudDog)，因为LoudDog没有&#x27;new&#x27; 的key， </span><br><span class="hljs-comment">--    不过在它的元表可以看到 __index = Dog。 </span><br><span class="hljs-comment">--    结果: seymour的元表是LoudDog，并且 </span><br><span class="hljs-comment">--    LoudDog.__index = LoudDog。所以有seymour.key </span><br><span class="hljs-comment">--    = seymour.key, LoudDog.key, Dog.key, 要看 </span><br><span class="hljs-comment">--    针对给定的key哪一个table排在前面。 </span><br><span class="hljs-comment">-- 4. 在LoudDog可以找到&#x27;makeSound&#x27;的key；这与 </span><br><span class="hljs-comment">--    LoudDog.makeSound(seymour)一样。</span><br><br><span class="hljs-comment">-- 如果需要，子类也可以有new()，与基类的类似： </span><br><span class="hljs-function"><span class="hljs-keyword">function</span> <span class="hljs-title">LoudDog:new</span><span class="hljs-params">()</span></span> <br>  newObj = &#123;&#125; <br>  <span class="hljs-comment">-- 初始化newObj </span><br>  <span class="hljs-built_in">self</span>.<span class="hljs-built_in">__index</span> = <span class="hljs-built_in">self</span> <br>  <span class="hljs-keyword">return</span> <span class="hljs-built_in">setmetatable</span>(newObj, <span class="hljs-built_in">self</span>) <br><span class="hljs-keyword">end</span><br></code></pre></td></tr></table></figure>
+
+<h3 id="模块"><a href="#模块" class="headerlink" title="模块"></a>模块</h3><figure class="hljs highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><code class="hljs lua"><span class="hljs-comment">--[[ 我把这部分给注释了，这样脚本剩下的部分就可以运行了</span><br><span class="hljs-comment"></span><br><span class="hljs-comment">-- 假设文件mod.lua的内容是： </span><br><span class="hljs-comment">local M = &#123;&#125;</span><br><span class="hljs-comment"></span><br><span class="hljs-comment">local function sayMyName() </span><br><span class="hljs-comment">  print(&#x27;Hrunkner&#x27;) </span><br><span class="hljs-comment">end</span><br><span class="hljs-comment"></span><br><span class="hljs-comment">function M.sayHello() </span><br><span class="hljs-comment">  print(&#x27;Why hello there&#x27;) </span><br><span class="hljs-comment">  sayMyName() </span><br><span class="hljs-comment">end</span><br><span class="hljs-comment"></span><br><span class="hljs-comment">return M</span><br><span class="hljs-comment"></span><br><span class="hljs-comment">-- 另一个文件也可以使用mod.lua的函数： </span><br><span class="hljs-comment">local mod = require(&#x27;mod&#x27;)  -- 运行文件mod.lua.</span><br><span class="hljs-comment"></span><br><span class="hljs-comment">-- require是包含模块的标准做法。 </span><br><span class="hljs-comment">-- require等价于:    (针对没有被缓存的情况；参加后面的内容) </span><br><span class="hljs-comment">local mod = (function () </span><br><span class="hljs-comment">  &lt;contents of mod.lua&gt; </span><br><span class="hljs-comment">end)() </span><br><span class="hljs-comment">-- mod.lua就好像一个函数体，所以mod.lua的局部变量对外是不可见的。</span><br><span class="hljs-comment"></span><br><span class="hljs-comment">-- 下面的代码是工作的，因为在mod.lua中mod = M： </span><br><span class="hljs-comment">mod.sayHello()  -- Says hello to Hrunkner.</span><br><span class="hljs-comment"></span><br><span class="hljs-comment">-- 这是错误的；sayMyName只在mod.lua中存在： </span><br><span class="hljs-comment">mod.sayMyName()  -- 错误</span><br><span class="hljs-comment"></span><br><span class="hljs-comment">-- require返回的值会被缓存，所以一个文件只会被运行一次， </span><br><span class="hljs-comment">-- 即使它被require了多次。</span><br><span class="hljs-comment"></span><br><span class="hljs-comment">-- 假设mod2.lua包含代码&quot;print(&#x27;Hi!&#x27;)&quot;。 </span><br><span class="hljs-comment">local a = require(&#x27;mod2&#x27;)  -- 打印Hi! </span><br><span class="hljs-comment">local b = require(&#x27;mod2&#x27;)  -- 不再打印; a=b.</span><br><span class="hljs-comment"></span><br><span class="hljs-comment">-- dofile与require类似，只是不做缓存： </span><br><span class="hljs-comment">dofile(&#x27;mod2&#x27;)  --&gt; Hi! </span><br><span class="hljs-comment">dofile(&#x27;mod2&#x27;)  --&gt; Hi! (再次运行，与require不同)</span><br><span class="hljs-comment"></span><br><span class="hljs-comment">-- loadfile加载一个lua文件，但是并不允许它。 </span><br><span class="hljs-comment">f = loadfile(&#x27;mod2&#x27;)  -- Calling f() runs mod2.lua.</span><br><span class="hljs-comment"></span><br><span class="hljs-comment">-- loadstring是loadfile的字符串版本。 </span><br><span class="hljs-comment">g = loadstring(&#x27;print(343)&#x27;)  --返回一个函数。 </span><br><span class="hljs-comment">g()  -- 打印343; 在此之前什么也不打印。</span><br><span class="hljs-comment"></span><br><span class="hljs-comment">--]]</span><br></code></pre></td></tr></table></figure>
 
 
       
-      <p align="right"><a class="morebtn" href="/2022/09/19/RTR/%E6%B3%95%E7%BA%BF%E7%A9%BA%E9%97%B4%E8%BD%AC%E6%8D%A2/" title="">阅读全文</a></p>
+      <p align="right"><a class="morebtn" href="/2022/09/19/language/lua/fast_learn_lua/" title="">阅读全文</a></p>
     </main>
     <footer class="post-footer">
       
@@ -1106,7 +720,7 @@
   
   <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
     <div class="post-block">
-      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/09/19/RTR/%E6%AF%9B%E5%8F%91%E6%96%B9%E6%A1%88%E5%88%86%E6%9E%90/">
+      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/09/19/language/c++/unlock_queue/">
       <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
         <meta itemprop="name" content="leinlin">
         <meta itemprop="description" content="">
@@ -1118,7 +732,7 @@
     </div>
     <header class="post-header">
       <h1 class="post-title" itemprop="name headline">
-        <a class="post-title-link post-title-link-external" href="/2022/09/19/RTR/%E6%AF%9B%E5%8F%91%E6%96%B9%E6%A1%88%E5%88%86%E6%9E%90/" itemprop="url"></a>
+        <a class="post-title-link post-title-link-external" href="/2022/09/19/language/c++/unlock_queue/" itemprop="url"></a>
       </h1>
       <div class="post-meta">
         
@@ -1134,24 +748,10 @@
     </header>
     <main class="post-main" itemprop="articleBody">
       
-      <h1 id="怪物猎人世界中宠物的毛发与Fins-amp-Shells模型"><a href="#怪物猎人世界中宠物的毛发与Fins-amp-Shells模型" class="headerlink" title="怪物猎人世界中宠物的毛发与Fins&amp;Shells模型"></a>怪物猎人世界中宠物的毛发与Fins&amp;Shells模型</h1><p>最近策划决定项目中要使用怪物猎人世界中宠物的毛发方案。所以做了简单的分析。</p>
-<p>目前发现怪物猎人当中的宠物，使用的是MotionBlur的方式来生成浓密毛发的。</p>
-<p>经过实验大致实现步骤如下：</p>
-<ol>
-<li>有毛发部位需要一张<strong>毛发流向图</strong>或者<strong>将毛发流向写入顶点色</strong>来描述毛发走向。这个阶段需要在绘制毛发Gbuffer的过程中，<strong>将毛发走向填充到一张走向buffer当中</strong>或者<strong>单独进行一次流向渲染</strong>。</li>
-<li>使用屏幕空间的毛发走向图，进行一次运动模糊。</li>
-</ol>
-<h2 id="毛发基础材质制作"><a href="#毛发基础材质制作" class="headerlink" title="毛发基础材质制作"></a>毛发基础材质制作</h2><p>毛发的基础材质就是基础的PBR材质即可。</p>
-<p>包括diffuse、metallic、smoothness、normal。主要用来表述整个毛发的材质。</p>
-<h2 id="毛发噪声纹理制作"><a href="#毛发噪声纹理制作" class="headerlink" title="毛发噪声纹理制作"></a>毛发噪声纹理制作</h2><p>毛发噪声直接作为一个噪声乘上diffuse，作为最终的diffuse。</p>
-<p>下面是一张可用的噪声，</p>
-<p><img src="/../../images/img/furnosie.png" alt="furnosie"></p>
-<p>让后直接进行模糊即可。</p>
-<p><strong>TODO：</strong></p>
-<h1 id="Fins-amp-Shells模型"><a href="#Fins-amp-Shells模型" class="headerlink" title="Fins&amp;Shells模型"></a>Fins&amp;Shells模型</h1><p>标准的壳模型，</p>
+      <h1 id="无锁队列的实现"><a href="#无锁队列的实现" class="headerlink" title="无锁队列的实现"></a>无锁队列的实现</h1><p>本文修改自<a target="_blank" rel="noopener" href="https://coolshell.cn/articles/8239.html">无锁队列的实现</a></p>
 
       
-      <p align="right"><a class="morebtn" href="/2022/09/19/RTR/%E6%AF%9B%E5%8F%91%E6%96%B9%E6%A1%88%E5%88%86%E6%9E%90/" title="">阅读全文</a></p>
+      <p align="right"><a class="morebtn" href="/2022/09/19/language/c++/unlock_queue/" title="">阅读全文</a></p>
     </main>
     <footer class="post-footer">
       
@@ -1160,7 +760,7 @@
   
   <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
     <div class="post-block">
-      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/09/19/RTR/%E6%89%8B%E6%9C%BATiled-BasedRender%E5%92%8CGPU%E5%B8%A6%E5%AE%BD/">
+      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/09/19/language/c++/thread/">
       <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
         <meta itemprop="name" content="leinlin">
         <meta itemprop="description" content="">
@@ -1172,7 +772,7 @@
     </div>
     <header class="post-header">
       <h1 class="post-title" itemprop="name headline">
-        <a class="post-title-link post-title-link-external" href="/2022/09/19/RTR/%E6%89%8B%E6%9C%BATiled-BasedRender%E5%92%8CGPU%E5%B8%A6%E5%AE%BD/" itemprop="url"></a>
+        <a class="post-title-link post-title-link-external" href="/2022/09/19/language/c++/thread/" itemprop="url"></a>
       </h1>
       <div class="post-meta">
         
@@ -1188,86 +788,339 @@
     </header>
     <main class="post-main" itemprop="articleBody">
       
-      <h1 id="手机Tiled-BasedRender和GPU带宽"><a href="#手机Tiled-BasedRender和GPU带宽" class="headerlink" title="手机Tiled-BasedRender和GPU带宽"></a>手机Tiled-BasedRender和GPU带宽</h1><h2 id="带宽的概念"><a href="#带宽的概念" class="headerlink" title="带宽的概念"></a>带宽的概念</h2><p>参考资料:</p>
-<p><a target="_blank" rel="noopener" href="https://developer.apple.com/documentation/metal/gpu_selection_in_macos/understanding_gpu_bandwidth">Apple官方文档</a></p>
-<p><em>Bandwidth</em> refers to the external bandwidth between a GPU and its associated system. It’s a measure of the data transfer speed across the bus that connects the two (for example, PCIe or Thunderbolt). Bandwidth doesn’t refer to the internal bandwidth of a GPU, which is a measure of the data transfer speed between components within the GPU.</p>
-<p>内存一共有两种，设备内存和系统内存：</p>
-<p>资源使用方式：</p>
-<p>1.所有数据都放在系统内存</p>
-<p><img src="/../../images/%E6%89%8B%E6%9C%BATiled-BasedRender%E5%92%8CGPU%E5%B8%A6%E5%AE%BD/d1b485f2-df04-403f-b665-44e91c8bec0b.png" alt="A system diagram showing two shared resources in the same system memory that can be accessed by a discrete GPU via a PCIe bus and by an external GPU via a Thunderbolt 3 bus."></p>
-<p>2.所有数据放到设备内存</p>
-<p><img src="/../../images/%E6%89%8B%E6%9C%BATiled-BasedRender%E5%92%8CGPU%E5%B8%A6%E5%AE%BD/dd271bd5-dfd5-479a-80bb-67eb01405346.png" alt="A system diagram showing two private resources in separate video memory that can be accessed directly by a discrete GPU and an external GPU."></p>
-<p>3.同时放到设备系统内存</p>
-<p><img src="/../../images/%E6%89%8B%E6%9C%BATiled-BasedRender%E5%92%8CGPU%E5%B8%A6%E5%AE%BD/f3cf8929-b6e6-47de-8cf3-307313202472.png" alt="A system diagram showing two managed resources with one copy in the same system memory and another copy in separate video memory. The resource copies in system memory can be accessed by a discrete GPU via a PCIe bus and by an external GPU via a Thunderbolt 3 bus. The resource copies in video memory can be accessed directly by a discrete GPU and an external GPU."></p>
-<p>可以看到，经过PCIe访问的数据就会产生带宽。</p>
-<p><a target="_blank" rel="noopener" href="https://developer.samsung.com/game/gpu-framebuffer">三星文档</a></p>
-<h2 id="渲染模式的推导"><a href="#渲染模式的推导" class="headerlink" title="渲染模式的推导"></a>渲染模式的推导</h2><p>带宽和Cache导致了手机不得不使用Tiled Based Rendering。</p>
-<h3 id="立即模式的渲染Immediate-Mode-Renderer-“IMR”"><a href="#立即模式的渲染Immediate-Mode-Renderer-“IMR”" class="headerlink" title="立即模式的渲染Immediate-Mode Renderer (“IMR”)"></a>立即模式的渲染Immediate-Mode Renderer (“IMR”)</h3><p>如下图所示可以看到，每次读取数据，写出数据，都占用大量带宽。</p>
-<p><img src="/../../images/%E6%89%8B%E6%9C%BATiled-BasedRender%E5%92%8CGPU%E5%B8%A6%E5%AE%BD/tech_GPUFramebuffer_03.svg" alt="Pipeline of an &#39;immediate-mode&#39; renderer"></p>
-<p>IMR模式的渲染每次会有大量的栅格化写出，这部分内容是没有规律的。所以像素会反复写出。</p>
-<p>这种状态下有一个Cache，是行级别的。</p>
-<p><img src="/../../images/%E6%89%8B%E6%9C%BATiled-BasedRender%E5%92%8CGPU%E5%B8%A6%E5%AE%BD/1569317001543.png" alt="1569317001543"></p>
-<p>这里有一个极大的前提就是，Cache是有限的！！！</p>
-<h3 id="Tiled-memory"><a href="#Tiled-memory" class="headerlink" title="Tiled memory"></a>Tiled memory</h3><p>第一个策略是把屏幕分块Cache，这样内存功能更加有规律。内存的传输不是太频繁了。</p>
-<p><img src="/../../images/%E6%89%8B%E6%9C%BATiled-BasedRender%E5%92%8CGPU%E5%B8%A6%E5%AE%BD/1569317024532.png" alt="1569317024532"></p>
-<h3 id="Rasterizing-within-tiles"><a href="#Rasterizing-within-tiles" class="headerlink" title="Rasterizing within tiles"></a>Rasterizing within tiles</h3><p>上面的问题是，如果一个三角跨越整个屏幕的三角形会打破Cache。</p>
-<p>进一步的优化，是基于Tiled进行光栅化：we can draw all the pixels that the triangle covers within one tile before moving on to the next tile.</p>
-<h3 id="Binning"><a href="#Binning" class="headerlink" title="Binning"></a>Binning</h3><p>进一步优化，我们现在不只是基于Cache去光栅化，而是直接基于Tiled计算所有的三角形。</p>
-<ol>
-<li>第一步就是计算每个tile中的所有三角形。</li>
-</ol>
-<p> Note that this process involves vertex shading, since this affects the location of triangles, but not fragment shading.</p>
-<p><img src="/../../images/%E6%89%8B%E6%9C%BATiled-BasedRender%E5%92%8CGPU%E5%B8%A6%E5%AE%BD/1569318032142.png" alt="1569318032142"></p>
-<h3 id="Tile-based-rasterization"><a href="#Tile-based-rasterization" class="headerlink" title="Tile-based rasterization"></a>Tile-based rasterization</h3><p>第二步就是基于Tile的栅格化。</p>
-<p>Once the geometry has been sorted into bins, the rasterizer can process the scene one bin at a time, writing only to local tile memory until processing of the tile is finished.</p>
-<p>由于一个一个处理所以Cache被压缩成了一个Tile,而不再需要多个Cache进行缓存了。</p>
-<p>Since each tile is processed only once, the “cache” is now reduced to a single tile. </p>
-<p>新的流程:</p>
-<p><img src="/../../images/%E6%89%8B%E6%9C%BATiled-BasedRender%E5%92%8CGPU%E5%B8%A6%E5%AE%BD/tech_GPUFramebuffer_16.svg" alt="Pipeline of a tiled renderer"></p>
-<h3 id="优点："><a href="#优点：" class="headerlink" title="优点："></a>优点：</h3><ul>
-<li>Frame buffer memory bandwidth is greatly reduced, reducing power and increasing speed.<ul>
-<li>Mobile memory is typically slower and lower power than desktop systems, and bandwidth is shared with the CPU, so access is very costly.</li>
-</ul>
-</li>
-<li>With API support, off-chip memory requirements may also be reduced (it may not be necessary to allocate an off-chip Z buffer at all, for example).</li>
-<li>Texture cache performance can be improved (textures covering multiple primitives may be accessed more coherently one tile at a time than one primitive at a time.</li>
-<li>Much less on-chip space is needed for good performance compared with a general-purpose frame buffer cache.<ul>
-<li>This means that more space can be dedicated to texture cache, further reducing bandwidth.</li>
-</ul>
-</li>
-</ul>
-<h3 id="Limitations-of-tile-based-rendering"><a href="#Limitations-of-tile-based-rendering" class="headerlink" title="Limitations of tile-based rendering"></a>Limitations of tile-based rendering</h3><p>While there are many performance advantages to tile-based rendering, there are some restrictions imposed by the technique:</p>
+      <p>##临界区</p>
+<p>在多线程当中进行互斥同步的锁。</p>
+<p>可是使用windase.h当中的临时区锁进行控制：</p>
+<p>**InitializeCriticalSection  此函数初始化一个临界区对象 **</p>
+<p>void InitializeCriticalSection(  LPCRITICAL_SECTION <em>lpCriticalSection</em>);</p>
+<p>参数：lpCriticalSection指向临界区对象的指针</p>
+<p>这个进程负责分配一个临界区对象使用的内存，它可以通过声明类型的CRITICAL_SECTION的变量使用的内存。一旦一个临界区对象已被初始化，该进程的线程可以在EnterCriticalSection或LeaveCriticalSection函数指定对象，提供对共享资源的相互独占式访问。对于不同进程之间的类似线程同步，使用互斥对象。</p>
+<p>一个临界区对象不能移动或复制。这一进程也绝不能修改该对象，但必须把它作为逻辑不透明来处理。只能使用由与Microsoft Win32 ® API提供的临界区功能，用来管理临界区对象。</p>
+<p>在低内存的情况下，InitializeCriticalSection可能提出STATUS_NO_MEMORY异常。</p>
+<p><strong>DeleteCriticalSection 删除关键节对象释放由该对象使用的所有系统资源。</strong></p>
+<p>void WINAPI DeleteCriticalSection(<em>Inout</em> LPCRITICAL_SECTION lpCriticalSection);</p>
+<p>参数：<em>lpCriticalSection，</em>对关键节对象的指针。先前必须已将该对象初始化于InitializeCriticalSection对象中。</p>
+<p><strong>线程锁的概念函数EnterCriticalSection和LeaveCriticalSection的用法</strong></p>
+<p>使用结构CRITICAL_SECTION 需加入头文件#include “afxmt.h”</p>
+<p>定义一个全局的锁 CRITICAL_SECTION的实例</p>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs c">CRITICAL_SECTION cs;<br>InitializeCriticalSection(&amp;cs);<br><br><span class="hljs-comment">//第一个线程</span><br><span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i&lt;<span class="hljs-number">10</span>; i++)&#123;      <br>  EnterCriticalSection(&amp;cs);<span class="hljs-comment">//加锁</span><br>	<span class="hljs-comment">// TODO：逻辑</span><br>  LeaveCriticalSection(&amp;cs);<span class="hljs-comment">//解锁</span><br>&#125;<br><br><span class="hljs-comment">//第二线程</span><br><span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i&lt;<span class="hljs-number">10</span>; i++)&#123;      <br>  EnterCriticalSection(&amp;cs);<span class="hljs-comment">//加锁</span><br>	<span class="hljs-comment">// TODO：逻辑</span><br>  LeaveCriticalSection(&amp;cs);<span class="hljs-comment">//解锁</span><br>&#125;<br><br><span class="hljs-comment">//使用完成</span><br>DeleteCriticalSection(&amp;cs);<br></code></pre></td></tr></table></figure>
+
+
+
+<h2 id="互斥锁和阻塞信号"><a href="#互斥锁和阻塞信号" class="headerlink" title="互斥锁和阻塞信号"></a>互斥锁和阻塞信号</h2><p>SuspendThread 如果暂停了获取锁的进程：</p>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs c">EnterCriticalSection(&amp;cs);<span class="hljs-comment">//加锁</span><br><span class="hljs-comment">// <span class="hljs-doctag">TODO:</span>A</span><br>LeaveCriticalSection(&amp;cs);<span class="hljs-comment">//解锁</span><br></code></pre></td></tr></table></figure>
+
+<p>如果在A处暂停则可能造成死锁。</p>
+<p>WaitForSingleObject是等待一个特定的对象编程发出信号的状态或者过时。</p>
+<p>说明<a target="_blank" rel="noopener" href="https://msdn.microsoft.com/en-us/library/windows/desktop/ms687032(v=vs.85).aspx">WaitForSingleObject</a></p>
+<p>例子<a target="_blank" rel="noopener" href="https://msdn.microsoft.com/en-us/library/windows/desktop/ms686915(v=vs.85).aspx">WaitForSingleObject</a></p>
+<h2 id="多线程编程之Windows同步方式"><a href="#多线程编程之Windows同步方式" class="headerlink" title="多线程编程之Windows同步方式"></a>多线程编程之Windows同步方式</h2><p>　本文来自<a target="_blank" rel="noopener" href="http://www.cnblogs.com/kuliuheng/p/4062211.html">cnblogs.</a></p>
+<p>​	在Windows环境下针对多线程同步与互斥操作的支持，主要包括四种方式：临界区（CriticalSection）、互斥对象（Mutex）、信号量（Semaphore）、事件对象（Event）。下面分别针对这四种方式作说明：</p>
+<p><strong>（1）临界区（CriticalSection）</strong></p>
+<p>　　每个进程中访问临界资源的那段代码称为临界区（临界资源是一次仅允许一个进程使用的共享资源）。每次只准许一个进程进入临界区，进入后不允许其他进程进入。不论是硬件临界资源，还是软件临界资源，多个进程必须互斥地对它进行访问。Windows环境下临界区的基本操作有以下几个：</p>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs c">CRITICAL_SECTION CriticalSection;<br>InitializeCriticalSection(&amp;CriticalSection);<br>EnterCriticalSection(&amp;CriticalSection);<br>LeaveCriticalSection(&amp;CriticalSection);<br>DeleteCriticalSection(&amp;CriticalSection);<br></code></pre></td></tr></table></figure>
+
+<p><strong>（2）互斥对象（Mutex）</strong></p>
+<p>　　在编程中，引入了对象互斥对象（也叫互斥锁）的概念，来保证共享数据操作的完整性。每个对象都对应于一个可称为“互斥锁”的标记，这个标记用来保证在任一时刻，只能有一个线程访问该对象。互斥对象的操作接口有以下几个：</p>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs c">CreateMutex<br>OpenMutex<br>ReleaseMutex<br></code></pre></td></tr></table></figure>
+
+<p> 　　在使用互斥对象的时候借助WaitforSingleObject，例如：</p>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs c">WaitForSingleObject(<span class="hljs-comment">/*...*/</span>);<br>    do_something();<br>ReleaseMutex(<span class="hljs-comment">/*...*/</span>);<br></code></pre></td></tr></table></figure>
+
+<p> **（3）信号量（Semaphore）　　**</p>
+<p>　　信号量有时被称为信号灯，是在多线程环境下使用的一种设施，它负责协调各个线程，以保证它们能够正确、合理的使用公共资源。也是操作系统中用于控制<strong>进程同步互斥</strong>的量。信号量分为单值和多值两种，前者只能被一个线程获得，后者可以被若干个线程获得。与互斥对象相比，信号量就好比是可以容纳N多个人的房子允许多个人同时进入（数量有限制而已），而互斥对象就只能容纳一个人的小房子，同一时刻只能一个人使用。</p>
+<p>　　Windows环境下的信号量操作接口包括：</p>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs c">CreateSemaphore<br>OpenSemaphore<br>ReleaseSemaphore<br></code></pre></td></tr></table></figure>
+
+<p> 　　信号量的使用方式与互斥对象差不多，只不过在初始化的时候需要指定信号的个数：</p>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs c">WaitForSingleObject(<span class="hljs-comment">/*...*/</span>);<br>    do_something();<br>ReleaseSemaphore(<span class="hljs-comment">/*...*/</span>);<br></code></pre></td></tr></table></figure>
+
+<p> <strong>（4）事件对象（Event）</strong></p>
+<p>　　 Event对象是Windows下面很有趣的一种锁结果。从某种意义上说，它和互斥锁很相近，但是又不一样。因为在线程获得锁的使用权之前，常常需要某一个线程（可能是主线程也可能是其他线程）调用SetEvent设置一下才行。关键是，在线程结束之前，我们也不清楚当前线程获得Event之后执行到哪了。所以使用起来，要特别小心。常用的Event对象操作有：</p>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs c">CreateEvent<br>OpenEvent<br>PulseEvent<br>ResetEvent<br>SetEvent<br></code></pre></td></tr></table></figure>
+
+<p> 　　主线程一般可以这样做：</p>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c">CreateEvent(<span class="hljs-comment">/*...*/</span>);    <span class="hljs-comment">// 创建事件对象</span><br>SetEvent(<span class="hljs-comment">/*...*/</span>);       <span class="hljs-comment">// 设置信号</span><br>WaitForMultiObjects(hThread, <span class="hljs-comment">/*...*/</span>);    <span class="hljs-comment">// 等待线程结束</span><br>CloseHandle(<span class="hljs-comment">/*...*/</span>);    <span class="hljs-comment">// 关闭线程句柄</span><br></code></pre></td></tr></table></figure>
+
+<p> 　　而被启动的线程一般要等待某个事件再进行动作：</p>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-keyword">while</span>(<span class="hljs-number">1</span>)&#123;<br>    WaitForSingleObject(<span class="hljs-comment">/*...*/</span>);    <span class="hljs-comment">// 等待事件</span><br>    <span class="hljs-comment">/*...*/</span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p><strong>总结：</strong><br>（1）关于<a target="_blank" rel="noopener" href="http://msdn.microsoft.com/en-us/library/ms686908(v=VS.85).aspx">临界区</a>、<a target="_blank" rel="noopener" href="http://msdn.microsoft.com/en-us/library/ms686927(v=VS.85).aspx">互斥区</a>、<a target="_blank" rel="noopener" href="http://msdn.microsoft.com/en-us/library/ms686946(v=VS.85).aspx">信号量</a>、<a target="_blank" rel="noopener" href="http://msdn.microsoft.com/en-us/library/ms686915(v=VS.85).aspx">E</a><a target="_blank" rel="noopener" href="http://msdn.microsoft.com/en-us/library/ms686915(v=VS.85).aspx">vent</a>在msdn上均有示例代码；</p>
+<p>（2）一般来说，使用频率上<strong>信号量 &gt; 互斥对象 &gt; 临界区 &gt; 事件对象</strong></p>
+<p>（3）信号量可以实现其他三种锁的功能，学习上应有所侧重</p>
+<p>（4）纸上得来终觉浅，多实践才能掌握它们之间的区别 *    *</p>
+
+      
+      <p align="right"><a class="morebtn" href="/2022/09/19/language/c++/thread/" title="">阅读全文</a></p>
+    </main>
+    <footer class="post-footer">
+      
+    </footer>
+  </article>
+  
+  <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
+    <div class="post-block">
+      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/09/19/language/c++/network/">
+      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <meta itemprop="name" content="leinlin">
+        <meta itemprop="description" content="">
+        <meta itemprop="image" content="/images/avatar.jpg">
+      </span>
+      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+        <meta itemprop="name" content="leinlin的小笔记">
+      </span>
+    </div>
+    <header class="post-header">
+      <h1 class="post-title" itemprop="name headline">
+        <a class="post-title-link post-title-link-external" href="/2022/09/19/language/c++/network/" itemprop="url"></a>
+      </h1>
+      <div class="post-meta">
+        
+        <span class="post-date">
+          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2022-09-19T19:53:33+08:00">2022-09-19 19:53:33</time></span>
+        </span>
+        
+        
+        
+        
+        
+      </div>
+    </header>
+    <main class="post-main" itemprop="articleBody">
+      
+      <p>winsock2.h</p>
+
+      
+      <p align="right"><a class="morebtn" href="/2022/09/19/language/c++/network/" title="">阅读全文</a></p>
+    </main>
+    <footer class="post-footer">
+      
+    </footer>
+  </article>
+  
+  <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
+    <div class="post-block">
+      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/09/19/language/lang_index/">
+      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <meta itemprop="name" content="leinlin">
+        <meta itemprop="description" content="">
+        <meta itemprop="image" content="/images/avatar.jpg">
+      </span>
+      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+        <meta itemprop="name" content="leinlin的小笔记">
+      </span>
+    </div>
+    <header class="post-header">
+      <h1 class="post-title" itemprop="name headline">
+        <a class="post-title-link post-title-link-external" href="/2022/09/19/language/lang_index/" itemprop="url"></a>
+      </h1>
+      <div class="post-meta">
+        
+        <span class="post-date">
+          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2022-09-19T19:53:33+08:00">2022-09-19 19:53:33</time></span>
+        </span>
+        
+        
+        
+        
+        
+      </div>
+    </header>
+    <main class="post-main" itemprop="articleBody">
+      
+      <h1 id="语言学习"><a href="#语言学习" class="headerlink" title="语言学习"></a>语言学习</h1><p>包含了基本的语言基础和相关技巧</p>
+<p>Lua</p>
+<p><a href="lua/fast_learn_lua.md">十五分钟快速学会lua</a></p>
+<p>C++</p>
+<p><a href="c++/network.md">windows网络编程</a></p>
+<p><a href="c++/thread.md">多线程</a></p>
+<p><a href="unlock_queue.md">无锁队列</a></p>
+<p><a href="../../index.md">back</a></p>
+
+      
+      <p align="right"><a class="morebtn" href="/2022/09/19/language/lang_index/" title="">阅读全文</a></p>
+    </main>
+    <footer class="post-footer">
+      
+    </footer>
+  </article>
+  
+  <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
+    <div class="post-block">
+      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/09/19/VulkanTranslate/Vulkan-A-Specification%E4%B8%AD%E6%96%87%E7%BF%BB%E8%AF%91%E7%89%88/">
+      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <meta itemprop="name" content="leinlin">
+        <meta itemprop="description" content="">
+        <meta itemprop="image" content="/images/avatar.jpg">
+      </span>
+      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+        <meta itemprop="name" content="leinlin的小笔记">
+      </span>
+    </div>
+    <header class="post-header">
+      <h1 class="post-title" itemprop="name headline">
+        <a class="post-title-link post-title-link-external" href="/2022/09/19/VulkanTranslate/Vulkan-A-Specification%E4%B8%AD%E6%96%87%E7%BF%BB%E8%AF%91%E7%89%88/" itemprop="url"></a>
+      </h1>
+      <div class="post-meta">
+        
+        <span class="post-date">
+          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2022-09-19T19:53:33+08:00">2022-09-19 19:53:33</time></span>
+        </span>
+        
+        
+        
+        
+        
+      </div>
+    </header>
+    <main class="post-main" itemprop="articleBody">
+      
+      <h1 id="Vulkan-A-Specification中文翻译版"><a href="#Vulkan-A-Specification中文翻译版" class="headerlink" title="Vulkan-A-Specification中文翻译版"></a>Vulkan-A-Specification中文翻译版</h1><p>翻译了一点点发现已经有了一个相对完整的中文版，但是发现了大量的错别字和语句问题，导致很难理解。</p>
+<p><a target="_blank" rel="noopener" href="https://khronos.org/registry/vulkan/specs/1.1/html/chap15.html#textures-texel-filtering">Vulkan Specification英文版</a></p>
+<p><a target="_blank" rel="noopener" href="http://spec.vulkan.org.cn/#devsandqueues">Vulkan Specification中文版</a></p>
+<p>我这里就尝试翻译一些重要的部分。</p>
+<p><a href="Chapter1-Introduction.md">Chapter1-Introduction</a></p>
+<p><a href="Chapter2-Fundamentals-%E5%9F%BA%E7%A1%80%E5%8A%9F%E8%83%BD">Chapter2-Fundamentals-基础功能</a></p>
+
+      
+      <p align="right"><a class="morebtn" href="/2022/09/19/VulkanTranslate/Vulkan-A-Specification%E4%B8%AD%E6%96%87%E7%BF%BB%E8%AF%91%E7%89%88/" title="">阅读全文</a></p>
+    </main>
+    <footer class="post-footer">
+      
+    </footer>
+  </article>
+  
+  <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
+    <div class="post-block">
+      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/09/19/VulkanTranslate/Chapter2-Fundamentals-%E5%9F%BA%E7%A1%80%E5%8A%9F%E8%83%BD/">
+      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <meta itemprop="name" content="leinlin">
+        <meta itemprop="description" content="">
+        <meta itemprop="image" content="/images/avatar.jpg">
+      </span>
+      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+        <meta itemprop="name" content="leinlin的小笔记">
+      </span>
+    </div>
+    <header class="post-header">
+      <h1 class="post-title" itemprop="name headline">
+        <a class="post-title-link post-title-link-external" href="/2022/09/19/VulkanTranslate/Chapter2-Fundamentals-%E5%9F%BA%E7%A1%80%E5%8A%9F%E8%83%BD/" itemprop="url"></a>
+      </h1>
+      <div class="post-meta">
+        
+        <span class="post-date">
+          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2022-09-19T19:53:33+08:00">2022-09-19 19:53:33</time></span>
+        </span>
+        
+        
+        
+        
+        
+      </div>
+    </header>
+    <main class="post-main" itemprop="articleBody">
+      
+      <h1 id="Chapter2-Fundamentals-基础功能"><a href="#Chapter2-Fundamentals-基础功能" class="headerlink" title="Chapter2 Fundamentals 基础功能"></a>Chapter2 Fundamentals 基础功能</h1><p>​	这个章节主要介绍了基础概念：包括Vulkan架构、扩展模型、API语法、管线配置、数字表示方法、状态和状态查询、以及不同类型的对象和Shader。这部分提供了一个框架用于解释说明文档剩下部分中更加具体的命令和表现。</p>
+<h2 id="2-1-主机和设备环境"><a href="#2-1-主机和设备环境" class="headerlink" title="2.1 主机和设备环境"></a>2.1 主机和设备环境</h2><p>Vulkan说明文件假设并且需要：主机设备满足下面的要求以支持Vulkan的实现：</p>
 <ul>
-<li>The two-stage binning and fragment passes introduce latency<ul>
-<li>This latency should be hidden by pipelining and improved performance, but makes some operations relatively more costly</li>
-<li>In pipelined tiled rendering, framebuffer and textures required for rendering should be double-buffered so as to avoid stalling the pipeline。</li>
-</ul>
+<li><p>主机必须支持8,16,32,64位的有符号以及无符号整型，并且可以按照字节（byte）寻址。</p>
 </li>
-<li><strong>Framebuffer reads that might fall outside the current fragment are relatively more costly</strong><ul>
-<li><strong>Operations such as screen-space ray tracing require writing all the framebuffer data - removing the ability to discard full-resolution images and depth values after use</strong></li>
-</ul>
+<li><p>主机必须支持32-和64-位的浮点数类型，并且满足后续章节的范围和精度的要求。</p>
 </li>
-<li>There is a cost to traversing the geometry repeatedly<ul>
-<li>Scenes that are vertex-shader bound may have increased overhead in a tiler</li>
-</ul>
-</li>
-<li>The binning pass may have limitations<ul>
-<li>Some implementations may run out of space for binning primitives in very complex scenes, or may have optimizations that are bypassed by unusual input (such as highly irregular geometry)</li>
-</ul>
-</li>
-<li>Switching to a different render target and back involves flushing all working data to memory and later reading it back<ul>
-<li>For a tiler, it is especially important that shadow and environment maps be generated before the main frame buffer, not “on demand” during final rendering (though this is good advice for most GPUs)</li>
-</ul>
-</li>
-<li>Graphics state (such as shaders) may change more frequently and less predictably<ul>
-<li>Geometry that is “skipped” means that states do not necessarily follow in turn, making incremental state updates hard to implement</li>
-</ul>
+<li><p>这些数据的字节顺序和表示方式必须和物理设备一致。</p>
 </li>
 </ul>
-<p>In most cases, the behavior of a tile-based GPU should not be appreciably worse than for an immediate-mode renderer using similarly limited hardware (indeed, some hardware can choose whether or not to run in a tiled mode), but it is possible to remove the performance benefits of tile-based rendering with the wrong use pattern.</p>
+<blockquote>
+<p>Note</p>
+<p>因为各种类型的数据和结构体主机和物理设备都需要访问，所以两端都需要高效的访问以便保证灵活写入和高性能。</p>
+</blockquote>
+<h2 id="2-2-Execution-Model-执行模式"><a href="#2-2-Execution-Model-执行模式" class="headerlink" title="2.2 Execution Model 执行模式"></a>2.2 Execution Model 执行模式</h2><p>这一节说明了Vulkan系统的执行模式。</p>
+<p>​	Vulkan会暴露出一个或者多个device，每个device会暴露出一个或多个能够异步工作的queue。同一个device支持的各个队列会划分到不同的family。每一个family支持一种或多种功能，并且应该包含一个或多个有相同特性的queue。同一个family当中queue可以认为是互相兼容的。为某个queue所生产的任务，可以在其所属family中的任何一个queue上执行。本说明文档定义了queue可能具备的四个类型的功能：Graphic，Compute，Transfer 和Sparse memory management。</p>
+<blockquote>
+<p>Note</p>
+<p>一个device可能报告出多个相似queue的family，而不是报告出这些fafmily的一个或多个的多个成员。这表明，虽然这些family的queue具有类似的能力，但他们之间并不直接相容。（没有很明白。）</p>
+</blockquote>
+<p>设备内存是通过应用程序明确的管理的。每一个设备都可以声明一个或者多个堆用于区分不同区域的内存。内存堆要么是设备的本地内存要么是主机的本地内存，但是对于设备总是可见的。进一步的内存堆的细节是通过在堆上的可用内存类型暴露出来的。例如可用的内存类型有：</p>
+<ul>
+<li>device local：和device直接物理连接的设备内存。</li>
+<li>device local, host visible: 设备的local内存对于主机可见。</li>
+<li>host local ,host  visible : 是在主机的内存对设备和主机都可见。</li>
+</ul>
+<p>在其它的架构上，可能有一种堆满足各种用处。</p>
+<p>一个Vulkan 应用程序通过提交command buffer来控制所有设备，command buffer能够通过Vulkan库函数的调用记录设备命令。Command buffer的内容依赖与具体的实现和应用程序无关。一旦构造了Comman buffer，就可以进行提交一次或者多次到队列中来执行。多个Command buffer能够通过多线程并行的构建。</p>
+<p>Command buffer 提交到不同的队列能够并行的执行，执行顺序彼此没有关联。Command buffer提交到同一个队列表示了一个提交顺序。Command buffer在设备中执行的结果也是异步返回到主机的。一旦Command buffer提交到一个队列，控制流会立即返回到应用程序。应用程序需要关注同步设备和主机、同步各个队列。</p>
+<h3 id="2-2-1-队列操作-Queue-Operation"><a href="#2-2-1-队列操作-Queue-Operation" class="headerlink" title="2.2.1 队列操作 Queue Operation"></a>2.2.1 队列操作 Queue Operation</h3><p>Vulkan队列提供了一个执行设备引擎的接口。引擎执行的命令在运行之前记录到Command Buffer当中。这些命令伴随queue submission命令提交到一个队列中，进行批量(batches)执行。一旦命令提交到队列，这些命令将会开始并在脱离程序控制的状态下完整的执行，执行的顺序依赖于一些隐式和显式的排序约束。</p>
+<p>任务一般会通过队列提交命令提交到队列，这些命令一般形如<code>vkQueue*</code>(例如：<code>vkQueueSubmit</code>, <code>vkQueueBindSparse</code>)，并且可以接受一组等待信号量（信号被激活时才会开始执行）和一组激发的信号量（人物完成或会激活对应的信号）。信号量的处理和任务本身都属于队列操作。</p>
+<p>在不同队列上的队列操作并没有隐式的顺序限制，可能以任何顺序执行。不同队列间同步可以通过semaphores（通常用于GPU-GPU指令同步）和fences（通常用语CPU-GPU同步）控制。</p>
+<p>提交到一个队列中的Command buffer的执行顺序遵循提交顺序和隐式顺序的约束，其他情况则可能同时执行或者乱序执行。针对单个队列的其他类型的批处理和队列提交（例如：稀疏内存绑定），彼此之间没有隐式顺序约束。附加的批处理和队列提交显式顺序约束可以通过信号量semaphores（通常用于GPU-GPU指令同步）和fences（通常用语CPU-GPU同步）控制。</p>
+<p>在semaphores或fences被激发之前，可以确定的是：之前被提交的队列操作已经完成了，且随后的队列操作可以继续进行内存的写入。等待一个被激活的semaphore或 fence可以保证之前的写入的内容是可用的，并且是对之后的命令可见（也就是说等待的semaphore或 fence完成后，接下来就能获取之前写入的内容。）</p>
+<p>对于Command Buffer是没有顺序约束的，包括相同或者不同类型的Primary Command Buffer的batches或者submissions，以及Primary Command Buffer和Second Command Buffer之间。也就是说，在任何的 semaphore或者fence操作之间，提交一系列的Command Buffer（包括Second Command Buffer） 和在一个单独的Primary Command Buffer中记录这些命令然后提交是一样的（除非当前的状态被重置了）。想要显示的控制这些顺序，可以通过显示信号量。</p>
+<p>在同一个Command Buffer当中的命令遵循一些隐式的顺序约束，但是只约束了一部分操作。</p>
+<blockquote>
+<p>​	Note</p>
+<p>提交到一个队列当中的任务有很大的自由度进行重叠执行。这是由于Vulkan本身的管线和并行策略决定的。</p>
+</blockquote>
+<p>记录在Command Buffer当中的命令包括：执行操作（例如：draw，dispatch，clear，copy，query&#x2F;timestamp， begin&#x2F;end subpass，）状态设置操作（例如：bind pipeline，descriptor sets, buffer, set dynamic state,push constants, set render pass），同步操作（例如：set&#x2F;wait events, pipeline barrier, render pass&#x2F;subpass dependencies）一些命令执行多次。状态设置会更新CommandBuffer当前的状态。一些命令的执行基于当前的状态。</p>
+<p>设备端的队列执行和主机端队列提交是异步执行的。当命令缓冲区被提交到队列后控制流马上就退回到应用程序了。 应用程序必须按需求在主机端和设备端进行同步操作。</p>
+<h2 id="2-3-对象模型-Object-Model"><a href="#2-3-对象模型-Object-Model" class="headerlink" title="2.3 对象模型 Object Model"></a>2.3 对象模型 Object Model</h2><p>devices，queue和其他的实例都是通过Vulkan object表示的。在API级别，所有的对象都通过handle来引用。有两种类型的handle：可分发的与不可分发的。<em>可分发的</em> handle是不可见类型数据的指针。这个指针可被layers使用，被当作拦截API命令的一部分， 每一个API命令都接受一个可分发类型的handle作为第一参数。 每一个不可分发类型的对象必须在其生命周期内有唯一一个handle值。</p>
+<p>_不可分发的_handle类型是64位整型类型，其含义是Vulkan实现决定的，他可能会把对象信息直接包含到handle里，而非通过指向一个数据结构。不可分发类型的对象，对于不同的类型或者同一个类型可能没有唯一的handle值（handle可能重复）。 如果handle值不唯一，那么销毁任何一个handle时：要保证不能造成其他类型的、相同handle值的对象变得无效，也要保证如果用同一个handle创建了多个对象，并且创建次数多余销毁次数，也不能让这个销毁操作导致有相同handle值的对象失效。</p>
+<p>所有通过<code>VkDevice</code> （用 <code>VkDevice</code>作为第一个参数 )的命令创建的对象都是该设备私有的，必须不能被其他设备使用。</p>
+<h3 id="2-3-1-对象的生命周期Object-Lifetime"><a href="#2-3-1-对象的生命周期Object-Lifetime" class="headerlink" title="2.3.1 对象的生命周期Object Lifetime"></a>2.3.1 对象的生命周期Object Lifetime</h3><p>对象都是通过形如<code>vkCreate*</code> and <code>vkAllocate*</code> 的命令创建或者分配的。 一旦一个对象被创建或者分配，它的结构就被认为是不变的，即使对象的内容可以自由改动。 对象通过形如<code>vkDestroy*</code> 和 <code>vkFree</code>* 的命令来销毁或释放。</p>
+<p>被分配（而不是创建）的对象从一个已存在的池子对象或者内存堆中获取资源，当被释放时会把资源归还给该池子或者堆。对象的创建和销毁在运行时通常是低频操作， 对象的分配或者释放可能是高频的。对象池帮助调节分配和释放的性能提升。</p>
+<p>应用程序有责任跟踪Vulkan对象的生命周期，并且不能销毁正在被使用的对象。</p>
+<p>属于应用程序端的内存在提交给Vulkan命令的时候会即刻被接管。在Vulkan命令执行结束之后一定会返还给应用程序。应用程序可以在需要占用这些内存的命令返回之后，再修改和释放这些内存。</p>
+<p>下面的对象会在传递给Vulkan命令之后被消耗掉，并且不能再被由它创建的对象访问。这种对象在任何用到他们的API命令执行期间不能被销毁。</p>
+<p>• VkShaderModule<br>• VkPipelineCache</p>
 
       
-      <p align="right"><a class="morebtn" href="/2022/09/19/RTR/%E6%89%8B%E6%9C%BATiled-BasedRender%E5%92%8CGPU%E5%B8%A6%E5%AE%BD/" title="">阅读全文</a></p>
+      <p align="right"><a class="morebtn" href="/2022/09/19/VulkanTranslate/Chapter2-Fundamentals-%E5%9F%BA%E7%A1%80%E5%8A%9F%E8%83%BD/" title="">阅读全文</a></p>
+    </main>
+    <footer class="post-footer">
+      
+    </footer>
+  </article>
+  
+  <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
+    <div class="post-block">
+      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/09/19/VulkanTranslate/Chapter1-Introduction/">
+      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <meta itemprop="name" content="leinlin">
+        <meta itemprop="description" content="">
+        <meta itemprop="image" content="/images/avatar.jpg">
+      </span>
+      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+        <meta itemprop="name" content="leinlin的小笔记">
+      </span>
+    </div>
+    <header class="post-header">
+      <h1 class="post-title" itemprop="name headline">
+        <a class="post-title-link post-title-link-external" href="/2022/09/19/VulkanTranslate/Chapter1-Introduction/" itemprop="url"></a>
+      </h1>
+      <div class="post-meta">
+        
+        <span class="post-date">
+          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2022-09-19T19:53:33+08:00">2022-09-19 19:53:33</time></span>
+        </span>
+        
+        
+        
+        
+        
+      </div>
+    </header>
+    <main class="post-main" itemprop="articleBody">
+      
+      <h1 id="Chapter-1-Introduction"><a href="#Chapter-1-Introduction" class="headerlink" title="Chapter 1 Introduction"></a>Chapter 1 Introduction</h1><p>这篇文档主要是一份说明文档，用来描述Vulkan API。 Vulkan API是符合 C99标准的控制low-level图形计算功能的API。</p>
+<p>文档的权威版本在官方网站可以查阅：<a target="_blank" rel="noopener" href="https://www.khronos.org/registry/vulkan/">官方文档</a></p>
+<p>生成官方文档的工程：[文档工程](<a target="_blank" rel="noopener" href="https://github.com/">https://github.com/</a> KhronosGroup&#x2F;Vulkan-Docs)</p>
+<h2 id="1-1-文档约定"><a href="#1-1-文档约定" class="headerlink" title="1.1 文档约定"></a>1.1 文档约定</h2><p>Vulkan说明文档用与给API开发人员和应用开发人员提供API使用参考，为两者提供统一的约定。从上下文通常也能推断出面向的受众，某些部分只针对这部分开发人员。例如 Valid Usage章节只提供给应用开发人员使用。任何的需求、禁止、建议和选择都在Normative terminology中说明。</p>
+<blockquote>
+<p>Note</p>
+<p> extensions 中定义的结构体、枚举类型已经被集成到了Vulkan 1.1的核心库中。这些内容现在和Vulkan1.1的接口等价。和部分影响了Vulkan说明文件、头文件、和XML注册表。</p>
+</blockquote>
+
+      
+      <p align="right"><a class="morebtn" href="/2022/09/19/VulkanTranslate/Chapter1-Introduction/" title="">阅读全文</a></p>
     </main>
     <footer class="post-footer">
       
@@ -1320,7 +1173,7 @@
     
     <div class="categories-count count-block">
       <div class="site-count-title">分类</div>
-      <div><a href="/categories/">13</a></div>
+      <div><a href="/categories/">17</a></div>
     </div>
     
     

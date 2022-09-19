@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#33363b">
+    <meta name="msapplication-TileColor" content="#33363b">
+    
+    
+    
+    
+    <meta name="keywords" content="leinlin, ARIA, Hexo">
+    
+    
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png">
+    
+    
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicons/android-chrome-192x192.png">
+    
+    
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png">
+    
+    
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png">
+    
+    
+    <link rel="mask-icon" href="/favicons/safari-pinned-tab.svg" color="#33363b">
+    
+    
+    <link rel="manifest" href="/favicons/site.webmanifest">
+    
+    
+    <meta name="msapplication-config" content="/favicons/browserconfig.xml">
+    
+    
+    <link rel="alternate" href="/atom.xml" title="leinlin的小笔记" type="application/atom+xml" />
+    
+    
+    <link rel="shortcut icon" type="image/x-icon" href="/favicons/favicon.ico">
+    
+    
+    <link rel="stylesheet" type="text/css" href="/css/normalize.css">
+    <link rel="stylesheet" type="text/css" href="/css/index.css">
+    
+    <link rel="stylesheet" type="text/css" href="/css/sidebar.css">
+    
+    
+<link rel="stylesheet" type="text/css" href="/css/page.css">
+<link rel="stylesheet" type="text/css" href="/css/post.css">
+
+    <link rel="stylesheet" type="text/css" href="/css/custom.css">
+    <link rel="stylesheet" type="text/css" href="/css/atom-one-light.css">
+    <link rel="stylesheet" type="text/css" href="/css/lightgallery.min.css">
+    <script type="text/javascript" src="/js/jquery.min.js"></script>
+    <script defer type="text/javascript" src="/js/util.js"></script>
+    <script defer type="text/javascript" src="/js/clipboard.min.js"></script>
+    <script defer type="text/javascript" src="/js/scrollspy.js"></script>
+    <script defer type="text/javascript" src="/js/fontawesome-all.min.js"></script>
+    <script defer type="text/javascript" src="/js/lightgallery.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-fullscreen.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-hash.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-pager.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-thumbnail.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-zoom.min.js"></script>
+    
+    <script defer src="/js/busuanzi.pure.mini.js"></script>
+    
+    
+    <script defer type="text/javascript" src="/js/search.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function () {
+      var searchPath = "search.xml";
+      if (searchPath.length === 0) {
+        searchPath = "search.xml";
+      }
+      var path = "/" + searchPath;
+      searchFunc(path, "search-input", "search-result");
+    });
+    </script>
+    
+    
+    
+    <script defer type="text/javascript" src="https://cdn.staticfile.org/MathJax/MathJax-2.6-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ["$","$"], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ["script", "noscript", "style", "textarea", "pre", "code"]
+      }
+    });
+    </script>
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for (i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += " has-jax";
+      }
+    });
+    </script>
+    
+    
+    <script defer type="text/javascript" src="/js/index.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function () {
+      var cb = null;
+      var els = $(".post figure.highlight");
+      if (els.length) {
+        // Enabled Hexo highlight line number.
+        $(els).each(function (i, e) {
+          // $(e).before("<button class=\"copy button\">复制</button>");
+          $(e).before([
+            "<div class=\"code-titlebar\">",
+              "<div class=\"titlebar-left\">",
+                "<button class=\"copy\">复制</button>",
+              "</div>",
+            "</div>"
+          ].join(""));
+        });
+        cb = new ClipboardJS("button.copy", {
+          "target": function (trigger) {
+              // Get target element by DOM API.
+              return trigger.parentNode.parentNode.nextElementSibling.firstChild.firstChild.firstChild.lastChild.firstChild.firstChild;
+          }
+        });
+      } else {
+        // Disabled Hexo highlight line number.
+        els = $(".post pre code");
+        $(els).each(function (i, e) {
+          // Add button before pre, not code.
+          // $(e).parent().before("<button class=\"copy button\">复制</button>");
+          $(e).before([
+            "<div class=\"code-titlebar\">",
+              "<div class=\"titlebar-left\">",
+                "<button class=\"copy\" >复制</button>",
+              "</div>",
+              "<div class=\"titlebar-right\">",
+                "<button class=\"button-dot dot-minimize\" aria-label=\"Decoration\"></button>",
+                "<button class=\"button-dot dot-maximize\" aria-label=\"Decoration\"></button>",
+                "<button class=\"button-dot dot-close\" aria-label=\"Decoration\"></button>",
+              "</div>",
+            "</div>"
+          ].join(""));
+        });
+        cb = new ClipboardJS("button.copy", {
+          "target": function (trigger) {
+              // Get target element by DOM API.
+              return trigger.parentNode.parentNode.nextElementSibling;
+          }
+        });
+      }
+      cb.on("success", function (e) {
+        e.clearSelection();
+        var trigger = e.trigger;
+        // Change button text as a user tip.
+        trigger.innerHTML = "已复制";
+        $(trigger).addClass("copied");
+        // Change button text back;
+        setTimeout(function () {
+          trigger.innerHTML = "复制";
+          $(trigger).removeClass("copied");
+        }, 1500);
+      });
+    });
+    </script>
+    
+    <script defer type="text/javascript" src="/js/custom.js"></script>
+    <title>IBL理论与应用 | leinlin的小笔记</title>
+  <meta name="generator" content="Hexo 6.2.0"></head>
+  <body itemscope itemtype="http://schema.org/WebPage" lang="zh_CN"  data-spy="scroll" data-target=".list-group">
+    
+<header id="header" class="header" style="background: #33363b;">
+  <div class="container">
+    <div class="header-container">
+      <div class="header-title">
+        <h1 class="title"><a href="/">leinlin的小笔记</a></h1>
+        <h2 class="subtitle"></h2>
+      </div>
+      
+    </div>
+    <nav id="nav" class="nav">
+      <a id="nav-toggle" class="nav-toggle" aria-hidden="true"><i class="fas fa-bars" aria-label="切换导航栏"></i></a>
+      <ul id="menu" role="menubar" aria-hidden="false">
+        
+        <li role="menuitem"><a href="/"><i class="fas fa-home"></i><span class="menu-text">首页</span></a></li>
+        
+        <li role="menuitem"><a href="/categories/"><i class="fas fa-th-list"></i><span class="menu-text">分类</span></a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</header>
+
+
+    <main id="main" class="main">
+      <div class="container">
+        <div class="main-container">
+          <div class="content">
+            
+<div id="post" class="page">
+  
+  <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
+    <div class="post-block">
+      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/07/09/RTR/IBL%E5%85%89%E7%85%A7%E7%90%86%E8%AE%BA%E4%B8%8E%E5%BA%94%E7%94%A8/">
+      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+       <meta itemprop="name" content="leinlin">
+       <meta itemprop="description" content="">
+       <meta itemprop="image" content="/images/avatar.jpg">
+      </span>
+      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+       <meta itemprop="name" content="leinlin的小笔记">
+      </span>
+    </div>
+    <header class="post-header">
+      <h1 class="post-title" itemprop="name headline">IBL理论与应用</h1>
+      <div class="post-meta">
+        
+        <span class="post-date">
+          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2022-07-09T12:00:14+08:00">2022-07-09 12:00:14</time></span>
+        </span>
+        
+        
+        
+        <span class="post-meta-divider divider">|</span>
+        
+        <span class="post-categories">
+          
+          <i class="far fa-folder-open"></i><span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/RTR/" itemprop="url" rel="index"><span itemprop="name">RTR</span></a></span>
+        </span>
+        
+        
+        
+        
+      </div>
+    </header>
+    <main class="post-main" itemprop="articleBody">
+      <!-- TOC -->
+
+
+
+<p>- <a href="#ibl%E7%90%86%E8%AE%BA%E4%B8%8E%E5%BA%94%E7%94%A8">IBL理论与应用</a></p>
+<p>​    - <a href="#%E7%90%86%E8%AE%BA%E5%9F%BA%E7%A1%80">理论基础</a></p>
+<p>​        - <a href="#%E5%85%89%E7%85%A7%E5%87%BD%E6%95%B0">光照函数</a></p>
+<p>​        - <a href="#%E4%BB%A3%E7%A0%81">代码</a></p>
+<p>​    - <a href="#ibl%E4%BC%98%E5%8C%96split-sum-approximation">IBL优化：Split Sum Approximation</a></p>
+<p>​        - <a href="#ibl-mipmap%E6%9E%84%E9%80%A0%E4%B8%8Eprefilter">IBL MipMap构造与Prefilter</a></p>
+<p>​        - <a href="#ibl%E5%85%89%E7%85%A7%E5%87%BD%E6%95%B0%E7%A7%AF%E5%88%86%E4%BC%B0%E8%AE%A1">IBL光照函数积分估计</a></p>
+<p>​            - <a href="#%E5%8E%9F%E5%A7%8B%E7%A7%AF%E5%88%86">原始积分</a></p>
+<p>​            - <a href="#%E6%8B%9F%E5%90%88%E7%A7%AF%E5%88%86%E4%BC%98%E5%8C%96">拟合积分优化</a></p>
+<p>​            - <a href="#%E9%A2%84%E7%A7%AF%E5%88%86%E8%B4%B4%E5%9B%BE">预积分贴图</a></p>
+<!-- /TOC -->
+
+<h1 id="IBL理论与应用"><a href="#IBL理论与应用" class="headerlink" title="IBL理论与应用"></a>IBL理论与应用</h1><p>这部分内容主要参自UE4的论文[Real Shading in Unreal Engine 4]</p>
+<p>IBL主要指的就是环境贴图部分计算的光照。</p>
+<h2 id="理论基础"><a href="#理论基础" class="headerlink" title="理论基础"></a>理论基础</h2><h3 id="光照函数"><a href="#光照函数" class="headerlink" title="光照函数"></a>光照函数</h3><p>光源就是一个Cubemap，过去也会用到双剖面。实际的积分光照结果是：</p>
+<p><img src="/../../images/IBL%E5%85%89%E7%85%A7%E7%90%86%E8%AE%BA%E4%B8%8E%E5%BA%94%E7%94%A8/1574853586831.png" alt="1574853586831"></p>
+<h3 id="代码"><a href="#代码" class="headerlink" title="代码"></a>代码</h3><p>这部分内容对应的代码就是下面的：</p>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// 根据一个随机Xi值和粗糙度、法线计算需要采样cubemap的方向，</span><br>float3 <span class="hljs-title function_">ImportanceSampleGGX</span><span class="hljs-params">( float2 Xi, <span class="hljs-type">float</span> Roughness, float3 N )</span> &#123; <br>   	<span class="hljs-type">float</span> a = Roughness * Roughness;<br>    <span class="hljs-type">float</span> Phi = <span class="hljs-number">2</span> * PI * Xi.x; <br>    <span class="hljs-type">float</span> CosTheta = <span class="hljs-built_in">sqrt</span>( (<span class="hljs-number">1</span> - Xi.y) / ( <span class="hljs-number">1</span> + (a*a - <span class="hljs-number">1</span>) * Xi.y ) ); <br>    <span class="hljs-type">float</span> SinTheta = <span class="hljs-built_in">sqrt</span>( <span class="hljs-number">1</span> - CosTheta * CosTheta );<br>    float3 H; <br>    H.x = SinTheta * <span class="hljs-built_in">cos</span>( Phi ); <br>    H.y = SinTheta * <span class="hljs-built_in">sin</span>( Phi ); <br>    H.z = CosTheta;<br>	float3 UpVector = <span class="hljs-built_in">abs</span>(N.z) &lt; <span class="hljs-number">0.999</span> ? float3(<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-number">1</span>) : float3(<span class="hljs-number">1</span>,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>); <br>    float3 TangentX = normalize( cross( UpVector, N ) ); <br>    float3 TangentY = cross( N, TangentX ); <span class="hljs-comment">// Tangent to world space </span><br>    <span class="hljs-keyword">return</span> TangentX * H.x + TangentY * H.y + N * H.z;<br>&#125;<br><span class="hljs-comment">//N就是NumSamples，是进行采样估计得采样数，决定了积分准确度，可以看到和正常光照一样需要有FDG的计算</span><br>float3 <span class="hljs-title function_">SpecularIBL</span><span class="hljs-params">( float3 SpecularColor, <span class="hljs-type">float</span> Roughness, float3 N, float3 V )</span> <br>&#123; <br>    float3 SpecularLighting = <span class="hljs-number">0</span>;<br>    <span class="hljs-type">const</span> uint NumSamples = <span class="hljs-number">1024</span>; <br>    <span class="hljs-keyword">for</span>( uint i = <span class="hljs-number">0</span>; i &lt; NumSamples; i++ ) <br>    &#123; <br>        float2 Xi = Hammersley( i, NumSamples );<br>		float3 H = ImportanceSampleGGX( Xi, Roughness, N ); <br>        float3 L = <span class="hljs-number">2</span> * dot( V, H ) * H - V;<br>		<span class="hljs-type">float</span> NoV = saturate( dot( N, V ) ); <br>        <span class="hljs-type">float</span> NoL = saturate( dot( N, L ) ); <br>        <span class="hljs-type">float</span> NoH = saturate( dot( N, H ) ); <br>        <span class="hljs-type">float</span> VoH = saturate( dot( V, H ) );<br>        <span class="hljs-keyword">if</span>( NoL &gt; <span class="hljs-number">0</span> ) <br>        &#123; <br>            float3 SampleColor = EnvMap.SampleLevel( EnvMapSampler, L, <span class="hljs-number">0</span> ).rgb;<br>        	<span class="hljs-type">float</span> G = G_Smith( Roughness, NoV, NoL ); <br>            <span class="hljs-type">float</span> Fc = <span class="hljs-built_in">pow</span>( <span class="hljs-number">1</span> - VoH, <span class="hljs-number">5</span> ); <br>            float3 F = (<span class="hljs-number">1</span> - Fc) * SpecularColor + Fc;<br>			<span class="hljs-comment">// Incident light = SampleColor * NoL </span><br>            <span class="hljs-comment">// Microfacet specular = D*G*F / (4*NoL*NoV) </span><br>            <span class="hljs-comment">// pdf = D * NoH / (4 * VoH) </span><br>            SpecularLighting += SampleColor * F * G * VoH / (NoH * NoV);<br>		&#125;<br>	&#125;<br>	<span class="hljs-keyword">return</span> SpecularLighting / NumSamples;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+<h2 id="IBL优化：Split-Sum-Approximation"><a href="#IBL优化：Split-Sum-Approximation" class="headerlink" title="IBL优化：Split Sum Approximation"></a>IBL优化：Split Sum Approximation</h2><p>由于上面内容如果实时计算的话，开销太高，所以对原始公式进行了一次估计。变成了：</p>
+<p><img src="/../../images/IBL%E5%85%89%E7%85%A7%E7%90%86%E8%AE%BA%E4%B8%8E%E5%BA%94%E7%94%A8/1574853973468.png" alt="1574853973468"></p>
+<p>这个就叫做Split Sum Approximation。</p>
+<p>优化之后的代码：</p>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs c">float3 <span class="hljs-title function_">ApproximateSpecularIBL</span><span class="hljs-params">( float3 SpecularColor, <span class="hljs-type">float</span> Roughness, float3 N, float3 V )</span> <br>&#123; <br>    <span class="hljs-type">float</span> NoV = saturate( dot( N, V ) ); <br>    float3 R = <span class="hljs-number">2</span> * dot( V, N ) * N - V;<br>    <span class="hljs-comment">// 第一项的优化结果：mipmap某一层</span><br>	float3 PrefilteredColor = PrefilterEnvMap( Roughness, R ); <br>    <span class="hljs-comment">// 第二项优化结果：真实的进行采样积分，或者使用估计值。</span><br>    float2 EnvBRDF = IntegrateBRDF( Roughness, NoV );<br>	<span class="hljs-keyword">return</span> PrefilteredColor * ( SpecularColor * EnvBRDF.x + EnvBRDF.y );<br>&#125;<br><br><br></code></pre></td></tr></table></figure>
+
+<p>得到上面的公式之后进行两个积分项的分别化简。</p>
+<h3 id="IBL-MipMap构造与Prefilter"><a href="#IBL-MipMap构造与Prefilter" class="headerlink" title="IBL MipMap构造与Prefilter"></a>IBL MipMap构造与Prefilter</h3><p>首先是第一项，实际上就是计算一个颜色的平均值。</p>
+<p><img src="/../../images/IBL%E5%85%89%E7%85%A7%E7%90%86%E8%AE%BA%E4%B8%8E%E5%BA%94%E7%94%A8/1574854041330.png" alt="1574854041330"></p>
+<p>根据不同的粗糙度采样的范围有所区别。粗糙度越大，采样越分散，所以通常就使用了mipmap对应于不同的粗糙度（也就是模糊程度不同的平均值）。根据其他的一些数学推导，模糊用的filter有所区别。</p>
+<p>UE4进行Prefilter的代码：</p>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs c">float3 <span class="hljs-title function_">PrefilterEnvMap</span><span class="hljs-params">( <span class="hljs-type">float</span> Roughness, float3 R )</span> <br>&#123; <br>    float3 N = R; float3 V = R;<br>    float3 PrefilteredColor = <span class="hljs-number">0</span>;<br>    <span class="hljs-type">const</span> uint NumSamples = <span class="hljs-number">1024</span>; <br>    <span class="hljs-keyword">for</span>( uint i = <span class="hljs-number">0</span>; i &lt; NumSamples; i++ ) <br>    &#123; <br>        float2 Xi = Hammersley( i, NumSamples ); <br>        float3 H = ImportanceSampleGGX( Xi, Roughness, N ); <br>        float3 L = <span class="hljs-number">2</span> * dot( V, H ) * H - V;<br>        <span class="hljs-type">float</span> NoL = saturate( dot( N, L ) ); <br>        <span class="hljs-keyword">if</span>( NoL &gt; <span class="hljs-number">0</span> ) <br>        &#123; <br>            PrefilteredColor += EnvMap.SampleLevel( EnvMapSampler, L, <span class="hljs-number">0</span> ).rgb * NoL; <br>            TotalWeight += NoL; <br>        &#125;<br>	&#125;<br>	<span class="hljs-keyword">return</span> PrefilteredColor / TotalWeight;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+<h3 id="IBL光照函数积分估计"><a href="#IBL光照函数积分估计" class="headerlink" title="IBL光照函数积分估计"></a>IBL光照函数积分估计</h3><p>然后是第二项：</p>
+<p><img src="/../../images/IBL%E5%85%89%E7%85%A7%E7%90%86%E8%AE%BA%E4%B8%8E%E5%BA%94%E7%94%A8/1574854160210.png" alt="1574854160210"></p>
+<p>这一项的优化方式是:</p>
+<ol>
+<li>先得到一个真实的曲线。然后创造一个函数去拟合这个积分结果。</li>
+<li>或者不拟合直接用原始积分结果。</li>
+<li>把准确的积分结果保存在贴图中：UE4的做法</li>
+</ol>
+<h4 id="原始积分"><a href="#原始积分" class="headerlink" title="原始积分"></a>原始积分</h4><p>真实的积分代码：</p>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// 真实的积分代码：</span><br>float2 <span class="hljs-title function_">IntegrateBRDF</span><span class="hljs-params">( <span class="hljs-type">float</span> Roughness, <span class="hljs-type">float</span> NoV )</span> <br>&#123; <br>    float3 V; V.x = <span class="hljs-built_in">sqrt</span>( <span class="hljs-number">1.0f</span> - NoV * NoV ); <span class="hljs-comment">// sin V.y = 0; V.z = NoV; // cos</span><br>	<span class="hljs-type">float</span> A = <span class="hljs-number">0</span>; <br>    <span class="hljs-type">float</span> B = <span class="hljs-number">0</span>;<br>	<span class="hljs-type">const</span> uint NumSamples = <span class="hljs-number">1024</span>; <br>    <span class="hljs-keyword">for</span>( uint i = <span class="hljs-number">0</span>; i &lt; NumSamples; i++ ) <br>    &#123; <br>        float2 Xi = Hammersley( i, NumSamples ); <br>        float3 H = ImportanceSampleGGX( Xi, Roughness, N ); <br>        float3 L = <span class="hljs-number">2</span> * dot( V, H ) * H - V;<br>		<span class="hljs-type">float</span> NoL = saturate( L.z ); <span class="hljs-type">float</span> NoH = saturate( H.z ); <br>        <span class="hljs-type">float</span> VoH = saturate( dot( V, H ) );<br>		<span class="hljs-keyword">if</span>( NoL &gt; <span class="hljs-number">0</span> ) <br>        &#123; <br>            <span class="hljs-type">float</span> G = G_Smith( Roughness, NoV, NoL );<br>			<span class="hljs-type">float</span> G_Vis = G * VoH / (NoH * NoV); <br>            <span class="hljs-type">float</span> Fc = <span class="hljs-built_in">pow</span>( <span class="hljs-number">1</span> - VoH, <span class="hljs-number">5</span> ); <br>            A += (<span class="hljs-number">1</span> - Fc) * G_Vis; <br>            B += Fc * G_Vis;<br>		&#125;<br>	&#125;<br>	<span class="hljs-keyword">return</span> float2( A, B ) / NumSamples;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="拟合积分优化"><a href="#拟合积分优化" class="headerlink" title="拟合积分优化"></a>拟合积分优化</h4><p>拟合的方式可以参考文献:</p>
+<p>[Summary of Physically Based Shading in Call of Duty: Black Ops ]</p>
+<p>文献当中提到了真实曲线和如何构造出估计曲线。</p>
+<p>估计拟合的brdf代码：</p>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs c">float3 <span class="hljs-title function_">EnvironmentBRDF</span><span class="hljs-params">( <span class="hljs-type">float</span> g, <span class="hljs-type">float</span> NoV, float3 rf0 )</span> <br>&#123; <br>    float4 t = float4( <span class="hljs-number">1</span>/<span class="hljs-number">0.96</span>, <span class="hljs-number">0.475</span>, (<span class="hljs-number">0.0275</span> - <span class="hljs-number">0.25</span> * <span class="hljs-number">0.04</span>)/<span class="hljs-number">0.96</span>, <span class="hljs-number">0.25</span> ); <br>    t *= float4( g, g, g, g );<br>    t += float4( <span class="hljs-number">0</span>, <span class="hljs-number">0</span>, (<span class="hljs-number">0.015</span> - <span class="hljs-number">0.75</span> * <span class="hljs-number">0.04</span>)/<span class="hljs-number">0.96</span>, <span class="hljs-number">0.75</span> ); <br>    <span class="hljs-type">float</span> a0 = t.x * min( t.y, exp2( <span class="hljs-number">-9.28</span> * NoV ) ) + t.z; <br>    <span class="hljs-type">float</span> a1 = t.w; <br>    <span class="hljs-keyword">return</span> saturate( a0 + rf0 * ( a1 - a0 ) ); <br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h4 id="预积分贴图"><a href="#预积分贴图" class="headerlink" title="预积分贴图"></a>预积分贴图</h4><p>UE4Brdf的积分贴图：</p>
+<p><img src="/../../images/IBL%E5%85%89%E7%85%A7%E7%90%86%E8%AE%BA%E4%B8%8E%E5%BA%94%E7%94%A8/1574854766491.png" alt="1574854766491"></p>
+
+    </main>
+    <footer class="post-footer">
+      
+    </footer>
+  </article>
+  
+  
+  <nav class="page-nav">
+    <div class="page-nav-next page-nav-item">
+      
+      <a href="/2022/07/09/RTR/LOD%E7%AD%96%E7%95%A5/" rel="next" title="LOD策略"><i class="fas fa-angle-left"></i><span class="nav-title">LOD策略</span></a>
+      
+    </div>
+    <div class="page-nav-prev page-nav-item">
+      
+      <a href="/2022/07/09/RTR/HDR%E4%B8%8EToneMapping%E7%90%86%E8%AE%BA/" rel="prev" title="HDR 与ToneMapping"><span class="nav-title">HDR 与ToneMapping</span><i class="fas fa-angle-right"></i></a>
+      
+    </div>
+  </nav>
+  
+  
+  
+
+<div class="comments" id="comments">
+  
+  
+  <div class="commentjs" id="comment-thread"></div>
+  <link rel="stylesheet" href="/css/commentjs.css">
+  <script defer type="text/javascript" src="/js/marked.min.js"></script>
+  <script defer type="text/javascript" src="/js/timeago.min.js"></script>
+  <script defer type="text/javascript" src="/js/highlight.min.js"></script>
+  <script defer type="text/javascript" src="/js/commentjs.js"></script>
+  <script type="text/javascript">
+  $(document).ready(function () {
+    getComments({
+      "type": "github",
+      "user": "leinlin",
+      "repo": "leinlin.github.io",
+      "client_id": "aee134bdfb54c4ef5826",
+      "client_secret": "4af1d3f2b82dccc028c49715becc01e611afbe43",
+      "no_comment": "这个页面还没有评论，现在就去评论吧！",
+      "go_to_comment": "去评论",
+      "issue_title": "IBL理论与应用",
+      "btn_class": "button",
+      "comments_target": "#comment-thread"
+    });
+    marked.setOptions({
+      "highlight": function (code, lang) {
+        return hljs.highlightAuto(code).value;
+      }
+    });
+    function mark() {
+      var markdowns = document.getElementsByClassName("markdown");
+      for (var i = 0; i < markdowns.length; ++i){
+        if (markdowns[i].innerHTML) {
+          markdowns[i].innerHTML = marked(markdowns[i].innerHTML);
+        }
+      }
+    }
+    window.addEventListener("DOMContentLoaded", mark, false);
+    window.addEventListener("load", mark, false);
+  });
+  </script>
+  
+  
+</div>
+
+
+
+  
+</div>
+
+          </div>
+          
+          
+          
+<aside class="sidebar" id="sidebar" style="background: url(/images/background.png);">
+  
+  <div class="search">
+    <div class="form-group">
+      <i class="fas fa-search"></i><input type="search" id="search-input" name="q" results="0" placeholder="搜索" class="form-control"/>
+    </div>
+  </div>
+  <div class="search-result-box" id="search-result"></div>
+  
+  
+<div class="info sidebar-item" id="info">
+  
+  <img class="author-avatar" src="/images/avatar.jpg" alt="leinlin">
+  
+  <h1 class="author-name">leinlin</h1>
+  <h2 class="author-description"></h2>
+  <div class="site-count">
+    
+    
+    
+    
+    <div class="categories-count count-block">
+      <div class="site-count-title">分类</div>
+      <div><a href="/categories/">17</a></div>
+    </div>
+    
+    
+  </div>
+  
+  <div class="rss">
+    <a class="rss-link button sidebar-item" href="/atom.xml"><i class="fas fa-rss"></i>RSS</a>
+  </div>
+  
+</div>
+
+
+  <div class="sidebar-sticky">
+    
+    
+    
+    
+    
+    <hr>
+    <div class="post-toc sidebar-item" id="toc-div">
+      <div><i class="fas fa-list-ol"></i>文章目录</div>
+      <div class="post-toc-content"><ol class="list-group toc"><li class="toc-item toc-level-1"><a class="list-group-item toc-link" href="#IBL%E7%90%86%E8%AE%BA%E4%B8%8E%E5%BA%94%E7%94%A8"><span class="toc-text">IBL理论与应用</span></a><ol class="list-group toc-child"><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#%E7%90%86%E8%AE%BA%E5%9F%BA%E7%A1%80"><span class="toc-text">理论基础</span></a><ol class="list-group toc-child"><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#%E5%85%89%E7%85%A7%E5%87%BD%E6%95%B0"><span class="toc-text">光照函数</span></a></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#%E4%BB%A3%E7%A0%81"><span class="toc-text">代码</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#IBL%E4%BC%98%E5%8C%96%EF%BC%9ASplit-Sum-Approximation"><span class="toc-text">IBL优化：Split Sum Approximation</span></a><ol class="list-group toc-child"><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#IBL-MipMap%E6%9E%84%E9%80%A0%E4%B8%8EPrefilter"><span class="toc-text">IBL MipMap构造与Prefilter</span></a></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#IBL%E5%85%89%E7%85%A7%E5%87%BD%E6%95%B0%E7%A7%AF%E5%88%86%E4%BC%B0%E8%AE%A1"><span class="toc-text">IBL光照函数积分估计</span></a><ol class="list-group toc-child"><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#%E5%8E%9F%E5%A7%8B%E7%A7%AF%E5%88%86"><span class="toc-text">原始积分</span></a></li><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#%E6%8B%9F%E5%90%88%E7%A7%AF%E5%88%86%E4%BC%98%E5%8C%96"><span class="toc-text">拟合积分优化</span></a></li><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#%E9%A2%84%E7%A7%AF%E5%88%86%E8%B4%B4%E5%9B%BE"><span class="toc-text">预积分贴图</span></a></li></ol></li></ol></li></ol></li></ol></div>
+    </div>
+    
+    
+    
+    <hr>
+    <div class="social-link sidebar-item">
+      <div><i class="far fa-address-card"></i>社交链接</p></div>
+      <ul>
+        
+        <li><i class="fab fa-github"></i><a href="https://leinlin.github.com/" target="_blank">GitHub</a></li>
+        
+      </ul>
+    </div>
+    
+    
+  </div>
+</aside>
+
+
+          
+        </div>
+      </div>
+    </main>
+    
+<footer id="footer" class="footer" style="background: #33363b;">
+  <div class="container">
+    <div class="back-to-top">
+      <button id="back-to-top"><i class="fas fa-angle-double-up" aria-label="回到顶部"></i></button>
+    </div>
+    <div class="footer-container">
+      <div class="footer-left">
+        <div class="copyright">
+          <span class="author">leinlin</span><span class="year"><i class="far fa-copyright"></i>2022</span>
+        </div>
+        
+        <div class="busuanzi">
+          <span id="busuanzi_container_site_pv"><i class="fas fa-eye" aria-label="站点点击量" aria-hidden="false"></i><span id="busuanzi_value_site_pv"></span></span><span id="busuanzi_container_site_uv"><i class="fas fa-user" aria-label="站点用户数" aria-hidden="false"></i><span id="busuanzi_value_site_uv"></span></span><span id="busuanzi_container_page_pv"><i class="far fa-file-alt"></i><span id="busuanzi_value_page_pv" aria-label="页面点击量" aria-hidden="false"></span></span>
+        </div>
+        
+      </div>
+      <div class="footer-right">
+        <div class="custom-info">
+          
+          托管于<i class="fab fa-github-alt"></i><a href="https://pages.github.com/" target="_blank">GitHub Pages</a>
+          
+        </div>
+        <div class="powered-by">
+          由 <a href="https://hexo.io/" target="_blank">Hexo</a> 强力驱动 | 主题 <a href="https://github.com/AlynxZhou/hexo-theme-aria/" target="_blank">ARIA</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+  <script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

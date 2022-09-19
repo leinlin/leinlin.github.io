@@ -204,7 +204,7 @@
   
   <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
     <div class="post-block">
-      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/09/19/language/c++/thread/">
+      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/07/09/Art/%E9%A2%9C%E8%89%B2%E9%A3%8E%E6%A0%BC/">
       <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
         <meta itemprop="name" content="leinlin">
         <meta itemprop="description" content="">
@@ -216,381 +216,12 @@
     </div>
     <header class="post-header">
       <h1 class="post-title" itemprop="name headline">
-        <a class="post-title-link post-title-link-external" href="/2022/09/19/language/c++/thread/" itemprop="url"></a>
+        <a class="post-title-link post-title-link-external" href="/2022/07/09/Art/%E9%A2%9C%E8%89%B2%E9%A3%8E%E6%A0%BC/" itemprop="url">PS颜色风格</a>
       </h1>
       <div class="post-meta">
         
         <span class="post-date">
-          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2022-09-19T19:53:33+08:00">2022-09-19 19:53:33</time></span>
-        </span>
-        
-        
-        
-        
-        
-      </div>
-    </header>
-    <main class="post-main" itemprop="articleBody">
-      
-      <p>##临界区</p>
-<p>在多线程当中进行互斥同步的锁。</p>
-<p>可是使用windase.h当中的临时区锁进行控制：</p>
-<p>**InitializeCriticalSection  此函数初始化一个临界区对象 **</p>
-<p>void InitializeCriticalSection(  LPCRITICAL_SECTION <em>lpCriticalSection</em>);</p>
-<p>参数：lpCriticalSection指向临界区对象的指针</p>
-<p>这个进程负责分配一个临界区对象使用的内存，它可以通过声明类型的CRITICAL_SECTION的变量使用的内存。一旦一个临界区对象已被初始化，该进程的线程可以在EnterCriticalSection或LeaveCriticalSection函数指定对象，提供对共享资源的相互独占式访问。对于不同进程之间的类似线程同步，使用互斥对象。</p>
-<p>一个临界区对象不能移动或复制。这一进程也绝不能修改该对象，但必须把它作为逻辑不透明来处理。只能使用由与Microsoft Win32 ® API提供的临界区功能，用来管理临界区对象。</p>
-<p>在低内存的情况下，InitializeCriticalSection可能提出STATUS_NO_MEMORY异常。</p>
-<p><strong>DeleteCriticalSection 删除关键节对象释放由该对象使用的所有系统资源。</strong></p>
-<p>void WINAPI DeleteCriticalSection(<em>Inout</em> LPCRITICAL_SECTION lpCriticalSection);</p>
-<p>参数：<em>lpCriticalSection，</em>对关键节对象的指针。先前必须已将该对象初始化于InitializeCriticalSection对象中。</p>
-<p><strong>线程锁的概念函数EnterCriticalSection和LeaveCriticalSection的用法</strong></p>
-<p>使用结构CRITICAL_SECTION 需加入头文件#include “afxmt.h”</p>
-<p>定义一个全局的锁 CRITICAL_SECTION的实例</p>
-<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs c">CRITICAL_SECTION cs;<br>InitializeCriticalSection(&amp;cs);<br><br><span class="hljs-comment">//第一个线程</span><br><span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i&lt;<span class="hljs-number">10</span>; i++)&#123;      <br>  EnterCriticalSection(&amp;cs);<span class="hljs-comment">//加锁</span><br>	<span class="hljs-comment">// TODO：逻辑</span><br>  LeaveCriticalSection(&amp;cs);<span class="hljs-comment">//解锁</span><br>&#125;<br><br><span class="hljs-comment">//第二线程</span><br><span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i&lt;<span class="hljs-number">10</span>; i++)&#123;      <br>  EnterCriticalSection(&amp;cs);<span class="hljs-comment">//加锁</span><br>	<span class="hljs-comment">// TODO：逻辑</span><br>  LeaveCriticalSection(&amp;cs);<span class="hljs-comment">//解锁</span><br>&#125;<br><br><span class="hljs-comment">//使用完成</span><br>DeleteCriticalSection(&amp;cs);<br></code></pre></td></tr></table></figure>
-
-
-
-<h2 id="互斥锁和阻塞信号"><a href="#互斥锁和阻塞信号" class="headerlink" title="互斥锁和阻塞信号"></a>互斥锁和阻塞信号</h2><p>SuspendThread 如果暂停了获取锁的进程：</p>
-<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs c">EnterCriticalSection(&amp;cs);<span class="hljs-comment">//加锁</span><br><span class="hljs-comment">// <span class="hljs-doctag">TODO:</span>A</span><br>LeaveCriticalSection(&amp;cs);<span class="hljs-comment">//解锁</span><br></code></pre></td></tr></table></figure>
-
-<p>如果在A处暂停则可能造成死锁。</p>
-<p>WaitForSingleObject是等待一个特定的对象编程发出信号的状态或者过时。</p>
-<p>说明<a target="_blank" rel="noopener" href="https://msdn.microsoft.com/en-us/library/windows/desktop/ms687032(v=vs.85).aspx">WaitForSingleObject</a></p>
-<p>例子<a target="_blank" rel="noopener" href="https://msdn.microsoft.com/en-us/library/windows/desktop/ms686915(v=vs.85).aspx">WaitForSingleObject</a></p>
-<h2 id="多线程编程之Windows同步方式"><a href="#多线程编程之Windows同步方式" class="headerlink" title="多线程编程之Windows同步方式"></a>多线程编程之Windows同步方式</h2><p>　本文来自<a target="_blank" rel="noopener" href="http://www.cnblogs.com/kuliuheng/p/4062211.html">cnblogs.</a></p>
-<p>​	在Windows环境下针对多线程同步与互斥操作的支持，主要包括四种方式：临界区（CriticalSection）、互斥对象（Mutex）、信号量（Semaphore）、事件对象（Event）。下面分别针对这四种方式作说明：</p>
-<p><strong>（1）临界区（CriticalSection）</strong></p>
-<p>　　每个进程中访问临界资源的那段代码称为临界区（临界资源是一次仅允许一个进程使用的共享资源）。每次只准许一个进程进入临界区，进入后不允许其他进程进入。不论是硬件临界资源，还是软件临界资源，多个进程必须互斥地对它进行访问。Windows环境下临界区的基本操作有以下几个：</p>
-<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs c">CRITICAL_SECTION CriticalSection;<br>InitializeCriticalSection(&amp;CriticalSection);<br>EnterCriticalSection(&amp;CriticalSection);<br>LeaveCriticalSection(&amp;CriticalSection);<br>DeleteCriticalSection(&amp;CriticalSection);<br></code></pre></td></tr></table></figure>
-
-<p><strong>（2）互斥对象（Mutex）</strong></p>
-<p>　　在编程中，引入了对象互斥对象（也叫互斥锁）的概念，来保证共享数据操作的完整性。每个对象都对应于一个可称为“互斥锁”的标记，这个标记用来保证在任一时刻，只能有一个线程访问该对象。互斥对象的操作接口有以下几个：</p>
-<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs c">CreateMutex<br>OpenMutex<br>ReleaseMutex<br></code></pre></td></tr></table></figure>
-
-<p> 　　在使用互斥对象的时候借助WaitforSingleObject，例如：</p>
-<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs c">WaitForSingleObject(<span class="hljs-comment">/*...*/</span>);<br>    do_something();<br>ReleaseMutex(<span class="hljs-comment">/*...*/</span>);<br></code></pre></td></tr></table></figure>
-
-<p> **（3）信号量（Semaphore）　　**</p>
-<p>　　信号量有时被称为信号灯，是在多线程环境下使用的一种设施，它负责协调各个线程，以保证它们能够正确、合理的使用公共资源。也是操作系统中用于控制<strong>进程同步互斥</strong>的量。信号量分为单值和多值两种，前者只能被一个线程获得，后者可以被若干个线程获得。与互斥对象相比，信号量就好比是可以容纳N多个人的房子允许多个人同时进入（数量有限制而已），而互斥对象就只能容纳一个人的小房子，同一时刻只能一个人使用。</p>
-<p>　　Windows环境下的信号量操作接口包括：</p>
-<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs c">CreateSemaphore<br>OpenSemaphore<br>ReleaseSemaphore<br></code></pre></td></tr></table></figure>
-
-<p> 　　信号量的使用方式与互斥对象差不多，只不过在初始化的时候需要指定信号的个数：</p>
-<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs c">WaitForSingleObject(<span class="hljs-comment">/*...*/</span>);<br>    do_something();<br>ReleaseSemaphore(<span class="hljs-comment">/*...*/</span>);<br></code></pre></td></tr></table></figure>
-
-<p> <strong>（4）事件对象（Event）</strong></p>
-<p>　　 Event对象是Windows下面很有趣的一种锁结果。从某种意义上说，它和互斥锁很相近，但是又不一样。因为在线程获得锁的使用权之前，常常需要某一个线程（可能是主线程也可能是其他线程）调用SetEvent设置一下才行。关键是，在线程结束之前，我们也不清楚当前线程获得Event之后执行到哪了。所以使用起来，要特别小心。常用的Event对象操作有：</p>
-<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs c">CreateEvent<br>OpenEvent<br>PulseEvent<br>ResetEvent<br>SetEvent<br></code></pre></td></tr></table></figure>
-
-<p> 　　主线程一般可以这样做：</p>
-<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c">CreateEvent(<span class="hljs-comment">/*...*/</span>);    <span class="hljs-comment">// 创建事件对象</span><br>SetEvent(<span class="hljs-comment">/*...*/</span>);       <span class="hljs-comment">// 设置信号</span><br>WaitForMultiObjects(hThread, <span class="hljs-comment">/*...*/</span>);    <span class="hljs-comment">// 等待线程结束</span><br>CloseHandle(<span class="hljs-comment">/*...*/</span>);    <span class="hljs-comment">// 关闭线程句柄</span><br></code></pre></td></tr></table></figure>
-
-<p> 　　而被启动的线程一般要等待某个事件再进行动作：</p>
-<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-keyword">while</span>(<span class="hljs-number">1</span>)&#123;<br>    WaitForSingleObject(<span class="hljs-comment">/*...*/</span>);    <span class="hljs-comment">// 等待事件</span><br>    <span class="hljs-comment">/*...*/</span><br>&#125;<br></code></pre></td></tr></table></figure>
-
-<p><strong>总结：</strong><br>（1）关于<a target="_blank" rel="noopener" href="http://msdn.microsoft.com/en-us/library/ms686908(v=VS.85).aspx">临界区</a>、<a target="_blank" rel="noopener" href="http://msdn.microsoft.com/en-us/library/ms686927(v=VS.85).aspx">互斥区</a>、<a target="_blank" rel="noopener" href="http://msdn.microsoft.com/en-us/library/ms686946(v=VS.85).aspx">信号量</a>、<a target="_blank" rel="noopener" href="http://msdn.microsoft.com/en-us/library/ms686915(v=VS.85).aspx">E</a><a target="_blank" rel="noopener" href="http://msdn.microsoft.com/en-us/library/ms686915(v=VS.85).aspx">vent</a>在msdn上均有示例代码；</p>
-<p>（2）一般来说，使用频率上<strong>信号量 &gt; 互斥对象 &gt; 临界区 &gt; 事件对象</strong></p>
-<p>（3）信号量可以实现其他三种锁的功能，学习上应有所侧重</p>
-<p>（4）纸上得来终觉浅，多实践才能掌握它们之间的区别 *    *</p>
-
-      
-      <p align="right"><a class="morebtn" href="/2022/09/19/language/c++/thread/" title="">阅读全文</a></p>
-    </main>
-    <footer class="post-footer">
-      
-    </footer>
-  </article>
-  
-  <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
-    <div class="post-block">
-      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/09/19/language/c++/network/">
-      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-        <meta itemprop="name" content="leinlin">
-        <meta itemprop="description" content="">
-        <meta itemprop="image" content="/images/avatar.jpg">
-      </span>
-      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-        <meta itemprop="name" content="leinlin的小笔记">
-      </span>
-    </div>
-    <header class="post-header">
-      <h1 class="post-title" itemprop="name headline">
-        <a class="post-title-link post-title-link-external" href="/2022/09/19/language/c++/network/" itemprop="url"></a>
-      </h1>
-      <div class="post-meta">
-        
-        <span class="post-date">
-          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2022-09-19T19:53:33+08:00">2022-09-19 19:53:33</time></span>
-        </span>
-        
-        
-        
-        
-        
-      </div>
-    </header>
-    <main class="post-main" itemprop="articleBody">
-      
-      <p>winsock2.h</p>
-
-      
-      <p align="right"><a class="morebtn" href="/2022/09/19/language/c++/network/" title="">阅读全文</a></p>
-    </main>
-    <footer class="post-footer">
-      
-    </footer>
-  </article>
-  
-  <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
-    <div class="post-block">
-      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/09/19/language/lang_index/">
-      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-        <meta itemprop="name" content="leinlin">
-        <meta itemprop="description" content="">
-        <meta itemprop="image" content="/images/avatar.jpg">
-      </span>
-      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-        <meta itemprop="name" content="leinlin的小笔记">
-      </span>
-    </div>
-    <header class="post-header">
-      <h1 class="post-title" itemprop="name headline">
-        <a class="post-title-link post-title-link-external" href="/2022/09/19/language/lang_index/" itemprop="url"></a>
-      </h1>
-      <div class="post-meta">
-        
-        <span class="post-date">
-          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2022-09-19T19:53:33+08:00">2022-09-19 19:53:33</time></span>
-        </span>
-        
-        
-        
-        
-        
-      </div>
-    </header>
-    <main class="post-main" itemprop="articleBody">
-      
-      <h1 id="语言学习"><a href="#语言学习" class="headerlink" title="语言学习"></a>语言学习</h1><p>包含了基本的语言基础和相关技巧</p>
-<p>Lua</p>
-<p><a href="lua/fast_learn_lua.md">十五分钟快速学会lua</a></p>
-<p>C++</p>
-<p><a href="c++/network.md">windows网络编程</a></p>
-<p><a href="c++/thread.md">多线程</a></p>
-<p><a href="unlock_queue.md">无锁队列</a></p>
-<p><a href="../../index.md">back</a></p>
-
-      
-      <p align="right"><a class="morebtn" href="/2022/09/19/language/lang_index/" title="">阅读全文</a></p>
-    </main>
-    <footer class="post-footer">
-      
-    </footer>
-  </article>
-  
-  <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
-    <div class="post-block">
-      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/09/19/VulkanTranslate/Vulkan-A-Specification%E4%B8%AD%E6%96%87%E7%BF%BB%E8%AF%91%E7%89%88/">
-      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-        <meta itemprop="name" content="leinlin">
-        <meta itemprop="description" content="">
-        <meta itemprop="image" content="/images/avatar.jpg">
-      </span>
-      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-        <meta itemprop="name" content="leinlin的小笔记">
-      </span>
-    </div>
-    <header class="post-header">
-      <h1 class="post-title" itemprop="name headline">
-        <a class="post-title-link post-title-link-external" href="/2022/09/19/VulkanTranslate/Vulkan-A-Specification%E4%B8%AD%E6%96%87%E7%BF%BB%E8%AF%91%E7%89%88/" itemprop="url"></a>
-      </h1>
-      <div class="post-meta">
-        
-        <span class="post-date">
-          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2022-09-19T19:53:33+08:00">2022-09-19 19:53:33</time></span>
-        </span>
-        
-        
-        
-        
-        
-      </div>
-    </header>
-    <main class="post-main" itemprop="articleBody">
-      
-      <h1 id="Vulkan-A-Specification中文翻译版"><a href="#Vulkan-A-Specification中文翻译版" class="headerlink" title="Vulkan-A-Specification中文翻译版"></a>Vulkan-A-Specification中文翻译版</h1><p>翻译了一点点发现已经有了一个相对完整的中文版，但是发现了大量的错别字和语句问题，导致很难理解。</p>
-<p><a target="_blank" rel="noopener" href="https://khronos.org/registry/vulkan/specs/1.1/html/chap15.html#textures-texel-filtering">Vulkan Specification英文版</a></p>
-<p><a target="_blank" rel="noopener" href="http://spec.vulkan.org.cn/#devsandqueues">Vulkan Specification中文版</a></p>
-<p>我这里就尝试翻译一些重要的部分。</p>
-<p><a href="Chapter1-Introduction.md">Chapter1-Introduction</a></p>
-<p><a href="Chapter2-Fundamentals-%E5%9F%BA%E7%A1%80%E5%8A%9F%E8%83%BD">Chapter2-Fundamentals-基础功能</a></p>
-
-      
-      <p align="right"><a class="morebtn" href="/2022/09/19/VulkanTranslate/Vulkan-A-Specification%E4%B8%AD%E6%96%87%E7%BF%BB%E8%AF%91%E7%89%88/" title="">阅读全文</a></p>
-    </main>
-    <footer class="post-footer">
-      
-    </footer>
-  </article>
-  
-  <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
-    <div class="post-block">
-      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/09/19/VulkanTranslate/Chapter2-Fundamentals-%E5%9F%BA%E7%A1%80%E5%8A%9F%E8%83%BD/">
-      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-        <meta itemprop="name" content="leinlin">
-        <meta itemprop="description" content="">
-        <meta itemprop="image" content="/images/avatar.jpg">
-      </span>
-      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-        <meta itemprop="name" content="leinlin的小笔记">
-      </span>
-    </div>
-    <header class="post-header">
-      <h1 class="post-title" itemprop="name headline">
-        <a class="post-title-link post-title-link-external" href="/2022/09/19/VulkanTranslate/Chapter2-Fundamentals-%E5%9F%BA%E7%A1%80%E5%8A%9F%E8%83%BD/" itemprop="url"></a>
-      </h1>
-      <div class="post-meta">
-        
-        <span class="post-date">
-          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2022-09-19T19:53:33+08:00">2022-09-19 19:53:33</time></span>
-        </span>
-        
-        
-        
-        
-        
-      </div>
-    </header>
-    <main class="post-main" itemprop="articleBody">
-      
-      <h1 id="Chapter2-Fundamentals-基础功能"><a href="#Chapter2-Fundamentals-基础功能" class="headerlink" title="Chapter2 Fundamentals 基础功能"></a>Chapter2 Fundamentals 基础功能</h1><p>​	这个章节主要介绍了基础概念：包括Vulkan架构、扩展模型、API语法、管线配置、数字表示方法、状态和状态查询、以及不同类型的对象和Shader。这部分提供了一个框架用于解释说明文档剩下部分中更加具体的命令和表现。</p>
-<h2 id="2-1-主机和设备环境"><a href="#2-1-主机和设备环境" class="headerlink" title="2.1 主机和设备环境"></a>2.1 主机和设备环境</h2><p>Vulkan说明文件假设并且需要：主机设备满足下面的要求以支持Vulkan的实现：</p>
-<ul>
-<li><p>主机必须支持8,16,32,64位的有符号以及无符号整型，并且可以按照字节（byte）寻址。</p>
-</li>
-<li><p>主机必须支持32-和64-位的浮点数类型，并且满足后续章节的范围和精度的要求。</p>
-</li>
-<li><p>这些数据的字节顺序和表示方式必须和物理设备一致。</p>
-</li>
-</ul>
-<blockquote>
-<p>Note</p>
-<p>因为各种类型的数据和结构体主机和物理设备都需要访问，所以两端都需要高效的访问以便保证灵活写入和高性能。</p>
-</blockquote>
-<h2 id="2-2-Execution-Model-执行模式"><a href="#2-2-Execution-Model-执行模式" class="headerlink" title="2.2 Execution Model 执行模式"></a>2.2 Execution Model 执行模式</h2><p>这一节说明了Vulkan系统的执行模式。</p>
-<p>​	Vulkan会暴露出一个或者多个device，每个device会暴露出一个或多个能够异步工作的queue。同一个device支持的各个队列会划分到不同的family。每一个family支持一种或多种功能，并且应该包含一个或多个有相同特性的queue。同一个family当中queue可以认为是互相兼容的。为某个queue所生产的任务，可以在其所属family中的任何一个queue上执行。本说明文档定义了queue可能具备的四个类型的功能：Graphic，Compute，Transfer 和Sparse memory management。</p>
-<blockquote>
-<p>Note</p>
-<p>一个device可能报告出多个相似queue的family，而不是报告出这些fafmily的一个或多个的多个成员。这表明，虽然这些family的queue具有类似的能力，但他们之间并不直接相容。（没有很明白。）</p>
-</blockquote>
-<p>设备内存是通过应用程序明确的管理的。每一个设备都可以声明一个或者多个堆用于区分不同区域的内存。内存堆要么是设备的本地内存要么是主机的本地内存，但是对于设备总是可见的。进一步的内存堆的细节是通过在堆上的可用内存类型暴露出来的。例如可用的内存类型有：</p>
-<ul>
-<li>device local：和device直接物理连接的设备内存。</li>
-<li>device local, host visible: 设备的local内存对于主机可见。</li>
-<li>host local ,host  visible : 是在主机的内存对设备和主机都可见。</li>
-</ul>
-<p>在其它的架构上，可能有一种堆满足各种用处。</p>
-<p>一个Vulkan 应用程序通过提交command buffer来控制所有设备，command buffer能够通过Vulkan库函数的调用记录设备命令。Command buffer的内容依赖与具体的实现和应用程序无关。一旦构造了Comman buffer，就可以进行提交一次或者多次到队列中来执行。多个Command buffer能够通过多线程并行的构建。</p>
-<p>Command buffer 提交到不同的队列能够并行的执行，执行顺序彼此没有关联。Command buffer提交到同一个队列表示了一个提交顺序。Command buffer在设备中执行的结果也是异步返回到主机的。一旦Command buffer提交到一个队列，控制流会立即返回到应用程序。应用程序需要关注同步设备和主机、同步各个队列。</p>
-<h3 id="2-2-1-队列操作-Queue-Operation"><a href="#2-2-1-队列操作-Queue-Operation" class="headerlink" title="2.2.1 队列操作 Queue Operation"></a>2.2.1 队列操作 Queue Operation</h3><p>Vulkan队列提供了一个执行设备引擎的接口。引擎执行的命令在运行之前记录到Command Buffer当中。这些命令伴随queue submission命令提交到一个队列中，进行批量(batches)执行。一旦命令提交到队列，这些命令将会开始并在脱离程序控制的状态下完整的执行，执行的顺序依赖于一些隐式和显式的排序约束。</p>
-<p>任务一般会通过队列提交命令提交到队列，这些命令一般形如<code>vkQueue*</code>(例如：<code>vkQueueSubmit</code>, <code>vkQueueBindSparse</code>)，并且可以接受一组等待信号量（信号被激活时才会开始执行）和一组激发的信号量（人物完成或会激活对应的信号）。信号量的处理和任务本身都属于队列操作。</p>
-<p>在不同队列上的队列操作并没有隐式的顺序限制，可能以任何顺序执行。不同队列间同步可以通过semaphores（通常用于GPU-GPU指令同步）和fences（通常用语CPU-GPU同步）控制。</p>
-<p>提交到一个队列中的Command buffer的执行顺序遵循提交顺序和隐式顺序的约束，其他情况则可能同时执行或者乱序执行。针对单个队列的其他类型的批处理和队列提交（例如：稀疏内存绑定），彼此之间没有隐式顺序约束。附加的批处理和队列提交显式顺序约束可以通过信号量semaphores（通常用于GPU-GPU指令同步）和fences（通常用语CPU-GPU同步）控制。</p>
-<p>在semaphores或fences被激发之前，可以确定的是：之前被提交的队列操作已经完成了，且随后的队列操作可以继续进行内存的写入。等待一个被激活的semaphore或 fence可以保证之前的写入的内容是可用的，并且是对之后的命令可见（也就是说等待的semaphore或 fence完成后，接下来就能获取之前写入的内容。）</p>
-<p>对于Command Buffer是没有顺序约束的，包括相同或者不同类型的Primary Command Buffer的batches或者submissions，以及Primary Command Buffer和Second Command Buffer之间。也就是说，在任何的 semaphore或者fence操作之间，提交一系列的Command Buffer（包括Second Command Buffer） 和在一个单独的Primary Command Buffer中记录这些命令然后提交是一样的（除非当前的状态被重置了）。想要显示的控制这些顺序，可以通过显示信号量。</p>
-<p>在同一个Command Buffer当中的命令遵循一些隐式的顺序约束，但是只约束了一部分操作。</p>
-<blockquote>
-<p>​	Note</p>
-<p>提交到一个队列当中的任务有很大的自由度进行重叠执行。这是由于Vulkan本身的管线和并行策略决定的。</p>
-</blockquote>
-<p>记录在Command Buffer当中的命令包括：执行操作（例如：draw，dispatch，clear，copy，query&#x2F;timestamp， begin&#x2F;end subpass，）状态设置操作（例如：bind pipeline，descriptor sets, buffer, set dynamic state,push constants, set render pass），同步操作（例如：set&#x2F;wait events, pipeline barrier, render pass&#x2F;subpass dependencies）一些命令执行多次。状态设置会更新CommandBuffer当前的状态。一些命令的执行基于当前的状态。</p>
-<p>设备端的队列执行和主机端队列提交是异步执行的。当命令缓冲区被提交到队列后控制流马上就退回到应用程序了。 应用程序必须按需求在主机端和设备端进行同步操作。</p>
-<h2 id="2-3-对象模型-Object-Model"><a href="#2-3-对象模型-Object-Model" class="headerlink" title="2.3 对象模型 Object Model"></a>2.3 对象模型 Object Model</h2><p>devices，queue和其他的实例都是通过Vulkan object表示的。在API级别，所有的对象都通过handle来引用。有两种类型的handle：可分发的与不可分发的。<em>可分发的</em> handle是不可见类型数据的指针。这个指针可被layers使用，被当作拦截API命令的一部分， 每一个API命令都接受一个可分发类型的handle作为第一参数。 每一个不可分发类型的对象必须在其生命周期内有唯一一个handle值。</p>
-<p>_不可分发的_handle类型是64位整型类型，其含义是Vulkan实现决定的，他可能会把对象信息直接包含到handle里，而非通过指向一个数据结构。不可分发类型的对象，对于不同的类型或者同一个类型可能没有唯一的handle值（handle可能重复）。 如果handle值不唯一，那么销毁任何一个handle时：要保证不能造成其他类型的、相同handle值的对象变得无效，也要保证如果用同一个handle创建了多个对象，并且创建次数多余销毁次数，也不能让这个销毁操作导致有相同handle值的对象失效。</p>
-<p>所有通过<code>VkDevice</code> （用 <code>VkDevice</code>作为第一个参数 )的命令创建的对象都是该设备私有的，必须不能被其他设备使用。</p>
-<h3 id="2-3-1-对象的生命周期Object-Lifetime"><a href="#2-3-1-对象的生命周期Object-Lifetime" class="headerlink" title="2.3.1 对象的生命周期Object Lifetime"></a>2.3.1 对象的生命周期Object Lifetime</h3><p>对象都是通过形如<code>vkCreate*</code> and <code>vkAllocate*</code> 的命令创建或者分配的。 一旦一个对象被创建或者分配，它的结构就被认为是不变的，即使对象的内容可以自由改动。 对象通过形如<code>vkDestroy*</code> 和 <code>vkFree</code>* 的命令来销毁或释放。</p>
-<p>被分配（而不是创建）的对象从一个已存在的池子对象或者内存堆中获取资源，当被释放时会把资源归还给该池子或者堆。对象的创建和销毁在运行时通常是低频操作， 对象的分配或者释放可能是高频的。对象池帮助调节分配和释放的性能提升。</p>
-<p>应用程序有责任跟踪Vulkan对象的生命周期，并且不能销毁正在被使用的对象。</p>
-<p>属于应用程序端的内存在提交给Vulkan命令的时候会即刻被接管。在Vulkan命令执行结束之后一定会返还给应用程序。应用程序可以在需要占用这些内存的命令返回之后，再修改和释放这些内存。</p>
-<p>下面的对象会在传递给Vulkan命令之后被消耗掉，并且不能再被由它创建的对象访问。这种对象在任何用到他们的API命令执行期间不能被销毁。</p>
-<p>• VkShaderModule<br>• VkPipelineCache</p>
-
-      
-      <p align="right"><a class="morebtn" href="/2022/09/19/VulkanTranslate/Chapter2-Fundamentals-%E5%9F%BA%E7%A1%80%E5%8A%9F%E8%83%BD/" title="">阅读全文</a></p>
-    </main>
-    <footer class="post-footer">
-      
-    </footer>
-  </article>
-  
-  <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
-    <div class="post-block">
-      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/09/19/VulkanTranslate/Chapter1-Introduction/">
-      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-        <meta itemprop="name" content="leinlin">
-        <meta itemprop="description" content="">
-        <meta itemprop="image" content="/images/avatar.jpg">
-      </span>
-      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-        <meta itemprop="name" content="leinlin的小笔记">
-      </span>
-    </div>
-    <header class="post-header">
-      <h1 class="post-title" itemprop="name headline">
-        <a class="post-title-link post-title-link-external" href="/2022/09/19/VulkanTranslate/Chapter1-Introduction/" itemprop="url"></a>
-      </h1>
-      <div class="post-meta">
-        
-        <span class="post-date">
-          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2022-09-19T19:53:33+08:00">2022-09-19 19:53:33</time></span>
-        </span>
-        
-        
-        
-        
-        
-      </div>
-    </header>
-    <main class="post-main" itemprop="articleBody">
-      
-      <h1 id="Chapter-1-Introduction"><a href="#Chapter-1-Introduction" class="headerlink" title="Chapter 1 Introduction"></a>Chapter 1 Introduction</h1><p>这篇文档主要是一份说明文档，用来描述Vulkan API。 Vulkan API是符合 C99标准的控制low-level图形计算功能的API。</p>
-<p>文档的权威版本在官方网站可以查阅：<a target="_blank" rel="noopener" href="https://www.khronos.org/registry/vulkan/">官方文档</a></p>
-<p>生成官方文档的工程：[文档工程](<a target="_blank" rel="noopener" href="https://github.com/">https://github.com/</a> KhronosGroup&#x2F;Vulkan-Docs)</p>
-<h2 id="1-1-文档约定"><a href="#1-1-文档约定" class="headerlink" title="1.1 文档约定"></a>1.1 文档约定</h2><p>Vulkan说明文档用与给API开发人员和应用开发人员提供API使用参考，为两者提供统一的约定。从上下文通常也能推断出面向的受众，某些部分只针对这部分开发人员。例如 Valid Usage章节只提供给应用开发人员使用。任何的需求、禁止、建议和选择都在Normative terminology中说明。</p>
-<blockquote>
-<p>Note</p>
-<p> extensions 中定义的结构体、枚举类型已经被集成到了Vulkan 1.1的核心库中。这些内容现在和Vulkan1.1的接口等价。和部分影响了Vulkan说明文件、头文件、和XML注册表。</p>
-</blockquote>
-
-      
-      <p align="right"><a class="morebtn" href="/2022/09/19/VulkanTranslate/Chapter1-Introduction/" title="">阅读全文</a></p>
-    </main>
-    <footer class="post-footer">
-      
-    </footer>
-  </article>
-  
-  <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
-    <div class="post-block">
-      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/08/03/Unity/il2cpp_fastbuild/">
-      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-        <meta itemprop="name" content="leinlin">
-        <meta itemprop="description" content="">
-        <meta itemprop="image" content="/images/avatar.jpg">
-      </span>
-      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-        <meta itemprop="name" content="leinlin的小笔记">
-      </span>
-    </div>
-    <header class="post-header">
-      <h1 class="post-title" itemprop="name headline">
-        <a class="post-title-link post-title-link-external" href="/2022/08/03/Unity/il2cpp_fastbuild/" itemprop="url">在unity的IL2CPP中接入FASTBuild</a>
-      </h1>
-      <div class="post-meta">
-        
-        <span class="post-date">
-          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2022-08-03T08:17:00+08:00">2022-08-03 08:17:00</time></span>
+          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2022-07-09T12:00:14+08:00">2022-07-09 12:00:14</time></span>
         </span>
         
         
@@ -599,7 +230,7 @@
         
         <span class="post-categories">
           
-          <i class="far fa-folder-open"></i><span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/FASTBUILD/" itemprop="url" rel="index"><span itemprop="name">FASTBUILD</span></a></span>
+          <i class="far fa-folder-open"></i><span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Art/" itemprop="url" rel="index"><span itemprop="name">Art</span></a></span>
         </span>
         
         
@@ -609,29 +240,30 @@
     </header>
     <main class="post-main" itemprop="articleBody">
       
-      <h1 id="在unity的IL2CPP中接入FASTBuild"><a href="#在unity的IL2CPP中接入FASTBuild" class="headerlink" title="在unity的IL2CPP中接入FASTBuild"></a>在unity的IL2CPP中接入FASTBuild</h1><h2 id="如何编译IL2CPP-exe"><a href="#如何编译IL2CPP-exe" class="headerlink" title="如何编译IL2CPP.exe"></a>如何编译IL2CPP.exe</h2><figure class="hljs highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">jam WinEditor<br></code></pre></td></tr></table></figure>
-
-<h2 id="如何调试IL2CPP-exe"><a href="#如何调试IL2CPP-exe" class="headerlink" title="如何调试IL2CPP.exe"></a>如何调试IL2CPP.exe</h2><p>用vs2017我研究了一天没有成功，改用rider进行附加调试。第一步加入一个ReadKey的指令，等待附加</p>
-<figure class="hljs highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">public static int Main(string[] args)<br>&#123;<br>    // 这里是等待附加的代码<br>    ConsoleKey key = Console.ReadKey().Key;<br>    int exitCode;<br>    try<br>    &#123;<br>        exitCode = Run(args, true);<br>    &#125;<br>    catch (PathTooLongException e)<br>    &#123;<br>        Console.WriteLine(&quot;IL2CPP error: The specified output path is too long to write generated files. Please choose a location with a shorter path.&quot;);<br>        Console.WriteLine(e);<br>        throw;<br>    &#125;<br>    catch (Exception e)<br>    &#123;<br>        Console.WriteLine(&quot;il2cpp.exe didn&#x27;t catch exception: &quot; + e.StackTrace);<br>        throw;<br>    &#125;<br><br>    return exitCode;<br>&#125;<br></code></pre></td></tr></table></figure>
+      <h1 id="PS颜色风格"><a href="#PS颜色风格" class="headerlink" title="PS颜色风格"></a>PS颜色风格</h1><h2 id="基础"><a href="#基础" class="headerlink" title="基础"></a>基础</h2><p>日系，ins风格，低饱和度，平和。</p>
+<p>欧美系，高饱和，有侵略性。</p>
+<p>明度，轻盈舒适。</p>
+<p>低明度，压抑称重，有质感，金属—&gt; 铁和铝箔的IBL。</p>
+<p>同类色-&gt; 15%的色相环，-&gt;靠明度和饱和度达到设计和层次感。–&gt;ToneMapping。</p>
+<p><img src="/../../images/%E9%A2%9C%E8%89%B2%E9%A3%8E%E6%A0%BC/1592918191766.png" alt="1592918191766"></p>
+<h2 id="Camera-Raw"><a href="#Camera-Raw" class="headerlink" title="Camera Raw"></a>Camera Raw</h2><p>Ctrl + Shift + A进入PS的Camera Raw风格。</p>
+<p> 主要用来编辑Raw文件的。</p>
+<p><img src="/../../images/%E9%A2%9C%E8%89%B2%E9%A3%8E%E6%A0%BC/1592918699887.png" alt="1592918699887"></p>
+<p>自动白平衡和手动白平衡。</p>
+<p>下面的图像有没有色偏？可以有也可以没有，但是自动白平衡会去掉。</p>
+<p><img src="/../../images/%E9%A2%9C%E8%89%B2%E9%A3%8E%E6%A0%BC/1592919134345.png" alt="1592919134345"></p>
+<p>渲染当中白色光就没有色偏！！怎么做。</p>
       
-      <p align="right"><a class="morebtn" href="/2022/08/03/Unity/il2cpp_fastbuild/" title="在unity的IL2CPP中接入FASTBuild">阅读全文</a></p>
+      <p align="right"><a class="morebtn" href="/2022/07/09/Art/%E9%A2%9C%E8%89%B2%E9%A3%8E%E6%A0%BC/" title="PS颜色风格">阅读全文</a></p>
     </main>
     <footer class="post-footer">
-      
-      <div class="post-tags">
-        
-        <a class="post-tag button" href="/tags/IL2CPP/" rel="tag"><i class="fas fa-tags"></i>IL2CPP</a>
-        
-        <a class="post-tag button" href="/tags/FASTBUILD/" rel="tag"><i class="fas fa-tags"></i>FASTBUILD</a>
-        
-      </div>
       
     </footer>
   </article>
   
   <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
     <div class="post-block">
-      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/07/18/Unity/profiler/">
+      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/07/09/Art/BRDF%E4%B8%8E%E8%89%B2%E5%BD%A9%E4%B8%8E%E6%98%8E%E6%9A%97/">
       <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
         <meta itemprop="name" content="leinlin">
         <meta itemprop="description" content="">
@@ -643,117 +275,12 @@
     </div>
     <header class="post-header">
       <h1 class="post-title" itemprop="name headline">
-        <a class="post-title-link post-title-link-external" href="/2022/07/18/Unity/profiler/" itemprop="url">snp Profiler</a>
+        <a class="post-title-link post-title-link-external" href="/2022/07/09/Art/BRDF%E4%B8%8E%E8%89%B2%E5%BD%A9%E4%B8%8E%E6%98%8E%E6%9A%97/" itemprop="url">BRDF与色彩与明暗</a>
       </h1>
       <div class="post-meta">
         
         <span class="post-date">
-          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2022-07-18T08:17:00+08:00">2022-07-18 08:17:00</time></span>
-        </span>
-        
-        
-        
-        
-        
-      </div>
-    </header>
-    <main class="post-main" itemprop="articleBody">
-      
-      <p><img src="/../../images/2022-07-19-18-03-57.png"></p>
-
-      
-      <p align="right"><a class="morebtn" href="/2022/07/18/Unity/profiler/" title="snp Profiler">阅读全文</a></p>
-    </main>
-    <footer class="post-footer">
-      
-      <div class="post-tags">
-        
-        <a class="post-tag button" href="/tags/snp/" rel="tag"><i class="fas fa-tags"></i>snp</a>
-        
-        <a class="post-tag button" href="/tags/android/" rel="tag"><i class="fas fa-tags"></i>android</a>
-        
-      </div>
-      
-    </footer>
-  </article>
-  
-  <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
-    <div class="post-block">
-      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/07/18/Unity/textmeshpro/">
-      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-        <meta itemprop="name" content="leinlin">
-        <meta itemprop="description" content="">
-        <meta itemprop="image" content="/images/avatar.jpg">
-      </span>
-      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-        <meta itemprop="name" content="leinlin的小笔记">
-      </span>
-    </div>
-    <header class="post-header">
-      <h1 class="post-title" itemprop="name headline">
-        <a class="post-title-link post-title-link-external" href="/2022/07/18/Unity/textmeshpro/" itemprop="url">textmesh-pro 压缩通道</a>
-      </h1>
-      <div class="post-meta">
-        
-        <span class="post-date">
-          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2022-07-18T08:17:00+08:00">2022-07-18 08:17:00</time></span>
-        </span>
-        
-        
-        
-        
-        
-      </div>
-    </header>
-    <main class="post-main" itemprop="articleBody">
-      
-      <h2 id="把Alpha-8改为4通道的RGBA"><a href="#把Alpha-8改为4通道的RGBA" class="headerlink" title="把Alpha 8改为4通道的RGBA"></a>把Alpha 8改为4通道的RGBA</h2><p><img src="/../../images/2022-07-21-17-44-41.png"></p>
-<h2 id="修改shader根据uv采样不同的通道"><a href="#修改shader根据uv采样不同的通道" class="headerlink" title="修改shader根据uv采样不同的通道"></a>修改shader根据uv采样不同的通道</h2><p><img src="/../../images/2022-07-21-17-45-35.png"></p>
-<h2 id="补充"><a href="#补充" class="headerlink" title="补充"></a>补充</h2><ul>
-<li><p>优化图集算法，不能让中间线切割字符，使一个字符分布到多个通道中</p>
-</li>
-<li><p>修改采样的shader</p>
-</li>
-<li><p>稳定化debug</p>
-</li>
-<li><p>不如把图片直接改为2048x2048 alpha8</p>
-</li>
-</ul>
-
-      
-      <p align="right"><a class="morebtn" href="/2022/07/18/Unity/textmeshpro/" title="textmesh-pro 压缩通道">阅读全文</a></p>
-    </main>
-    <footer class="post-footer">
-      
-      <div class="post-tags">
-        
-        <a class="post-tag button" href="/tags/textmesh-pro/" rel="tag"><i class="fas fa-tags"></i>textmesh-pro</a>
-        
-      </div>
-      
-    </footer>
-  </article>
-  
-  <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
-    <div class="post-block">
-      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/07/13/ARM/IDVS-shader-variants/">
-      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-        <meta itemprop="name" content="leinlin">
-        <meta itemprop="description" content="">
-        <meta itemprop="image" content="/images/avatar.jpg">
-      </span>
-      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-        <meta itemprop="name" content="leinlin的小笔记">
-      </span>
-    </div>
-    <header class="post-header">
-      <h1 class="post-title" itemprop="name headline">
-        <a class="post-title-link post-title-link-external" href="/2022/07/13/ARM/IDVS-shader-variants/" itemprop="url">IDVS shader variants</a>
-      </h1>
-      <div class="post-meta">
-        
-        <span class="post-date">
-          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2022-07-13T06:57:19+08:00">2022-07-13 06:57:19</time></span>
+          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2022-07-09T12:00:14+08:00">2022-07-09 12:00:14</time></span>
         </span>
         
         
@@ -762,7 +289,7 @@
         
         <span class="post-categories">
           
-          <i class="far fa-folder-open"></i><span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/mali-gpu/" itemprop="url" rel="index"><span itemprop="name">mali gpu</span></a></span>
+          <i class="far fa-folder-open"></i><span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Art/" itemprop="url" rel="index"><span itemprop="name">Art</span></a></span>
         </span>
         
         
@@ -772,26 +299,537 @@
     </header>
     <main class="post-main" itemprop="articleBody">
       
-      <h1 id="IDVS-shader-variants"><a href="#IDVS-shader-variants" class="headerlink" title="IDVS shader variants"></a>IDVS shader variants</h1><p>On Mali GPUs in the Bifrost and Valhall families, vertex shaders are executed using an optimized shading flow called Index-Driven Vertex Shading (IDVS).</p>
-<p>In the IDVS pipeline, vertex shaders are compiled into two binaries:</p>
-<ul>
-<li>A position shader, which computes only position.</li>
-<li>A varying shader, which computes the remaining non-position vertex attribute outputs.</li>
-</ul>
-<h2 id="Figure-2-1-IDVS-pipeline"><a href="#Figure-2-1-IDVS-pipeline" class="headerlink" title="Figure 2-1 IDVS pipeline"></a>Figure 2-1 IDVS pipeline</h2><p><img src="/../../images/2022-07-13-14-47-58.png"></p>
-
+      <h1 id="BRDF与色彩与明暗"><a href="#BRDF与色彩与明暗" class="headerlink" title="BRDF与色彩与明暗"></a>BRDF与色彩与明暗</h1><p>最近看了一些和色彩相关的文章。在美术当中，明暗变化和颜色的过度是紧紧关联起来的（例如：油画变暗并不是单纯地混入黑色），与BRDF模拟有一些差别（单纯考虑明暗，多个通道同样的明暗衰退过程），原画师、插画师一般是从HSV空间（色相环之类的）下手。</p>
+<h2 id="BRDF明暗与美术明暗"><a href="#BRDF明暗与美术明暗" class="headerlink" title="BRDF明暗与美术明暗"></a>BRDF明暗与美术明暗</h2><p>在美术配色当中，颜色的变化并不只是混入黑色，现实世界同样是，<strong>亮度的降低往往伴随了饱和度的升高</strong>（下图蓝色）。</p>
+<p>但是BRDF总是等比例降低RGB大小（下图黄色），饱和度没有变化。导致画面看起来暗部部分变脏。</p>
+<p>brdf和实际的明暗在拾色器中的变化如下图：<br><img src="/../../images/brdf.jpg" alt="brdf"></p>
+<p>在Cel Shading当中，画面通常需要保证高饱和度，所以通常需要通过后期的Tone Mapping或者Ramp Map的方式调整暗部颜色。</p>
+<p>这里需要注意，BRDF符合正确的物理明暗变化，但是艺术处理上有所欠缺。</p>
       
-      <p align="right"><a class="morebtn" href="/2022/07/13/ARM/IDVS-shader-variants/" title="IDVS shader variants">阅读全文</a></p>
+      <p align="right"><a class="morebtn" href="/2022/07/09/Art/BRDF%E4%B8%8E%E8%89%B2%E5%BD%A9%E4%B8%8E%E6%98%8E%E6%9A%97/" title="BRDF与色彩与明暗">阅读全文</a></p>
     </main>
     <footer class="post-footer">
       
-      <div class="post-tags">
+    </footer>
+  </article>
+  
+  <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
+    <div class="post-block">
+      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/07/09/Art/DaVinCi%E8%89%B2%E5%BD%A9%E5%A4%84%E7%90%86%E5%8E%9F%E7%90%86%E5%85%A5%E9%97%A8/">
+      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <meta itemprop="name" content="leinlin">
+        <meta itemprop="description" content="">
+        <meta itemprop="image" content="/images/avatar.jpg">
+      </span>
+      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+        <meta itemprop="name" content="leinlin的小笔记">
+      </span>
+    </div>
+    <header class="post-header">
+      <h1 class="post-title" itemprop="name headline">
+        <a class="post-title-link post-title-link-external" href="/2022/07/09/Art/DaVinCi%E8%89%B2%E5%BD%A9%E5%A4%84%E7%90%86%E5%8E%9F%E7%90%86%E5%85%A5%E9%97%A8/" itemprop="url">DaVinCi色彩处理原理</a>
+      </h1>
+      <div class="post-meta">
         
-        <a class="post-tag button" href="/tags/mali/" rel="tag"><i class="fas fa-tags"></i>mali</a>
+        <span class="post-date">
+          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2022-07-09T12:00:14+08:00">2022-07-09 12:00:14</time></span>
+        </span>
         
-        <a class="post-tag button" href="/tags/IDVS/" rel="tag"><i class="fas fa-tags"></i>IDVS</a>
+        
+        
+        <span class="post-meta-divider divider">|</span>
+        
+        <span class="post-categories">
+          
+          <i class="far fa-folder-open"></i><span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Art/" itemprop="url" rel="index"><span itemprop="name">Art</span></a></span>
+        </span>
+        
+        
+        
         
       </div>
+    </header>
+    <main class="post-main" itemprop="articleBody">
+      
+      <h1 id="DaVinCi色彩处理原理"><a href="#DaVinCi色彩处理原理" class="headerlink" title="DaVinCi色彩处理原理"></a>DaVinCi色彩处理原理</h1><h2 id="Data-Level（pdf，P215）"><a href="#Data-Level（pdf，P215）" class="headerlink" title="Data Level（pdf，P215）"></a>Data Level（pdf，P215）</h2><p>不同的媒体数据文件使用不同范围的数据表示。通常来讲处理的是10bit的数据(0-1023)，有两种不同的data level用来保存图像数据：</p>
+<ul>
+<li><p><strong>Video：</strong>所有的图像数据从0-1的颜色强度，会映射到64-940之间。Y通道[64-940]，CB和CR[64-960],小于64用于表示比黑色更黑的区域，941&#x2F;961–1019 表示超过白色的区域。过低过高的数据称作：undershoots 和overshoots。</p>
+</li>
+<li><p><strong>Full：</strong>对于RGB444数据，数据强度0-1映射到4-1023。</p>
+</li>
+</ul>
+<p>无论哪种数据类型，都有0-100的最大和最小亮度。当数据格式转换时，范围会重新映射：</p>
+<ul>
+<li>(minimum Video Level) 64 &#x3D; 4 (Data Level minimum) </li>
+<li>(maximum Video Level) 940 or 960 &#x3D; 1023 (Data Level maximum）</li>
+</ul>
+<p>​      数据格式的转换几乎不会有变化，因为合法数据会被被保存下来。区别是undershoots 和overshoots可能丢失，但是Resolve软件内部会记录下来，保证之后可以还原。</p>
+<p>   <strong>在DaVinci Resolve中，所有的图像格式都会以Full的格式进行处理。并且是未被压缩的32bit浮点数表示。</strong>也就是说，每一个图片无论原始的bit-depth是多少，都会转换成32bit的数据。转换的质量依赖于原始数据，总之是无压缩的转换。</p>
+      
+      <p align="right"><a class="morebtn" href="/2022/07/09/Art/DaVinCi%E8%89%B2%E5%BD%A9%E5%A4%84%E7%90%86%E5%8E%9F%E7%90%86%E5%85%A5%E9%97%A8/" title="DaVinCi色彩处理原理">阅读全文</a></p>
+    </main>
+    <footer class="post-footer">
+      
+    </footer>
+  </article>
+  
+  <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
+    <div class="post-block">
+      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/07/09/Art/%E6%9D%90%E8%B4%A8%E5%88%B6%E4%BD%9C%E5%8F%82%E6%95%B0F0/">
+      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <meta itemprop="name" content="leinlin">
+        <meta itemprop="description" content="">
+        <meta itemprop="image" content="/images/avatar.jpg">
+      </span>
+      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+        <meta itemprop="name" content="leinlin的小笔记">
+      </span>
+    </div>
+    <header class="post-header">
+      <h1 class="post-title" itemprop="name headline">
+        <a class="post-title-link post-title-link-external" href="/2022/07/09/Art/%E6%9D%90%E8%B4%A8%E5%88%B6%E4%BD%9C%E5%8F%82%E6%95%B0F0/" itemprop="url">材质制作参数F0</a>
+      </h1>
+      <div class="post-meta">
+        
+        <span class="post-date">
+          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2022-07-09T12:00:14+08:00">2022-07-09 12:00:14</time></span>
+        </span>
+        
+        
+        
+        <span class="post-meta-divider divider">|</span>
+        
+        <span class="post-categories">
+          
+          <i class="far fa-folder-open"></i><span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Art/" itemprop="url" rel="index"><span itemprop="name">Art</span></a></span>
+        </span>
+        
+        
+        
+        
+      </div>
+    </header>
+    <main class="post-main" itemprop="articleBody">
+      
+      <p>- <a href="#%E6%9D%90%E8%B4%A8%E5%88%B6%E4%BD%9C%E5%8F%82%E6%95%B0f0">材质制作参数F0</a><br>    - <a href="#%E9%9D%9E%E9%87%91%E5%B1%9E">非金属</a><br>    - <a href="#%E9%87%91%E5%B1%9E%E6%9D%90%E8%B4%A8">金属材质</a><br>    - <a href="#%E5%B8%B8%E8%A7%81%E9%87%91%E5%B1%9E%E5%8F%82%E6%95%B0">常见金属参数</a></p>
+<h1 id="材质制作参数F0"><a href="#材质制作参数F0" class="headerlink" title="材质制作参数F0"></a>材质制作参数F0</h1><h2 id="非金属"><a href="#非金属" class="headerlink" title="非金属"></a>非金属</h2><p>网上可以查到很多物体的折射率</p>
+<p>对于非金属来说，将折射率转化成F0的公式：</p>
+<p>$$ F0 &#x3D; \frac{(n-1)^2}{(n+1)^2} $$</p>
+<p>不同物体的Fresnel的值</p>
+<figure class="hljs highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">Charcoal       0.04<br>Fresh asphalt  0.04<br>Worn asphalt   0.12<br>Bare soil      0.17<br>Green grass    0.25<br>Desert sand    0.40<br>New concrete   0.55<br>Ocean Ice      0.5–0.7<br>Fresh snow     0.80–0.90<br>Quartz    0.045593921<br>ice       0.017908907<br>Water     0.020373188<br>Alcohol   0.01995505<br>Glass     0.04<br>Milk      0.022181983<br>Ruby      0.077271957<br>Crystal   0.111111111<br>Diamond   0.171968833<br>Skin      0.028<br></code></pre></td></tr></table></figure>
+
+<p>更多参数可以参考：<a target="_blank" rel="noopener" href="https://www.btbat.com/12032.html">常见材质IOR</a>，不过因为电介质材质的IOR通常很小在渲染中一般为0.04即可。</p>
+<p><strong>但是对于非金属的宝石之类的特殊物体，需要比较高的IOR，这个时候一般的金属工作流是不适用的，应为他需要特殊的F0</strong>.</p>
+<p>电介质F0的定义准则：</p>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c">No value under <span class="hljs-number">0.02</span><br>Common gemstones <span class="hljs-number">0.05</span><span class="hljs-number">-0.17</span><br>Common liquids <span class="hljs-number">0.02</span><span class="hljs-number">-0.04</span><br>When not finding reference <span class="hljs-keyword">for</span> a dielectric material, setting a value of <span class="hljs-number">0.04</span> (around plastic)<br></code></pre></td></tr></table></figure>
+      
+      <p align="right"><a class="morebtn" href="/2022/07/09/Art/%E6%9D%90%E8%B4%A8%E5%88%B6%E4%BD%9C%E5%8F%82%E6%95%B0F0/" title="材质制作参数F0">阅读全文</a></p>
+    </main>
+    <footer class="post-footer">
+      
+    </footer>
+  </article>
+  
+  <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
+    <div class="post-block">
+      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/07/09/Art/%E6%9D%90%E8%B4%A8%E5%88%B6%E4%BD%9C%E6%95%B0%E5%80%BC%E6%A0%87%E5%87%86%E6%80%BB%E7%BB%93/">
+      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <meta itemprop="name" content="leinlin">
+        <meta itemprop="description" content="">
+        <meta itemprop="image" content="/images/avatar.jpg">
+      </span>
+      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+        <meta itemprop="name" content="leinlin的小笔记">
+      </span>
+    </div>
+    <header class="post-header">
+      <h1 class="post-title" itemprop="name headline">
+        <a class="post-title-link post-title-link-external" href="/2022/07/09/Art/%E6%9D%90%E8%B4%A8%E5%88%B6%E4%BD%9C%E6%95%B0%E5%80%BC%E6%A0%87%E5%87%86%E6%80%BB%E7%BB%93/" itemprop="url">材质制作数值标准总结</a>
+      </h1>
+      <div class="post-meta">
+        
+        <span class="post-date">
+          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2022-07-09T12:00:14+08:00">2022-07-09 12:00:14</time></span>
+        </span>
+        
+        
+        
+        <span class="post-meta-divider divider">|</span>
+        
+        <span class="post-categories">
+          
+          <i class="far fa-folder-open"></i><span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Art/" itemprop="url" rel="index"><span itemprop="name">Art</span></a></span>
+        </span>
+        
+        
+        
+        
+      </div>
+    </header>
+    <main class="post-main" itemprop="articleBody">
+      
+      <!-- TOC -->
+
+
+
+<p>- <a href="#%E6%9D%90%E8%B4%A8%E5%88%B6%E4%BD%9C%E6%95%B0%E5%80%BC%E6%A0%87%E5%87%86%E6%80%BB%E7%BB%93">材质制作数值标准总结</a></p>
+<p>​    - <a href="#%E6%9D%90%E8%B4%A8%E5%8F%82%E6%95%B0%E8%8C%83%E5%9B%B4">材质参数范围</a></p>
+<p>​        - <a href="#basecolorrgb-srgb">BaseColor（RGB-sRGB）</a></p>
+<p>​            - <a href="#guidelines">Guidelines</a></p>
+<p>​        - <a href="#metallic">Metallic</a></p>
+<p>​            - <a href="#f0">F0</a></p>
+<p>​            - <a href="#%E9%87%91%E5%B1%9E">金属</a></p>
+<p>​            - <a href="#%E9%9D%9E%E9%87%91%E5%B1%9E">非金属</a></p>
+<p>​            - <a href="#guideline">Guideline</a></p>
+<p>​        - <a href="#roughness">Roughness</a></p>
+<p>​            - <a href="#guideline">GuideLine</a></p>
+<p>​        - <a href="#ao">AO</a></p>
+<p>​            - <a href="#guidline">Guidline</a></p>
+<p>​        - <a href="#%E6%80%BB%E7%BB%93">总结</a></p>
+<p>​    - <a href="#gamma%E7%A9%BA%E9%97%B4">Gamma空间</a></p>
+<p>​    - <a href="#%E9%AA%8C%E8%AF%81">验证</a></p>
+      
+      <p align="right"><a class="morebtn" href="/2022/07/09/Art/%E6%9D%90%E8%B4%A8%E5%88%B6%E4%BD%9C%E6%95%B0%E5%80%BC%E6%A0%87%E5%87%86%E6%80%BB%E7%BB%93/" title="材质制作数值标准总结">阅读全文</a></p>
+    </main>
+    <footer class="post-footer">
+      
+    </footer>
+  </article>
+  
+  <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
+    <div class="post-block">
+      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/07/09/Art/HDRColorGrading%E6%8A%80%E6%9C%AF%E6%96%B9%E6%A1%88/">
+      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <meta itemprop="name" content="leinlin">
+        <meta itemprop="description" content="">
+        <meta itemprop="image" content="/images/avatar.jpg">
+      </span>
+      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+        <meta itemprop="name" content="leinlin的小笔记">
+      </span>
+    </div>
+    <header class="post-header">
+      <h1 class="post-title" itemprop="name headline">
+        <a class="post-title-link post-title-link-external" href="/2022/07/09/Art/HDRColorGrading%E6%8A%80%E6%9C%AF%E6%96%B9%E6%A1%88/" itemprop="url">HDRColorGrading技术方案</a>
+      </h1>
+      <div class="post-meta">
+        
+        <span class="post-date">
+          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2022-07-09T12:00:14+08:00">2022-07-09 12:00:14</time></span>
+        </span>
+        
+        
+        
+        <span class="post-meta-divider divider">|</span>
+        
+        <span class="post-categories">
+          
+          <i class="far fa-folder-open"></i><span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Art/" itemprop="url" rel="index"><span itemprop="name">Art</span></a></span>
+        </span>
+        
+        
+        
+        
+      </div>
+    </header>
+    <main class="post-main" itemprop="articleBody">
+      
+      <p>- <a href="#hdrcolorgrading%E6%8A%80%E6%9C%AF%E6%96%B9%E6%A1%88">HDRColorGrading技术方案</a></p>
+<p>​    - <a href="#%E6%95%B4%E4%BD%93%E6%B5%81%E7%A8%8B">整体流程</a></p>
+<p>​    - <a href="#%E8%AF%A6%E7%BB%86%E6%B5%81%E7%A8%8B">详细流程</a></p>
+<p>​        - <a href="#pq%E7%A9%BA%E9%97%B4%E8%BD%AC%E6%8D%A2">PQ空间转换</a></p>
+<p>​        - <a href="#amplify">Amplify</a></p>
+<p>​        - <a href="#pg%E7%A9%BA%E9%97%B4colorgrading">PG空间ColorGrading</a></p>
+<p>​        - <a href="#%E7%BA%BF%E6%80%A7%E7%A9%BA%E9%97%B4tonemapping">线性空间ToneMapping</a></p>
+<p>​        - <a href="#%E6%98%BE%E7%A4%BA%E5%99%A8%E4%BA%AE%E5%BA%A6%E9%85%8D%E9%80%82">显示器亮度配适</a></p>
+<p>​            - <a href="#%E5%AF%B9%E4%BA%8Ehdr%E6%98%BE%E7%A4%BA%E5%99%A8">对于hdr显示器</a></p>
+<p>​            - <a href="#%E5%AF%B9%E4%BA%8Esdr%E6%98%BE%E7%A4%BA%E5%99%A8">对于sdr显示器</a></p>
+<p>​        - <a href="#tonemapping">ToneMapping</a></p>
+<p>​            - <a href="#hdr%E6%98%BE%E7%A4%BA%E5%99%A8displaymapping%E6%9B%B2%E7%BA%BF%E8%AE%BE%E8%AE%A1">hdr显示器Displaymapping曲线设计</a></p>
+<p>​            - <a href="#sdr%E6%98%BE%E7%A4%BA%E5%99%A8display-mapping%E6%9B%B2%E7%BA%BF%E8%AE%BE%E8%AE%A1">Sdr显示器Display Mapping曲线设计</a></p>
+<p>​        - <a href="#gumatmapping">GumatMapping</a></p>
+<p>​    - <a href="#%E7%9B%B8%E5%85%B3%E8%B5%84%E6%BA%90%E5%88%B6%E4%BD%9C">相关资源制作</a></p>
+<p>​        - <a href="#davinci-colorgrading-lut%E5%88%B6%E4%BD%9C">DaVinCi ColorGrading Lut制作</a></p>
+<p>​        - <a href="#%E5%BC%95%E6%93%8E%E4%B8%AD%E5%AF%BC%E5%87%BA%E5%9B%BE%E7%89%87%E6%88%96%E8%A7%86%E9%A2%91">引擎中导出图片或视频</a></p>
+<p>​        - <a href="#davinci%E8%AE%BE%E7%BD%AE">DaVinCi设置</a></p>
+<p>​        - <a href="#davinci%E5%AF%BC%E5%85%A5%E5%9B%BE%E7%89%87">DaVinCi导入图片</a></p>
+<p>​        - <a href="#lut%E5%AF%BC%E5%87%BAcube">Lut导出cube</a></p>
+<p>​        - <a href="#cube%E6%96%87%E4%BB%B6%E8%BD%AC%E6%8D%A2%E6%88%90%E5%BC%95%E6%93%8E%E5%8F%AF%E7%94%A8%E7%9A%84lut">cube文件转换成引擎可用的lut</a></p>
+      
+      <p align="right"><a class="morebtn" href="/2022/07/09/Art/HDRColorGrading%E6%8A%80%E6%9C%AF%E6%96%B9%E6%A1%88/" title="HDRColorGrading技术方案">阅读全文</a></p>
+    </main>
+    <footer class="post-footer">
+      
+    </footer>
+  </article>
+  
+  <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
+    <div class="post-block">
+      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/07/09/Art/%E8%89%B2%E5%BD%A9%E8%A1%A8%E7%A4%BA%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/">
+      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <meta itemprop="name" content="leinlin">
+        <meta itemprop="description" content="">
+        <meta itemprop="image" content="/images/avatar.jpg">
+      </span>
+      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+        <meta itemprop="name" content="leinlin的小笔记">
+      </span>
+    </div>
+    <header class="post-header">
+      <h1 class="post-title" itemprop="name headline">
+        <a class="post-title-link post-title-link-external" href="/2022/07/09/Art/%E8%89%B2%E5%BD%A9%E8%A1%A8%E7%A4%BA%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/" itemprop="url">色彩表示的前世今生</a>
+      </h1>
+      <div class="post-meta">
+        
+        <span class="post-date">
+          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2022-07-09T12:00:14+08:00">2022-07-09 12:00:14</time></span>
+        </span>
+        
+        
+        
+        <span class="post-meta-divider divider">|</span>
+        
+        <span class="post-categories">
+          
+          <i class="far fa-folder-open"></i><span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Art/" itemprop="url" rel="index"><span itemprop="name">Art</span></a></span>
+        </span>
+        
+        
+        
+        
+      </div>
+    </header>
+    <main class="post-main" itemprop="articleBody">
+      
+      <h1 id="色彩表示的前世今生"><a href="#色彩表示的前世今生" class="headerlink" title="色彩表示的前世今生"></a>色彩表示的前世今生</h1><h2 id="眼睛"><a href="#眼睛" class="headerlink" title="眼睛"></a>眼睛</h2><p>因此，彩色光的表观亮度的变化是由于棒效应的叠加造成的，在视杆细胞上只刺激光感</p>
+<p>眼睛的亮度感受： 10000:1<br>眼睛的色彩接收器：Rods and Cones<br>因此，光敏感曲线和暗敏感曲线基本上是单独作用于视锥细胞和视杆细胞的<br>猫的眼睛受视杆细胞支配。</p>
+<h2 id="首先是从波长到颜色感知-CIE-1931-color-space来源-wiki"><a href="#首先是从波长到颜色感知-CIE-1931-color-space来源-wiki" class="headerlink" title="首先是从波长到颜色感知-CIE 1931 color space来源 wiki"></a><strong>首先是从波长到颜色感知</strong>-CIE 1931 color space来源 <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/CIE_1931_color_space">wiki</a></h2><p>CIE是国际照明委员会（ <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/International_Commission_on_Illumination">International Commission on Illumination</a>）的缩写。制定了与光和颜色相关的国际标准。</p>
+<p>CIE 1931颜色空间是第一个在<strong>电磁可见光谱中波长分布</strong>（波长）和人类色觉中生理感知的颜色（颜色）之间的定量联系。</p>
+<p>定义这些颜色空间的数学关系是颜色管理的基本工具，在处理彩色油墨、发光显示器和数字相机等记录设备时非常重要。</p>
+      
+      <p align="right"><a class="morebtn" href="/2022/07/09/Art/%E8%89%B2%E5%BD%A9%E8%A1%A8%E7%A4%BA%E7%9A%84%E5%89%8D%E4%B8%96%E4%BB%8A%E7%94%9F/" title="色彩表示的前世今生">阅读全文</a></p>
+    </main>
+    <footer class="post-footer">
+      
+    </footer>
+  </article>
+  
+  <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
+    <div class="post-block">
+      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/07/09/Art/%E5%90%8E%E5%A4%84%E7%90%86ColorGrading/">
+      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <meta itemprop="name" content="leinlin">
+        <meta itemprop="description" content="">
+        <meta itemprop="image" content="/images/avatar.jpg">
+      </span>
+      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+        <meta itemprop="name" content="leinlin的小笔记">
+      </span>
+    </div>
+    <header class="post-header">
+      <h1 class="post-title" itemprop="name headline">
+        <a class="post-title-link post-title-link-external" href="/2022/07/09/Art/%E5%90%8E%E5%A4%84%E7%90%86ColorGrading/" itemprop="url">后处理ColorGrading</a>
+      </h1>
+      <div class="post-meta">
+        
+        <span class="post-date">
+          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2022-07-09T12:00:14+08:00">2022-07-09 12:00:14</time></span>
+        </span>
+        
+        
+        
+        <span class="post-meta-divider divider">|</span>
+        
+        <span class="post-categories">
+          
+          <i class="far fa-folder-open"></i><span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Art/" itemprop="url" rel="index"><span itemprop="name">Art</span></a></span>
+        </span>
+        
+        
+        
+        
+      </div>
+    </header>
+    <main class="post-main" itemprop="articleBody">
+      
+      <h1 id="Why-Color-Grading"><a href="#Why-Color-Grading" class="headerlink" title="Why Color Grading"></a>Why Color Grading</h1><p>Color Grading（或者Color Correction）几乎是每一个游戏、视频必定会涉及的话题。但是我们的工作重点总是<strong>如何迁移一个算法</strong>，图程和TA的工作停留在算法层面就无法理解他在美术、设计中真正起到的作用。</p>
+<p>这篇笔记主要来自于DaVinci的用户文档，解释了我们为什么需要这样的技术、不同的工具解决的问题是什么。</p>
+<h2 id="Color-Correction的作用"><a href="#Color-Correction的作用" class="headerlink" title="Color Correction的作用"></a>Color Correction的作用</h2><p>Color Correction的作用是要保证每一个视频看起来是最佳的状态。</p>
+<p>视频编辑人员的目的是通过艺术的风格呈现图像，以实现艺术化的效果，手段就是需要调整图片的色彩和对比度，最终的结果是尽可能接近导演和摄影师的想法。</p>
+<ol>
+<li>在处理的过程当中需要<strong>解决曝光异常、白平衡等问题</strong>，这些是在视频拍摄过程中不可避免的问题。此外，你可以做一些<strong>细微的调整来增加温暖感或对比度</strong>，这在拍摄过程中是没有的，但摄影师会喜欢的效果。</li>
+<li>新一代的数字电影摄像机能够拍摄原始的色彩空间图像数据，或带有L指数曝光的RGB图像数据，以便在色彩校正过程中保留最大数量的图像数据以供操作。然而，当你以这种方式获取图像数据时，<strong>它必须通过颜色校正转换成可视图像</strong>，就像底片必须先冲洗并打印成正片一样。</li>
+<li>色彩校正过程中另一个重要的方面是<strong>对视频内的特定元素进行强调或弱化的能力</strong>。它在概念上类似于音频混合中的均衡，因为您可以使用多种技术来选择要增强或抑制哪些颜色值。例如用一个Power窗口包围图像的特定部分，这可以引导观看者的视线。
+      
+      <p align="right"><a class="morebtn" href="/2022/07/09/Art/%E5%90%8E%E5%A4%84%E7%90%86ColorGrading/" title="后处理ColorGrading">阅读全文</a></p>
+    </main>
+    <footer class="post-footer">
+      
+    </footer>
+  </article>
+  
+  <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
+    <div class="post-block">
+      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/07/09/HDRPartist/Density%20Volume%203D%E7%BA%B9%E7%90%86%E5%88%B6%E4%BD%9C%E6%96%B9%E6%A1%88/">
+      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <meta itemprop="name" content="leinlin">
+        <meta itemprop="description" content="">
+        <meta itemprop="image" content="/images/avatar.jpg">
+      </span>
+      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+        <meta itemprop="name" content="leinlin的小笔记">
+      </span>
+    </div>
+    <header class="post-header">
+      <h1 class="post-title" itemprop="name headline">
+        <a class="post-title-link post-title-link-external" href="/2022/07/09/HDRPartist/Density%20Volume%203D%E7%BA%B9%E7%90%86%E5%88%B6%E4%BD%9C%E6%96%B9%E6%A1%88/" itemprop="url">Density Volume使用方式</a>
+      </h1>
+      <div class="post-meta">
+        
+        <span class="post-date">
+          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2022-07-09T12:00:14+08:00">2022-07-09 12:00:14</time></span>
+        </span>
+        
+        
+        
+        <span class="post-meta-divider divider">|</span>
+        
+        <span class="post-categories">
+          
+          <i class="far fa-folder-open"></i><span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/HDRPartist/" itemprop="url" rel="index"><span itemprop="name">HDRPartist</span></a></span>
+        </span>
+        
+        
+        
+        
+      </div>
+    </header>
+    <main class="post-main" itemprop="articleBody">
+      
+      <h1 id="Density-Volume使用方式"><a href="#Density-Volume使用方式" class="headerlink" title="Density Volume使用方式"></a>Density Volume使用方式</h1><p>Density Volume主要用来设置局部雾，界面如下：</p>
+<p><img src="/../../images/img/density_volume.jpg.jpg" alt="density_volume.jpg"></p>
+<h2 id="基础参数"><a href="#基础参数" class="headerlink" title="基础参数"></a>基础参数</h2><p>Fog Distance ：雾的可见距离，单位：m（米），值越小表示雾越浓，越大雾越稀薄，推荐值：5-100。</p>
+<p>Blend Distance ：局部雾边界的衰减距离。边界处雾浓度为0，越向内部走浓度越大。这个值表示从边界开始到雾最浓的位置的距离。</p>
+<p>Distance Fade Start：雾浓度的开始衰减位置，与摄像机的距离。</p>
+<p>Distance Fade End：雾浓度衰减到0的位置，与摄像机的距离。</p>
+<p>Texture：雾的纹理。</p>
+<p>Scroll Speed：雾纹理的流动速度。</p>
+<p>Tiling ：雾纹理的Tiling数。</p>
+<p>更具体参数说明见：<a target="_blank" rel="noopener" href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.high-definition@5.3/manual/Volumetric-Fog.html">官方文档</a></p>
+<h2 id="Density-Mask-Texture制作方式"><a href="#Density-Mask-Texture制作方式" class="headerlink" title="Density Mask Texture制作方式"></a>Density Mask Texture制作方式</h2><p>Density Mask Texture主要用来给雾添加一些简单的纹理和噪声，无法制作复杂的结构。只支持分辨率为32 * 32 * 32的3D纹理。纹理制作方式如下：</p>
+<p>使用Houdini可以生成Texture的纹理。</p>
+<p>制作方式：</p>
+<p>1.Houdini当中的操作：</p>
+<p>1.1 在Houdini里做一个自己想要的Volume形态</p>
+<p><img src="/../../images/img/cloud.png" alt="cloud"></p>
+<p>1.2 使用GameDev ROP Volume Texture节点将Volume输出1024*32的黑白图片格式。</p>
+<p><img src="/../../images/img/node.png" alt="node"></p>
+<p>1.3 节点属性设置</p>
+<p><img src="/../../images/img/export.png" alt="export"></p>
+<p>1.4 最终会生成 1024*32分辨率的jpg格式图片，如下图所示：</p>
+<p><img src="/../../images/img/aaa.jpg" alt="aaa"></p>
+<p>2.将生成的图片导入Unity，导入设置如下图所示：</p>
+<p><img src="/../../images/img/texture_import.jpg" alt="texture_import"></p>
+<p>3.通过导入的图片，生成VolumeTexture。打开Window&#x2F;Rendering&#x2F;Density Volume Texture Tool。拖入图片，将Texture Slice Size设置成32（只能是32），点击Create 3D Texture，生成3D纹理。</p>
+<p><img src="/../../images/img/generation.jpg" alt="generation"></p>
+<p>4.使用。上一步中生成的3D纹理和输入图片在同一目录中。生成的3D纹理文件名为：XXXX_Texture3D，可以直接用做Density Mask Texture。</p>
+<p><img src="/../../images/img/result.jpg" alt="result"></p>
+<p>5.结果。</p>
+<p><img src="/../../images/img/result2.jpg" alt="result2"></p>
+
+      
+      <p align="right"><a class="morebtn" href="/2022/07/09/HDRPartist/Density%20Volume%203D%E7%BA%B9%E7%90%86%E5%88%B6%E4%BD%9C%E6%96%B9%E6%A1%88/" title="Density Volume使用方式">阅读全文</a></p>
+    </main>
+    <footer class="post-footer">
+      
+    </footer>
+  </article>
+  
+  <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
+    <div class="post-block">
+      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/07/09/HDRPartist/CubeMap%E7%94%9F%E6%88%90/">
+      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <meta itemprop="name" content="leinlin">
+        <meta itemprop="description" content="">
+        <meta itemprop="image" content="/images/avatar.jpg">
+      </span>
+      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+        <meta itemprop="name" content="leinlin的小笔记">
+      </span>
+    </div>
+    <header class="post-header">
+      <h1 class="post-title" itemprop="name headline">
+        <a class="post-title-link post-title-link-external" href="/2022/07/09/HDRPartist/CubeMap%E7%94%9F%E6%88%90/" itemprop="url">CubeMap生成与使用</a>
+      </h1>
+      <div class="post-meta">
+        
+        <span class="post-date">
+          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2022-07-09T12:00:14+08:00">2022-07-09 12:00:14</time></span>
+        </span>
+        
+        
+        
+        <span class="post-meta-divider divider">|</span>
+        
+        <span class="post-categories">
+          
+          <i class="far fa-folder-open"></i><span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/HDRPartist/" itemprop="url" rel="index"><span itemprop="name">HDRPartist</span></a></span>
+        </span>
+        
+        
+        
+        
+      </div>
+    </header>
+    <main class="post-main" itemprop="articleBody">
+      
+      <h1 id="CubeMap生成与使用"><a href="#CubeMap生成与使用" class="headerlink" title="CubeMap生成与使用"></a>CubeMap生成与使用</h1><h2 id="使用工具生成CubeMap"><a href="#使用工具生成CubeMap" class="headerlink" title="使用工具生成CubeMap"></a>使用工具生成CubeMap</h2><p>主要内容来自于<a target="_blank" rel="noopener" href="https://docs.unrealengine.com/en-US/Engine/Content/Types/Textures/Cubemaps/index.html">UE4官方文档</a></p>
+<h3 id="需要一张HDR贴图"><a href="#需要一张HDR贴图" class="headerlink" title="需要一张HDR贴图"></a>需要一张HDR贴图</h3><p>在<a target="_blank" rel="noopener" href="https://hdrihaven.com/hdris/category/?c=skies">HDRIhaven</a>中可以搜索到很多免费的HDRI贴图。</p>
+<p>是一张：railway_bridges_4k.hdr的贴图</p>
+<p><img src="/../../images/CubeMap%E7%94%9F%E6%88%90%E4%B8%8E%E4%BD%BF%E7%94%A8/1574128098932.png" alt="1574128098932"></p>
+<h2 id="从HDRI到映射到Cubemap"><a href="#从HDRI到映射到Cubemap" class="headerlink" title="从HDRI到映射到Cubemap"></a>从HDRI到映射到Cubemap</h2><p>这个时候需要用到xNormal工具。</p>
+<ol>
+<li>点击High definition加载一个Cube的mesh。</li>
+</ol>
+<p><img src="/../../images/CubeMap%E7%94%9F%E6%88%90%E4%B8%8E%E4%BD%BF%E7%94%A8/1574133444216.png" alt="1574133444216"></p>
+<p>2.点击Base Texture to bake，加载这张hdri贴图</p>
+<p><img src="/../../images/CubeMap%E7%94%9F%E6%88%90%E4%B8%8E%E4%BD%BF%E7%94%A8/1574133454919.png" alt="1574133454919"></p>
+<p>3.点击Low definition meshes，加载一个Sphere形状的mesh。</p>
+<p><img src="/../../images/CubeMap%E7%94%9F%E6%88%90%E4%B8%8E%E4%BD%BF%E7%94%A8/1574133470000.png" alt="1574133470000"></p>
+<p>4.点击Bake Options，Size设置成4096, 512. (本身应该是6:1但是这里没有3072这个选项).。Maps to Render 设置成Bake base texture。Output File设置一个合适的名字：</p>
+<p><img src="/../../images/CubeMap%E7%94%9F%E6%88%90%E4%B8%8E%E4%BD%BF%E7%94%A8/1574133482559.png" alt="1574133482559"></p>
+<p>5.点击右下角的Generation Maps，生成结果：</p>
+<p><img src="/../../images/CubeMap%E7%94%9F%E6%88%90%E4%B8%8E%E4%BD%BF%E7%94%A8/1574133497943.png" alt="1574133497943"></p>
+<h3 id="调整Cubemap格式和尺寸"><a href="#调整Cubemap格式和尺寸" class="headerlink" title="调整Cubemap格式和尺寸"></a>调整Cubemap格式和尺寸</h3><ol>
+<li><p>需要一个NVIDIA的ps4插件工具：<a target="_blank" rel="noopener" href="https://developer.nvidia.com/nvidia-texture-tools-adobe-photoshop">NVIDIA Texture Tools for Adobe Photoshop</a>, 注意支持的ps版本。</p>
+</li>
+<li><p>用ps打开上面的贴图</p>
+<p><img src="/../../images/CubeMap%E7%94%9F%E6%88%90%E4%B8%8E%E4%BD%BF%E7%94%A8/1574133528409.png" alt="1574133528409"></p>
+</li>
+<li><p>调整到正确的尺寸6:1，（下面图片有点错误）</p>
+</li>
+</ol>
+<p><img src="/../../images/CubeMap%E7%94%9F%E6%88%90%E4%B8%8E%E4%BD%BF%E7%94%A8/1574133585920.png" alt="1574133585920"></p>
+<ol start="4">
+<li>存储为dds</li>
+</ol>
+<p><img src="/../../images/CubeMap%E7%94%9F%E6%88%90%E4%B8%8E%E4%BD%BF%E7%94%A8/1574132648798.png" alt="1574132648798"></p>
+<ol start="5">
+<li>点击保存会显示，注意下面的格式，CubeMap  、8888、No MIP maps（unity和ue4会生成自己的mipmap应该）：</li>
+</ol>
+<p><img src="/../../images/CubeMap%E7%94%9F%E6%88%90%E4%B8%8E%E4%BD%BF%E7%94%A8/1574132674591.png" alt="1574132674591"></p>
+<h3 id="使用"><a href="#使用" class="headerlink" title="使用"></a>使用</h3><p>这张cubemap可以直接在Unity和UE4当中使用。</p>
+<h2 id="CubeMap的采样"><a href="#CubeMap的采样" class="headerlink" title="CubeMap的采样"></a>CubeMap的采样</h2><h3 id="Unity非HDRP"><a href="#Unity非HDRP" class="headerlink" title="Unity非HDRP"></a>Unity非HDRP</h3><figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs c">half3 <span class="hljs-title function_">Unity_GlossyEnvironment</span> <span class="hljs-params">(UNITY_ARGS_TEXCUBE(tex), half4 hdr, Unity_GlossyEnvironmentData glossIn)</span><br>&#123;<br>    half perceptualRoughness = glossIn.roughness <span class="hljs-comment">/* perceptualRoughness */</span> ;<br>	<span class="hljs-comment">// 这部分是让其尽快模糊起来</span><br>    perceptualRoughness = perceptualRoughness*(<span class="hljs-number">1.7</span> - <span class="hljs-number">0.7</span>*perceptualRoughness);<br>	<br>    half mip = perceptualRoughnessToMipmapLevel(perceptualRoughness);<br>    half3 R = glossIn.reflUVW; <span class="hljs-comment">// 反射方向</span><br>    half4 rgbm = UNITY_SAMPLE_TEXCUBE_LOD(tex, R, mip); <span class="hljs-comment">// 采样贴图</span><br><br>    <span class="hljs-keyword">return</span> DecodeHDR(rgbm, hdr);<br>&#125;<br><br><span class="hljs-comment">// 从粗糙度到mipmap等级</span><br>half <span class="hljs-title function_">perceptualRoughnessToMipmapLevel</span><span class="hljs-params">(half perceptualRoughness)</span><br>&#123;<br>    <span class="hljs-keyword">return</span> perceptualRoughness * UNITY_SPECCUBE_LOD_STEPS;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="Unity-HDRP的cubemap采样"><a href="#Unity-HDRP的cubemap采样" class="headerlink" title="Unity HDRP的cubemap采样"></a>Unity HDRP的cubemap采样</h3><figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs c"> R = lerp(R, preLightData.iblR, saturate(smoothstep(<span class="hljs-number">0</span>, <span class="hljs-number">1</span>, roughness * roughness)));<br><br><span class="hljs-comment">// 计算的效果</span><br>preLightData.iblPerceptualRoughness = bsdfData.perceptualRoughness;<br><span class="hljs-comment">/// 计算要采样的mipmap的层级</span><br>   iblMipLevel = PerceptualRoughnessToMipmapLevel(preLightData.iblPerceptualRoughness);<br><br><span class="hljs-comment">/// 和非HDRP的效果一样</span><br>real <span class="hljs-title function_">PerceptualRoughnessToMipmapLevel</span><span class="hljs-params">(real perceptualRoughness, uint mipMapCount)</span><br>&#123;<br>    perceptualRoughness = perceptualRoughness * (<span class="hljs-number">1.7</span> - <span class="hljs-number">0.7</span> * perceptualRoughness);<br><br>    <span class="hljs-keyword">return</span> perceptualRoughness * mipMapCount;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h3 id="UE4"><a href="#UE4" class="headerlink" title="UE4"></a>UE4</h3><figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">define</span> REFLECTION_CAPTURE_ROUGHEST_MIP 1</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> REFLECTION_CAPTURE_ROUGHNESS_MIP_SCALE 1.2</span><br><br>half <span class="hljs-title function_">ComputeReflectionCaptureMipFromRoughness</span><span class="hljs-params">(half Roughness, half CubemapMaxMip)</span><br>&#123;<br>	<span class="hljs-comment">// Heuristic that maps roughness to mip level</span><br>	<span class="hljs-comment">// This is done in a way such that a certain mip level will always have the same roughness, regardless of how many mips are in the texture</span><br>	<span class="hljs-comment">// Using more mips in the cubemap just allows sharper reflections to be supported</span><br>	half LevelFrom1x1 = <span class="hljs-number">1</span> - <span class="hljs-number">1.2</span> * log2(Roughness);<br>	<span class="hljs-keyword">return</span> CubemapMaxMip - <span class="hljs-number">1</span> - LevelFrom1x1;<br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+
+      
+      <p align="right"><a class="morebtn" href="/2022/07/09/HDRPartist/CubeMap%E7%94%9F%E6%88%90/" title="CubeMap生成与使用">阅读全文</a></p>
+    </main>
+    <footer class="post-footer">
       
     </footer>
   </article>
@@ -842,7 +880,7 @@
     
     <div class="categories-count count-block">
       <div class="site-count-title">分类</div>
-      <div><a href="/categories/">13</a></div>
+      <div><a href="/categories/">17</a></div>
     </div>
     
     

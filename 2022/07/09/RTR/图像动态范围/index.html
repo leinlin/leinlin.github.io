@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#33363b">
+    <meta name="msapplication-TileColor" content="#33363b">
+    
+    
+    
+    
+    <meta name="keywords" content="leinlin, ARIA, Hexo">
+    
+    
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png">
+    
+    
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicons/android-chrome-192x192.png">
+    
+    
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png">
+    
+    
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png">
+    
+    
+    <link rel="mask-icon" href="/favicons/safari-pinned-tab.svg" color="#33363b">
+    
+    
+    <link rel="manifest" href="/favicons/site.webmanifest">
+    
+    
+    <meta name="msapplication-config" content="/favicons/browserconfig.xml">
+    
+    
+    <link rel="alternate" href="/atom.xml" title="leinlin的小笔记" type="application/atom+xml" />
+    
+    
+    <link rel="shortcut icon" type="image/x-icon" href="/favicons/favicon.ico">
+    
+    
+    <link rel="stylesheet" type="text/css" href="/css/normalize.css">
+    <link rel="stylesheet" type="text/css" href="/css/index.css">
+    
+    <link rel="stylesheet" type="text/css" href="/css/sidebar.css">
+    
+    
+<link rel="stylesheet" type="text/css" href="/css/page.css">
+<link rel="stylesheet" type="text/css" href="/css/post.css">
+
+    <link rel="stylesheet" type="text/css" href="/css/custom.css">
+    <link rel="stylesheet" type="text/css" href="/css/atom-one-light.css">
+    <link rel="stylesheet" type="text/css" href="/css/lightgallery.min.css">
+    <script type="text/javascript" src="/js/jquery.min.js"></script>
+    <script defer type="text/javascript" src="/js/util.js"></script>
+    <script defer type="text/javascript" src="/js/clipboard.min.js"></script>
+    <script defer type="text/javascript" src="/js/scrollspy.js"></script>
+    <script defer type="text/javascript" src="/js/fontawesome-all.min.js"></script>
+    <script defer type="text/javascript" src="/js/lightgallery.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-fullscreen.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-hash.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-pager.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-thumbnail.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-zoom.min.js"></script>
+    
+    <script defer src="/js/busuanzi.pure.mini.js"></script>
+    
+    
+    <script defer type="text/javascript" src="/js/search.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function () {
+      var searchPath = "search.xml";
+      if (searchPath.length === 0) {
+        searchPath = "search.xml";
+      }
+      var path = "/" + searchPath;
+      searchFunc(path, "search-input", "search-result");
+    });
+    </script>
+    
+    
+    
+    <script defer type="text/javascript" src="https://cdn.staticfile.org/MathJax/MathJax-2.6-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ["$","$"], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ["script", "noscript", "style", "textarea", "pre", "code"]
+      }
+    });
+    </script>
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for (i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += " has-jax";
+      }
+    });
+    </script>
+    
+    
+    <script defer type="text/javascript" src="/js/index.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function () {
+      var cb = null;
+      var els = $(".post figure.highlight");
+      if (els.length) {
+        // Enabled Hexo highlight line number.
+        $(els).each(function (i, e) {
+          // $(e).before("<button class=\"copy button\">复制</button>");
+          $(e).before([
+            "<div class=\"code-titlebar\">",
+              "<div class=\"titlebar-left\">",
+                "<button class=\"copy\">复制</button>",
+              "</div>",
+            "</div>"
+          ].join(""));
+        });
+        cb = new ClipboardJS("button.copy", {
+          "target": function (trigger) {
+              // Get target element by DOM API.
+              return trigger.parentNode.parentNode.nextElementSibling.firstChild.firstChild.firstChild.lastChild.firstChild.firstChild;
+          }
+        });
+      } else {
+        // Disabled Hexo highlight line number.
+        els = $(".post pre code");
+        $(els).each(function (i, e) {
+          // Add button before pre, not code.
+          // $(e).parent().before("<button class=\"copy button\">复制</button>");
+          $(e).before([
+            "<div class=\"code-titlebar\">",
+              "<div class=\"titlebar-left\">",
+                "<button class=\"copy\" >复制</button>",
+              "</div>",
+              "<div class=\"titlebar-right\">",
+                "<button class=\"button-dot dot-minimize\" aria-label=\"Decoration\"></button>",
+                "<button class=\"button-dot dot-maximize\" aria-label=\"Decoration\"></button>",
+                "<button class=\"button-dot dot-close\" aria-label=\"Decoration\"></button>",
+              "</div>",
+            "</div>"
+          ].join(""));
+        });
+        cb = new ClipboardJS("button.copy", {
+          "target": function (trigger) {
+              // Get target element by DOM API.
+              return trigger.parentNode.parentNode.nextElementSibling;
+          }
+        });
+      }
+      cb.on("success", function (e) {
+        e.clearSelection();
+        var trigger = e.trigger;
+        // Change button text as a user tip.
+        trigger.innerHTML = "已复制";
+        $(trigger).addClass("copied");
+        // Change button text back;
+        setTimeout(function () {
+          trigger.innerHTML = "复制";
+          $(trigger).removeClass("copied");
+        }, 1500);
+      });
+    });
+    </script>
+    
+    <script defer type="text/javascript" src="/js/custom.js"></script>
+    <title>图像动态范围 | leinlin的小笔记</title>
+  <meta name="generator" content="Hexo 6.2.0"></head>
+  <body itemscope itemtype="http://schema.org/WebPage" lang="zh_CN"  data-spy="scroll" data-target=".list-group">
+    
+<header id="header" class="header" style="background: #33363b;">
+  <div class="container">
+    <div class="header-container">
+      <div class="header-title">
+        <h1 class="title"><a href="/">leinlin的小笔记</a></h1>
+        <h2 class="subtitle"></h2>
+      </div>
+      
+    </div>
+    <nav id="nav" class="nav">
+      <a id="nav-toggle" class="nav-toggle" aria-hidden="true"><i class="fas fa-bars" aria-label="切换导航栏"></i></a>
+      <ul id="menu" role="menubar" aria-hidden="false">
+        
+        <li role="menuitem"><a href="/"><i class="fas fa-home"></i><span class="menu-text">首页</span></a></li>
+        
+        <li role="menuitem"><a href="/categories/"><i class="fas fa-th-list"></i><span class="menu-text">分类</span></a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</header>
+
+
+    <main id="main" class="main">
+      <div class="container">
+        <div class="main-container">
+          <div class="content">
+            
+<div id="post" class="page">
+  
+  <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
+    <div class="post-block">
+      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/07/09/RTR/%E5%9B%BE%E5%83%8F%E5%8A%A8%E6%80%81%E8%8C%83%E5%9B%B4/">
+      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+       <meta itemprop="name" content="leinlin">
+       <meta itemprop="description" content="">
+       <meta itemprop="image" content="/images/avatar.jpg">
+      </span>
+      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+       <meta itemprop="name" content="leinlin的小笔记">
+      </span>
+    </div>
+    <header class="post-header">
+      <h1 class="post-title" itemprop="name headline">图像动态范围</h1>
+      <div class="post-meta">
+        
+        <span class="post-date">
+          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2022-07-09T12:00:14+08:00">2022-07-09 12:00:14</time></span>
+        </span>
+        
+        
+        
+        <span class="post-meta-divider divider">|</span>
+        
+        <span class="post-categories">
+          
+          <i class="far fa-folder-open"></i><span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/RTR/" itemprop="url" rel="index"><span itemprop="name">RTR</span></a></span>
+        </span>
+        
+        
+        
+        
+      </div>
+    </header>
+    <main class="post-main" itemprop="articleBody">
+      <!-- TOC -->
+
+
+
+<p>- <a href="#%E5%9B%BE%E5%83%8F%E5%8A%A8%E6%80%81%E8%8C%83%E5%9B%B4">图像动态范围</a></p>
+<p>​    - <a href="#dynamic-range">Dynamic Range</a></p>
+<p>​    - <a href="#%E6%98%BE%E7%A4%BA%E5%99%A8%E5%8A%A8%E6%80%81%E8%8C%83%E5%9B%B4">显示器动态范围</a></p>
+<p>​    - <a href="#%E6%9B%9D%E5%85%89%E6%93%8D%E4%BD%9C%E4%BA%AE%E5%BA%A6%E4%B9%98%E6%B3%95%E5%9C%A8ev-%E7%A9%BA%E9%97%B4%E6%80%8E%E4%B9%88%E6%A0%B7%E7%9A%84">曝光操作（亮度乘法）在EV 空间怎么样的？</a></p>
+<p>​    - <a href="#gamma%E6%93%8D%E4%BD%9C%E6%8C%87%E6%95%B0%E6%93%8D%E4%BD%9C%E5%9C%A8ev%E7%A9%BA%E9%97%B4%E6%98%AF%E6%80%8E%E4%B9%88%E6%A0%B7%E7%9A%84">Gamma操作（指数操作）在EV空间是怎么样的？</a></p>
+<p>​    - <a href="#%E5%AF%B9%E6%AF%94%E5%BA%A6contrast">对比度Contrast</a></p>
+<p>​    - <a href="#%E8%BF%99%E4%BA%9B%E5%86%85%E5%AE%B9%E5%A6%82%E4%BD%95%E5%BA%94%E7%94%A8%E5%88%B0%E5%B1%80%E9%83%A8%E6%9B%9D%E5%85%89%E4%B8%8A%E5%8F%AF%E4%BB%A5%E7%95%A5%E8%BF%87">这些内容如何应用到局部曝光上（可以略过）</a></p>
+<p>​    - <a href="#eotf%E5%92%8Coetf">EOTF和OETF</a></p>
+<p>​    - <a href="#%E6%98%BE%E7%A4%BA%E5%99%A8oetf%E5%92%8Cgamma22%E7%BC%96%E7%A0%81">显示器OETF和gamma2.2编码</a></p>
+<p>​    - <a href="#%E8%A7%82%E5%AF%9F%E6%9D%A1%E4%BB%B6">观察条件</a></p>
+<p>​    - <a href="#eotf%E5%92%8Coetf%E7%9A%84%E8%A7%86%E8%A7%89%E6%9D%A1%E4%BB%B6">EOTF和OETF的视觉条件</a></p>
+<p>​    - <a href="#adjust-gamma-until-logo-is-barely-visible">Adjust gamma until logo is barely visible</a></p>
+<p>​    - <a href="#tonemapping%E6%93%8D%E4%BD%9C">ToneMapping操作</a></p>
+<p>​    - <a href="#%E5%8F%82%E8%80%83">参考</a></p>
+<p>​    - <a href="#%E9%87%8D%E8%A6%81%E6%80%BB%E7%BB%93">重要总结</a></p>
+<!-- /TOC -->
+
+<h1 id="图像动态范围"><a href="#图像动态范围" class="headerlink" title="图像动态范围"></a>图像动态范围</h1><p>​	这篇笔记主要为了解释什么是<strong>动态范围</strong>，引出sRGB、ToneMapping等内容的前因后果。</p>
+<p>​	笔记摘录自<a target="_blank" rel="noopener" href="https://bartwronski.com/2016/09/01/dynamic-range-and-evs/">Image Dynamic Range</a>, <a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Dynamic_range">wiki Dynamic range</a>,同时根据自己的理解做了补充和注释说明。</p>
+<h2 id="Dynamic-Range"><a href="#Dynamic-Range" class="headerlink" title="Dynamic Range"></a>Dynamic Range</h2><p>​		<strong>动态范围</strong>指的是媒体设备能够表示的最大值和最小值的比例（有人会疑问最小值是0怎么办，而实际上0通常表示没有信号，另外最大值和最小值描述的是<strong>设备能够表示的范围</strong>，和设备的硬件相关）。</p>
+<p>​		动态范围通常用来描述<strong>信号</strong>：声音信号（播放器）、亮度信号（显示屏）。</p>
+<p>​		它通常是一个比例，或者以10为基数的数(声音：分贝)、或者是用2为基数的对数值表示最小信号值和最大信号值的差值(doublings、bits或<strong>stops</strong>)。</p>
+<pre><code>    &gt; bits:信号理论、计算、数字通信当中的**基本信号单位**。他的名字是**binary digit**的缩写。
+    &gt;
+    &gt; doublings:没有搜索到，在这篇笔记中不重要。
+    &gt;
+    &gt; stops：在摄影中,设备的曝光范围通常用**stops**来表示，相当于设备或者媒体常量比例（contrast ratio）的 $ \log _&#123;2&#125;(c) $ 表示形式。
+    &gt;
+    &gt; 例如：通常的DV机的拍摄的常量比例是45:1，他的曝光约为5.5stops。
+    &gt;
+    &gt; 曝光范围可以指几种动态范围中的任何一种:
+    &gt;
+    &gt; 1.  感光范围照相胶片、纸或数码相机传感器的感光范围.
+    &gt; 2.  被拍摄场景的光度范围
+    &gt; 3.  显影胶片图像的不透明度范围
+    &gt; 4.  相纸上图像的反射率范围。
+    &gt;
+    &gt; 例如：胶片的曝光范围约为14stops。
+</code></pre>
+<p>​		（<strong>本段的扩展阅读有点复杂可以跳过</strong>）在模拟信号（模拟信号是指用连续变化的物理量表示的信息）的媒体设备上，他通常表示为信噪比（signal to noise ratio）。最小值是无法从噪声中区分出来的。在某种程度上，他和数字信号（数字信号指自变量是离散的、因变量也是离散的信号，这种信号的自变量用整数表示，因变量用有限数字中的一个数字来表示。）的媒体设备类似，在数字信号设备上，小于最小可表示数据的内容都是量化噪声（由增量调制原理可知，译码器恢复的信号是阶梯形电压经过低通滤波器平滑后的解调电压。它与编码器输入模拟信号的波形近似，但是存在失真，将这种失真称为<strong>量化噪声</strong>。）。</p>
+<p>​		动态范围对<strong>模拟相机</strong>（在高亮度和中等亮度的区域的精度更高，黑暗的区域会显示颗粒噪声）、<strong>数字信号</strong>（白色信号被完全的剪裁、大量的信息被压缩到暗部，并且还掺杂着数字噪声）和<strong>数字信号文件</strong>（除了量化噪声、伪影还有0噪声）有不同的含义。</p>
+<p>​		这里我们主要讨论在<strong>显示器上</strong>的<strong>动态范围</strong>（<strong>动态范围是stops的范围，可以理解成bit位数</strong>，也叫做曝光范围，也就是说用EV stops表示dynamic range）。我们使用EV stops &#x3D; exposure value stops.<strong>这是一个以2为底数的对数差值</strong>。</p>
+<blockquote>
+<p>  注意是<strong>对数差值</strong>，例如最大值亮度的曝光值是9，最小亮度的曝光是2，那么动态范围是7.</p>
+</blockquote>
+<h2 id="显示器动态范围"><a href="#显示器动态范围" class="headerlink" title="显示器动态范围"></a>显示器动态范围</h2><p>​		首先可以做一个简单的联想：<strong>如果我们的输出图像是8bits的，那么显示器的动态范围就是8 EV stop</strong>。<strong>这是错误的：</strong>因为所有在设备上保存的数据都是考虑了<strong>OETF</strong>（存储格式进行了Gamma之类的变换），为了能够在显示设备上正常显示。典型的OETF是gamma操作，常用的Gamma是2.2指数和sRGB（sRGB比2.2编码更加准确，可以参考wiki）</p>
+<p>​		<strong>这里实际上就是提出了一个问题：为什么8bits不是对应8 EV stop的动态范围？这里参见后面的解释：OETF（Gamma操作）带来的什么影响</strong>？</p>
+<p>​		首先，对于最简单的情况（没有OETF），直接存储8bit值数据。</p>
+<p>​		<strong>因为0表示没有信号，所以使用1&#x2F;256（对数为 $ log_2(\frac{1}{258}) &#x3D; -8 $）表示最小可表示信号（小于这个值的都是噪声），1为最高可表示信号（对数为 $ log_2(1) &#x3D; 0 $）,所以动态范围是8。</strong></p>
+<blockquote>
+<p>  <strong>重要说明，一般来讲图像最大值就是1，关键就是最小值是多少！直接决定了曝光范围</strong></p>
+<p>  对于只有8bit的数据来表示颜色情况下，Gamma空间的颜色值的最小值要比线性空间颜色的最小值要小！</p>
+</blockquote>
+<p>​		下面是动态范围的数值输出和亮度的关系：</p>
+<p><img src="/../../images/%E5%9B%BE%E5%83%8F%E5%8A%A8%E6%80%81%E8%8C%83%E5%9B%B4/dynrange_linear2.png" alt="dynrange_linear.png"></p>
+<p>​		图像说明：动态范围用8bits进行线性编码（没有开了OETF直接保存，即没有Gamma）. 红线 &#x3D; stops:曝光值. 蓝色线 &#x3D; 输出结果（亮度）. 绿色线&#x3D; 曝光值. 点&#x3D; <strong>曝光范围到线性亮度的映射</strong>.</p>
+<p>​		线性空间中EV stops的表示显然是指数型的，您可以看到这种编码的问题。很多颜色曝光值压缩在暗部，包括了3&#x2F;4的范围。因此线性编码对于对数信号是极大的浪费。</p>
+<blockquote>
+<p>  <strong>重要：这幅图用来做什么？</strong></p>
+<p>  ​		首先注意，他不是针对像素说的：不是指一个像素的亮度值和这个像素的曝光值的映射。</p>
+<p>  ​		<strong>这幅图表达的是</strong>：当我确定一个曝光范围的时候，可以<strong>表示哪个线性范围的图像亮度</strong>。例如：曝光值范围是8的时候可以表示[0-1]的亮度。当曝光范围变成4,那么小于-4的值就是噪声了，这个时候我们发现图像的大部分亮度范围（观察线性亮度的范围）还在，只是丢失了很小一部分的颜色。<strong>这幅图要讨论的就是这个：用更少的编码位数（动态范围）表示图像大部分的亮度范围（线性亮度）。</strong></p>
+</blockquote>
+<p>​		<strong>重要：我们进行图像的亮度操作通常有两种：Gamma操作（指数操作）和亮度缩放（亮度乘法），下面我们讨论这两种操作在EV stops上会产生什么影响！</strong></p>
+<h2 id="曝光操作（亮度乘法）在EV-空间怎么样的？"><a href="#曝光操作（亮度乘法）在EV-空间怎么样的？" class="headerlink" title="曝光操作（亮度乘法）在EV 空间怎么样的？"></a>曝光操作（亮度乘法）在EV 空间怎么样的？</h2><p>​		在EV空间的常见操作是调整曝光值（在我们的游戏开发过程中通常的方法是：<strong>亮度</strong>结果直接<strong>乘一个系数</strong>）。<strong>我们现在讨论这个直接进行亮度乘法会给曝光范围（EV stops）带来什么影响。</strong></p>
+<p>​		很显然对数空间（EV空间，就是右上角的值）的加法相当于对应的线性空间（亮度空间）的乘法，亮度空间的乘法：</p>
+<p>$$ 2^{x+y} &#x3D;&#x3D; 2^x * 2^y $$</p>
+<p>​		从下图可以看出曝光的操作（亮度乘法）没有修改动态范围（EV的范围）：</p>
+<p><img src="/../../images/%E5%9B%BE%E5%83%8F%E5%8A%A8%E6%80%81%E8%8C%83%E5%9B%B4/exposure.gif" alt="exposure.gif"></p>
+<blockquote>
+<p>  ​	为什么会是上图的样子呢？</p>
+<p>  ​		因为图像在变化的过程中，有效位只有8位，当亮度乘一个系数的时候相当于乘了一个 pow(2,N)，在对数空间相当于做了整体的加法，也可以看做做了左右移位的操作。由于有效位数没有变，所以变化范围只能在这8位以内。也就是动态范围只有8。</p>
+</blockquote>
+<h2 id="Gamma操作（指数操作）在EV空间是怎么样的？"><a href="#Gamma操作（指数操作）在EV空间是怎么样的？" class="headerlink" title="Gamma操作（指数操作）在EV空间是怎么样的？"></a>Gamma操作（指数操作）在EV空间是怎么样的？</h2><p>​		这就是事情开始变得有趣的地方。Gamma操作（这里实际上泛指的就是幂函数**exp()**，而不是特指图像Gamma变化）通常被定义为线性空间中的一个简单幂函数。</p>
+<p>​		Gamma操作：</p>
+<p>$$ gamma(x,y) &#x3D; x^y $$   </p>
+<p>​		<strong>对亮度进行Gamma操作：下面的公式x表示曝光范围，描述的是在亮度空间进行Gamma操作之后转换回EV空间后，看看EV stops(也就是x)发生了什么变化：</strong></p>
+<p>$$ log_2(gamma(2^x,y)) &#x3D;&#x3D; log_2(2^{x*y}) $$  </p>
+<p>​		<strong>进一步变化，说明亮度的Gamma操作相当于对动态范围（EV值）的乘法：</strong></p>
+<p>$$ log2(2^{x<em>y}) &#x3D;&#x3D; x</em>y $$</p>
+<p>​		Gamma的操作对应了<strong>EV值的乘法</strong>（乘法就是压缩或者拉伸）。这是一个被GPU利用的性质：通过一系列的exp2，madd和log2操作来表示power操作。</p>
+<blockquote>
+<p>  怎么理解？</p>
+<p>  就是说Gamma空间的颜色值进行了指数运算，相当于对曝光空间（EV stop 曝光步长）进行了压缩或者拉长。见下图。</p>
+</blockquote>
+<p>​		<strong>因此伽玛操作本质上是动态范围压缩&#x2F;扩展操作!</strong></p>
+<p><img src="/../../images/%E5%9B%BE%E5%83%8F%E5%8A%A8%E6%80%81%E8%8C%83%E5%9B%B4/gamma.gif" alt="gamma.gif"></p>
+<p>​		<strong>你可以看到它对原来的8位动态范围发生了变化。所以Gamma操作（幂操作或者log操作）可以压缩或者增加动态范围。</strong></p>
+<h2 id="对比度Contrast"><a href="#对比度Contrast" class="headerlink" title="对比度Contrast"></a>对比度Contrast</h2><blockquote>
+<p>  这里的对比度Contrast指的是一种维持颜色明暗的类似Gamma的操作，不是指图像的对比度。</p>
+</blockquote>
+<p>​		Gamma操作是一个有用的操作，但是用作增加动态范围的时候，整个图像比原来亮了。压缩动态范围的时候，整个图像的颜色都变暗了。这是因为锚点定在了0，线性空间颜色的最大值不会因为EV空间的动态范围变化而变化。这并不是我们想要的属性。<strong>在调整动态范围的过程中（Gamma操作的时候），我们希望图像保证亮度一致性。我们可以补偿亮度！用到的策略就是修改锚点—-例如使用中间灰度作为中间锚点。</strong></p>
+<p>​		对比度和gamma很像，但是希望在调整动态范围的时候，保证其他的某个点的颜色不变而不是亮度为1的点不变（<strong>这里还没有讨论到hdr，所以最亮的位置是1</strong>）。例如中间灰度点0.18。</p>
+<p>​		对比度计算公式:</p>
+<p>$$ contrast(x, y, midPoint) &#x3D; \frac{x^y * midPoint }{ midPoint^y} $$</p>
+<h2 id="这些内容如何应用到局部曝光上（可以略过）"><a href="#这些内容如何应用到局部曝光上（可以略过）" class="headerlink" title="这些内容如何应用到局部曝光上（可以略过）"></a>这些内容如何应用到局部曝光上（可以略过）</h2><p>​		希望有了这些知识，我们就能明白为什么局部曝光相对于其他对比和Gamma操作能更好地保持局部对比、饱和度。他移动了部分的颜色直方图（颜色过亮或者过暗的区域）但是：</p>
+<ol>
+<li>只应用在了部分图像，没有影响中间调。</li>
+<li>只移动值，没有想Gamma一样压缩或者缩放。</li>
+</ol>
+<p><img src="/../../images/%E5%9B%BE%E5%83%8F%E5%8A%A8%E6%80%81%E8%8C%83%E5%9B%B4/gamma_vs_both.gif" alt="gamma_vs_both"></p>
+<h2 id="EOTF和OETF"><a href="#EOTF和OETF" class="headerlink" title="EOTF和OETF"></a>EOTF和OETF</h2><p>​		在谈论输出函数的时候，显示设备使用的电信号转换函数（EOTF – Electro Optical Transfer Function）和他的逆转函数（OETF, Opto-Electrical Transfer Function）是很重要的。</p>
+<p>​		EOTF已经存在了很长时间， 所有CRT显示器对于电压强度的响应方式在某些条件下被认为是一致的。</p>
+<p>​		下图是CRT显示器对于输入电压和输出亮度的函数关系。</p>
+<p><img src="/../../images/%E5%9B%BE%E5%83%8F%E5%8A%A8%E6%80%81%E8%8C%83%E5%9B%B4/crt_gamma.gif" alt="crt_gamma.gif"></p>
+<p>​		早期的渲染管线完全忽视了Gamma并且直接使用它的感知线性属性，直接输出被显示器进行Gamma Power编码后的值。<strong>当你开始认真对待线性空间时，我们才开始使用它的逆函数-OETF，这也是我们为显示器编码信号的策略，例如： sRGB or Rec709。</strong></p>
+<p>​		<strong>重要：当我们不再使用CRT显示器的时候，这种指数编码同样被验证在现代显示器上是有用的，他允许我们能够编码更多的信号</strong>（参考前面的Gamma变化可以压缩动态范围）。现在我们使用BT1886标准（指的是EOTF）<strong>用来模拟老式CRT显示器的gamma电压响应。</strong></p>
+<blockquote>
+<p>  这里讨论的就是我们能够通过Gamma编码<strong>在文件当中保存更大的动态范围</strong>，随后再利用显示器自带的EOTF解码以得到正确的效果。</p>
+</blockquote>
+<p>​		<a target="_blank" rel="noopener" href="https://kb.portrait.com/help/bt-1886-10-questions-10-answers">BT1886问答</a></p>
+<p>​		下面是BT1886标，注意他是在指数空间：</p>
+<p><img src="/../../images/%E5%9B%BE%E5%83%8F%E5%8A%A8%E6%80%81%E8%8C%83%E5%9B%B4/1579405297828.png" alt="1579405297828"></p>
+<h2 id="显示器OETF和gamma2-2编码"><a href="#显示器OETF和gamma2-2编码" class="headerlink" title="显示器OETF和gamma2.2编码"></a>显示器OETF和gamma2.2编码</h2><p>​		我们现在回顾显示器的2.2 Gamma。因为EOTF是2.2，所以OETF就是1&#x2F;2.2（大概就是0.45），这就是我们的Gamma函数，将颜色从线性空间转换到gamma空间，我们会得到一个2.2*8（&#x3D;17.6）的动态范围。（可以保存在文件中的）。</p>
+<p> $$OETF &#x3D;  gamma(color, \frac{1}{2.2}) $$  </p>
+<p> $$EV stops &#x3D; log_2(gamma(2^x, \frac{1}{2.2}))  &#x3D; 2.2*x$$   </p>
+<p><img src="/../../images/%E5%9B%BE%E5%83%8F%E5%8A%A8%E6%80%81%E8%8C%83%E5%9B%B4/dynrange_gamma_2_21.png" alt="dynrange_gamma_2_2.png"></p>
+<blockquote>
+<p>  sRGB标准包括了很多内容，Gamma编码只是其中一部分。</p>
+<p>  下图来源于wiki，sRGB标准中linear空间进入Gamma空间的公式。</p>
+<p>  <img src="/../../images/%E5%9B%BE%E5%83%8F%E5%8A%A8%E6%80%81%E8%8C%83%E5%9B%B4/1579420987252.png" alt="1579420987252"></p>
+</blockquote>
+<p>​		现在有人会问，我以为显示器使用sRGB函数，（它在较小值的位置使用了线性函数，其他位置用了2.4的指数。）</p>
+<p>​		为什么我不使用精确的sRGB? 在这篇文章中，<strong>我将直接使用gamma 2.2，为了简化说明。</strong></p>
+<blockquote>
+<p>  对于大部分制作软件，和显示器都依赖sRGB标准。在渲染当中我们通常用2.2进行编码解码。</p>
+</blockquote>
+<p>​		<strong>这里值得注意的是，仅仅是伽玛2.2的线性值编码在8位就有了很大的动态范围（翻倍）。那么17.6的曝光级别足够了么？</strong>我们得到了更大的分布，尤其是在y轴上变得更均匀了。但是现在仍然不完美，因为现在把太多的值放在了表示阴影上，更多的变化集中在高亮度区间（而不是中等亮度区间，<strong>也就是说高亮度区间对于数值的变化更敏感</strong>）。我们随后在处理。</p>
+<p>​		另一方面，使用gamma2.2的OETF（使用了17.6的曝光级别）意味着我们不需要HDR显示和局部的tonemapping了？并不是！仔细想想在1&#x2F;256和2&#x2F;256之间有多少信息？2.2的 EV对于观察者意味着什么？他们可能根本注意不到，因为范围亮度变化太小了。<strong>不同的显示器有不同的曝光范围，并且依赖于观察环境（就是显示器周围的环境）</strong>。参考<a target="_blank" rel="noopener" href="http://gpuopen.com/gdc16-wrapup-presentations/">Presentation by Timothy Lottes</a> 。</p>
+<blockquote>
+<p>  有一个地方值得说明：</p>
+<p>  EOTF 的标准只有一个BT1886</p>
+<p>  但是为了这种显示器编码的OETF标准有各种各样。</p>
+</blockquote>
+<p>​		但是在我继续深入分析tonemapping是如何改变它的以及gamma真正做了什么之前，我做了一个关于观察条件的小实验。</p>
+<h2 id="观察条件"><a href="#观察条件" class="headerlink" title="观察条件"></a>观察条件</h2><p>​		下面是一张iPhone照片，照片中的笔记本上显示了一张图片。这是对于笔记本来说完美的观察环境（拉上了窗帘），笔记本中的图片细节都看的很清楚。</p>
+<p><img src="/../../images/%E5%9B%BE%E5%83%8F%E5%8A%A8%E6%80%81%E8%8C%83%E5%9B%B4/2016-08-21-13-31-05.jpg" alt="2016-08-21 13.31.05.jpg"></p>
+<p>由于手机没有捕获足够的动态范围，但是看着可以，所有的细节都捕获了，大量的细节在阴影当中。</p>
+<p>有趣的是HDR的场景和影子看起来非常暗，但是充满了细节和亮点。在这样的完美观察环境中，我不要任何的调整就能够感觉到图像和显示器就是hdr的。</p>
+<p>第二张图片在平均视觉条件当中：</p>
+<p><img src="/../../images/%E5%9B%BE%E5%83%8F%E5%8A%A8%E6%80%81%E8%8C%83%E5%9B%B4/2016-08-21-13-29-59.jpg" alt="2016-08-21 13.29.59.jpg"></p>
+<p>正常图片仍然是清晰可以观察到的，尽管暗处丢失的细节不可见。</p>
+<p>图像看起来有了更强烈的明暗差别，但是Kratos的背部完全看不到了。</p>
+<ul>
+<li><strong>Bartleson–Breneman effect:</strong> 图像对比度(发光显示器的图像，如液晶显示器上的图像)随着周围照明的亮度增加。</li>
+</ul>
+<p>第三张我们在极强的亮度条件下</p>
+<p><img src="/../../images/%E5%9B%BE%E5%83%8F%E5%8A%A8%E6%80%81%E8%8C%83%E5%9B%B4/2016-08-21-13-30-31.jpg" alt="2016-08-21 13.30.31.jpg">条</p>
+<p>这个时候超过的屏幕的亮度，屏幕内容已经变得不可见了。</p>
+<p>增强亮度，可以看到屏幕细微的变化：</p>
+<p><img src="/../../images/%E5%9B%BE%E5%83%8F%E5%8A%A8%E6%80%81%E8%8C%83%E5%9B%B4/2016-08-21-13-30-31_c.jpg" alt="2016-08-21 13.30.31_c.jpg"></p>
+<p>​		图像不但不可见了，而且丢失了大量的细节，并且还被屏幕的反射覆盖了。几乎没有Gamma设置能够改善这样的情况。</p>
+<p>​		实验的目的是为了说明：<strong>Timothy Lottes在他的演讲中所展示的——观看条件（看显示器的环境）定义了可感知（人眼的实际感受）的动态范围，和图像的清晰度。</strong></p>
+<p>​		从数值上理解就是，由于亮度太高你无法分辨0.25以下的值。这就是这个场景动态范围的结果：</p>
+<p><img src="/../../images/%E5%9B%BE%E5%83%8F%E5%8A%A8%E6%80%81%E8%8C%83%E5%9B%B4/poor_viewing_conditions2.png" alt="poor_viewing_conditions.png"></p>
+<p>曝光范围在4.4EV的位置就停止了，所以我们需要做一些局部的tonemapping。</p>
+<h2 id="EOTF和OETF的视觉条件"><a href="#EOTF和OETF的视觉条件" class="headerlink" title="EOTF和OETF的视觉条件"></a>EOTF和OETF的视觉条件</h2><p>​		<strong>观察环境</strong>和<strong>感知能力</strong>是存在不同的gamma EOTF曲线和OETF曲线的原因。Rec709 EOTF （给高清电视用的）和sRGB（给显示器和打印机用的）的转换曲线是不同的（<strong>2.4</strong> vs <strong>2.2</strong>），因为高清电视在较暗的观看条件下需要不同的对比度和人眼感知效果（2.4有更大的动态范围）。</p>
+<blockquote>
+<p>  Rec709和sRGB除了Gamma不同之外还有很多特性需要注意，还涉及到文件传输，保存，显示特性，这里不做详细讨论。值得注意的是，Rec. 709和sRGB具有相同的主色性。</p>
+</blockquote>
+<p>​		由于Bartleson-Breneman效应（<strong>当周围环境变得更明亮时，我们感知到更多的对比度，更少的动态范围</strong>，因为动态范围由最小可表示精度决定，太亮的地方，看暗处的感受就不明显了。），客厅在晚上和标准办公环境(sRGB)需要不同的EOTF。Rec709 EOTF伽马将意味着输出设备产生更多的对比度。（<strong>Gamma更大，图像亮度更亮</strong>）</p>
+<p>​		因此使用，翻转函数，OETF of Rec709能够保存更大的曝光范围，并且TV支持他们的显示并且TV的使用环境我们认为偏暗，所以会足够好。</p>
+<blockquote>
+<p>  在比较暗的环境中，因为人感受到更少的对比度（明暗对比），更大的动态范围（暗处的细节），我们希望提高屏幕亮度，降低对比度，使用比较大的gamma值。（晚上的客厅）</p>
+<p>  在比较亮的环境中，因为人感受到更多的对比度，更x小的动态范围，我们希望降低屏幕亮度，提升对比度，使用比较小的gamma值。（办公环境）</p>
+</blockquote>
+<p>​		下面是两个曲线的对比：</p>
+<p><img src="/../../images/%E5%9B%BE%E5%83%8F%E5%8A%A8%E6%80%81%E8%8C%83%E5%9B%B4/gamma_2_2vs2_4.gif" alt="gamma_2_2vs2_4.gif"></p>
+<p>​		Gamma2.2和2.4并不是唯一的标准，不同的软件和硬件还有不同的标准。你可以找到历史参考苹果Mac gammas 1.8或2.0。Gameboy使用了极限的gammas 3.0或4.0</p>
+<h2 id="Adjust-gamma-until-logo-is-barely-visible"><a href="#Adjust-gamma-until-logo-is-barely-visible" class="headerlink" title="Adjust gamma until logo is barely visible"></a>Adjust gamma until logo is barely visible</h2><p>​		由于不同的观察条件（在不同的灯光环境看显示器），是我们看到下面这张图的原因：</p>
+<p><img src="/../../images/%E5%9B%BE%E5%83%8F%E5%8A%A8%E6%80%81%E8%8C%83%E5%9B%B4/logo.png" alt="logo.png"></p>
+<p>​		<strong>有的时候这个东西没有名字，有时候叫做Slider,有时候叫做Gamma，有时候叫做对比度、亮度，这些都是不对的，但是他们本质的功能是调节不完美的观察条件,以让人能够正确的观察到屏幕效果。</strong></p>
+<p>​		在亮度环境范围，会造成一个对比度的降低了的环境，需要动态范围压缩的操作（降低Gamma值，让图像变暗），观察者能够感受到更强的对比度。</p>
+<blockquote>
+<p>  试想一下</p>
+<p>  在特别亮的灯光环境下，应该把它调亮，这个时候相当于增加动态范围，增加Gamma，这个时候对比度降低了。</p>
+<p>  当周围环境变得更明亮时，我们感知到更多的对比度，更少的动态范围。所以我们要增加动态范围降低对比度，以保证观察效果。</p>
+</blockquote>
+<p>这个设置通常是有用的，但是问题在于：</p>
+<ol>
+<li>通常用户值只设置一次，却在不同的环境玩游戏。设置一次但是在白天、晚上、晚上开灯的时候玩游戏。</li>
+<li>这个功能的目的没有合理的表达出来。这个调节结果依赖于室内环境的亮度和内容被观察的环境。</li>
+</ol>
+<p>​		假设在一个很糟糕的观察条件下。环境特别亮，这个时候我们如何调整显示器的Gamma值?(在EOTF以外的操作)。</p>
+<p>​		这个是时候我们需要提高动态范围，降低对比度。所以在输出之前的OETF编码需要进行修改，使用0.7的改变图像的动态范围（我们对于显示器的EOTF没有做任何事情）:</p>
+<p>$$ (x^{0.7})^{1&#x2F;2.2} &#x3D;&#x3D; x^{0.7&#x2F;2.2} $$</p>
+<p>注意下面的公式是编码到Gamma空间的编码方式，上面的内容就是保存更大的动态范围：</p>
+<p>$$ x^{1&#x2F;2.2} $$</p>
+<p>图示：</p>
+<p><img src="/../../images/%E5%9B%BE%E5%83%8F%E5%8A%A8%E6%80%81%E8%8C%83%E5%9B%B4/poor_viewing_conditions1.gif" alt="poor_viewing_conditions.gif"></p>
+<p>​		这样我们就增加了1.42左右的曝光范围。然而，在好的观察条件下（从特别明亮的环境，回到晚上），效果有会变的很差。</p>
+<blockquote>
+<p>  这部分需要注意了： 我们没有对显示器本身的EOTF做任何事情，只是单纯的修改了图像编码到Gamma空间的函数，也就是我们提升了这个图像保存时的动态范围。然后在显示出来。</p>
+<p>  这个时候就有一个问题，Gamma的编码和解码不配套，而按照标准资源制作流程都是sRBG。这里需要注意两点：</p>
+<ol>
+<li>我们是在游戏渲染中常常用到这种策略。</li>
+<li>修改原始图像的动态范围，表示我们的图像在动态范围做了伸缩，而显示器本身还有自己的动态范围的伸缩，并没有改变颜色，Gamma空间就是单纯的动态范围伸缩而已！另外，注意动态范围并不是数据精度的bit。</li>
+</ol>
+</blockquote>
+<h2 id="ToneMapping操作"><a href="#ToneMapping操作" class="headerlink" title="ToneMapping操作"></a>ToneMapping操作</h2><p>​		从上面的分析来看我们不需要tonemapping的曲线。毕竟在适当的观测条件下，采用直接的线性编码可以获得较大的动态范围。</p>
+<p>这里有两个问题：</p>
+<ol>
+<li><p>其一是非正规分布的数据，较高的曝光区域占据了很大的范围。我们希望更大的动态范围保存中等亮度的值。</p>
+</li>
+<li><p>通常1定义了一个白色点，但是在没有上限的HDR渲染上，曝光之后，我能够保证在中等范围有足够的值，我们也能够在亮度区域有足够的动态分布。这在PBR渲染当中是确实存在的。</p>
+<p>​		目前提供的方法还没有为那些非常明亮的对象提供任何解决方案，我们不想降低对比度或改变曝光，我们不想让它们完全失去饱和度;我们仍然希望看到一些细节。</p>
+</li>
+</ol>
+<p><img src="/../../images/%E5%9B%BE%E5%83%8F%E5%8A%A8%E6%80%81%E8%8C%83%E5%9B%B4/proper_exp_linear.png" alt="proper_exp_linear"></p>
+<p>​	上图的曝光效果完全剪裁掉了亮度区域。</p>
+<p>​	这个时候就是tonemapping发挥作用的地方。一些常见的例子： Reinhard。我绝不推荐这条曲线，还有更好的选择。</p>
+<p>可能每个引擎都实现了一个参考曲线： <a target="_blank" rel="noopener" href="http://filmicgames.com/archives/75">Hable Uncharted tonemapping curve</a>.</p>
+<p>另一个选择是：<a target="_blank" rel="noopener" href="https://github.com/ampas/aces-dev">ACES</a></p>
+<p>或者开销更低的：ACES RRT and ODT， <a target="_blank" rel="noopener" href="https://knarkowicz.wordpress.com/2016/01/06/aces-filmic-tone-mapping-curve/">Kris Narkowicz proposed</a>.</p>
+<p>最后，我个人认为非常方便的选择是精心设计的：<a target="_blank" rel="noopener" href="http://gpuopen.com/gdc16-wrapup-presentations/">generic filmic tonemapping operator from Timothy Lottes</a>.</p>
+<p>我不在这里集中讨论它们，而是尝试用最简单的形式来解释:</p>
+<p>$$  tonemap(x) &#x3D; x&#x2F;(1+x) $$</p>
+<p>这是一条永远不会到达白点的曲线，因此通常使用重新调平校正因子（除以白点值）</p>
+<p><img src="/../../images/%E5%9B%BE%E5%83%8F%E5%8A%A8%E6%80%81%E8%8C%83%E5%9B%B4/reinhard.png" alt="reinhard.png"></p>
+<p>上图是白点值定义为128的tonemapping曲线。</p>
+<p>​		这看起来很棒——我们不仅获得了超过7个曝光点，在不影响中间色调和暗部的情况下，将它们紧紧地包裹在亮色中，而且在最终编码中EV的分布看起来几乎完美!</p>
+<p>​		它还可以(在一定程度上)分辨出比EV 0(曝光后)的原始亮度高得多的物体的细节——比如发射物、发光粒子、火焰、明亮的镜面反射。任何没有比128更“热”的东西都会得到一些区别和表现。</p>
+<p>​	最好的方案是 <a target="_blank" rel="noopener" href="http://graphicrants.blogspot.com/2013/12/tone-mapping.html">firefly fighting in post effects or general variance reduction</a>. 更好的解决方案，能想要在tonemapping上做更多的事情：在暗部添加一些饱和度和对比度的视觉矫正（filmic曲线的toe部分）等。</p>
+<h2 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h2><p><a target="_blank" rel="noopener" href="http://renderwonk.com/publications/s2010-color-course/">http://renderwonk.com/publications/s2010-color-course/ </a>SIGGRAPH 2010 Course: Color Enhancement and Rendering in Film and Game Production</p>
+<p><a target="_blank" rel="noopener" href="http://gpuopen.com/gdc16-wrapup-presentations/">http://gpuopen.com/gdc16-wrapup-presentations/</a>  “Advanced Techniques and Optimization of HDR Color Pipelines”, Timothy Lottes.</p>
+<p><a target="_blank" rel="noopener" href="http://filmicgames.com/archives/75">http://filmicgames.com/archives/75</a> John Hable “Filmic Tonemapping Operators”</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/ampas/aces-dev">https://github.com/ampas/aces-dev</a> Academy Color Encoding Standard</p>
+<p><a target="_blank" rel="noopener" href="https://knarkowicz.wordpress.com/2016/01/06/aces-filmic-tone-mapping-curve/">https://knarkowicz.wordpress.com/2016/01/06/aces-filmic-tone-mapping-curve/</a> ACES filmic tonemapping curve</p>
+<p><a target="_blank" rel="noopener" href="http://graphicrants.blogspot.com/2013/12/tone-mapping.html">http://graphicrants.blogspot.com/2013/12/tone-mapping.html</a> Brian Karis “Tone-mapping”</p>
+<h2 id="重要总结"><a href="#重要总结" class="headerlink" title="重要总结"></a>重要总结</h2><ol>
+<li>为什么要讨论动态范围？ 其实和软件无关，这是一个硬件上的内容，是为了描述硬件设备可表示信号的区分度。文中有一段话：</li>
+</ol>
+<p>​		<strong>因为0表示没有信号，所以使用1&#x2F;256（对数为 $ log_2(\frac{1}{258}) &#x3D; -8 $）表示最小可表示信号（小于这个值的都是噪声），1为最高可表示信号（对数为 $ log_2(1) &#x3D; 0 $）,所以动态范围是8。</strong></p>
+<p>​		<strong>这完全是因为在8bit的数据格式下，我们能表达的最小亮度就是1&#x2F;256，我们无法表达更小的颜色了。</strong>所以亮度的范围就是[1&#x2F;256 ，1]。 在二进制上就是8个级别，就是我们的8 EV stops。</p>
+<p>​		通过Gamma编码之后： 这个值变成了  $ {(2^{-8}) }^{\frac{1}{2.2}} $   &#x3D; $ {(2^{-3.6}) } $。</p>
+<p>​		**最小值变大了！也就是说我们可以表示更暗的颜色了!**，但是数据还是8bits。我们能表示的亮度级别变成了17.6.也就是我们的sRGB能够表达17.6EV stops。</p>
+<ol start="2">
+<li><p>一定要记住，Dynamic Range(动态范围，8 EV stops)不是数据格式（8 bits的图像格式）。8bits的通道可以保存17.6 EV stops的动态范围。Gamma的作用就是在固定的数据量下，保存更多的亮度变化范围。</p>
+</li>
+<li><p>整个显示过程中存在两次动态范围的变化，一次是制作软件完成制作，保存到sRBG（17.6 EV stops的动态范围），用了OTEF。显示器显示时，自身的EOTF（CRT是自带的，最新显示器是专门附加的）从17.6 EV stops解码回正确的亮度值。</p>
+</li>
+<li><p>人眼对很高的动态范围感知，但是依赖于环境。嘈杂的环境听不到耳语。强光看不到暗处的细节。所以需要游戏中调节滑块的功能，修改显示器的显示动态范围大小。</p>
+</li>
+<li><p>一般的显示器本身的动态范围有限，过渡的拉伸会导致亮部被剪裁掉。所以HDR显示器就是有更大的动态范围。</p>
+</li>
+<li><p>游戏当中Gamma的编码和解码可能不配套，因为需要Gamma矫正。如果编码用了更大的动态范围（这个时候显示器的动态范围不变），相当于把整个图像变亮了。（提高动态范围会增加图像亮度，这是Gamma本身的特性）这一点很容易体现在数据大小上。</p>
+</li>
+</ol>
+
+    </main>
+    <footer class="post-footer">
+      
+    </footer>
+  </article>
+  
+  
+  <nav class="page-nav">
+    <div class="page-nav-next page-nav-item">
+      
+      <a href="/2022/07/09/RTR/%E6%AF%9B%E5%8F%91%E6%96%B9%E6%A1%88%E5%88%86%E6%9E%90/" rel="next" title="毛发方案分析"><i class="fas fa-angle-left"></i><span class="nav-title">毛发方案分析</span></a>
+      
+    </div>
+    <div class="page-nav-prev page-nav-item">
+      
+      <a href="/2022/07/09/RTR/%E5%A4%A7%E6%B0%94%E6%95%A3%E5%B0%84/" rel="prev" title="大气散射"><span class="nav-title">大气散射</span><i class="fas fa-angle-right"></i></a>
+      
+    </div>
+  </nav>
+  
+  
+  
+
+<div class="comments" id="comments">
+  
+  
+  <div class="commentjs" id="comment-thread"></div>
+  <link rel="stylesheet" href="/css/commentjs.css">
+  <script defer type="text/javascript" src="/js/marked.min.js"></script>
+  <script defer type="text/javascript" src="/js/timeago.min.js"></script>
+  <script defer type="text/javascript" src="/js/highlight.min.js"></script>
+  <script defer type="text/javascript" src="/js/commentjs.js"></script>
+  <script type="text/javascript">
+  $(document).ready(function () {
+    getComments({
+      "type": "github",
+      "user": "leinlin",
+      "repo": "leinlin.github.io",
+      "client_id": "aee134bdfb54c4ef5826",
+      "client_secret": "4af1d3f2b82dccc028c49715becc01e611afbe43",
+      "no_comment": "这个页面还没有评论，现在就去评论吧！",
+      "go_to_comment": "去评论",
+      "issue_title": "图像动态范围",
+      "btn_class": "button",
+      "comments_target": "#comment-thread"
+    });
+    marked.setOptions({
+      "highlight": function (code, lang) {
+        return hljs.highlightAuto(code).value;
+      }
+    });
+    function mark() {
+      var markdowns = document.getElementsByClassName("markdown");
+      for (var i = 0; i < markdowns.length; ++i){
+        if (markdowns[i].innerHTML) {
+          markdowns[i].innerHTML = marked(markdowns[i].innerHTML);
+        }
+      }
+    }
+    window.addEventListener("DOMContentLoaded", mark, false);
+    window.addEventListener("load", mark, false);
+  });
+  </script>
+  
+  
+</div>
+
+
+
+  
+</div>
+
+          </div>
+          
+          
+          
+<aside class="sidebar" id="sidebar" style="background: url(/images/background.png);">
+  
+  <div class="search">
+    <div class="form-group">
+      <i class="fas fa-search"></i><input type="search" id="search-input" name="q" results="0" placeholder="搜索" class="form-control"/>
+    </div>
+  </div>
+  <div class="search-result-box" id="search-result"></div>
+  
+  
+<div class="info sidebar-item" id="info">
+  
+  <img class="author-avatar" src="/images/avatar.jpg" alt="leinlin">
+  
+  <h1 class="author-name">leinlin</h1>
+  <h2 class="author-description"></h2>
+  <div class="site-count">
+    
+    
+    
+    
+    <div class="categories-count count-block">
+      <div class="site-count-title">分类</div>
+      <div><a href="/categories/">17</a></div>
+    </div>
+    
+    
+  </div>
+  
+  <div class="rss">
+    <a class="rss-link button sidebar-item" href="/atom.xml"><i class="fas fa-rss"></i>RSS</a>
+  </div>
+  
+</div>
+
+
+  <div class="sidebar-sticky">
+    
+    
+    
+    
+    
+    <hr>
+    <div class="post-toc sidebar-item" id="toc-div">
+      <div><i class="fas fa-list-ol"></i>文章目录</div>
+      <div class="post-toc-content"><ol class="list-group toc"><li class="toc-item toc-level-1"><a class="list-group-item toc-link" href="#%E5%9B%BE%E5%83%8F%E5%8A%A8%E6%80%81%E8%8C%83%E5%9B%B4"><span class="toc-text">图像动态范围</span></a><ol class="list-group toc-child"><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#Dynamic-Range"><span class="toc-text">Dynamic Range</span></a></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#%E6%98%BE%E7%A4%BA%E5%99%A8%E5%8A%A8%E6%80%81%E8%8C%83%E5%9B%B4"><span class="toc-text">显示器动态范围</span></a></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#%E6%9B%9D%E5%85%89%E6%93%8D%E4%BD%9C%EF%BC%88%E4%BA%AE%E5%BA%A6%E4%B9%98%E6%B3%95%EF%BC%89%E5%9C%A8EV-%E7%A9%BA%E9%97%B4%E6%80%8E%E4%B9%88%E6%A0%B7%E7%9A%84%EF%BC%9F"><span class="toc-text">曝光操作（亮度乘法）在EV 空间怎么样的？</span></a></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#Gamma%E6%93%8D%E4%BD%9C%EF%BC%88%E6%8C%87%E6%95%B0%E6%93%8D%E4%BD%9C%EF%BC%89%E5%9C%A8EV%E7%A9%BA%E9%97%B4%E6%98%AF%E6%80%8E%E4%B9%88%E6%A0%B7%E7%9A%84%EF%BC%9F"><span class="toc-text">Gamma操作（指数操作）在EV空间是怎么样的？</span></a></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#%E5%AF%B9%E6%AF%94%E5%BA%A6Contrast"><span class="toc-text">对比度Contrast</span></a></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#%E8%BF%99%E4%BA%9B%E5%86%85%E5%AE%B9%E5%A6%82%E4%BD%95%E5%BA%94%E7%94%A8%E5%88%B0%E5%B1%80%E9%83%A8%E6%9B%9D%E5%85%89%E4%B8%8A%EF%BC%88%E5%8F%AF%E4%BB%A5%E7%95%A5%E8%BF%87%EF%BC%89"><span class="toc-text">这些内容如何应用到局部曝光上（可以略过）</span></a></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#EOTF%E5%92%8COETF"><span class="toc-text">EOTF和OETF</span></a></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#%E6%98%BE%E7%A4%BA%E5%99%A8OETF%E5%92%8Cgamma2-2%E7%BC%96%E7%A0%81"><span class="toc-text">显示器OETF和gamma2.2编码</span></a></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#%E8%A7%82%E5%AF%9F%E6%9D%A1%E4%BB%B6"><span class="toc-text">观察条件</span></a></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#EOTF%E5%92%8COETF%E7%9A%84%E8%A7%86%E8%A7%89%E6%9D%A1%E4%BB%B6"><span class="toc-text">EOTF和OETF的视觉条件</span></a></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#Adjust-gamma-until-logo-is-barely-visible"><span class="toc-text">Adjust gamma until logo is barely visible</span></a></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#ToneMapping%E6%93%8D%E4%BD%9C"><span class="toc-text">ToneMapping操作</span></a></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#%E5%8F%82%E8%80%83"><span class="toc-text">参考</span></a></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#%E9%87%8D%E8%A6%81%E6%80%BB%E7%BB%93"><span class="toc-text">重要总结</span></a></li></ol></li></ol></div>
+    </div>
+    
+    
+    
+    <hr>
+    <div class="social-link sidebar-item">
+      <div><i class="far fa-address-card"></i>社交链接</p></div>
+      <ul>
+        
+        <li><i class="fab fa-github"></i><a href="https://leinlin.github.com/" target="_blank">GitHub</a></li>
+        
+      </ul>
+    </div>
+    
+    
+  </div>
+</aside>
+
+
+          
+        </div>
+      </div>
+    </main>
+    
+<footer id="footer" class="footer" style="background: #33363b;">
+  <div class="container">
+    <div class="back-to-top">
+      <button id="back-to-top"><i class="fas fa-angle-double-up" aria-label="回到顶部"></i></button>
+    </div>
+    <div class="footer-container">
+      <div class="footer-left">
+        <div class="copyright">
+          <span class="author">leinlin</span><span class="year"><i class="far fa-copyright"></i>2022</span>
+        </div>
+        
+        <div class="busuanzi">
+          <span id="busuanzi_container_site_pv"><i class="fas fa-eye" aria-label="站点点击量" aria-hidden="false"></i><span id="busuanzi_value_site_pv"></span></span><span id="busuanzi_container_site_uv"><i class="fas fa-user" aria-label="站点用户数" aria-hidden="false"></i><span id="busuanzi_value_site_uv"></span></span><span id="busuanzi_container_page_pv"><i class="far fa-file-alt"></i><span id="busuanzi_value_page_pv" aria-label="页面点击量" aria-hidden="false"></span></span>
+        </div>
+        
+      </div>
+      <div class="footer-right">
+        <div class="custom-info">
+          
+          托管于<i class="fab fa-github-alt"></i><a href="https://pages.github.com/" target="_blank">GitHub Pages</a>
+          
+        </div>
+        <div class="powered-by">
+          由 <a href="https://hexo.io/" target="_blank">Hexo</a> 强力驱动 | 主题 <a href="https://github.com/AlynxZhou/hexo-theme-aria/" target="_blank">ARIA</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+  <script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

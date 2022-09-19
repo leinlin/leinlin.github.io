@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#33363b">
+    <meta name="msapplication-TileColor" content="#33363b">
+    
+    
+    
+    
+    <meta name="keywords" content="leinlin, ARIA, Hexo">
+    
+    
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png">
+    
+    
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicons/android-chrome-192x192.png">
+    
+    
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png">
+    
+    
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png">
+    
+    
+    <link rel="mask-icon" href="/favicons/safari-pinned-tab.svg" color="#33363b">
+    
+    
+    <link rel="manifest" href="/favicons/site.webmanifest">
+    
+    
+    <meta name="msapplication-config" content="/favicons/browserconfig.xml">
+    
+    
+    <link rel="alternate" href="/atom.xml" title="leinlin的小笔记" type="application/atom+xml" />
+    
+    
+    <link rel="shortcut icon" type="image/x-icon" href="/favicons/favicon.ico">
+    
+    
+    <link rel="stylesheet" type="text/css" href="/css/normalize.css">
+    <link rel="stylesheet" type="text/css" href="/css/index.css">
+    
+    <link rel="stylesheet" type="text/css" href="/css/sidebar.css">
+    
+    
+<link rel="stylesheet" type="text/css" href="/css/page.css">
+<link rel="stylesheet" type="text/css" href="/css/post.css">
+
+    <link rel="stylesheet" type="text/css" href="/css/custom.css">
+    <link rel="stylesheet" type="text/css" href="/css/atom-one-light.css">
+    <link rel="stylesheet" type="text/css" href="/css/lightgallery.min.css">
+    <script type="text/javascript" src="/js/jquery.min.js"></script>
+    <script defer type="text/javascript" src="/js/util.js"></script>
+    <script defer type="text/javascript" src="/js/clipboard.min.js"></script>
+    <script defer type="text/javascript" src="/js/scrollspy.js"></script>
+    <script defer type="text/javascript" src="/js/fontawesome-all.min.js"></script>
+    <script defer type="text/javascript" src="/js/lightgallery.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-fullscreen.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-hash.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-pager.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-thumbnail.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-zoom.min.js"></script>
+    
+    <script defer src="/js/busuanzi.pure.mini.js"></script>
+    
+    
+    <script defer type="text/javascript" src="/js/search.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function () {
+      var searchPath = "search.xml";
+      if (searchPath.length === 0) {
+        searchPath = "search.xml";
+      }
+      var path = "/" + searchPath;
+      searchFunc(path, "search-input", "search-result");
+    });
+    </script>
+    
+    
+    
+    <script defer type="text/javascript" src="https://cdn.staticfile.org/MathJax/MathJax-2.6-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ["$","$"], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ["script", "noscript", "style", "textarea", "pre", "code"]
+      }
+    });
+    </script>
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for (i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += " has-jax";
+      }
+    });
+    </script>
+    
+    
+    <script defer type="text/javascript" src="/js/index.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function () {
+      var cb = null;
+      var els = $(".post figure.highlight");
+      if (els.length) {
+        // Enabled Hexo highlight line number.
+        $(els).each(function (i, e) {
+          // $(e).before("<button class=\"copy button\">复制</button>");
+          $(e).before([
+            "<div class=\"code-titlebar\">",
+              "<div class=\"titlebar-left\">",
+                "<button class=\"copy\">复制</button>",
+              "</div>",
+            "</div>"
+          ].join(""));
+        });
+        cb = new ClipboardJS("button.copy", {
+          "target": function (trigger) {
+              // Get target element by DOM API.
+              return trigger.parentNode.parentNode.nextElementSibling.firstChild.firstChild.firstChild.lastChild.firstChild.firstChild;
+          }
+        });
+      } else {
+        // Disabled Hexo highlight line number.
+        els = $(".post pre code");
+        $(els).each(function (i, e) {
+          // Add button before pre, not code.
+          // $(e).parent().before("<button class=\"copy button\">复制</button>");
+          $(e).before([
+            "<div class=\"code-titlebar\">",
+              "<div class=\"titlebar-left\">",
+                "<button class=\"copy\" >复制</button>",
+              "</div>",
+              "<div class=\"titlebar-right\">",
+                "<button class=\"button-dot dot-minimize\" aria-label=\"Decoration\"></button>",
+                "<button class=\"button-dot dot-maximize\" aria-label=\"Decoration\"></button>",
+                "<button class=\"button-dot dot-close\" aria-label=\"Decoration\"></button>",
+              "</div>",
+            "</div>"
+          ].join(""));
+        });
+        cb = new ClipboardJS("button.copy", {
+          "target": function (trigger) {
+              // Get target element by DOM API.
+              return trigger.parentNode.parentNode.nextElementSibling;
+          }
+        });
+      }
+      cb.on("success", function (e) {
+        e.clearSelection();
+        var trigger = e.trigger;
+        // Change button text as a user tip.
+        trigger.innerHTML = "已复制";
+        $(trigger).addClass("copied");
+        // Change button text back;
+        setTimeout(function () {
+          trigger.innerHTML = "复制";
+          $(trigger).removeClass("copied");
+        }, 1500);
+      });
+    });
+    </script>
+    
+    <script defer type="text/javascript" src="/js/custom.js"></script>
+    <title>主机渲染和优化技术概要 | leinlin的小笔记</title>
+  <meta name="generator" content="Hexo 6.2.0"></head>
+  <body itemscope itemtype="http://schema.org/WebPage" lang="zh_CN"  data-spy="scroll" data-target=".list-group">
+    
+<header id="header" class="header" style="background: #33363b;">
+  <div class="container">
+    <div class="header-container">
+      <div class="header-title">
+        <h1 class="title"><a href="/">leinlin的小笔记</a></h1>
+        <h2 class="subtitle"></h2>
+      </div>
+      
+    </div>
+    <nav id="nav" class="nav">
+      <a id="nav-toggle" class="nav-toggle" aria-hidden="true"><i class="fas fa-bars" aria-label="切换导航栏"></i></a>
+      <ul id="menu" role="menubar" aria-hidden="false">
+        
+        <li role="menuitem"><a href="/"><i class="fas fa-home"></i><span class="menu-text">首页</span></a></li>
+        
+        <li role="menuitem"><a href="/categories/"><i class="fas fa-th-list"></i><span class="menu-text">分类</span></a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</header>
+
+
+    <main id="main" class="main">
+      <div class="container">
+        <div class="main-container">
+          <div class="content">
+            
+<div id="post" class="page">
+  
+  <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
+    <div class="post-block">
+      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/07/09/RTR/%E4%B8%BB%E6%9C%BA%E6%B8%B2%E6%9F%93%E5%92%8C%E4%BC%98%E5%8C%96%E6%8A%80%E6%9C%AF%E6%A6%82%E8%A6%81/">
+      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+       <meta itemprop="name" content="leinlin">
+       <meta itemprop="description" content="">
+       <meta itemprop="image" content="/images/avatar.jpg">
+      </span>
+      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+       <meta itemprop="name" content="leinlin的小笔记">
+      </span>
+    </div>
+    <header class="post-header">
+      <h1 class="post-title" itemprop="name headline">主机渲染和优化技术概要</h1>
+      <div class="post-meta">
+        
+        <span class="post-date">
+          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2022-07-09T12:00:14+08:00">2022-07-09 12:00:14</time></span>
+        </span>
+        
+        
+        
+        <span class="post-meta-divider divider">|</span>
+        
+        <span class="post-categories">
+          
+          <i class="far fa-folder-open"></i><span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/RTR/" itemprop="url" rel="index"><span itemprop="name">RTR</span></a></span>
+        </span>
+        
+        
+        
+        
+      </div>
+    </header>
+    <main class="post-main" itemprop="articleBody">
+      <h1 id="主机渲染和优化技术概要"><a href="#主机渲染和优化技术概要" class="headerlink" title="主机渲染和优化技术概要"></a>主机渲染和优化技术概要</h1><!-- TOC --><br/><br/>- [主机渲染和优化技术概要](#主机渲染和优化技术概要)<br/>    - [1. 渲染流程](#1-渲染流程)<br/>        - [1.1. RenderPipeline](#11-renderpipeline)<br/>        - [1.2. 渲染参数](#12-渲染参数)<br/>        - [1.3. 常用光照模型](#13-常用光照模型)<br/>        - [1.4. 基础光照计算](#14-基础光照计算)<br/>            - [1.4.1. D项 ：GGX (Trowbridge-Reitz)](#141-d项-ggx-trowbridge-reitz)<br/>            - [1.4.2. G项：Schlick](#142-g项schlick)<br/>            - [1.4.3. F项：Schlick’s approximation](#143-f项schlicks-approximation)<br/>            - [1.4.4. IBL](#144-ibl)<br/>        - [1.5. 光照技术](#15-光照技术)<br/>            - [1.5.1. multipass forward](#151-multipass-forward)<br/>            - [1.5.2. multipass deferred](#152-multipass-deferred)<br/>            - [1.5.3. singlepass deferred](#153-singlepass-deferred)<br/>            - [1.5.4. Tiled-based  Shading](#154-tiled-based--shading)<br/>            - [1.5.5. Clustered Shading](#155-clustered-shading)<br/>            - [1.5.6. 效果对比](#156-效果对比)<br/>    - [2. 渲染技术](#2-渲染技术)<br/>        - [2.1. 基础材质](#21-基础材质)<br/>        - [2.2. 分层细节材质](#22-分层细节材质)<br/>        - [2.3. 分层材质系统](#23-分层材质系统)<br/>        - [2.4. 材质库系统](#24-材质库系统)<br/>        - [2.5. 特效材质](#25-特效材质)<br/>        - [2.6. 屏幕空间技术](#26-屏幕空间技术)<br/>            - [2.6.1. 主要涉及到屏幕空间的Ray Trace操作。](#261-主要涉及到屏幕空间的ray-trace操作)<br/>            - [2.6.2. Screen Space Contact Shadow](#262-screen-space-contact-shadow)<br/>            - [2.6.3. Screen Space Reflections](#263-screen-space-reflections)<br/>        - [2.7. 毛发](#27-毛发)<br/>            - [2.7.1. hairworks or TressFX：](#271-hairworks-or-tressfx)<br/>        - [2.8. 灯光方案](#28-灯光方案)<br/>        - [2.9. 阴影方案](#29-阴影方案)<br/>            - [2.9.1. 巫师3的CSM](#291-巫师3的csm)<br/>            - [2.9.2. 阴影代理](#292-阴影代理)<br/>        - [2.10. LOD方案](#210-lod方案)<br/>        - [2.11. 后处理：曝光与光照设定](#211-后处理曝光与光照设定)<br/>        - [2.12. 透明物体低分辨率渲染](#212-透明物体低分辨率渲染)<br/>        - [2.13. 后处理：HDR and ToneMapping](#213-后处理hdr-and-tonemapping)<br/>        - [2.14. 后处理：TAA](#214-后处理taa)<br/>    - [3. GPU架构](#3-gpu架构)<br/>        - [3.1. GPU存储架构](#31-gpu存储架构)<br/>        - [3.2. GPU渲染架构](#32-gpu渲染架构)<br/>            - [3.2.1. 存储和计算的关系](#321-存储和计算的关系)<br/>            - [3.2.2. Wrap与Wave Front](#322-wrap与wave-front)<br/>        - [3.3. 手游架构](#33-手游架构)<br/>    - [4. 程序优化性能关注的点](#4-程序优化性能关注的点)<br/>        - [4.1. Draw Call](#41-draw-call)<br/>        - [4.2. Early - z](#42-early---z)<br/>        - [4.3. Over Draw](#43-over-draw)<br/>        - [4.4. Quad OverDraw](#44-quad-overdraw)<br/>        - [4.5. Light](#45-light)<br/>        - [4.6. Vertex Count](#46-vertex-count)<br/>        - [4.7. Texture压缩与内存优化](#47-texture压缩与内存优化)<br/>        - [4.8. Baking](#48-baking)<br/>        - [4.9. MipMap](#49-mipmap)<br/>        - [4.10. Testure Streaming](#410-testure-streaming)<br/>        - [4.11. Shader预加载](#411-shader预加载)<br/>        - [4.12. Shader分支](#412-shader分支)<br/>    - [5. 美术资源可能带来的性能问题](#5-美术资源可能带来的性能问题)<br/>        - [5.1. 游戏性能瓶颈：模型](#51-游戏性能瓶颈模型)<br/>        - [5.2. 游戏性能优化：模型](#52-游戏性能优化模型)<br/>        - [5.3. 游戏性能瓶颈：贴图](#53-游戏性能瓶颈贴图)<br/>        - [5.4. 游戏性能优化：贴图](#54-游戏性能优化贴图)<br/>        - [5.5. 游戏性能瓶颈：材质](#55-游戏性能瓶颈材质)<br/>        - [5.6. 游戏性能优化：材质](#56-游戏性能优化材质)<br/>        - [5.7. 游戏性能瓶颈：Quad OverDraw 、OverDraw](#57-游戏性能瓶颈quad-overdraw-overdraw)<br/>        - [5.8. 游戏性能优化：Quad OverDraw 、OverDraw](#58-游戏性能优化quad-overdraw-overdraw)<br/><br/><!-- /TOC -->
+
+<h2 id="1-渲染流程"><a href="#1-渲染流程" class="headerlink" title="1. 渲染流程"></a>1. 渲染流程</h2><h3 id="1-1-RenderPipeline"><a href="#1-1-RenderPipeline" class="headerlink" title="1.1. RenderPipeline"></a>1.1. RenderPipeline</h3><p>基础渲染流程。</p>
+<p><img src="/%5B%E7%BB%84%E5%86%85%E5%88%86%E4%BA%AB%5D%E4%B8%BB%E6%9C%BA%E6%B8%B2%E6%9F%93%E5%92%8C%E4%BC%98%E5%8C%96%E6%8A%80%E6%9C%AF%E6%A6%82%E8%A6%81/1568961718383.png" alt="1568961718383"></p>
+<p><img src="/%E4%B8%BB%E6%9C%BA%E6%B8%B2%E6%9F%93%E5%92%8C%E4%BC%98%E5%8C%96%E6%8A%80%E6%9C%AF%E6%A6%82%E8%A6%81/1568961632451.png" alt="1568961632451"></p>
+<p><img src="/%5B%E7%BB%84%E5%86%85%E5%88%86%E4%BA%AB%5D%E4%B8%BB%E6%9C%BA%E6%B8%B2%E6%9F%93%E5%92%8C%E4%BC%98%E5%8C%96%E6%8A%80%E6%9C%AF%E6%A6%82%E8%A6%81/1568961793802.png" alt="1568961793802"></p>
+<p><img src="/%5B%E7%BB%84%E5%86%85%E5%88%86%E4%BA%AB%5D%E4%B8%BB%E6%9C%BA%E6%B8%B2%E6%9F%93%E5%92%8C%E4%BC%98%E5%8C%96%E6%8A%80%E6%9C%AF%E6%A6%82%E8%A6%81/1568961811084.png" alt="1568961811084"></p>
+<p><img src="/%5B%E7%BB%84%E5%86%85%E5%88%86%E4%BA%AB%5D%E4%B8%BB%E6%9C%BA%E6%B8%B2%E6%9F%93%E5%92%8C%E4%BC%98%E5%8C%96%E6%8A%80%E6%9C%AF%E6%A6%82%E8%A6%81/1568961840796.png" alt="1568961840796"></p>
+<p><img src="/%5B%E7%BB%84%E5%86%85%E5%88%86%E4%BA%AB%5D%E4%B8%BB%E6%9C%BA%E6%B8%B2%E6%9F%93%E5%92%8C%E4%BC%98%E5%8C%96%E6%8A%80%E6%9C%AF%E6%A6%82%E8%A6%81/1568961874770.png" alt="1568961874770"></p>
+<p><img src="/%5B%E7%BB%84%E5%86%85%E5%88%86%E4%BA%AB%5D%E4%B8%BB%E6%9C%BA%E6%B8%B2%E6%9F%93%E5%92%8C%E4%BC%98%E5%8C%96%E6%8A%80%E6%9C%AF%E6%A6%82%E8%A6%81/1568961884019.png" alt="1568961884019"></p>
+<h3 id="1-2-渲染参数"><a href="#1-2-渲染参数" class="headerlink" title="1.2. 渲染参数"></a>1.2. 渲染参数</h3><p>Unity HDRP Deferred结构</p>
+<table>
+<thead>
+<tr>
+<th>G-Buffer Usage</th>
+<th>Format</th>
+<th>RGB</th>
+<th>A</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>GBuffer0</td>
+<td>RGBA32</td>
+<td>Albedo Color &#x2F;      SSS Color</td>
+<td>Spacular Occlusiion &#x2F; SSS Parameter</td>
+</tr>
+<tr>
+<td>GBuffer1</td>
+<td>RGBA32</td>
+<td>Packed Normal</td>
+<td>Roughness</td>
+</tr>
+<tr>
+<td>GBuffer2</td>
+<td>RGBA32</td>
+<td>BSDF Model Specific Parameters</td>
+<td>Coat Mask + Material ID</td>
+</tr>
+<tr>
+<td>GBuffer3</td>
+<td>R11G11B10</td>
+<td>GI + Emissive</td>
+<td>&#x2F;</td>
+</tr>
+<tr>
+<td>GBuffer4 - Optional</td>
+<td>RGBA32</td>
+<td>R:&#x2F;             G:&#x2F;             B: AO</td>
+<td>Light Layer</td>
+</tr>
+<tr>
+<td>GBuffer5 - Optional</td>
+<td>RGBA32</td>
+<td>shadowmask0 - 2</td>
+<td>shadowmask3</td>
+</tr>
+</tbody></table>
+<h3 id="1-3-常用光照模型"><a href="#1-3-常用光照模型" class="headerlink" title="1.3. 常用光照模型"></a>1.3. 常用光照模型</h3><table>
+<thead>
+<tr>
+<th>Clear Coat</th>
+<th>车漆效果</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>Specular</td>
+<td>这个是和Standard（金属工作流）相对的高光工作流。区别只是金属度变成了高光颜色。其他计算没有区别。指定F0。</td>
+</tr>
+<tr>
+<td>Anisotropy</td>
+<td>计算高光时使用各项异性的高光计算。和Standard区别只在于高光的计算，同时多出了一张各向异性贴图和强度控制。例如：拉丝金属。</td>
+</tr>
+<tr>
+<td>Iridescence</td>
+<td>彩虹色是指：随着光照角度的变化光照颜色发生变化。例如：肥皂泡沫，昆虫翅膀。</td>
+</tr>
+<tr>
+<td>Translucent</td>
+<td>透光效果是指：在背光面可以看到光穿过物体的效果。主要用于半透明材质。例如：树叶。</td>
+</tr>
+<tr>
+<td>Surface Scattering</td>
+<td>SSS效果用来描述光线在表面多次散射的效果。可以用来描述灯光和半透物体的交互过程。可以用来制作：玉、冰、皮肤等物体。</td>
+</tr>
+<tr>
+<td>Displacement</td>
+<td>Unity支持高度图计算。Vertex Displacement:  在Vertex阶段直接移动顶点，高度图作为移动距离。Pixel displacement： 将高度图作为视差贴图。（POM）</td>
+</tr>
+<tr>
+<td>Standard</td>
+<td>标准材质</td>
+</tr>
+</tbody></table>
+<h3 id="1-4-基础光照计算"><a href="#1-4-基础光照计算" class="headerlink" title="1.4. 基础光照计算"></a>1.4. 基础光照计算</h3><p>漫反射：</p>
+<p>$$ f(l,v) &#x3D; \frac{c_{diff}}{\pi} $$</p>
+<p>高光：</p>
+<p>$$ f(l,v) &#x3D; \frac{D(h)G(l,v,h)F(v,h)}{4(nl)(nv)} $$</p>
+<h4 id="1-4-1-D项-：GGX-Trowbridge-Reitz"><a href="#1-4-1-D项-：GGX-Trowbridge-Reitz" class="headerlink" title="1.4.1. D项 ：GGX (Trowbridge-Reitz)"></a>1.4.1. D项 ：GGX (Trowbridge-Reitz)</h4><p>$$ \alpha &#x3D; roughness^2 $$</p>
+<p>$$ D_{GGX}(h)&#x3D;\frac{\alpha^2}{\pi((nh)^2(\alpha^2-1)+1)^2} $$</p>
+<h4 id="1-4-2-G项：Schlick"><a href="#1-4-2-G项：Schlick" class="headerlink" title="1.4.2. G项：Schlick"></a>1.4.2. G项：Schlick</h4><p>Schlick-GGX（用在IBL上）</p>
+<p>$$k &#x3D;\frac{\alpha} {2}$$  </p>
+<p>$$ \alpha &#x3D; roughness^2 $$</p>
+<p>根据Disney文章对其做了修改（这个修改只用在解析光源上，IBL在glancing angles会太暗）：</p>
+<p>$$k &#x3D;\frac{(roughness + 1)^2} {8}$$  </p>
+<p>$$ G_{GGX}(v) &#x3D; \frac{nv}{(nv)(1-k)+k} $$</p>
+<h4 id="1-4-3-F项：Schlick’s-approximation"><a href="#1-4-3-F项：Schlick’s-approximation" class="headerlink" title="1.4.3. F项：Schlick’s approximation"></a>1.4.3. F项：Schlick’s approximation</h4><p>$$ F(v,h)&#x3D;F_0 + (1 - F_0) 2^{-5.55473(vh)-6.98316)(vh)} $$</p>
+<h4 id="1-4-4-IBL"><a href="#1-4-4-IBL" class="headerlink" title="1.4.4. IBL"></a>1.4.4. IBL</h4><p>首先需要解决的是辐射度积分，通常使用重要度采样：</p>
+<p>$$ \int_H L_i(l)f(l,v)cos(\theta_l)dl  &#x3D; \frac{1}{N}\sum^{N}_{k&#x3D;1}\frac{L_i(l_k)f(l_k,v)cos theta _{l_k} }{p(l_k,v)} $$</p>
+<h3 id="1-5-光照技术"><a href="#1-5-光照技术" class="headerlink" title="1.5. 光照技术"></a>1.5. 光照技术</h3><h4 id="1-5-1-multipass-forward"><a href="#1-5-1-multipass-forward" class="headerlink" title="1.5.1. multipass forward"></a>1.5.1. multipass forward</h4><figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">//Shaders:</span><br>Shader simpleShader<br><br><span class="hljs-comment">//Buffers:</span><br>Buffer display<br><br><span class="hljs-keyword">for</span> mesh in scene<br>    <span class="hljs-keyword">for</span> light in scene<br>        display += simpleShader(mesh, light)<br></code></pre></td></tr></table></figure>
+
+<h4 id="1-5-2-multipass-deferred"><a href="#1-5-2-multipass-deferred" class="headerlink" title="1.5.2. multipass deferred"></a>1.5.2. multipass deferred</h4><figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">//Buffers:</span><br>Buffer display<br>Buffer GBuffer <br><br><span class="hljs-comment">//Shaders:</span><br>Shader simpleShader<br>Shader writeShadingAttributes<br><br><span class="hljs-comment">//Visibility &amp; materials</span><br><span class="hljs-keyword">for</span> mesh in scene<br>    <span class="hljs-keyword">if</span> mesh.depth &lt; GBuffer.depth<br>       GBuffer = writeShadingAttributes(mesh)<br><br><span class="hljs-comment">//Shading &amp; lighting - Multi-pass</span><br><span class="hljs-keyword">for</span> light in scene<br>    display += simpleShader(GBuffer, light)<br></code></pre></td></tr></table></figure>
+
+<h4 id="1-5-3-singlepass-deferred"><a href="#1-5-3-singlepass-deferred" class="headerlink" title="1.5.3. singlepass deferred"></a>1.5.3. singlepass deferred</h4><figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">//Buffers:</span><br>Buffer display<br>Buffer GBuffer <br><br><span class="hljs-comment">//Shaders:</span><br>Shader manyLightShader<br>Shader writeShadingAttributes<br><br><span class="hljs-comment">//Visibility &amp; materials</span><br><span class="hljs-keyword">for</span> mesh in scene<br>    <span class="hljs-keyword">if</span> mesh.depth &lt; GBuffer.depth<br>       GBuffer = writeShadingAttributes(mesh)<br><br><span class="hljs-comment">//Shading &amp; lighting - Single-pass</span><br>display = manyLightShader(GBuffer, scene.lights)<br></code></pre></td></tr></table></figure>
+
+<h4 id="1-5-4-Tiled-based-Shading"><a href="#1-5-4-Tiled-based-Shading" class="headerlink" title="1.5.4. Tiled-based  Shading"></a>1.5.4. Tiled-based  Shading</h4><p><img src="/../../images/%5B%E7%BB%84%E5%86%85%E5%88%86%E4%BA%AB%5D%E4%B8%BB%E6%9C%BA%E6%B8%B2%E6%9F%93%E5%92%8C%E4%BC%98%E5%8C%96%E6%8A%80%E6%9C%AF%E6%A6%82%E8%A6%81/1569236801768.png" alt="1569236801768"></p>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs c">Buffer display<br>Buffer GBuffer <br>Buffer tileArray<br><br><span class="hljs-comment">//Shaders:</span><br>Shader manyLightShader<br>Shader writeShadingAttributes<br>CompShader lightInTile<br><br><span class="hljs-comment">//Visibility &amp; materials</span><br><span class="hljs-keyword">for</span> mesh in scene<br>    <span class="hljs-keyword">if</span> mesh.depth &lt; GBuffer.depth<br>       GBuffer = writeShadingAttributes(mesh)<br><br><span class="hljs-comment">//Light culling</span><br><span class="hljs-keyword">for</span> tile in tileArray<br>   <span class="hljs-keyword">for</span> light in scene<br>      <span class="hljs-keyword">if</span> lightInTile(tile, light)<br>          tile += light<br>      <br><span class="hljs-comment">//Shading</span><br>display = manyLightShader(GBuffer, tileArray)<br></code></pre></td></tr></table></figure>
+
+<h4 id="1-5-5-Clustered-Shading"><a href="#1-5-5-Clustered-Shading" class="headerlink" title="1.5.5. Clustered Shading"></a>1.5.5. Clustered Shading</h4><p><img src="/../../images/%5B%E7%BB%84%E5%86%85%E5%88%86%E4%BA%AB%5D%E4%B8%BB%E6%9C%BA%E6%B8%B2%E6%9F%93%E5%92%8C%E4%BC%98%E5%8C%96%E6%8A%80%E6%9C%AF%E6%A6%82%E8%A6%81/1569237072424.png" alt="1569237072424"></p>
+<p><img src="/../../images/%E4%B8%BB%E6%9C%BA%E6%B8%B2%E6%9F%93%E5%92%8C%E4%BC%98%E5%8C%96%E6%8A%80%E6%9C%AF%E6%A6%82%E8%A6%81/1569237086038.png" alt="1569237086038"></p>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">//Buffers:</span><br>Buffer display<br>Buffer GBuffer<br>Buffer clusterArray<br><br><span class="hljs-comment">//Shaders:</span><br>Shader manyLightShader<br>Shader writeShadingAttributes<br>CompShader lightInCluster <br><br><span class="hljs-comment">//Visibility &amp; materials</span><br><span class="hljs-keyword">for</span> mesh in scene<br>    <span class="hljs-keyword">if</span> mesh.depth &lt; GBuffer.depth<br>       GBuffer = writeShadingAttributes(mesh)<br><br><span class="hljs-comment">//Light culling</span><br><span class="hljs-keyword">for</span> cluster in clusterArray<br>   <span class="hljs-keyword">for</span> light in scene<br>      <span class="hljs-keyword">if</span> lightIncluster(cluster, light)<br>          cluster += light<br><br><span class="hljs-comment">//Shading</span><br>display = manyLightShader(GBuffer, clusterArray)<br></code></pre></td></tr></table></figure>
+
+<h4 id="1-5-6-效果对比"><a href="#1-5-6-效果对比" class="headerlink" title="1.5.6. 效果对比"></a>1.5.6. 效果对比</h4><p><img src="/../../images/%5B%E7%BB%84%E5%86%85%E5%88%86%E4%BA%AB%5D%E4%B8%BB%E6%9C%BA%E6%B8%B2%E6%9F%93%E5%92%8C%E4%BC%98%E5%8C%96%E6%8A%80%E6%9C%AF%E6%A6%82%E8%A6%81/1569237135439.png" alt="1569237135439"></p>
+<h2 id="2-渲染技术"><a href="#2-渲染技术" class="headerlink" title="2. 渲染技术"></a>2. 渲染技术</h2><h3 id="2-1-基础材质"><a href="#2-1-基础材质" class="headerlink" title="2.1. 基础材质"></a>2.1. 基础材质</h3><table>
+<thead>
+<tr>
+<th align="left"><strong>Property</strong></th>
+<th align="left"><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>Albedo Map</strong></td>
+<td align="left">表示物体颜色，不应该包含任何明暗、AO、阴影信息。除了基础颜色外，还可以包含一些偏色、或者色相的变化。</td>
+</tr>
+<tr>
+<td align="left"><strong>Mask Map</strong></td>
+<td align="left">Assign a Texture that packs different Material maps into each of its RGBA channels. • <strong>Red</strong>: Stores the metallic map.  • <strong>Green</strong>: Stores the ambient occlusion map. • <strong>Blue</strong>: Stores the detail mask map. • <strong>Alpha</strong>: Stores the smoothness map.</td>
+</tr>
+<tr>
+<td align="left"><strong>Normal  Map</strong></td>
+<td align="left">法线，LitShader支持模型空间和切线空间的法线，使用模型空间法线，可以在LOD当中过度更好，使用切线空间法线，可以压缩纹理空间。</td>
+</tr>
+<tr>
+<td align="left"><strong>Bent Normal</strong></td>
+<td align="left">Bent normal实际上也是一个表面方向和Normal接近，主要用来优化AO效果，只对GI（lightmap&#x2F;lightprobe&#x2F;volume proxy）生效。shaer代码：builtinData.bakeDiffuseLighting &#x3D; SampleBakedGI(posInput.positionWS, bennormalWS, texCoord1.xy, texCoord2.xy);</td>
+</tr>
+<tr>
+<td align="left"><strong>Detial Map</strong></td>
+<td align="left"><strong>Red</strong>:  Smoothness的细节噪声 <strong>Green</strong>+<strong>Blue</strong>: 细节法线. • <strong>Alpha</strong>: Albede的明暗细节噪声.</td>
+</tr>
+</tbody></table>
+<h3 id="2-2-分层细节材质"><a href="#2-2-分层细节材质" class="headerlink" title="2.2. 分层细节材质"></a>2.2. 分层细节材质</h3><p>用于秒回细致的角色。</p>
+<p>1.多加了4&#x2F;8层Detial。</p>
+<p>一次DrawCall 刻画精细的材质。</p>
+<table>
+<thead>
+<tr>
+<th align="left"><strong>Property</strong></th>
+<th align="left"><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>Albedo Map</strong></td>
+<td align="left">表示物体颜色，不应该包含任何明暗、AO、阴影信息。除了基础颜色外，还可以包含一些偏色、或者色相的变化。</td>
+</tr>
+<tr>
+<td align="left"><strong>Mask Map</strong></td>
+<td align="left">• <strong>Red</strong>: Stores the metallic map.  • <strong>Green</strong>: Stores the ambient occlusion map. • <strong>Blue</strong>: Stores the detail mask map. • <strong>Alpha</strong>: Stores the smoothness map.</td>
+</tr>
+<tr>
+<td align="left"><strong>Normal  Map</strong></td>
+<td align="left">法线，LitShader支持模型空间和切线空间的法线，使用模型空间法线，可以在LOD当中过度更好，使用切线空间法线，可以压缩纹理空间。</td>
+</tr>
+<tr>
+<td align="left"><strong>Bent Normal</strong></td>
+<td align="left">Bent normal实际上也是一个表面方向和Normal接近，主要用来优化AO效果，只对GI（lightmap&#x2F;lightprobe&#x2F;volume proxy）生效。shaer代码：builtinData.bakeDiffuseLighting &#x3D; SampleBakedGI(posInput.positionWS, bennormalWS, texCoord1.xy, texCoord2.xy);</td>
+</tr>
+<tr>
+<td align="left"><strong>Detial Map</strong>0</td>
+<td align="left"><strong>Red</strong>:  Smoothness的细节噪声 <strong>Green</strong>+<strong>Blue</strong>: 细节法线. • <strong>Alpha</strong>: Albede的明暗细节噪声.</td>
+</tr>
+<tr>
+<td align="left"><strong>Detial Map</strong>1</td>
+<td align="left">…</td>
+</tr>
+<tr>
+<td align="left"><strong>Detial Map</strong>2</td>
+<td align="left">…</td>
+</tr>
+<tr>
+<td align="left"><strong>Detial Map</strong>3</td>
+<td align="left">…</td>
+</tr>
+</tbody></table>
+<ol start="2">
+<li>Mask Map中B通道均分4份，作为4层权重。</li>
+</ol>
+<h3 id="2-3-分层材质系统"><a href="#2-3-分层材质系统" class="headerlink" title="2.3. 分层材质系统"></a>2.3. 分层材质系统</h3><p>用于处理建筑：基础材质+脏（剥落材质）+ 旧（覆盖材质）+ 表面覆盖（雪，苔藓等）</p>
+<p>贴图复用，材质球复用，Mesh合并。</p>
+<p>1.参数变成4组。</p>
+<table>
+<thead>
+<tr>
+<th align="left"><strong>Property</strong></th>
+<th align="left"><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>Albedo Map1-4</strong></td>
+<td align="left">表示物体颜色，不应该包含任何明暗、AO、阴影信息。除了基础颜色外，还可以包含一些偏色、或者色相的变化。</td>
+</tr>
+<tr>
+<td align="left"><strong>Mask Map1-4</strong></td>
+<td align="left">• <strong>Red</strong>: Stores the metallic map.  • <strong>Green</strong>: Stores the ambient occlusion map. • <strong>Blue</strong>:None. • <strong>Alpha</strong>: Stores the smoothness map.</td>
+</tr>
+<tr>
+<td align="left"><strong>Normal  Map1-4</strong></td>
+<td align="left">法线，LitShader支持模型空间和切线空间的法线，使用模型空间法线，可以在LOD当中过度更好，使用切线空间法线，可以压缩纹理空间。</td>
+</tr>
+<tr>
+<td align="left">Mask</td>
+<td align="left">四个通道对应四层。</td>
+</tr>
+</tbody></table>
+<p>2.混合方式</p>
+<p>从上层到下层的覆盖权重，而不是加权求和。</p>
+<p>顶点色作为混合基调，Mask作为平铺细节。</p>
+<p>材质混合：</p>
+<p><img src="/../../images/%5B%E7%BB%84%E5%86%85%E5%88%86%E4%BA%AB%5D%E4%B8%BB%E6%9C%BA%E6%B8%B2%E6%9F%93%E5%92%8C%E4%BC%98%E5%8C%96%E6%8A%80%E6%9C%AF%E6%A6%82%E8%A6%81/1569313963924.png" alt="1569313963924"></p>
+<p><img src="/../../images/%5B%E7%BB%84%E5%86%85%E5%88%86%E4%BA%AB%5D%E4%B8%BB%E6%9C%BA%E6%B8%B2%E6%9F%93%E5%92%8C%E4%BC%98%E5%8C%96%E6%8A%80%E6%9C%AF%E6%A6%82%E8%A6%81/1569313995548.png" alt="1569313995548"></p>
+<h3 id="2-4-材质库系统"><a href="#2-4-材质库系统" class="headerlink" title="2.4. 材质库系统"></a>2.4. 材质库系统</h3><p>刺客型条 GCD2017 Texturing the World of Assassin’s Creed Odyssey：</p>
+<p><img src="/../../images/%5B%E7%BB%84%E5%86%85%E5%88%86%E4%BA%AB%5D%E4%B8%BB%E6%9C%BA%E6%B8%B2%E6%9F%93%E5%92%8C%E4%BC%98%E5%8C%96%E6%8A%80%E6%9C%AF%E6%A6%82%E8%A6%81/1569314751834.png" alt="1569314751834"></p>
+<p>材质使用：</p>
+<p><img src="/../../images/%5B%E7%BB%84%E5%86%85%E5%88%86%E4%BA%AB%5D%E4%B8%BB%E6%9C%BA%E6%B8%B2%E6%9F%93%E5%92%8C%E4%BC%98%E5%8C%96%E6%8A%80%E6%9C%AF%E6%A6%82%E8%A6%81/1569314652689.png" alt="1569314652689"></p>
+<p><img src="/../../images/%5B%E7%BB%84%E5%86%85%E5%88%86%E4%BA%AB%5D%E4%B8%BB%E6%9C%BA%E6%B8%B2%E6%9F%93%E5%92%8C%E4%BC%98%E5%8C%96%E6%8A%80%E6%9C%AF%E6%A6%82%E8%A6%81/1569314671739.png" alt="1569314671739"></p>
+<h3 id="2-5-特效材质"><a href="#2-5-特效材质" class="headerlink" title="2.5. 特效材质"></a>2.5. 特效材质</h3><p>这里的特效主要指的是附着在模型上的效果：</p>
+<ol>
+<li><p>对模型产生修改的效果，直接通过宏开关加载模型上.</p>
+<p>例如：溶解、顶点动画、透明化、AlphaTest类型的效果。</p>
+</li>
+<li><p>不会修改模型的效果，另外使用Unlit渲染一次：</p>
+<p>例如：身体流光、边缘光、轮廓线、透明特效。</p>
+</li>
+</ol>
+<h3 id="2-6-屏幕空间技术"><a href="#2-6-屏幕空间技术" class="headerlink" title="2.6. 屏幕空间技术"></a>2.6. 屏幕空间技术</h3><h4 id="2-6-1-主要涉及到屏幕空间的Ray-Trace操作。"><a href="#2-6-1-主要涉及到屏幕空间的Ray-Trace操作。" class="headerlink" title="2.6.1. 主要涉及到屏幕空间的Ray Trace操作。"></a>2.6.1. 主要涉及到屏幕空间的Ray Trace操作。</h4><h4 id="2-6-2-Screen-Space-Contact-Shadow"><a href="#2-6-2-Screen-Space-Contact-Shadow" class="headerlink" title="2.6.2. Screen Space Contact Shadow"></a>2.6.2. Screen Space Contact Shadow</h4><p><img src="/../../images/%5B%E7%BB%84%E5%86%85%E5%88%86%E4%BA%AB%5D%E4%B8%BB%E6%9C%BA%E6%B8%B2%E6%9F%93%E5%92%8C%E4%BC%98%E5%8C%96%E6%8A%80%E6%9C%AF%E6%A6%82%E8%A6%81/1569392407631.png" alt="1569392407631"></p>
+<p><img src="/../../images/%5B%E7%BB%84%E5%86%85%E5%88%86%E4%BA%AB%5D%E4%B8%BB%E6%9C%BA%E6%B8%B2%E6%9F%93%E5%92%8C%E4%BC%98%E5%8C%96%E6%8A%80%E6%9C%AF%E6%A6%82%E8%A6%81/1569392417350.png" alt="1569392417350"></p>
+<h4 id="2-6-3-Screen-Space-Reflections"><a href="#2-6-3-Screen-Space-Reflections" class="headerlink" title="2.6.3. Screen Space Reflections"></a>2.6.3. Screen Space Reflections</h4><p><img src="/../../images/%5B%E7%BB%84%E5%86%85%E5%88%86%E4%BA%AB%5D%E4%B8%BB%E6%9C%BA%E6%B8%B2%E6%9F%93%E5%92%8C%E4%BC%98%E5%8C%96%E6%8A%80%E6%9C%AF%E6%A6%82%E8%A6%81/1569392453534.png" alt="1569392453534"></p>
+<p><img src="/../../images/%5B%E7%BB%84%E5%86%85%E5%88%86%E4%BA%AB%5D%E4%B8%BB%E6%9C%BA%E6%B8%B2%E6%9F%93%E5%92%8C%E4%BC%98%E5%8C%96%E6%8A%80%E6%9C%AF%E6%A6%82%E8%A6%81/1569392487449.png" alt="1569392487449"></p>
+<h3 id="2-7-毛发"><a href="#2-7-毛发" class="headerlink" title="2.7. 毛发"></a>2.7. 毛发</h3><h4 id="2-7-1-hairworks-or-TressFX："><a href="#2-7-1-hairworks-or-TressFX：" class="headerlink" title="2.7.1. hairworks or TressFX："></a>2.7.1. hairworks or TressFX：</h4><p><img src="/../../images/%E4%B8%BB%E6%9C%BA%E6%B8%B2%E6%9F%93%E5%92%8C%E4%BC%98%E5%8C%96%E6%8A%80%E6%9C%AF%E6%A6%82%E8%A6%81/1569390840595.png" alt="1569390840595"></p>
+<p>神秘海域4头发</p>
+<p><img src="/../../images/%5B%E7%BB%84%E5%86%85%E5%88%86%E4%BA%AB%5D%E4%B8%BB%E6%9C%BA%E6%B8%B2%E6%9F%93%E5%92%8C%E4%BC%98%E5%8C%96%E6%8A%80%E6%9C%AF%E6%A6%82%E8%A6%81/1569144795134.png" alt="1569144795134"></p>
+<p>怪物猎人世界宠物毛发</p>
+<p><img src="/../../images/%E4%B8%BB%E6%9C%BA%E6%B8%B2%E6%9F%93%E5%92%8C%E4%BC%98%E5%8C%96%E6%8A%80%E6%9C%AF%E6%A6%82%E8%A6%81/1569144859044.png" alt="1569144859044"></p>
+<p>Unity异教徒短片衣服毛领子：</p>
+<p><img src="/../../images/%5B%E7%BB%84%E5%86%85%E5%88%86%E4%BA%AB%5D%E4%B8%BB%E6%9C%BA%E6%B8%B2%E6%9F%93%E5%92%8C%E4%BC%98%E5%8C%96%E6%8A%80%E6%9C%AF%E6%A6%82%E8%A6%81/1569144994165.png" alt="1569144994165"></p>
+<p>Shell Model</p>
+<p><img src="/../../images/%E4%B8%BB%E6%9C%BA%E6%B8%B2%E6%9F%93%E5%92%8C%E4%BC%98%E5%8C%96%E6%8A%80%E6%9C%AF%E6%A6%82%E8%A6%81/1569310477528.png" alt="1569310477528"></p>
+<h3 id="2-8-灯光方案"><a href="#2-8-灯光方案" class="headerlink" title="2.8. 灯光方案"></a>2.8. 灯光方案</h3><ol>
+<li>动态物体：</li>
+</ol>
+<p>PBR直接光照 + SH 间接光（Reflection Probe） + IBL环境光（Reflection Probe）</p>
+<p>直接光照：所有实时光照的直接分量。</p>
+<p>SH 间接光（Reflection Probe）：天光 + 实时光的间接分量 + 完整烘焙光直接和间接分量。</p>
+<p>点云：记录了六个方向的光线，简化版的SH。</p>
+<ol start="2">
+<li>静态物体：</li>
+</ol>
+<p>PBR直接光照 + LightMap间接光计算 + IBL环境光 （Reflection Probe）</p>
+<p>LightMap间接光计算 ：天光 + 实时光的间接分量 + 完整烘焙光直接和间接分量。</p>
+<h3 id="2-9-阴影方案"><a href="#2-9-阴影方案" class="headerlink" title="2.9. 阴影方案"></a>2.9. 阴影方案</h3><p>动态物体：ShadowMap CSM 2(5,20) + 静态物体：ShadowMask</p>
+<p>动态阴影边缘优化：PCF2*2 5*5 7*7 、PCSS</p>
+<p><img src="/../../images/%5B%E7%BB%84%E5%86%85%E5%88%86%E4%BA%AB%5D%E4%B8%BB%E6%9C%BA%E6%B8%B2%E6%9F%93%E5%92%8C%E4%BC%98%E5%8C%96%E6%8A%80%E6%9C%AF%E6%A6%82%E8%A6%81/1569209076734.png" alt="1569209076734"></p>
+<p>远处动态物体：</p>
+<ol>
+<li><p>使用第三级CSM，使用代理体阴影。</p>
+</li>
+<li><p>SDF</p>
+</li>
+</ol>
+<p><img src="/../../images/%5B%E7%BB%84%E5%86%85%E5%88%86%E4%BA%AB%5D%E4%B8%BB%E6%9C%BA%E6%B8%B2%E6%9F%93%E5%92%8C%E4%BC%98%E5%8C%96%E6%8A%80%E6%9C%AF%E6%A6%82%E8%A6%81/1569220211656.png" alt="1569220211656"></p>
+<h4 id="2-9-1-巫师3的CSM"><a href="#2-9-1-巫师3的CSM" class="headerlink" title="2.9.1. 巫师3的CSM"></a>2.9.1. 巫师3的CSM</h4><p>0级：3米</p>
+<p><img src="/../../images/%5B%E7%BB%84%E5%86%85%E5%88%86%E4%BA%AB%5D%E4%B8%BB%E6%9C%BA%E6%B8%B2%E6%9F%93%E5%92%8C%E4%BC%98%E5%8C%96%E6%8A%80%E6%9C%AF%E6%A6%82%E8%A6%81/1569393594256.png" alt="1569393594256"></p>
+<p>1级：20米</p>
+<p><img src="/../../images/%5B%E7%BB%84%E5%86%85%E5%88%86%E4%BA%AB%5D%E4%B8%BB%E6%9C%BA%E6%B8%B2%E6%9F%93%E5%92%8C%E4%BC%98%E5%8C%96%E6%8A%80%E6%9C%AF%E6%A6%82%E8%A6%81/1569393483587.png" alt="1569393483587"></p>
+<p>2级：200米</p>
+<p><img src="/../../images/%5B%E7%BB%84%E5%86%85%E5%88%86%E4%BA%AB%5D%E4%B8%BB%E6%9C%BA%E6%B8%B2%E6%9F%93%E5%92%8C%E4%BC%98%E5%8C%96%E6%8A%80%E6%9C%AF%E6%A6%82%E8%A6%81/1569393547484.png" alt="1569393547484"></p>
+<p>3级：动态物体无阴影</p>
+<h4 id="2-9-2-阴影代理"><a href="#2-9-2-阴影代理" class="headerlink" title="2.9.2. 阴影代理"></a>2.9.2. 阴影代理</h4><p><img src="/../../images/%5B%E7%BB%84%E5%86%85%E5%88%86%E4%BA%AB%5D%E4%B8%BB%E6%9C%BA%E6%B8%B2%E6%9F%93%E5%92%8C%E4%BC%98%E5%8C%96%E6%8A%80%E6%9C%AF%E6%A6%82%E8%A6%81/1569407455456.png" alt="1569407455456"></p>
+<h3 id="2-10-LOD方案"><a href="#2-10-LOD方案" class="headerlink" title="2.10. LOD方案"></a>2.10. LOD方案</h3><p>Mesh Lod :LOD0 - N  + HLOD + IMPOSTER</p>
+<p>特效LOD : 削减次要粒子 &gt; 降低粒子数量 &gt; 关闭Alpha Test，简化计算。</p>
+<p>Shading LOD ：简化光照模型。</p>
+<p>阴影LOD：Shadow Mask</p>
+<h3 id="2-11-后处理：曝光与光照设定"><a href="#2-11-后处理：曝光与光照设定" class="headerlink" title="2.11. 后处理：曝光与光照设定"></a>2.11. 后处理：曝光与光照设定</h3><ol>
+<li>白平衡场景和灯光设置：</li>
+</ol>
+<p>基本的资源检查场景，确定ShadingModel、贴图制作、光源方案没有问题。</p>
+<p>包括：展览光源+反射球+反射探针。</p>
+<ol start="2">
+<li>风格化场景和灯光设置：</li>
+</ol>
+<p>结合后处理的风格化场景：夜晚，白天，洞穴，室内，森林等等，包括少量烘焙、参考资源。</p>
+<p>制作标准亮度的cubemap,标准灯光参数，用于检查外包资源的场景。确定在各种环境下显示正常、</p>
+<p>包括：展览光源+反射球+反射探针+lightmap+后处理。</p>
+<ol start="3">
+<li>AssetLibrary资源库。</li>
+</ol>
+<p>包括了所有资源的展览场景，游戏当中的各种复用场景资源集中排列摆放：树，石头。</p>
+<p>游戏当中场景材质集中摆放。</p>
+<p>检查所有材质模型合规。检查LOD效果。需要可以切换各个风格化设置。资源之间是否统一。</p>
+<p><img src="/../../images/%E4%B8%BB%E6%9C%BA%E6%B8%B2%E6%9F%93%E5%92%8C%E4%BC%98%E5%8C%96%E6%8A%80%E6%9C%AF%E6%A6%82%E8%A6%81/1569405739260.png" alt="1569405739260"></p>
+<p><img src="/../../images/%E4%B8%BB%E6%9C%BA%E6%B8%B2%E6%9F%93%E5%92%8C%E4%BC%98%E5%8C%96%E6%8A%80%E6%9C%AF%E6%A6%82%E8%A6%81/1569405759431.png" alt="1569405759431"></p>
+<ol start="4">
+<li>游戏场景。</li>
+</ol>
+<p>地标大型资源的游戏场景，地编从2中选取光照方案，从3中选取资源填充场景。</p>
+<p>最终的游戏场景，进行最终游戏性能测试。</p>
+<h3 id="2-12-透明物体低分辨率渲染"><a href="#2-12-透明物体低分辨率渲染" class="headerlink" title="2.12. 透明物体低分辨率渲染"></a>2.12. 透明物体低分辨率渲染</h3><p>通过在低分辨率上渲染透明物体直接减低overdraw。通常给烟雾使用。</p>
+<h3 id="2-13-后处理：HDR-and-ToneMapping"><a href="#2-13-后处理：HDR-and-ToneMapping" class="headerlink" title="2.13. 后处理：HDR and ToneMapping"></a>2.13. 后处理：HDR and ToneMapping</h3><ol>
+<li>渲染层的HDR: HDR和ToneMapping</li>
+</ol>
+<p>参考GDC2017 High Dynamic Range color grading and display in Frostbite</p>
+<p><img src="/../../images/%5B%E7%BB%84%E5%86%85%E5%88%86%E4%BA%AB%5D%E4%B8%BB%E6%9C%BA%E6%B8%B2%E6%9F%93%E5%92%8C%E4%BC%98%E5%8C%96%E6%8A%80%E6%9C%AF%E6%A6%82%E8%A6%81/1568966737421.png" alt="1568966737421"></p>
+<p>Tonemap之前的流程包括暗角，Flare Len，DoF，Bloom，自动曝光参数计算（部分参数用于ToneMaping）.</p>
+<p>可以将ToneMap和Grading、Gamma矫正进行合并。</p>
+<ol start="2">
+<li>显示层的HDR：多ToneMapping曲线</li>
+</ol>
+<p>如果在LDR和HDR显示器上使用同一个ToneMapping曲线，会导致画面整体变亮。</p>
+<p><img src="/../../images/%E4%B8%BB%E6%9C%BA%E6%B8%B2%E6%9F%93%E5%92%8C%E4%BC%98%E5%8C%96%E6%8A%80%E6%9C%AF%E6%A6%82%E8%A6%81/1569205929868.png" alt="1569205929868"></p>
+<p><strong>FrameBuffer始终是0-1</strong>，（硬件层面，还会转换为1-65535或者1-255），而1对应的值变成了：100nits  200nits 1000nits,所以需要不同的曲线。</p>
+<p><img src="/../../images/%E4%B8%BB%E6%9C%BA%E6%B8%B2%E6%9F%93%E5%92%8C%E4%BC%98%E5%8C%96%E6%8A%80%E6%9C%AF%E6%A6%82%E8%A6%81/1569204914339.png" alt="1569204914339"></p>
+<p>寒霜策略：</p>
+<p><img src="/../../images/%E4%B8%BB%E6%9C%BA%E6%B8%B2%E6%9F%93%E5%92%8C%E4%BC%98%E5%8C%96%E6%8A%80%E6%9C%AF%E6%A6%82%E8%A6%81/1569205757913.png" alt="1569205757913"></p>
+<h3 id="2-14-后处理：TAA"><a href="#2-14-后处理：TAA" class="headerlink" title="2.14. 后处理：TAA"></a>2.14. 后处理：TAA</h3><p>参考：SIGGRAPH2016 Temporal Reprojection AA INSIDE</p>
+<p><img src="/../../images/%5B%E7%BB%84%E5%86%85%E5%88%86%E4%BA%AB%5D%E4%B8%BB%E6%9C%BA%E6%B8%B2%E6%9F%93%E5%92%8C%E4%BC%98%E5%8C%96%E6%8A%80%E6%9C%AF%E6%A6%82%E8%A6%81/TAACompare.jpg" alt="TAACompare"></p>
+<h2 id="3-GPU架构"><a href="#3-GPU架构" class="headerlink" title="3. GPU架构"></a>3. GPU架构</h2><h3 id="3-1-GPU存储架构"><a href="#3-1-GPU存储架构" class="headerlink" title="3.1. GPU存储架构"></a>3.1. GPU存储架构</h3><p>Registers:  [on-chip]5 clocks   </p>
+<p>Shared Memory ： [on-chip]50 clocks</p>
+<p>Local Memory ：  [logic  on-chip] 100 clocks</p>
+<p>Constant Memory ：150 clocks +  conditional Cache.</p>
+<p>Global Memory ：150 clocks</p>
+<p>Texture Memory ：150 clocks  + Cache + Filter etc.</p>
+<p>Host Memory :  Pageable And Pinned. </p>
+<p><img src="/../../images/%5B%E7%BB%84%E5%86%85%E5%88%86%E4%BA%AB%5D%E4%B8%BB%E6%9C%BA%E6%B8%B2%E6%9F%93%E5%92%8C%E4%BC%98%E5%8C%96%E6%8A%80%E6%9C%AF%E6%A6%82%E8%A6%81/1569141565643.png" alt="1569141565643"></p>
+<h3 id="3-2-GPU渲染架构"><a href="#3-2-GPU渲染架构" class="headerlink" title="3.2. GPU渲染架构"></a>3.2. GPU渲染架构</h3><h4 id="3-2-1-存储和计算的关系"><a href="#3-2-1-存储和计算的关系" class="headerlink" title="3.2.1. 存储和计算的关系"></a>3.2.1. 存储和计算的关系</h4><p><img src="/../../images/%5B%E7%BB%84%E5%86%85%E5%88%86%E4%BA%AB%5D%E4%B8%BB%E6%9C%BA%E6%B8%B2%E6%9F%93%E5%92%8C%E4%BC%98%E5%8C%96%E6%8A%80%E6%9C%AF%E6%A6%82%E8%A6%81/1569140686391.png" alt="1569140686391"></p>
+<h4 id="3-2-2-Wrap与Wave-Front"><a href="#3-2-2-Wrap与Wave-Front" class="headerlink" title="3.2.2. Wrap与Wave Front"></a>3.2.2. Wrap与Wave Front</h4><p><img src="/../../images/%E4%B8%BB%E6%9C%BA%E6%B8%B2%E6%9F%93%E5%92%8C%E4%BC%98%E5%8C%96%E6%8A%80%E6%9C%AF%E6%A6%82%E8%A6%81/1569140550632.png" alt="1569140550632"></p>
+<p><img src="/../../images/%E4%B8%BB%E6%9C%BA%E6%B8%B2%E6%9F%93%E5%92%8C%E4%BC%98%E5%8C%96%E6%8A%80%E6%9C%AF%E6%A6%82%E8%A6%81/1569140555815.png" alt="1569140555815"></p>
+<h3 id="3-3-手游架构"><a href="#3-3-手游架构" class="headerlink" title="3.3. 手游架构"></a>3.3. 手游架构</h3><p>Memory And Tiled Based Rendering</p>
+<p>参考：siggraph2016 Best practice for Mobile</p>
+<p><img src="/../../images/%5B%E7%BB%84%E5%86%85%E5%88%86%E4%BA%AB%5D%E4%B8%BB%E6%9C%BA%E6%B8%B2%E6%9F%93%E5%92%8C%E4%BC%98%E5%8C%96%E6%8A%80%E6%9C%AF%E6%A6%82%E8%A6%81/5aa7a8c2a46f3.png" alt="5aa7a8c2a46f3"></p>
+<h2 id="4-程序优化性能关注的点"><a href="#4-程序优化性能关注的点" class="headerlink" title="4. 程序优化性能关注的点"></a>4. 程序优化性能关注的点</h2><h3 id="4-1-Draw-Call"><a href="#4-1-Draw-Call" class="headerlink" title="4.1. Draw Call"></a>4.1. Draw Call</h3><p>略</p>
+<h3 id="4-2-Early-z"><a href="#4-2-Early-z" class="headerlink" title="4.2. Early - z"></a>4.2. Early - z</h3><p>原本的深度测试是在Fragment Shader计算之后的，如果不通过深度测试，这部分Pixel计算就是浪费的。</p>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">//Buffers:</span><br>Buffer display<br>Buffer depthBuffer<br><br><span class="hljs-comment">//Shaders:</span><br>Shader simpleShader<br>Shader writeDepth<br><br><span class="hljs-comment">//Visibility</span><br><span class="hljs-keyword">for</span> mesh in scene<br>    <span class="hljs-keyword">if</span> mesh.depth &lt; depthBuffer.depth<br>       depthBuffer = writeDepth(mesh)<br><br><span class="hljs-comment">//Shading and lighting</span><br><span class="hljs-keyword">for</span> mesh in scene<br>    <span class="hljs-keyword">if</span> mesh.depth == depthBuffer.depth<br>        <span class="hljs-keyword">for</span> light in scene<br>            display += simpleShader(mesh, light)<br></code></pre></td></tr></table></figure>
+
+<p>Early-z可以假设PS不修改Depth状态，这样就能将深度测试提前。</p>
+<p>Alpha Test会直接导致Early-z失效。也就是无论这个物体有没有被遮挡，一定会发生全部的PS计算。必定产生OverDraw开销，场景中要少用。</p>
+<p>大部分引擎的优化策略：<strong>Z-Pre-Pass</strong>和Render Queue Sort。</p>
+<p>Unity官方文档的描述：</p>
+<p>The fixed-function <a target="_blank" rel="noopener" href="https://docs.unity3d.com/Manual//SL-AlphaTest.html">AlphaTest</a> - or its programmable equivalent, <code>clip()</code> - has different performance characteristics on different platforms:</p>
+<ul>
+<li>Generally you gain a small advantage when using it to remove totally transparent pixels on most platforms.优化了FrameBuffer的读取（Blend）写入，</li>
+<li><strong>However, on PowerVR GPUs found in iOS and some Android devices, alpha testing is resource-intensive. Do not try to use it for performance optimization on these platforms, as it causes the game to run slower than usual.与手机架构有关</strong></li>
+</ul>
+<h3 id="4-3-Over-Draw"><a href="#4-3-Over-Draw" class="headerlink" title="4.3. Over Draw"></a>4.3. Over Draw</h3><p><strong>GPU计算开销主要是<em>warp</em>(或WaveFront或thread，对应一次像素计算（PS）或者一次顶点(VS)计算)的多线程并行计算：需要计算的<em>warp</em>越多开销越高，计算的<em>warp</em>越复杂开销越高。</strong></p>
+<p>透明物体，程序可以通过实现，LowResolutionTransparent技术降低大范围覆盖的透明物体的OverDraw。开销分为两部分PS本身的计算和FrameBuffer的写出。</p>
+<p>可以制作特效LOD策略降低特效和透明物体的OverDraw。</p>
+<p><img src="/../../images/%5B%E7%BB%84%E5%86%85%E5%88%86%E4%BA%AB%5D%E4%B8%BB%E6%9C%BA%E6%B8%B2%E6%9F%93%E5%92%8C%E4%BC%98%E5%8C%96%E6%8A%80%E6%9C%AF%E6%A6%82%E8%A6%81/1569145360889.png" alt="1569145360889"></p>
+<h3 id="4-4-Quad-OverDraw"><a href="#4-4-Quad-OverDraw" class="headerlink" title="4.4. Quad OverDraw"></a>4.4. Quad OverDraw</h3><p>warp以2*2形式提交计算，三角形边界有无效计算，三角形越小，无效计算比例越高。PS当中一般需要每个三角形有10个像素的占用。</p>
+<p><img src="/../../images/%5B%E7%BB%84%E5%86%85%E5%88%86%E4%BA%AB%5D%E4%B8%BB%E6%9C%BA%E6%B8%B2%E6%9F%93%E5%92%8C%E4%BC%98%E5%8C%96%E6%8A%80%E6%9C%AF%E6%A6%82%E8%A6%81/1569145282601.png" alt="1569145282601"></p>
+<h3 id="4-5-Light"><a href="#4-5-Light" class="headerlink" title="4.5. Light"></a>4.5. Light</h3><p>光照需要合理分布，Deferred阶段的灯光影响区域的重叠是变相的OverDraw（非Tiled和Clustered）：</p>
+<p><img src="/../../images/%5B%E7%BB%84%E5%86%85%E5%88%86%E4%BA%AB%5D%E4%B8%BB%E6%9C%BA%E6%B8%B2%E6%9F%93%E5%92%8C%E4%BC%98%E5%8C%96%E6%8A%80%E6%9C%AF%E6%A6%82%E8%A6%81/1569145437672.png" alt="1569145437672"></p>
+<h3 id="4-6-Vertex-Count"><a href="#4-6-Vertex-Count" class="headerlink" title="4.6. Vertex Count"></a>4.6. Vertex Count</h3><p>同一个模型顶点数过多-&gt;三角面增多-&gt;Quad OverDraw增加。</p>
+<p>曲面细分在顶点带来的开销意外 还有大量的Quad OverDraw的开销。</p>
+<h3 id="4-7-Texture压缩与内存优化"><a href="#4-7-Texture压缩与内存优化" class="headerlink" title="4.7. Texture压缩与内存优化"></a>4.7. Texture压缩与内存优化</h3><p>纹理是内存当中最主要的的资源，需要合理的进行Tiling和Packing策略，提升利用率。</p>
+<h3 id="4-8-Baking"><a href="#4-8-Baking" class="headerlink" title="4.8. Baking"></a>4.8. Baking</h3><p>烘焙唯一的性能影响就是Lighmap的内存占用。必须要合理调节渲染参数。通常需要用一米面积多少个texel的限制。每个模型都需要具体调整。</p>
+<h3 id="4-9-MipMap"><a href="#4-9-MipMap" class="headerlink" title="4.9. MipMap"></a>4.9. MipMap</h3><p>重要的远处物体反走样，提升效果的特性。但是内存占用会升高。</p>
+<h3 id="4-10-Testure-Streaming"><a href="#4-10-Testure-Streaming" class="headerlink" title="4.10. Testure Streaming"></a>4.10. Testure Streaming</h3><p>解决Mipmap内存占用的问题。</p>
+<h3 id="4-11-Shader预加载"><a href="#4-11-Shader预加载" class="headerlink" title="4.11. Shader预加载"></a>4.11. Shader预加载</h3><p>如果场景中Shader变体过多，需要考虑Shader的预加载。</p>
+<h3 id="4-12-Shader分支"><a href="#4-12-Shader分支" class="headerlink" title="4.12. Shader分支"></a>4.12. Shader分支</h3><p>通常需要切换渲染效果：切换方式有3种：</p>
+<ol>
+<li>宏：</li>
+</ol>
+<p>通过#define关键字可以定义Shader的表现。不能游戏时切换，主要用来测试和调试，或者多平台兼容。</p>
+<ol start="2">
+<li>变体：</li>
+</ol>
+<p>通过Shader的变体宏控制分支开关，缺点是会生成大量变体。</p>
+<ol start="3">
+<li>if else 分支语句切换：</li>
+</ol>
+<p>如果没有合理使用可能导致性能降低，但是通常可以提升性能并且降低变体数量。</p>
+<h2 id="5-美术资源可能带来的性能问题"><a href="#5-美术资源可能带来的性能问题" class="headerlink" title="5. 美术资源可能带来的性能问题"></a>5. 美术资源可能带来的性能问题</h2><ol>
+<li>游戏内存： 场景当中要绘制的所有东西都需要保存到内存中，其中最重要的就是：<strong>模型、贴图</strong>。</li>
+<li>drawcall：每绘制一种东西（不同的模型：即使是相同的材质球也算不同的模型，除非合并他们的mesh），<strong>内存都需要把相关的渲染参数、模型数据、贴图数据传递到GPU</strong>，这个速度非常慢，所以看到的模型越多，drawcall越多。</li>
+<li>GPU渲染速度：模型的材质越复杂，渲染越慢。这个靠TA来制定标准即可。</li>
+</ol>
+<p>对应的美术资源优化主要有个以下方面：</p>
+<ol>
+<li>模型拆分，模型组件复用：美术制作场景时，复用模型资源进行摆放。<strong>只是为了提升工作效率，拆分之后还是需要尽可能使用相同材质，最终还是要合并。</strong></li>
+<li>贴图Tiling，贴图复用：能够直接降低内存开销。<strong>为了效果可以使用更少、分辨率更高的贴图。</strong></li>
+<li>材质复用：不同的模型使用同一个材质球（必须是同一个材质球，而不是不同的材质球同一个参数。）<strong>材质复用的目的，是最终要合并网格以减少drawcall，如果不合并那么材质复用就没有意义。</strong> <strong>Dynamic Batch</strong> 就是这个原理，但是他会在内存生成一份合并后的mesh，相当于内存占用翻倍，浪费内存。<strong>Static Batch</strong>也是一样，只不过是静态合并好。但是合并的物体覆盖全场景。还会导致遮挡剔除失效，同样占内存。</li>
+<li>Prefab、Model复用（包括组件的Prefab，完整模型的Prefab）：直接提升资源利用率。这种服用就是一模一样的mesh和材质，可以直接合并。</li>
+</ol>
+<h3 id="5-1-游戏性能瓶颈：模型"><a href="#5-1-游戏性能瓶颈：模型" class="headerlink" title="5.1. 游戏性能瓶颈：模型"></a>5.1. 游戏性能瓶颈：模型</h3><p>由于场景资源复杂，可能遇到的性能瓶颈：</p>
+<ol>
+<li>模型数量：模型数量越多（ 一个submesh算一个模型 ）drawcall越多，成正比。</li>
+<li>一个模型的面数：模型越大，越占内存。（不使用static batch的原因）。</li>
+<li>模型属性太多（比如各个uv通道全部使用，normal、tangent全部使用）：属性使用的越多，越占内存。</li>
+</ol>
+<p><strong>模型的内存开销&#x3D;模型数量 * 一个模型的面数 * 模型属性</strong></p>
+<p><strong>模型的drawcall 开销&#x3D; 场景中的模型数量。</strong></p>
+<h3 id="5-2-游戏性能优化：模型"><a href="#5-2-游戏性能优化：模型" class="headerlink" title="5.2. 游戏性能优化：模型"></a>5.2. 游戏性能优化：模型</h3><ol>
+<li>美术在3Dmax当中合并不同的mesh。（相同材质的合并，通过合理分布uv可以让大部分mesh复用同一个材质）。<strong>能够在模型总内存消耗不变的情况下降低drawcall。</strong></li>
+<li>如果材质的属性不使用，就不要输出，例如：第二套uv，顶点色，切线信息。<strong>直接降低内存开销。</strong></li>
+<li>控制模型面数，场景当中看不到的面裁切掉。<strong>直接降低内存开销。</strong></li>
+</ol>
+<h3 id="5-3-游戏性能瓶颈：贴图"><a href="#5-3-游戏性能瓶颈：贴图" class="headerlink" title="5.3. 游戏性能瓶颈：贴图"></a>5.3. 游戏性能瓶颈：贴图</h3><ol>
+<li><strong>场景中涉及到的</strong>贴图数量越多，内存占用越大。（例如：一张1024*1024的三通道贴图，相当于一个100万点的只记录了顶点位置的模型，相当于10万顶点并记录了顶点色的模型），美术需要考虑模型和贴图之间的平衡。</li>
+<li><strong>场景中涉及到的</strong>贴图越大，内存占用越多。</li>
+<li><strong>场景中涉及到的</strong>贴图开启mipmap占用内存越多。</li>
+<li>如果贴图不在场景中，那他就只是占用硬盘而已。</li>
+</ol>
+<p><strong>贴图内存开销&#x3D; 贴图数量 * 贴图大小。</strong></p>
+<p><strong>贴图drawcall开销 &#x3D; 基本只和内存有关。</strong></p>
+<p>*<strong>注：</strong>“场景当中涉及到的”指的是客户端从硬盘加载到内存的场景数据。</p>
+<h3 id="5-4-游戏性能优化：贴图"><a href="#5-4-游戏性能优化：贴图" class="headerlink" title="5.4. 游戏性能优化：贴图"></a>5.4. 游戏性能优化：贴图</h3><p><strong>贴图内存开销&#x3D; 贴图数量 * 贴图大小。</strong></p>
+<ol>
+<li>使用Tiling方式的贴图。<strong>减小贴图大小。</strong></li>
+<li>提高利用率。<strong>减少贴图数量。</strong></li>
+<li>LightMap 一般会很占用内存，需要合理调整大小，和烘焙参数。</li>
+</ol>
+<h3 id="5-5-游戏性能瓶颈：材质"><a href="#5-5-游戏性能瓶颈：材质" class="headerlink" title="5.5. 游戏性能瓶颈：材质"></a>5.5. 游戏性能瓶颈：材质</h3><ol>
+<li><strong>场景中涉及到的材质</strong>数量越多drawcall越多。</li>
+<li><strong>场景中涉及到的材质</strong>使用的贴图越多占用内存越多。</li>
+</ol>
+<p>材质内存开销 &#x3D;  几乎不考虑。</p>
+<p>材质drawcall开销&#x3D; 主要看mesh，因为如果同一个mesh 使用不同的材质，那么drawcall还是两个。</p>
+<p><strong>材质复用的真正目的是为了能够合并场景中使用相同材质的mesh。以直接减少drawcall。</strong></p>
+<h3 id="5-6-游戏性能优化：材质"><a href="#5-6-游戏性能优化：材质" class="headerlink" title="5.6. 游戏性能优化：材质"></a>5.6. 游戏性能优化：材质</h3><p><strong>材质复用的真正目的：为了能够合并场景中使用相同材质的mesh，以直接减少drawcall。</strong></p>
+<ol>
+<li><strong>使用相同的材质 + 不同的mesh</strong> 的策略来实现丰富的表现，方便合并。例如：用刷顶点色，代替mask贴图。</li>
+<li>材质复用优先于mesh复用：如果mesh复用，而使用了不同的材质，那么drawcall不能再减少了。如果复用了材质（同一个材质球），而使用了不同的mesh，那么有很多方法来合并mesh以减少drawcall。</li>
+</ol>
+<h3 id="5-7-游戏性能瓶颈：Quad-OverDraw-、OverDraw"><a href="#5-7-游戏性能瓶颈：Quad-OverDraw-、OverDraw" class="headerlink" title="5.7. 游戏性能瓶颈：Quad OverDraw 、OverDraw"></a>5.7. 游戏性能瓶颈：Quad OverDraw 、OverDraw</h3><p><strong>GPU计算开销主要是<em>warp</em>(或WaveFront或thread，对应一次像素计算（PS）或者一次顶点(VS)计算)的多线程并行计算：需要计算的<em>warp</em>越多开销越高，计算的<em>warp</em>越复杂开销越高。</strong></p>
+<p>在渲染管线当中主要是VS阶段计算（和顶点数相关）和PS阶段的计算（和物体覆盖像素有关）。其中PS开销最高。也就是说物体占用的像素越多，开销越高。</p>
+<p>OverDraw：</p>
+<p>​	1.可见透明物体，所有未遮挡像素都会计算。多层透明物体重叠，会导致PS阶段需要计算的Warp数提升。</p>
+<p>​	2.Alpha Test物体：无论是否被遮挡，Early-Z完全失效，导致PS阶段计算的Warp数提升。</p>
+<ol start="3">
+<li>后处理：每一个后处理相当于全屏每个像素计算一次。</li>
+</ol>
+<p>Quad OverDraw：</p>
+<p>​	PS阶段Warp实际上以2*2为单位计算，也就是说三角形的渲染边界会有很多无效的像素被计算。</p>
+<ol>
+<li>狭长三角形，对像素利用率过低。</li>
+<li>距离过远的三角形，如果缩成一个像素点，开销为实际需要的4倍，如果占据8个限速点，大概为实际需要的2倍。</li>
+</ol>
+<h3 id="5-8-游戏性能优化：Quad-OverDraw-、OverDraw"><a href="#5-8-游戏性能优化：Quad-OverDraw-、OverDraw" class="headerlink" title="5.8. 游戏性能优化：Quad OverDraw 、OverDraw"></a>5.8. 游戏性能优化：Quad OverDraw 、OverDraw</h3><p>OverDraw：</p>
+<ol>
+<li>用更细化的网格秒回透明物体、或者AlphaTest物体。</li>
+<li>场景中少用AlphaTest ：例如：蜘蛛网用AlphaBlend。铁丝网少用。</li>
+<li>对后处理进行合并计算，去除不必要的后处理。</li>
+</ol>
+<p>Quad OverDarw</p>
+<ol>
+<li>美术布线避免使用狭长三角形。</li>
+<li>使用LOD，保证每一个三角形的像素占用率。</li>
+</ol>
+
+    </main>
+    <footer class="post-footer">
+      
+    </footer>
+  </article>
+  
+  
+  <nav class="page-nav">
+    <div class="page-nav-next page-nav-item">
+      
+      <a href="/2022/07/09/RTR/%E5%A4%A7%E6%B0%94%E6%95%A3%E5%B0%84/" rel="next" title="大气散射"><i class="fas fa-angle-left"></i><span class="nav-title">大气散射</span></a>
+      
+    </div>
+    <div class="page-nav-prev page-nav-item">
+      
+      <a href="/2022/07/09/RTR/%E4%BD%93%E7%A7%AF%E4%BA%91/" rel="prev" title="体积云光照部分相关理论"><span class="nav-title">体积云光照部分相关理论</span><i class="fas fa-angle-right"></i></a>
+      
+    </div>
+  </nav>
+  
+  
+  
+
+<div class="comments" id="comments">
+  
+  
+  <div class="commentjs" id="comment-thread"></div>
+  <link rel="stylesheet" href="/css/commentjs.css">
+  <script defer type="text/javascript" src="/js/marked.min.js"></script>
+  <script defer type="text/javascript" src="/js/timeago.min.js"></script>
+  <script defer type="text/javascript" src="/js/highlight.min.js"></script>
+  <script defer type="text/javascript" src="/js/commentjs.js"></script>
+  <script type="text/javascript">
+  $(document).ready(function () {
+    getComments({
+      "type": "github",
+      "user": "leinlin",
+      "repo": "leinlin.github.io",
+      "client_id": "aee134bdfb54c4ef5826",
+      "client_secret": "4af1d3f2b82dccc028c49715becc01e611afbe43",
+      "no_comment": "这个页面还没有评论，现在就去评论吧！",
+      "go_to_comment": "去评论",
+      "issue_title": "主机渲染和优化技术概要",
+      "btn_class": "button",
+      "comments_target": "#comment-thread"
+    });
+    marked.setOptions({
+      "highlight": function (code, lang) {
+        return hljs.highlightAuto(code).value;
+      }
+    });
+    function mark() {
+      var markdowns = document.getElementsByClassName("markdown");
+      for (var i = 0; i < markdowns.length; ++i){
+        if (markdowns[i].innerHTML) {
+          markdowns[i].innerHTML = marked(markdowns[i].innerHTML);
+        }
+      }
+    }
+    window.addEventListener("DOMContentLoaded", mark, false);
+    window.addEventListener("load", mark, false);
+  });
+  </script>
+  
+  
+</div>
+
+
+
+  
+</div>
+
+          </div>
+          
+          
+          
+<aside class="sidebar" id="sidebar" style="background: url(/images/background.png);">
+  
+  <div class="search">
+    <div class="form-group">
+      <i class="fas fa-search"></i><input type="search" id="search-input" name="q" results="0" placeholder="搜索" class="form-control"/>
+    </div>
+  </div>
+  <div class="search-result-box" id="search-result"></div>
+  
+  
+<div class="info sidebar-item" id="info">
+  
+  <img class="author-avatar" src="/images/avatar.jpg" alt="leinlin">
+  
+  <h1 class="author-name">leinlin</h1>
+  <h2 class="author-description"></h2>
+  <div class="site-count">
+    
+    
+    
+    
+    <div class="categories-count count-block">
+      <div class="site-count-title">分类</div>
+      <div><a href="/categories/">17</a></div>
+    </div>
+    
+    
+  </div>
+  
+  <div class="rss">
+    <a class="rss-link button sidebar-item" href="/atom.xml"><i class="fas fa-rss"></i>RSS</a>
+  </div>
+  
+</div>
+
+
+  <div class="sidebar-sticky">
+    
+    
+    
+    
+    
+    <hr>
+    <div class="post-toc sidebar-item" id="toc-div">
+      <div><i class="fas fa-list-ol"></i>文章目录</div>
+      <div class="post-toc-content"><ol class="list-group toc"><li class="toc-item toc-level-1"><a class="list-group-item toc-link" href="#%E4%B8%BB%E6%9C%BA%E6%B8%B2%E6%9F%93%E5%92%8C%E4%BC%98%E5%8C%96%E6%8A%80%E6%9C%AF%E6%A6%82%E8%A6%81"><span class="toc-text">主机渲染和优化技术概要</span></a><ol class="list-group toc-child"><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#1-%E6%B8%B2%E6%9F%93%E6%B5%81%E7%A8%8B"><span class="toc-text">1. 渲染流程</span></a><ol class="list-group toc-child"><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#1-1-RenderPipeline"><span class="toc-text">1.1. RenderPipeline</span></a></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#1-2-%E6%B8%B2%E6%9F%93%E5%8F%82%E6%95%B0"><span class="toc-text">1.2. 渲染参数</span></a></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#1-3-%E5%B8%B8%E7%94%A8%E5%85%89%E7%85%A7%E6%A8%A1%E5%9E%8B"><span class="toc-text">1.3. 常用光照模型</span></a></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#1-4-%E5%9F%BA%E7%A1%80%E5%85%89%E7%85%A7%E8%AE%A1%E7%AE%97"><span class="toc-text">1.4. 基础光照计算</span></a><ol class="list-group toc-child"><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#1-4-1-D%E9%A1%B9-%EF%BC%9AGGX-Trowbridge-Reitz"><span class="toc-text">1.4.1. D项 ：GGX (Trowbridge-Reitz)</span></a></li><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#1-4-2-G%E9%A1%B9%EF%BC%9ASchlick"><span class="toc-text">1.4.2. G项：Schlick</span></a></li><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#1-4-3-F%E9%A1%B9%EF%BC%9ASchlick%E2%80%99s-approximation"><span class="toc-text">1.4.3. F项：Schlick’s approximation</span></a></li><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#1-4-4-IBL"><span class="toc-text">1.4.4. IBL</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#1-5-%E5%85%89%E7%85%A7%E6%8A%80%E6%9C%AF"><span class="toc-text">1.5. 光照技术</span></a><ol class="list-group toc-child"><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#1-5-1-multipass-forward"><span class="toc-text">1.5.1. multipass forward</span></a></li><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#1-5-2-multipass-deferred"><span class="toc-text">1.5.2. multipass deferred</span></a></li><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#1-5-3-singlepass-deferred"><span class="toc-text">1.5.3. singlepass deferred</span></a></li><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#1-5-4-Tiled-based-Shading"><span class="toc-text">1.5.4. Tiled-based  Shading</span></a></li><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#1-5-5-Clustered-Shading"><span class="toc-text">1.5.5. Clustered Shading</span></a></li><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#1-5-6-%E6%95%88%E6%9E%9C%E5%AF%B9%E6%AF%94"><span class="toc-text">1.5.6. 效果对比</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#2-%E6%B8%B2%E6%9F%93%E6%8A%80%E6%9C%AF"><span class="toc-text">2. 渲染技术</span></a><ol class="list-group toc-child"><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#2-1-%E5%9F%BA%E7%A1%80%E6%9D%90%E8%B4%A8"><span class="toc-text">2.1. 基础材质</span></a></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#2-2-%E5%88%86%E5%B1%82%E7%BB%86%E8%8A%82%E6%9D%90%E8%B4%A8"><span class="toc-text">2.2. 分层细节材质</span></a></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#2-3-%E5%88%86%E5%B1%82%E6%9D%90%E8%B4%A8%E7%B3%BB%E7%BB%9F"><span class="toc-text">2.3. 分层材质系统</span></a></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#2-4-%E6%9D%90%E8%B4%A8%E5%BA%93%E7%B3%BB%E7%BB%9F"><span class="toc-text">2.4. 材质库系统</span></a></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#2-5-%E7%89%B9%E6%95%88%E6%9D%90%E8%B4%A8"><span class="toc-text">2.5. 特效材质</span></a></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#2-6-%E5%B1%8F%E5%B9%95%E7%A9%BA%E9%97%B4%E6%8A%80%E6%9C%AF"><span class="toc-text">2.6. 屏幕空间技术</span></a><ol class="list-group toc-child"><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#2-6-1-%E4%B8%BB%E8%A6%81%E6%B6%89%E5%8F%8A%E5%88%B0%E5%B1%8F%E5%B9%95%E7%A9%BA%E9%97%B4%E7%9A%84Ray-Trace%E6%93%8D%E4%BD%9C%E3%80%82"><span class="toc-text">2.6.1. 主要涉及到屏幕空间的Ray Trace操作。</span></a></li><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#2-6-2-Screen-Space-Contact-Shadow"><span class="toc-text">2.6.2. Screen Space Contact Shadow</span></a></li><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#2-6-3-Screen-Space-Reflections"><span class="toc-text">2.6.3. Screen Space Reflections</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#2-7-%E6%AF%9B%E5%8F%91"><span class="toc-text">2.7. 毛发</span></a><ol class="list-group toc-child"><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#2-7-1-hairworks-or-TressFX%EF%BC%9A"><span class="toc-text">2.7.1. hairworks or TressFX：</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#2-8-%E7%81%AF%E5%85%89%E6%96%B9%E6%A1%88"><span class="toc-text">2.8. 灯光方案</span></a></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#2-9-%E9%98%B4%E5%BD%B1%E6%96%B9%E6%A1%88"><span class="toc-text">2.9. 阴影方案</span></a><ol class="list-group toc-child"><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#2-9-1-%E5%B7%AB%E5%B8%883%E7%9A%84CSM"><span class="toc-text">2.9.1. 巫师3的CSM</span></a></li><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#2-9-2-%E9%98%B4%E5%BD%B1%E4%BB%A3%E7%90%86"><span class="toc-text">2.9.2. 阴影代理</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#2-10-LOD%E6%96%B9%E6%A1%88"><span class="toc-text">2.10. LOD方案</span></a></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#2-11-%E5%90%8E%E5%A4%84%E7%90%86%EF%BC%9A%E6%9B%9D%E5%85%89%E4%B8%8E%E5%85%89%E7%85%A7%E8%AE%BE%E5%AE%9A"><span class="toc-text">2.11. 后处理：曝光与光照设定</span></a></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#2-12-%E9%80%8F%E6%98%8E%E7%89%A9%E4%BD%93%E4%BD%8E%E5%88%86%E8%BE%A8%E7%8E%87%E6%B8%B2%E6%9F%93"><span class="toc-text">2.12. 透明物体低分辨率渲染</span></a></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#2-13-%E5%90%8E%E5%A4%84%E7%90%86%EF%BC%9AHDR-and-ToneMapping"><span class="toc-text">2.13. 后处理：HDR and ToneMapping</span></a></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#2-14-%E5%90%8E%E5%A4%84%E7%90%86%EF%BC%9ATAA"><span class="toc-text">2.14. 后处理：TAA</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#3-GPU%E6%9E%B6%E6%9E%84"><span class="toc-text">3. GPU架构</span></a><ol class="list-group toc-child"><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#3-1-GPU%E5%AD%98%E5%82%A8%E6%9E%B6%E6%9E%84"><span class="toc-text">3.1. GPU存储架构</span></a></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#3-2-GPU%E6%B8%B2%E6%9F%93%E6%9E%B6%E6%9E%84"><span class="toc-text">3.2. GPU渲染架构</span></a><ol class="list-group toc-child"><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#3-2-1-%E5%AD%98%E5%82%A8%E5%92%8C%E8%AE%A1%E7%AE%97%E7%9A%84%E5%85%B3%E7%B3%BB"><span class="toc-text">3.2.1. 存储和计算的关系</span></a></li><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#3-2-2-Wrap%E4%B8%8EWave-Front"><span class="toc-text">3.2.2. Wrap与Wave Front</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#3-3-%E6%89%8B%E6%B8%B8%E6%9E%B6%E6%9E%84"><span class="toc-text">3.3. 手游架构</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#4-%E7%A8%8B%E5%BA%8F%E4%BC%98%E5%8C%96%E6%80%A7%E8%83%BD%E5%85%B3%E6%B3%A8%E7%9A%84%E7%82%B9"><span class="toc-text">4. 程序优化性能关注的点</span></a><ol class="list-group toc-child"><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#4-1-Draw-Call"><span class="toc-text">4.1. Draw Call</span></a></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#4-2-Early-z"><span class="toc-text">4.2. Early - z</span></a></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#4-3-Over-Draw"><span class="toc-text">4.3. Over Draw</span></a></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#4-4-Quad-OverDraw"><span class="toc-text">4.4. Quad OverDraw</span></a></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#4-5-Light"><span class="toc-text">4.5. Light</span></a></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#4-6-Vertex-Count"><span class="toc-text">4.6. Vertex Count</span></a></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#4-7-Texture%E5%8E%8B%E7%BC%A9%E4%B8%8E%E5%86%85%E5%AD%98%E4%BC%98%E5%8C%96"><span class="toc-text">4.7. Texture压缩与内存优化</span></a></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#4-8-Baking"><span class="toc-text">4.8. Baking</span></a></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#4-9-MipMap"><span class="toc-text">4.9. MipMap</span></a></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#4-10-Testure-Streaming"><span class="toc-text">4.10. Testure Streaming</span></a></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#4-11-Shader%E9%A2%84%E5%8A%A0%E8%BD%BD"><span class="toc-text">4.11. Shader预加载</span></a></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#4-12-Shader%E5%88%86%E6%94%AF"><span class="toc-text">4.12. Shader分支</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#5-%E7%BE%8E%E6%9C%AF%E8%B5%84%E6%BA%90%E5%8F%AF%E8%83%BD%E5%B8%A6%E6%9D%A5%E7%9A%84%E6%80%A7%E8%83%BD%E9%97%AE%E9%A2%98"><span class="toc-text">5. 美术资源可能带来的性能问题</span></a><ol class="list-group toc-child"><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#5-1-%E6%B8%B8%E6%88%8F%E6%80%A7%E8%83%BD%E7%93%B6%E9%A2%88%EF%BC%9A%E6%A8%A1%E5%9E%8B"><span class="toc-text">5.1. 游戏性能瓶颈：模型</span></a></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#5-2-%E6%B8%B8%E6%88%8F%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%EF%BC%9A%E6%A8%A1%E5%9E%8B"><span class="toc-text">5.2. 游戏性能优化：模型</span></a></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#5-3-%E6%B8%B8%E6%88%8F%E6%80%A7%E8%83%BD%E7%93%B6%E9%A2%88%EF%BC%9A%E8%B4%B4%E5%9B%BE"><span class="toc-text">5.3. 游戏性能瓶颈：贴图</span></a></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#5-4-%E6%B8%B8%E6%88%8F%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%EF%BC%9A%E8%B4%B4%E5%9B%BE"><span class="toc-text">5.4. 游戏性能优化：贴图</span></a></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#5-5-%E6%B8%B8%E6%88%8F%E6%80%A7%E8%83%BD%E7%93%B6%E9%A2%88%EF%BC%9A%E6%9D%90%E8%B4%A8"><span class="toc-text">5.5. 游戏性能瓶颈：材质</span></a></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#5-6-%E6%B8%B8%E6%88%8F%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%EF%BC%9A%E6%9D%90%E8%B4%A8"><span class="toc-text">5.6. 游戏性能优化：材质</span></a></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#5-7-%E6%B8%B8%E6%88%8F%E6%80%A7%E8%83%BD%E7%93%B6%E9%A2%88%EF%BC%9AQuad-OverDraw-%E3%80%81OverDraw"><span class="toc-text">5.7. 游戏性能瓶颈：Quad OverDraw 、OverDraw</span></a></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#5-8-%E6%B8%B8%E6%88%8F%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%EF%BC%9AQuad-OverDraw-%E3%80%81OverDraw"><span class="toc-text">5.8. 游戏性能优化：Quad OverDraw 、OverDraw</span></a></li></ol></li></ol></li></ol></div>
+    </div>
+    
+    
+    
+    <hr>
+    <div class="social-link sidebar-item">
+      <div><i class="far fa-address-card"></i>社交链接</p></div>
+      <ul>
+        
+        <li><i class="fab fa-github"></i><a href="https://leinlin.github.com/" target="_blank">GitHub</a></li>
+        
+      </ul>
+    </div>
+    
+    
+  </div>
+</aside>
+
+
+          
+        </div>
+      </div>
+    </main>
+    
+<footer id="footer" class="footer" style="background: #33363b;">
+  <div class="container">
+    <div class="back-to-top">
+      <button id="back-to-top"><i class="fas fa-angle-double-up" aria-label="回到顶部"></i></button>
+    </div>
+    <div class="footer-container">
+      <div class="footer-left">
+        <div class="copyright">
+          <span class="author">leinlin</span><span class="year"><i class="far fa-copyright"></i>2022</span>
+        </div>
+        
+        <div class="busuanzi">
+          <span id="busuanzi_container_site_pv"><i class="fas fa-eye" aria-label="站点点击量" aria-hidden="false"></i><span id="busuanzi_value_site_pv"></span></span><span id="busuanzi_container_site_uv"><i class="fas fa-user" aria-label="站点用户数" aria-hidden="false"></i><span id="busuanzi_value_site_uv"></span></span><span id="busuanzi_container_page_pv"><i class="far fa-file-alt"></i><span id="busuanzi_value_page_pv" aria-label="页面点击量" aria-hidden="false"></span></span>
+        </div>
+        
+      </div>
+      <div class="footer-right">
+        <div class="custom-info">
+          
+          托管于<i class="fab fa-github-alt"></i><a href="https://pages.github.com/" target="_blank">GitHub Pages</a>
+          
+        </div>
+        <div class="powered-by">
+          由 <a href="https://hexo.io/" target="_blank">Hexo</a> 强力驱动 | 主题 <a href="https://github.com/AlynxZhou/hexo-theme-aria/" target="_blank">ARIA</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+  <script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

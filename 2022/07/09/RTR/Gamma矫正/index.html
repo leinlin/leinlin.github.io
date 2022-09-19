@@ -1,0 +1,456 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#33363b">
+    <meta name="msapplication-TileColor" content="#33363b">
+    
+    
+    
+    
+    <meta name="keywords" content="leinlin, ARIA, Hexo">
+    
+    
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png">
+    
+    
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicons/android-chrome-192x192.png">
+    
+    
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png">
+    
+    
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png">
+    
+    
+    <link rel="mask-icon" href="/favicons/safari-pinned-tab.svg" color="#33363b">
+    
+    
+    <link rel="manifest" href="/favicons/site.webmanifest">
+    
+    
+    <meta name="msapplication-config" content="/favicons/browserconfig.xml">
+    
+    
+    <link rel="alternate" href="/atom.xml" title="leinlin的小笔记" type="application/atom+xml" />
+    
+    
+    <link rel="shortcut icon" type="image/x-icon" href="/favicons/favicon.ico">
+    
+    
+    <link rel="stylesheet" type="text/css" href="/css/normalize.css">
+    <link rel="stylesheet" type="text/css" href="/css/index.css">
+    
+    <link rel="stylesheet" type="text/css" href="/css/sidebar.css">
+    
+    
+<link rel="stylesheet" type="text/css" href="/css/page.css">
+<link rel="stylesheet" type="text/css" href="/css/post.css">
+
+    <link rel="stylesheet" type="text/css" href="/css/custom.css">
+    <link rel="stylesheet" type="text/css" href="/css/atom-one-light.css">
+    <link rel="stylesheet" type="text/css" href="/css/lightgallery.min.css">
+    <script type="text/javascript" src="/js/jquery.min.js"></script>
+    <script defer type="text/javascript" src="/js/util.js"></script>
+    <script defer type="text/javascript" src="/js/clipboard.min.js"></script>
+    <script defer type="text/javascript" src="/js/scrollspy.js"></script>
+    <script defer type="text/javascript" src="/js/fontawesome-all.min.js"></script>
+    <script defer type="text/javascript" src="/js/lightgallery.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-fullscreen.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-hash.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-pager.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-thumbnail.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-zoom.min.js"></script>
+    
+    <script defer src="/js/busuanzi.pure.mini.js"></script>
+    
+    
+    <script defer type="text/javascript" src="/js/search.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function () {
+      var searchPath = "search.xml";
+      if (searchPath.length === 0) {
+        searchPath = "search.xml";
+      }
+      var path = "/" + searchPath;
+      searchFunc(path, "search-input", "search-result");
+    });
+    </script>
+    
+    
+    
+    <script defer type="text/javascript" src="https://cdn.staticfile.org/MathJax/MathJax-2.6-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ["$","$"], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ["script", "noscript", "style", "textarea", "pre", "code"]
+      }
+    });
+    </script>
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for (i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += " has-jax";
+      }
+    });
+    </script>
+    
+    
+    <script defer type="text/javascript" src="/js/index.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function () {
+      var cb = null;
+      var els = $(".post figure.highlight");
+      if (els.length) {
+        // Enabled Hexo highlight line number.
+        $(els).each(function (i, e) {
+          // $(e).before("<button class=\"copy button\">复制</button>");
+          $(e).before([
+            "<div class=\"code-titlebar\">",
+              "<div class=\"titlebar-left\">",
+                "<button class=\"copy\">复制</button>",
+              "</div>",
+            "</div>"
+          ].join(""));
+        });
+        cb = new ClipboardJS("button.copy", {
+          "target": function (trigger) {
+              // Get target element by DOM API.
+              return trigger.parentNode.parentNode.nextElementSibling.firstChild.firstChild.firstChild.lastChild.firstChild.firstChild;
+          }
+        });
+      } else {
+        // Disabled Hexo highlight line number.
+        els = $(".post pre code");
+        $(els).each(function (i, e) {
+          // Add button before pre, not code.
+          // $(e).parent().before("<button class=\"copy button\">复制</button>");
+          $(e).before([
+            "<div class=\"code-titlebar\">",
+              "<div class=\"titlebar-left\">",
+                "<button class=\"copy\" >复制</button>",
+              "</div>",
+              "<div class=\"titlebar-right\">",
+                "<button class=\"button-dot dot-minimize\" aria-label=\"Decoration\"></button>",
+                "<button class=\"button-dot dot-maximize\" aria-label=\"Decoration\"></button>",
+                "<button class=\"button-dot dot-close\" aria-label=\"Decoration\"></button>",
+              "</div>",
+            "</div>"
+          ].join(""));
+        });
+        cb = new ClipboardJS("button.copy", {
+          "target": function (trigger) {
+              // Get target element by DOM API.
+              return trigger.parentNode.parentNode.nextElementSibling;
+          }
+        });
+      }
+      cb.on("success", function (e) {
+        e.clearSelection();
+        var trigger = e.trigger;
+        // Change button text as a user tip.
+        trigger.innerHTML = "已复制";
+        $(trigger).addClass("copied");
+        // Change button text back;
+        setTimeout(function () {
+          trigger.innerHTML = "复制";
+          $(trigger).removeClass("copied");
+        }, 1500);
+      });
+    });
+    </script>
+    
+    <script defer type="text/javascript" src="/js/custom.js"></script>
+    <title>Gamma矫正 | leinlin的小笔记</title>
+  <meta name="generator" content="Hexo 6.2.0"></head>
+  <body itemscope itemtype="http://schema.org/WebPage" lang="zh_CN"  data-spy="scroll" data-target=".list-group">
+    
+<header id="header" class="header" style="background: #33363b;">
+  <div class="container">
+    <div class="header-container">
+      <div class="header-title">
+        <h1 class="title"><a href="/">leinlin的小笔记</a></h1>
+        <h2 class="subtitle"></h2>
+      </div>
+      
+    </div>
+    <nav id="nav" class="nav">
+      <a id="nav-toggle" class="nav-toggle" aria-hidden="true"><i class="fas fa-bars" aria-label="切换导航栏"></i></a>
+      <ul id="menu" role="menubar" aria-hidden="false">
+        
+        <li role="menuitem"><a href="/"><i class="fas fa-home"></i><span class="menu-text">首页</span></a></li>
+        
+        <li role="menuitem"><a href="/categories/"><i class="fas fa-th-list"></i><span class="menu-text">分类</span></a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</header>
+
+
+    <main id="main" class="main">
+      <div class="container">
+        <div class="main-container">
+          <div class="content">
+            
+<div id="post" class="page">
+  
+  <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
+    <div class="post-block">
+      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/07/09/RTR/Gamma%E7%9F%AB%E6%AD%A3/">
+      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+       <meta itemprop="name" content="leinlin">
+       <meta itemprop="description" content="">
+       <meta itemprop="image" content="/images/avatar.jpg">
+      </span>
+      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+       <meta itemprop="name" content="leinlin的小笔记">
+      </span>
+    </div>
+    <header class="post-header">
+      <h1 class="post-title" itemprop="name headline">Gamma矫正</h1>
+      <div class="post-meta">
+        
+        <span class="post-date">
+          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2022-07-09T12:00:14+08:00">2022-07-09 12:00:14</time></span>
+        </span>
+        
+        
+        
+        <span class="post-meta-divider divider">|</span>
+        
+        <span class="post-categories">
+          
+          <i class="far fa-folder-open"></i><span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/RTR/" itemprop="url" rel="index"><span itemprop="name">RTR</span></a></span>
+        </span>
+        
+        
+        
+        
+      </div>
+    </header>
+    <main class="post-main" itemprop="articleBody">
+      <h1 id="Gamma矫正"><a href="#Gamma矫正" class="headerlink" title="Gamma矫正"></a>Gamma矫正</h1><p>之前总结了UnityGamma矫正相关的内容。</p>
+<p>这里进行更加详细的解释。</p>
+<p>主要的参考资料：</p>
+<p>线性空间：<a target="_blank" rel="noopener" href="https://developer.nvidia.com/gpugems/GPUGems3/gpugems3_ch24.html">GPU Gems:Chapter 24. The Importance of Being Linear</a></p>
+<p>HDR：<a target="_blank" rel="noopener" href="https://www.eizo.com.cn/global/library/management/ins-and-outs-of-hdr/index1.html">HDR标准</a></p>
+<h2 id="Gamma存在的原因"><a href="#Gamma存在的原因" class="headerlink" title="Gamma存在的原因"></a>Gamma存在的原因</h2><p><strong>一切的起因：CRT显示器对于颜色值得的响应并不是线性的</strong> + <strong>人眼对暗部更明显</strong>。</p>
+<ol>
+<li>阴极射线管在将电压转换成光强的过程中并不表现出线性关系，也就是说，计算机当中保存的0.5的颜色值，输出到CRT显示器上会变成0.25左右，整个颜色会变暗。即使在后来使用了LCD显示器，也需要进行Gamma矫正。Gamma矫正会将图像亮。$$ C_{Gamma} &#x3D; C^{1&#x2F;2.2}$$.</li>
+<li>Gamma矫正会将图像变亮的同时，还会让数值的更大的范围来描述颜色的暗部。恰巧人眼对暗部更加敏感，所以我会直接将Gamma矫正后的图像进行保存。再到后来就是，拍摄设备+存储+显示全部都是用Gamma矫正的图像。</li>
+</ol>
+<h2 id="显示器与Gamma"><a href="#显示器与Gamma" class="headerlink" title="显示器与Gamma"></a>显示器与Gamma</h2><p><strong>根据上面提到的，一般的CRT显示器和LCD显示器都会需要一个Gamma矫正才能正常显示。</strong></p>
+<p><strong>在使用HDR显示器上，同样会有一条Gamma曲线（与CRT不同的是他的分布在整个亮度区间，而不是0到1），这个是为了能够配合人类的视觉。</strong></p>
+<p>人类眼睛所能感知的最暗和最亮物体之间的差异范围（动态范围）通常为  $$ 10^{12} $$ ，传统的SDR范围是 $$  10^{3} $$ ,HDR的范围 $$ 10^{6} $$ . </p>
+<p>为了正确显示HDR图像，仅仅提高亮度是不够的 - 以与人类视力相匹配的方式显示色彩和色调至关重要。 色彩和色调受每个输入和输出设备具有的称为伽玛的输入 - 输出特性的影响。</p>
+<h2 id="渲染与Gamma"><a href="#渲染与Gamma" class="headerlink" title="渲染与Gamma"></a>渲染与Gamma</h2><p>渲染过程中，涉及到两个问题：</p>
+<ol>
+<li>如何使用sRGB图像。</li>
+<li>如何输出正确的图像格式。</li>
+</ol>
+<p>上面两个问题是独立的，互相之间没有关系，下面进行分别讨论。</p>
+<h3 id="sRGB图像的使用"><a href="#sRGB图像的使用" class="headerlink" title="sRGB图像的使用"></a>sRGB图像的使用</h3><p>一般图像都保存在sRGB空间，我们计算光照必定要在线性空间下。</p>
+<p>有两种方式得到：</p>
+<ol>
+<li>一种是通过图像API支持，例如：opengl在设置纹理是可以吧纹理标记，这样Shader在采样的时候就会自动获取到一个线性空间的颜色。这部分需要API的支持，对于手机来说一个Opengl ES 3.0 和Vulken 都支持。</li>
+<li>另一种方式是采样之后计算平方。</li>
+</ol>
+<p>在Gems里面提到，对于手动计算，可能在mipmap和filtering步骤有一些问题。</p>
+<h3 id="输出正确的图像"><a href="#输出正确的图像" class="headerlink" title="输出正确的图像"></a>输出正确的图像</h3><p>这部分就需要判断设备类型：</p>
+<p>如果支持FrameBuffer设置成sRGB那么就可以直接输出线性颜色。任何被Shader返回的值都会在保存之间进行Gamma矫正。如果开启了线性混合，那么已经保存的值会被返回到线性空间进行混合，然后在进行Gamma矫正之后保存。Alpha的值不会参与上面的操作操作。</p>
+<p>如果不支持sRGB类型的Frame Buffer。就需要进行手动矫正。但是这个时候Blend操作我们是无法控制的，所以Blend的结果是用Gamma空间直接混合的错误结果：</p>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs c">float3 finalCol = do_all_lighting_and_shading();<br><span class="hljs-type">float</span> pixelAlpha = compute_pixel_alpha();<br><span class="hljs-keyword">return</span> float4(<span class="hljs-built_in">pow</span>(finalCol, <span class="hljs-number">1.0</span> / <span class="hljs-number">2.2</span>), pixelAlpha);<br><span class="hljs-comment">// Or (cheaper, but assuming gamma of 2.0 rather than 2.2)</span><br><span class="hljs-keyword">return</span> float4( <span class="hljs-built_in">sqrt</span>( finalCol ), pixelAlpha );<br></code></pre></td></tr></table></figure>
+
+<p>如果使用了HDR显示器，那么可以不做这个操作。</p>
+<h3 id="中间结果"><a href="#中间结果" class="headerlink" title="中间结果"></a>中间结果</h3><p>只要记住如果用了sRGB的FrameBuffer，会自动编码解码，计算时统一即可。</p>
+<h3 id="HDR"><a href="#HDR" class="headerlink" title="HDR"></a>HDR</h3><p>如果使用了HDR，那么可以参考Unity的制作方案。</p>
+<p>如果没有开启HDR，原本颜色的叠加都会使用Gamma矫正。这是因为精确度低，经过Gamma编码可以让更大的区间保存暗部。在大部分8bit的颜色格式中，大部分图形API都提供了sRGB版本，就是为了尽可能提升分辨率。</p>
+<p>开启HDR表示可以使用超过255的颜色，此时所有的帧缓存会变成ARGB32.或者ARGBHalf。此时分辨率足够高，所有的线性颜色进行不断的叠加，不在需要特殊编码，而是在这一帧完全处理完成之后，在进行下面的处理。</p>
+<p>当所有的混合和或处理计算结束，Gamma矫正才会再次执行。</p>
+
+    </main>
+    <footer class="post-footer">
+      
+    </footer>
+  </article>
+  
+  
+  <nav class="page-nav">
+    <div class="page-nav-next page-nav-item">
+      
+      <a href="/2022/07/09/RTR/EarlyZ/" rel="next" title="Early Z"><i class="fas fa-angle-left"></i><span class="nav-title">Early Z</span></a>
+      
+    </div>
+    <div class="page-nav-prev page-nav-item">
+      
+      <a href="/2022/07/09/RTR/GPU%E6%B8%B2%E6%9F%93%E4%BC%98%E5%8C%96%E6%8A%80%E6%9C%AFInside_Geometry_Instancing/" rel="prev" title="GPU渲染优化技术:Inside Geometry Instancing"><span class="nav-title">GPU渲染优化技术:Inside Geometry Instancing</span><i class="fas fa-angle-right"></i></a>
+      
+    </div>
+  </nav>
+  
+  
+  
+
+<div class="comments" id="comments">
+  
+  
+  <div class="commentjs" id="comment-thread"></div>
+  <link rel="stylesheet" href="/css/commentjs.css">
+  <script defer type="text/javascript" src="/js/marked.min.js"></script>
+  <script defer type="text/javascript" src="/js/timeago.min.js"></script>
+  <script defer type="text/javascript" src="/js/highlight.min.js"></script>
+  <script defer type="text/javascript" src="/js/commentjs.js"></script>
+  <script type="text/javascript">
+  $(document).ready(function () {
+    getComments({
+      "type": "github",
+      "user": "leinlin",
+      "repo": "leinlin.github.io",
+      "client_id": "aee134bdfb54c4ef5826",
+      "client_secret": "4af1d3f2b82dccc028c49715becc01e611afbe43",
+      "no_comment": "这个页面还没有评论，现在就去评论吧！",
+      "go_to_comment": "去评论",
+      "issue_title": "Gamma矫正",
+      "btn_class": "button",
+      "comments_target": "#comment-thread"
+    });
+    marked.setOptions({
+      "highlight": function (code, lang) {
+        return hljs.highlightAuto(code).value;
+      }
+    });
+    function mark() {
+      var markdowns = document.getElementsByClassName("markdown");
+      for (var i = 0; i < markdowns.length; ++i){
+        if (markdowns[i].innerHTML) {
+          markdowns[i].innerHTML = marked(markdowns[i].innerHTML);
+        }
+      }
+    }
+    window.addEventListener("DOMContentLoaded", mark, false);
+    window.addEventListener("load", mark, false);
+  });
+  </script>
+  
+  
+</div>
+
+
+
+  
+</div>
+
+          </div>
+          
+          
+          
+<aside class="sidebar" id="sidebar" style="background: url(/images/background.png);">
+  
+  <div class="search">
+    <div class="form-group">
+      <i class="fas fa-search"></i><input type="search" id="search-input" name="q" results="0" placeholder="搜索" class="form-control"/>
+    </div>
+  </div>
+  <div class="search-result-box" id="search-result"></div>
+  
+  
+<div class="info sidebar-item" id="info">
+  
+  <img class="author-avatar" src="/images/avatar.jpg" alt="leinlin">
+  
+  <h1 class="author-name">leinlin</h1>
+  <h2 class="author-description"></h2>
+  <div class="site-count">
+    
+    
+    
+    
+    <div class="categories-count count-block">
+      <div class="site-count-title">分类</div>
+      <div><a href="/categories/">17</a></div>
+    </div>
+    
+    
+  </div>
+  
+  <div class="rss">
+    <a class="rss-link button sidebar-item" href="/atom.xml"><i class="fas fa-rss"></i>RSS</a>
+  </div>
+  
+</div>
+
+
+  <div class="sidebar-sticky">
+    
+    
+    
+    
+    
+    <hr>
+    <div class="post-toc sidebar-item" id="toc-div">
+      <div><i class="fas fa-list-ol"></i>文章目录</div>
+      <div class="post-toc-content"><ol class="list-group toc"><li class="toc-item toc-level-1"><a class="list-group-item toc-link" href="#Gamma%E7%9F%AB%E6%AD%A3"><span class="toc-text">Gamma矫正</span></a><ol class="list-group toc-child"><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#Gamma%E5%AD%98%E5%9C%A8%E7%9A%84%E5%8E%9F%E5%9B%A0"><span class="toc-text">Gamma存在的原因</span></a></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#%E6%98%BE%E7%A4%BA%E5%99%A8%E4%B8%8EGamma"><span class="toc-text">显示器与Gamma</span></a></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#%E6%B8%B2%E6%9F%93%E4%B8%8EGamma"><span class="toc-text">渲染与Gamma</span></a><ol class="list-group toc-child"><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#sRGB%E5%9B%BE%E5%83%8F%E7%9A%84%E4%BD%BF%E7%94%A8"><span class="toc-text">sRGB图像的使用</span></a></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#%E8%BE%93%E5%87%BA%E6%AD%A3%E7%A1%AE%E7%9A%84%E5%9B%BE%E5%83%8F"><span class="toc-text">输出正确的图像</span></a></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#%E4%B8%AD%E9%97%B4%E7%BB%93%E6%9E%9C"><span class="toc-text">中间结果</span></a></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#HDR"><span class="toc-text">HDR</span></a></li></ol></li></ol></li></ol></div>
+    </div>
+    
+    
+    
+    <hr>
+    <div class="social-link sidebar-item">
+      <div><i class="far fa-address-card"></i>社交链接</p></div>
+      <ul>
+        
+        <li><i class="fab fa-github"></i><a href="https://leinlin.github.com/" target="_blank">GitHub</a></li>
+        
+      </ul>
+    </div>
+    
+    
+  </div>
+</aside>
+
+
+          
+        </div>
+      </div>
+    </main>
+    
+<footer id="footer" class="footer" style="background: #33363b;">
+  <div class="container">
+    <div class="back-to-top">
+      <button id="back-to-top"><i class="fas fa-angle-double-up" aria-label="回到顶部"></i></button>
+    </div>
+    <div class="footer-container">
+      <div class="footer-left">
+        <div class="copyright">
+          <span class="author">leinlin</span><span class="year"><i class="far fa-copyright"></i>2022</span>
+        </div>
+        
+        <div class="busuanzi">
+          <span id="busuanzi_container_site_pv"><i class="fas fa-eye" aria-label="站点点击量" aria-hidden="false"></i><span id="busuanzi_value_site_pv"></span></span><span id="busuanzi_container_site_uv"><i class="fas fa-user" aria-label="站点用户数" aria-hidden="false"></i><span id="busuanzi_value_site_uv"></span></span><span id="busuanzi_container_page_pv"><i class="far fa-file-alt"></i><span id="busuanzi_value_page_pv" aria-label="页面点击量" aria-hidden="false"></span></span>
+        </div>
+        
+      </div>
+      <div class="footer-right">
+        <div class="custom-info">
+          
+          托管于<i class="fab fa-github-alt"></i><a href="https://pages.github.com/" target="_blank">GitHub Pages</a>
+          
+        </div>
+        <div class="powered-by">
+          由 <a href="https://hexo.io/" target="_blank">Hexo</a> 强力驱动 | 主题 <a href="https://github.com/AlynxZhou/hexo-theme-aria/" target="_blank">ARIA</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+  <script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

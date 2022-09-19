@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#33363b">
+    <meta name="msapplication-TileColor" content="#33363b">
+    
+    
+    
+    
+    <meta name="keywords" content="leinlin, ARIA, Hexo">
+    
+    
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png">
+    
+    
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicons/android-chrome-192x192.png">
+    
+    
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png">
+    
+    
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png">
+    
+    
+    <link rel="mask-icon" href="/favicons/safari-pinned-tab.svg" color="#33363b">
+    
+    
+    <link rel="manifest" href="/favicons/site.webmanifest">
+    
+    
+    <meta name="msapplication-config" content="/favicons/browserconfig.xml">
+    
+    
+    <link rel="alternate" href="/atom.xml" title="leinlin的小笔记" type="application/atom+xml" />
+    
+    
+    <link rel="shortcut icon" type="image/x-icon" href="/favicons/favicon.ico">
+    
+    
+    <link rel="stylesheet" type="text/css" href="/css/normalize.css">
+    <link rel="stylesheet" type="text/css" href="/css/index.css">
+    
+    <link rel="stylesheet" type="text/css" href="/css/sidebar.css">
+    
+    
+<link rel="stylesheet" type="text/css" href="/css/page.css">
+<link rel="stylesheet" type="text/css" href="/css/post.css">
+
+    <link rel="stylesheet" type="text/css" href="/css/custom.css">
+    <link rel="stylesheet" type="text/css" href="/css/atom-one-light.css">
+    <link rel="stylesheet" type="text/css" href="/css/lightgallery.min.css">
+    <script type="text/javascript" src="/js/jquery.min.js"></script>
+    <script defer type="text/javascript" src="/js/util.js"></script>
+    <script defer type="text/javascript" src="/js/clipboard.min.js"></script>
+    <script defer type="text/javascript" src="/js/scrollspy.js"></script>
+    <script defer type="text/javascript" src="/js/fontawesome-all.min.js"></script>
+    <script defer type="text/javascript" src="/js/lightgallery.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-fullscreen.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-hash.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-pager.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-thumbnail.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-zoom.min.js"></script>
+    
+    <script defer src="/js/busuanzi.pure.mini.js"></script>
+    
+    
+    <script defer type="text/javascript" src="/js/search.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function () {
+      var searchPath = "search.xml";
+      if (searchPath.length === 0) {
+        searchPath = "search.xml";
+      }
+      var path = "/" + searchPath;
+      searchFunc(path, "search-input", "search-result");
+    });
+    </script>
+    
+    
+    
+    <script defer type="text/javascript" src="https://cdn.staticfile.org/MathJax/MathJax-2.6-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ["$","$"], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ["script", "noscript", "style", "textarea", "pre", "code"]
+      }
+    });
+    </script>
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for (i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += " has-jax";
+      }
+    });
+    </script>
+    
+    
+    <script defer type="text/javascript" src="/js/index.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function () {
+      var cb = null;
+      var els = $(".post figure.highlight");
+      if (els.length) {
+        // Enabled Hexo highlight line number.
+        $(els).each(function (i, e) {
+          // $(e).before("<button class=\"copy button\">复制</button>");
+          $(e).before([
+            "<div class=\"code-titlebar\">",
+              "<div class=\"titlebar-left\">",
+                "<button class=\"copy\">复制</button>",
+              "</div>",
+            "</div>"
+          ].join(""));
+        });
+        cb = new ClipboardJS("button.copy", {
+          "target": function (trigger) {
+              // Get target element by DOM API.
+              return trigger.parentNode.parentNode.nextElementSibling.firstChild.firstChild.firstChild.lastChild.firstChild.firstChild;
+          }
+        });
+      } else {
+        // Disabled Hexo highlight line number.
+        els = $(".post pre code");
+        $(els).each(function (i, e) {
+          // Add button before pre, not code.
+          // $(e).parent().before("<button class=\"copy button\">复制</button>");
+          $(e).before([
+            "<div class=\"code-titlebar\">",
+              "<div class=\"titlebar-left\">",
+                "<button class=\"copy\" >复制</button>",
+              "</div>",
+              "<div class=\"titlebar-right\">",
+                "<button class=\"button-dot dot-minimize\" aria-label=\"Decoration\"></button>",
+                "<button class=\"button-dot dot-maximize\" aria-label=\"Decoration\"></button>",
+                "<button class=\"button-dot dot-close\" aria-label=\"Decoration\"></button>",
+              "</div>",
+            "</div>"
+          ].join(""));
+        });
+        cb = new ClipboardJS("button.copy", {
+          "target": function (trigger) {
+              // Get target element by DOM API.
+              return trigger.parentNode.parentNode.nextElementSibling;
+          }
+        });
+      }
+      cb.on("success", function (e) {
+        e.clearSelection();
+        var trigger = e.trigger;
+        // Change button text as a user tip.
+        trigger.innerHTML = "已复制";
+        $(trigger).addClass("copied");
+        // Change button text back;
+        setTimeout(function () {
+          trigger.innerHTML = "复制";
+          $(trigger).removeClass("copied");
+        }, 1500);
+      });
+    });
+    </script>
+    
+    <script defer type="text/javascript" src="/js/custom.js"></script>
+    <title>Early Z | leinlin的小笔记</title>
+  <meta name="generator" content="Hexo 6.2.0"></head>
+  <body itemscope itemtype="http://schema.org/WebPage" lang="zh_CN"  data-spy="scroll" data-target=".list-group">
+    
+<header id="header" class="header" style="background: #33363b;">
+  <div class="container">
+    <div class="header-container">
+      <div class="header-title">
+        <h1 class="title"><a href="/">leinlin的小笔记</a></h1>
+        <h2 class="subtitle"></h2>
+      </div>
+      
+    </div>
+    <nav id="nav" class="nav">
+      <a id="nav-toggle" class="nav-toggle" aria-hidden="true"><i class="fas fa-bars" aria-label="切换导航栏"></i></a>
+      <ul id="menu" role="menubar" aria-hidden="false">
+        
+        <li role="menuitem"><a href="/"><i class="fas fa-home"></i><span class="menu-text">首页</span></a></li>
+        
+        <li role="menuitem"><a href="/categories/"><i class="fas fa-th-list"></i><span class="menu-text">分类</span></a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</header>
+
+
+    <main id="main" class="main">
+      <div class="container">
+        <div class="main-container">
+          <div class="content">
+            
+<div id="post" class="page">
+  
+  <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
+    <div class="post-block">
+      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/07/09/RTR/EarlyZ/">
+      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+       <meta itemprop="name" content="leinlin">
+       <meta itemprop="description" content="">
+       <meta itemprop="image" content="/images/avatar.jpg">
+      </span>
+      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+       <meta itemprop="name" content="leinlin的小笔记">
+      </span>
+    </div>
+    <header class="post-header">
+      <h1 class="post-title" itemprop="name headline">Early Z</h1>
+      <div class="post-meta">
+        
+        <span class="post-date">
+          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2022-07-09T12:00:14+08:00">2022-07-09 12:00:14</time></span>
+        </span>
+        
+        
+        
+        <span class="post-meta-divider divider">|</span>
+        
+        <span class="post-categories">
+          
+          <i class="far fa-folder-open"></i><span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/RTR/" itemprop="url" rel="index"><span itemprop="name">RTR</span></a></span>
+        </span>
+        
+        
+        
+        
+      </div>
+    </header>
+    <main class="post-main" itemprop="articleBody">
+      <h1 id="Early-Z"><a href="#Early-Z" class="headerlink" title="Early Z"></a>Early Z</h1><h2 id="优化原理"><a href="#优化原理" class="headerlink" title="优化原理"></a>优化原理</h2><p><a target="_blank" rel="noopener" href="https://www.khronos.org/opengl/wiki/Early_Fragment_Test">OpenGL官方文档对EarlyZ的解释</a></p>
+<p>原本的深度测试是在Fragment Shader计算之后的，如果不通过深度测试，这部分Pixel计算就是浪费的。</p>
+<p>优化方式就是在Fragment Shader处理之前，先进行深度测试，可以避免过多的Pixel计算。</p>
+<p>使用深度检测是方便的（硬件直接支持），这个优化，假设你的Pixel计算没有对深度进行任何修改，也就是说在Fragment Shader之前和之后进行深度检测的结果是一样的。（Therefore, an implementation is free to apply early fragment tests if the <a target="_blank" rel="noopener" href="https://www.khronos.org/opengl/wiki/Fragment_Shader">Fragment Shader</a> being used does not do anything that would impact the results of those tests. ）</p>
+<h2 id="限制条件"><a href="#限制条件" class="headerlink" title="限制条件"></a>限制条件</h2><ol>
+<li><p>这个是硬件支持的功能，图形API无法决定是否进行。（原文：Because this is a hardware-based optimization, OpenGL has no direct controls that will tell you if early depth testing will happen.）</p>
+</li>
+<li><p>如果进行了Alpha Clip或者深度写入，会造成EarlyZ失效。（原文：Similarly, if the <a target="_blank" rel="noopener" href="https://www.khronos.org/opengl/wiki/Fragment_Shader#Special_operations">fragment shader discards the fragment with the discard keyword</a>, this will almost always turn off early depth tests on some hardware. Note that even <em>conditional</em> use of discard will mean that the FS will turn off early depth tests.）</p>
+</li>
+</ol>
+<h2 id="优化方式"><a href="#优化方式" class="headerlink" title="优化方式"></a>优化方式</h2><h3 id="Z-Pre-Pass"><a href="#Z-Pre-Pass" class="headerlink" title="Z-Pre-Pass"></a>Z-Pre-Pass</h3><p>Early-Z的实现，主要是通过一个Z-pre-pass实现。简单来说：对不透明物体：</p>
+<ol>
+<li>首先用简单shader进行渲染，这个shader<strong>不写颜色缓冲区，只写深度缓冲区</strong>。</li>
+<li><strong>关闭深度写入，开启深度测试</strong>，用正常的shader进行渲染。</li>
+</ol>
+<p>The most effective way to use early depth test hardware is to run a depth-only pre-processing pass. This means to render all available geometry, using minimal shaders and a rendering pipeline that <a target="_blank" rel="noopener" href="https://www.khronos.org/opengl/wiki/Write_Mask">only writes to the depth buffer</a>. The <a target="_blank" rel="noopener" href="https://www.khronos.org/opengl/wiki/Vertex_Shader">Vertex Shader</a> should do nothing more than transform positions, and the <a target="_blank" rel="noopener" href="https://www.khronos.org/opengl/wiki/Fragment_Shader#Optional">Fragment Shader does not even need to exist</a>.</p>
+<p>This provides the best performance gain if the fragment shader is expensive, or if you intend to use multiple passes across the geometry.</p>
+<h3 id="类似Unity的渲染排序-Render-Sort"><a href="#类似Unity的渲染排序-Render-Sort" class="headerlink" title="类似Unity的渲染排序 Render Sort"></a>类似Unity的渲染排序 Render Sort</h3><p>我们常用的深度排序（从前往后渲染）渲染不透明物体，就是为了利用Early Z，如果没有Early Z那么深度排序就没有意义（并且还会浪费CPU）。（Unity官方文档原文：Spend lots of CPU cycles to do occlusion culling and better sorting (to take advantage of Early Z-cull).）</p>
+<h2 id="Alpha-Test（Discard）在移动平台消耗较大的原因"><a href="#Alpha-Test（Discard）在移动平台消耗较大的原因" class="headerlink" title="Alpha Test（Discard）在移动平台消耗较大的原因"></a><strong>Alpha Test（Discard）在移动平台消耗较大的原因</strong></h2><p>跟上面讲到的Early-Z有关。</p>
+<ol>
+<li>正常情况下，不管是否是开启深度写入或者深度测试，这个面片的光栅化之后对应的像素的深度值都可以在Early-Z（Z-Cull）的阶段判断出来。</li>
+<li>如果开启了Alpha Test（Discard），导致Early-Z失效。即使被遮挡也一定会进行Pixel计算！ 与之相对的Alpha Blend却可以进行正确的Early计算，所以会有人讨论Alpha Test和Alpha Blend的区别。<a target="_blank" rel="noopener" href="https://docs.cryengine.com/display/SDKDOC2/Rendering+Performance+Guidelines">CryEngine官方解释</a>文档指出，使用Alpha Testing会导致跳过对Opaque物体的优化。Alpha Blend会进行Frame Buffer的w&#x2F;o操作，开销也比较到。所以他们性能开销的痛点是不一样的。</li>
+</ol>
+<p>Unity官方文档的描述：</p>
+<p>The fixed-function <a target="_blank" rel="noopener" href="https://docs.unity3d.com/Manual//SL-AlphaTest.html">AlphaTest</a> - or its programmable equivalent, <code>clip()</code> - has different performance characteristics on different platforms:</p>
+<ul>
+<li>Generally you gain a small advantage when using it to remove totally transparent pixels on most platforms.</li>
+<li>However, on PowerVR GPUs found in iOS and some Android devices, alpha testing is resource-intensive. Do not try to use it for performance optimization on these platforms, as it causes the game to run slower than usual.</li>
+</ul>
+<h2 id="其他的资料"><a href="#其他的资料" class="headerlink" title="其他的资料"></a>其他的资料</h2><p>这个<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/33127345">文章</a>提到了像素并行处理的问题，这个问题在使用Unity的Render Sort策略下是有问题的。但是如果使用Z-Pre-Pass策略是没有问题的。</p>
+<p>里面提到的更详细的内容都是猜测不是很准确，需要进一步研究一些手机架构。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>他的核心：Early Z的优化和优化失效的问题。</p>
+<p>​	</p>
+
+    </main>
+    <footer class="post-footer">
+      
+    </footer>
+  </article>
+  
+  
+  <nav class="page-nav">
+    <div class="page-nav-next page-nav-item">
+      
+      <a href="/2022/07/09/RTR/HDR%E4%B8%8EToneMapping%E7%90%86%E8%AE%BA/" rel="next" title="HDR 与ToneMapping"><i class="fas fa-angle-left"></i><span class="nav-title">HDR 与ToneMapping</span></a>
+      
+    </div>
+    <div class="page-nav-prev page-nav-item">
+      
+      <a href="/2022/07/09/RTR/Gamma%E7%9F%AB%E6%AD%A3/" rel="prev" title="Gamma矫正"><span class="nav-title">Gamma矫正</span><i class="fas fa-angle-right"></i></a>
+      
+    </div>
+  </nav>
+  
+  
+  
+
+<div class="comments" id="comments">
+  
+  
+  <div class="commentjs" id="comment-thread"></div>
+  <link rel="stylesheet" href="/css/commentjs.css">
+  <script defer type="text/javascript" src="/js/marked.min.js"></script>
+  <script defer type="text/javascript" src="/js/timeago.min.js"></script>
+  <script defer type="text/javascript" src="/js/highlight.min.js"></script>
+  <script defer type="text/javascript" src="/js/commentjs.js"></script>
+  <script type="text/javascript">
+  $(document).ready(function () {
+    getComments({
+      "type": "github",
+      "user": "leinlin",
+      "repo": "leinlin.github.io",
+      "client_id": "aee134bdfb54c4ef5826",
+      "client_secret": "4af1d3f2b82dccc028c49715becc01e611afbe43",
+      "no_comment": "这个页面还没有评论，现在就去评论吧！",
+      "go_to_comment": "去评论",
+      "issue_title": "Early Z",
+      "btn_class": "button",
+      "comments_target": "#comment-thread"
+    });
+    marked.setOptions({
+      "highlight": function (code, lang) {
+        return hljs.highlightAuto(code).value;
+      }
+    });
+    function mark() {
+      var markdowns = document.getElementsByClassName("markdown");
+      for (var i = 0; i < markdowns.length; ++i){
+        if (markdowns[i].innerHTML) {
+          markdowns[i].innerHTML = marked(markdowns[i].innerHTML);
+        }
+      }
+    }
+    window.addEventListener("DOMContentLoaded", mark, false);
+    window.addEventListener("load", mark, false);
+  });
+  </script>
+  
+  
+</div>
+
+
+
+  
+</div>
+
+          </div>
+          
+          
+          
+<aside class="sidebar" id="sidebar" style="background: url(/images/background.png);">
+  
+  <div class="search">
+    <div class="form-group">
+      <i class="fas fa-search"></i><input type="search" id="search-input" name="q" results="0" placeholder="搜索" class="form-control"/>
+    </div>
+  </div>
+  <div class="search-result-box" id="search-result"></div>
+  
+  
+<div class="info sidebar-item" id="info">
+  
+  <img class="author-avatar" src="/images/avatar.jpg" alt="leinlin">
+  
+  <h1 class="author-name">leinlin</h1>
+  <h2 class="author-description"></h2>
+  <div class="site-count">
+    
+    
+    
+    
+    <div class="categories-count count-block">
+      <div class="site-count-title">分类</div>
+      <div><a href="/categories/">17</a></div>
+    </div>
+    
+    
+  </div>
+  
+  <div class="rss">
+    <a class="rss-link button sidebar-item" href="/atom.xml"><i class="fas fa-rss"></i>RSS</a>
+  </div>
+  
+</div>
+
+
+  <div class="sidebar-sticky">
+    
+    
+    
+    
+    
+    <hr>
+    <div class="post-toc sidebar-item" id="toc-div">
+      <div><i class="fas fa-list-ol"></i>文章目录</div>
+      <div class="post-toc-content"><ol class="list-group toc"><li class="toc-item toc-level-1"><a class="list-group-item toc-link" href="#Early-Z"><span class="toc-text">Early Z</span></a><ol class="list-group toc-child"><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#%E4%BC%98%E5%8C%96%E5%8E%9F%E7%90%86"><span class="toc-text">优化原理</span></a></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#%E9%99%90%E5%88%B6%E6%9D%A1%E4%BB%B6"><span class="toc-text">限制条件</span></a></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#%E4%BC%98%E5%8C%96%E6%96%B9%E5%BC%8F"><span class="toc-text">优化方式</span></a><ol class="list-group toc-child"><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#Z-Pre-Pass"><span class="toc-text">Z-Pre-Pass</span></a></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#%E7%B1%BB%E4%BC%BCUnity%E7%9A%84%E6%B8%B2%E6%9F%93%E6%8E%92%E5%BA%8F-Render-Sort"><span class="toc-text">类似Unity的渲染排序 Render Sort</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#Alpha-Test%EF%BC%88Discard%EF%BC%89%E5%9C%A8%E7%A7%BB%E5%8A%A8%E5%B9%B3%E5%8F%B0%E6%B6%88%E8%80%97%E8%BE%83%E5%A4%A7%E7%9A%84%E5%8E%9F%E5%9B%A0"><span class="toc-text">Alpha Test（Discard）在移动平台消耗较大的原因</span></a></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#%E5%85%B6%E4%BB%96%E7%9A%84%E8%B5%84%E6%96%99"><span class="toc-text">其他的资料</span></a></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-text">总结</span></a></li></ol></li></ol></div>
+    </div>
+    
+    
+    
+    <hr>
+    <div class="social-link sidebar-item">
+      <div><i class="far fa-address-card"></i>社交链接</p></div>
+      <ul>
+        
+        <li><i class="fab fa-github"></i><a href="https://leinlin.github.com/" target="_blank">GitHub</a></li>
+        
+      </ul>
+    </div>
+    
+    
+  </div>
+</aside>
+
+
+          
+        </div>
+      </div>
+    </main>
+    
+<footer id="footer" class="footer" style="background: #33363b;">
+  <div class="container">
+    <div class="back-to-top">
+      <button id="back-to-top"><i class="fas fa-angle-double-up" aria-label="回到顶部"></i></button>
+    </div>
+    <div class="footer-container">
+      <div class="footer-left">
+        <div class="copyright">
+          <span class="author">leinlin</span><span class="year"><i class="far fa-copyright"></i>2022</span>
+        </div>
+        
+        <div class="busuanzi">
+          <span id="busuanzi_container_site_pv"><i class="fas fa-eye" aria-label="站点点击量" aria-hidden="false"></i><span id="busuanzi_value_site_pv"></span></span><span id="busuanzi_container_site_uv"><i class="fas fa-user" aria-label="站点用户数" aria-hidden="false"></i><span id="busuanzi_value_site_uv"></span></span><span id="busuanzi_container_page_pv"><i class="far fa-file-alt"></i><span id="busuanzi_value_page_pv" aria-label="页面点击量" aria-hidden="false"></span></span>
+        </div>
+        
+      </div>
+      <div class="footer-right">
+        <div class="custom-info">
+          
+          托管于<i class="fab fa-github-alt"></i><a href="https://pages.github.com/" target="_blank">GitHub Pages</a>
+          
+        </div>
+        <div class="powered-by">
+          由 <a href="https://hexo.io/" target="_blank">Hexo</a> 强力驱动 | 主题 <a href="https://github.com/AlynxZhou/hexo-theme-aria/" target="_blank">ARIA</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+  <script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

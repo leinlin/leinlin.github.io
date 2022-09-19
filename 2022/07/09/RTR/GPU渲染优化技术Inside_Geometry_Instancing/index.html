@@ -1,0 +1,557 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#33363b">
+    <meta name="msapplication-TileColor" content="#33363b">
+    
+    
+    
+    
+    <meta name="keywords" content="leinlin, ARIA, Hexo">
+    
+    
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png">
+    
+    
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicons/android-chrome-192x192.png">
+    
+    
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png">
+    
+    
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png">
+    
+    
+    <link rel="mask-icon" href="/favicons/safari-pinned-tab.svg" color="#33363b">
+    
+    
+    <link rel="manifest" href="/favicons/site.webmanifest">
+    
+    
+    <meta name="msapplication-config" content="/favicons/browserconfig.xml">
+    
+    
+    <link rel="alternate" href="/atom.xml" title="leinlin的小笔记" type="application/atom+xml" />
+    
+    
+    <link rel="shortcut icon" type="image/x-icon" href="/favicons/favicon.ico">
+    
+    
+    <link rel="stylesheet" type="text/css" href="/css/normalize.css">
+    <link rel="stylesheet" type="text/css" href="/css/index.css">
+    
+    <link rel="stylesheet" type="text/css" href="/css/sidebar.css">
+    
+    
+<link rel="stylesheet" type="text/css" href="/css/page.css">
+<link rel="stylesheet" type="text/css" href="/css/post.css">
+
+    <link rel="stylesheet" type="text/css" href="/css/custom.css">
+    <link rel="stylesheet" type="text/css" href="/css/atom-one-light.css">
+    <link rel="stylesheet" type="text/css" href="/css/lightgallery.min.css">
+    <script type="text/javascript" src="/js/jquery.min.js"></script>
+    <script defer type="text/javascript" src="/js/util.js"></script>
+    <script defer type="text/javascript" src="/js/clipboard.min.js"></script>
+    <script defer type="text/javascript" src="/js/scrollspy.js"></script>
+    <script defer type="text/javascript" src="/js/fontawesome-all.min.js"></script>
+    <script defer type="text/javascript" src="/js/lightgallery.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-fullscreen.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-hash.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-pager.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-thumbnail.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-zoom.min.js"></script>
+    
+    <script defer src="/js/busuanzi.pure.mini.js"></script>
+    
+    
+    <script defer type="text/javascript" src="/js/search.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function () {
+      var searchPath = "search.xml";
+      if (searchPath.length === 0) {
+        searchPath = "search.xml";
+      }
+      var path = "/" + searchPath;
+      searchFunc(path, "search-input", "search-result");
+    });
+    </script>
+    
+    
+    
+    <script defer type="text/javascript" src="https://cdn.staticfile.org/MathJax/MathJax-2.6-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ["$","$"], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ["script", "noscript", "style", "textarea", "pre", "code"]
+      }
+    });
+    </script>
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for (i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += " has-jax";
+      }
+    });
+    </script>
+    
+    
+    <script defer type="text/javascript" src="/js/index.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function () {
+      var cb = null;
+      var els = $(".post figure.highlight");
+      if (els.length) {
+        // Enabled Hexo highlight line number.
+        $(els).each(function (i, e) {
+          // $(e).before("<button class=\"copy button\">复制</button>");
+          $(e).before([
+            "<div class=\"code-titlebar\">",
+              "<div class=\"titlebar-left\">",
+                "<button class=\"copy\">复制</button>",
+              "</div>",
+            "</div>"
+          ].join(""));
+        });
+        cb = new ClipboardJS("button.copy", {
+          "target": function (trigger) {
+              // Get target element by DOM API.
+              return trigger.parentNode.parentNode.nextElementSibling.firstChild.firstChild.firstChild.lastChild.firstChild.firstChild;
+          }
+        });
+      } else {
+        // Disabled Hexo highlight line number.
+        els = $(".post pre code");
+        $(els).each(function (i, e) {
+          // Add button before pre, not code.
+          // $(e).parent().before("<button class=\"copy button\">复制</button>");
+          $(e).before([
+            "<div class=\"code-titlebar\">",
+              "<div class=\"titlebar-left\">",
+                "<button class=\"copy\" >复制</button>",
+              "</div>",
+              "<div class=\"titlebar-right\">",
+                "<button class=\"button-dot dot-minimize\" aria-label=\"Decoration\"></button>",
+                "<button class=\"button-dot dot-maximize\" aria-label=\"Decoration\"></button>",
+                "<button class=\"button-dot dot-close\" aria-label=\"Decoration\"></button>",
+              "</div>",
+            "</div>"
+          ].join(""));
+        });
+        cb = new ClipboardJS("button.copy", {
+          "target": function (trigger) {
+              // Get target element by DOM API.
+              return trigger.parentNode.parentNode.nextElementSibling;
+          }
+        });
+      }
+      cb.on("success", function (e) {
+        e.clearSelection();
+        var trigger = e.trigger;
+        // Change button text as a user tip.
+        trigger.innerHTML = "已复制";
+        $(trigger).addClass("copied");
+        // Change button text back;
+        setTimeout(function () {
+          trigger.innerHTML = "复制";
+          $(trigger).removeClass("copied");
+        }, 1500);
+      });
+    });
+    </script>
+    
+    <script defer type="text/javascript" src="/js/custom.js"></script>
+    <title>GPU渲染优化技术:Inside Geometry Instancing | leinlin的小笔记</title>
+  <meta name="generator" content="Hexo 6.2.0"></head>
+  <body itemscope itemtype="http://schema.org/WebPage" lang="zh_CN"  data-spy="scroll" data-target=".list-group">
+    
+<header id="header" class="header" style="background: #33363b;">
+  <div class="container">
+    <div class="header-container">
+      <div class="header-title">
+        <h1 class="title"><a href="/">leinlin的小笔记</a></h1>
+        <h2 class="subtitle"></h2>
+      </div>
+      
+    </div>
+    <nav id="nav" class="nav">
+      <a id="nav-toggle" class="nav-toggle" aria-hidden="true"><i class="fas fa-bars" aria-label="切换导航栏"></i></a>
+      <ul id="menu" role="menubar" aria-hidden="false">
+        
+        <li role="menuitem"><a href="/"><i class="fas fa-home"></i><span class="menu-text">首页</span></a></li>
+        
+        <li role="menuitem"><a href="/categories/"><i class="fas fa-th-list"></i><span class="menu-text">分类</span></a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</header>
+
+
+    <main id="main" class="main">
+      <div class="container">
+        <div class="main-container">
+          <div class="content">
+            
+<div id="post" class="page">
+  
+  <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
+    <div class="post-block">
+      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/07/09/RTR/GPU%E6%B8%B2%E6%9F%93%E4%BC%98%E5%8C%96%E6%8A%80%E6%9C%AFInside_Geometry_Instancing/">
+      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+       <meta itemprop="name" content="leinlin">
+       <meta itemprop="description" content="">
+       <meta itemprop="image" content="/images/avatar.jpg">
+      </span>
+      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+       <meta itemprop="name" content="leinlin的小笔记">
+      </span>
+    </div>
+    <header class="post-header">
+      <h1 class="post-title" itemprop="name headline">GPU渲染优化技术:Inside Geometry Instancing</h1>
+      <div class="post-meta">
+        
+        <span class="post-date">
+          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2022-07-09T12:00:14+08:00">2022-07-09 12:00:14</time></span>
+        </span>
+        
+        
+        
+        <span class="post-meta-divider divider">|</span>
+        
+        <span class="post-categories">
+          
+          <i class="far fa-folder-open"></i><span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/RTR/" itemprop="url" rel="index"><span itemprop="name">RTR</span></a></span>
+        </span>
+        
+        
+        
+        
+      </div>
+    </header>
+    <main class="post-main" itemprop="articleBody">
+      <!-- TOC -->
+
+<ul>
+<li><a href="#gpu%E6%B8%B2%E6%9F%93%E4%BC%98%E5%8C%96%E6%8A%80%E6%9C%AFinside-geometry-instancing">GPU渲染优化技术:Inside Geometry Instancing</a><ul>
+<li><a href="#%E7%AE%80%E4%BB%8B">简介</a></li>
+<li><a href="#why-geometry-instancing">Why Geometry Instancing?</a></li>
+<li><a href="#definitions">Definitions</a><ul>
+<li><a href="#geometry-packet">Geometry Packet</a></li>
+<li><a href="#instance-attributes">Instance Attributes</a></li>
+<li><a href="#geometry-instance">Geometry Instance</a></li>
+<li><a href="#render-and-texture-context">Render and Texture Context</a></li>
+<li><a href="#geometry-batch">Geometry Batch</a></li>
+</ul>
+</li>
+<li><a href="#implementation">Implementation</a><ul>
+<li><a href="#static-batching">Static Batching</a></li>
+<li><a href="#dynamic-batching">Dynamic Batching</a></li>
+<li><a href="#vertex-constants-instancing">Vertex Constants Instancing</a></li>
+<li><a href="#batching-with-the-geometry-instancing-api">Batching with the Geometry Instancing API</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<!-- /TOC -->
+
+<h1 id="GPU渲染优化技术-Inside-Geometry-Instancing"><a href="#GPU渲染优化技术-Inside-Geometry-Instancing" class="headerlink" title="GPU渲染优化技术:Inside Geometry Instancing"></a>GPU渲染优化技术:Inside Geometry Instancing</h1><h2 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h2><p>这里主要讨论对几何体的渲染优化技术：</p>
+<p>参考内容为<a target="_blank" rel="noopener" href="http://developer.nvidia.com/gpugems2">GPU Gems 2</a></p>
+<p>为了制作一个完整的、令人信服的游戏世界，地图当中可能存在大量的细小的、零碎的模型，这些模型可能彼此之间只有微小的差别：颜色、位置等。</p>
+<p>但是渲染大量的小物体，每一个只使用面很少的多边形，会造成GPU的大量开销。<strong>现在的图形API的设计对于渲染大量的小物体（面数少）是非常低效的</strong>。（Graphics APIs such as Direct3D and OpenGL are not designed to efficiently render a small number of polygons thousands of times per frame）</p>
+<p><strong>这部分内容主要处理渲染大量相同几何体的问题。</strong></p>
+<h2 id="Why-Geometry-Instancing"><a href="#Why-Geometry-Instancing" class="headerlink" title="Why Geometry Instancing?"></a>Why Geometry Instancing?</h2><p><strong>将三角形提交到GPU进行渲染是相对缓慢的操作（drawcall）</strong>。原文中提到的渲染限制：（Wloka 2003 shows that a 1 GHz CPU can render only around 10,000 to 40,000 batches per second in Direct3D.  On a more modern CPU, we can expect this number to be between 30,000 and 120,000 batches per second (around 1,000 to 4,000 batches per frame at 30 frames&#x2F;sec). )  <strong>这就说明我们不能提交过多的次数，也就是Drawcall的范围需要在1000- 4000之间，无论一个batch当中有多少个三角形，因为CPU时间限制，否则他没有更多的时间做别的事情。</strong></p>
+<p>为了渲染更多的东西，应该尽可能最小化贴图和渲染状态的变化。<strong>一个比较好的方案是在同一个Batch当中，渲染多次三角形。这样可以最小化批次提交的次数，释放更多的CPU时间给别的系统（物理系统，游戏逻辑）。</strong></p>
+<h2 id="Definitions"><a href="#Definitions" class="headerlink" title="Definitions"></a>Definitions</h2><p>首先明确几个概念：</p>
+<h3 id="Geometry-Packet"><a href="#Geometry-Packet" class="headerlink" title="Geometry Packet"></a>Geometry Packet</h3><p>Geometry Packet指的是一堆需要被Instance的几何体，包括了顶点和索引的集合。一个Geometry Packet包括：顶点数据（position, texture coordinates, normal, possibly tangent space and bones information for skinning, and per-vertex colors）和索引数据流。这些数据以最有效的方式提交到GPU。</p>
+<p>Geometry Packet是对一段几何图形的抽象描述，其中几何实体在模型空间中表示，没有保存和渲染上下文相关的信息（世界坐标矩阵、渲染状态）。</p>
+<p>下面是一段Geometry Packet的例子：包括物体的几何信息和它的边界球:</p>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">GeometryPacket</span>  </span><br><span class="hljs-class">&#123;</span>    <br>    Primitive mPrimType;    <br>    <span class="hljs-type">void</span>* mVertices;   <br>    <span class="hljs-type">unsigned</span> <span class="hljs-type">int</span> mVertexStride;      <span class="hljs-comment">//顶点列表</span><br>    <span class="hljs-type">unsigned</span> <span class="hljs-type">short</span>* mIndices;      <span class="hljs-comment">//索引列表</span><br>    <span class="hljs-type">unsigned</span> <span class="hljs-type">int</span> mVertexCount;    <span class="hljs-comment">// 顶点数</span><br>    <span class="hljs-type">unsigned</span> <span class="hljs-type">int</span> mIndexCount;      <span class="hljs-comment">// 索引数 </span><br>    D3DXVECTOR3 mSphereCentre;   <span class="hljs-comment">// 包围球中心</span><br>    <span class="hljs-type">float</span> mSphereRadius;   <span class="hljs-comment">// 包围球半径</span><br>&#125;; <br></code></pre></td></tr></table></figure>
+
+<h3 id="Instance-Attributes"><a href="#Instance-Attributes" class="headerlink" title="Instance Attributes"></a>Instance Attributes</h3><p>Instance Attributes是每个Instance物体的属性，可以包括:模型到世界的转换矩阵、实例颜色。（为了方便理解原文的其他属性省略了）</p>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">InstanceAttributes</span>  &#123;</span>    <br>    D3DXMATRIX mModelMatrix;    <span class="hljs-comment">// 模型矩阵</span><br>    D3DCOLOR mInstanceColor;    <span class="hljs-comment">// Instance 颜色</span><br>&#125;;<br></code></pre></td></tr></table></figure>
+
+<h3 id="Geometry-Instance"><a href="#Geometry-Instance" class="headerlink" title="Geometry Instance"></a>Geometry Instance</h3><p>Geometry Instance是一个 geometry packet加上其用于实例化成被渲染物体的属性。</p>
+<p>结构体如下图：</p>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">GeometryInstance</span>  &#123;</span>    <br>    GeometryPacket* mGeometryPacket;    <br>    InstanceAttributes mInstanceAttributes;  <br>&#125;; <br></code></pre></td></tr></table></figure>
+
+<h3 id="Render-and-Texture-Context"><a href="#Render-and-Texture-Context" class="headerlink" title="Render and Texture Context"></a>Render and Texture Context</h3><p>渲染上下文指的是渲染状态：AlphaTest之类的。纹理上下文指的是当前激活的纹理，渲染目标之类的。</p>
+<h3 id="Geometry-Batch"><a href="#Geometry-Batch" class="headerlink" title="Geometry Batch"></a>Geometry Batch</h3><p><strong>一个Geometry Batch包括：一组需要渲染的Geometry Instances、他们需要的渲染状态和纹理上下文的集合。它总是直接对应一个DrawIndexedPrimitive()调用。</strong> </p>
+<p><strong>也就是说一个Batch对应了一个Redner Content、一个纹理上下文和多个Geometry Instances，对应了一个DrawCall也就是一次DrawIndexedPrimitive()的调用</strong></p>
+<p><strong>RenderContext</strong>和<strong>TextureContext</strong>的Class(为了方便理解和原文做了调整)：</p>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// 渲染下文</span><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">RenderContext</span>  &#123;</span>  <br>public:     <br>    <span class="hljs-comment">// 开始设置 render context，使渲染状态激活</span><br>    <span class="hljs-type">void</span> <span class="hljs-title function_">Begin</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span>;      <br>    <span class="hljs-comment">// 关闭 render context，还原之前的状态    </span><br>    <span class="hljs-type">void</span> <span class="hljs-title function_">End</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span>;    <br>private:      <br>    <span class="hljs-comment">// render state、pixel shader、vertex shader</span><br>    <span class="hljs-comment">// ...</span><br>&#125;;    <br><br><span class="hljs-comment">// 需要用到的纹理</span><br><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">TextureContext</span>  &#123;</span>     <br>    Texture mDiffuseMap;    <br>    Texture mLightMap;      <br>    <span class="hljs-comment">// . . .    </span><br>&#125;; <br></code></pre></td></tr></table></figure>
+
+<p>Geometry Batch类</p>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">GeometryBatch</span>  &#123;</span>  <br>public:      <br>    <span class="hljs-comment">// 清楚batch当中包含的全部Instance  </span><br>    virtual <span class="hljs-type">void</span> <span class="hljs-title function_">ClearInstances</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span>;      <br>    <span class="hljs-comment">// 添加一个Instance 返回Instance ID </span><br>    <span class="hljs-comment">// 如果不能在添加返回-1</span><br>    virtual <span class="hljs-type">int</span> <span class="hljs-title function_">AddInstance</span><span class="hljs-params">(GeometryInstance* instance)</span>;      <br>    <span class="hljs-comment">// 提交所有Instance, 渲染循环之前调用一次，或者Instance发生变化之后。  </span><br>    virtual <span class="hljs-type">unsigned</span> <span class="hljs-type">int</span> <span class="hljs-title function_">Commit</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span> = <span class="hljs-number">0</span>;      <br>    <span class="hljs-comment">/* </span><br><span class="hljs-comment">    更新Geometry batch, 最终会准备GPU数据提交给驱动程序，如果需要也回填充indexbuffer和vertexbuffer ，每帧调用一次。</span><br><span class="hljs-comment">	*/</span>     <br>    virtual <span class="hljs-type">void</span> <span class="hljs-title function_">Update</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span> = <span class="hljs-number">0</span>;     <br>    <span class="hljs-comment">// 将batch提交给驱动程序，通常就是一次drawcall，一次DrawIndexedPrimitive的调用。 </span><br>    virtual <span class="hljs-type">void</span> <span class="hljs-title function_">Render</span><span class="hljs-params">(<span class="hljs-type">void</span>)</span> <span class="hljs-type">const</span> = <span class="hljs-number">0</span>;    <br>    <br>private:   <br>    <span class="hljs-comment">// Instance的列表</span><br>    GeometryInstancesCollection mInstances;      <br>   <br>&#125;; <br></code></pre></td></tr></table></figure>
+
+<h2 id="Implementation"><a href="#Implementation" class="headerlink" title="Implementation"></a>Implementation</h2><p>引擎的渲染只能通过Geometry Batch看到Geometry Instance的抽象接口。隐藏了instancing技术的实现细节， GeometryBatch还提供了管理Instance物体，更新和渲染的服务。这样引擎能够专注于batch排序、以最小化渲染状态的变化。Geometry Batch关注实际的实现和图形API的交互。</p>
+<p>下面是一个通过排序GeometryBatch以最小化渲染状态变化的渲染过程伪代码。</p>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// 遍历所有的drawcall，也就是所有的batch</span><br>Foreach GeometryBatch in ActiveBatchesList    <br>	<span class="hljs-comment">// 更新这个batch</span><br>    GeometryBatch.Update();    <br>    <span class="hljs-comment">// Render phase  </span><br>    Foreach RenderContext  <br>    Begin    <br>    	<span class="hljs-comment">// 渲染状态</span><br>        RenderContext.BeginRendering();    <br>        RenderContext.CommitStates();    <br>		<span class="hljs-comment">// 贴图状态</span><br>        Foreach TextureContext      <br>            Begin      <br>            	<span class="hljs-comment">//应用贴图</span><br>                TextureContext.Apply();    <br>			   <span class="hljs-comment">// 渲染Batch中的所有instance</span><br>                Foreach GeometryBatch in the texture context        <br>                	GeometryBatch.Render();    <br>            End  <br>    End <br></code></pre></td></tr></table></figure>
+
+<p>更新操作和渲染阶段可以保持分离，如果我们希望一次性更新所有batch，渲染多次。例如渲染Shadowmap。</p>
+<p>现在我们讨论四种GeometryBatch的实现并且分析他们的性能特性：内存和灵活性。</p>
+<p>下面比较重要所以保留了原文：</p>
+<ul>
+<li><strong>Static batching.</strong> The fastest way to instance geometry. Each instance is transformed once to world space, its attributes are applied, and then it’s sent already transformed to the GPU with every frame. Although simple, static batching is the least flexible technique.</li>
+<li><strong>Dynamic batching.</strong> The slowest way to instance geometry. Each instance is streamed to GPU memory every frame, already transformed and with attributes applied. Dynamic batching seamlessly supports skinning and provides the most flexible implementation.</li>
+<li><strong>Vertex constants instancing.</strong> A hybrid implementation in which multiple copies of the geometry for each instance are copied once into GPU memory. Instance attributes are then set every frame through vertex constants, and a vertex shader completes geometry instancing.</li>
+<li><strong>Batching with Geometry Instancing API.</strong> Using the Geometry Instancing API provided by DirectX 9 and fully supported in hardware by GeForce 6 Series GPUs, this implementation offers a flexible and fast solution to geometry instancing. Unlike all other methods, this does not require geometry packet replication in the Direct3D vertex stream.</li>
+</ul>
+<h3 id="Static-Batching"><a href="#Static-Batching" class="headerlink" title="Static Batching"></a>Static Batching</h3><p>这个策略中，我们希望一次性处理全部的Instance，所以需要把所有内容拷贝到一个静态的vertex buffer中。vertex buffer object要足够的大，以保存所有的instance。因为是提前合并所有instance数据，所以设置成D3DUSAGE_WRITEONLY和MAX_STATIC_BUFFER_SIZE即可</p>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs c">HRESULT res;    <br>res = lpDevice-&gt;CreateVertexBuffer(MAX_STATIC_BUFFER_SIZE,    <br>                                   D3DUSAGE_WRITEONLY,    <br>                                   <span class="hljs-number">0</span>,    <br>                                   D3DPOOL_MANAGED,    <br>                                   &amp;mStaticVertexStream,    <br>                                   <span class="hljs-number">0</span>);    <br>ENGINE_ASSERT(SUCCEEDED(res)); <br></code></pre></td></tr></table></figure>
+
+<p>然后实现 <code>Commit()</code>的伪代码：</p>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// 遍历每一个Batch当中的instance</span><br>Foreach GeometryInstance in Instances  <br>Begin    <br>	<span class="hljs-comment">// 将所有的instance都转换到同一个空间。</span><br>    Transform geometry in mGeometryPacket to world space      with instance mModelMatrix    <br>    <span class="hljs-comment">// 应用所有的instance属性</span><br>    Apply other instance <span class="hljs-title function_">attributes</span> <span class="hljs-params">(like instance color)</span>    <br>    <span class="hljs-comment">// 将转换后的几何信息保存的vertex buffer</span><br>    Copy transformed geometry to the Vertex Buffer    <br>    <span class="hljs-comment">// 将索引根据不同instance增加一个offet保存到Indexbuffer</span><br>	Copy <span class="hljs-title function_">indices</span> <span class="hljs-params">(with the right offset)</span> to the Index Buffer  <br>End <br></code></pre></td></tr></table></figure>
+
+<p>现在就可以调用 <code>DrawIndexedPrimitive()</code>方法。所有的物体都变成了一个几何体</p>
+<p><strong>限制</strong>：</p>
+<ol>
+<li>Large memory footprint.</li>
+<li>No support for different levels of detail</li>
+<li>No support for skinning.</li>
+<li>No direct support for moving instances.</li>
+</ol>
+<h3 id="Dynamic-Batching"><a href="#Dynamic-Batching" class="headerlink" title="Dynamic Batching"></a>Dynamic Batching</h3><p>Dynamic batching 克服了static batching的缺点，但是降低了渲染效率。主要的有优点是能够不需要可编程管线GPU的支持。</p>
+<p>首先需要创建一个vertexbuffer，内存分布更好的支持动态的更新。</p>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs c">HRESULT res;    <br>res = lpDevice-&gt;CreateVertexBuffer(MAX_DYNAMIC_BUFFER_SIZE,    <br>                                   D3DUSAGE_DYNAMIC | D3DUSAGE_WRITEONLY,    <br>                                   <span class="hljs-number">0</span>,    <br>                                   D3DPOOL_DEFAULT,    <br>                                   &amp;mDynamicVertexStream,    <br>                                   <span class="hljs-number">0</span>); <br></code></pre></td></tr></table></figure>
+
+<p>设置一个 <code>MAX_DYNAMIC_BUFFER_SIZE</code>是很重要的，有两个方案：</p>
+<ol>
+<li>选择一个足够大的值能够保证每一帧的所有instance都足够。</li>
+<li>选择一个满足一定数量instance数量。</li>
+</ol>
+<p>第一个策略能够保证几何体更新和渲染是分开的，更新一次batch，提交一次渲染。更新一个batch的意义是将所有的instances放置到一个vertexbuffer当中：渲染只是提交 <code>DrawIndexedPrimitive()</code>渲染操作。但是这个方法需要足够大的图形内存。他可能是不可靠的：如果我们没有办法保证buffer在应用程序运行期间总是足够的大。</p>
+<p>第二个策略需要交错的进行更新batch和提交渲染，当dynamicbuffer填充满的时候，提交渲染，并且丢弃buffer内容。然后继续填充。为了性能优化，选择合适的协议很重要。</p>
+<p>选择哪一种依赖于具体的应用程序。本章节，我们选择第一个策略，因为更直接更容易解释。</p>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs c">Foreach GeometryInstance in Instances  <br>	Begin    <br> 		Transform geometry in mGeometryPacket to world space with      instance mModelMatrix    <br> 		If instance needs skinning, request a <span class="hljs-built_in">set</span> of bones from      mAnimationPlayer and skin geometry    <br> 		Apply other instance <span class="hljs-title function_">attributes</span> <span class="hljs-params">(like instance color)</span>    <br> 		Copy transformed geometry to the Vertex Buffer    <br> 		Copy <span class="hljs-title function_">indices</span> <span class="hljs-params">(with the right offset)</span> to the Index Buffer    <br>		Advance current pointer to the Vertex Buffer    <br>		Advance current pointer to the Index Buffer  <br>    End <br></code></pre></td></tr></table></figure>
+
+<p>这里的渲染调用也是简单的：</p>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c">DrawIndexedPrimitive().<br></code></pre></td></tr></table></figure>
+
+<h3 id="Vertex-Constants-Instancing"><a href="#Vertex-Constants-Instancing" class="headerlink" title="Vertex Constants Instancing"></a>Vertex Constants Instancing</h3><p>Vertex Constants Instance中，我们使用顶点常量来保存Instance数据。顶点常量的batching在渲染中速度非常快，并且它支持instance物体每帧移动，但是为了这样的灵活性需要有一定的代价。</p>
+<p>限制：</p>
+<ol>
+<li>每一个batch的数量是有限制的，依赖于可用的常量数量；通常一个batch数量在50到100个。但是这个在降低CPU开销上是足够的。</li>
+<li>无法进行蒙皮，顶点常量 已经用来存储instance属性。</li>
+<li>需要图形硬件对于vertexshader的支持。</li>
+</ol>
+<p>下图是顶点数据的示意图，表示了VertexBuffer的布局：</p>
+<p><img src="/../../images/GPU%E6%B8%B2%E6%9F%93%E4%BC%98%E5%8C%96%E6%8A%80%E6%9C%AFInside_Geometry_Instancing/03_instancing_02.jpg" alt="03_instancing_02.jpg"></p>
+<p>原始的顶点格式需要增加一个整形的索引用来表示Constant用的是哪个Instance，指明所属的geometry patcket。这个和蒙皮一样，指定哪个顶点被哪几根骨骼影响。</p>
+<p>顶点格式：</p>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">InstanceVertex</span>  &#123;</span>    <br>    D3DXVECTOR3  mPosition; <span class="hljs-comment">// Other vertex properties, such as normal and texture    </span><br>    <span class="hljs-comment">// coordinates      </span><br>    WORD  mInstanceIndex[<span class="hljs-number">4</span>]; <span class="hljs-comment">// Direct3D requires SHORT4  </span><br>&#125;; <br></code></pre></td></tr></table></figure>
+
+<p>提交数据 <code>Commit()</code> ，当所有的Instance数据都加入到geometrybatch之后，提交修改后的顶点buffer(增加Instancebuffer)。</p>
+<p>下一步就是为每一个instance更新渲染属性。假设我们只有模型矩阵，描述instance的位置和朝向和颜色。</p>
+<p>当使用Dx9类的GPU时，我们最大使用256个常量数据，可以使用200用于Instance属性。在我们的例子当中，一个模型矩阵需要4个常量，一个颜色需要1个常量，那么对于一个Instance就需要5个常量，也就是一个batch最多支持40个Instance。</p>
+<p>下面是Update()方法（用于更新顶点数据）的伪代码：</p>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs c">D3DXVECTOR4 instancesData[MAX_NUMBER_OF_CONSTANTS];    <br><span class="hljs-type">unsigned</span> <span class="hljs-type">int</span> count = <span class="hljs-number">0</span>;    <br><span class="hljs-keyword">for</span> (<span class="hljs-type">unsigned</span> <span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; GetInstancesCount(); ++i)  &#123;    <br>    <span class="hljs-comment">// write model matrix    </span><br>    instancesData[count++] = *(D3DXVECTOR4*)        <br>    &amp;mInstances[i].mModelMatrix.m11;    <br>    instancesData[count++] = *(D3DXVECTOR4*)        <br>    &amp;mInstances[i].mModelMatrix.m21;    <br>    instancesData[count++] = *(D3DXVECTOR4*)        <br>    &amp;mInstances[i].mModelMatrix.m31;    <br>    instancesData[count++] = *(D3DXVECTOR4*)        <br>    &amp;mInstances[i].mModelMatrix.m41;      <br>    <span class="hljs-comment">// write instance color      </span><br>    instanceData[count++] = ConvertColorToVec4(mInstances[i].mColor));  <br>&#125;    <br>lpDevice-&gt;SetVertexConstants(    <br>    INSTANCES_DATA_FIRST_CONSTANT,    <br>    instancesData,    <br>    count); <br></code></pre></td></tr></table></figure>
+
+<p>Render()方法设置视口矩阵和所有的instance，并通过<code>DrawIndexedPrimitive()</code> 提交渲染。</p>
+<p>可能的优化方式：可以将模型矩阵以四元组的形式保存可以节省两个顶点常量，最大支持的instance数量增加到70个左右。一个统一的缩放值保存在位移的w通道。模型矩阵在顶点数组中进行重构，但是会增加顶点Shader的复杂程度和计算时间。</p>
+<h3 id="Batching-with-the-Geometry-Instancing-API"><a href="#Batching-with-the-Geometry-Instancing-API" class="headerlink" title="Batching with the Geometry Instancing API"></a>Batching with the Geometry Instancing API</h3><p>最后一个技术是通过图形API直接暴露的硬件功能。越来越多的图形硬件开始支持Geometry Insancing API，这个技术优雅的解决了顶点数据Instancing 的数量限制，内存占用有限，CPU几乎不需要干预。唯一的缺点就是他只能处理相同的Geometry Packet。</p>
+<p>DX9提供下面的调用用来访问Geometry Instancing API：</p>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c">HRESULT <span class="hljs-title function_">SetStreamSourceFreq</span><span class="hljs-params">(    UINT StreamNumber,    UINT FrequencyParameter)</span>; <br></code></pre></td></tr></table></figure>
+
+<p><em>StreamNumber</em>表示了流数据的索引，<em>FrequencyParameter</em>表示了每一个顶点包含的Instance数量。</p>
+<p>我们首先需要创造两个vertexbuffer，一个是静态的用于保存一个单一几何体的geometry packet ，这个几何体是我们想要进行多次Instance绘制的物体。还需要一个动态的buffer用于保存Instance 数据。两个vertex的stream如下图：</p>
+<p><img src="/../../images/GPU%E6%B8%B2%E6%9F%93%E4%BC%98%E5%8C%96%E6%8A%80%E6%9C%AFInside_Geometry_Instancing/03_instancing_03.jpg" alt="03_instancing_03.jpg"></p>
+<p><code>Commit()</code> 数据确保所有的Instance只使用同一个geometrypacket，并且把这个geometry拷贝到一个静态的buffer当中。</p>
+<p> <code>Update()</code> 就简单的将所有的Instance的属性拷贝到第二个stream当中。这个方法看起来虽然和dynamic batch的策略很接近，但是CPU的介入和图形总线 (AGP or PCI Express)的带宽都是最小的。除此之外，我们能够分配一个足够大的内存给所有Instance的属性而不用担心图形内存，因为每一个Instance属性只使用一个几何体包的一小部分内存。</p>
+<p> <code>Render()</code> 方法需要设置两个Stream和正确的Stream frequency和调用DrawIndexedPrimitive()来在一个batch中渲染全部Instance。</p>
+<p>GPU会处理第一个stream的数据通过复制和第二个stream的数据打包。vertex shader会把模型空间的顶点用instance属性中的矩阵转换到世界空间。</p>
+<p>下面是对两个stream的设置：</p>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">unsigned</span> <span class="hljs-type">int</span> instancesCount = GetInstancesCount();    <br><span class="hljs-comment">// set up stream source frequency for the first stream  </span><br><span class="hljs-comment">// to render instancesCount instances  </span><br><span class="hljs-comment">// D3DSTREAMSOURCE_INDEXEDDATA tells Direct3D we&#x27;ll use  </span><br><span class="hljs-comment">// indexed geometry for instancing  </span><br>lpDevice-&gt;SetStreamSourceFreq(    <span class="hljs-number">0</span>,    D3DSTREAMSOURCE_INDEXEDDATA | instancesCount);      <br><span class="hljs-comment">// set up first stream source with the vertex buffer  </span><br><span class="hljs-comment">// containing geometry for the geometry packet  </span><br>lpDevice-&gt;SetStreamSource(    <span class="hljs-number">0</span>,    mGeometryInstancingVB[<span class="hljs-number">0</span>],    <span class="hljs-number">0</span>,    mGeometryPacketDecl);    <br><span class="hljs-comment">// set up stream source frequency for the second stream;  </span><br><span class="hljs-comment">// each set of instance attributes describes one instance  </span><br><span class="hljs-comment">// to be rendered  </span><br>lpDevice-&gt;SetStreamSourceFreq(    <span class="hljs-number">1</span>,    D3DSTREAMSOURCE_INSTANCEDATA | <span class="hljs-number">1</span>);    <span class="hljs-comment">// set up second stream source with the vertex buffer    </span><br><span class="hljs-comment">// containing all instances&#x27; attributes  </span><br>pd3dDevice-&gt;SetStreamSource(    <span class="hljs-number">1</span>,    mGeometryInstancingVB[<span class="hljs-number">0</span>],    <span class="hljs-number">0</span>,    mInstancesDataVertexDecl); <br></code></pre></td></tr></table></figure>
+
+<p>vertex shader的代码如图所示：</p>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><code class="hljs c"> <span class="hljs-comment">// vertex input declaration  </span><br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">vsInput</span>  </span><br><span class="hljs-class">&#123;</span>    <br>    <span class="hljs-comment">// stream 0    </span><br>    float4 position : POSITION;    <br>    float3 normal   : NORMAL;      <br>    <span class="hljs-comment">// stream 1      </span><br>    float4 model_matrix0 : TEXCOORD0;    <br>    float4 model_matrix1 : TEXCOORD1;    <br>    float4 model_matrix2 : TEXCOORD2;    <br>    float4 model_matrix3 : TEXCOORD3;      <br>    float4 instance_color : D3DCOLOR;  <br>&#125;;      <br>vsOutput <span class="hljs-title function_">GeometryInstancingVS</span><span class="hljs-params">(    in vsInput input)</span>  <br>&#123;    <br>    <span class="hljs-comment">// construct the model matrix    </span><br>    float4x4 modelMatrix =    &#123;      <br>        input.model_matrix0,      <br>        input.model_matrix1,      <br>        input.model_matrix2,      <br>        input.model_matrix3    <br>    &#125;;      <br>    <span class="hljs-comment">// transform input position and normal to world space    </span><br>    <span class="hljs-comment">// with the instance model matrix      </span><br>    float4 worldPosition = mul(input.position, modelMatrix);    <br>    float3 worldNormal = mul(input.normal, modelMatrix);      <br>    <span class="hljs-comment">// output position, normal, and color    </span><br>    output.position = mul(worldPosition, ViewProjectionMatrix);    <br>    output.normal = mul(worldNormal, ViewProjectionMatrix);    <br>    output.color = input.instance_color;      <br>    <span class="hljs-comment">// output other vertex data    </span><br>&#125; <br></code></pre></td></tr></table></figure>
+
+<p>伴随着最小的cpu开销和内存，这个技术能够高效的绘制大量的同种几何体，并且是很多场景的理想使用方式。唯一的缺点就是需要硬件支持并且不能简单的支持蒙皮。</p>
+<p>为了实现蒙皮，可能需要为所有的instance把蒙皮骨骼信息保存在贴图上，需要为正确的instance获取正确的骨骼，并且要保证texture fectch技术可用（Geometry instancing API需要，ShaderModel 3.0支持）。这个方案看起来很有吸引力，但是性能有待测试。</p>
+
+    </main>
+    <footer class="post-footer">
+      
+    </footer>
+  </article>
+  
+  
+  <nav class="page-nav">
+    <div class="page-nav-next page-nav-item">
+      
+      <a href="/2022/07/09/RTR/Gamma%E7%9F%AB%E6%AD%A3/" rel="next" title="Gamma矫正"><i class="fas fa-angle-left"></i><span class="nav-title">Gamma矫正</span></a>
+      
+    </div>
+    <div class="page-nav-prev page-nav-item">
+      
+      <a href="/2022/07/09/RTR/DepthPeeling/" rel="prev" title="Depth Peeling"><span class="nav-title">Depth Peeling</span><i class="fas fa-angle-right"></i></a>
+      
+    </div>
+  </nav>
+  
+  
+  
+
+<div class="comments" id="comments">
+  
+  
+  <div class="commentjs" id="comment-thread"></div>
+  <link rel="stylesheet" href="/css/commentjs.css">
+  <script defer type="text/javascript" src="/js/marked.min.js"></script>
+  <script defer type="text/javascript" src="/js/timeago.min.js"></script>
+  <script defer type="text/javascript" src="/js/highlight.min.js"></script>
+  <script defer type="text/javascript" src="/js/commentjs.js"></script>
+  <script type="text/javascript">
+  $(document).ready(function () {
+    getComments({
+      "type": "github",
+      "user": "leinlin",
+      "repo": "leinlin.github.io",
+      "client_id": "aee134bdfb54c4ef5826",
+      "client_secret": "4af1d3f2b82dccc028c49715becc01e611afbe43",
+      "no_comment": "这个页面还没有评论，现在就去评论吧！",
+      "go_to_comment": "去评论",
+      "issue_title": "GPU渲染优化技术:Inside Geometry Instancing",
+      "btn_class": "button",
+      "comments_target": "#comment-thread"
+    });
+    marked.setOptions({
+      "highlight": function (code, lang) {
+        return hljs.highlightAuto(code).value;
+      }
+    });
+    function mark() {
+      var markdowns = document.getElementsByClassName("markdown");
+      for (var i = 0; i < markdowns.length; ++i){
+        if (markdowns[i].innerHTML) {
+          markdowns[i].innerHTML = marked(markdowns[i].innerHTML);
+        }
+      }
+    }
+    window.addEventListener("DOMContentLoaded", mark, false);
+    window.addEventListener("load", mark, false);
+  });
+  </script>
+  
+  
+</div>
+
+
+
+  
+</div>
+
+          </div>
+          
+          
+          
+<aside class="sidebar" id="sidebar" style="background: url(/images/background.png);">
+  
+  <div class="search">
+    <div class="form-group">
+      <i class="fas fa-search"></i><input type="search" id="search-input" name="q" results="0" placeholder="搜索" class="form-control"/>
+    </div>
+  </div>
+  <div class="search-result-box" id="search-result"></div>
+  
+  
+<div class="info sidebar-item" id="info">
+  
+  <img class="author-avatar" src="/images/avatar.jpg" alt="leinlin">
+  
+  <h1 class="author-name">leinlin</h1>
+  <h2 class="author-description"></h2>
+  <div class="site-count">
+    
+    
+    
+    
+    <div class="categories-count count-block">
+      <div class="site-count-title">分类</div>
+      <div><a href="/categories/">17</a></div>
+    </div>
+    
+    
+  </div>
+  
+  <div class="rss">
+    <a class="rss-link button sidebar-item" href="/atom.xml"><i class="fas fa-rss"></i>RSS</a>
+  </div>
+  
+</div>
+
+
+  <div class="sidebar-sticky">
+    
+    
+    
+    
+    
+    <hr>
+    <div class="post-toc sidebar-item" id="toc-div">
+      <div><i class="fas fa-list-ol"></i>文章目录</div>
+      <div class="post-toc-content"><ol class="list-group toc"><li class="toc-item toc-level-1"><a class="list-group-item toc-link" href="#GPU%E6%B8%B2%E6%9F%93%E4%BC%98%E5%8C%96%E6%8A%80%E6%9C%AF-Inside-Geometry-Instancing"><span class="toc-text">GPU渲染优化技术:Inside Geometry Instancing</span></a><ol class="list-group toc-child"><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#%E7%AE%80%E4%BB%8B"><span class="toc-text">简介</span></a></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#Why-Geometry-Instancing"><span class="toc-text">Why Geometry Instancing?</span></a></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#Definitions"><span class="toc-text">Definitions</span></a><ol class="list-group toc-child"><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#Geometry-Packet"><span class="toc-text">Geometry Packet</span></a></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#Instance-Attributes"><span class="toc-text">Instance Attributes</span></a></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#Geometry-Instance"><span class="toc-text">Geometry Instance</span></a></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#Render-and-Texture-Context"><span class="toc-text">Render and Texture Context</span></a></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#Geometry-Batch"><span class="toc-text">Geometry Batch</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#Implementation"><span class="toc-text">Implementation</span></a><ol class="list-group toc-child"><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#Static-Batching"><span class="toc-text">Static Batching</span></a></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#Dynamic-Batching"><span class="toc-text">Dynamic Batching</span></a></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#Vertex-Constants-Instancing"><span class="toc-text">Vertex Constants Instancing</span></a></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#Batching-with-the-Geometry-Instancing-API"><span class="toc-text">Batching with the Geometry Instancing API</span></a></li></ol></li></ol></li></ol></div>
+    </div>
+    
+    
+    
+    <hr>
+    <div class="social-link sidebar-item">
+      <div><i class="far fa-address-card"></i>社交链接</p></div>
+      <ul>
+        
+        <li><i class="fab fa-github"></i><a href="https://leinlin.github.com/" target="_blank">GitHub</a></li>
+        
+      </ul>
+    </div>
+    
+    
+  </div>
+</aside>
+
+
+          
+        </div>
+      </div>
+    </main>
+    
+<footer id="footer" class="footer" style="background: #33363b;">
+  <div class="container">
+    <div class="back-to-top">
+      <button id="back-to-top"><i class="fas fa-angle-double-up" aria-label="回到顶部"></i></button>
+    </div>
+    <div class="footer-container">
+      <div class="footer-left">
+        <div class="copyright">
+          <span class="author">leinlin</span><span class="year"><i class="far fa-copyright"></i>2022</span>
+        </div>
+        
+        <div class="busuanzi">
+          <span id="busuanzi_container_site_pv"><i class="fas fa-eye" aria-label="站点点击量" aria-hidden="false"></i><span id="busuanzi_value_site_pv"></span></span><span id="busuanzi_container_site_uv"><i class="fas fa-user" aria-label="站点用户数" aria-hidden="false"></i><span id="busuanzi_value_site_uv"></span></span><span id="busuanzi_container_page_pv"><i class="far fa-file-alt"></i><span id="busuanzi_value_page_pv" aria-label="页面点击量" aria-hidden="false"></span></span>
+        </div>
+        
+      </div>
+      <div class="footer-right">
+        <div class="custom-info">
+          
+          托管于<i class="fab fa-github-alt"></i><a href="https://pages.github.com/" target="_blank">GitHub Pages</a>
+          
+        </div>
+        <div class="powered-by">
+          由 <a href="https://hexo.io/" target="_blank">Hexo</a> 强力驱动 | 主题 <a href="https://github.com/AlynxZhou/hexo-theme-aria/" target="_blank">ARIA</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+  <script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>
