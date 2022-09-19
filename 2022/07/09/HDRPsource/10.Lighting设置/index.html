@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#33363b">
+    <meta name="msapplication-TileColor" content="#33363b">
+    
+    
+    
+    
+    <meta name="keywords" content="leinlin, ARIA, Hexo">
+    
+    
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png">
+    
+    
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicons/android-chrome-192x192.png">
+    
+    
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png">
+    
+    
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png">
+    
+    
+    <link rel="mask-icon" href="/favicons/safari-pinned-tab.svg" color="#33363b">
+    
+    
+    <link rel="manifest" href="/favicons/site.webmanifest">
+    
+    
+    <meta name="msapplication-config" content="/favicons/browserconfig.xml">
+    
+    
+    <link rel="alternate" href="/atom.xml" title="leinlin的小笔记" type="application/atom+xml" />
+    
+    
+    <link rel="shortcut icon" type="image/x-icon" href="/favicons/favicon.ico">
+    
+    
+    <link rel="stylesheet" type="text/css" href="/css/normalize.css">
+    <link rel="stylesheet" type="text/css" href="/css/index.css">
+    
+    <link rel="stylesheet" type="text/css" href="/css/sidebar.css">
+    
+    
+<link rel="stylesheet" type="text/css" href="/css/page.css">
+<link rel="stylesheet" type="text/css" href="/css/post.css">
+
+    <link rel="stylesheet" type="text/css" href="/css/custom.css">
+    <link rel="stylesheet" type="text/css" href="/css/atom-one-light.css">
+    <link rel="stylesheet" type="text/css" href="/css/lightgallery.min.css">
+    <script type="text/javascript" src="/js/jquery.min.js"></script>
+    <script defer type="text/javascript" src="/js/util.js"></script>
+    <script defer type="text/javascript" src="/js/clipboard.min.js"></script>
+    <script defer type="text/javascript" src="/js/scrollspy.js"></script>
+    <script defer type="text/javascript" src="/js/fontawesome-all.min.js"></script>
+    <script defer type="text/javascript" src="/js/lightgallery.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-fullscreen.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-hash.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-pager.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-thumbnail.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-zoom.min.js"></script>
+    
+    <script defer src="/js/busuanzi.pure.mini.js"></script>
+    
+    
+    <script defer type="text/javascript" src="/js/search.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function () {
+      var searchPath = "search.xml";
+      if (searchPath.length === 0) {
+        searchPath = "search.xml";
+      }
+      var path = "/" + searchPath;
+      searchFunc(path, "search-input", "search-result");
+    });
+    </script>
+    
+    
+    
+    <script defer type="text/javascript" src="https://cdn.staticfile.org/MathJax/MathJax-2.6-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ["$","$"], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ["script", "noscript", "style", "textarea", "pre", "code"]
+      }
+    });
+    </script>
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for (i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += " has-jax";
+      }
+    });
+    </script>
+    
+    
+    <script defer type="text/javascript" src="/js/index.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function () {
+      var cb = null;
+      var els = $(".post figure.highlight");
+      if (els.length) {
+        // Enabled Hexo highlight line number.
+        $(els).each(function (i, e) {
+          // $(e).before("<button class=\"copy button\">复制</button>");
+          $(e).before([
+            "<div class=\"code-titlebar\">",
+              "<div class=\"titlebar-left\">",
+                "<button class=\"copy\">复制</button>",
+              "</div>",
+            "</div>"
+          ].join(""));
+        });
+        cb = new ClipboardJS("button.copy", {
+          "target": function (trigger) {
+              // Get target element by DOM API.
+              return trigger.parentNode.parentNode.nextElementSibling.firstChild.firstChild.firstChild.lastChild.firstChild.firstChild;
+          }
+        });
+      } else {
+        // Disabled Hexo highlight line number.
+        els = $(".post pre code");
+        $(els).each(function (i, e) {
+          // Add button before pre, not code.
+          // $(e).parent().before("<button class=\"copy button\">复制</button>");
+          $(e).before([
+            "<div class=\"code-titlebar\">",
+              "<div class=\"titlebar-left\">",
+                "<button class=\"copy\" >复制</button>",
+              "</div>",
+              "<div class=\"titlebar-right\">",
+                "<button class=\"button-dot dot-minimize\" aria-label=\"Decoration\"></button>",
+                "<button class=\"button-dot dot-maximize\" aria-label=\"Decoration\"></button>",
+                "<button class=\"button-dot dot-close\" aria-label=\"Decoration\"></button>",
+              "</div>",
+            "</div>"
+          ].join(""));
+        });
+        cb = new ClipboardJS("button.copy", {
+          "target": function (trigger) {
+              // Get target element by DOM API.
+              return trigger.parentNode.parentNode.nextElementSibling;
+          }
+        });
+      }
+      cb.on("success", function (e) {
+        e.clearSelection();
+        var trigger = e.trigger;
+        // Change button text as a user tip.
+        trigger.innerHTML = "已复制";
+        $(trigger).addClass("copied");
+        // Change button text back;
+        setTimeout(function () {
+          trigger.innerHTML = "复制";
+          $(trigger).removeClass("copied");
+        }, 1500);
+      });
+    });
+    </script>
+    
+    <script defer type="text/javascript" src="/js/custom.js"></script>
+    <title>光照设置 | leinlin的小笔记</title>
+  <meta name="generator" content="Hexo 6.2.0"></head>
+  <body itemscope itemtype="http://schema.org/WebPage" lang="zh_CN"  data-spy="scroll" data-target=".list-group">
+    
+<header id="header" class="header" style="background: #33363b;">
+  <div class="container">
+    <div class="header-container">
+      <div class="header-title">
+        <h1 class="title"><a href="/">leinlin的小笔记</a></h1>
+        <h2 class="subtitle"></h2>
+      </div>
+      
+    </div>
+    <nav id="nav" class="nav">
+      <a id="nav-toggle" class="nav-toggle" aria-hidden="true"><i class="fas fa-bars" aria-label="切换导航栏"></i></a>
+      <ul id="menu" role="menubar" aria-hidden="false">
+        
+        <li role="menuitem"><a href="/"><i class="fas fa-home"></i><span class="menu-text">首页</span></a></li>
+        
+        <li role="menuitem"><a href="/categories/"><i class="fas fa-th-list"></i><span class="menu-text">分类</span></a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</header>
+
+
+    <main id="main" class="main">
+      <div class="container">
+        <div class="main-container">
+          <div class="content">
+            
+<div id="post" class="page">
+  
+  <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
+    <div class="post-block">
+      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/07/09/HDRPsource/10.Lighting%E8%AE%BE%E7%BD%AE/">
+      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+       <meta itemprop="name" content="leinlin">
+       <meta itemprop="description" content="">
+       <meta itemprop="image" content="/images/avatar.jpg">
+      </span>
+      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+       <meta itemprop="name" content="leinlin的小笔记">
+      </span>
+    </div>
+    <header class="post-header">
+      <h1 class="post-title" itemprop="name headline">光照设置</h1>
+      <div class="post-meta">
+        
+        <span class="post-date">
+          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2022-07-09T12:00:14+08:00">2022-07-09 12:00:14</time></span>
+        </span>
+        
+        
+        
+        <span class="post-meta-divider divider">|</span>
+        
+        <span class="post-categories">
+          
+          <i class="far fa-folder-open"></i><span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/HDRPSource/" itemprop="url" rel="index"><span itemprop="name">HDRPSource</span></a></span>
+        </span>
+        
+        
+        
+        
+      </div>
+    </header>
+    <main class="post-main" itemprop="articleBody">
+      <h1 id="光照设置"><a href="#光照设置" class="headerlink" title="光照设置"></a>光照设置</h1><p>这里主要讲解GI的设置方式。</p>
+<p>同时解释一下Shader是如何在<strong>光照探针</strong>、<strong>静态光照贴图</strong>，<strong>动态光照贴图</strong>，<strong>直接光照</strong>之间产生作用的。</p>
+<p>首先看一下我们能设置的选项：</p>
+<p>对于光源：</p>
+<ol>
+<li>realtime.</li>
+<li>mix.</li>
+<li>bake.</li>
+</ol>
+<p>对于emission（HDRP）：</p>
+<ol>
+<li>realtime.</li>
+<li>bake.</li>
+</ol>
+<p>对于物体：</p>
+<ol>
+<li>lightmap static.</li>
+<li>lightprobe.</li>
+</ol>
+<p>对于工程选项，在Windows&#x2F;Rendering&#x2F;Lighting Setting中的设置三部分：</p>
+<ol>
+<li>Realtime Lighting.</li>
+<li>Mixed Lighting.</li>
+<li>Lightmapping Setting.</li>
+</ol>
+<p>##测试场景</p>
+<p>下面是测试场景：</p>
+<p><img src="/../../images/10.%E5%85%89%E6%BA%90%E9%85%8D%E7%BD%AE.PNG" alt="光源配置"></p>
+<p>测试场景当中有三个光源：红色点光源，绿色物体自发光，蓝色点光源，同时场景当中布满了光照探针。两个黑色模型，用于观察受光表现。（目前全部都是realtime光源，同时，物体是Lightmap static, realtime GI 和baked GI全部开启）。</p>
+<p>从反面可以看到，红框内部就是间接光照。</p>
+<p><img src="/../../images/10.%E5%85%89%E6%BA%90%E9%85%8D%E7%BD%AE%E5%8F%8D%E9%9D%A2.PNG" alt="光源配置"></p>
+<p>接下来的内容会不断修改光源类型，物体类型设置和光照设置，来观察GI情况。</p>
+<h2 id="光源类型"><a href="#光源类型" class="headerlink" title="光源类型"></a>光源类型</h2><p>光源有三种类型：realtime、mix、bake，如下图：</p>
+<p><img src="/../../images/10.%E5%85%89%E6%BA%90%E7%B1%BB%E5%9E%8B.png"></p>
+<p>每种类型的光都可以假设成由两部分组成：</p>
+<p><strong>直接光照</strong>（直接照在某个物体上）</p>
+<p><strong>间接光照</strong>。（经过物体反弹之后照在其他物体上）</p>
+<h2 id="自发光"><a href="#自发光" class="headerlink" title="自发光"></a>自发光</h2><p>自发光也是一种光源：但是只有两种：realtime和bake。</p>
+<p>这里有不同：</p>
+<p>1.realtime：对应的是realtime类型光源的间接成分。</p>
+<p>2.bake：对应的是bake类型的光源。</p>
+<p><img src="/../../images/10.%E8%87%AA%E5%8F%91%E5%85%89%E7%B1%BB%E5%9E%8B.png"></p>
+<h2 id="物体受光"><a href="#物体受光" class="headerlink" title="物体受光"></a>物体受光</h2><p>物体上和受光相关的有两个设置：</p>
+<ol>
+<li>lightmap static是否打开。</li>
+<li>lightprobe 是否打开。</li>
+</ol>
+<p>选项位置见下图：</p>
+<p><img src="/../../images/10.%E7%89%A9%E4%BD%93%E5%85%89%E7%85%A7%E7%B1%BB%E5%9E%8B.png"></p>
+<p>下面讨论每个情况。</p>
+<p>###LightMap Static物体</p>
+<p>​	LightMap Static打开时受光来源：Realtime GI贴图 + Baked GI贴图 + realtime 光的直接光照 + mix 光的直接光照。(贴图内容和探针内容在后面解释)</p>
+<p>当前场景两个物体都是lightMap Static。我们把测试场景中蓝色光改成bake，这个时候两个lightmap static物体的光照贴图如下。</p>
+<p><img src="/../../images/10.%E7%89%A9%E4%BD%93%E5%8F%97%E5%85%89%E6%83%85%E5%86%B5.png"></p>
+<p>​	从上图可以看到，蓝色光源被bake到baked lightmap中，realtime光源和realtime自发光被bake到realtimeGI当中。同时，下图是物体背面的受光情况，可以看到，间接光都存在。</p>
+<p><img src="/../../images/10.%E7%89%A9%E4%BD%93%E5%8F%97%E5%85%89%E6%83%85%E5%86%B5%E8%83%8C%E9%9D%A2.PNG"></p>
+<p>接下来我们在做一个实验，在运行模式下修改三个光源的颜色，</p>
+<p>​	红色realtime点光源-&gt;蓝色realtime点光源， 绿色realtime自发光-&gt;黄色realtime自发光， 蓝色baked点光源-&gt;红色baked自发光</p>
+<p>下图为修改后的结果，可以发现。两个点光源的变化是合理的。但是realtime GI贴图上的realtime自发光并没有变化（就是说在Play模式下并不是realtime的）。同时我发现，在编辑模式下，我修改自发光颜色realtimeGI贴图不用重新烘焙就会马上变（就是说在Editor模式下是realtime的），这个可能是bug。</p>
+<p><img src="/../../images/10.%E4%BF%AE%E6%94%B9%E5%85%89%E6%BA%90%E9%A2%9C%E8%89%B2.PNG"></p>
+<p>###Lightprobe物体</p>
+<p>打开时受光来源： realtime光的直接光照 + mix光的直接光照 + 光照探针。</p>
+<p>​	我们把下方平面取消掉lightmap static，这样这个物体就会使用LightProbe作为间接光。同时保持左侧为realtime红色光，右侧为bake蓝色光，中间为realtime自发光。</p>
+<p><img src="/../../images/10.LightProbe%E7%BB%93%E6%9E%9C.PNG"></p>
+<p>​	从上图可以看到，光照探针烘焙了所有的间接光（红绿蓝）。同时下方平面不再接受GI贴图，而间接光是通过光照探针插值来的（有个很重要的地方是：realtime的自发光和baked点光源表现居然是一样的的效果），选择平面后可以看到插值用到的光照探针。可以看到光照效果很差，所以大物体不适合使用探针。</p>
+<p>###特殊说明</p>
+<ol>
+<li>如果为一个物体烘焙了光照贴图，那么即使取消了lightmap static，lightprobe也不会生效（灰色状态），必须手动清除光照贴图。</li>
+</ol>
+<p><img src="/../../images/10.%E9%94%99%E8%AF%AF%E5%85%89%E7%85%A7%E7%8A%B6%E6%80%811.PNG"></p>
+<ol start="2">
+<li>如果一个物体还没有烘焙光照贴图，那么即使LightMap Static打开，Lightprobe也可以打开（正常情况他们是互斥的）。</li>
+</ol>
+<p><img src="/../../images/10.%E9%94%99%E8%AF%AF%E5%85%89%E7%85%A7%E7%8A%B6%E6%80%812.PNG"></p>
+<p>上面两种情况就是光照信息错误的状态。</p>
+<p>物体受光可以参考一下Shader当中的逻辑：</p>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs c">float3 <span class="hljs-title function_">SampleBakedGI</span><span class="hljs-params">(float3 positionRWS, float3 normalWS, float2 uvStaticLightmap, float2 uvDynamicLightmap)</span><br>&#123;<br><span class="hljs-meta">#<span class="hljs-keyword">if</span> !defined(LIGHTMAP_ON) &amp;&amp; !defined(DYNAMICLIGHTMAP_ON)</span><br>	<span class="hljs-comment">// If there is no lightmap, it assume lightprobe</span><br>  	...<br><span class="hljs-meta">#<span class="hljs-keyword">else</span></span><br><br>    float3 bakeDiffuseLighting = float3(<span class="hljs-number">0.0</span>, <span class="hljs-number">0.0</span>, <span class="hljs-number">0.0</span>);<br><br>    <span class="hljs-meta">#<span class="hljs-keyword">ifdef</span> LIGHTMAP_ON</span><br>        bakeDiffuseLighting += SampleDirectionalLightmap();<br>    <span class="hljs-meta">#<span class="hljs-keyword">endif</span></span><br><br>    <span class="hljs-meta">#<span class="hljs-keyword">ifdef</span> DYNAMICLIGHTMAP_ON</span><br>        bakeDiffuseLighting += SampleSingleLightmap()<br>    <span class="hljs-meta">#<span class="hljs-keyword">endif</span></span><br><br>    <span class="hljs-keyword">return</span> bakeDiffuseLighting;<br><span class="hljs-meta">#<span class="hljs-keyword">endif</span></span><br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="光源烘焙"><a href="#光源烘焙" class="headerlink" title="光源烘焙"></a>光源烘焙</h2><p>三种光源（每种光源的两个部分）和两种emission通过光照烘焙之后会通过不同的方式对物体产生影响。</p>
+<ol>
+<li>Realtime GI贴图： Realtime Light的间接部分  + realtime emission。</li>
+<li>Baked GI贴图：Mix Light的间接部分 + Baked Light的全部 + baked emission。</li>
+<li>实时光照计算： Realtime的直接部分 + MixLight的直接部分。</li>
+<li>光头照探针里面：Mix Light的间接部分 + Baked Light的全部 + baked emission+ Realtime Light的间接部分</li>
+</ol>
+<p>这里特殊说明mix 光源类型我们关掉自发光，将红光变成mix点光源，蓝光还是bake。</p>
+<p><img src="/../../images/10.mix%E5%85%89%E6%BA%90.PNG"></p>
+<p>此时法线，realtime的间接光烘焙到了bakelightmap当中。此时如果在Play模式下变化mix点光源，只有直接光会变化，而Baked lilghtmap不会变化，如果在运行过程中，把红色点光源变化realtime，则Realtime lightmap中也不计算间接光，因为没有预先烘焙的信息。</p>
+<p>​	<strong>结合上一部分的特殊说明：所有GI内容和物体类型，必须在设置好之后统一bake一次。在修改了物体类型和光照类型之后，也必须重新bake，场景光照才会正确。</strong></p>
+<h2 id="光照设置-1"><a href="#光照设置-1" class="headerlink" title="光照设置"></a>光照设置</h2><p>光照设置有下面三块：</p>
+<ol>
+<li>Realtime Lighting.</li>
+<li>Mixed Lighting.</li>
+<li>Lightmapping Setting.</li>
+</ol>
+<p>###Realtime Lighting</p>
+<p>这个下面只有一个开关。Realtime Global Illumination，用于控制是否生成Realtime GI贴图。</p>
+<p>如果不选择。那么对于LightMap Static打开的物体受光就会发生改变：</p>
+<p>从   :</p>
+<p><strong>Realtime GI贴图 + Baked GI贴图 + realtime 光的直接光照 + mix 光的直接光照。</strong> </p>
+<p>变成 :</p>
+<p>​                                   <strong>Baked GI贴图 + realtime 光的直接光照 + mix 光的直接光照</strong>。</p>
+<h3 id="Mixed-Lighting"><a href="#Mixed-Lighting" class="headerlink" title="Mixed Lighting"></a>Mixed Lighting</h3><p>这个下面有一个开关，Baked  Global Illumination用于控制是否生成Baked GI贴图。</p>
+<p>效果和上面的Realtime Global Illumination一致。</p>
+<p>还有一个选项Lighting Mode。这个用于控制MixLight对于ShadowMask之类的类容有所影响，对于前面的内容没有影响。</p>
+<p>下面是三种设置情况对应的物体接受光照贴图的情况：</p>
+<p>1.Realtime GI开Baked GI开</p>
+<p><img src="/../../images/10.%E5%85%89%E7%85%A7%E8%AE%BE%E7%BD%AE1.PNG"></p>
+<p>2.Realtime GI关Baked GI开</p>
+<p><img src="/../../images/10.%E5%85%89%E7%85%A7%E8%AE%BE%E7%BD%AE2.PNG"></p>
+<p>3.Realtime GI开Baked GI关</p>
+<p><img src="/../../images/10.%E5%85%89%E7%85%A7%E8%AE%BE%E7%BD%AE3.PNG"></p>
+<h3 id="Lightmapping-Setting"><a href="#Lightmapping-Setting" class="headerlink" title="Lightmapping Setting"></a>Lightmapping Setting</h3><p>这个主要用来控制 <strong>Baked GI贴图</strong>如何生成。</p>
+<p>Directional Mode 开始 对于<strong>Baked GI贴图</strong>和<strong>Realtime GI贴图</strong>同时生效。</p>
+
+    </main>
+    <footer class="post-footer">
+      
+    </footer>
+  </article>
+  
+  
+  <nav class="page-nav">
+    <div class="page-nav-next page-nav-item">
+      
+      <a href="/2022/07/09/HDRPsource/1.%E4%BB%A3%E7%A0%81%E7%BB%93%E6%9E%84/" rel="next" title="代码结构"><i class="fas fa-angle-left"></i><span class="nav-title">代码结构</span></a>
+      
+    </div>
+    <div class="page-nav-prev page-nav-item">
+      
+      <a href="/2022/07/09/HDRPsource/2.ShaderPass%E8%AF%B4%E6%98%8E/" rel="prev" title="HDRP ShaderPass说明"><span class="nav-title">HDRP ShaderPass说明</span><i class="fas fa-angle-right"></i></a>
+      
+    </div>
+  </nav>
+  
+  
+  
+
+<div class="comments" id="comments">
+  
+  
+  <div class="commentjs" id="comment-thread"></div>
+  <link rel="stylesheet" href="/css/commentjs.css">
+  <script defer type="text/javascript" src="/js/marked.min.js"></script>
+  <script defer type="text/javascript" src="/js/timeago.min.js"></script>
+  <script defer type="text/javascript" src="/js/highlight.min.js"></script>
+  <script defer type="text/javascript" src="/js/commentjs.js"></script>
+  <script type="text/javascript">
+  $(document).ready(function () {
+    getComments({
+      "type": "github",
+      "user": "leinlin",
+      "repo": "leinlin.github.io",
+      "client_id": "aee134bdfb54c4ef5826",
+      "client_secret": "4af1d3f2b82dccc028c49715becc01e611afbe43",
+      "no_comment": "这个页面还没有评论，现在就去评论吧！",
+      "go_to_comment": "去评论",
+      "issue_title": "光照设置",
+      "btn_class": "button",
+      "comments_target": "#comment-thread"
+    });
+    marked.setOptions({
+      "highlight": function (code, lang) {
+        return hljs.highlightAuto(code).value;
+      }
+    });
+    function mark() {
+      var markdowns = document.getElementsByClassName("markdown");
+      for (var i = 0; i < markdowns.length; ++i){
+        if (markdowns[i].innerHTML) {
+          markdowns[i].innerHTML = marked(markdowns[i].innerHTML);
+        }
+      }
+    }
+    window.addEventListener("DOMContentLoaded", mark, false);
+    window.addEventListener("load", mark, false);
+  });
+  </script>
+  
+  
+</div>
+
+
+
+  
+</div>
+
+          </div>
+          
+          
+          
+<aside class="sidebar" id="sidebar" style="background: url(/images/background.png);">
+  
+  <div class="search">
+    <div class="form-group">
+      <i class="fas fa-search"></i><input type="search" id="search-input" name="q" results="0" placeholder="搜索" class="form-control"/>
+    </div>
+  </div>
+  <div class="search-result-box" id="search-result"></div>
+  
+  
+<div class="info sidebar-item" id="info">
+  
+  <img class="author-avatar" src="/images/avatar.jpg" alt="leinlin">
+  
+  <h1 class="author-name">leinlin</h1>
+  <h2 class="author-description"></h2>
+  <div class="site-count">
+    
+    
+    
+    
+    <div class="categories-count count-block">
+      <div class="site-count-title">分类</div>
+      <div><a href="/categories/">13</a></div>
+    </div>
+    
+    
+  </div>
+  
+  <div class="rss">
+    <a class="rss-link button sidebar-item" href="/atom.xml"><i class="fas fa-rss"></i>RSS</a>
+  </div>
+  
+</div>
+
+
+  <div class="sidebar-sticky">
+    
+    
+    
+    
+    
+    <hr>
+    <div class="post-toc sidebar-item" id="toc-div">
+      <div><i class="fas fa-list-ol"></i>文章目录</div>
+      <div class="post-toc-content"><ol class="list-group toc"><li class="toc-item toc-level-1"><a class="list-group-item toc-link" href="#%E5%85%89%E7%85%A7%E8%AE%BE%E7%BD%AE"><span class="toc-text">光照设置</span></a><ol class="list-group toc-child"><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#%E5%85%89%E6%BA%90%E7%B1%BB%E5%9E%8B"><span class="toc-text">光源类型</span></a></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#%E8%87%AA%E5%8F%91%E5%85%89"><span class="toc-text">自发光</span></a></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#%E7%89%A9%E4%BD%93%E5%8F%97%E5%85%89"><span class="toc-text">物体受光</span></a></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#%E5%85%89%E6%BA%90%E7%83%98%E7%84%99"><span class="toc-text">光源烘焙</span></a></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#%E5%85%89%E7%85%A7%E8%AE%BE%E7%BD%AE-1"><span class="toc-text">光照设置</span></a><ol class="list-group toc-child"><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#Mixed-Lighting"><span class="toc-text">Mixed Lighting</span></a></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#Lightmapping-Setting"><span class="toc-text">Lightmapping Setting</span></a></li></ol></li></ol></li></ol></div>
+    </div>
+    
+    
+    
+    <hr>
+    <div class="social-link sidebar-item">
+      <div><i class="far fa-address-card"></i>社交链接</p></div>
+      <ul>
+        
+        <li><i class="fab fa-github"></i><a href="https://leinlin.github.com/" target="_blank">GitHub</a></li>
+        
+      </ul>
+    </div>
+    
+    
+  </div>
+</aside>
+
+
+          
+        </div>
+      </div>
+    </main>
+    
+<footer id="footer" class="footer" style="background: #33363b;">
+  <div class="container">
+    <div class="back-to-top">
+      <button id="back-to-top"><i class="fas fa-angle-double-up" aria-label="回到顶部"></i></button>
+    </div>
+    <div class="footer-container">
+      <div class="footer-left">
+        <div class="copyright">
+          <span class="author">leinlin</span><span class="year"><i class="far fa-copyright"></i>2022</span>
+        </div>
+        
+        <div class="busuanzi">
+          <span id="busuanzi_container_site_pv"><i class="fas fa-eye" aria-label="站点点击量" aria-hidden="false"></i><span id="busuanzi_value_site_pv"></span></span><span id="busuanzi_container_site_uv"><i class="fas fa-user" aria-label="站点用户数" aria-hidden="false"></i><span id="busuanzi_value_site_uv"></span></span><span id="busuanzi_container_page_pv"><i class="far fa-file-alt"></i><span id="busuanzi_value_page_pv" aria-label="页面点击量" aria-hidden="false"></span></span>
+        </div>
+        
+      </div>
+      <div class="footer-right">
+        <div class="custom-info">
+          
+          托管于<i class="fab fa-github-alt"></i><a href="https://pages.github.com/" target="_blank">GitHub Pages</a>
+          
+        </div>
+        <div class="powered-by">
+          由 <a href="https://hexo.io/" target="_blank">Hexo</a> 强力驱动 | 主题 <a href="https://github.com/AlynxZhou/hexo-theme-aria/" target="_blank">ARIA</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+  <script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

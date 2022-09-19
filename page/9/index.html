@@ -204,46 +204,6 @@
   
   <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
     <div class="post-block">
-      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/09/19/language/c++/unlock_queue/">
-      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-        <meta itemprop="name" content="leinlin">
-        <meta itemprop="description" content="">
-        <meta itemprop="image" content="/images/avatar.jpg">
-      </span>
-      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-        <meta itemprop="name" content="leinlin的小笔记">
-      </span>
-    </div>
-    <header class="post-header">
-      <h1 class="post-title" itemprop="name headline">
-        <a class="post-title-link post-title-link-external" href="/2022/09/19/language/c++/unlock_queue/" itemprop="url"></a>
-      </h1>
-      <div class="post-meta">
-        
-        <span class="post-date">
-          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2022-09-19T19:53:33+08:00">2022-09-19 19:53:33</time></span>
-        </span>
-        
-        
-        
-        
-        
-      </div>
-    </header>
-    <main class="post-main" itemprop="articleBody">
-      
-      <h1 id="无锁队列的实现"><a href="#无锁队列的实现" class="headerlink" title="无锁队列的实现"></a>无锁队列的实现</h1><p>本文修改自<a target="_blank" rel="noopener" href="https://coolshell.cn/articles/8239.html">无锁队列的实现</a></p>
-
-      
-      <p align="right"><a class="morebtn" href="/2022/09/19/language/c++/unlock_queue/" title="">阅读全文</a></p>
-    </main>
-    <footer class="post-footer">
-      
-    </footer>
-  </article>
-  
-  <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
-    <div class="post-block">
       <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/09/19/language/c++/thread/">
       <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
         <meta itemprop="name" content="leinlin">
@@ -431,7 +391,7 @@
   
   <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
     <div class="post-block">
-      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/09/19/HDRPsource/new3.HDRP%20Shadow/">
+      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/09/19/VulkanTranslate/Vulkan-A-Specification%E4%B8%AD%E6%96%87%E7%BF%BB%E8%AF%91%E7%89%88/">
       <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
         <meta itemprop="name" content="leinlin">
         <meta itemprop="description" content="">
@@ -443,7 +403,7 @@
     </div>
     <header class="post-header">
       <h1 class="post-title" itemprop="name headline">
-        <a class="post-title-link post-title-link-external" href="/2022/09/19/HDRPsource/new3.HDRP%20Shadow/" itemprop="url"></a>
+        <a class="post-title-link post-title-link-external" href="/2022/09/19/VulkanTranslate/Vulkan-A-Specification%E4%B8%AD%E6%96%87%E7%BF%BB%E8%AF%91%E7%89%88/" itemprop="url"></a>
       </h1>
       <div class="post-meta">
         
@@ -459,39 +419,15 @@
     </header>
     <main class="post-main" itemprop="articleBody">
       
-      <p>准备阴影Atlas：</p>
-<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// 在PrepareLightsForGPU当中分配阴影,PrepareLightsForGPU是用来CPU准备光照数据的</span><br><br><span class="hljs-comment">// 给阴影分配渲染请求，设置摄像机参数，阴影分辨率。</span><br>additionalData.ReserveShadows(camera, m_ShadowManager, m_ShadowInitParameters, cullResults, m_FrameSettings, lightIndex);<br><br>...<br><span class="hljs-comment">// Now that all the lights have requested a shadow resolution, we can layout them in the atlas</span><br><span class="hljs-comment">// And if needed rescale the whole atlas</span><br>m_ShadowManager.LayoutShadowMaps(debugDisplaySettings.data.lightingDebugSettings);<br></code></pre></td></tr></table></figure>
-
-<p>当我设置多个方向光阴影的时候会报错，分配阴影贴图布局的方法：</p>
-<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs c">public <span class="hljs-type">void</span> <span class="hljs-title function_">LayoutShadowMaps</span><span class="hljs-params">(LightingDebugSettings lightingDebugSettings)</span><br>&#123;<br>    m_Atlas.UpdateDebugSettings(lightingDebugSettings);<br><br>    <span class="hljs-keyword">if</span> (m_CascadeAtlas != null)<br>        m_CascadeAtlas.UpdateDebugSettings(lightingDebugSettings);<br><br>    m_AreaLightShadowAtlas.UpdateDebugSettings(lightingDebugSettings);<br><br>    <span class="hljs-keyword">if</span> (lightingDebugSettings.shadowResolutionScaleFactor != <span class="hljs-number">1.0f</span>)<br>    &#123;<br>        foreach (var shadowResolutionRequest in m_ShadowResolutionRequests)<br>        &#123;<br>            <span class="hljs-comment">// We don&#x27;t rescale the directional shadows with the global shadow scale factor</span><br>            <span class="hljs-comment">// because there is no dynamic atlas rescale when it overflow.</span><br>            <span class="hljs-keyword">if</span> (shadowResolutionRequest.shadowMapType != ShadowMapType.CascadedDirectional)<br>                shadowResolutionRequest.resolution *= lightingDebugSettings.shadowResolutionScaleFactor;<br>        &#125;<br>    &#125;<br><br>    <span class="hljs-comment">// Assign a position to all the shadows in the atlas, and scale shadows if needed</span><br>    <span class="hljs-keyword">if</span> (m_CascadeAtlas != null &amp;&amp; !m_CascadeAtlas.Layout(<span class="hljs-literal">false</span>))<br>        Debug.LogError(<span class="hljs-string">&quot;Cascade Shadow atlasing has failed, only one directional light can cast shadows at a time&quot;</span>);<br>    m_Atlas.Layout();<br>    m_AreaLightShadowAtlas.Layout();<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<p>渲染阴影的位置是在HDShadowAtlas类当中：</p>
-<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// HDShadowAtlas类</span><br><span class="hljs-comment">// 所有需要渲染阴影的灯光都会组织成一个HDShadowAtlas类。</span><br>public <span class="hljs-type">void</span> <span class="hljs-title function_">RenderShadows</span><span class="hljs-params">(ScriptableRenderContext renderContext, CommandBuffer cmd, ShadowDrawingSettings dss)</span><br>&#123;<br>    <span class="hljs-comment">// m_ShadowRequests是渲染阴影需要的所有的参数。</span><br>    <span class="hljs-keyword">if</span> (m_ShadowRequests.Count == <span class="hljs-number">0</span>)<br>        <span class="hljs-keyword">return</span>;<br>	<br>    <span class="hljs-comment">// shadow mask 纹理id</span><br>    cmd.SetRenderTarget(identifier);<br>    <span class="hljs-comment">// shadow 大小 </span><br>    cmd.SetGlobalVector(m_AtlasSizeShaderID, new Vector4(width, height, <span class="hljs-number">1.0f</span> / width, <span class="hljs-number">1.0f</span> / height));<br><br>    <span class="hljs-comment">// debug设置</span><br>    <span class="hljs-keyword">if</span> (m_LightingDebugSettings.clearShadowAtlas)<br>        CoreUtils.DrawFullScreen(cmd, m_ClearMaterial, null, <span class="hljs-number">0</span>);<br>	<br>    <span class="hljs-comment">// 渲染所以阴影请求，直线光渲染次数为级联阴影数。</span><br>    foreach (var shadowRequest in m_ShadowRequests)<br>    &#123;<br>        <span class="hljs-comment">// 设置渲染区域。</span><br>        cmd.SetViewport(shadowRequest.atlasViewport);<br>		<span class="hljs-comment">// 根据阴影设置是否启用zClip</span><br>        <span class="hljs-comment">/*</span><br><span class="hljs-comment">        zClip的设置：</span><br><span class="hljs-comment">        shadowRequest.zClip = (legacyLight.type != LightType.Directional);</span><br><span class="hljs-comment">        为什么关闭直线光的ZClip</span><br><span class="hljs-comment">        */</span><br>        cmd.SetGlobalFloat(HDShaderIDs._ZClip, shadowRequest.zClip ? <span class="hljs-number">1.0f</span> : <span class="hljs-number">0.0f</span>);<br>        <span class="hljs-keyword">if</span> (!m_LightingDebugSettings.clearShadowAtlas)<br>        &#123;<br>            CoreUtils.DrawFullScreen(cmd, m_ClearMaterial, null, <span class="hljs-number">0</span>);<br>        &#125;<br>		<br>        <span class="hljs-comment">// 读取灯光信息和剪裁信息</span><br>        dss.lightIndex = shadowRequest.lightIndex;<br>        dss.splitData = shadowRequest.splitData;<br><br>        <span class="hljs-comment">// 设置摄像机参数</span><br>        <span class="hljs-comment">// Setup matrices for shadow rendering:</span><br>        Matrix4x4 viewProjection = shadowRequest.deviceProjectionYFlip * shadowRequest.view;<br>        cmd.SetGlobalMatrix(HDShaderIDs._ViewMatrix, shadowRequest.view);<br>        cmd.SetGlobalMatrix(HDShaderIDs._InvViewMatrix, shadowRequest.view.inverse);<br>        cmd.SetGlobalMatrix(HDShaderIDs._ProjMatrix, shadowRequest.deviceProjectionYFlip);<br>        cmd.SetGlobalMatrix(HDShaderIDs._InvProjMatrix, shadowRequest.deviceProjectionYFlip.inverse);<br>        cmd.SetGlobalMatrix(HDShaderIDs._ViewProjMatrix, viewProjection);<br>        cmd.SetGlobalMatrix(HDShaderIDs._InvViewProjMatrix, viewProjection.inverse);<br>        cmd.SetGlobalVectorArray(HDShaderIDs._ShadowClipPlanes, shadowRequest.frustumPlanes);<br><br>        <span class="hljs-comment">// <span class="hljs-doctag">TODO:</span> remove this execute when DrawShadows will use a CommandBuffer</span><br>        <span class="hljs-comment">// 使用Command来绘制阴影，目前还没有实现？？</span><br>        renderContext.ExecuteCommandBuffer(cmd);<br>        cmd.Clear();<br><br>        renderContext.DrawShadows(ref dss);<br>    &#125;<br>	<br>    <span class="hljs-comment">// 设置Clip启用</span><br>    cmd.SetGlobalFloat(HDShaderIDs._ZClip, <span class="hljs-number">1.0f</span>);   <span class="hljs-comment">// Re-enable zclip globally</span><br>&#125;<br></code></pre></td></tr></table></figure>
-
-
-
-<p>HDShadowResolutionRequest表示一个灯光需要渲染阴影的次数。目前通过灯光类型，和shadow级联数决定，下面是所有相关的方法：</p>
-<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// =================HDAdditionalLightData:ReserveShadows====</span><br><span class="hljs-type">int</span> count = HDAdditionalLightData:GetShadowRequestCount();<br><span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> index = <span class="hljs-number">0</span>; index &lt; count; index++)<br>    m_ShadowRequestIndices[index] = shadowManager.ReserveShadowResolutions(viewportSize, shadowMapType);<br><br><span class="hljs-comment">// =================HDAdditionalLightData:GetShadowRequestCount====</span><br><span class="hljs-type">int</span> <span class="hljs-title function_">GetShadowRequestCount</span><span class="hljs-params">()</span><br>&#123;<br>    <span class="hljs-keyword">return</span> (legacyLight.type == LightType.Point <br>            &amp;&amp; lightTypeExtent == LightTypeExtent.Punctual) ? <br>        	<span class="hljs-number">6</span> : <br>    		<span class="hljs-comment">// 如果是直线光，则渲染次数等于级联阴影数。</span><br>            (legacyLight.type == LightType.Directional) ? 				    m_ShadowSettings.cascadeShadowSplitCount.value : <span class="hljs-number">1</span>;<br>&#125;<br><br><span class="hljs-comment">//==================HDShadowManager:ReserveShadowResolutions ======</span><br><span class="hljs-keyword">switch</span> (shadowMapType)<br>&#123;<br>    <span class="hljs-keyword">case</span> ShadowMapType.PunctualAtlas:<br>      m_Atlas.ReserveResolution(resolutionRequest);<br>        <span class="hljs-keyword">break</span>;<br>    <span class="hljs-keyword">case</span> ShadowMapType.AreaLightAtlas:<br>      m_AreaLightShadowAtlas.ReserveResolution(resolutionRequest);<br>        <span class="hljs-keyword">break</span>;<br>    <span class="hljs-keyword">case</span> ShadowMapType.CascadedDirectional:<br>      m_CascadeAtlas.ReserveResolution(resolutionRequest);<br>        <span class="hljs-keyword">break</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<p>通过级联数据和剪裁结果计算剪裁平面。</p>
-<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs c">cullResults.ComputeDirectionalShadowMatricesAndCullingPrimitives(lightIndex, (<span class="hljs-type">int</span>)cascadeIndex, cascadeCount, ratios, (<span class="hljs-type">int</span>)viewportSize.x, nearPlaneOffset, out view, out projection, out splitData);<br>           <br></code></pre></td></tr></table></figure>
-
-<p>ShadowAtlas的纹理声明：</p>
-<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">//	HDShadowManager:</span><br><span class="hljs-comment">// The cascade atlas will be allocated only if there is a directional light</span><br>m_Atlas = new HDShadowAtlas(renderPipelineResources, punctualLightAtlasInfo.shadowAtlasResolution, punctualLightAtlasInfo.shadowAtlasResolution, HDShaderIDs._ShadowAtlasSize, clearMaterial, <span class="hljs-literal">false</span>, depthBufferBits: punctualLightAtlasInfo.shadowAtlasDepthBits, name: <span class="hljs-string">&quot;Shadow Map Atlas&quot;</span>);<br><span class="hljs-comment">// Cascade atlas render texture will only be allocated if there is a shadow casting directional light</span><br><span class="hljs-type">bool</span> useMomentShadows = GetDirectionalShadowAlgorithm() == DirectionalShadowAlgorithm.IMS;<br>m_CascadeAtlas = new HDShadowAtlas(renderPipelineResources, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>, HDShaderIDs._CascadeShadowAtlasSize, clearMaterial, useMomentShadows, depthBufferBits: directionalShadowDepthBits, name: <span class="hljs-string">&quot;Cascade Shadow Map Atlas&quot;</span>);<br><br>m_AreaLightShadowAtlas = new HDShadowAtlas(renderPipelineResources, areaLightAtlasInfo.shadowAtlasResolution, areaLightAtlasInfo.shadowAtlasResolution, HDShaderIDs._AreaShadowAtlasSize, clearMaterial, <span class="hljs-literal">false</span>, BlurredEVSM: <span class="hljs-literal">true</span>, depthBufferBits: areaLightAtlasInfo.shadowAtlasDepthBits, name: <span class="hljs-string">&quot;Area Light Shadow Map Atlas&quot;</span>);<br><br></code></pre></td></tr></table></figure>
-
-
-
-<p>在HDRenderPipelineAsset当中可以设置每种Atlas的大小，以及每种纹理深度的精度。</p>
-<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// LightLoop</span><br><span class="hljs-comment">// 下面是阴影相关设置的使用位置。</span><br><span class="hljs-type">void</span> <span class="hljs-title function_">InitShadowSystem</span><span class="hljs-params">(HDRenderPipelineAsset hdAsset)</span><br>&#123;<br>    m_ShadowInitParameters = hdAsset.currentPlatformRenderPipelineSettings.hdShadowInitParams;<br>    m_ShadowManager = new HDShadowManager(<br>        hdAsset.renderPipelineResources,<br>        m_ShadowInitParameters.directionalShadowsDepthBits,<br>        m_ShadowInitParameters.punctualLightShadowAtlas,<br>        m_ShadowInitParameters.areaLightShadowAtlas,<br>        m_ShadowInitParameters.maxShadowRequests,<br>        hdAsset.renderPipelineResources.shaders.shadowClearPS<br>    );<br>&#125;<br></code></pre></td></tr></table></figure>
-
-
-
-<p>Unity支持的Soft Shadow 类型：</p>
-<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs c">public <span class="hljs-type">static</span> DirectionalShadowAlgorithm <span class="hljs-title function_">GetDirectionalShadowAlgorithm</span><span class="hljs-params">()</span><br>&#123;<br>    var hdAsset = (GraphicsSettings.renderPipelineAsset as HDRenderPipelineAsset);<br>    <span class="hljs-keyword">switch</span> (hdAsset.currentPlatformRenderPipelineSettings.hdShadowInitParams.shadowQuality)<br>    &#123;<br>        <span class="hljs-keyword">case</span> HDShadowQuality.Low:<br>            &#123;<br>                <span class="hljs-keyword">return</span> DirectionalShadowAlgorithm.PCF5x5;<br>            &#125;<br>        <span class="hljs-keyword">case</span> HDShadowQuality.Medium:<br>            &#123;<br>                <span class="hljs-keyword">return</span> DirectionalShadowAlgorithm.PCF7x7;<br>            &#125;<br>        <span class="hljs-keyword">case</span> HDShadowQuality.High:<br>            &#123;<br>                <span class="hljs-keyword">return</span> DirectionalShadowAlgorithm.PCSS;<br>            &#125;<br>        <span class="hljs-keyword">case</span> HDShadowQuality.VeryHigh:<br>            &#123;<br>                <span class="hljs-keyword">return</span> DirectionalShadowAlgorithm.IMS;<br>            &#125;<br>    &#125;;<br>    <span class="hljs-keyword">return</span> DirectionalShadowAlgorithm.PCF5x5;<br>&#125;<br></code></pre></td></tr></table></figure>
-
+      <h1 id="Vulkan-A-Specification中文翻译版"><a href="#Vulkan-A-Specification中文翻译版" class="headerlink" title="Vulkan-A-Specification中文翻译版"></a>Vulkan-A-Specification中文翻译版</h1><p>翻译了一点点发现已经有了一个相对完整的中文版，但是发现了大量的错别字和语句问题，导致很难理解。</p>
+<p><a target="_blank" rel="noopener" href="https://khronos.org/registry/vulkan/specs/1.1/html/chap15.html#textures-texel-filtering">Vulkan Specification英文版</a></p>
+<p><a target="_blank" rel="noopener" href="http://spec.vulkan.org.cn/#devsandqueues">Vulkan Specification中文版</a></p>
+<p>我这里就尝试翻译一些重要的部分。</p>
+<p><a href="Chapter1-Introduction.md">Chapter1-Introduction</a></p>
+<p><a href="Chapter2-Fundamentals-%E5%9F%BA%E7%A1%80%E5%8A%9F%E8%83%BD">Chapter2-Fundamentals-基础功能</a></p>
 
       
-      <p align="right"><a class="morebtn" href="/2022/09/19/HDRPsource/new3.HDRP%20Shadow/" title="">阅读全文</a></p>
+      <p align="right"><a class="morebtn" href="/2022/09/19/VulkanTranslate/Vulkan-A-Specification%E4%B8%AD%E6%96%87%E7%BF%BB%E8%AF%91%E7%89%88/" title="">阅读全文</a></p>
     </main>
     <footer class="post-footer">
       
@@ -500,7 +436,7 @@
   
   <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
     <div class="post-block">
-      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/09/19/HDRPsource/new2.HDRPShader%E5%BC%80%E5%8F%91%E8%AF%B4%E6%98%8E/">
+      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/09/19/VulkanTranslate/Chapter2-Fundamentals-%E5%9F%BA%E7%A1%80%E5%8A%9F%E8%83%BD/">
       <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
         <meta itemprop="name" content="leinlin">
         <meta itemprop="description" content="">
@@ -512,7 +448,7 @@
     </div>
     <header class="post-header">
       <h1 class="post-title" itemprop="name headline">
-        <a class="post-title-link post-title-link-external" href="/2022/09/19/HDRPsource/new2.HDRPShader%E5%BC%80%E5%8F%91%E8%AF%B4%E6%98%8E/" itemprop="url"></a>
+        <a class="post-title-link post-title-link-external" href="/2022/09/19/VulkanTranslate/Chapter2-Fundamentals-%E5%9F%BA%E7%A1%80%E5%8A%9F%E8%83%BD/" itemprop="url"></a>
       </h1>
       <div class="post-meta">
         
@@ -528,348 +464,60 @@
     </header>
     <main class="post-main" itemprop="articleBody">
       
-      <h2 id="Shader开发说明"><a href="#Shader开发说明" class="headerlink" title="Shader开发说明"></a>Shader开发说明</h2><h3 id="文件结构"><a href="#文件结构" class="headerlink" title="文件结构"></a>文件结构</h3><p><strong>CoreRPLibrary&#x2F;ShaderLibrary:</strong></p>
-<p>保存了大量的工具函数：光照计算工具函数，随机数计算，矩阵工具，坐标转换工具，风场，ParallaxOcclusionMapping等。</p>
-<p><strong>CoreRPLibrary&#x2F;ShaderLibrary&#x2F;API:</strong></p>
-<p>保存了跨平台函数的定义。</p>
-<p><strong>HDRP&#x2F;Runtime&#x2F;Material:</strong></p>
-<p>保存了HDRP中默认支持的材质Shader：Lit，LayeredLit，Stacklit等，都是和各自材质相关的计算。不同的材质中包含了不同的BSDF函数的实现、不同的BuiltinData的组织方式。</p>
-<p><strong>HDRP&#x2F;Runtime&#x2F;PostProcessing&#x2F;Shaders:</strong></p>
-<p>后处理的Shader，HDRP中后处理全部使用ComputeShader。</p>
-<p><strong>HDRP&#x2F;Runtime&#x2F;RenderPipeline&#x2F;ShaderPass:</strong></p>
-<p>ShaderPass的定义：包括了Vertex和Fragment程序的定义。</p>
-<p><strong>HDRP&#x2F;Runtime&#x2F;RenderPipeline&#x2F;ShaderLibrary:</strong></p>
-<p>从C#当中设置的Shader参数，包括：各种变换矩阵、获取矩阵的函数、摄像机参数、场景参数、全部buffer、全局纹理、shader控制参数等。</p>
-<h3 id="Shader-Pass"><a href="#Shader-Pass" class="headerlink" title="Shader Pass"></a>Shader Pass</h3><p>RenderPiple的代码中，在不同的时机会渲染不同的ShaderPass（通过lightmode区分）。<strong>如果要看更详细的Pass绘制时机，以及Pass之间如何组合成正确的Shader，需要看Pipeline的代码，如果随意组合会得到无法预知的结果</strong>，主要的Pass如下：</p>
-<h4 id="Forward"><a href="#Forward" class="headerlink" title="Forward"></a>Forward</h4><p>前向渲染物体使用这个Pass，正常情况下使用Deferred。透明物体可以使用Forward Pass， StackLit也是Forward Pass。</p>
-<h4 id="ForwardOnly"><a href="#ForwardOnly" class="headerlink" title="ForwardOnly"></a>ForwardOnly</h4><p>ForwardOnly的用处是：渲染透明物体或<strong>在Deferred模式下强制使用Forward模式渲染不透明物体</strong>。 例如：StackLit就是使用了{ForwardOnly和DepthForwardOnly}组合的Shader。</p>
-<h4 id="DepthForwardOnly"><a href="#DepthForwardOnly" class="headerlink" title="DepthForwardOnly"></a>DepthForwardOnly</h4><p>和ForwardOnly对应使用。</p>
-<h4 id="DepthOnly"><a href="#DepthOnly" class="headerlink" title="DepthOnly"></a>DepthOnly</h4><p>渲染深度，Forward和Deferred必须有一个深度，使用这个Pass。</p>
-<h4 id="TransparentDepthPrepass"><a href="#TransparentDepthPrepass" class="headerlink" title="TransparentDepthPrepass"></a>TransparentDepthPrepass</h4><p>透明物体Prepass深度</p>
-<h4 id="TransparentDepthPostpass"><a href="#TransparentDepthPostpass" class="headerlink" title="TransparentDepthPostpass"></a>TransparentDepthPostpass</h4><p>透明物体Postpass深度</p>
-<p><strong>注意：</strong>上面所有的Pass需要正确的组合在一个Shader当中，不然会出错。例如：自己写的Shader中可以包括：{ForwardOnly，DepthForwardOnly}。 如果出现：{ForwardOnly，DepthOnly}就会出现不可预知的结果。</p>
-<h4 id="ShadowCaster"><a href="#ShadowCaster" class="headerlink" title="ShadowCaster"></a>ShadowCaster</h4><p>用于渲染阴影的Pass，和老版本不同的是：HDRP的阴影和深度使用了两个不同的Pass。</p>
-<h4 id="DistortionVectors"><a href="#DistortionVectors" class="headerlink" title="DistortionVectors"></a>DistortionVectors</h4><p>扭曲向量</p>
-<h4 id="DistortionVectors-1"><a href="#DistortionVectors-1" class="headerlink" title="DistortionVectors"></a>DistortionVectors</h4><p>屏幕运动向量</p>
-<h3 id="Shader编写"><a href="#Shader编写" class="headerlink" title="Shader编写"></a>Shader编写</h3><h4 id="定义LightMode和ShaderPass"><a href="#定义LightMode和ShaderPass" class="headerlink" title="定义LightMode和ShaderPass"></a>定义LightMode和ShaderPass</h4><p>如果要实现自己的Shader，第一步需要正确的定义ShaderPass：</p>
-<p>不透明物体:主要需要基本的光照渲染Forward或者Deferred、阴影ShadowCaster，深度DepthOnly：</p>
-<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs c">Shader <span class="hljs-string">&quot;HDRP&quot;</span><br>&#123;<br><br>    SubShader<br>    &#123;<br>        Pass<br>        &#123;<br>            Name <span class="hljs-string">&quot;Forward&quot;</span><br>            Tags&#123; <span class="hljs-string">&quot;LightMode&quot;</span> = <span class="hljs-string">&quot;Forward&quot;</span> &#125;<br>        &#125;<br>         Pass<br>        &#123;<br>            Name <span class="hljs-string">&quot;Deferred&quot;</span><br>            Tags&#123; <span class="hljs-string">&quot;LightMode&quot;</span> = <span class="hljs-string">&quot;Deferred&quot;</span> &#125;<br>        &#125;<br>        Pass<br>        &#123;<br>            Name <span class="hljs-string">&quot;DepthOnly&quot;</span><br>            Tags&#123; <span class="hljs-string">&quot;LightMode&quot;</span> = <span class="hljs-string">&quot;DepthOnly&quot;</span> &#125;<br>        &#125;<br>        Pass<br>        &#123;<br>            Name <span class="hljs-string">&quot;ShadowCaster&quot;</span><br>            Tags&#123; <span class="hljs-string">&quot;LightMode&quot;</span> = <span class="hljs-string">&quot;ShadowCaster&quot;</span> &#125;<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<p>不透明物体也可以是（类似StackLit方式）：</p>
-<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs c">Shader <span class="hljs-string">&quot;HDRP&quot;</span><br>&#123;<br>    SubShader<br>    &#123;<br>        Pass<br>        &#123;<br>            Name <span class="hljs-string">&quot;ForwardOnly&quot;</span><br>            Tags&#123; <span class="hljs-string">&quot;LightMode&quot;</span> = <span class="hljs-string">&quot;ForwardOnly&quot;</span> &#125;<br>        &#125;<br>        Pass<br>        &#123;<br>            Name <span class="hljs-string">&quot;DepthForwardOnly&quot;</span><br>            Tags&#123; <span class="hljs-string">&quot;LightMode&quot;</span> = <span class="hljs-string">&quot;DepthForwardOnly&quot;</span> &#125;<br>            HLSLPROGRAM<br>            <span class="hljs-meta">#<span class="hljs-keyword">pragma</span> vertex Vert</span><br>            <span class="hljs-meta">#<span class="hljs-keyword">pragma</span> fragment Frag</span><br>            ENDHLSL<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<p>透明物体,需要基本的光照Pass（也可以不计算光照）ForwardOnly或者Forward，深度TransparentDepthPrepass、TransparentDepthPostpass</p>
-<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs c">Shader <span class="hljs-string">&quot;HDRP&quot;</span><br>&#123;<br><br>    SubShader<br>    &#123;<br>        Pass<br>        &#123;<br>            Name <span class="hljs-string">&quot;ForwardOnly&quot;</span><br>            Tags&#123; <span class="hljs-string">&quot;LightMode&quot;</span> = <span class="hljs-string">&quot;Forward&quot;</span> &#125;<br>            HLSLPROGRAM<br>            <span class="hljs-meta">#<span class="hljs-keyword">pragma</span> vertex Vert</span><br>            <span class="hljs-meta">#<span class="hljs-keyword">pragma</span> fragment Frag</span><br>            ENDHLSL<br>        &#125;<br>        Pass<br>        &#123;<br>            Name <span class="hljs-string">&quot;TransparentDepthPrepass&quot;</span><br>            Tags&#123; <span class="hljs-string">&quot;LightMode&quot;</span> = <span class="hljs-string">&quot;TransparentDepthPrepass&quot;</span> &#125;<br>        &#125;<br>        Pass<br>        &#123;<br>            Name <span class="hljs-string">&quot;TransparentDepthPostpass&quot;</span><br>            Tags&#123; <span class="hljs-string">&quot;LightMode&quot;</span> = <span class="hljs-string">&quot;TransparentDepthPostpass&quot;</span> &#125;<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<p>可以根据自己的需求组合不同的Pass达到不同的效果。例如：一个物体如果不想要阴影，可以直接去掉ShadowCaster Pass，这样对深度没有任何影响。<strong>还有一个重要的问题就是：所有ShaderGraph或者HDRP内置的Shader都包括了ShadowCaster Pass和Depth Pass。所以，需要之后应该需要我们根据需求手动去除这个Pass。</strong></p>
-<h4 id="设置Queue"><a href="#设置Queue" class="headerlink" title="设置Queue"></a>设置Queue</h4><p>控制渲染时机的除了LightMode之外，另一个是Queue。</p>
-<p>HDRP的Queue和原本不同，现在只能定义到SubShader级别.</p>
-<figure class="hljs highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">Shader &quot;&quot;<br>&#123;<br>     SubShader<br>     &#123;<br>        Tags &#123; &quot;Queue&quot; = &quot;Transparent&quot; &#125;<br>        Pass<br>        &#123;<br>            // rest of the shader body...<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<p>HDRP使用了Priority定义Queue，具体参考HDMaterialTags.cs文件。</p>
-<p>完成了Queue和LightMode的设置就算是完成一个完整的Shader设置。</p>
-<h4 id="Material参数"><a href="#Material参数" class="headerlink" title="Material参数"></a>Material参数</h4><p>HDRP的自定义参数设置和原始版本的使用方式是一样的。</p>
-<p>不同的是内置参数。HDRP的内置参数全部通过可查看的C#代码设置。需要包括以下两个文件。</p>
-<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;Packages/com.unity.render-pipelines.core/ShaderLibrary/Common.hlsl&quot;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;Packages/com.unity.render-pipelines.high-definition/Runtime/ShaderLibrary/ShaderVariables.hlsl&quot;</span></span><br><br></code></pre></td></tr></table></figure>
-
-<p>这两个文件包括了：版本相关的变量关键字、摄像机矩阵、场景参数、摄像机参数等内容。矩阵类型和原本也有所差异。</p>
-<h4 id="灯光设置"><a href="#灯光设置" class="headerlink" title="灯光设置"></a>灯光设置</h4><p>HDRP和原始版本最大的区别就是灯光计算，HDPR在一个Pass当中会计算完所有的灯光（包括区域光、环境光、雾、LightMap、LightProbe）。需要从LightList当中读取各种信息。</p>
-<p>下面是读取灯光信息的基本形式：</p>
-<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;CustomLighting.hlsl&quot;</span></span><br><br><span class="hljs-type">void</span> <span class="hljs-title function_">LightLoop</span><span class="hljs-params">(...)</span><br>&#123;<br><br>    <span class="hljs-type">float</span> NdotV = dot(bsdfData.normalWS, V);<br>    LightLoopContext context;<br>    context.shadowContext    = InitShadowContext();<br>    <span class="hljs-comment">// 计算基于屏幕的细节阴影</span><br>    context.contactShadow    = InitContactShadow(posInput);<br>    context.shadowValue      = <span class="hljs-number">1</span>;<br>    context.sampleReflection = <span class="hljs-number">0</span>;<br><br>    uint lightCount, lightStart;<br><br>    <span class="hljs-comment">// ===================  读取点光、聚光灯  ===================== </span><br>    <span class="hljs-comment">/*</span><br><span class="hljs-comment">    struct LightData</span><br><span class="hljs-comment">    &#123;</span><br><span class="hljs-comment">        float3 positionRWS;</span><br><span class="hljs-comment">        uint lightLayers;</span><br><span class="hljs-comment">        float lightDimmer;</span><br><span class="hljs-comment">        float volumetricLightDimmer;</span><br><span class="hljs-comment">        float angleScale;</span><br><span class="hljs-comment">        float angleOffset;</span><br><span class="hljs-comment">        float3 forward;</span><br><span class="hljs-comment">        int lightType;</span><br><span class="hljs-comment">        float3 right;</span><br><span class="hljs-comment">        float range;</span><br><span class="hljs-comment">        float3 up;</span><br><span class="hljs-comment">        float rangeAttenuationScale;</span><br><span class="hljs-comment">        float3 color;</span><br><span class="hljs-comment">        float rangeAttenuationBias;</span><br><span class="hljs-comment">        int cookieIndex;</span><br><span class="hljs-comment">        int tileCookie;</span><br><span class="hljs-comment">        int shadowIndex;</span><br><span class="hljs-comment">        int contactShadowMask;</span><br><span class="hljs-comment">        int rayTracedAreaShadowIndex;</span><br><span class="hljs-comment">        float shadowDimmer;</span><br><span class="hljs-comment">        float volumetricShadowDimmer;</span><br><span class="hljs-comment">        int nonLightMappedOnly;</span><br><span class="hljs-comment">        float minRoughness;</span><br><span class="hljs-comment">        float4 shadowMaskSelector;</span><br><span class="hljs-comment">        float2 size;</span><br><span class="hljs-comment">        float diffuseDimmer;</span><br><span class="hljs-comment">        float specularDimmer;</span><br><span class="hljs-comment">    &#125;;</span><br><span class="hljs-comment">    */</span><br>    <span class="hljs-comment">/*</span><br><span class="hljs-comment">    根据世界坐标位置和灯光类型，返回灯光索引的开始索引和数量.</span><br><span class="hljs-comment">    */</span><br>    GetCountAndStart(posInput, LIGHTCATEGORY_PUNCTUAL, lightStart, lightCount);<br>    uint i = <span class="hljs-number">0</span>; <br>    <span class="hljs-keyword">for</span> (i = <span class="hljs-number">0</span>; i &lt; lightCount; ++i)<br>    &#123;<br>        LightData lightData = FetchLight(lightStart, i);<br>        <span class="hljs-comment">// 计算光照</span><br>    &#125;<br>    <br>    <span class="hljs-comment">// ===================  读取直线光  =====================</span><br>    <span class="hljs-comment">/*</span><br><span class="hljs-comment">    _DirectionalLightCount：直线光个数</span><br><span class="hljs-comment">    _DirectionalLightDatas：所有直线光数组.</span><br><span class="hljs-comment">    直线光保存在CB当中，不参与FPTL,所以直接通过数组计算。</span><br><span class="hljs-comment">    _DirectionalLightDatas的数据结构：</span><br><span class="hljs-comment">    struct DirectionalLightData</span><br><span class="hljs-comment">    &#123;</span><br><span class="hljs-comment">        float3 positionRWS;</span><br><span class="hljs-comment">        uint lightLayers;</span><br><span class="hljs-comment">        float lightDimmer;</span><br><span class="hljs-comment">        float volumetricLightDimmer;</span><br><span class="hljs-comment">        float angleScale;</span><br><span class="hljs-comment">        float angleOffset;</span><br><span class="hljs-comment">        float3 forward;</span><br><span class="hljs-comment">        int cookieIndex;</span><br><span class="hljs-comment">        float3 right;</span><br><span class="hljs-comment">        int tileCookie;</span><br><span class="hljs-comment">        float3 up;</span><br><span class="hljs-comment">        int shadowIndex;</span><br><span class="hljs-comment">        float3 color;</span><br><span class="hljs-comment">        int contactShadowMask;</span><br><span class="hljs-comment">        float shadowDimmer;</span><br><span class="hljs-comment">        float volumetricShadowDimmer;</span><br><span class="hljs-comment">        int nonLightMappedOnly;</span><br><span class="hljs-comment">        float minRoughness;</span><br><span class="hljs-comment">        float4 shadowMaskSelector;</span><br><span class="hljs-comment">        float diffuseDimmer;</span><br><span class="hljs-comment">        float specularDimmer;</span><br><span class="hljs-comment">    &#125;;</span><br><span class="hljs-comment">    */</span><br>    uint i = <span class="hljs-number">0</span>; <br>    <span class="hljs-keyword">for</span> (i = <span class="hljs-number">0</span>; i &lt; _DirectionalLightCount; ++i)<br>    &#123;<br>        _DirectionalLightDatas[i];<br>    &#125;<br>    <br>    <br>    <span class="hljs-comment">// ====================== 读取区域光 =====================</span><br>    <span class="hljs-comment">/*</span><br><span class="hljs-comment">   	LightData定义同读取点光、聚光灯。</span><br><span class="hljs-comment">    */</span><br>    <span class="hljs-comment">/*</span><br><span class="hljs-comment">     在Lit当中Loop当中可以看到用了两个while，主要是为了GPU优化。</span><br><span class="hljs-comment">    */</span><br>    GetCountAndStart(posInput, LIGHTCATEGORY_AREA, lightStart, lightCount);<br>    <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>; i &lt; lightCount; i++)<br>    &#123;<br>        LightData lightData = FetchLight(lightStart, i);<br>       	<span class="hljs-comment">// 计算光照</span><br>    &#125;<br>    <br>    <span class="hljs-comment">// ==================== 读取环境光，主要处理反射和折射光的分量 =====================</span><br>    <span class="hljs-comment">/*</span><br><span class="hljs-comment">    这里有个重要的内容，就是反射和折射信息和光照计算不同，不是叠加，而是反射的上限应该是1。所以具体如何处理不同的反射和折射的关系需要参考Lit。</span><br><span class="hljs-comment">    */</span><br>    <span class="hljs-comment">/*</span><br><span class="hljs-comment">    struct EnvLightData</span><br><span class="hljs-comment">    &#123;</span><br><span class="hljs-comment">        uint lightLayers;</span><br><span class="hljs-comment">        float3 capturePositionRWS;</span><br><span class="hljs-comment">        int influenceShapeType;</span><br><span class="hljs-comment">        float3 proxyExtents;</span><br><span class="hljs-comment">        float minProjectionDistance;</span><br><span class="hljs-comment">        float3 proxyPositionRWS;</span><br><span class="hljs-comment">        float3 proxyForward;</span><br><span class="hljs-comment">        float3 proxyUp;</span><br><span class="hljs-comment">        float3 proxyRight;</span><br><span class="hljs-comment">        float3 influencePositionRWS;</span><br><span class="hljs-comment">        float3 influenceForward;</span><br><span class="hljs-comment">        float3 influenceUp;</span><br><span class="hljs-comment">        float3 influenceRight;</span><br><span class="hljs-comment">        float3 influenceExtents;</span><br><span class="hljs-comment">        float unused00;</span><br><span class="hljs-comment">        float3 blendDistancePositive;</span><br><span class="hljs-comment">        float3 blendDistanceNegative;</span><br><span class="hljs-comment">        float3 blendNormalDistancePositive;</span><br><span class="hljs-comment">        float3 blendNormalDistanceNegative;</span><br><span class="hljs-comment">        float3 boxSideFadePositive;</span><br><span class="hljs-comment">        float3 boxSideFadeNegative;</span><br><span class="hljs-comment">        float weight;</span><br><span class="hljs-comment">        float multiplier;</span><br><span class="hljs-comment">        int envIndex;</span><br><span class="hljs-comment">    &#125;;</span><br><span class="hljs-comment">    */</span><br>    <span class="hljs-comment">//Lit当中首先定义了反射和折射的成分，初始化为0.</span><br>    <span class="hljs-type">float</span> reflectionHierarchyWeight = <span class="hljs-number">0.0</span>; <span class="hljs-comment">// Max: 1.0</span><br>    <span class="hljs-type">float</span> refractionHierarchyWeight = _EnableSSRefraction ? <span class="hljs-number">0.0</span> : <span class="hljs-number">1.0</span>; <span class="hljs-comment">// Max: 1.0</span><br>    <span class="hljs-comment">// 读取环境光照信息</span><br>    GetCountAndStart(posInput, LIGHTCATEGORY_ENV, envLightStart, envLightCount);<br>    <br>    <span class="hljs-comment">// 先计算屏幕空间反射：叠加reflectionHierarchyWeight。这部分信息不再Tile当中</span><br>    &#123;<br>        IndirectLighting indirect = EvaluateBSDF_ScreenSpaceReflection(posInput, preLightData, bsdfData,                                     reflectionHierarchyWeight);<br>        AccumulateIndirectLighting(indirect, aggregateLighting);<br>    &#125;<br>    <br>    <span class="hljs-comment">// 计算屏幕折射。</span><br>    <span class="hljs-keyword">if</span> ((featureFlags &amp; LIGHTFEATUREFLAGS_SSREFRACTION) &amp;&amp; (_EnableSSRefraction &gt; <span class="hljs-number">0</span>))<br>    &#123;<br>        <span class="hljs-comment">// 折射信息</span><br>        envLightData = FetchEnvLight(envLightStart, <span class="hljs-number">0</span>);<br>    &#125;<br>        <br>    <span class="hljs-comment">// 反射和折射探针。</span><br>    <span class="hljs-keyword">if</span> (featureFlags &amp; LIGHTFEATUREFLAGS_ENV)<br>    &#123;<br>        <span class="hljs-keyword">for</span>(i = <span class="hljs-number">0</span>;i&lt;envLightCount;i++)<br>        &#123;<br>            uint v_envLightIdx = FetchIndex(envLightStart, i);<br>            EnvLightData s_envLightData = FetchEnvLight(v_envLightIdx);    <br>   			<span class="hljs-comment">// 处理环境光</span><br>        &#125;<br><br>        <span class="hljs-comment">// 使用天空纹理计算IBL</span><br>        <span class="hljs-keyword">if</span> ((featureFlags &amp; LIGHTFEATUREFLAGS_SKY) &amp;&amp; _EnvLightSkyEnabled)<br>        &#123;<br>            context.sampleReflection = SINGLE_PASS_CONTEXT_SAMPLE_SKY;<br>            EnvLightData envLightSky = InitSkyEnvLightData(<span class="hljs-number">0</span>);<br>			<span class="hljs-comment">// 处理envLightSky </span><br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<h4 id="重要函数"><a href="#重要函数" class="headerlink" title="重要函数"></a>重要函数</h4><h5 id="需要通过Tile读取的灯光"><a href="#需要通过Tile读取的灯光" class="headerlink" title="需要通过Tile读取的灯光"></a>需要通过Tile读取的灯光</h5><p>#define LIGHTCATEGORY_PUNCTUAL (0)<br>#define LIGHTCATEGORY_AREA (1)<br>#define LIGHTCATEGORY_ENV (2)</p>
-<h5 id="FetchLight"><a href="#FetchLight" class="headerlink" title="FetchLight"></a>FetchLight</h5><p>灯光就是直接从Buffer当中读取的，但是索引是要通过FPTL、Cluster、Big-Tile等方法读取的，下面是直接读取灯光信息：</p>
-<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs c">LightData <span class="hljs-title function_">FetchLight</span><span class="hljs-params">(uint start, uint i)</span><br>&#123;<br>    uint j = FetchIndex(start, i);<br><br>    <span class="hljs-keyword">return</span> _LightDatas[j];<br>&#125;<br><br>LightData <span class="hljs-title function_">FetchLight</span><span class="hljs-params">(uint index)</span><br>&#123;<br>    <span class="hljs-keyword">return</span> _LightDatas[index];<br>&#125;<br><br>EnvLightData <span class="hljs-title function_">FetchEnvLight</span><span class="hljs-params">(uint start, uint i)</span><br>&#123;<br>    <span class="hljs-type">int</span> j = FetchIndex(start, i);<br><br>    <span class="hljs-keyword">return</span> _EnvLightDatas[j];<br>&#125;<br><br>EnvLightData <span class="hljs-title function_">FetchEnvLight</span><span class="hljs-params">(uint index)</span><br>&#123;<br>    <span class="hljs-keyword">return</span> _EnvLightDatas[index];<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<h5 id="FetchIndex"><a href="#FetchIndex" class="headerlink" title="FetchIndex"></a>FetchIndex</h5><p>具体的索引如何读取，就要看是否使用FPTL、Cluster、Big-Tile或者不用光照优化策略：</p>
-<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">ifdef</span> USE_FPTL_LIGHTLIST    <span class="hljs-comment">// 使用FPTL</span></span><br>uint <span class="hljs-title function_">FetchIndex</span><span class="hljs-params">(uint tileOffset, uint lightOffset)</span><br>&#123;<br>    <span class="hljs-type">const</span> uint lightOffsetPlusOne = lightOffset + <span class="hljs-number">1</span>; <span class="hljs-comment">// Add +1 as first slot is reserved to store number of light</span><br>    <span class="hljs-comment">// Light index are store on 16bit</span><br>    <span class="hljs-keyword">return</span> (g_vLightListGlobal[DWORD_PER_TILE * tileOffset + (lightOffsetPlusOne &gt;&gt; <span class="hljs-number">1</span>)] &gt;&gt; ((lightOffsetPlusOne &amp; <span class="hljs-number">1</span>) * DWORD_PER_TILE)) &amp; <span class="hljs-number">0xffff</span>;<br>&#125;<br><br><span class="hljs-meta">#<span class="hljs-keyword">elif</span> defined(USE_CLUSTERED_LIGHTLIST) <span class="hljs-comment">// 使用Cluster  例如：对于透明物体就用Cluster</span></span><br><br>uint <span class="hljs-title function_">FetchIndex</span><span class="hljs-params">(uint lightStart, uint lightOffset)</span><br>&#123;<br>    <span class="hljs-keyword">return</span> g_vLightListGlobal[lightStart + lightOffset];<br>&#125;<br><br><span class="hljs-meta">#<span class="hljs-keyword">elif</span> defined(USE_BIG_TILE_LIGHTLIST) <span class="hljs-comment">// 使用BigTile</span></span><br><br>uint <span class="hljs-title function_">FetchIndex</span><span class="hljs-params">(uint lightStart, uint lightOffset)</span><br>&#123;<br>    <span class="hljs-keyword">return</span> g_vBigTileLightList[lightStart + lightOffset];<br>&#125;<br><br><span class="hljs-meta">#<span class="hljs-keyword">else</span>             <span class="hljs-comment">// 没有</span></span><br><span class="hljs-comment">// Fallback case (mainly for raytracing right now)</span><br>uint <span class="hljs-title function_">FetchIndex</span><span class="hljs-params">(uint lightStart, uint lightOffset)</span><br>&#123;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br><span class="hljs-meta">#<span class="hljs-keyword">endif</span> <span class="hljs-comment">// USE_FPTL_LIGHTLIST</span></span><br></code></pre></td></tr></table></figure>
-
-<h5 id="GetCountAndStart"><a href="#GetCountAndStart" class="headerlink" title="GetCountAndStart"></a>GetCountAndStart</h5><p>获取灯光列表的起始索引和数量，同上。具体查看LightLoopDef.hlsl源文件。</p>
-
-      
-      <p align="right"><a class="morebtn" href="/2022/09/19/HDRPsource/new2.HDRPShader%E5%BC%80%E5%8F%91%E8%AF%B4%E6%98%8E/" title="">阅读全文</a></p>
-    </main>
-    <footer class="post-footer">
-      
-    </footer>
-  </article>
-  
-  <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
-    <div class="post-block">
-      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/09/19/HDRPsource/new1.HDRP%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF%E6%80%BB%E7%BB%93/">
-      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-        <meta itemprop="name" content="leinlin">
-        <meta itemprop="description" content="">
-        <meta itemprop="image" content="/images/avatar.jpg">
-      </span>
-      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-        <meta itemprop="name" content="leinlin的小笔记">
-      </span>
-    </div>
-    <header class="post-header">
-      <h1 class="post-title" itemprop="name headline">
-        <a class="post-title-link post-title-link-external" href="/2022/09/19/HDRPsource/new1.HDRP%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF%E6%80%BB%E7%BB%93/" itemprop="url"></a>
-      </h1>
-      <div class="post-meta">
-        
-        <span class="post-date">
-          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2022-09-19T19:53:33+08:00">2022-09-19 19:53:33</time></span>
-        </span>
-        
-        
-        
-        
-        
-      </div>
-    </header>
-    <main class="post-main" itemprop="articleBody">
-      
-      <h1 id="Unity-HDRP主要功能和渲染管线的介绍"><a href="#Unity-HDRP主要功能和渲染管线的介绍" class="headerlink" title="Unity HDRP主要功能和渲染管线的介绍"></a>Unity HDRP主要功能和渲染管线的介绍</h1><h2 id="1-SRP和HDRP介绍"><a href="#1-SRP和HDRP介绍" class="headerlink" title="1. SRP和HDRP介绍"></a>1. SRP和HDRP介绍</h2><p>unity SRP可以让我们自己控制摄像机每一帧的渲染流程。他把渲染管线可以进行的操作都暴露给了用户，不再是一个封闭的引擎内置流程。</p>
-<p>为了方便用户使用，Unity提供了两个已经实现好的SRP流程，分别针对不同的平台。</p>
+      <h1 id="Chapter2-Fundamentals-基础功能"><a href="#Chapter2-Fundamentals-基础功能" class="headerlink" title="Chapter2 Fundamentals 基础功能"></a>Chapter2 Fundamentals 基础功能</h1><p>​	这个章节主要介绍了基础概念：包括Vulkan架构、扩展模型、API语法、管线配置、数字表示方法、状态和状态查询、以及不同类型的对象和Shader。这部分提供了一个框架用于解释说明文档剩下部分中更加具体的命令和表现。</p>
+<h2 id="2-1-主机和设备环境"><a href="#2-1-主机和设备环境" class="headerlink" title="2.1 主机和设备环境"></a>2.1 主机和设备环境</h2><p>Vulkan说明文件假设并且需要：主机设备满足下面的要求以支持Vulkan的实现：</p>
 <ul>
-<li>Lightweight Render Pipeline (LWRP) ：支持手机平台和PC平台，目的是提供一个高性能的渲染，牺牲了引擎的表现效果。</li>
-<li>High Definition Render Pipeline (HDRP) ：使用了基于物理的灯光技术以及基于Compute Shader的光照计算。针对高端的PC和主机平台。</li>
-</ul>
-<h2 id="2-HDRP渲染效果与材质类型"><a href="#2-HDRP渲染效果与材质类型" class="headerlink" title="2. HDRP渲染效果与材质类型"></a>2. HDRP渲染效果与材质类型</h2><p>Unity HDRP提供了更丰富的材质效果，包括：SSS效果、透光、Coat等。通过ShaderGraph和基础的LitShader都可以构建出支持这些效果的Shader。</p>
-<p>在Lit Shader中可以通过Surface Options当中的Material Type来选择需要的材质效果。</p>
-<p>Unity的说明文档:<a target="_blank" rel="noopener" href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.high-definition@6.7/manual/Material-Type.html">材质类型官网介绍</a>。</p>
-<p>下面简要介绍这些材质效果主要的功能。</p>
-<h3 id="2-1-Standard"><a href="#2-1-Standard" class="headerlink" title="2.1 Standard"></a>2.1 Standard</h3><p>Standard就是标准的光照模型。渲染流程如下：</p>
-<ul>
-<li>Gbuffer Pass ：填充GBuffer</li>
-<li>Deferred Lighting Pass：Compute Shader计算光照。</li>
-</ul>
-<p>基础的输入参数：</p>
-<ul>
-<li>Diffuse贴图：表面颜色，同时支持用Color参数对其进行调整。Alpha通道在开启透明模式的时候，可以用作透明度。</li>
-<li>Normal贴图：支持Object空间和Tangent空间，支持调节法线强度。</li>
-<li>Mask贴图：R通道对应金属度，G通道对应平滑度，B通道对应细节贴图的区域，A通道对应平滑度，同时提供了多个滑块参数对金属度和平滑度进行调整。</li>
-<li>BentNormal贴图：主要用于计算AO，比AO贴图准确。</li>
-<li>DetialMap贴图：支持平铺的细节，可以给Diffuse、normal、smoothness调节细节，通过Mask贴图B通道控制区域。</li>
-<li>Height贴图：开启Displacement Mode，可以使用高度贴图。</li>
-<li>开启透明模式：支持扭曲、折射。</li>
-<li>支持Clear Coat：效果。</li>
-</ul>
-<p>上面的效果Lit材质球默认支持，Lit的Inspector是一个专门为LitShader写的材质编辑器，通过开启选项可修改Lit的材质效果。</p>
-<p>另外，可以看到Lit支持很多贴图输入，一般而言这样做开销很高，但是Lit Shader内部做了优化，如果不使用某一张贴图就不要给他赋值，它就不会对这个贴图进行采样。</p>
-<h3 id="2-2-Specular"><a href="#2-2-Specular" class="headerlink" title="2.2 Specular"></a>2.2 Specular</h3><p>这个是和Standard（金属工作流）相对的高光工作流。区别只是金属度变成了高光颜色。其他计算没有区别。</p>
-<h3 id="2-3-Anisotropy"><a href="#2-3-Anisotropy" class="headerlink" title="2.3 Anisotropy"></a>2.3 Anisotropy</h3><p>计算高光时使用各项异性的高光计算。和Standard区别只在于高光的计算，同时多出了一张各向异性贴图和强度控制。例如：拉丝金属。</p>
-<h3 id="2-4-Iridescence"><a href="#2-4-Iridescence" class="headerlink" title="2.4 Iridescence"></a>2.4 Iridescence</h3><p>彩虹色是指：随着光照角度的变化光照颜色发生变化。例如：肥皂泡沫，昆虫翅膀。</p>
-<p>和Standard的区别在于：光的颜色随光照角度发生变化。</p>
-<h3 id="2-5-Translucent"><a href="#2-5-Translucent" class="headerlink" title="2.5 Translucent"></a>2.5 Translucent</h3><p>透光效果是指：在背光面可以看到光穿过物体的效果。主要用于半透明材质。例如：树叶。</p>
-<p><strong>以上效果的开销没有太大区别，效果的差距只在于计算公式的不同，而渲染流程基本一致。</strong></p>
-<h3 id="2-6-Surface-Scattering"><a href="#2-6-Surface-Scattering" class="headerlink" title="2.6 Surface Scattering"></a>2.6 Surface Scattering</h3><p>SSS效果用来描述光线在表面多次散射的效果。可以用来描述灯光和半透物体的交互过程。可以用来制作：玉、冰、皮肤等物体。</p>
-<p>Surface Scattering的效果和上面几种效果不同，并且需要额外的计算。大致的渲染流程如下：</p>
-<ul>
-<li>Gbuffer Pass ：和Standard一样填充Gbuffer</li>
-<li>Deferred Lighting Pass：计算光照</li>
-<li>Convolution Pass：对需要SSS的部位进行卷积（通过Diffuse Profile）。</li>
-<li>Combine Pass：计算好的SSS光和原始光融合。</li>
-</ul>
-<h3 id="2-7-Displacement-高度图"><a href="#2-7-Displacement-高度图" class="headerlink" title="2.7 Displacement,  高度图"></a>2.7 Displacement,  高度图</h3><p>Unity支持高度图计算。</p>
-<p>所有的材质都可以使用高度图。</p>
-<p>在Surface Options 当中选择Displacement Mode：</p>
-<p>None：不使用高度图。</p>
-<p>Vertex Displacement:  在Vertex阶段直接移动顶点，高度图作为移动距离。</p>
-<p>Pixel displacement： 将高度图作为视差贴图。（POM）</p>
-<p>当开启Pixel displacement时，视差贴图对应的参数就会开启。</p>
-<p>官方说明：<a target="_blank" rel="noopener" href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.high-definition@6.7/manual/Displacement-Mode.html">Displacement Mode</a></p>
-<h2 id="3-渲染流程介绍"><a href="#3-渲染流程介绍" class="headerlink" title="3. 渲染流程介绍"></a>3. 渲染流程介绍</h2><p>这里主要描述实现上述效果需要的基本渲染流程。</p>
-<p>HDRP中Lit的渲染流程和Built-in Standard当中的延迟渲染基本一致，不透明物体流程如下：</p>
-<ul>
-<li>Gbuffer Pass  :填充Gbuffer，不过Gbuffer的内容和Built-in的内容有所区别。</li>
-<li>Deferred Lighting Pass：进行光照计算。HDRP当中的光照计算放在了ComputeShader当中，计算效率更高。</li>
-</ul>
-<h3 id="3-1-Gbuffer结构"><a href="#3-1-Gbuffer结构" class="headerlink" title="3.1 Gbuffer结构"></a>3.1 Gbuffer结构</h3><p>下面是HDRP当中Gbuffer的结构类型。</p>
-<table>
-<thead>
-<tr>
-<th>G-Buffer Usage</th>
-<th>Format</th>
-<th>RGB</th>
-<th>A</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>GBuffer0</td>
-<td>RGBA32</td>
-<td>Albedo Color &#x2F;      SSS Color</td>
-<td>Spacular Occlusiion &#x2F; SSS Parameter</td>
-</tr>
-<tr>
-<td>GBuffer1</td>
-<td>RGBA32</td>
-<td>Packed Normal</td>
-<td>Roughness</td>
-</tr>
-<tr>
-<td>GBuffer2</td>
-<td>RGBA32</td>
-<td>BSDF Model Specific Parameters</td>
-<td>Coat Mask + Material ID</td>
-</tr>
-<tr>
-<td>GBuffer3</td>
-<td>R11G11B10</td>
-<td>GI + Emissive</td>
-<td>&#x2F;</td>
-</tr>
-<tr>
-<td>GBuffer4 - Optional</td>
-<td>RGBA32</td>
-<td>R:&#x2F;             G:&#x2F;             B: AO</td>
-<td>Light Layer</td>
-</tr>
-<tr>
-<td>GBuffer5 - Optional</td>
-<td>RGBA32</td>
-<td>shadowmask0 - 2</td>
-<td>shadowmask3</td>
-</tr>
-</tbody></table>
-<p>其中Gbuffer0 、Gbuffer1、Gbuffer3的内容和Built-in的内容类型基本一致，主要是金属工作流需要的参数。</p>
-<p>Gbuffer2和Gbuffer4当中保存了用于区分材质的标记，例如：</p>
-<ul>
-<li>Light Layer: 区分使用哪个Layer的光源。</li>
-<li>Coat Mask：区分使用Coat效果的区域。</li>
-<li>Material ID：区分材质类型。</li>
-</ul>
-<p>还有其他的参数可以在Shader当中查看具体使用方式。</p>
-<h3 id="3-2-灯光列表"><a href="#3-2-灯光列表" class="headerlink" title="3.2 灯光列表"></a>3.2 灯光列表</h3><p>HDRP使用FPTL和Cluster策略，将灯光列表一次性传递到一个Pass当中完成计算。</p>
-<p>Unity灯光计算就是（使用FPTL或Cluster策略）生成影响每一个Tile的灯光列表，在Compute Shader当中根据自己所在的Tile读取光照列表，然后一次性完成灯光计算。</p>
-<h4 id="3-2-1-FPTL和Cluster"><a href="#3-2-1-FPTL和Cluster" class="headerlink" title="3.2.1 FPTL和Cluster"></a>3.2.1 FPTL和Cluster</h4><p>Unity有两种灯管列表的计算方式，FPTL的方式能够依赖深度区分需要使用的灯光是否能够作用在表面。透明物体没有深度，所以需要使用Cluster方式对灯管列表进行进一步的纵向划分。</p>
-<p>Cluster将视锥体划分成多个体素块，在体素块中保存属于它的内容索引。体素块当中不止保存了灯光列表索引，还可以保存光照探针、Decal、Density Volume的内容。</p>
-<p>FPTL目的是为了能够在一个pass当中读取所有的光照信息，这样就能够在一个Pass当中完成光照计算，节省了大量DrawCall。</p>
-<p>如果要想查看灯光列表计算方式，查看LightLoops.cs源文件中的BuildGPULightListsCommon函数。</p>
-<p><strong>下面简要介绍FPTL的计算过程和使用方式：</strong></p>
-<ol start="0">
-<li><p>首先需要场景中所有灯光，场景灯光是在CPU中统一收集的，记录了<strong>光照信息</strong>及其<strong>包围盒</strong>。</p>
+<li><p>主机必须支持8,16,32,64位的有符号以及无符号整型，并且可以按照字节（byte）寻址。</p>
 </li>
-<li><p>FPTL是基于屏幕坐标计算的所以需要将<strong>灯光转换到摄像机空间的矩阵（上一步已经完成）</strong>。</p>
-<p><strong>这部分计算在函数LightLoop.cs:PrepareLightsForGPU当中。这部分主要是CPU计算。统计LightList,讲LightBounds转换到View空间</strong></p>
+<li><p>主机必须支持32-和64-位的浮点数类型，并且满足后续章节的范围和精度的要求。</p>
 </li>
-<li><p>生成剪裁空间的AABB包围盒：用于FPTL和Cluster。代码位于：Runtime&#x2F;Lighting&#x2F;LightLoop&#x2F;scrbound.compute</p>
+<li><p>这些数据的字节顺序和表示方式必须和物理设备一致。</p>
 </li>
-</ol>
-<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">//scrbound.compute</span><br><span class="hljs-comment">// 读取光的AABB包围盒</span><br> SFiniteLightBound lgtDat = g_data[eyeAdjustedLgtIndex];<br><span class="hljs-comment">/*</span><br><span class="hljs-comment">包围盒数据结构</span><br><span class="hljs-comment">    public struct SFiniteLightBound</span><br><span class="hljs-comment">    &#123;</span><br><span class="hljs-comment">        public Vector3 boxAxisX;</span><br><span class="hljs-comment">        public Vector3 boxAxisY;</span><br><span class="hljs-comment">        public Vector3 boxAxisZ;</span><br><span class="hljs-comment">        public Vector3 center;        // a center in camera space inside the bounding volume of the light source.</span><br><span class="hljs-comment">        public Vector2 scaleXY;</span><br><span class="hljs-comment">        public float radius;</span><br><span class="hljs-comment">    &#125;;</span><br><span class="hljs-comment">  */</span><br><br><span class="hljs-comment">// 包围盒的计算函数 LightingConvexHullUtils.hlsl</span><br><span class="hljs-type">void</span> <span class="hljs-title function_">GetHullQuad</span><span class="hljs-params">(out float3 p0, out float3 p1, out float3 p2, out float3 p3, <span class="hljs-type">const</span> float3 boxX, <span class="hljs-type">const</span> float3 boxY, <span class="hljs-type">const</span> float3 boxZ, <span class="hljs-type">const</span> float3 center, <span class="hljs-type">const</span> float2 scaleXY, <span class="hljs-type">const</span> <span class="hljs-type">int</span> sideIndex)</span><br>&#123;<br>    <span class="hljs-comment">// 开启6个thread分别计算light的AABB的六个面在view空间的AABB凸包。因为线程每次提交8个所以两个thread被丢弃。</span><br>    ...<br>    GroupMemoryBarrierWithGroupSync();<br>    <span class="hljs-comment">// 保留6个thread中的第一个，组合成一个完整的AABB凸包。 计算在屏幕中的位置。其中包括了大量的优化计算。最终输出到g_vBoundsBuffer当中。这里面包括的z坐标。</span><br>    ...<br>    g_vBoundsBuffer[boundsIndices.min] = ...;<br>    g_vBoundsBuffer[boundsIndices.max] = ...;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<ol start="3">
-<li>根据屏幕空间的AABB生成big-Tile：（enable coarse 2D pass on 64x64 tiles ）。目的是优化fptl和cluster的计算。</li>
-</ol>
-<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">//lightlistbuild-bigtile.compute:BigTileLightListGen</span><br><span class="hljs-comment">//CPU提交时每一个big-tile提交一次。GPU每一次提交计算64个thread。</span><br><br>[numthreads(NR_THREADS, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>)]<br><span class="hljs-type">void</span> <span class="hljs-title function_">BigTileLightListGen</span><span class="hljs-params">(uint threadID : SV_GroupIndex, uint3 u3GroupID : SV_GroupID)</span><br>&#123;<br>    <span class="hljs-comment">// 首先64个thread同事计算所有光照列表，判断每一个光源的AABB是否在这个Tile当中。通过元操作进行累加和记录</span><br>    ...<br>	<span class="hljs-comment">// 在这个tile中，累加并返回uIndex当前值。</span><br>    <span class="hljs-type">unsigned</span> <span class="hljs-type">int</span> uInc = <span class="hljs-number">1</span>;<br>    <span class="hljs-type">unsigned</span> <span class="hljs-type">int</span> uIndex;<br>    InterlockedAdd(lightOffs, uInc, uIndex);<br>	<span class="hljs-comment">// 记录灯光索引</span><br>    <span class="hljs-keyword">if</span>(uIndex&lt;MAX_NR_BIGTILE_LIGHTS) lightsListLDS[uIndex] = l;     <span class="hljs-comment">// add to light list</span><br>    ...<br>    <span class="hljs-comment">// sort lights:对光源类型排序。</span><br>    SORTLIST(lightsListLDS, iNrCoarseLights, MAX_NR_BIG_TILE_LIGHTS_PLUS_ONE, t, NR_THREADS);<br>    ...<br>    <span class="hljs-comment">// 输出 :第一个放光源个数，后面是索引。</span><br> <span class="hljs-keyword">for</span>(i=t; i&lt;(iNrCoarseLights+<span class="hljs-number">1</span>); i+=NR_THREADS)<br>        g_vLightList[MAX_NR_BIG_TILE_LIGHTS_PLUS_ONE*offs + i] = i==<span class="hljs-number">0</span> ? iNrCoarseLights : lightsListLDS[max(i<span class="hljs-number">-1</span>, <span class="hljs-number">0</span>)];<br></code></pre></td></tr></table></figure>
-
-<ol start="4">
-<li>进行FPTL计算。参考相关论文或者Shader源代码。</li>
-<li>进行Cluster计算，这里面不只包括了光照，还包括了环境光、Decal、DensityVolume。</li>
-</ol>
-<h3 id="3-3-光照计算"><a href="#3-3-光照计算" class="headerlink" title="3.3 光照计算"></a>3.3 光照计算</h3><p>​	完成光照计算和Gbuffer填充之后就可以进行最终的光照计算，HDRP的Gbuffer光照计算使用了Compute Shader。</p>
-<p>Compute Shader源文件：</p>
-<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c">HDRP/Runtime/Lighting/LightLoop: Deferred.compute.<br></code></pre></td></tr></table></figure>
-
-<p>在lightloop函数当中读取了光照列表，使用BSDF函数计算最终的材质颜色。</p>
-<h3 id="3-4-BSDF"><a href="#3-4-BSDF" class="headerlink" title="3.4 BSDF"></a>3.4 BSDF</h3><p>​		由于物体表面上有凹凸不平的微小表面，一道入射光线射到表面会产生光的散射现象，BSDF 用来表示这种散射现象（散射到各个方向的光的强度）。</p>
-<p>Unity HDRP支持多种BSDF函数，例如：</p>
-<p>Lit Shader的BSDF计算位于Lit.hlsl</p>
-<p>Hair Shader的BSDF计算位于Hair.hlsl</p>
-<h3 id="3-5-BSDF中PBR材质参数的意义"><a href="#3-5-BSDF中PBR材质参数的意义" class="headerlink" title="3.5 BSDF中PBR材质参数的意义"></a>3.5 BSDF中PBR材质参数的意义</h3><p>在光照计算当中除了光源的参数和BSDF函数以外，最重要的就是材质相关的参数，下面表格解释了基本的材质参数。结合了Unity人员的说明和Shader源代码总结了如下内容：</p>
-<table>
-<thead>
-<tr>
-<th align="left"><strong>Property</strong></th>
-<th align="left"><strong>Description</strong></th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left"><strong>Base Color</strong></td>
-<td align="left">表示物体颜色，不应该包含任何明暗、AO、阴影信息。除了基础颜色外，还可以包含一些偏色、或者色相的变化。</td>
-</tr>
-<tr>
-<td align="left"><strong>Smoothness</strong></td>
-<td align="left">平滑度，用来描述物体的粗糙程度。在Shader源代码中，Smoothness会转化成粗糙度进行计算。有两种粗糙度。PerceptualRoughness &#x3D; 1- smoothness。Roughness&#x3D; PerceptualRoughness * PerceptualRoughness；</td>
-</tr>
-<tr>
-<td align="left">**Ambient Occlusion **</td>
-<td align="left">AO贴图：unity人员说可以使用sRGB格式，也可以使用RGB格式，但是需要统一。主要用来控制环境光（间接光）的明暗，对于直接光照没有影响。AO用来表现物体的明暗层次。</td>
-</tr>
-<tr>
-<td align="left"><strong>Mask Map</strong></td>
-<td align="left">Assign a Texture that packs different Material maps into each of its RGBA channels. • <strong>Red</strong>: Stores the metallic map.  • <strong>Green</strong>: Stores the ambient occlusion map. • <strong>Blue</strong>: Stores the detail mask map. • <strong>Alpha</strong>: Stores the smoothness map.</td>
-</tr>
-<tr>
-<td align="left">**Normal **</td>
-<td align="left">法线，LitShader支持模型空间和切线空间的法线，使用模型空间法线，可以在LOD当中过度更好，使用切线空间法线，可以压缩纹理空间。</td>
-</tr>
-<tr>
-<td align="left"><strong>Bent Normal</strong></td>
-<td align="left">Bent normal实际上也是一个表面方向和Normal接近，主要用来优化AO效果，只对GI（lightmap&#x2F;lightprobe&#x2F;volume proxy）生效。shaer代码：builtinData.bakeDiffuseLighting &#x3D; SampleBakedGI(posInput.positionWS, bennormalWS, texCoord1.xy, texCoord2.xy);</td>
-</tr>
-<tr>
-<td align="left"><strong>Coat Mask</strong></td>
-<td align="left">Coat效果强弱，0-1之间</td>
-</tr>
-</tbody></table>
-<h2 id="4-HDRP的其他渲染特性"><a href="#4-HDRP的其他渲染特性" class="headerlink" title="4. HDRP的其他渲染特性"></a>4. HDRP的其他渲染特性</h2><h3 id="4-1-StackLit"><a href="#4-1-StackLit" class="headerlink" title="4.1 StackLit"></a>4.1 StackLit</h3><p>Unity提供了ShaderGraph Package。能够实现LitShader当中的所有功能。但是无法修改光照计算。如果需要修改光照计算就需要手写Shader。默认的Shader Graph的Lit节点使用的是Deferred光照，所以能够支持的效果有限（由于Gbuffer容量限制）</p>
-<p>为了实现更好的效果，<strong>Shader Graph提供了Forward模式的StackLit Master节点</strong>，它支持更加物理正确的Shading模型，提供了更多的渲染功能。</p>
-<p>使用StackLit可以制作：包括头发、毛发、布料、皮肤等效果。但是<strong>Forward模式渲染开销非常大，所以不建议在游戏当中使用</strong>，但是可以在选人界面等简单场景使用。</p>
-<h3 id="4-2-透明物体渲染"><a href="#4-2-透明物体渲染" class="headerlink" title="4.2 透明物体渲染"></a>4.2 透明物体渲染</h3><p>HDRP当中的所有透明物体都是在Forward下渲染的，所以渲染开销比较大。</p>
-<p>除此之外透明物体还支持两个pass：TransparentDepthPrepas和TransparentDepthPostpass。下面是透明物体渲染部分的Pipeline代码和对应说明：</p>
-<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// 渲染天空球 </span><br>RenderSky(hdCamera, cmd);<br><span class="hljs-comment">// 渲染透明物体的Prepass，用于处理透明物体之间的遮挡。</span><br>RenderTransparentDepthPrepass(cullingResults, hdCamera, renderContext, cmd);<br><br><br><span class="hljs-comment">// 渲染需要被折射的透明物体。RenderQueue:[2750-100,2750+100]</span><br>RenderForward(cullingResults, hdCamera, renderContext, cmd, ForwardPass.PreRefraction);<br><br><span class="hljs-comment">// 如果开启RoughRefraction，则生成ColorPyramid</span><br>&#123;<br>	...<br>    RenderColorPyramid(hdCamera, cmd, <span class="hljs-literal">true</span>);<br>&#125;<br><br>cmd.SetGlobalTexture(HDShaderIDs._ColorPyramidTexture, currentColorPyramid);<br><br><span class="hljs-comment">// 渲染所有其他透明物体。</span><br><span class="hljs-comment">// RenderQueue:[3000-100,3000+100]（没有开启LowResolutionTrans）</span><br><span class="hljs-comment">// RenderQueue:[3000-100,3400+100]（开启LowResolutionTrans）</span><br>RenderForward(cullingResults, hdCamera, renderContext, cmd, ForwardPass.Transparent);<br><br>...<br><br><span class="hljs-comment">// 渲染LowResTransparency。RenderQueue:[3400-100,3400+100]</span><br>DownsampleDepthForLowResTransparency(hdCamera, cmd);<br>RenderLowResTransparent(cullingResults, hdCamera, renderContext, cmd);<br>UpsampleTransparent(hdCamera, cmd);<br><br><span class="hljs-comment">// 渲染TransparentDepthPostpass，为了能够在需要深度的后处理效果中正确的处理透明物体  </span><br>RenderTransparentDepthPostpass(cullingResults, hdCamera, renderContext, cmd);<br><br><span class="hljs-comment">// 渲染颜色金字塔。</span><br>RenderColorPyramid(hdCamera, cmd, <span class="hljs-literal">false</span>);<br><br><span class="hljs-comment">// 渲染扭曲效果。</span><br>AccumulateDistortion(cullingResults, hdCamera, renderContext, cmd);<br>RenderDistortion(hdCamera, cmd);<br></code></pre></td></tr></table></figure>
-
-<p>上面提到了渲染LowResTransparency，如果要使用这个功能就需要在HDRPRenderPipelineAsset中开启LowResTransparency。</p>
-<p>开启LowResTransparency后，材质中的LowRes属性生效。勾选这个属性，就会在低分辨率的RenderTarget上渲染这个透明物体，由于透明物体是Forward渲染。所以这样可以大幅提升效果。</p>
-<p><strong>另外可以看到，代码是通过RenderQueue区分一个物体在什么时候被渲染的，所以不建议修改material的Queue，而是使用Priority。</strong>例如：在3200到3300这段区间的物体，如果HDRP设置中没有开启LowResTran选项，则永远不会被渲染。</p>
-<h3 id="4-3-Decal"><a href="#4-3-Decal" class="headerlink" title="4.3 Decal"></a>4.3 Decal</h3><p>Unity HDRP提供了Decal的支持。原始Decal直接往Gbuffer写数据，而HDRP的Decal使用了Dbuffer先存储Decal的信息，然后在计算Gbuffer的过程中在合并到光照计算中。</p>
-<p><strong>Decal有两种一种是Dbuffer Decal一种是ClusterDecal。</strong></p>
-<p><strong>Dbuffer Decal：</strong>（Projector Decal就是一个方块，可以往Dbuffer（类似Gbuffer）写入Decal纹理）。</p>
-<p><strong>Dbuffer 结构：</strong>类似Gbuffer结构，可以影响物体Diffuse，Normal，Emssive等，不需要GI信息（Dbuffer0,Dbuffer1,Dbuffer2）。</p>
-<p>HDRenderPipelineAsset有设置:Metal &amp; Amitent Propterty，用来控制Decal是否影响金属度和AO，勾选以后就会多使用一张Dbuffer，增加开销。</p>
-<p><strong>Emssive Decal：</strong>会多绘制一次。Emissive不能受光照影响。</p>
-<p><strong>Mesh Decal：</strong>和透明物体很像，直接绘制到Debuffer当中。</p>
-<p><strong>关于Decal物体的剪裁：</strong></p>
-<p>Decal 参与Culling，所以在CPU上有消耗。我们可以仿照Decal的方式对我们自己管理的对象用Culling Group手动culling。</p>
-<p><strong>ClusterDecal：</strong>HDRP支持透明物体的Decal，Dbuffer需要深度。不透明物体没有深度，所以不透明物体需要使用Cluster信息。与Cluster灯光原理一样。Decal 有Affect Transparent选项，开启后生效。</p>
-<p><strong>不过LightList当中不光有Light信息，还有Reflection Probe ，Decal，Local Density Volume信息。</strong></p>
-<p><strong>其他：</strong></p>
-<p>视锥体内不依赖深度的简单物体都可以使用Cluster方式来做。这样就不用在CPU上做物体和物体的相交计算。通过记录索引可以让大部分物体进行合并。</p>
-<p>例如：不是同一个Reflection Probe，可以Batch在一起。因为他们不依赖CPU来决定这次Batch使用哪一个Probe，而是通过LightList在GPU上实时计算。 然后通过Cluster当中的List查找信息。</p>
-<p>Cluster Decal会被patch在一个大的纹理，一起传送给GPU，通过UV偏移来找。在Setting当中有decal相关选项：Atlas Weight和Atlas Height，这个选项直接影响占用显存的大小。</p>
-<h3 id="4-4-体积光"><a href="#4-4-体积光" class="headerlink" title="4.4 体积光"></a>4.4 体积光</h3><p><strong>全局体积雾设置：</strong>场景当中的SceneSetting &#x2F;Volumetric Fog 是全局的体积光的设置。</p>
-<p><strong>Density Volume局部的体积雾</strong>：只控制Abledo和浓度，其他的参数通过Global控制。</p>
-<p><strong>基础原理：</strong></p>
-<p>HDRP体积光不是屏幕空间的体积光（从屏幕空间 Reymarching），他是视锥体空间的3D体素纹理。有一个体素化的Pass，会把能看见的Density Volume体素化（Voxelization）到3D纹理里。Density Volume也是通过Cluster来记录的。体素化的时候通过ID知道是哪个Density Volume。</p>
-<p><strong>Volumetric 参数：</strong></p>
-<p>体积雾的颜色由大气散射决定（需要使用Precedual Sky），如果要用HDRISky，就需要自己计算大气散射颜色。</p>
-<p>计算方式参考：Pre-compute Atemosphere Scattering相关文章。</p>
-<p><strong>Phase Function（全局各向异性）：</strong>光线在各个方向的散射强度。类似BRDF函数。</p>
-<p>不同的物体Phase Function不同，例如：冰晶（强透射和折射）、尘土（吸收阻挡光照）。Phase Function主要控制朝向光的时候亮，还是背向光的方向亮、已经高光环的形状。灰尘就是Phase Function（0）只有颜色，水就是越朝光看越亮，大晴天很少有所以一般做成0。</p>
-<p><strong>相关设置：</strong>HDRenderPipelineAsset（涉及到资源分配的内容）当中可以设置精度（3D体素的分辨率）：Volumetric Hight Quality。</p>
-<p>Hight Quality 是屏幕1&#x2F;4大小，slice是128.</p>
-<p>Midum 是屏幕1&#x2F;8大小，深度slice是64.</p>
-<p>PS4上测试：  屏幕1&#x2F;16 大小 , slice64耗时0.8毫秒。 优化时需要考虑：体素化、Volume数量。</p>
-<p><strong>体积雾纵向切分方式：</strong></p>
-<p>Slice Distribution Uniformition：Slice的分布，近处密集还是等距划分。</p>
-<p>Depth Extrent：覆盖多远。</p>
-<h2 id="5-HDRP与引擎自带模块"><a href="#5-HDRP与引擎自带模块" class="headerlink" title="5. HDRP与引擎自带模块"></a>5. HDRP与引擎自带模块</h2><p><strong>Culling 模块：</strong></p>
-<p>我们可以定义自己的Custom数据，然后使用Unity的Culling Group，每帧收集数据转换成AABB让引擎Culling。HDRP的Volume、Decal都是使用的这种方式。</p>
-<p><strong>Baking 模块：</strong></p>
-<p>支持原始所有内容。</p>
-<p>GI信息都是一个物体计算一次，在填充Gbuffer时计算。</p>
-<p>小型物体推荐使用light probe。大物体推荐用Lightmap或者开启light probe volume。</p>
-<h2 id="6-Package"><a href="#6-Package" class="headerlink" title="6. Package"></a>6. Package</h2><p><strong>Core Package：</strong></p>
-<p>包含大量的基础c#渲染工具。</p>
-<p>包含光照计算等基础的Shader函数。</p>
-<p>包含重要的功能：Volume System。</p>
-<p><strong>ShaderGraph：</strong></p>
-<p><strong>基础功能：</strong>Lit和StackLit等自带master节点。</p>
-<p><strong>扩展功能：</strong>ShaderGraph模板和Shader Custom Node。</p>
-<p><strong>VFX：</strong></p>
-<p>必须和HDRP一起用。需要Compute Shader，基于indrect Dispatch效率高。</p>
-<p><strong>基础原理：</strong>将Compute buffer作为一个RWbuffer，放到compute Shader里面。在Compute Shader里面讲vertex buffer和index buffer动态生成好，然后把这个Compue buffer作为VB和IB传递到Graphic Pipeline里进行渲染。</p>
-<p>LWRP不计划加入ComputeShader。</p>
-<p><strong>扩展功能：</strong>VFX模板、自定义Shader、ShaderGraph（还不支持）</p>
+</ul>
+<blockquote>
+<p>Note</p>
+<p>因为各种类型的数据和结构体主机和物理设备都需要访问，所以两端都需要高效的访问以便保证灵活写入和高性能。</p>
+</blockquote>
+<h2 id="2-2-Execution-Model-执行模式"><a href="#2-2-Execution-Model-执行模式" class="headerlink" title="2.2 Execution Model 执行模式"></a>2.2 Execution Model 执行模式</h2><p>这一节说明了Vulkan系统的执行模式。</p>
+<p>​	Vulkan会暴露出一个或者多个device，每个device会暴露出一个或多个能够异步工作的queue。同一个device支持的各个队列会划分到不同的family。每一个family支持一种或多种功能，并且应该包含一个或多个有相同特性的queue。同一个family当中queue可以认为是互相兼容的。为某个queue所生产的任务，可以在其所属family中的任何一个queue上执行。本说明文档定义了queue可能具备的四个类型的功能：Graphic，Compute，Transfer 和Sparse memory management。</p>
+<blockquote>
+<p>Note</p>
+<p>一个device可能报告出多个相似queue的family，而不是报告出这些fafmily的一个或多个的多个成员。这表明，虽然这些family的queue具有类似的能力，但他们之间并不直接相容。（没有很明白。）</p>
+</blockquote>
+<p>设备内存是通过应用程序明确的管理的。每一个设备都可以声明一个或者多个堆用于区分不同区域的内存。内存堆要么是设备的本地内存要么是主机的本地内存，但是对于设备总是可见的。进一步的内存堆的细节是通过在堆上的可用内存类型暴露出来的。例如可用的内存类型有：</p>
+<ul>
+<li>device local：和device直接物理连接的设备内存。</li>
+<li>device local, host visible: 设备的local内存对于主机可见。</li>
+<li>host local ,host  visible : 是在主机的内存对设备和主机都可见。</li>
+</ul>
+<p>在其它的架构上，可能有一种堆满足各种用处。</p>
+<p>一个Vulkan 应用程序通过提交command buffer来控制所有设备，command buffer能够通过Vulkan库函数的调用记录设备命令。Command buffer的内容依赖与具体的实现和应用程序无关。一旦构造了Comman buffer，就可以进行提交一次或者多次到队列中来执行。多个Command buffer能够通过多线程并行的构建。</p>
+<p>Command buffer 提交到不同的队列能够并行的执行，执行顺序彼此没有关联。Command buffer提交到同一个队列表示了一个提交顺序。Command buffer在设备中执行的结果也是异步返回到主机的。一旦Command buffer提交到一个队列，控制流会立即返回到应用程序。应用程序需要关注同步设备和主机、同步各个队列。</p>
+<h3 id="2-2-1-队列操作-Queue-Operation"><a href="#2-2-1-队列操作-Queue-Operation" class="headerlink" title="2.2.1 队列操作 Queue Operation"></a>2.2.1 队列操作 Queue Operation</h3><p>Vulkan队列提供了一个执行设备引擎的接口。引擎执行的命令在运行之前记录到Command Buffer当中。这些命令伴随queue submission命令提交到一个队列中，进行批量(batches)执行。一旦命令提交到队列，这些命令将会开始并在脱离程序控制的状态下完整的执行，执行的顺序依赖于一些隐式和显式的排序约束。</p>
+<p>任务一般会通过队列提交命令提交到队列，这些命令一般形如<code>vkQueue*</code>(例如：<code>vkQueueSubmit</code>, <code>vkQueueBindSparse</code>)，并且可以接受一组等待信号量（信号被激活时才会开始执行）和一组激发的信号量（人物完成或会激活对应的信号）。信号量的处理和任务本身都属于队列操作。</p>
+<p>在不同队列上的队列操作并没有隐式的顺序限制，可能以任何顺序执行。不同队列间同步可以通过semaphores（通常用于GPU-GPU指令同步）和fences（通常用语CPU-GPU同步）控制。</p>
+<p>提交到一个队列中的Command buffer的执行顺序遵循提交顺序和隐式顺序的约束，其他情况则可能同时执行或者乱序执行。针对单个队列的其他类型的批处理和队列提交（例如：稀疏内存绑定），彼此之间没有隐式顺序约束。附加的批处理和队列提交显式顺序约束可以通过信号量semaphores（通常用于GPU-GPU指令同步）和fences（通常用语CPU-GPU同步）控制。</p>
+<p>在semaphores或fences被激发之前，可以确定的是：之前被提交的队列操作已经完成了，且随后的队列操作可以继续进行内存的写入。等待一个被激活的semaphore或 fence可以保证之前的写入的内容是可用的，并且是对之后的命令可见（也就是说等待的semaphore或 fence完成后，接下来就能获取之前写入的内容。）</p>
+<p>对于Command Buffer是没有顺序约束的，包括相同或者不同类型的Primary Command Buffer的batches或者submissions，以及Primary Command Buffer和Second Command Buffer之间。也就是说，在任何的 semaphore或者fence操作之间，提交一系列的Command Buffer（包括Second Command Buffer） 和在一个单独的Primary Command Buffer中记录这些命令然后提交是一样的（除非当前的状态被重置了）。想要显示的控制这些顺序，可以通过显示信号量。</p>
+<p>在同一个Command Buffer当中的命令遵循一些隐式的顺序约束，但是只约束了一部分操作。</p>
+<blockquote>
+<p>​	Note</p>
+<p>提交到一个队列当中的任务有很大的自由度进行重叠执行。这是由于Vulkan本身的管线和并行策略决定的。</p>
+</blockquote>
+<p>记录在Command Buffer当中的命令包括：执行操作（例如：draw，dispatch，clear，copy，query&#x2F;timestamp， begin&#x2F;end subpass，）状态设置操作（例如：bind pipeline，descriptor sets, buffer, set dynamic state,push constants, set render pass），同步操作（例如：set&#x2F;wait events, pipeline barrier, render pass&#x2F;subpass dependencies）一些命令执行多次。状态设置会更新CommandBuffer当前的状态。一些命令的执行基于当前的状态。</p>
+<p>设备端的队列执行和主机端队列提交是异步执行的。当命令缓冲区被提交到队列后控制流马上就退回到应用程序了。 应用程序必须按需求在主机端和设备端进行同步操作。</p>
+<h2 id="2-3-对象模型-Object-Model"><a href="#2-3-对象模型-Object-Model" class="headerlink" title="2.3 对象模型 Object Model"></a>2.3 对象模型 Object Model</h2><p>devices，queue和其他的实例都是通过Vulkan object表示的。在API级别，所有的对象都通过handle来引用。有两种类型的handle：可分发的与不可分发的。<em>可分发的</em> handle是不可见类型数据的指针。这个指针可被layers使用，被当作拦截API命令的一部分， 每一个API命令都接受一个可分发类型的handle作为第一参数。 每一个不可分发类型的对象必须在其生命周期内有唯一一个handle值。</p>
+<p>_不可分发的_handle类型是64位整型类型，其含义是Vulkan实现决定的，他可能会把对象信息直接包含到handle里，而非通过指向一个数据结构。不可分发类型的对象，对于不同的类型或者同一个类型可能没有唯一的handle值（handle可能重复）。 如果handle值不唯一，那么销毁任何一个handle时：要保证不能造成其他类型的、相同handle值的对象变得无效，也要保证如果用同一个handle创建了多个对象，并且创建次数多余销毁次数，也不能让这个销毁操作导致有相同handle值的对象失效。</p>
+<p>所有通过<code>VkDevice</code> （用 <code>VkDevice</code>作为第一个参数 )的命令创建的对象都是该设备私有的，必须不能被其他设备使用。</p>
+<h3 id="2-3-1-对象的生命周期Object-Lifetime"><a href="#2-3-1-对象的生命周期Object-Lifetime" class="headerlink" title="2.3.1 对象的生命周期Object Lifetime"></a>2.3.1 对象的生命周期Object Lifetime</h3><p>对象都是通过形如<code>vkCreate*</code> and <code>vkAllocate*</code> 的命令创建或者分配的。 一旦一个对象被创建或者分配，它的结构就被认为是不变的，即使对象的内容可以自由改动。 对象通过形如<code>vkDestroy*</code> 和 <code>vkFree</code>* 的命令来销毁或释放。</p>
+<p>被分配（而不是创建）的对象从一个已存在的池子对象或者内存堆中获取资源，当被释放时会把资源归还给该池子或者堆。对象的创建和销毁在运行时通常是低频操作， 对象的分配或者释放可能是高频的。对象池帮助调节分配和释放的性能提升。</p>
+<p>应用程序有责任跟踪Vulkan对象的生命周期，并且不能销毁正在被使用的对象。</p>
+<p>属于应用程序端的内存在提交给Vulkan命令的时候会即刻被接管。在Vulkan命令执行结束之后一定会返还给应用程序。应用程序可以在需要占用这些内存的命令返回之后，再修改和释放这些内存。</p>
+<p>下面的对象会在传递给Vulkan命令之后被消耗掉，并且不能再被由它创建的对象访问。这种对象在任何用到他们的API命令执行期间不能被销毁。</p>
+<p>• VkShaderModule<br>• VkPipelineCache</p>
 
       
-      <p align="right"><a class="morebtn" href="/2022/09/19/HDRPsource/new1.HDRP%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF%E6%80%BB%E7%BB%93/" title="">阅读全文</a></p>
+      <p align="right"><a class="morebtn" href="/2022/09/19/VulkanTranslate/Chapter2-Fundamentals-%E5%9F%BA%E7%A1%80%E5%8A%9F%E8%83%BD/" title="">阅读全文</a></p>
     </main>
     <footer class="post-footer">
       
@@ -878,7 +526,7 @@
   
   <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
     <div class="post-block">
-      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/09/19/HDRPsource/HDRPShader%E5%86%85%E7%BD%AE%E7%9F%A9%E9%98%B5%E5%A4%87%E6%9F%A5/">
+      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/09/19/VulkanTranslate/Chapter1-Introduction/">
       <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
         <meta itemprop="name" content="leinlin">
         <meta itemprop="description" content="">
@@ -890,7 +538,7 @@
     </div>
     <header class="post-header">
       <h1 class="post-title" itemprop="name headline">
-        <a class="post-title-link post-title-link-external" href="/2022/09/19/HDRPsource/HDRPShader%E5%86%85%E7%BD%AE%E7%9F%A9%E9%98%B5%E5%A4%87%E6%9F%A5/" itemprop="url"></a>
+        <a class="post-title-link post-title-link-external" href="/2022/09/19/VulkanTranslate/Chapter1-Introduction/" itemprop="url"></a>
       </h1>
       <div class="post-meta">
         
@@ -906,21 +554,17 @@
     </header>
     <main class="post-main" itemprop="articleBody">
       
-      <p>HDRP当中设置矩阵的代码：</p>
-<p>HDCamera.cs</p>
-<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs c">&#123;<br>    <span class="hljs-type">bool</span> taaEnabled = m_frameSettings.IsEnabled(FrameSettingsField.Postprocess)<br>        &amp;&amp; antialiasing == AntialiasingMode.TemporalAntialiasing<br>        &amp;&amp; camera.cameraType == CameraType.Game;<br><br>    cmd.SetGlobalMatrix(HDShaderIDs._ViewMatrix,                viewMatrix);<br>    cmd.SetGlobalMatrix(HDShaderIDs._InvViewMatrix,             viewMatrix.inverse);<br>    cmd.SetGlobalMatrix(HDShaderIDs._ProjMatrix,                projMatrix);<br>    cmd.SetGlobalMatrix(HDShaderIDs._InvProjMatrix,             projMatrix.inverse);<br>    cmd.SetGlobalMatrix(HDShaderIDs._ViewProjMatrix,            viewProjMatrix);<br>    cmd.SetGlobalMatrix(HDShaderIDs._InvViewProjMatrix,         viewProjMatrix.inverse);<br>    cmd.SetGlobalMatrix(HDShaderIDs._NonJitteredViewProjMatrix, nonJitteredViewProjMatrix);<br>    cmd.SetGlobalMatrix(HDShaderIDs._PrevViewProjMatrix,        prevViewProjMatrix);<br>    cmd.SetGlobalMatrix(HDShaderIDs._CameraViewProjMatrix,      viewProjMatrix);<br>    cmd.SetGlobalVector(HDShaderIDs._WorldSpaceCameraPos,       worldSpaceCameraPos);<br>    cmd.SetGlobalVector(HDShaderIDs._PrevCamPosRWS,             prevWorldSpaceCameraPos);<br>    cmd.SetGlobalVector(HDShaderIDs._ScreenSize,                screenSize);<br>    cmd.SetGlobalVector(HDShaderIDs._ScreenToTargetScale,       doubleBufferedViewportScale);<br>    cmd.SetGlobalVector(HDShaderIDs._ScreenToTargetScaleHistory, doubleBufferedViewportScaleHistory);<br>    cmd.SetGlobalVector(HDShaderIDs._ZBufferParams,             zBufferParams);<br>    cmd.SetGlobalVector(HDShaderIDs._ProjectionParams,          projectionParams);<br>    cmd.SetGlobalVector(HDShaderIDs.unity_OrthoParams,          unity_OrthoParams);<br>    cmd.SetGlobalVector(HDShaderIDs._ScreenParams,              screenParams);<br>    cmd.SetGlobalVector(HDShaderIDs._TaaFrameInfo,              new Vector4(taaFrameRotation.x, taaFrameRotation.y, taaFrameIndex, taaEnabled ? <span class="hljs-number">1</span> : <span class="hljs-number">0</span>));<br>    cmd.SetGlobalVector(HDShaderIDs._TaaJitterStrength,         taaJitter);<br>    cmd.SetGlobalVectorArray(HDShaderIDs._FrustumPlanes,        frustumPlaneEquations);<br></code></pre></td></tr></table></figure>
-
-<p>矩阵在Shader当中的代码:</p>
-<p>ShaderVariables.hlsl</p>
-<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><code class="hljs c"><br><span class="hljs-comment">// Define that before including all the sub systems ShaderVariablesXXX.hlsl files in order to include constant buffer properties.</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> SHADER_VARIABLES_INCLUDE_CB</span><br><br><span class="hljs-comment">// Important: please use macros or functions to access the CBuffer data.</span><br><span class="hljs-comment">// The member names and data layout can (and will) change!</span><br>CBUFFER_START(UnityGlobal)<br>    <span class="hljs-comment">// ================================</span><br>    <span class="hljs-comment">//     PER VIEW CONSTANTS</span><br>    <span class="hljs-comment">// ================================</span><br>    <span class="hljs-comment">// <span class="hljs-doctag">TODO:</span> all affine matrices should be 3x4.</span><br>    float4x4 _ViewMatrix;<br>float4x4 _InvViewMatrix;<br>float4x4 _ProjMatrix;<br>float4x4 _InvProjMatrix;<br>float4x4 _ViewProjMatrix;<br>float4x4 _CameraViewProjMatrix;<br>float4x4 _InvViewProjMatrix;<br>float4x4 _NonJitteredViewProjMatrix;<br>float4x4 _PrevViewProjMatrix;       <span class="hljs-comment">// non-jittered</span><br><br>float4 _TextureWidthScaling; <span class="hljs-comment">// 0.5 for SinglePassDoubleWide (stereo) and 1.0 otherwise</span><br><br><span class="hljs-comment">// <span class="hljs-doctag">TODO:</span> put commonly used vars together (below), and then sort them by the frequency of use (descending).</span><br><span class="hljs-comment">// Note: a matrix is 4 * 4 * 4 = 64 bytes (1x cache line), so no need to sort those.</span><br><span class="hljs-meta">#<span class="hljs-keyword">ifndef</span> USING_STEREO_MATRICES</span><br>float3 _WorldSpaceCameraPos;<br><span class="hljs-type">float</span>  _Pad0;<br>float3 _PrevCamPosRWS;<br><span class="hljs-type">float</span>  _Pad1;<br><span class="hljs-meta">#<span class="hljs-keyword">endif</span></span><br>float4 _ScreenSize;                 <span class="hljs-comment">// &#123; w, h, 1 / w, 1 / h &#125;</span><br><br><span class="hljs-comment">// Those two uniforms are specific to the RTHandle system</span><br>float4 _ScreenToTargetScale;        <span class="hljs-comment">// &#123; w / RTHandle.maxWidth, h / RTHandle.maxHeight &#125; : xy = currFrame, zw = prevFrame</span><br>float4 _ScreenToTargetScaleHistory; <span class="hljs-comment">// Same as above but the RTHandle handle size is that of the history buffer</span><br><br></code></pre></td></tr></table></figure>
-
-<p>上面矩阵的宏定义:</p>
-<p>ShaderVariablesMatrixDefsHDCamera.hlsl</p>
-<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">ifdef</span> UNITY_SHADER_VARIABLES_MATRIX_DEFS_LEGACY_UNITY_INCLUDED</span><br>    <span class="hljs-meta">#<span class="hljs-keyword">error</span> Mixing HDCamera and legacy Unity matrix definitions</span><br><span class="hljs-meta">#<span class="hljs-keyword">endif</span></span><br><br><span class="hljs-meta">#<span class="hljs-keyword">ifndef</span> UNITY_SHADER_VARIABLES_MATRIX_DEFS_HDCAMERA_INCLUDED</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> UNITY_SHADER_VARIABLES_MATRIX_DEFS_HDCAMERA_INCLUDED</span><br><br><span class="hljs-meta">#<span class="hljs-keyword">if</span> defined(USING_STEREO_MATRICES)</span><br><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> UNITY_MATRIX_V     _ViewMatrixStereo[unity_StereoEyeIndex]</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> UNITY_MATRIX_I_V   _InvViewMatrixStereo[unity_StereoEyeIndex]</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> UNITY_MATRIX_P     OptimizeProjectionMatrix(_ProjMatrixStereo[unity_StereoEyeIndex])</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> UNITY_MATRIX_I_P   _InvProjMatrixStereo[unity_StereoEyeIndex]</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> UNITY_MATRIX_VP    _ViewProjMatrixStereo[unity_StereoEyeIndex]</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> UNITY_MATRIX_I_VP  _InvViewProjMatrixStereo[unity_StereoEyeIndex]</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> UNITY_MATRIX_UNJITTERED_VP _ViewProjMatrixStereo[unity_StereoEyeIndex] <span class="hljs-comment">// Since VR doesn&#x27;t need to add jitter, just use normal VP matrix</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> UNITY_MATRIX_PREV_VP _PrevViewProjMatrixStereo[unity_StereoEyeIndex]</span><br><br><span class="hljs-meta">#<span class="hljs-keyword">else</span></span><br><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> UNITY_MATRIX_V     _ViewMatrix</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> UNITY_MATRIX_I_V   _InvViewMatrix</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> UNITY_MATRIX_P     OptimizeProjectionMatrix(_ProjMatrix)</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> UNITY_MATRIX_I_P   _InvProjMatrix</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> UNITY_MATRIX_VP    _ViewProjMatrix</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> UNITY_MATRIX_I_VP  _InvViewProjMatrix</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> UNITY_MATRIX_UNJITTERED_VP _NonJitteredViewProjMatrix</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> UNITY_MATRIX_PREV_VP _PrevViewProjMatrix</span><br><br><span class="hljs-meta">#<span class="hljs-keyword">endif</span> <span class="hljs-comment">// USING_STEREO_MATRICES</span></span><br><br><span class="hljs-meta">#<span class="hljs-keyword">endif</span> <span class="hljs-comment">// UNITY_SHADER_VARIABLES_MATRIX_DEFS_HDCAMERA_INCLUDED</span></span><br></code></pre></td></tr></table></figure>
-
+      <h1 id="Chapter-1-Introduction"><a href="#Chapter-1-Introduction" class="headerlink" title="Chapter 1 Introduction"></a>Chapter 1 Introduction</h1><p>这篇文档主要是一份说明文档，用来描述Vulkan API。 Vulkan API是符合 C99标准的控制low-level图形计算功能的API。</p>
+<p>文档的权威版本在官方网站可以查阅：<a target="_blank" rel="noopener" href="https://www.khronos.org/registry/vulkan/">官方文档</a></p>
+<p>生成官方文档的工程：[文档工程](<a target="_blank" rel="noopener" href="https://github.com/">https://github.com/</a> KhronosGroup&#x2F;Vulkan-Docs)</p>
+<h2 id="1-1-文档约定"><a href="#1-1-文档约定" class="headerlink" title="1.1 文档约定"></a>1.1 文档约定</h2><p>Vulkan说明文档用与给API开发人员和应用开发人员提供API使用参考，为两者提供统一的约定。从上下文通常也能推断出面向的受众，某些部分只针对这部分开发人员。例如 Valid Usage章节只提供给应用开发人员使用。任何的需求、禁止、建议和选择都在Normative terminology中说明。</p>
+<blockquote>
+<p>Note</p>
+<p> extensions 中定义的结构体、枚举类型已经被集成到了Vulkan 1.1的核心库中。这些内容现在和Vulkan1.1的接口等价。和部分影响了Vulkan说明文件、头文件、和XML注册表。</p>
+</blockquote>
 
       
-      <p align="right"><a class="morebtn" href="/2022/09/19/HDRPsource/HDRPShader%E5%86%85%E7%BD%AE%E7%9F%A9%E9%98%B5%E5%A4%87%E6%9F%A5/" title="">阅读全文</a></p>
+      <p align="right"><a class="morebtn" href="/2022/09/19/VulkanTranslate/Chapter1-Introduction/" title="">阅读全文</a></p>
     </main>
     <footer class="post-footer">
       
@@ -929,7 +573,7 @@
   
   <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
     <div class="post-block">
-      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/09/19/HDRPsource/9.OcclusionProbe/">
+      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/08/03/Unity/il2cpp_fastbuild/">
       <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
         <meta itemprop="name" content="leinlin">
         <meta itemprop="description" content="">
@@ -941,14 +585,22 @@
     </div>
     <header class="post-header">
       <h1 class="post-title" itemprop="name headline">
-        <a class="post-title-link post-title-link-external" href="/2022/09/19/HDRPsource/9.OcclusionProbe/" itemprop="url"></a>
+        <a class="post-title-link post-title-link-external" href="/2022/08/03/Unity/il2cpp_fastbuild/" itemprop="url">在unity的IL2CPP中接入FASTBuild</a>
       </h1>
       <div class="post-meta">
         
         <span class="post-date">
-          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2022-09-19T19:53:33+08:00">2022-09-19 19:53:33</time></span>
+          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2022-08-03T08:17:00+08:00">2022-08-03 08:17:00</time></span>
         </span>
         
+        
+        
+        <span class="post-meta-divider divider">|</span>
+        
+        <span class="post-categories">
+          
+          <i class="far fa-folder-open"></i><span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/FASTBUILD/" itemprop="url" rel="index"><span itemprop="name">FASTBUILD</span></a></span>
+        </span>
         
         
         
@@ -957,78 +609,29 @@
     </header>
     <main class="post-main" itemprop="articleBody">
       
-      <h1 id="Occlusion-Probe-Shader部分"><a href="#Occlusion-Probe-Shader部分" class="headerlink" title="Occlusion Probe Shader部分"></a>Occlusion Probe Shader部分</h1><p>OcclusionProbe主要是用来计算环境光遮挡的探针，基本的原理是生成一个体素划分的块区域，在体素中填充阴影遮挡情况。在后在Shader当中提取计算的体素信息。</p>
-<p>有两个步骤需要实现：</p>
-<p>1.需要使用Unity自带的Progressive烘焙工具，<strong>手动</strong>烘焙环境贴图。</p>
-<p>2.需要保证产生遮挡的物体，开启lightmap static</p>
-<p>3.需要保证Baked Global Illumination是选择的。</p>
-<p>4.烘焙完成，需要修改Shader读取这些体素信息。</p>
-<h2 id="Shader中SurfaceData的区别"><a href="#Shader中SurfaceData的区别" class="headerlink" title="Shader中SurfaceData的区别"></a>Shader中SurfaceData的区别</h2><p>HDRP中SurfaceData数据保存了遮挡信息</p>
-<p>主要的区别是三个Occlusion值</p>
-<ol>
-<li>skyOcclusion </li>
-<li>treeOcclusion</li>
-<li>grassOcclusion</li>
-</ol>
-<figure class="hljs highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">struct SurfaceData<br>&#123;<br>    uint materialFeatures;<br>    float3 baseColor;<br>    float specularOcclusion;<br>    float3 normalWS;<br>    float perceptualSmoothness;<br>    float ambientOcclusion;<br>    float metallic;<br>    float coatMask;<br>    float3 specularColor;<br>    uint diffusionProfile;<br>    float subsurfaceMask;<br>    float thickness;<br>    float3 tangentWS;<br>    float anisotropy;<br>    float iridescenceThickness;<br>    float iridescenceMask;<br>    float ior;<br>    float3 transmittanceColor;<br>    float atDistance;<br>    float transmittanceMask;<br>    // (BofD)中的内容<br>    float skyOcclusion; // Occlusion Prode的遮挡信息<br>    float treeOcclusion;  // Occlusion Prode2的遮挡信息<br>    // 还有一个grassOcclusion 是一个临时变量没有出现<br>&#125;;<br>================================<br>struct SurfaceData<br>&#123;<br>    uint materialFeatures;<br>    float3 baseColor;<br>    float specularOcclusion;<br>    float3 normalWS;<br>    float perceptualSmoothness;<br>    float ambientOcclusion;<br>    float metallic;<br>    float coatMask;<br>    float3 specularColor;<br>    uint diffusionProfile;<br>    float subsurfaceMask;<br>    float thickness;<br>    float3 tangentWS;<br>    float anisotropy;<br>    float iridescenceThickness;<br>    float iridescenceMask;<br>    float3 geomNormalWS;<br>    float ior;<br>    float3 transmittanceColor;<br>    float atDistance;<br>    float transmittanceMask;<br>&#125;;<br></code></pre></td></tr></table></figure>
+      <h1 id="在unity的IL2CPP中接入FASTBuild"><a href="#在unity的IL2CPP中接入FASTBuild" class="headerlink" title="在unity的IL2CPP中接入FASTBuild"></a>在unity的IL2CPP中接入FASTBuild</h1><h2 id="如何编译IL2CPP-exe"><a href="#如何编译IL2CPP-exe" class="headerlink" title="如何编译IL2CPP.exe"></a>如何编译IL2CPP.exe</h2><figure class="hljs highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">jam WinEditor<br></code></pre></td></tr></table></figure>
 
-<h2 id="Occlusion遮挡信息的读取"><a href="#Occlusion遮挡信息的读取" class="headerlink" title="Occlusion遮挡信息的读取"></a>Occlusion遮挡信息的读取</h2><figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs c">主要获取到SurfaceData的位置是LitDaysIndividualLayer.  (BofD)<br>  ...<br><span class="hljs-comment">//forest-begin: sky occlusion</span><br>    <span class="hljs-type">float</span> grassOcclusion;<br>    surfaceData.skyOcclusion = SampleSkyOcclusion(input.positionRWS, grassOcclusion);<br><span class="hljs-comment">//forest-end</span><br><span class="hljs-comment">//forest-begin: Tree Occlusion</span><br>    float4 treeOcclusionInput = float4(input.texCoord2.xy, input.texCoord3.xy);<br>    surfaceData.treeOcclusion = GetTreeOcclusion(input.positionRWS, treeOcclusionInput);<br><span class="hljs-comment">//forest-end:</span><br><span class="hljs-meta">#<span class="hljs-keyword">else</span> <span class="hljs-comment">// #if !defined(LAYERED_LIT_SHADER)</span></span><br> 	...<br></code></pre></td></tr></table></figure>
-
-<p>上面涉及到的具体的函数</p>
-<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br></pre></td><td class="code"><pre><code class="hljs c">float3 _AtmosphericScatteringSunVector;<br><span class="hljs-comment">// 通过树的参数计算得到。</span><br><span class="hljs-type">float</span> <span class="hljs-title function_">GetTreeOcclusion</span><span class="hljs-params">(float3 positionRWS, float4 treeOcclusionInput)</span> &#123;<br><span class="hljs-meta">#<span class="hljs-keyword">if</span> defined(_ANIM_SINGLE_PIVOT_COLOR) || defined(_ANIM_HIERARCHY_PIVOT)</span><br>	<span class="hljs-keyword">if</span>(_UseTreeOcclusion) &#123;<br>		float3 positionWS = GetAbsolutePositionWS(positionRWS);<br>		<span class="hljs-type">float</span> treeWidth = _Tree12Width == <span class="hljs-number">0</span> ? <span class="hljs-number">1.f</span> : saturate((positionWS.y - UNITY_MATRIX_M._m13) / _Tree12Width);<br>		<span class="hljs-type">float</span> treeDO = lerp(_TreeDO, _TreeDO2, treeWidth);<br>		<span class="hljs-type">float</span> treeAO = lerp(_TreeAO, _TreeAO2, treeWidth);<br>		float4 lightDir = float4(-_AtmosphericScatteringSunVector * treeDO, treeAO);<br>		<span class="hljs-type">float</span> treeDOBias = lerp(_TreeDOBias, _TreeDOBias2, treeWidth);<br>		<span class="hljs-type">float</span> treeAOBias = lerp(_TreeAOBias, _TreeAOBias2, treeWidth);<br>		<span class="hljs-keyword">return</span> saturate(dot(saturate(treeOcclusionInput + float4(treeDOBias.rrr, treeAOBias)), lightDir));<br>	&#125;<br>	<span class="hljs-keyword">else</span><br><span class="hljs-meta">#<span class="hljs-keyword">endif</span></span><br>	&#123;<br>		<span class="hljs-keyword">return</span> <span class="hljs-number">1.f</span>;<br>	&#125;<br>&#125;<br><br><span class="hljs-type">float</span> <span class="hljs-title function_">SampleOcclusionProbes</span><span class="hljs-params">(float3 positionWS)</span><br>&#123;<br>    <span class="hljs-type">float</span> occlusionProbes = <span class="hljs-number">1</span>;<br>	<span class="hljs-comment">// 世界坐标转换到探针坐标</span><br>    float3 pos = mul(_OcclusionProbesWorldToLocalDetail, float4(positionWS, <span class="hljs-number">1</span>)).xyz;<br>	<br>  	<span class="hljs-comment">// 这里有两个三维纹理。一个细节一个全局</span><br>    UNITY_BRANCH<br>	<span class="hljs-title function_">if</span><span class="hljs-params">(all(pos &gt; <span class="hljs-number">0</span>) &amp;&amp; all(pos &lt; <span class="hljs-number">1</span>))</span><br>    &#123;<br>      	<span class="hljs-comment">// 采样三维纹理</span><br>		occlusionProbes = tex3D(_OcclusionProbesDetail, pos).a;<br>	&#125;<br>    <span class="hljs-keyword">else</span><br>    &#123;<br>		pos = mul(_OcclusionProbesWorldToLocal, float4(positionWS, <span class="hljs-number">1</span>)).xyz;<br>		occlusionProbes = tex3D(_OcclusionProbes, pos).a;<br>	&#125;<br><br>    <span class="hljs-keyword">return</span> occlusionProbes;<br>&#125;<br><br><span class="hljs-comment">// 草的环境光遮挡，这是二维纹理。</span><br><span class="hljs-type">float</span> <span class="hljs-title function_">SampleGrassOcclusion</span><span class="hljs-params">(float2 terrainUV)</span><br>&#123;<br>    <span class="hljs-keyword">return</span> lerp(<span class="hljs-number">1.0</span>, tex2D(_GrassOcclusion, terrainUV).a, _GrassOcclusionAmountTerrain);<br>&#125;<br><br><span class="hljs-type">float</span> <span class="hljs-title function_">SampleGrassOcclusion</span><span class="hljs-params">(float3 positionWS)</span><br>&#123;<br>    float3 pos = mul(_GrassOcclusionWorldToLocal, float4(positionWS, <span class="hljs-number">1</span>)).xyz;<br>    <span class="hljs-type">float</span> terrainHeight = tex2D(_GrassOcclusionHeightmap, pos.xz).a;<br>    <span class="hljs-type">float</span> height = pos.y - terrainHeight * _GrassOcclusionHeightRange;<br><br>    UNITY_BRANCH<br>    <span class="hljs-title function_">if</span><span class="hljs-params">(height &lt; _GrassOcclusionCullHeight)</span><br>    &#123;<br>        <span class="hljs-type">float</span> xz = lerp(<span class="hljs-number">1.0</span>, tex2D(_GrassOcclusion, pos.xz).a, _GrassOcclusionAmountGrass);<br>        <span class="hljs-keyword">return</span> saturate(xz + smoothstep(_GrassOcclusionHeightFadeBottom, _GrassOcclusionHeightFadeTop, height));<br><br>    &#125;<br>    <span class="hljs-keyword">else</span><br>        <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>;<br>&#125;<br><br><span class="hljs-comment">// 这里会返回grassOcclusion和SkyOcclusion两个内容</span><br><span class="hljs-type">float</span> <span class="hljs-title function_">SampleSkyOcclusion</span><span class="hljs-params">(float3 positionRWS, out <span class="hljs-type">float</span> grassOcclusion)</span><br>&#123;<br>  	<span class="hljs-comment">// 获取世界坐标</span><br>    float3 positionWS = GetAbsolutePositionWS(positionRWS);<br>  	<span class="hljs-comment">// 从世界坐标采样体素块</span><br>    grassOcclusion = SampleGrassOcclusion(positionWS);<br>  <br>    <span class="hljs-keyword">return</span> grassOcclusion * SampleOcclusionProbes(positionWS);<br>&#125;<br><br><span class="hljs-type">float</span> <span class="hljs-title function_">SampleSkyOcclusion</span><span class="hljs-params">(float3 positionRWS, float2 terrainUV, out <span class="hljs-type">float</span> grassOcclusion)</span><br>&#123;<br>    float3 positionWS = GetAbsolutePositionWS(positionRWS);<br>    grassOcclusion = SampleGrassOcclusion(terrainUV);<br>    <span class="hljs-keyword">return</span> grassOcclusion * SampleOcclusionProbes(positionWS);<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<p>现在可以知道三个信息的来源：</p>
-<ol>
-<li>skyOcclusion  来自三维纹理</li>
-<li>treeOcclusion  通过树的参数计算得到</li>
-<li>grassOcclusion 来自二维纹理</li>
-</ol>
-<h2 id="Occlusion遮挡信息的使用"><a href="#Occlusion遮挡信息的使用" class="headerlink" title="Occlusion遮挡信息的使用"></a>Occlusion遮挡信息的使用</h2><figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">//BuildinData中获取环境烘焙信息是使用了上面的采样结果。</span><br>SampleBakedGI函数出现了区别<br><span class="hljs-comment">// 所有的基础烘焙信息：</span><br><span class="hljs-comment">// LightMap：fully baked lightmap (static lightmap) + enlighten realtime lightmap (dynamic lightmap) 可以组合使用</span><br><span class="hljs-comment">// for each case we can have directional lightmap or not.</span><br><span class="hljs-comment">// lightprobe for dynamic/moving entity：</span><br><span class="hljs-comment">//探针类型：Either SH9 per object lightprobe or SH4 per pixel per object volume probe</span><br>float3 <span class="hljs-title function_">SampleBakedGI</span><span class="hljs-params">(float3 positionRWS, float3 normalWS, float2 uvStaticLightmap, float2 uvDynamicLightmap)</span><br>&#123;<br><span class="hljs-comment">// If there is no lightmap, it assume lightprobe</span><br><span class="hljs-meta">#<span class="hljs-keyword">if</span> !defined(LIGHTMAP_ON) &amp;&amp; !defined(DYNAMICLIGHTMAP_ON)</span><br><br>    <span class="hljs-keyword">if</span> (unity_ProbeVolumeParams.x == <span class="hljs-number">0.0</span>)<br>    &#123;<br>        <span class="hljs-comment">// <span class="hljs-doctag">TODO:</span> pass a tab of coefficient instead!</span><br>        real4 SHCoefficients[<span class="hljs-number">7</span>];<br>        SHCoefficients[<span class="hljs-number">0</span>] = unity_SHAr;<br>        SHCoefficients[<span class="hljs-number">1</span>] = unity_SHAg;<br>        SHCoefficients[<span class="hljs-number">2</span>] = unity_SHAb;<br>        SHCoefficients[<span class="hljs-number">3</span>] = unity_SHBr;<br>        SHCoefficients[<span class="hljs-number">4</span>] = unity_SHBg;<br>        SHCoefficients[<span class="hljs-number">5</span>] = unity_SHBb;<br>        SHCoefficients[<span class="hljs-number">6</span>] = unity_SHC;<br><br>        <span class="hljs-keyword">return</span> SampleSH9(SHCoefficients, normalWS);<br>    &#125;<br>    <span class="hljs-keyword">else</span><br>    &#123;<br>        <span class="hljs-keyword">return</span> SampleProbeVolumeSH4(TEXTURE3D_PARAM(unity_ProbeVolumeSH, samplerunity_ProbeVolumeSH), positionRWS, normalWS, GetProbeVolumeWorldToObject(),<br>        unity_ProbeVolumeParams.y, unity_ProbeVolumeParams.z, unity_ProbeVolumeMin.xyz, unity_ProbeVolumeSizeInv.xyz);<br>    &#125;<br><br><span class="hljs-meta">#<span class="hljs-keyword">else</span></span><br>	<span class="hljs-comment">//定义了光照贴图，进行贴图内容的读取</span><br>    float3 bakeDiffuseLighting = float3(<span class="hljs-number">0.0</span>, <span class="hljs-number">0.0</span>, <span class="hljs-number">0.0</span>);<br><br><span class="hljs-meta">#<span class="hljs-keyword">ifdef</span> UNITY_LIGHTMAP_FULL_HDR</span><br>    <span class="hljs-type">bool</span> useRGBMLightmap = <span class="hljs-literal">false</span>;<br>    float4 decodeInstructions = float4(<span class="hljs-number">0.0</span>, <span class="hljs-number">0.0</span>, <span class="hljs-number">0.0</span>, <span class="hljs-number">0.0</span>); <span class="hljs-comment">// Never used but needed for the interface since it supports gamma lightmaps</span><br><span class="hljs-meta">#<span class="hljs-keyword">else</span></span><br>    <span class="hljs-type">bool</span> useRGBMLightmap = <span class="hljs-literal">true</span>;<br>    <span class="hljs-meta">#<span class="hljs-keyword">if</span> defined(UNITY_LIGHTMAP_RGBM_ENCODING)</span><br>        float4 decodeInstructions = float4(<span class="hljs-number">34.493242</span>, <span class="hljs-number">2.2</span>, <span class="hljs-number">0.0</span>, <span class="hljs-number">0.0</span>); <span class="hljs-comment">// range^2.2 = 5^2.2, gamma = 2.2</span><br>    <span class="hljs-meta">#<span class="hljs-keyword">else</span></span><br>        float4 decodeInstructions = float4(<span class="hljs-number">2.0</span>, <span class="hljs-number">2.2</span>, <span class="hljs-number">0.0</span>, <span class="hljs-number">0.0</span>); <span class="hljs-comment">// range = 2.0^2.2 = 4.59</span><br>    <span class="hljs-meta">#<span class="hljs-keyword">endif</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">endif</span></span><br>	<span class="hljs-comment">// 每一种Light都可以分成方向烘焙和单一烘焙两种</span><br>    <span class="hljs-meta">#<span class="hljs-keyword">ifdef</span> LIGHTMAP_ON</span><br>        <span class="hljs-meta">#<span class="hljs-keyword">ifdef</span> DIRLIGHTMAP_COMBINED</span><br>        bakeDiffuseLighting += SampleDirectionalLightmap(TEXTURE2D_PARAM(unity_Lightmap, samplerunity_Lightmap),<br>                                                        TEXTURE2D_PARAM(unity_LightmapInd, samplerunity_Lightmap),<br>                                                        uvStaticLightmap, unity_LightmapST, normalWS, useRGBMLightmap, decodeInstructions);<br>        <span class="hljs-meta">#<span class="hljs-keyword">else</span></span><br>        bakeDiffuseLighting += SampleSingleLightmap(TEXTURE2D_PARAM(unity_Lightmap, samplerunity_Lightmap), uvStaticLightmap, unity_LightmapST, useRGBMLightmap, decodeInstructions);<br>        <span class="hljs-meta">#<span class="hljs-keyword">endif</span></span><br>    <span class="hljs-meta">#<span class="hljs-keyword">endif</span></span><br><br>    <span class="hljs-meta">#<span class="hljs-keyword">ifdef</span> DYNAMICLIGHTMAP_ON</span><br>        <span class="hljs-meta">#<span class="hljs-keyword">ifdef</span> DIRLIGHTMAP_COMBINED</span><br>        bakeDiffuseLighting += SampleDirectionalLightmap(TEXTURE2D_PARAM(unity_DynamicLightmap, samplerunity_DynamicLightmap),<br>                                                        TEXTURE2D_PARAM(unity_DynamicDirectionality, samplerunity_DynamicLightmap),<br>                                                        uvDynamicLightmap, unity_DynamicLightmapST, normalWS, <span class="hljs-literal">false</span>, decodeInstructions);<br>        <span class="hljs-meta">#<span class="hljs-keyword">else</span></span><br>        bakeDiffuseLighting += SampleSingleLightmap(TEXTURE2D_PARAM(unity_DynamicLightmap, samplerunity_DynamicLightmap), uvDynamicLightmap, unity_DynamicLightmapST, <span class="hljs-literal">false</span>, decodeInstructions);<br>        <span class="hljs-meta">#<span class="hljs-keyword">endif</span></span><br>    <span class="hljs-meta">#<span class="hljs-keyword">endif</span></span><br><br>  	<span class="hljs-comment">// 俩个lightmap是相加的关系</span><br>    <span class="hljs-keyword">return</span> bakeDiffuseLighting;<br><br><span class="hljs-meta">#<span class="hljs-keyword">endif</span></span><br>&#125;<br><br><br><span class="hljs-comment">// 修改后的烘焙信息获取。</span><br>float3 <span class="hljs-title function_">SampleBakedGI</span><span class="hljs-params">(float3 positionRWS, float3 normalWS, float2 uvStaticLightmap, float2 uvDynamicLightmap, <span class="hljs-type">float</span> skyOcclusion, <span class="hljs-type">float</span> grassOcclusion, <span class="hljs-type">float</span> treeOcclusion)</span><br><span class="hljs-comment">//forest-end</span><br>&#123;<br>    <span class="hljs-comment">// If there is no lightmap, it assume lightprobe</span><br><span class="hljs-meta">#<span class="hljs-keyword">if</span> !defined(LIGHTMAP_ON) &amp;&amp; !defined(DYNAMICLIGHTMAP_ON)</span><br>    <span class="hljs-keyword">if</span> (unity_ProbeVolumeParams.x == <span class="hljs-number">0.0</span>)<br>    &#123;<br>        <span class="hljs-comment">// <span class="hljs-doctag">TODO:</span> pass a tab of coefficient instead!</span><br>        real4 SHCoefficients[<span class="hljs-number">7</span>];<br>        SHCoefficients[<span class="hljs-number">0</span>] = unity_SHAr;<br>        SHCoefficients[<span class="hljs-number">1</span>] = unity_SHAg;<br>        SHCoefficients[<span class="hljs-number">2</span>] = unity_SHAb;<br>        SHCoefficients[<span class="hljs-number">3</span>] = unity_SHBr;<br>        SHCoefficients[<span class="hljs-number">4</span>] = unity_SHBg;<br>        SHCoefficients[<span class="hljs-number">5</span>] = unity_SHBb;<br>        SHCoefficients[<span class="hljs-number">6</span>] = unity_SHC;<br>		<br>      <span class="hljs-comment">// 这个累加计算了一个环境光的探针。</span><br><span class="hljs-comment">//forest-begin: sky occlusion</span><br>        <span class="hljs-meta">#<span class="hljs-keyword">if</span> SKY_OCCLUSION</span><br>			SHCoefficients[<span class="hljs-number">0</span>] += _AmbientProbeSH[<span class="hljs-number">0</span>] * skyOcclusion;<br>			SHCoefficients[<span class="hljs-number">1</span>] += _AmbientProbeSH[<span class="hljs-number">1</span>] * skyOcclusion;<br>			SHCoefficients[<span class="hljs-number">2</span>] += _AmbientProbeSH[<span class="hljs-number">2</span>] * skyOcclusion;<br>			SHCoefficients[<span class="hljs-number">3</span>] += _AmbientProbeSH[<span class="hljs-number">3</span>] * skyOcclusion;<br>			SHCoefficients[<span class="hljs-number">4</span>] += _AmbientProbeSH[<span class="hljs-number">4</span>] * skyOcclusion;<br>			SHCoefficients[<span class="hljs-number">5</span>] += _AmbientProbeSH[<span class="hljs-number">5</span>] * skyOcclusion;<br>			SHCoefficients[<span class="hljs-number">6</span>] += _AmbientProbeSH[<span class="hljs-number">6</span>] * skyOcclusion;<br>       <span class="hljs-meta">#<span class="hljs-keyword">endif</span></span><br><span class="hljs-comment">//forest-end</span><br><br>		<span class="hljs-comment">// 同时还积累的树的环境光遮挡</span><br><span class="hljs-comment">//forest-begin: Tree occlusion</span><br>        <span class="hljs-keyword">return</span> SampleSH9(SHCoefficients, normalWS) * treeOcclusion;<br><span class="hljs-comment">//forest-end</span><br>    &#125;<br>    <span class="hljs-keyword">else</span><br>    &#123;<br>      <span class="hljs-comment">//这里只是多了一个树木的遮挡</span><br>        <span class="hljs-keyword">return</span> SampleProbeVolumeSH4(TEXTURE3D_PARAM(unity_ProbeVolumeSH, samplerunity_ProbeVolumeSH), positionRWS, normalWS, GetProbeVolumeWorldToObject(),<br><span class="hljs-comment">//forest-begin: Tree occlusion</span><br>            unity_ProbeVolumeParams.y, unity_ProbeVolumeParams.z, unity_ProbeVolumeMin, unity_ProbeVolumeSizeInv) * treeOcclusion;<br><span class="hljs-comment">//forest-end</span><br>    &#125;<br><br><span class="hljs-meta">#<span class="hljs-keyword">else</span></span><br><br>    float3 bakeDiffuseLighting = float3(<span class="hljs-number">0.0</span>, <span class="hljs-number">0.0</span>, <span class="hljs-number">0.0</span>);<br><br><span class="hljs-meta">#<span class="hljs-keyword">ifdef</span> UNITY_LIGHTMAP_FULL_HDR</span><br>    <span class="hljs-type">bool</span> useRGBMLightmap = <span class="hljs-literal">false</span>;<br>    float4 decodeInstructions = float4(<span class="hljs-number">0.0</span>, <span class="hljs-number">0.0</span>, <span class="hljs-number">0.0</span>, <span class="hljs-number">0.0</span>); <span class="hljs-comment">// Never used but needed for the interface since it supports gamma lightmaps</span><br><span class="hljs-meta">#<span class="hljs-keyword">else</span></span><br>    <span class="hljs-type">bool</span> useRGBMLightmap = <span class="hljs-literal">true</span>;<br>    <span class="hljs-meta">#<span class="hljs-keyword">if</span> defined(UNITY_LIGHTMAP_RGBM_ENCODING)</span><br>        float4 decodeInstructions = float4(<span class="hljs-number">34.493242</span>, <span class="hljs-number">2.2</span>, <span class="hljs-number">0.0</span>, <span class="hljs-number">0.0</span>); <span class="hljs-comment">// range^2.2 = 5^2.2, gamma = 2.2</span><br>    <span class="hljs-meta">#<span class="hljs-keyword">else</span></span><br>        float4 decodeInstructions = float4(<span class="hljs-number">2.0</span>, <span class="hljs-number">2.2</span>, <span class="hljs-number">0.0</span>, <span class="hljs-number">0.0</span>); <span class="hljs-comment">// range = 2.0^2.2 = 4.59</span><br>    <span class="hljs-meta">#<span class="hljs-keyword">endif</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">endif</span></span><br><br>    <span class="hljs-meta">#<span class="hljs-keyword">ifdef</span> LIGHTMAP_ON</span><br>        <span class="hljs-meta">#<span class="hljs-keyword">ifdef</span> DIRLIGHTMAP_COMBINED</span><br>        bakeDiffuseLighting += SampleDirectionalLightmap(TEXTURE2D_PARAM(unity_Lightmap, samplerunity_Lightmap),<br>                                                        TEXTURE2D_PARAM(unity_LightmapInd, samplerunity_Lightmap),<br>                                                        uvStaticLightmap, unity_LightmapST, normalWS, useRGBMLightmap, decodeInstructions);<br>        <span class="hljs-meta">#<span class="hljs-keyword">else</span></span><br>        bakeDiffuseLighting += SampleSingleLightmap(TEXTURE2D_PARAM(unity_Lightmap, samplerunity_Lightmap), uvStaticLightmap, unity_LightmapST, useRGBMLightmap, decodeInstructions);<br>        <span class="hljs-meta">#<span class="hljs-keyword">endif</span></span><br>    <span class="hljs-meta">#<span class="hljs-keyword">endif</span></span><br><br>    <span class="hljs-meta">#<span class="hljs-keyword">ifdef</span> DYNAMICLIGHTMAP_ON</span><br>        <span class="hljs-meta">#<span class="hljs-keyword">ifdef</span> DIRLIGHTMAP_COMBINED</span><br>        bakeDiffuseLighting += SampleDirectionalLightmap(TEXTURE2D_PARAM(unity_DynamicLightmap, samplerunity_DynamicLightmap),<br>                                                        TEXTURE2D_PARAM(unity_DynamicDirectionality, samplerunity_DynamicLightmap),<br>                                                        uvDynamicLightmap, unity_DynamicLightmapST, normalWS, <span class="hljs-literal">false</span>, decodeInstructions);<br>        <span class="hljs-meta">#<span class="hljs-keyword">else</span></span><br>        bakeDiffuseLighting += SampleSingleLightmap(TEXTURE2D_PARAM(unity_DynamicLightmap, samplerunity_DynamicLightmap), uvDynamicLightmap, unity_DynamicLightmapST, <span class="hljs-literal">false</span>, decodeInstructions);<br>        <span class="hljs-meta">#<span class="hljs-keyword">endif</span></span><br>    <span class="hljs-meta">#<span class="hljs-keyword">endif</span></span><br><br>  <span class="hljs-comment">// 这里只是多积累了一个草的环境光遮挡，也就是说LightProbe是给动态物体使用的</span><br><span class="hljs-comment">//forest-begin: sky occlusion</span><br>    <span class="hljs-keyword">return</span> bakeDiffuseLighting * grassOcclusion;<br><span class="hljs-comment">//forest-end</span><br><br><span class="hljs-meta">#<span class="hljs-keyword">endif</span></span><br>&#125;<br><br></code></pre></td></tr></table></figure>
-
-<p><strong>从上面的代码中我发现skyOcclusion只在lightprobe计算的时候生效，也就是他是给动态物体使用的!!!!</strong></p>
-<p>现在三个Occlusion的作用就清楚了</p>
-<ol>
-<li>grassOcclusion 用于乘到每一个烘焙信息上</li>
-<li>treeOcclusion 用于乘到每一个光照探针结果上</li>
-<li>skyOcclusion  用于乘到动态光照探针SH9上</li>
-</ol>
-<h2 id="Shader部分总结"><a href="#Shader部分总结" class="headerlink" title="Shader部分总结"></a>Shader部分总结</h2><p>上面的内容只是Book of Death的使用方式，而我们可以自己修改应用位置，计算方法。</p>
-<p>下面需要讨论这些Occlusion的参数是如何传递到Shader当中的。</p>
-<h1 id="Occlusion-Prob-Script部分"><a href="#Occlusion-Prob-Script部分" class="headerlink" title="Occlusion Prob Script部分"></a>Occlusion Prob Script部分</h1><p>上面介绍了如何在Shader当中使用prob三维纹理内容，现在看一下脚本当中如何生成这些。</p>
-<p>在BofD当中主要的脚本就是OcclusionProbes以及他对应的Editor代码</p>
-<figure class="hljs highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">首先最终要的内容就是传递到unity当中参数。<br>    static class Uniforms<br>    &#123;<br>        internal static readonly int _AmbientProbeSH = Shader.PropertyToID(&quot;_AmbientProbeSH&quot;);<br>        internal static readonly int _OcclusionProbes = Shader.PropertyToID(&quot;_OcclusionProbes&quot;);<br>        internal static readonly int _OcclusionProbesWorldToLocal = Shader.PropertyToID(&quot;_OcclusionProbesWorldToLocal&quot;);<br>        internal static readonly int _OcclusionProbesDetail = Shader.PropertyToID(&quot;_OcclusionProbesDetail&quot;);<br>        internal static readonly int _OcclusionProbesWorldToLocalDetail = Shader.PropertyToID(&quot;_OcclusionProbesWorldToLocalDetail&quot;);<br>        internal static readonly int _OcclusionProbesReflectionOcclusionAmount = Shader.PropertyToID(&quot;_OcclusionProbesReflectionOcclusionAmount&quot;);<br>    &#125;<br></code></pre></td></tr></table></figure>
-
-<p><strong>这些数据是通过Progressive烘焙lightmapping引擎烘焙出来的内容，相当于使用了引擎的特性。</strong></p>
-<p><strong>要使用引擎的特性需要自己写一部分回调函数。BofD的代码在OcclusionProbes.Editor.cs文件中。</strong></p>
-<h2 id="OcclusionProbes生成设置"><a href="#OcclusionProbes生成设置" class="headerlink" title="OcclusionProbes生成设置"></a>OcclusionProbes生成设置</h2><p>主要有两部分：</p>
-<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs c">Lightmapping.started += Started;<br>Lightmapping.completed += Completed;<br></code></pre></td></tr></table></figure>
-
-<h3 id="Started"><a href="#Started" class="headerlink" title="Started"></a>Started</h3><p>在光照贴图开始烘焙之前调用</p>
-<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">void</span> <span class="hljs-title function_">Started</span><span class="hljs-params">()</span><br>&#123;<br>    <span class="hljs-comment">// 计算探针的数量：这里使用的是体素形式，我们也可以定义自己的形状。</span><br>    <span class="hljs-type">int</span> probeCount = m_XCount * m_YCount * m_ZCount;<br>    <span class="hljs-keyword">if</span> (probeCount == <span class="hljs-number">0</span>)<br>      <span class="hljs-keyword">return</span>;<br><br>  	<span class="hljs-comment">// 细节Probe数量统计</span><br>    <span class="hljs-type">int</span> detailSetCount = <span class="hljs-number">0</span>;<br>    foreach(OcclusionProbesDetail detail in m_OcclusionProbesDetail)<br>    &#123;<br>      <span class="hljs-keyword">if</span> (detail == null || !detail.gameObject.activeSelf)<br>        <span class="hljs-keyword">continue</span>;<br><br>      probeCount += detail.m_XCount * detail.m_YCount * detail.m_ZCount;<br>      detailSetCount++;<br>    &#125;<br><br>  	<span class="hljs-comment">// 声明主探针位置数组,坐标矩阵等等</span><br>    Vector4[] positions = new Vector4[probeCount];<br><br>        <span class="hljs-comment">// Main</span><br>        Vector3 size = transform.localScale;<br>        Matrix4x4 localToWorld = Matrix4x4.TRS(transform.position - size * <span class="hljs-number">0.5f</span>, transform.rotation, size);<br>        m_WorldToLocal = localToWorld.inverse;<br>        m_CountBaked = new Vector3i(m_XCount, m_YCount, m_ZCount);<br><br>        <span class="hljs-type">int</span> indexOffset = <span class="hljs-number">0</span>;<br>        GenerateProbePositions(ref positions, ref indexOffset, m_CountBaked, localToWorld, CalculateRayOffset(m_RayOffset, size, m_CountBaked));<br><br>        <span class="hljs-comment">// Detail</span><br>        m_CountBakedDetail = new Vector3i[detailSetCount];<br>        m_WorldToLocalDetail = new Matrix4x4[detailSetCount];<br><br>  		<span class="hljs-comment">// 声明细节探针的位置，矩阵转化，大小等等</span><br>        <span class="hljs-type">int</span> i = <span class="hljs-number">0</span>;<br>        foreach(OcclusionProbesDetail detail in m_OcclusionProbesDetail)<br>        &#123;<br>            <span class="hljs-keyword">if</span> (detail == null || !detail.gameObject.activeSelf)<br>                <span class="hljs-keyword">continue</span>;<br>            <br>            Transform t = detail.transform;<br>            Vector3 sizeDetail = t.localScale;<br>            Matrix4x4 localToWorldDetail = Matrix4x4.TRS(t.position - sizeDetail * <span class="hljs-number">0.5f</span>, t.rotation, sizeDetail);<br>            m_WorldToLocalDetail[i] = localToWorldDetail.inverse;<br>            m_CountBakedDetail[i] = new Vector3i(detail.m_XCount, detail.m_YCount, detail.m_ZCount);<br>            GenerateProbePositions(ref positions, ref indexOffset, m_CountBakedDetail[i], localToWorldDetail, CalculateRayOffset(detail.m_RayOffset, sizeDetail, m_CountBakedDetail[i]));<br>            i++;<br>        &#125;<br><br>        <span class="hljs-type">int</span> sampleCount = <span class="hljs-number">1024</span>;<br><br>  <br>  	<span class="hljs-comment">//这两句话才是核心内容，传入顶点数量和顶点位置，上面的内容实际上都是逻辑层的东西。</span><br>  UnityEditor.Experimental.Lightmapping.SetCustomBakeInputs(positions, sampleCount);<br>        m_SampleCountBaked = sampleCount;<br><br>        UnityEditor.Experimental.Lightmapping.probesIgnoreDirectEnvironment = <span class="hljs-literal">true</span>;<br>    &#125;<br></code></pre></td></tr></table></figure>
-
-<h3 id="Completed"><a href="#Completed" class="headerlink" title="Completed"></a>Completed</h3><p>光照烘焙计算之后保存数据</p>
-<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs c">  <span class="hljs-type">void</span> <span class="hljs-title function_">Completed</span><span class="hljs-params">()</span><br>  &#123;<br><span class="hljs-comment">// 从烘焙管线当中提取所有的探针生成三维纹理。</span><br>    	<span class="hljs-comment">// 同样也可以生成别的list之类的结构</span><br>    	<span class="hljs-comment">// ...</span><br><br>      <span class="hljs-comment">// Ambient probe</span><br>      <span class="hljs-comment">// 这个只是一个SH9 用于记录全局的光线                              </span><br>      BakeAmbientProbe();<br><span class="hljs-comment">// 把所有资源保存</span><br>      AssetDatabase.SaveAssets();<br><br>      m_CountBaked = new Vector3i(<span class="hljs-number">0</span>, <span class="hljs-number">0</span>, <span class="hljs-number">0</span>);<br>  &#125;<br></code></pre></td></tr></table></figure>
-
-<p>经过上面两步的计算所有的内容都会保存在和Lightmap相同的目录当中，需要自己通过代码设置到Shader当中来使用。</p>
-<p>剩下的工作就是把这些点传递到Shader当中就可以了，主要代码在OcclusionProbes当中。</p>
-<p>注：在BofD当中OcclusionProbes主要用来削减BakeAmbientProbe，然后削减的值叠加到原始的光照探针上。</p>
-<h1 id="使用方法"><a href="#使用方法" class="headerlink" title="使用方法"></a>使用方法</h1><p>1.在场景中新建一个Occlusion Probes，设置大小，体素纹理分辨率，细节纹理个数及其分辨率。</p>
-<p>2.将烘焙方式设置为<strong>手动</strong>，烘焙引擎设置为Progressive。</p>
-<p>3.点击烘焙，就会生成资源了。</p>
-<p>4.通过Occlusion Probes脚本，设置全局的Shader参数。</p>
-<p>5.在所有Shader当中就可以读取多个三维纹理，根据矩阵等位置的计算，就可以提去出各个点的环境光明暗情况。</p>
-
+<h2 id="如何调试IL2CPP-exe"><a href="#如何调试IL2CPP-exe" class="headerlink" title="如何调试IL2CPP.exe"></a>如何调试IL2CPP.exe</h2><p>用vs2017我研究了一天没有成功，改用rider进行附加调试。第一步加入一个ReadKey的指令，等待附加</p>
+<figure class="hljs highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">public static int Main(string[] args)<br>&#123;<br>    // 这里是等待附加的代码<br>    ConsoleKey key = Console.ReadKey().Key;<br>    int exitCode;<br>    try<br>    &#123;<br>        exitCode = Run(args, true);<br>    &#125;<br>    catch (PathTooLongException e)<br>    &#123;<br>        Console.WriteLine(&quot;IL2CPP error: The specified output path is too long to write generated files. Please choose a location with a shorter path.&quot;);<br>        Console.WriteLine(e);<br>        throw;<br>    &#125;<br>    catch (Exception e)<br>    &#123;<br>        Console.WriteLine(&quot;il2cpp.exe didn&#x27;t catch exception: &quot; + e.StackTrace);<br>        throw;<br>    &#125;<br><br>    return exitCode;<br>&#125;<br></code></pre></td></tr></table></figure>
       
-      <p align="right"><a class="morebtn" href="/2022/09/19/HDRPsource/9.OcclusionProbe/" title="">阅读全文</a></p>
+      <p align="right"><a class="morebtn" href="/2022/08/03/Unity/il2cpp_fastbuild/" title="在unity的IL2CPP中接入FASTBuild">阅读全文</a></p>
     </main>
     <footer class="post-footer">
+      
+      <div class="post-tags">
+        
+        <a class="post-tag button" href="/tags/IL2CPP/" rel="tag"><i class="fas fa-tags"></i>IL2CPP</a>
+        
+        <a class="post-tag button" href="/tags/FASTBUILD/" rel="tag"><i class="fas fa-tags"></i>FASTBUILD</a>
+        
+      </div>
       
     </footer>
   </article>
   
   <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
     <div class="post-block">
-      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/09/19/HDRPsource/8.LitShader/">
+      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/07/18/Unity/profiler/">
       <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
         <meta itemprop="name" content="leinlin">
         <meta itemprop="description" content="">
@@ -1040,12 +643,12 @@
     </div>
     <header class="post-header">
       <h1 class="post-title" itemprop="name headline">
-        <a class="post-title-link post-title-link-external" href="/2022/09/19/HDRPsource/8.LitShader/" itemprop="url"></a>
+        <a class="post-title-link post-title-link-external" href="/2022/07/18/Unity/profiler/" itemprop="url">snp Profiler</a>
       </h1>
       <div class="post-meta">
         
         <span class="post-date">
-          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2022-09-19T19:53:33+08:00">2022-09-19 19:53:33</time></span>
+          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2022-07-18T08:17:00+08:00">2022-07-18 08:17:00</time></span>
         </span>
         
         
@@ -1056,51 +659,139 @@
     </header>
     <main class="post-main" itemprop="articleBody">
       
-      <h1 id="LitShader参数"><a href="#LitShader参数" class="headerlink" title="LitShader参数"></a>LitShader参数</h1><p><strong>特殊设置：</strong></p>
-<p>Alpha CutOff  ：  透明阈值， Alpha值使用BaseColor,a通道，小于这个Alpha值得的位置完全透明。</p>
-<p>Use Alpha Test :  是否使用Alpha Test。</p>
-<p>Use PIXEL DisPlacement: 是否使用高度图。</p>
-<p>Height Min&#x2F;Max Samples  :  高度图最小&#x2F;大采样次数。（决定了效果）</p>
-<p>Height Lod Threshold：高度图 Lod，决定效果。</p>
-<p><strong>纹理设置：</strong></p>
-<p>BaseColor ：基础颜色默认白色，会和BaseColorMap的颜色相乘。</p>
-<p>BaseColorMap ：就是漫反射贴图，对应Albedo。</p>
-<p>Tiling&#x2F;Offset :决定了所有贴图的便偏移和混合。</p>
-<p>NormalMap：切线空间法线贴图。</p>
-<p>HeightMAp：当Use PIXEL DisPlacement勾选的时候，这个高度贴图才会生效。使用r通道。</p>
-<p>Height Amplitude：高度的强弱。和HeightMap的结果相乘。</p>
-<p>MaskMap：分为四个通道，R(Metalness)G(AO)B(Detial)A(Smoothness).</p>
-<p>Metallic : 和金属度相乘。</p>
-<p>Smothness : 这个值目前无效。（在HDRP中如果使用MaskMap则Smothness无效，这里为了兼容HDRP）</p>
-<p>SmoothnessRemapMin ：金属度映射下限</p>
-<p>SmoothnessRemapMax ： 金属度映射上限</p>
-<p>AORemapMin ：AO映射下限</p>
-<p>AORemapMax：AO映射上限</p>
-<h1 id="LayeredLit参数"><a href="#LayeredLit参数" class="headerlink" title="LayeredLit参数"></a>LayeredLit参数</h1><p><strong>特殊设置</strong></p>
-<p>LayerMaskMap ：混合贴图。</p>
-<p>Alpha CutOff：见LitShader，使用的Alpha值来自于所有BaseColor，a通道的混合结果。</p>
-<p>Use Alpha Test :  是否使用Alpha Test。</p>
-<p>Use PIXEL DisPlacement: 是否使用高度图。高度来自于高度图r通道混合的结果。</p>
-<p>Use Mul VERTEX Color Blend： 使用乘法顶点色混合。权重&#x3D;顶点色和LayerMaskMap相乘</p>
-<p>Use Add VERTEX Color Blend： 使用加法顶点色混合。权重&#x3D;（顶点色 - 0.5）和和LayerMaskMap相加</p>
-<p><strong>注：权重a表示0层，rgb分别表示123层。</strong></p>
-<p><strong>Use Mul VERTEX Color Blend&#x2F;Use Add VERTEX Color Blend:选择一个就可以，或者都不选。如果都选则第一个生效。</strong></p>
-<p><strong>纹理设置</strong></p>
-<p>这部分内容同LitShader一致，只不过最终的值是通过<strong>Mask和顶点色的权重</strong>混合的结果。</p>
-<p><strong>纹理层设置</strong></p>
-<p>Layer Number Three：使用三层。</p>
-<p>Layer Number Four：使用四层。</p>
-<p><strong>Layer Number Four&#x2F;Layer Number Three:选择一个就可以</strong></p>
-<h1 id="TiledLayeredLit"><a href="#TiledLayeredLit" class="headerlink" title="TiledLayeredLit"></a>TiledLayeredLit</h1><p>和LayeredLit全部一致。只是多了一张纹理和两个参数：</p>
-<p>Normal（RG）AO（B) Alpaha(A)：RG通道表示法线的两个通道，B表示AO，A是alpha通道。</p>
-<p>注：这个纹理的alpha通道和各层的混合结果的aplpha同时生效。</p>
-<p>Main Normal Fractor：各层纹理和这个主纹理的混合程度，0表示完全使用主纹理，1表示完全混合主纹理和细节纹理。</p>
-<p>AOFractor：表示主纹理AO所占最终AO比例。0表示不适用主纹理AO。</p>
+      <p><img src="/../../images/2022-07-19-18-03-57.png"></p>
 
       
-      <p align="right"><a class="morebtn" href="/2022/09/19/HDRPsource/8.LitShader/" title="">阅读全文</a></p>
+      <p align="right"><a class="morebtn" href="/2022/07/18/Unity/profiler/" title="snp Profiler">阅读全文</a></p>
     </main>
     <footer class="post-footer">
+      
+      <div class="post-tags">
+        
+        <a class="post-tag button" href="/tags/snp/" rel="tag"><i class="fas fa-tags"></i>snp</a>
+        
+        <a class="post-tag button" href="/tags/android/" rel="tag"><i class="fas fa-tags"></i>android</a>
+        
+      </div>
+      
+    </footer>
+  </article>
+  
+  <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
+    <div class="post-block">
+      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/07/18/Unity/textmeshpro/">
+      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <meta itemprop="name" content="leinlin">
+        <meta itemprop="description" content="">
+        <meta itemprop="image" content="/images/avatar.jpg">
+      </span>
+      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+        <meta itemprop="name" content="leinlin的小笔记">
+      </span>
+    </div>
+    <header class="post-header">
+      <h1 class="post-title" itemprop="name headline">
+        <a class="post-title-link post-title-link-external" href="/2022/07/18/Unity/textmeshpro/" itemprop="url">textmesh-pro 压缩通道</a>
+      </h1>
+      <div class="post-meta">
+        
+        <span class="post-date">
+          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2022-07-18T08:17:00+08:00">2022-07-18 08:17:00</time></span>
+        </span>
+        
+        
+        
+        
+        
+      </div>
+    </header>
+    <main class="post-main" itemprop="articleBody">
+      
+      <h2 id="把Alpha-8改为4通道的RGBA"><a href="#把Alpha-8改为4通道的RGBA" class="headerlink" title="把Alpha 8改为4通道的RGBA"></a>把Alpha 8改为4通道的RGBA</h2><p><img src="/../../images/2022-07-21-17-44-41.png"></p>
+<h2 id="修改shader根据uv采样不同的通道"><a href="#修改shader根据uv采样不同的通道" class="headerlink" title="修改shader根据uv采样不同的通道"></a>修改shader根据uv采样不同的通道</h2><p><img src="/../../images/2022-07-21-17-45-35.png"></p>
+<h2 id="补充"><a href="#补充" class="headerlink" title="补充"></a>补充</h2><ul>
+<li><p>优化图集算法，不能让中间线切割字符，使一个字符分布到多个通道中</p>
+</li>
+<li><p>修改采样的shader</p>
+</li>
+<li><p>稳定化debug</p>
+</li>
+<li><p>不如把图片直接改为2048x2048 alpha8</p>
+</li>
+</ul>
+
+      
+      <p align="right"><a class="morebtn" href="/2022/07/18/Unity/textmeshpro/" title="textmesh-pro 压缩通道">阅读全文</a></p>
+    </main>
+    <footer class="post-footer">
+      
+      <div class="post-tags">
+        
+        <a class="post-tag button" href="/tags/textmesh-pro/" rel="tag"><i class="fas fa-tags"></i>textmesh-pro</a>
+        
+      </div>
+      
+    </footer>
+  </article>
+  
+  <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
+    <div class="post-block">
+      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/07/13/ARM/IDVS-shader-variants/">
+      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <meta itemprop="name" content="leinlin">
+        <meta itemprop="description" content="">
+        <meta itemprop="image" content="/images/avatar.jpg">
+      </span>
+      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+        <meta itemprop="name" content="leinlin的小笔记">
+      </span>
+    </div>
+    <header class="post-header">
+      <h1 class="post-title" itemprop="name headline">
+        <a class="post-title-link post-title-link-external" href="/2022/07/13/ARM/IDVS-shader-variants/" itemprop="url">IDVS shader variants</a>
+      </h1>
+      <div class="post-meta">
+        
+        <span class="post-date">
+          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2022-07-13T06:57:19+08:00">2022-07-13 06:57:19</time></span>
+        </span>
+        
+        
+        
+        <span class="post-meta-divider divider">|</span>
+        
+        <span class="post-categories">
+          
+          <i class="far fa-folder-open"></i><span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/mali-gpu/" itemprop="url" rel="index"><span itemprop="name">mali gpu</span></a></span>
+        </span>
+        
+        
+        
+        
+      </div>
+    </header>
+    <main class="post-main" itemprop="articleBody">
+      
+      <h1 id="IDVS-shader-variants"><a href="#IDVS-shader-variants" class="headerlink" title="IDVS shader variants"></a>IDVS shader variants</h1><p>On Mali GPUs in the Bifrost and Valhall families, vertex shaders are executed using an optimized shading flow called Index-Driven Vertex Shading (IDVS).</p>
+<p>In the IDVS pipeline, vertex shaders are compiled into two binaries:</p>
+<ul>
+<li>A position shader, which computes only position.</li>
+<li>A varying shader, which computes the remaining non-position vertex attribute outputs.</li>
+</ul>
+<h2 id="Figure-2-1-IDVS-pipeline"><a href="#Figure-2-1-IDVS-pipeline" class="headerlink" title="Figure 2-1 IDVS pipeline"></a>Figure 2-1 IDVS pipeline</h2><p><img src="/../../images/2022-07-13-14-47-58.png"></p>
+
+      
+      <p align="right"><a class="morebtn" href="/2022/07/13/ARM/IDVS-shader-variants/" title="IDVS shader variants">阅读全文</a></p>
+    </main>
+    <footer class="post-footer">
+      
+      <div class="post-tags">
+        
+        <a class="post-tag button" href="/tags/mali/" rel="tag"><i class="fas fa-tags"></i>mali</a>
+        
+        <a class="post-tag button" href="/tags/IDVS/" rel="tag"><i class="fas fa-tags"></i>IDVS</a>
+        
+      </div>
       
     </footer>
   </article>
@@ -1151,7 +842,7 @@
     
     <div class="categories-count count-block">
       <div class="site-count-title">分类</div>
-      <div><a href="/categories/">11</a></div>
+      <div><a href="/categories/">13</a></div>
     </div>
     
     

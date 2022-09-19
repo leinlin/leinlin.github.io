@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#33363b">
+    <meta name="msapplication-TileColor" content="#33363b">
+    
+    
+    
+    
+    <meta name="keywords" content="leinlin, ARIA, Hexo">
+    
+    
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png">
+    
+    
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicons/android-chrome-192x192.png">
+    
+    
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png">
+    
+    
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png">
+    
+    
+    <link rel="mask-icon" href="/favicons/safari-pinned-tab.svg" color="#33363b">
+    
+    
+    <link rel="manifest" href="/favicons/site.webmanifest">
+    
+    
+    <meta name="msapplication-config" content="/favicons/browserconfig.xml">
+    
+    
+    <link rel="alternate" href="/atom.xml" title="leinlin的小笔记" type="application/atom+xml" />
+    
+    
+    <link rel="shortcut icon" type="image/x-icon" href="/favicons/favicon.ico">
+    
+    
+    <link rel="stylesheet" type="text/css" href="/css/normalize.css">
+    <link rel="stylesheet" type="text/css" href="/css/index.css">
+    
+    <link rel="stylesheet" type="text/css" href="/css/sidebar.css">
+    
+    
+<link rel="stylesheet" type="text/css" href="/css/page.css">
+<link rel="stylesheet" type="text/css" href="/css/post.css">
+
+    <link rel="stylesheet" type="text/css" href="/css/custom.css">
+    <link rel="stylesheet" type="text/css" href="/css/atom-one-light.css">
+    <link rel="stylesheet" type="text/css" href="/css/lightgallery.min.css">
+    <script type="text/javascript" src="/js/jquery.min.js"></script>
+    <script defer type="text/javascript" src="/js/util.js"></script>
+    <script defer type="text/javascript" src="/js/clipboard.min.js"></script>
+    <script defer type="text/javascript" src="/js/scrollspy.js"></script>
+    <script defer type="text/javascript" src="/js/fontawesome-all.min.js"></script>
+    <script defer type="text/javascript" src="/js/lightgallery.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-fullscreen.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-hash.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-pager.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-thumbnail.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-zoom.min.js"></script>
+    
+    <script defer src="/js/busuanzi.pure.mini.js"></script>
+    
+    
+    <script defer type="text/javascript" src="/js/search.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function () {
+      var searchPath = "search.xml";
+      if (searchPath.length === 0) {
+        searchPath = "search.xml";
+      }
+      var path = "/" + searchPath;
+      searchFunc(path, "search-input", "search-result");
+    });
+    </script>
+    
+    
+    
+    <script defer type="text/javascript" src="https://cdn.staticfile.org/MathJax/MathJax-2.6-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ["$","$"], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ["script", "noscript", "style", "textarea", "pre", "code"]
+      }
+    });
+    </script>
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for (i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += " has-jax";
+      }
+    });
+    </script>
+    
+    
+    <script defer type="text/javascript" src="/js/index.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function () {
+      var cb = null;
+      var els = $(".post figure.highlight");
+      if (els.length) {
+        // Enabled Hexo highlight line number.
+        $(els).each(function (i, e) {
+          // $(e).before("<button class=\"copy button\">复制</button>");
+          $(e).before([
+            "<div class=\"code-titlebar\">",
+              "<div class=\"titlebar-left\">",
+                "<button class=\"copy\">复制</button>",
+              "</div>",
+            "</div>"
+          ].join(""));
+        });
+        cb = new ClipboardJS("button.copy", {
+          "target": function (trigger) {
+              // Get target element by DOM API.
+              return trigger.parentNode.parentNode.nextElementSibling.firstChild.firstChild.firstChild.lastChild.firstChild.firstChild;
+          }
+        });
+      } else {
+        // Disabled Hexo highlight line number.
+        els = $(".post pre code");
+        $(els).each(function (i, e) {
+          // Add button before pre, not code.
+          // $(e).parent().before("<button class=\"copy button\">复制</button>");
+          $(e).before([
+            "<div class=\"code-titlebar\">",
+              "<div class=\"titlebar-left\">",
+                "<button class=\"copy\" >复制</button>",
+              "</div>",
+              "<div class=\"titlebar-right\">",
+                "<button class=\"button-dot dot-minimize\" aria-label=\"Decoration\"></button>",
+                "<button class=\"button-dot dot-maximize\" aria-label=\"Decoration\"></button>",
+                "<button class=\"button-dot dot-close\" aria-label=\"Decoration\"></button>",
+              "</div>",
+            "</div>"
+          ].join(""));
+        });
+        cb = new ClipboardJS("button.copy", {
+          "target": function (trigger) {
+              // Get target element by DOM API.
+              return trigger.parentNode.parentNode.nextElementSibling;
+          }
+        });
+      }
+      cb.on("success", function (e) {
+        e.clearSelection();
+        var trigger = e.trigger;
+        // Change button text as a user tip.
+        trigger.innerHTML = "已复制";
+        $(trigger).addClass("copied");
+        // Change button text back;
+        setTimeout(function () {
+          trigger.innerHTML = "复制";
+          $(trigger).removeClass("copied");
+        }, 1500);
+      });
+    });
+    </script>
+    
+    <script defer type="text/javascript" src="/js/custom.js"></script>
+    <title>Unity HDRP主要功能和渲染管线的介绍 | leinlin的小笔记</title>
+  <meta name="generator" content="Hexo 6.2.0"></head>
+  <body itemscope itemtype="http://schema.org/WebPage" lang="zh_CN"  data-spy="scroll" data-target=".list-group">
+    
+<header id="header" class="header" style="background: #33363b;">
+  <div class="container">
+    <div class="header-container">
+      <div class="header-title">
+        <h1 class="title"><a href="/">leinlin的小笔记</a></h1>
+        <h2 class="subtitle"></h2>
+      </div>
+      
+    </div>
+    <nav id="nav" class="nav">
+      <a id="nav-toggle" class="nav-toggle" aria-hidden="true"><i class="fas fa-bars" aria-label="切换导航栏"></i></a>
+      <ul id="menu" role="menubar" aria-hidden="false">
+        
+        <li role="menuitem"><a href="/"><i class="fas fa-home"></i><span class="menu-text">首页</span></a></li>
+        
+        <li role="menuitem"><a href="/categories/"><i class="fas fa-th-list"></i><span class="menu-text">分类</span></a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</header>
+
+
+    <main id="main" class="main">
+      <div class="container">
+        <div class="main-container">
+          <div class="content">
+            
+<div id="post" class="page">
+  
+  <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
+    <div class="post-block">
+      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/07/09/HDRPsource/new1.HDRP%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF%E6%80%BB%E7%BB%93/">
+      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+       <meta itemprop="name" content="leinlin">
+       <meta itemprop="description" content="">
+       <meta itemprop="image" content="/images/avatar.jpg">
+      </span>
+      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+       <meta itemprop="name" content="leinlin的小笔记">
+      </span>
+    </div>
+    <header class="post-header">
+      <h1 class="post-title" itemprop="name headline">Unity HDRP主要功能和渲染管线的介绍</h1>
+      <div class="post-meta">
+        
+        <span class="post-date">
+          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2022-07-09T12:00:14+08:00">2022-07-09 12:00:14</time></span>
+        </span>
+        
+        
+        
+        <span class="post-meta-divider divider">|</span>
+        
+        <span class="post-categories">
+          
+          <i class="far fa-folder-open"></i><span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/HDRPSource/" itemprop="url" rel="index"><span itemprop="name">HDRPSource</span></a></span>
+        </span>
+        
+        
+        
+        
+      </div>
+    </header>
+    <main class="post-main" itemprop="articleBody">
+      <h1 id="Unity-HDRP主要功能和渲染管线的介绍"><a href="#Unity-HDRP主要功能和渲染管线的介绍" class="headerlink" title="Unity HDRP主要功能和渲染管线的介绍"></a>Unity HDRP主要功能和渲染管线的介绍</h1><h2 id="1-SRP和HDRP介绍"><a href="#1-SRP和HDRP介绍" class="headerlink" title="1. SRP和HDRP介绍"></a>1. SRP和HDRP介绍</h2><p>unity SRP可以让我们自己控制摄像机每一帧的渲染流程。他把渲染管线可以进行的操作都暴露给了用户，不再是一个封闭的引擎内置流程。</p>
+<p>为了方便用户使用，Unity提供了两个已经实现好的SRP流程，分别针对不同的平台。</p>
+<ul>
+<li>Lightweight Render Pipeline (LWRP) ：支持手机平台和PC平台，目的是提供一个高性能的渲染，牺牲了引擎的表现效果。</li>
+<li>High Definition Render Pipeline (HDRP) ：使用了基于物理的灯光技术以及基于Compute Shader的光照计算。针对高端的PC和主机平台。</li>
+</ul>
+<h2 id="2-HDRP渲染效果与材质类型"><a href="#2-HDRP渲染效果与材质类型" class="headerlink" title="2. HDRP渲染效果与材质类型"></a>2. HDRP渲染效果与材质类型</h2><p>Unity HDRP提供了更丰富的材质效果，包括：SSS效果、透光、Coat等。通过ShaderGraph和基础的LitShader都可以构建出支持这些效果的Shader。</p>
+<p>在Lit Shader中可以通过Surface Options当中的Material Type来选择需要的材质效果。</p>
+<p>Unity的说明文档:<a target="_blank" rel="noopener" href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.high-definition@6.7/manual/Material-Type.html">材质类型官网介绍</a>。</p>
+<p>下面简要介绍这些材质效果主要的功能。</p>
+<h3 id="2-1-Standard"><a href="#2-1-Standard" class="headerlink" title="2.1 Standard"></a>2.1 Standard</h3><p>Standard就是标准的光照模型。渲染流程如下：</p>
+<ul>
+<li>Gbuffer Pass ：填充GBuffer</li>
+<li>Deferred Lighting Pass：Compute Shader计算光照。</li>
+</ul>
+<p>基础的输入参数：</p>
+<ul>
+<li>Diffuse贴图：表面颜色，同时支持用Color参数对其进行调整。Alpha通道在开启透明模式的时候，可以用作透明度。</li>
+<li>Normal贴图：支持Object空间和Tangent空间，支持调节法线强度。</li>
+<li>Mask贴图：R通道对应金属度，G通道对应平滑度，B通道对应细节贴图的区域，A通道对应平滑度，同时提供了多个滑块参数对金属度和平滑度进行调整。</li>
+<li>BentNormal贴图：主要用于计算AO，比AO贴图准确。</li>
+<li>DetialMap贴图：支持平铺的细节，可以给Diffuse、normal、smoothness调节细节，通过Mask贴图B通道控制区域。</li>
+<li>Height贴图：开启Displacement Mode，可以使用高度贴图。</li>
+<li>开启透明模式：支持扭曲、折射。</li>
+<li>支持Clear Coat：效果。</li>
+</ul>
+<p>上面的效果Lit材质球默认支持，Lit的Inspector是一个专门为LitShader写的材质编辑器，通过开启选项可修改Lit的材质效果。</p>
+<p>另外，可以看到Lit支持很多贴图输入，一般而言这样做开销很高，但是Lit Shader内部做了优化，如果不使用某一张贴图就不要给他赋值，它就不会对这个贴图进行采样。</p>
+<h3 id="2-2-Specular"><a href="#2-2-Specular" class="headerlink" title="2.2 Specular"></a>2.2 Specular</h3><p>这个是和Standard（金属工作流）相对的高光工作流。区别只是金属度变成了高光颜色。其他计算没有区别。</p>
+<h3 id="2-3-Anisotropy"><a href="#2-3-Anisotropy" class="headerlink" title="2.3 Anisotropy"></a>2.3 Anisotropy</h3><p>计算高光时使用各项异性的高光计算。和Standard区别只在于高光的计算，同时多出了一张各向异性贴图和强度控制。例如：拉丝金属。</p>
+<h3 id="2-4-Iridescence"><a href="#2-4-Iridescence" class="headerlink" title="2.4 Iridescence"></a>2.4 Iridescence</h3><p>彩虹色是指：随着光照角度的变化光照颜色发生变化。例如：肥皂泡沫，昆虫翅膀。</p>
+<p>和Standard的区别在于：光的颜色随光照角度发生变化。</p>
+<h3 id="2-5-Translucent"><a href="#2-5-Translucent" class="headerlink" title="2.5 Translucent"></a>2.5 Translucent</h3><p>透光效果是指：在背光面可以看到光穿过物体的效果。主要用于半透明材质。例如：树叶。</p>
+<p><strong>以上效果的开销没有太大区别，效果的差距只在于计算公式的不同，而渲染流程基本一致。</strong></p>
+<h3 id="2-6-Surface-Scattering"><a href="#2-6-Surface-Scattering" class="headerlink" title="2.6 Surface Scattering"></a>2.6 Surface Scattering</h3><p>SSS效果用来描述光线在表面多次散射的效果。可以用来描述灯光和半透物体的交互过程。可以用来制作：玉、冰、皮肤等物体。</p>
+<p>Surface Scattering的效果和上面几种效果不同，并且需要额外的计算。大致的渲染流程如下：</p>
+<ul>
+<li>Gbuffer Pass ：和Standard一样填充Gbuffer</li>
+<li>Deferred Lighting Pass：计算光照</li>
+<li>Convolution Pass：对需要SSS的部位进行卷积（通过Diffuse Profile）。</li>
+<li>Combine Pass：计算好的SSS光和原始光融合。</li>
+</ul>
+<h3 id="2-7-Displacement-高度图"><a href="#2-7-Displacement-高度图" class="headerlink" title="2.7 Displacement,  高度图"></a>2.7 Displacement,  高度图</h3><p>Unity支持高度图计算。</p>
+<p>所有的材质都可以使用高度图。</p>
+<p>在Surface Options 当中选择Displacement Mode：</p>
+<p>None：不使用高度图。</p>
+<p>Vertex Displacement:  在Vertex阶段直接移动顶点，高度图作为移动距离。</p>
+<p>Pixel displacement： 将高度图作为视差贴图。（POM）</p>
+<p>当开启Pixel displacement时，视差贴图对应的参数就会开启。</p>
+<p>官方说明：<a target="_blank" rel="noopener" href="https://docs.unity3d.com/Packages/com.unity.render-pipelines.high-definition@6.7/manual/Displacement-Mode.html">Displacement Mode</a></p>
+<h2 id="3-渲染流程介绍"><a href="#3-渲染流程介绍" class="headerlink" title="3. 渲染流程介绍"></a>3. 渲染流程介绍</h2><p>这里主要描述实现上述效果需要的基本渲染流程。</p>
+<p>HDRP中Lit的渲染流程和Built-in Standard当中的延迟渲染基本一致，不透明物体流程如下：</p>
+<ul>
+<li>Gbuffer Pass  :填充Gbuffer，不过Gbuffer的内容和Built-in的内容有所区别。</li>
+<li>Deferred Lighting Pass：进行光照计算。HDRP当中的光照计算放在了ComputeShader当中，计算效率更高。</li>
+</ul>
+<h3 id="3-1-Gbuffer结构"><a href="#3-1-Gbuffer结构" class="headerlink" title="3.1 Gbuffer结构"></a>3.1 Gbuffer结构</h3><p>下面是HDRP当中Gbuffer的结构类型。</p>
+<table>
+<thead>
+<tr>
+<th>G-Buffer Usage</th>
+<th>Format</th>
+<th>RGB</th>
+<th>A</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>GBuffer0</td>
+<td>RGBA32</td>
+<td>Albedo Color &#x2F;      SSS Color</td>
+<td>Spacular Occlusiion &#x2F; SSS Parameter</td>
+</tr>
+<tr>
+<td>GBuffer1</td>
+<td>RGBA32</td>
+<td>Packed Normal</td>
+<td>Roughness</td>
+</tr>
+<tr>
+<td>GBuffer2</td>
+<td>RGBA32</td>
+<td>BSDF Model Specific Parameters</td>
+<td>Coat Mask + Material ID</td>
+</tr>
+<tr>
+<td>GBuffer3</td>
+<td>R11G11B10</td>
+<td>GI + Emissive</td>
+<td>&#x2F;</td>
+</tr>
+<tr>
+<td>GBuffer4 - Optional</td>
+<td>RGBA32</td>
+<td>R:&#x2F;             G:&#x2F;             B: AO</td>
+<td>Light Layer</td>
+</tr>
+<tr>
+<td>GBuffer5 - Optional</td>
+<td>RGBA32</td>
+<td>shadowmask0 - 2</td>
+<td>shadowmask3</td>
+</tr>
+</tbody></table>
+<p>其中Gbuffer0 、Gbuffer1、Gbuffer3的内容和Built-in的内容类型基本一致，主要是金属工作流需要的参数。</p>
+<p>Gbuffer2和Gbuffer4当中保存了用于区分材质的标记，例如：</p>
+<ul>
+<li>Light Layer: 区分使用哪个Layer的光源。</li>
+<li>Coat Mask：区分使用Coat效果的区域。</li>
+<li>Material ID：区分材质类型。</li>
+</ul>
+<p>还有其他的参数可以在Shader当中查看具体使用方式。</p>
+<h3 id="3-2-灯光列表"><a href="#3-2-灯光列表" class="headerlink" title="3.2 灯光列表"></a>3.2 灯光列表</h3><p>HDRP使用FPTL和Cluster策略，将灯光列表一次性传递到一个Pass当中完成计算。</p>
+<p>Unity灯光计算就是（使用FPTL或Cluster策略）生成影响每一个Tile的灯光列表，在Compute Shader当中根据自己所在的Tile读取光照列表，然后一次性完成灯光计算。</p>
+<h4 id="3-2-1-FPTL和Cluster"><a href="#3-2-1-FPTL和Cluster" class="headerlink" title="3.2.1 FPTL和Cluster"></a>3.2.1 FPTL和Cluster</h4><p>Unity有两种灯管列表的计算方式，FPTL的方式能够依赖深度区分需要使用的灯光是否能够作用在表面。透明物体没有深度，所以需要使用Cluster方式对灯管列表进行进一步的纵向划分。</p>
+<p>Cluster将视锥体划分成多个体素块，在体素块中保存属于它的内容索引。体素块当中不止保存了灯光列表索引，还可以保存光照探针、Decal、Density Volume的内容。</p>
+<p>FPTL目的是为了能够在一个pass当中读取所有的光照信息，这样就能够在一个Pass当中完成光照计算，节省了大量DrawCall。</p>
+<p>如果要想查看灯光列表计算方式，查看LightLoops.cs源文件中的BuildGPULightListsCommon函数。</p>
+<p><strong>下面简要介绍FPTL的计算过程和使用方式：</strong></p>
+<ol start="0">
+<li><p>首先需要场景中所有灯光，场景灯光是在CPU中统一收集的，记录了<strong>光照信息</strong>及其<strong>包围盒</strong>。</p>
+</li>
+<li><p>FPTL是基于屏幕坐标计算的所以需要将<strong>灯光转换到摄像机空间的矩阵（上一步已经完成）</strong>。</p>
+<p><strong>这部分计算在函数LightLoop.cs:PrepareLightsForGPU当中。这部分主要是CPU计算。统计LightList,讲LightBounds转换到View空间</strong></p>
+</li>
+<li><p>生成剪裁空间的AABB包围盒：用于FPTL和Cluster。代码位于：Runtime&#x2F;Lighting&#x2F;LightLoop&#x2F;scrbound.compute</p>
+</li>
+</ol>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">//scrbound.compute</span><br><span class="hljs-comment">// 读取光的AABB包围盒</span><br> SFiniteLightBound lgtDat = g_data[eyeAdjustedLgtIndex];<br><span class="hljs-comment">/*</span><br><span class="hljs-comment">包围盒数据结构</span><br><span class="hljs-comment">    public struct SFiniteLightBound</span><br><span class="hljs-comment">    &#123;</span><br><span class="hljs-comment">        public Vector3 boxAxisX;</span><br><span class="hljs-comment">        public Vector3 boxAxisY;</span><br><span class="hljs-comment">        public Vector3 boxAxisZ;</span><br><span class="hljs-comment">        public Vector3 center;        // a center in camera space inside the bounding volume of the light source.</span><br><span class="hljs-comment">        public Vector2 scaleXY;</span><br><span class="hljs-comment">        public float radius;</span><br><span class="hljs-comment">    &#125;;</span><br><span class="hljs-comment">  */</span><br><br><span class="hljs-comment">// 包围盒的计算函数 LightingConvexHullUtils.hlsl</span><br><span class="hljs-type">void</span> <span class="hljs-title function_">GetHullQuad</span><span class="hljs-params">(out float3 p0, out float3 p1, out float3 p2, out float3 p3, <span class="hljs-type">const</span> float3 boxX, <span class="hljs-type">const</span> float3 boxY, <span class="hljs-type">const</span> float3 boxZ, <span class="hljs-type">const</span> float3 center, <span class="hljs-type">const</span> float2 scaleXY, <span class="hljs-type">const</span> <span class="hljs-type">int</span> sideIndex)</span><br>&#123;<br>    <span class="hljs-comment">// 开启6个thread分别计算light的AABB的六个面在view空间的AABB凸包。因为线程每次提交8个所以两个thread被丢弃。</span><br>    ...<br>    GroupMemoryBarrierWithGroupSync();<br>    <span class="hljs-comment">// 保留6个thread中的第一个，组合成一个完整的AABB凸包。 计算在屏幕中的位置。其中包括了大量的优化计算。最终输出到g_vBoundsBuffer当中。这里面包括的z坐标。</span><br>    ...<br>    g_vBoundsBuffer[boundsIndices.min] = ...;<br>    g_vBoundsBuffer[boundsIndices.max] = ...;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<ol start="3">
+<li>根据屏幕空间的AABB生成big-Tile：（enable coarse 2D pass on 64x64 tiles ）。目的是优化fptl和cluster的计算。</li>
+</ol>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">//lightlistbuild-bigtile.compute:BigTileLightListGen</span><br><span class="hljs-comment">//CPU提交时每一个big-tile提交一次。GPU每一次提交计算64个thread。</span><br><br>[numthreads(NR_THREADS, <span class="hljs-number">1</span>, <span class="hljs-number">1</span>)]<br><span class="hljs-type">void</span> <span class="hljs-title function_">BigTileLightListGen</span><span class="hljs-params">(uint threadID : SV_GroupIndex, uint3 u3GroupID : SV_GroupID)</span><br>&#123;<br>    <span class="hljs-comment">// 首先64个thread同事计算所有光照列表，判断每一个光源的AABB是否在这个Tile当中。通过元操作进行累加和记录</span><br>    ...<br>	<span class="hljs-comment">// 在这个tile中，累加并返回uIndex当前值。</span><br>    <span class="hljs-type">unsigned</span> <span class="hljs-type">int</span> uInc = <span class="hljs-number">1</span>;<br>    <span class="hljs-type">unsigned</span> <span class="hljs-type">int</span> uIndex;<br>    InterlockedAdd(lightOffs, uInc, uIndex);<br>	<span class="hljs-comment">// 记录灯光索引</span><br>    <span class="hljs-keyword">if</span>(uIndex&lt;MAX_NR_BIGTILE_LIGHTS) lightsListLDS[uIndex] = l;     <span class="hljs-comment">// add to light list</span><br>    ...<br>    <span class="hljs-comment">// sort lights:对光源类型排序。</span><br>    SORTLIST(lightsListLDS, iNrCoarseLights, MAX_NR_BIG_TILE_LIGHTS_PLUS_ONE, t, NR_THREADS);<br>    ...<br>    <span class="hljs-comment">// 输出 :第一个放光源个数，后面是索引。</span><br> <span class="hljs-keyword">for</span>(i=t; i&lt;(iNrCoarseLights+<span class="hljs-number">1</span>); i+=NR_THREADS)<br>        g_vLightList[MAX_NR_BIG_TILE_LIGHTS_PLUS_ONE*offs + i] = i==<span class="hljs-number">0</span> ? iNrCoarseLights : lightsListLDS[max(i<span class="hljs-number">-1</span>, <span class="hljs-number">0</span>)];<br></code></pre></td></tr></table></figure>
+
+<ol start="4">
+<li>进行FPTL计算。参考相关论文或者Shader源代码。</li>
+<li>进行Cluster计算，这里面不只包括了光照，还包括了环境光、Decal、DensityVolume。</li>
+</ol>
+<h3 id="3-3-光照计算"><a href="#3-3-光照计算" class="headerlink" title="3.3 光照计算"></a>3.3 光照计算</h3><p>​	完成光照计算和Gbuffer填充之后就可以进行最终的光照计算，HDRP的Gbuffer光照计算使用了Compute Shader。</p>
+<p>Compute Shader源文件：</p>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c">HDRP/Runtime/Lighting/LightLoop: Deferred.compute.<br></code></pre></td></tr></table></figure>
+
+<p>在lightloop函数当中读取了光照列表，使用BSDF函数计算最终的材质颜色。</p>
+<h3 id="3-4-BSDF"><a href="#3-4-BSDF" class="headerlink" title="3.4 BSDF"></a>3.4 BSDF</h3><p>​		由于物体表面上有凹凸不平的微小表面，一道入射光线射到表面会产生光的散射现象，BSDF 用来表示这种散射现象（散射到各个方向的光的强度）。</p>
+<p>Unity HDRP支持多种BSDF函数，例如：</p>
+<p>Lit Shader的BSDF计算位于Lit.hlsl</p>
+<p>Hair Shader的BSDF计算位于Hair.hlsl</p>
+<h3 id="3-5-BSDF中PBR材质参数的意义"><a href="#3-5-BSDF中PBR材质参数的意义" class="headerlink" title="3.5 BSDF中PBR材质参数的意义"></a>3.5 BSDF中PBR材质参数的意义</h3><p>在光照计算当中除了光源的参数和BSDF函数以外，最重要的就是材质相关的参数，下面表格解释了基本的材质参数。结合了Unity人员的说明和Shader源代码总结了如下内容：</p>
+<table>
+<thead>
+<tr>
+<th align="left"><strong>Property</strong></th>
+<th align="left"><strong>Description</strong></th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>Base Color</strong></td>
+<td align="left">表示物体颜色，不应该包含任何明暗、AO、阴影信息。除了基础颜色外，还可以包含一些偏色、或者色相的变化。</td>
+</tr>
+<tr>
+<td align="left"><strong>Smoothness</strong></td>
+<td align="left">平滑度，用来描述物体的粗糙程度。在Shader源代码中，Smoothness会转化成粗糙度进行计算。有两种粗糙度。PerceptualRoughness &#x3D; 1- smoothness。Roughness&#x3D; PerceptualRoughness * PerceptualRoughness；</td>
+</tr>
+<tr>
+<td align="left">**Ambient Occlusion **</td>
+<td align="left">AO贴图：unity人员说可以使用sRGB格式，也可以使用RGB格式，但是需要统一。主要用来控制环境光（间接光）的明暗，对于直接光照没有影响。AO用来表现物体的明暗层次。</td>
+</tr>
+<tr>
+<td align="left"><strong>Mask Map</strong></td>
+<td align="left">Assign a Texture that packs different Material maps into each of its RGBA channels. • <strong>Red</strong>: Stores the metallic map.  • <strong>Green</strong>: Stores the ambient occlusion map. • <strong>Blue</strong>: Stores the detail mask map. • <strong>Alpha</strong>: Stores the smoothness map.</td>
+</tr>
+<tr>
+<td align="left">**Normal **</td>
+<td align="left">法线，LitShader支持模型空间和切线空间的法线，使用模型空间法线，可以在LOD当中过度更好，使用切线空间法线，可以压缩纹理空间。</td>
+</tr>
+<tr>
+<td align="left"><strong>Bent Normal</strong></td>
+<td align="left">Bent normal实际上也是一个表面方向和Normal接近，主要用来优化AO效果，只对GI（lightmap&#x2F;lightprobe&#x2F;volume proxy）生效。shaer代码：builtinData.bakeDiffuseLighting &#x3D; SampleBakedGI(posInput.positionWS, bennormalWS, texCoord1.xy, texCoord2.xy);</td>
+</tr>
+<tr>
+<td align="left"><strong>Coat Mask</strong></td>
+<td align="left">Coat效果强弱，0-1之间</td>
+</tr>
+</tbody></table>
+<h2 id="4-HDRP的其他渲染特性"><a href="#4-HDRP的其他渲染特性" class="headerlink" title="4. HDRP的其他渲染特性"></a>4. HDRP的其他渲染特性</h2><h3 id="4-1-StackLit"><a href="#4-1-StackLit" class="headerlink" title="4.1 StackLit"></a>4.1 StackLit</h3><p>Unity提供了ShaderGraph Package。能够实现LitShader当中的所有功能。但是无法修改光照计算。如果需要修改光照计算就需要手写Shader。默认的Shader Graph的Lit节点使用的是Deferred光照，所以能够支持的效果有限（由于Gbuffer容量限制）</p>
+<p>为了实现更好的效果，<strong>Shader Graph提供了Forward模式的StackLit Master节点</strong>，它支持更加物理正确的Shading模型，提供了更多的渲染功能。</p>
+<p>使用StackLit可以制作：包括头发、毛发、布料、皮肤等效果。但是<strong>Forward模式渲染开销非常大，所以不建议在游戏当中使用</strong>，但是可以在选人界面等简单场景使用。</p>
+<h3 id="4-2-透明物体渲染"><a href="#4-2-透明物体渲染" class="headerlink" title="4.2 透明物体渲染"></a>4.2 透明物体渲染</h3><p>HDRP当中的所有透明物体都是在Forward下渲染的，所以渲染开销比较大。</p>
+<p>除此之外透明物体还支持两个pass：TransparentDepthPrepas和TransparentDepthPostpass。下面是透明物体渲染部分的Pipeline代码和对应说明：</p>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// 渲染天空球 </span><br>RenderSky(hdCamera, cmd);<br><span class="hljs-comment">// 渲染透明物体的Prepass，用于处理透明物体之间的遮挡。</span><br>RenderTransparentDepthPrepass(cullingResults, hdCamera, renderContext, cmd);<br><br><br><span class="hljs-comment">// 渲染需要被折射的透明物体。RenderQueue:[2750-100,2750+100]</span><br>RenderForward(cullingResults, hdCamera, renderContext, cmd, ForwardPass.PreRefraction);<br><br><span class="hljs-comment">// 如果开启RoughRefraction，则生成ColorPyramid</span><br>&#123;<br>	...<br>    RenderColorPyramid(hdCamera, cmd, <span class="hljs-literal">true</span>);<br>&#125;<br><br>cmd.SetGlobalTexture(HDShaderIDs._ColorPyramidTexture, currentColorPyramid);<br><br><span class="hljs-comment">// 渲染所有其他透明物体。</span><br><span class="hljs-comment">// RenderQueue:[3000-100,3000+100]（没有开启LowResolutionTrans）</span><br><span class="hljs-comment">// RenderQueue:[3000-100,3400+100]（开启LowResolutionTrans）</span><br>RenderForward(cullingResults, hdCamera, renderContext, cmd, ForwardPass.Transparent);<br><br>...<br><br><span class="hljs-comment">// 渲染LowResTransparency。RenderQueue:[3400-100,3400+100]</span><br>DownsampleDepthForLowResTransparency(hdCamera, cmd);<br>RenderLowResTransparent(cullingResults, hdCamera, renderContext, cmd);<br>UpsampleTransparent(hdCamera, cmd);<br><br><span class="hljs-comment">// 渲染TransparentDepthPostpass，为了能够在需要深度的后处理效果中正确的处理透明物体  </span><br>RenderTransparentDepthPostpass(cullingResults, hdCamera, renderContext, cmd);<br><br><span class="hljs-comment">// 渲染颜色金字塔。</span><br>RenderColorPyramid(hdCamera, cmd, <span class="hljs-literal">false</span>);<br><br><span class="hljs-comment">// 渲染扭曲效果。</span><br>AccumulateDistortion(cullingResults, hdCamera, renderContext, cmd);<br>RenderDistortion(hdCamera, cmd);<br></code></pre></td></tr></table></figure>
+
+<p>上面提到了渲染LowResTransparency，如果要使用这个功能就需要在HDRPRenderPipelineAsset中开启LowResTransparency。</p>
+<p>开启LowResTransparency后，材质中的LowRes属性生效。勾选这个属性，就会在低分辨率的RenderTarget上渲染这个透明物体，由于透明物体是Forward渲染。所以这样可以大幅提升效果。</p>
+<p><strong>另外可以看到，代码是通过RenderQueue区分一个物体在什么时候被渲染的，所以不建议修改material的Queue，而是使用Priority。</strong>例如：在3200到3300这段区间的物体，如果HDRP设置中没有开启LowResTran选项，则永远不会被渲染。</p>
+<h3 id="4-3-Decal"><a href="#4-3-Decal" class="headerlink" title="4.3 Decal"></a>4.3 Decal</h3><p>Unity HDRP提供了Decal的支持。原始Decal直接往Gbuffer写数据，而HDRP的Decal使用了Dbuffer先存储Decal的信息，然后在计算Gbuffer的过程中在合并到光照计算中。</p>
+<p><strong>Decal有两种一种是Dbuffer Decal一种是ClusterDecal。</strong></p>
+<p><strong>Dbuffer Decal：</strong>（Projector Decal就是一个方块，可以往Dbuffer（类似Gbuffer）写入Decal纹理）。</p>
+<p><strong>Dbuffer 结构：</strong>类似Gbuffer结构，可以影响物体Diffuse，Normal，Emssive等，不需要GI信息（Dbuffer0,Dbuffer1,Dbuffer2）。</p>
+<p>HDRenderPipelineAsset有设置:Metal &amp; Amitent Propterty，用来控制Decal是否影响金属度和AO，勾选以后就会多使用一张Dbuffer，增加开销。</p>
+<p><strong>Emssive Decal：</strong>会多绘制一次。Emissive不能受光照影响。</p>
+<p><strong>Mesh Decal：</strong>和透明物体很像，直接绘制到Debuffer当中。</p>
+<p><strong>关于Decal物体的剪裁：</strong></p>
+<p>Decal 参与Culling，所以在CPU上有消耗。我们可以仿照Decal的方式对我们自己管理的对象用Culling Group手动culling。</p>
+<p><strong>ClusterDecal：</strong>HDRP支持透明物体的Decal，Dbuffer需要深度。不透明物体没有深度，所以不透明物体需要使用Cluster信息。与Cluster灯光原理一样。Decal 有Affect Transparent选项，开启后生效。</p>
+<p><strong>不过LightList当中不光有Light信息，还有Reflection Probe ，Decal，Local Density Volume信息。</strong></p>
+<p><strong>其他：</strong></p>
+<p>视锥体内不依赖深度的简单物体都可以使用Cluster方式来做。这样就不用在CPU上做物体和物体的相交计算。通过记录索引可以让大部分物体进行合并。</p>
+<p>例如：不是同一个Reflection Probe，可以Batch在一起。因为他们不依赖CPU来决定这次Batch使用哪一个Probe，而是通过LightList在GPU上实时计算。 然后通过Cluster当中的List查找信息。</p>
+<p>Cluster Decal会被patch在一个大的纹理，一起传送给GPU，通过UV偏移来找。在Setting当中有decal相关选项：Atlas Weight和Atlas Height，这个选项直接影响占用显存的大小。</p>
+<h3 id="4-4-体积光"><a href="#4-4-体积光" class="headerlink" title="4.4 体积光"></a>4.4 体积光</h3><p><strong>全局体积雾设置：</strong>场景当中的SceneSetting &#x2F;Volumetric Fog 是全局的体积光的设置。</p>
+<p><strong>Density Volume局部的体积雾</strong>：只控制Abledo和浓度，其他的参数通过Global控制。</p>
+<p><strong>基础原理：</strong></p>
+<p>HDRP体积光不是屏幕空间的体积光（从屏幕空间 Reymarching），他是视锥体空间的3D体素纹理。有一个体素化的Pass，会把能看见的Density Volume体素化（Voxelization）到3D纹理里。Density Volume也是通过Cluster来记录的。体素化的时候通过ID知道是哪个Density Volume。</p>
+<p><strong>Volumetric 参数：</strong></p>
+<p>体积雾的颜色由大气散射决定（需要使用Precedual Sky），如果要用HDRISky，就需要自己计算大气散射颜色。</p>
+<p>计算方式参考：Pre-compute Atemosphere Scattering相关文章。</p>
+<p><strong>Phase Function（全局各向异性）：</strong>光线在各个方向的散射强度。类似BRDF函数。</p>
+<p>不同的物体Phase Function不同，例如：冰晶（强透射和折射）、尘土（吸收阻挡光照）。Phase Function主要控制朝向光的时候亮，还是背向光的方向亮、已经高光环的形状。灰尘就是Phase Function（0）只有颜色，水就是越朝光看越亮，大晴天很少有所以一般做成0。</p>
+<p><strong>相关设置：</strong>HDRenderPipelineAsset（涉及到资源分配的内容）当中可以设置精度（3D体素的分辨率）：Volumetric Hight Quality。</p>
+<p>Hight Quality 是屏幕1&#x2F;4大小，slice是128.</p>
+<p>Midum 是屏幕1&#x2F;8大小，深度slice是64.</p>
+<p>PS4上测试：  屏幕1&#x2F;16 大小 , slice64耗时0.8毫秒。 优化时需要考虑：体素化、Volume数量。</p>
+<p><strong>体积雾纵向切分方式：</strong></p>
+<p>Slice Distribution Uniformition：Slice的分布，近处密集还是等距划分。</p>
+<p>Depth Extrent：覆盖多远。</p>
+<h2 id="5-HDRP与引擎自带模块"><a href="#5-HDRP与引擎自带模块" class="headerlink" title="5. HDRP与引擎自带模块"></a>5. HDRP与引擎自带模块</h2><p><strong>Culling 模块：</strong></p>
+<p>我们可以定义自己的Custom数据，然后使用Unity的Culling Group，每帧收集数据转换成AABB让引擎Culling。HDRP的Volume、Decal都是使用的这种方式。</p>
+<p><strong>Baking 模块：</strong></p>
+<p>支持原始所有内容。</p>
+<p>GI信息都是一个物体计算一次，在填充Gbuffer时计算。</p>
+<p>小型物体推荐使用light probe。大物体推荐用Lightmap或者开启light probe volume。</p>
+<h2 id="6-Package"><a href="#6-Package" class="headerlink" title="6. Package"></a>6. Package</h2><p><strong>Core Package：</strong></p>
+<p>包含大量的基础c#渲染工具。</p>
+<p>包含光照计算等基础的Shader函数。</p>
+<p>包含重要的功能：Volume System。</p>
+<p><strong>ShaderGraph：</strong></p>
+<p><strong>基础功能：</strong>Lit和StackLit等自带master节点。</p>
+<p><strong>扩展功能：</strong>ShaderGraph模板和Shader Custom Node。</p>
+<p><strong>VFX：</strong></p>
+<p>必须和HDRP一起用。需要Compute Shader，基于indrect Dispatch效率高。</p>
+<p><strong>基础原理：</strong>将Compute buffer作为一个RWbuffer，放到compute Shader里面。在Compute Shader里面讲vertex buffer和index buffer动态生成好，然后把这个Compue buffer作为VB和IB传递到Graphic Pipeline里进行渲染。</p>
+<p>LWRP不计划加入ComputeShader。</p>
+<p><strong>扩展功能：</strong>VFX模板、自定义Shader、ShaderGraph（还不支持）</p>
+
+    </main>
+    <footer class="post-footer">
+      
+    </footer>
+  </article>
+  
+  
+  <nav class="page-nav">
+    <div class="page-nav-next page-nav-item">
+      
+      <a href="/2022/07/09/HDRPsource/new3.HDRP%20Shadow/" rel="next" title="new3.HDRP Shadow"><i class="fas fa-angle-left"></i><span class="nav-title">new3.HDRP Shadow</span></a>
+      
+    </div>
+    <div class="page-nav-prev page-nav-item">
+      
+      <a href="/2022/07/09/HDRPsource/new2.HDRPShader%E5%BC%80%E5%8F%91%E8%AF%B4%E6%98%8E/" rel="prev" title="Shader开发说明"><span class="nav-title">Shader开发说明</span><i class="fas fa-angle-right"></i></a>
+      
+    </div>
+  </nav>
+  
+  
+  
+
+<div class="comments" id="comments">
+  
+  
+  <div class="commentjs" id="comment-thread"></div>
+  <link rel="stylesheet" href="/css/commentjs.css">
+  <script defer type="text/javascript" src="/js/marked.min.js"></script>
+  <script defer type="text/javascript" src="/js/timeago.min.js"></script>
+  <script defer type="text/javascript" src="/js/highlight.min.js"></script>
+  <script defer type="text/javascript" src="/js/commentjs.js"></script>
+  <script type="text/javascript">
+  $(document).ready(function () {
+    getComments({
+      "type": "github",
+      "user": "leinlin",
+      "repo": "leinlin.github.io",
+      "client_id": "aee134bdfb54c4ef5826",
+      "client_secret": "4af1d3f2b82dccc028c49715becc01e611afbe43",
+      "no_comment": "这个页面还没有评论，现在就去评论吧！",
+      "go_to_comment": "去评论",
+      "issue_title": "Unity HDRP主要功能和渲染管线的介绍",
+      "btn_class": "button",
+      "comments_target": "#comment-thread"
+    });
+    marked.setOptions({
+      "highlight": function (code, lang) {
+        return hljs.highlightAuto(code).value;
+      }
+    });
+    function mark() {
+      var markdowns = document.getElementsByClassName("markdown");
+      for (var i = 0; i < markdowns.length; ++i){
+        if (markdowns[i].innerHTML) {
+          markdowns[i].innerHTML = marked(markdowns[i].innerHTML);
+        }
+      }
+    }
+    window.addEventListener("DOMContentLoaded", mark, false);
+    window.addEventListener("load", mark, false);
+  });
+  </script>
+  
+  
+</div>
+
+
+
+  
+</div>
+
+          </div>
+          
+          
+          
+<aside class="sidebar" id="sidebar" style="background: url(/images/background.png);">
+  
+  <div class="search">
+    <div class="form-group">
+      <i class="fas fa-search"></i><input type="search" id="search-input" name="q" results="0" placeholder="搜索" class="form-control"/>
+    </div>
+  </div>
+  <div class="search-result-box" id="search-result"></div>
+  
+  
+<div class="info sidebar-item" id="info">
+  
+  <img class="author-avatar" src="/images/avatar.jpg" alt="leinlin">
+  
+  <h1 class="author-name">leinlin</h1>
+  <h2 class="author-description"></h2>
+  <div class="site-count">
+    
+    
+    
+    
+    <div class="categories-count count-block">
+      <div class="site-count-title">分类</div>
+      <div><a href="/categories/">13</a></div>
+    </div>
+    
+    
+  </div>
+  
+  <div class="rss">
+    <a class="rss-link button sidebar-item" href="/atom.xml"><i class="fas fa-rss"></i>RSS</a>
+  </div>
+  
+</div>
+
+
+  <div class="sidebar-sticky">
+    
+    
+    
+    
+    
+    <hr>
+    <div class="post-toc sidebar-item" id="toc-div">
+      <div><i class="fas fa-list-ol"></i>文章目录</div>
+      <div class="post-toc-content"><ol class="list-group toc"><li class="toc-item toc-level-1"><a class="list-group-item toc-link" href="#Unity-HDRP%E4%B8%BB%E8%A6%81%E5%8A%9F%E8%83%BD%E5%92%8C%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF%E7%9A%84%E4%BB%8B%E7%BB%8D"><span class="toc-text">Unity HDRP主要功能和渲染管线的介绍</span></a><ol class="list-group toc-child"><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#1-SRP%E5%92%8CHDRP%E4%BB%8B%E7%BB%8D"><span class="toc-text">1. SRP和HDRP介绍</span></a></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#2-HDRP%E6%B8%B2%E6%9F%93%E6%95%88%E6%9E%9C%E4%B8%8E%E6%9D%90%E8%B4%A8%E7%B1%BB%E5%9E%8B"><span class="toc-text">2. HDRP渲染效果与材质类型</span></a><ol class="list-group toc-child"><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#2-1-Standard"><span class="toc-text">2.1 Standard</span></a></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#2-2-Specular"><span class="toc-text">2.2 Specular</span></a></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#2-3-Anisotropy"><span class="toc-text">2.3 Anisotropy</span></a></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#2-4-Iridescence"><span class="toc-text">2.4 Iridescence</span></a></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#2-5-Translucent"><span class="toc-text">2.5 Translucent</span></a></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#2-6-Surface-Scattering"><span class="toc-text">2.6 Surface Scattering</span></a></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#2-7-Displacement-%E9%AB%98%E5%BA%A6%E5%9B%BE"><span class="toc-text">2.7 Displacement,  高度图</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#3-%E6%B8%B2%E6%9F%93%E6%B5%81%E7%A8%8B%E4%BB%8B%E7%BB%8D"><span class="toc-text">3. 渲染流程介绍</span></a><ol class="list-group toc-child"><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#3-1-Gbuffer%E7%BB%93%E6%9E%84"><span class="toc-text">3.1 Gbuffer结构</span></a></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#3-2-%E7%81%AF%E5%85%89%E5%88%97%E8%A1%A8"><span class="toc-text">3.2 灯光列表</span></a><ol class="list-group toc-child"><li class="toc-item toc-level-4"><a class="list-group-item toc-link" href="#3-2-1-FPTL%E5%92%8CCluster"><span class="toc-text">3.2.1 FPTL和Cluster</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#3-3-%E5%85%89%E7%85%A7%E8%AE%A1%E7%AE%97"><span class="toc-text">3.3 光照计算</span></a></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#3-4-BSDF"><span class="toc-text">3.4 BSDF</span></a></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#3-5-BSDF%E4%B8%ADPBR%E6%9D%90%E8%B4%A8%E5%8F%82%E6%95%B0%E7%9A%84%E6%84%8F%E4%B9%89"><span class="toc-text">3.5 BSDF中PBR材质参数的意义</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#4-HDRP%E7%9A%84%E5%85%B6%E4%BB%96%E6%B8%B2%E6%9F%93%E7%89%B9%E6%80%A7"><span class="toc-text">4. HDRP的其他渲染特性</span></a><ol class="list-group toc-child"><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#4-1-StackLit"><span class="toc-text">4.1 StackLit</span></a></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#4-2-%E9%80%8F%E6%98%8E%E7%89%A9%E4%BD%93%E6%B8%B2%E6%9F%93"><span class="toc-text">4.2 透明物体渲染</span></a></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#4-3-Decal"><span class="toc-text">4.3 Decal</span></a></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#4-4-%E4%BD%93%E7%A7%AF%E5%85%89"><span class="toc-text">4.4 体积光</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#5-HDRP%E4%B8%8E%E5%BC%95%E6%93%8E%E8%87%AA%E5%B8%A6%E6%A8%A1%E5%9D%97"><span class="toc-text">5. HDRP与引擎自带模块</span></a></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#6-Package"><span class="toc-text">6. Package</span></a></li></ol></li></ol></div>
+    </div>
+    
+    
+    
+    <hr>
+    <div class="social-link sidebar-item">
+      <div><i class="far fa-address-card"></i>社交链接</p></div>
+      <ul>
+        
+        <li><i class="fab fa-github"></i><a href="https://leinlin.github.com/" target="_blank">GitHub</a></li>
+        
+      </ul>
+    </div>
+    
+    
+  </div>
+</aside>
+
+
+          
+        </div>
+      </div>
+    </main>
+    
+<footer id="footer" class="footer" style="background: #33363b;">
+  <div class="container">
+    <div class="back-to-top">
+      <button id="back-to-top"><i class="fas fa-angle-double-up" aria-label="回到顶部"></i></button>
+    </div>
+    <div class="footer-container">
+      <div class="footer-left">
+        <div class="copyright">
+          <span class="author">leinlin</span><span class="year"><i class="far fa-copyright"></i>2022</span>
+        </div>
+        
+        <div class="busuanzi">
+          <span id="busuanzi_container_site_pv"><i class="fas fa-eye" aria-label="站点点击量" aria-hidden="false"></i><span id="busuanzi_value_site_pv"></span></span><span id="busuanzi_container_site_uv"><i class="fas fa-user" aria-label="站点用户数" aria-hidden="false"></i><span id="busuanzi_value_site_uv"></span></span><span id="busuanzi_container_page_pv"><i class="far fa-file-alt"></i><span id="busuanzi_value_page_pv" aria-label="页面点击量" aria-hidden="false"></span></span>
+        </div>
+        
+      </div>
+      <div class="footer-right">
+        <div class="custom-info">
+          
+          托管于<i class="fab fa-github-alt"></i><a href="https://pages.github.com/" target="_blank">GitHub Pages</a>
+          
+        </div>
+        <div class="powered-by">
+          由 <a href="https://hexo.io/" target="_blank">Hexo</a> 强力驱动 | 主题 <a href="https://github.com/AlynxZhou/hexo-theme-aria/" target="_blank">ARIA</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+  <script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>
