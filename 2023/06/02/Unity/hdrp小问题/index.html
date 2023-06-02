@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#33363b">
+    <meta name="msapplication-TileColor" content="#33363b">
+    
+    
+    
+    
+    <meta name="keywords" content="leinlin, ARIA, Hexo">
+    
+    
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png">
+    
+    
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicons/android-chrome-192x192.png">
+    
+    
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png">
+    
+    
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png">
+    
+    
+    <link rel="mask-icon" href="/favicons/safari-pinned-tab.svg" color="#33363b">
+    
+    
+    <link rel="manifest" href="/favicons/site.webmanifest">
+    
+    
+    <meta name="msapplication-config" content="/favicons/browserconfig.xml">
+    
+    
+    <link rel="alternate" href="/atom.xml" title="leinlin的小笔记" type="application/atom+xml" />
+    
+    
+    <link rel="shortcut icon" type="image/x-icon" href="/favicons/favicon.ico">
+    
+    
+    <link rel="stylesheet" type="text/css" href="/css/normalize.css">
+    <link rel="stylesheet" type="text/css" href="/css/index.css">
+    
+    <link rel="stylesheet" type="text/css" href="/css/sidebar.css">
+    
+    
+<link rel="stylesheet" type="text/css" href="/css/page.css">
+<link rel="stylesheet" type="text/css" href="/css/post.css">
+
+    <link rel="stylesheet" type="text/css" href="/css/custom.css">
+    <link rel="stylesheet" type="text/css" href="/css/atom-one-light.css">
+    <link rel="stylesheet" type="text/css" href="/css/lightgallery.min.css">
+    <script type="text/javascript" src="/js/jquery.min.js"></script>
+    <script defer type="text/javascript" src="/js/util.js"></script>
+    <script defer type="text/javascript" src="/js/clipboard.min.js"></script>
+    <script defer type="text/javascript" src="/js/scrollspy.js"></script>
+    <script defer type="text/javascript" src="/js/fontawesome-all.min.js"></script>
+    <script defer type="text/javascript" src="/js/lightgallery.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-fullscreen.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-hash.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-pager.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-thumbnail.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-zoom.min.js"></script>
+    
+    <script defer src="/js/busuanzi.pure.mini.js"></script>
+    
+    
+    <script defer type="text/javascript" src="/js/search.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function () {
+      var searchPath = "search.xml";
+      if (searchPath.length === 0) {
+        searchPath = "search.xml";
+      }
+      var path = "/" + searchPath;
+      searchFunc(path, "search-input", "search-result");
+    });
+    </script>
+    
+    
+    
+    <script defer type="text/javascript" src="https://cdn.staticfile.org/MathJax/MathJax-2.6-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ["$","$"], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ["script", "noscript", "style", "textarea", "pre", "code"]
+      }
+    });
+    </script>
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for (i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += " has-jax";
+      }
+    });
+    </script>
+    
+    
+    <script defer type="text/javascript" src="/js/index.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function () {
+      var cb = null;
+      var els = $(".post figure.highlight");
+      if (els.length) {
+        // Enabled Hexo highlight line number.
+        $(els).each(function (i, e) {
+          // $(e).before("<button class=\"copy button\">复制</button>");
+          $(e).before([
+            "<div class=\"code-titlebar\">",
+              "<div class=\"titlebar-left\">",
+                "<button class=\"copy\">复制</button>",
+              "</div>",
+            "</div>"
+          ].join(""));
+        });
+        cb = new ClipboardJS("button.copy", {
+          "target": function (trigger) {
+              // Get target element by DOM API.
+              return trigger.parentNode.parentNode.nextElementSibling.firstChild.firstChild.firstChild.lastChild.firstChild.firstChild;
+          }
+        });
+      } else {
+        // Disabled Hexo highlight line number.
+        els = $(".post pre code");
+        $(els).each(function (i, e) {
+          // Add button before pre, not code.
+          // $(e).parent().before("<button class=\"copy button\">复制</button>");
+          $(e).before([
+            "<div class=\"code-titlebar\">",
+              "<div class=\"titlebar-left\">",
+                "<button class=\"copy\" >复制</button>",
+              "</div>",
+              "<div class=\"titlebar-right\">",
+                "<button class=\"button-dot dot-minimize\" aria-label=\"Decoration\"></button>",
+                "<button class=\"button-dot dot-maximize\" aria-label=\"Decoration\"></button>",
+                "<button class=\"button-dot dot-close\" aria-label=\"Decoration\"></button>",
+              "</div>",
+            "</div>"
+          ].join(""));
+        });
+        cb = new ClipboardJS("button.copy", {
+          "target": function (trigger) {
+              // Get target element by DOM API.
+              return trigger.parentNode.parentNode.nextElementSibling;
+          }
+        });
+      }
+      cb.on("success", function (e) {
+        e.clearSelection();
+        var trigger = e.trigger;
+        // Change button text as a user tip.
+        trigger.innerHTML = "已复制";
+        $(trigger).addClass("copied");
+        // Change button text back;
+        setTimeout(function () {
+          trigger.innerHTML = "复制";
+          $(trigger).removeClass("copied");
+        }, 1500);
+      });
+    });
+    </script>
+    
+    <script defer type="text/javascript" src="/js/custom.js"></script>
+    <title>UnlitShader使用 | leinlin的小笔记</title>
+  <meta name="generator" content="Hexo 6.2.0"></head>
+  <body itemscope itemtype="http://schema.org/WebPage" lang="zh_CN"  data-spy="scroll" data-target=".list-group">
+    
+<header id="header" class="header" style="background: #33363b;">
+  <div class="container">
+    <div class="header-container">
+      <div class="header-title">
+        <h1 class="title"><a href="/">leinlin的小笔记</a></h1>
+        <h2 class="subtitle"></h2>
+      </div>
+      
+    </div>
+    <nav id="nav" class="nav">
+      <a id="nav-toggle" class="nav-toggle" aria-hidden="true"><i class="fas fa-bars" aria-label="切换导航栏"></i></a>
+      <ul id="menu" role="menubar" aria-hidden="false">
+        
+        <li role="menuitem"><a href="/"><i class="fas fa-home"></i><span class="menu-text">首页</span></a></li>
+        
+        <li role="menuitem"><a href="/categories/"><i class="fas fa-th-list"></i><span class="menu-text">分类</span></a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</header>
+
+
+    <main id="main" class="main">
+      <div class="container">
+        <div class="main-container">
+          <div class="content">
+            
+<div id="post" class="page">
+  
+  <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
+    <div class="post-block">
+      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2023/06/02/Unity/hdrp%E5%B0%8F%E9%97%AE%E9%A2%98/">
+      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+       <meta itemprop="name" content="leinlin">
+       <meta itemprop="description" content="">
+       <meta itemprop="image" content="/images/avatar.jpg">
+      </span>
+      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+       <meta itemprop="name" content="leinlin的小笔记">
+      </span>
+    </div>
+    <header class="post-header">
+      <h1 class="post-title" itemprop="name headline">UnlitShader使用</h1>
+      <div class="post-meta">
+        
+        <span class="post-date">
+          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2023-06-02T12:00:14+08:00">2023-06-02 12:00:14</time></span>
+        </span>
+        
+        
+        
+        <span class="post-meta-divider divider">|</span>
+        
+        <span class="post-categories">
+          
+          <i class="far fa-folder-open"></i><span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Unity/" itemprop="url" rel="index"><span itemprop="name">Unity</span></a></span>
+        </span>
+        
+        
+        
+        
+      </div>
+    </header>
+    <main class="post-main" itemprop="articleBody">
+      <h1 id="1-UnlitShader使用"><a href="#1-UnlitShader使用" class="headerlink" title="1.UnlitShader使用"></a>1.UnlitShader使用</h1><ol>
+<li><p>目前UnlitGraph支持主要的纹理、向量、颜色、顶点色、屏幕空间位置等各种基础参数的计算。</p>
+</li>
+<li><p>通过宏来切换不同效果的部分需要手写谢。</p>
+</li>
+<li><p>同时支持透明和不透明两种模式。</p>
+</li>
+<li><p><strong>扭曲distort，默认的Unlit shader已经可以使用</strong>，但是UnlitGraph没有提供，LitGraph有这个功能，所以未来应该会提供。</p>
+</li>
+</ol>
+<p>使用方式：HDRP创建er默认材质，Shader改成Hdrp&#x2F;Unlit，材质选项中Surface Type改成Transparent。此时材质下方出现了新的选项Transprency Input。打开Distortion，给出一张扭曲纹理，然后调节参数就可以看到扭曲效果。</p>
+<p><strong>注意</strong>：扭曲和渲染顺序无关，所有和扭曲材质重叠切没有渲染深度的材质，都会被扭曲。</p>
+<h1 id="2-LitShader"><a href="#2-LitShader" class="headerlink" title="2.LitShader"></a>2.LitShader</h1><ol>
+<li><p>Lit一共有两种扭曲方式：Refraction折射和Distortion变形。LitGraph也可以使用这两个功能</p>
+</li>
+<li><p>支持折射、扭曲，但是会带上光照。</p>
+</li>
+<li><p>Refraction：透明的Lit物体可以用折射功能（Unlit物体只可以选择是否被折射）。Lit物体如果要折射其他物体就不能被其他的物体折射。不透明物体可以选择是否被折射。可以用来实现类似冰冻怪物的效果。</p>
+</li>
+<li><p>Distortion：Unlit和透明的Lit都可以用。有扭曲的Unlit材质会扭曲任何和他重叠的无深度物体。</p>
+</li>
+</ol>
+<h1 id="3-Unlit贴花"><a href="#3-Unlit贴花" class="headerlink" title="3.Unlit贴花"></a>3.Unlit贴花</h1><ol>
+<li><p>默认的功能无法实现Unlit效果。我们需要自己实现Unlit Decal，理论上只要能够正确读取深度就可以渲染，不过需要研究一下渲染输出的buffer、渲染队列、已经新的深度读取方式。</p>
+</li>
+<li><p><strong>内置贴花支持模型贴花</strong>，一个Decal模型可以贴附在另一个模型上，可以有自己的UV。</p>
+</li>
+</ol>
+<h1 id="4-天空球编程"><a href="#4-天空球编程" class="headerlink" title="4.天空球编程"></a>4.天空球编程</h1><p>参考链接：<a target="_blank" rel="noopener" href="https://github.com/Unity-Technologies/ScriptableRenderPipeline/wiki/Writing-A-Custom-Sky-Renderer">天空球编程</a>，可以自由实现想要的天空球。</p>
+<p>#5.HDRP 自带天空球混合</p>
+<p>Unity Volume源代码中有实现HDRI插值的计划，见：TODO注释：</p>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs c">public <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">CubemapParameter</span> :</span> VolumeParameter&lt;Cubemap&gt;<br>&#123;<br>     public <span class="hljs-title function_">CubemapParameter</span><span class="hljs-params">(Cubemap value, <span class="hljs-type">bool</span> overrideState = <span class="hljs-literal">false</span>)</span><br>     : <span class="hljs-title function_">base</span><span class="hljs-params">(value, overrideState)</span> &#123;&#125;<br>     <span class="hljs-comment">// <span class="hljs-doctag">TODO:</span> Cubemap interpolation</span><br>&#125;<br><br>public <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">NoInterpCubemapParameter</span> :</span> VolumeParameter&lt;Cubemap&gt;<br>&#123;<br>    public <span class="hljs-title function_">NoInterpCubemapParameter</span><span class="hljs-params">(Cubemap value, <span class="hljs-type">bool</span> overrideState = <span class="hljs-literal">false</span>)</span><br>    : <span class="hljs-title function_">base</span><span class="hljs-params">(value, overrideState)</span> &#123;&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>Volume当中的不同天空球都可以实现各自的混合效果，不过Hdri目前没有实现完（如果是其他两种类型的天空球，当前版本已经可以实现插值）。cubemap在混合时实时计算插值，有一部分开销需要考虑。在HDRP6.0.0当中也还是没有实现，不知道Unity是出于什么考虑，一直没有给出Cubemap混合的代码。</p>
+<p>目前，<strong>我们实现这部分代码就可以直接使用Volume当中的天空球插值</strong>。</p>
+<p>#6.关于特效和渲染队列</p>
+<p>之前美术手动调节了材质上的渲染队列来实现不同的特效。现在渲染队列的机制有一些改动，在不熟悉之前最好不要手动设置队列（默认材质都是不能调节的，只能修改<strong>渲染优先级Sort Priority</strong>），通过Shader Graph创建的可以手动设置。</p>
+<p>现在，在不透明物体渲染阶段，不会渲染2650以上的物体（看源代码得到的结果，在以前只要有队列，就会按照队列顺序渲染），反之亦然。</p>
+<p>HDRP理论上不建议手动调整材质顺序，因为这个顺序不在单纯的是顺序，还涉及到各种特殊的效果。</p>
+<p>2650-2850用来渲染被折射的透明物体，这个都是通过设置自动配置的，在不熟悉引擎之前不要修改材质队列。</p>
+<p>2900-3100是一把透明物体。</p>
+<p>2850到2900之间会出现奇怪的变化，Unity没有给出这部分渲染的是什么。</p>
+<p>2000到2500是不透明物体。这个队列以外的不透明物体不会渲染。</p>
+<p>2000以下什么都不会渲染（以前都是可以渲染的）。</p>
+<p><strong>现在的状态就是：如果没有把队列和物体类型匹配就会出现不可预知的结果。</strong></p>
+<p>下面是控制渲染队列的代码。</p>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><code class="hljs c">public <span class="hljs-class"><span class="hljs-keyword">enum</span> <span class="hljs-title">Priority</span></span><br><span class="hljs-class">        &#123;</span><br>            Background = UnityEngine.Rendering.RenderQueue.Background,<br>            Opaque = UnityEngine.Rendering.RenderQueue.Geometry,<br>            OpaqueAlphaTest = UnityEngine.Rendering.RenderQueue.AlphaTest,<br>            <span class="hljs-comment">// Warning: we must not change Geometry last value to stay compatible with occlusion</span><br>            OpaqueLast = UnityEngine.Rendering.RenderQueue.GeometryLast,<br>            <span class="hljs-comment">// For transparent pass we define a range of 200 value to define the priority</span><br>            <span class="hljs-comment">// Warning: Be sure no range are overlapping</span><br>            PreRefractionFirst = <span class="hljs-number">2750</span> - k_TransparentPriorityQueueRange,<br>            PreRefraction = <span class="hljs-number">2750</span>,<br>            PreRefractionLast = <span class="hljs-number">2750</span> + k_TransparentPriorityQueueRange,<br>            TransparentFirst = UnityEngine.Rendering.RenderQueue.Transparent - k_TransparentPriorityQueueRange,<br>            Transparent = UnityEngine.Rendering.RenderQueue.Transparent,<br>            TransparentLast = UnityEngine.Rendering.RenderQueue.Transparent + k_TransparentPriorityQueueRange,<br>            Overlay = UnityEngine.Rendering.RenderQueue.Overlay<br>        &#125;<br><br>RenderQueueRange k_RenderQueue_OpaqueNoAlphaTest = <br>    new RenderQueueRange &#123; min = (<span class="hljs-type">int</span>)Priority.Opaque, <br>                          max = (<span class="hljs-type">int</span>)Priority.OpaqueAlphaTest - <span class="hljs-number">1</span> &#125;;<br><br>RenderQueueRange k_RenderQueue_OpaqueAlphaTest = <br>    new RenderQueueRange &#123; min = (<span class="hljs-type">int</span>)Priority.OpaqueAlphaTest, <br>                          max = (<span class="hljs-type">int</span>)Priority.OpaqueLast &#125;;<br><br>RenderQueueRange k_RenderQueue_AllOpaque = new RenderQueueRange &#123; <br>    min = (<span class="hljs-type">int</span>)Priority.Opaque,<br>    max = (<span class="hljs-type">int</span>)Priority.OpaqueLast &#125;;<br><br>RenderQueueRange k_RenderQueue_PreRefraction = new RenderQueueRange &#123; <br>    min = (<span class="hljs-type">int</span>)Priority.PreRefractionFirst, <br>    max = (<span class="hljs-type">int</span>)Priority.PreRefractionLast &#125;;<br><br>RenderQueueRange k_RenderQueue_Transparent = new RenderQueueRange &#123; <br>    min = (<span class="hljs-type">int</span>)Priority.TransparentFirst, <br>    max = (<span class="hljs-type">int</span>)Priority.TransparentLast &#125;;<br><br>RenderQueueRange k_RenderQueue_AllTransparent = new RenderQueueRange &#123; <br>    min = (<span class="hljs-type">int</span>)Priority.PreRefractionFirst, <br>    max = (<span class="hljs-type">int</span>)Priority.TransparentLast &#125;;<br><br>RenderQueueRange k_RenderQueue_All = new RenderQueueRange &#123; min = <span class="hljs-number">0</span>, max = <span class="hljs-number">5000</span> &#125;;<br>    &#125;<br></code></pre></td></tr></table></figure>
+
+
+    </main>
+    <footer class="post-footer">
+      
+    </footer>
+  </article>
+  
+  
+  <nav class="page-nav">
+    <div class="page-nav-next page-nav-item">
+      
+      <a href="/2023/06/02/Unity/fullforwardshadows/" rel="next" title="fullforwardshadows"><i class="fas fa-angle-left"></i><span class="nav-title">fullforwardshadows</span></a>
+      
+    </div>
+    <div class="page-nav-prev page-nav-item">
+      
+      <a href="/2023/06/02/Unity/UnityTextureStreaming/" rel="prev" title="Texture Streaming"><span class="nav-title">Texture Streaming</span><i class="fas fa-angle-right"></i></a>
+      
+    </div>
+  </nav>
+  
+  
+  
+
+<div class="comments" id="comments">
+  
+  
+  <div class="commentjs" id="comment-thread"></div>
+  <link rel="stylesheet" href="/css/commentjs.css">
+  <script defer type="text/javascript" src="/js/marked.min.js"></script>
+  <script defer type="text/javascript" src="/js/timeago.min.js"></script>
+  <script defer type="text/javascript" src="/js/highlight.min.js"></script>
+  <script defer type="text/javascript" src="/js/commentjs.js"></script>
+  <script type="text/javascript">
+  $(document).ready(function () {
+    getComments({
+      "type": "github",
+      "user": "leinlin",
+      "repo": "leinlin.github.io",
+      "client_id": "aee134bdfb54c4ef5826",
+      "client_secret": "4af1d3f2b82dccc028c49715becc01e611afbe43",
+      "no_comment": "这个页面还没有评论，现在就去评论吧！",
+      "go_to_comment": "去评论",
+      "issue_title": "UnlitShader使用",
+      "btn_class": "button",
+      "comments_target": "#comment-thread"
+    });
+    marked.setOptions({
+      "highlight": function (code, lang) {
+        return hljs.highlightAuto(code).value;
+      }
+    });
+    function mark() {
+      var markdowns = document.getElementsByClassName("markdown");
+      for (var i = 0; i < markdowns.length; ++i){
+        if (markdowns[i].innerHTML) {
+          markdowns[i].innerHTML = marked(markdowns[i].innerHTML);
+        }
+      }
+    }
+    window.addEventListener("DOMContentLoaded", mark, false);
+    window.addEventListener("load", mark, false);
+  });
+  </script>
+  
+  
+</div>
+
+
+
+  
+</div>
+
+          </div>
+          
+          
+          
+<aside class="sidebar" id="sidebar" style="background: url(/images/background.png);">
+  
+  <div class="search">
+    <div class="form-group">
+      <i class="fas fa-search"></i><input type="search" id="search-input" name="q" results="0" placeholder="搜索" class="form-control"/>
+    </div>
+  </div>
+  <div class="search-result-box" id="search-result"></div>
+  
+  
+<div class="info sidebar-item" id="info">
+  
+  <img class="author-avatar" src="/images/avatar.jpg" alt="leinlin">
+  
+  <h1 class="author-name">leinlin</h1>
+  <h2 class="author-description"></h2>
+  <div class="site-count">
+    
+    
+    
+    
+    <div class="categories-count count-block">
+      <div class="site-count-title">分类</div>
+      <div><a href="/categories/">20</a></div>
+    </div>
+    
+    
+  </div>
+  
+  <div class="rss">
+    <a class="rss-link button sidebar-item" href="/atom.xml"><i class="fas fa-rss"></i>RSS</a>
+  </div>
+  
+</div>
+
+
+  <div class="sidebar-sticky">
+    
+    
+    
+    
+    
+    <hr>
+    <div class="post-toc sidebar-item" id="toc-div">
+      <div><i class="fas fa-list-ol"></i>文章目录</div>
+      <div class="post-toc-content"><ol class="list-group toc"><li class="toc-item toc-level-1"><a class="list-group-item toc-link" href="#1-UnlitShader%E4%BD%BF%E7%94%A8"><span class="toc-text">1.UnlitShader使用</span></a></li><li class="toc-item toc-level-1"><a class="list-group-item toc-link" href="#2-LitShader"><span class="toc-text">2.LitShader</span></a></li><li class="toc-item toc-level-1"><a class="list-group-item toc-link" href="#3-Unlit%E8%B4%B4%E8%8A%B1"><span class="toc-text">3.Unlit贴花</span></a></li><li class="toc-item toc-level-1"><a class="list-group-item toc-link" href="#4-%E5%A4%A9%E7%A9%BA%E7%90%83%E7%BC%96%E7%A8%8B"><span class="toc-text">4.天空球编程</span></a></li></ol></div>
+    </div>
+    
+    
+    
+    <hr>
+    <div class="social-link sidebar-item">
+      <div><i class="far fa-address-card"></i>社交链接</p></div>
+      <ul>
+        
+        <li><i class="fab fa-github"></i><a href="https://leinlin.github.com/" target="_blank">GitHub</a></li>
+        
+      </ul>
+    </div>
+    
+    
+  </div>
+</aside>
+
+
+          
+        </div>
+      </div>
+    </main>
+    
+<footer id="footer" class="footer" style="background: #33363b;">
+  <div class="container">
+    <div class="back-to-top">
+      <button id="back-to-top"><i class="fas fa-angle-double-up" aria-label="回到顶部"></i></button>
+    </div>
+    <div class="footer-container">
+      <div class="footer-left">
+        <div class="copyright">
+          <span class="author">leinlin</span><span class="year"><i class="far fa-copyright"></i>2023</span>
+        </div>
+        
+        <div class="busuanzi">
+          <span id="busuanzi_container_site_pv"><i class="fas fa-eye" aria-label="站点点击量" aria-hidden="false"></i><span id="busuanzi_value_site_pv"></span></span><span id="busuanzi_container_site_uv"><i class="fas fa-user" aria-label="站点用户数" aria-hidden="false"></i><span id="busuanzi_value_site_uv"></span></span><span id="busuanzi_container_page_pv"><i class="far fa-file-alt"></i><span id="busuanzi_value_page_pv" aria-label="页面点击量" aria-hidden="false"></span></span>
+        </div>
+        
+      </div>
+      <div class="footer-right">
+        <div class="custom-info">
+          
+          托管于<i class="fab fa-github-alt"></i><a href="https://pages.github.com/" target="_blank">GitHub Pages</a>
+          
+        </div>
+        <div class="powered-by">
+          由 <a href="https://hexo.io/" target="_blank">Hexo</a> 强力驱动 | 主题 <a href="https://github.com/AlynxZhou/hexo-theme-aria/" target="_blank">ARIA</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+  <script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

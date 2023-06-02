@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#33363b">
+    <meta name="msapplication-TileColor" content="#33363b">
+    
+    
+    
+    
+    <meta name="keywords" content="leinlin, ARIA, Hexo">
+    
+    
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png">
+    
+    
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicons/android-chrome-192x192.png">
+    
+    
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png">
+    
+    
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png">
+    
+    
+    <link rel="mask-icon" href="/favicons/safari-pinned-tab.svg" color="#33363b">
+    
+    
+    <link rel="manifest" href="/favicons/site.webmanifest">
+    
+    
+    <meta name="msapplication-config" content="/favicons/browserconfig.xml">
+    
+    
+    <link rel="alternate" href="/atom.xml" title="leinlin的小笔记" type="application/atom+xml" />
+    
+    
+    <link rel="shortcut icon" type="image/x-icon" href="/favicons/favicon.ico">
+    
+    
+    <link rel="stylesheet" type="text/css" href="/css/normalize.css">
+    <link rel="stylesheet" type="text/css" href="/css/index.css">
+    
+    <link rel="stylesheet" type="text/css" href="/css/sidebar.css">
+    
+    
+<link rel="stylesheet" type="text/css" href="/css/page.css">
+<link rel="stylesheet" type="text/css" href="/css/post.css">
+
+    <link rel="stylesheet" type="text/css" href="/css/custom.css">
+    <link rel="stylesheet" type="text/css" href="/css/atom-one-light.css">
+    <link rel="stylesheet" type="text/css" href="/css/lightgallery.min.css">
+    <script type="text/javascript" src="/js/jquery.min.js"></script>
+    <script defer type="text/javascript" src="/js/util.js"></script>
+    <script defer type="text/javascript" src="/js/clipboard.min.js"></script>
+    <script defer type="text/javascript" src="/js/scrollspy.js"></script>
+    <script defer type="text/javascript" src="/js/fontawesome-all.min.js"></script>
+    <script defer type="text/javascript" src="/js/lightgallery.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-fullscreen.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-hash.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-pager.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-thumbnail.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-zoom.min.js"></script>
+    
+    <script defer src="/js/busuanzi.pure.mini.js"></script>
+    
+    
+    <script defer type="text/javascript" src="/js/search.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function () {
+      var searchPath = "search.xml";
+      if (searchPath.length === 0) {
+        searchPath = "search.xml";
+      }
+      var path = "/" + searchPath;
+      searchFunc(path, "search-input", "search-result");
+    });
+    </script>
+    
+    
+    
+    <script defer type="text/javascript" src="https://cdn.staticfile.org/MathJax/MathJax-2.6-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ["$","$"], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ["script", "noscript", "style", "textarea", "pre", "code"]
+      }
+    });
+    </script>
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for (i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += " has-jax";
+      }
+    });
+    </script>
+    
+    
+    <script defer type="text/javascript" src="/js/index.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function () {
+      var cb = null;
+      var els = $(".post figure.highlight");
+      if (els.length) {
+        // Enabled Hexo highlight line number.
+        $(els).each(function (i, e) {
+          // $(e).before("<button class=\"copy button\">复制</button>");
+          $(e).before([
+            "<div class=\"code-titlebar\">",
+              "<div class=\"titlebar-left\">",
+                "<button class=\"copy\">复制</button>",
+              "</div>",
+            "</div>"
+          ].join(""));
+        });
+        cb = new ClipboardJS("button.copy", {
+          "target": function (trigger) {
+              // Get target element by DOM API.
+              return trigger.parentNode.parentNode.nextElementSibling.firstChild.firstChild.firstChild.lastChild.firstChild.firstChild;
+          }
+        });
+      } else {
+        // Disabled Hexo highlight line number.
+        els = $(".post pre code");
+        $(els).each(function (i, e) {
+          // Add button before pre, not code.
+          // $(e).parent().before("<button class=\"copy button\">复制</button>");
+          $(e).before([
+            "<div class=\"code-titlebar\">",
+              "<div class=\"titlebar-left\">",
+                "<button class=\"copy\" >复制</button>",
+              "</div>",
+              "<div class=\"titlebar-right\">",
+                "<button class=\"button-dot dot-minimize\" aria-label=\"Decoration\"></button>",
+                "<button class=\"button-dot dot-maximize\" aria-label=\"Decoration\"></button>",
+                "<button class=\"button-dot dot-close\" aria-label=\"Decoration\"></button>",
+              "</div>",
+            "</div>"
+          ].join(""));
+        });
+        cb = new ClipboardJS("button.copy", {
+          "target": function (trigger) {
+              // Get target element by DOM API.
+              return trigger.parentNode.parentNode.nextElementSibling;
+          }
+        });
+      }
+      cb.on("success", function (e) {
+        e.clearSelection();
+        var trigger = e.trigger;
+        // Change button text as a user tip.
+        trigger.innerHTML = "已复制";
+        $(trigger).addClass("copied");
+        // Change button text back;
+        setTimeout(function () {
+          trigger.innerHTML = "复制";
+          $(trigger).removeClass("copied");
+        }, 1500);
+      });
+    });
+    </script>
+    
+    <script defer type="text/javascript" src="/js/custom.js"></script>
+    <title>Scriptable Render Pipeline Overview | leinlin的小笔记</title>
+  <meta name="generator" content="Hexo 6.2.0"></head>
+  <body itemscope itemtype="http://schema.org/WebPage" lang="zh_CN"  data-spy="scroll" data-target=".list-group">
+    
+<header id="header" class="header" style="background: #33363b;">
+  <div class="container">
+    <div class="header-container">
+      <div class="header-title">
+        <h1 class="title"><a href="/">leinlin的小笔记</a></h1>
+        <h2 class="subtitle"></h2>
+      </div>
+      
+    </div>
+    <nav id="nav" class="nav">
+      <a id="nav-toggle" class="nav-toggle" aria-hidden="true"><i class="fas fa-bars" aria-label="切换导航栏"></i></a>
+      <ul id="menu" role="menubar" aria-hidden="false">
+        
+        <li role="menuitem"><a href="/"><i class="fas fa-home"></i><span class="menu-text">首页</span></a></li>
+        
+        <li role="menuitem"><a href="/categories/"><i class="fas fa-th-list"></i><span class="menu-text">分类</span></a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</header>
+
+
+    <main id="main" class="main">
+      <div class="container">
+        <div class="main-container">
+          <div class="content">
+            
+<div id="post" class="page">
+  
+  <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
+    <div class="post-block">
+      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2023/06/02/Unity/SPR%E5%AE%98%E6%96%B9%E4%BB%8B%E7%BB%8D/">
+      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+       <meta itemprop="name" content="leinlin">
+       <meta itemprop="description" content="">
+       <meta itemprop="image" content="/images/avatar.jpg">
+      </span>
+      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+       <meta itemprop="name" content="leinlin的小笔记">
+      </span>
+    </div>
+    <header class="post-header">
+      <h1 class="post-title" itemprop="name headline">Scriptable Render Pipeline Overview</h1>
+      <div class="post-meta">
+        
+        <span class="post-date">
+          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2023-06-02T12:00:14+08:00">2023-06-02 12:00:14</time></span>
+        </span>
+        
+        
+        
+        <span class="post-meta-divider divider">|</span>
+        
+        <span class="post-categories">
+          
+          <i class="far fa-folder-open"></i><span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Unity/" itemprop="url" rel="index"><span itemprop="name">Unity</span></a></span>
+        </span>
+        
+        
+        
+        
+      </div>
+    </header>
+    <main class="post-main" itemprop="articleBody">
+      <p>链接：<a target="_blank" rel="noopener" href="https://blogs.unity3d.com/cn/2018/01/31/srp-overview/">Scriptable Render Pipeline Overview</a></p>
+<h1 id="Scriptable-Render-Pipeline-Overview"><a href="#Scriptable-Render-Pipeline-Overview" class="headerlink" title="Scriptable Render Pipeline Overview"></a>Scriptable Render Pipeline Overview</h1><pre><code>&gt;unity2018当中介绍了可编程的渲染管线（SRP）。SPR可以通过c#来控制unity中渲染的配置和实现。在了解用户可以定制的渲染管线之前，需要先知道我们所谈论的渲染管线是什么。
+</code></pre>
+<p>##什么是渲染管线</p>
+<p>​	渲染管线是一个概括性的术语，用来概括将对象（Object）绘制到屏幕上的一系列的技术。这是一个高度概括的概念，包括了：</p>
+<ul>
+<li><p>剪裁 </p>
+</li>
+<li><p>对象渲染</p>
+</li>
+<li><p>后处理</p>
+<p>​除了这些抽象的概念之外，他们本身的功能还可以根据用户的需求进一步划分。</p>
+<p>​例如渲染对象可以通过以下方式实现：</p>
+</li>
+<li><p>Multi-pass rendering：每个pass渲染一个对象一个光照</p>
+</li>
+<li><p>Single-pass：每个对象使用一个pass</p>
+</li>
+<li><p>Deffered：将表面属性渲染到G-buffer，然后在屏幕空间实现光照</p>
+<p>当我们使用SRP的时候，就需要决定使用哪一种。不同的方式有不同的优缺点。</p>
+</li>
+</ul>
+<h2 id="渲染入口点（Rendering-entry-point）"><a href="#渲染入口点（Rendering-entry-point）" class="headerlink" title="渲染入口点（Rendering entry point）"></a>渲染入口点（Rendering entry point）</h2><p>​	使用SRP时，你需要定义一个类用来控制渲染；渲染管线就是通过这个类来创建的。入口点是对”Render”方法的一次调用，每一次渲染都有不同的渲染上下文（Render Context，下文解释）和需要渲染的摄像机。</p>
+<figure class="hljs highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs c#"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">BasicPipeInstance</span> : <span class="hljs-title">RenderPipeline</span><br>&#123;<br><span class="hljs-comment">//context 渲染上下文 ，cameras 摄像机列表</span><br>   <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">override</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Render</span>(<span class="hljs-params">ScriptableRenderContext context, Camera[] cameras</span>)</span>&#123;&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="渲染管线上下文（Render-Pipeline-Context）"><a href="#渲染管线上下文（Render-Pipeline-Context）" class="headerlink" title="渲染管线上下文（Render Pipeline Context）"></a>渲染管线上下文（Render Pipeline Context）</h2><p>​	SPR（脚本化渲染管线）渲染使用了延迟执行的概念。首先建立一系列的命令，然后统一执行。通过ScriptableRenderContext类来建立这一系列命令。当用一系列操作填充了这个上下文对象之后，可以 通过“submit”方法，来一次性提交所有drawcall。</p>
+<p>​	例子：使用CommandBuffer清空渲染目标：</p>
+<figure class="hljs highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs c#"><span class="hljs-comment">// Create a new command buffer that can be used</span><br><span class="hljs-comment">// to issue commands to the render context</span><br><span class="hljs-keyword">var</span> cmd = <span class="hljs-keyword">new</span> CommandBuffer();<br><br><span class="hljs-comment">// issue a clear render target command</span><br>cmd.ClearRenderTarget(<span class="hljs-literal">true</span>, <span class="hljs-literal">false</span>, Color.green);<br><br><span class="hljs-comment">// queue the command buffer</span><br>context.ExecuteCommandBuffer(cmd);<br></code></pre></td></tr></table></figure>
+
+<h2 id="剪裁Culling"><a href="#剪裁Culling" class="headerlink" title="剪裁Culling"></a>剪裁Culling</h2><p>剪裁用来确定哪些内容需要渲染的屏幕上。</p>
+<p>Unity中剪裁包含：</p>
+<ul>
+<li>视锥体剪裁：用摄像机的剪裁平面。</li>
+<li>遮挡剪裁：物体遮挡关系</li>
+</ul>
+<p>渲染开始时，需要决定哪些内容需要被渲染。这需要使用摄像机的透视图执行剪裁操作。剪裁结果是一个对象列表和光照列表。这些内容在接下来的渲染管线当中使用。</p>
+<h3 id="在SRP当中执行剪裁"><a href="#在SRP当中执行剪裁" class="headerlink" title="在SRP当中执行剪裁"></a>在SRP当中执行剪裁</h3><p>在SRP当中你通常需要摄像机的透视来完成渲染。unity内置的渲染也是使用同一个摄像机。SRP提供了一系列剪裁API。</p>
+<p>一般的剪裁流程：</p>
+<figure class="hljs highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs c#"><span class="hljs-comment">// Create an structure to hold the culling paramaters</span><br>ScriptableCullingParameters cullingParams;<br><br><span class="hljs-comment">//Populate the culling paramaters from the camera</span><br><span class="hljs-keyword">if</span> (!CullResults.GetCullingParameters(camera, stereoEnabled, <span class="hljs-keyword">out</span> cullingParams))<br>    <span class="hljs-keyword">continue</span>;<br><br><span class="hljs-comment">// if you like you can modify the culling paramaters here</span><br>cullingParams.isOrthographic = <span class="hljs-literal">true</span>;<br><br><span class="hljs-comment">// Create a structure to hold the cull results</span><br>CullResults cullResults = <span class="hljs-keyword">new</span> CullResults();<br><br><span class="hljs-comment">// Perform the culling operation</span><br>CullResults.Cull(<span class="hljs-keyword">ref</span> cullingParams, context, <span class="hljs-keyword">ref</span> cullResults);<br></code></pre></td></tr></table></figure>
+
+<p>之后可以进行下一步渲染。</p>
+<h2 id="Drawing-绘制"><a href="#Drawing-绘制" class="headerlink" title="Drawing 绘制"></a>Drawing 绘制</h2><p>现在的到了剪裁结果，可以进行进一步渲染。</p>
+<p>这里有很多种配置方法，有下面内容决定：</p>
+<ul>
+<li><p>目标平台</p>
+</li>
+<li><p>特殊的效果</p>
+</li>
+<li><p>项目类型</p>
+<p>具体的例子。</p>
+</li>
+<li><p>HDR和LDR</p>
+</li>
+<li><p>Linear和Gamma</p>
+</li>
+<li><p>MSAA和后处理AA</p>
+</li>
+<li><p>PBR材质和一般材质</p>
+</li>
+<li><p>有无光照</p>
+</li>
+<li><p>光照技术</p>
+</li>
+<li><p>阴影基础</p>
+</li>
+</ul>
+<h3 id="过滤：桶和层"><a href="#过滤：桶和层" class="headerlink" title="过滤：桶和层"></a>过滤：桶和层</h3><p>不同的对象有不同的类型，可以是透明不透明等。Unity使用队列的概念来决定对象渲染的时机。这些队列构成了桶，渲染对象将会保存在桶中（类似桶排序）。当我们使用SRP时，我们可以决定哪个范围的桶可以被渲染。</p>
+<p>除了桶之外，标准的分层也可以用于过滤。</p>
+<p>例子：</p>
+<figure class="hljs highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs c#"><span class="hljs-comment">// Get the opaque rendering filter settings</span><br><span class="hljs-keyword">var</span> opaqueRange = <span class="hljs-keyword">new</span> FilterRenderersSettings();<br><br><span class="hljs-comment">//Set the range to be the opaque queues</span><br>opaqueRange.renderQueueRange = <span class="hljs-keyword">new</span> RenderQueueRange()<br>&#123;<br>    min = <span class="hljs-number">0</span>,<br>    max = (<span class="hljs-built_in">int</span>)UnityEngine.Rendering.RenderQueue.GeometryLast,<br>&#125;;<br><br><span class="hljs-comment">//Include all layers</span><br>opaqueRange.layerMask = ~<span class="hljs-number">0</span>;<br></code></pre></td></tr></table></figure>
+
+<h3 id="绘制设置：物体如何被绘制"><a href="#绘制设置：物体如何被绘制" class="headerlink" title="绘制设置：物体如何被绘制"></a>绘制设置：物体如何被绘制</h3><p>之前的过滤和剪裁都是决定了哪些内容需要被渲染。接下来决定这些物体如何被渲染。SRP提供了一系列的操作，对通过过滤的物体进行渲染配置。配置这些数据的结构是：DrawRenderSettings。这个结构允许以下内容的配置：</p>
+<ul>
+<li>Sorting - 物体绘制顺序。</li>
+<li>每个渲染标志 - 传递内部参数。</li>
+<li>渲染标志 - 动态合并实例化技术等等算法</li>
+<li>Shander Pass -当前的draw使用哪一个pass</li>
+</ul>
+<figure class="hljs highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs c#"><span class="hljs-comment">// Create the draw render settings</span><br><span class="hljs-comment">// note that it takes a shader pass name</span><br><span class="hljs-keyword">var</span> drs = <span class="hljs-keyword">new</span> DrawRendererSettings(Camera.current, <span class="hljs-keyword">new</span> ShaderPassName(<span class="hljs-string">&quot;Opaque&quot;</span>));<br> <br><span class="hljs-comment">// enable instancing for the draw call</span><br>drs.flags = DrawRendererFlags.EnableInstancing;<br> <br><span class="hljs-comment">// pass light probe and lightmap data to each renderer</span><br>drs.rendererConfiguration = RendererConfiguration.PerObjectLightProbe | RendererConfiguration.PerObjectLightmaps;<br> <br><span class="hljs-comment">// sort the objects like normal opaque objects</span><br>drs.sorting.flags = SortFlags.CommonOpaque;<br></code></pre></td></tr></table></figure>
+
+<h3 id="绘制"><a href="#绘制" class="headerlink" title="绘制"></a>绘制</h3><p>现在完成了：</p>
+<ul>
+<li>剪裁规则</li>
+<li>过滤规则</li>
+<li>绘制规则</li>
+</ul>
+<p>我们需要执行一个draw call。一个draw call就是对上下文的一次调用。在SRP中通常不渲染独立的网格，除非你需要一次性绘制很多。这减小了开销，同时保证了CPU的快速执行。</p>
+<p>发布draw call</p>
+<figure class="hljs highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs c#"><span class="hljs-comment">// draw all of the renderers</span><br>context.DrawRenderers(cullResults.visibleRenderers, <span class="hljs-keyword">ref</span> drs, opaqueRange);<br> <br><span class="hljs-comment">// submit the context, this will execute all of the queued up commands.</span><br>context.Submit();<br></code></pre></td></tr></table></figure>
+
+<p>这会把对象渲染到当前绑定的渲染目标。你可以使用一个command buffer来切换渲染目标。</p>
+
+    </main>
+    <footer class="post-footer">
+      
+    </footer>
+  </article>
+  
+  
+  <nav class="page-nav">
+    <div class="page-nav-next page-nav-item">
+      
+      <a href="/2023/06/02/Unity/SetRenderTarget/" rel="next" title="在Unity官方文档的介绍中，SetRenderTarget可以设置渲染目标"><i class="fas fa-angle-left"></i><span class="nav-title">在Unity官方文档的介绍中，SetRenderTarget可以设置渲染目标</span></a>
+      
+    </div>
+    <div class="page-nav-prev page-nav-item">
+      
+      <a href="/2023/06/02/Unity/Occluded%20Culling/" rel="prev" title="介绍unity遮挡剔除功能"><span class="nav-title">介绍unity遮挡剔除功能</span><i class="fas fa-angle-right"></i></a>
+      
+    </div>
+  </nav>
+  
+  
+  
+
+<div class="comments" id="comments">
+  
+  
+  <div class="commentjs" id="comment-thread"></div>
+  <link rel="stylesheet" href="/css/commentjs.css">
+  <script defer type="text/javascript" src="/js/marked.min.js"></script>
+  <script defer type="text/javascript" src="/js/timeago.min.js"></script>
+  <script defer type="text/javascript" src="/js/highlight.min.js"></script>
+  <script defer type="text/javascript" src="/js/commentjs.js"></script>
+  <script type="text/javascript">
+  $(document).ready(function () {
+    getComments({
+      "type": "github",
+      "user": "leinlin",
+      "repo": "leinlin.github.io",
+      "client_id": "aee134bdfb54c4ef5826",
+      "client_secret": "4af1d3f2b82dccc028c49715becc01e611afbe43",
+      "no_comment": "这个页面还没有评论，现在就去评论吧！",
+      "go_to_comment": "去评论",
+      "issue_title": "Scriptable Render Pipeline Overview",
+      "btn_class": "button",
+      "comments_target": "#comment-thread"
+    });
+    marked.setOptions({
+      "highlight": function (code, lang) {
+        return hljs.highlightAuto(code).value;
+      }
+    });
+    function mark() {
+      var markdowns = document.getElementsByClassName("markdown");
+      for (var i = 0; i < markdowns.length; ++i){
+        if (markdowns[i].innerHTML) {
+          markdowns[i].innerHTML = marked(markdowns[i].innerHTML);
+        }
+      }
+    }
+    window.addEventListener("DOMContentLoaded", mark, false);
+    window.addEventListener("load", mark, false);
+  });
+  </script>
+  
+  
+</div>
+
+
+
+  
+</div>
+
+          </div>
+          
+          
+          
+<aside class="sidebar" id="sidebar" style="background: url(/images/background.png);">
+  
+  <div class="search">
+    <div class="form-group">
+      <i class="fas fa-search"></i><input type="search" id="search-input" name="q" results="0" placeholder="搜索" class="form-control"/>
+    </div>
+  </div>
+  <div class="search-result-box" id="search-result"></div>
+  
+  
+<div class="info sidebar-item" id="info">
+  
+  <img class="author-avatar" src="/images/avatar.jpg" alt="leinlin">
+  
+  <h1 class="author-name">leinlin</h1>
+  <h2 class="author-description"></h2>
+  <div class="site-count">
+    
+    
+    
+    
+    <div class="categories-count count-block">
+      <div class="site-count-title">分类</div>
+      <div><a href="/categories/">20</a></div>
+    </div>
+    
+    
+  </div>
+  
+  <div class="rss">
+    <a class="rss-link button sidebar-item" href="/atom.xml"><i class="fas fa-rss"></i>RSS</a>
+  </div>
+  
+</div>
+
+
+  <div class="sidebar-sticky">
+    
+    
+    
+    
+    
+    <hr>
+    <div class="post-toc sidebar-item" id="toc-div">
+      <div><i class="fas fa-list-ol"></i>文章目录</div>
+      <div class="post-toc-content"><ol class="list-group toc"><li class="toc-item toc-level-1"><a class="list-group-item toc-link" href="#Scriptable-Render-Pipeline-Overview"><span class="toc-text">Scriptable Render Pipeline Overview</span></a><ol class="list-group toc-child"><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#%E6%B8%B2%E6%9F%93%E5%85%A5%E5%8F%A3%E7%82%B9%EF%BC%88Rendering-entry-point%EF%BC%89"><span class="toc-text">渲染入口点（Rendering entry point）</span></a></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF%E4%B8%8A%E4%B8%8B%E6%96%87%EF%BC%88Render-Pipeline-Context%EF%BC%89"><span class="toc-text">渲染管线上下文（Render Pipeline Context）</span></a></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#%E5%89%AA%E8%A3%81Culling"><span class="toc-text">剪裁Culling</span></a><ol class="list-group toc-child"><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#%E5%9C%A8SRP%E5%BD%93%E4%B8%AD%E6%89%A7%E8%A1%8C%E5%89%AA%E8%A3%81"><span class="toc-text">在SRP当中执行剪裁</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#Drawing-%E7%BB%98%E5%88%B6"><span class="toc-text">Drawing 绘制</span></a><ol class="list-group toc-child"><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#%E8%BF%87%E6%BB%A4%EF%BC%9A%E6%A1%B6%E5%92%8C%E5%B1%82"><span class="toc-text">过滤：桶和层</span></a></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#%E7%BB%98%E5%88%B6%E8%AE%BE%E7%BD%AE%EF%BC%9A%E7%89%A9%E4%BD%93%E5%A6%82%E4%BD%95%E8%A2%AB%E7%BB%98%E5%88%B6"><span class="toc-text">绘制设置：物体如何被绘制</span></a></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#%E7%BB%98%E5%88%B6"><span class="toc-text">绘制</span></a></li></ol></li></ol></li></ol></div>
+    </div>
+    
+    
+    
+    <hr>
+    <div class="social-link sidebar-item">
+      <div><i class="far fa-address-card"></i>社交链接</p></div>
+      <ul>
+        
+        <li><i class="fab fa-github"></i><a href="https://leinlin.github.com/" target="_blank">GitHub</a></li>
+        
+      </ul>
+    </div>
+    
+    
+  </div>
+</aside>
+
+
+          
+        </div>
+      </div>
+    </main>
+    
+<footer id="footer" class="footer" style="background: #33363b;">
+  <div class="container">
+    <div class="back-to-top">
+      <button id="back-to-top"><i class="fas fa-angle-double-up" aria-label="回到顶部"></i></button>
+    </div>
+    <div class="footer-container">
+      <div class="footer-left">
+        <div class="copyright">
+          <span class="author">leinlin</span><span class="year"><i class="far fa-copyright"></i>2023</span>
+        </div>
+        
+        <div class="busuanzi">
+          <span id="busuanzi_container_site_pv"><i class="fas fa-eye" aria-label="站点点击量" aria-hidden="false"></i><span id="busuanzi_value_site_pv"></span></span><span id="busuanzi_container_site_uv"><i class="fas fa-user" aria-label="站点用户数" aria-hidden="false"></i><span id="busuanzi_value_site_uv"></span></span><span id="busuanzi_container_page_pv"><i class="far fa-file-alt"></i><span id="busuanzi_value_page_pv" aria-label="页面点击量" aria-hidden="false"></span></span>
+        </div>
+        
+      </div>
+      <div class="footer-right">
+        <div class="custom-info">
+          
+          托管于<i class="fab fa-github-alt"></i><a href="https://pages.github.com/" target="_blank">GitHub Pages</a>
+          
+        </div>
+        <div class="powered-by">
+          由 <a href="https://hexo.io/" target="_blank">Hexo</a> 强力驱动 | 主题 <a href="https://github.com/AlynxZhou/hexo-theme-aria/" target="_blank">ARIA</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+  <script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

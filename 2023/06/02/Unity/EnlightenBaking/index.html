@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#33363b">
+    <meta name="msapplication-TileColor" content="#33363b">
+    
+    
+    
+    
+    <meta name="keywords" content="leinlin, ARIA, Hexo">
+    
+    
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png">
+    
+    
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicons/android-chrome-192x192.png">
+    
+    
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png">
+    
+    
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png">
+    
+    
+    <link rel="mask-icon" href="/favicons/safari-pinned-tab.svg" color="#33363b">
+    
+    
+    <link rel="manifest" href="/favicons/site.webmanifest">
+    
+    
+    <meta name="msapplication-config" content="/favicons/browserconfig.xml">
+    
+    
+    <link rel="alternate" href="/atom.xml" title="leinlin的小笔记" type="application/atom+xml" />
+    
+    
+    <link rel="shortcut icon" type="image/x-icon" href="/favicons/favicon.ico">
+    
+    
+    <link rel="stylesheet" type="text/css" href="/css/normalize.css">
+    <link rel="stylesheet" type="text/css" href="/css/index.css">
+    
+    <link rel="stylesheet" type="text/css" href="/css/sidebar.css">
+    
+    
+<link rel="stylesheet" type="text/css" href="/css/page.css">
+<link rel="stylesheet" type="text/css" href="/css/post.css">
+
+    <link rel="stylesheet" type="text/css" href="/css/custom.css">
+    <link rel="stylesheet" type="text/css" href="/css/atom-one-light.css">
+    <link rel="stylesheet" type="text/css" href="/css/lightgallery.min.css">
+    <script type="text/javascript" src="/js/jquery.min.js"></script>
+    <script defer type="text/javascript" src="/js/util.js"></script>
+    <script defer type="text/javascript" src="/js/clipboard.min.js"></script>
+    <script defer type="text/javascript" src="/js/scrollspy.js"></script>
+    <script defer type="text/javascript" src="/js/fontawesome-all.min.js"></script>
+    <script defer type="text/javascript" src="/js/lightgallery.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-fullscreen.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-hash.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-pager.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-thumbnail.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-zoom.min.js"></script>
+    
+    <script defer src="/js/busuanzi.pure.mini.js"></script>
+    
+    
+    <script defer type="text/javascript" src="/js/search.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function () {
+      var searchPath = "search.xml";
+      if (searchPath.length === 0) {
+        searchPath = "search.xml";
+      }
+      var path = "/" + searchPath;
+      searchFunc(path, "search-input", "search-result");
+    });
+    </script>
+    
+    
+    
+    <script defer type="text/javascript" src="https://cdn.staticfile.org/MathJax/MathJax-2.6-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ["$","$"], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ["script", "noscript", "style", "textarea", "pre", "code"]
+      }
+    });
+    </script>
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for (i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += " has-jax";
+      }
+    });
+    </script>
+    
+    
+    <script defer type="text/javascript" src="/js/index.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function () {
+      var cb = null;
+      var els = $(".post figure.highlight");
+      if (els.length) {
+        // Enabled Hexo highlight line number.
+        $(els).each(function (i, e) {
+          // $(e).before("<button class=\"copy button\">复制</button>");
+          $(e).before([
+            "<div class=\"code-titlebar\">",
+              "<div class=\"titlebar-left\">",
+                "<button class=\"copy\">复制</button>",
+              "</div>",
+            "</div>"
+          ].join(""));
+        });
+        cb = new ClipboardJS("button.copy", {
+          "target": function (trigger) {
+              // Get target element by DOM API.
+              return trigger.parentNode.parentNode.nextElementSibling.firstChild.firstChild.firstChild.lastChild.firstChild.firstChild;
+          }
+        });
+      } else {
+        // Disabled Hexo highlight line number.
+        els = $(".post pre code");
+        $(els).each(function (i, e) {
+          // Add button before pre, not code.
+          // $(e).parent().before("<button class=\"copy button\">复制</button>");
+          $(e).before([
+            "<div class=\"code-titlebar\">",
+              "<div class=\"titlebar-left\">",
+                "<button class=\"copy\" >复制</button>",
+              "</div>",
+              "<div class=\"titlebar-right\">",
+                "<button class=\"button-dot dot-minimize\" aria-label=\"Decoration\"></button>",
+                "<button class=\"button-dot dot-maximize\" aria-label=\"Decoration\"></button>",
+                "<button class=\"button-dot dot-close\" aria-label=\"Decoration\"></button>",
+              "</div>",
+            "</div>"
+          ].join(""));
+        });
+        cb = new ClipboardJS("button.copy", {
+          "target": function (trigger) {
+              // Get target element by DOM API.
+              return trigger.parentNode.parentNode.nextElementSibling;
+          }
+        });
+      }
+      cb.on("success", function (e) {
+        e.clearSelection();
+        var trigger = e.trigger;
+        // Change button text as a user tip.
+        trigger.innerHTML = "已复制";
+        $(trigger).addClass("copied");
+        // Change button text back;
+        setTimeout(function () {
+          trigger.innerHTML = "复制";
+          $(trigger).removeClass("copied");
+        }, 1500);
+      });
+    });
+    </script>
+    
+    <script defer type="text/javascript" src="/js/custom.js"></script>
+    <title>Enlighten | leinlin的小笔记</title>
+  <meta name="generator" content="Hexo 6.2.0"></head>
+  <body itemscope itemtype="http://schema.org/WebPage" lang="zh_CN"  data-spy="scroll" data-target=".list-group">
+    
+<header id="header" class="header" style="background: #33363b;">
+  <div class="container">
+    <div class="header-container">
+      <div class="header-title">
+        <h1 class="title"><a href="/">leinlin的小笔记</a></h1>
+        <h2 class="subtitle"></h2>
+      </div>
+      
+    </div>
+    <nav id="nav" class="nav">
+      <a id="nav-toggle" class="nav-toggle" aria-hidden="true"><i class="fas fa-bars" aria-label="切换导航栏"></i></a>
+      <ul id="menu" role="menubar" aria-hidden="false">
+        
+        <li role="menuitem"><a href="/"><i class="fas fa-home"></i><span class="menu-text">首页</span></a></li>
+        
+        <li role="menuitem"><a href="/categories/"><i class="fas fa-th-list"></i><span class="menu-text">分类</span></a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</header>
+
+
+    <main id="main" class="main">
+      <div class="container">
+        <div class="main-container">
+          <div class="content">
+            
+<div id="post" class="page">
+  
+  <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
+    <div class="post-block">
+      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2023/06/02/Unity/EnlightenBaking/">
+      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+       <meta itemprop="name" content="leinlin">
+       <meta itemprop="description" content="">
+       <meta itemprop="image" content="/images/avatar.jpg">
+      </span>
+      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+       <meta itemprop="name" content="leinlin的小笔记">
+      </span>
+    </div>
+    <header class="post-header">
+      <h1 class="post-title" itemprop="name headline">Enlighten</h1>
+      <div class="post-meta">
+        
+        <span class="post-date">
+          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2023-06-02T12:00:14+08:00">2023-06-02 12:00:14</time></span>
+        </span>
+        
+        
+        
+        <span class="post-meta-divider divider">|</span>
+        
+        <span class="post-categories">
+          
+          <i class="far fa-folder-open"></i><span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Unity/" itemprop="url" rel="index"><span itemprop="name">Unity</span></a></span>
+        </span>
+        
+        
+        
+        
+      </div>
+    </header>
+    <main class="post-main" itemprop="articleBody">
+      <h1 id="Enlighten"><a href="#Enlighten" class="headerlink" title="Enlighten"></a>Enlighten</h1><p>Unity的Enlighten的lightmap烘焙有<strong>三个设置</strong>位置:</p>
+<p>全场景设置：</p>
+<p><img src="/img/lightmap_globalsetting.jpg" alt="lightmap_globalsetting"></p>
+<p>模型设置：</p>
+<p><img src="/img/lightmap_objectsetting.jpg" alt="lightmap_objectsetting"></p>
+<p>右键创建lightmap parameter:</p>
+<p><img src="/img/lightmap_lightparamtersetting.jpg" alt="lightmap_lightparamtersetting"></p>
+<p>Enlighten需要进行合理的设置才能够达到高效和高质量，如果使用默认设置几乎不能达到要求。</p>
+<p>​	国内大部分游戏使用Prograssive渐进烘焙，<strong>实际上Enlighten通过正确的设置参数，速度是可以保证的，并且效果更好，国外AAA以及UE4作品都是用Enlighten烘焙的。后面讲解如何正确的使用Enlighten。达到高效和高质量的结果。</strong></p>
+<h2 id="Enlighten和Prograssive直观对比"><a href="#Enlighten和Prograssive直观对比" class="headerlink" title="Enlighten和Prograssive直观对比"></a>Enlighten和Prograssive直观对比</h2><p>简单测试一下不同渲染器不同设置之间的差别。</p>
+<p>使用默认参数，70秒，Enlighten烘焙的间接光：</p>
+<p><img src="/../../images/img/lightmap_bakedemo2.jpg" alt="lightmap_bakedemo2"></p>
+<p>使用默认参数，18秒，Progressive烘焙的间接光：</p>
+<p><img src="/../../images/img/lightmap_bakedemo3.jpg" alt="lightmap_bakedemo3"></p>
+<p>经过参数调整，3秒，Enlighten烘焙的间接光：</p>
+<p><img src="/../../images/img/lightmap_bakedemo1.jpg" alt="lightmap_bakedemo1"></p>
+<p>经过参数调整，8秒，Progressive烘焙的间接光：</p>
+<p><img src="/../../images/img/lightmap_bakedemo4.jpg" alt="lightmap_bakedemo4"></p>
+<p>​	可以看到只要进行正确的调整,Enlighten是可以<strong>在更合理的时间达到比较好的效果</strong>，而Progressive的调整，比如降低direct采样数或者反弹数就会明显的让Lightmap变黑、变得生硬。</p>
+<h2 id="基本功能（这部分内容和Unity有差异）"><a href="#基本功能（这部分内容和Unity有差异）" class="headerlink" title="基本功能（这部分内容和Unity有差异）"></a>基本功能（这部分内容和Unity有差异）</h2><p>官方说明（和Unity集成后不太一样）：</p>
+<ol>
+<li>Enlighten 只计算反射光（间接光）。</li>
+<li>不计算直接光和阴影。</li>
+<li>Enlighten是CPU上的异步计算。</li>
+</ol>
+<p>Enlighten的输出（和Unity集成后不太一样）：</p>
+<ol>
+<li>高质量的可以实时更新的GI。</li>
+<li>漫反射间接光：lightmaps 和lightprobes。</li>
+<li>高管反射：cubemap</li>
+<li>比传统bake分辨率低。</li>
+</ol>
+<p>下面是一个官方参考的设置的大小，包括texel大小和lightprobef分布，绿色表示是动态物体：</p>
+<p><img src="/../../images/img/lightmap_bake2.jpg" alt="lightmap_bake2"><img src="/../../images/img/lightmap_bake1.jpg" alt="lightmap_bake1"></p>
+<h2 id="Cluster烘焙原理说明"><a href="#Cluster烘焙原理说明" class="headerlink" title="Cluster烘焙原理说明"></a>Cluster烘焙原理说明</h2><h3 id="Enlighten的好处"><a href="#Enlighten的好处" class="headerlink" title="Enlighten的好处"></a>Enlighten的好处</h3><ul>
+<li>有效的区域光：自发光表面可以作为一个区域光。</li>
+<li>平滑的工作流：迭代速度快。</li>
+<li>灵活及时反映的光照：实时间接光可以相应灯光的变化。</li>
+</ul>
+<h3 id="工作流"><a href="#工作流" class="headerlink" title="工作流"></a>工作流</h3><ol>
+<li>设置场景</li>
+<li>预计算</li>
+<li>灯光照亮</li>
+</ol>
+<h3 id="渲染"><a href="#渲染" class="headerlink" title="渲染"></a>渲染</h3><p>GI使用一个复杂的公式描述：<a target="_blank" rel="noopener" href="https://en.wikipedia.org/wiki/Rendering_equation">Rendering equation</a></p>
+<p><img src="/../../images/img/lightmap_fomula.jpg" alt="lightmap_fomula"></p>
+<p>这个公式非常复杂，wiki当中有详细的描述。这里简单的描述一下：</p>
+<p>$L_0$表示物体在位置$x$处，超$w_o$方向，对于波长$\lambda$的波的，在$t$时间中的光辐射率。</p>
+<p>$L_e$是自发光的光辐射量。</p>
+<p>$f_r$ 是<strong>brdf函数</strong>，描述入射光$w_i$的表面属性。</p>
+<p>$L_i$是入射光的辐射量</p>
+<p>$w_i * n$ 衰减因子。</p>
+<p>总的描述一下就是：<strong>反射的光线 &#x3D; 自发光 + 所有入射光被反射的和</strong></p>
+<p>上面的公式很复杂，但是可以通过很多方法进行估算。</p>
+<p>Enlighten简化了这个问题：<strong>假设元素是静态的、有限的、并且只传递漫反射。</strong>这个方法叫做辐射度（radiosity）。</p>
+<ol>
+<li>Enlighten移除了材质依赖：也就是去掉了brdf函数，把积分中的内容变成一个form fractor。</li>
+<li>form fractor描述了光从元素i离开到达元素j的百分比。</li>
+<li>积分就变成了（from fractor* 对应元素的辐射率）的和，然后再加上自发光。</li>
+<li>我们可以在多帧中处理这个离散的数学问题，同时需要运行多次达到收敛。不过求解这个问题和帧率是完全独立的，人眼对间接光的变化并不敏感。</li>
+</ol>
+<p>最终的简化结果：</p>
+<p>$$ B_i &#x3D; L_e + \rho_i  \sum <em>{j&#x3D;1}^{n}F</em>{ij}L_j$$</p>
+<p>$B_i $ 表示i点的光$L_e$ 表示从<strong>cluster</strong> i上发射的自发光。（光是靠cluster计算的）。</p>
+<p>$\rho_i$表示材质属性</p>
+<p>$n$ 是<strong>budget</strong>：一个cluster 最多接受几个cluster的辐射。</p>
+<p>$F_ij$  from fractor：从cluster i到cluster j可以传递多少能量。</p>
+<p>$L_j$ 是从cluster j当中释放出的光。（上一帧，这个算法是逐帧迭代的）。</p>
+<h3 id="Example"><a href="#Example" class="headerlink" title="Example"></a>Example</h3><ol>
+<li><p>首先场景当中的几何体会被划分成可以并行计算的<strong>System</strong>（based on proximity and Lightmap Parameters， sharing the same realtime lightmap）。<strong>System之间可以并行</strong>。</p>
+<p>下面是System Scene View：</p>
+<p><img src="/../../images/img/lightmap_GIUI_system.png" alt="lightmap_GIUI_system"></p>
+</li>
+<li><p>每一个System会分割成离散的<strong>Cluster</strong>。</p>
+</li>
+</ol>
+<p>Enlighten就是使用这些Clusters计算间接光的，因为每一帧需要进行积分，所以cluster数量越多，计算开销成$$O(n^2)$$。</p>
+<p>Cluster的大小需要比lightmap的pixel大。比例在LightMap Paramter当中设置：<strong>Cluster Resolution</strong>。这个参数内存敏感，如果这个比例设置不正确，将Geometry设置成cluster的步骤将会消耗大量内存。</p>
+<p>下面是Cluster Scene View：</p>
+<p><img src="/../../images/img/lightmap_GIUI_cluster.png" alt="lightmap_GIUI_cluster"></p>
+<ol start="3">
+<li>预计算，需要计算Cluster之间的可见性。</li>
+<li>当对<strong>每一个点</strong>计算间接光时，每个像素可见的cluster已经完成了预先计算。运行时，只要将这些cluster求和即可。</li>
+</ol>
+<h3 id="Culster和System"><a href="#Culster和System" class="headerlink" title="Culster和System"></a>Culster和System</h3><p>Enlighten将世界看做由很多Cluster组成的。Cluster是计算光照的基本单位。</p>
+<p>Cluster并不是只属于一个System，而是可以在System之间传递。</p>
+<p>在光照传输阶段，计算的是cluster之间的可见性。</p>
+<p><strong>Irradiance Quality</strong>在lightmap paramenter中设置。描述了在预计算阶段，针对每一个lightmap texel 要发射多少条ray，来计算有多少个cluster对这个texelhui产生影响。数量越多，找到的cluster越精确，只影响预计算效率。不影响运行时效率。</p>
+<p><strong>Irradiance budget</strong>在lightmap paramenter中设置。通过发射ray找到每一个lightmap texel关联的cluster之后，记录form fractor的数量。如果太小可能遗漏应该计算的光线。</p>
+<h2 id="烘焙参数"><a href="#烘焙参数" class="headerlink" title="烘焙参数"></a>烘焙参数</h2><p>对于上一部分的流程，这里接招几个和bake性能有关的重要参数。</p>
+<p>由于有三个位置可以设置Enlighten的烘焙，下面就分三部分介绍：</p>
+<h3 id="针对场景的总体设置：LightMapping-Setting"><a href="#针对场景的总体设置：LightMapping-Setting" class="headerlink" title="针对场景的总体设置：LightMapping Setting"></a>针对场景的总体设置：LightMapping Setting</h3><p>详细解释见<a target="_blank" rel="noopener" href="https://docs.unity3d.com/Manual/GI-Enlighten.html">官方说明</a>，下面只对重要参数进行说明。</p>
+<p><img src="/../../images/img/lightmap_globalsetting.jpg" alt="lightmap_globalsetting"></p>
+<p><strong>LightMapper</strong> ：使用哪个烘焙，这里只讨论Enlighten。</p>
+<p><strong>Indrection Resolution</strong> ： 一米多少个Cluster。<strong>越小越快。</strong></p>
+<p><strong>Lightmap Resolution</strong> ： 一米多少个lightmap pixel。<strong>越小越快</strong></p>
+<p>注：当我们把上面两个值都设置成1 的时候，切换cluster scene view和baked lightmap，发现cluster比lightmap pixel要大。这是因为<strong>在LightmapParameters当中Cluster Resolution</strong>也会对cluster产生影响。如果把物体的Cluster Resolution也设置为1，那么Cluster和LightMap Pixel的大小就是1:1。</p>
+<p>注：因为预计算是计算每一个pixel对于哪些cluster可见，所以开销就是Indrection Resolution*Lightmap Resolution。</p>
+<h3 id="针对GameObject的设置：LightMapping"><a href="#针对GameObject的设置：LightMapping" class="headerlink" title="针对GameObject的设置：LightMapping"></a>针对GameObject的设置：LightMapping</h3><p><strong>Scale In Lightmap</strong> 在Lightmap当中的缩放，并不影响计算进度，只影响算完之后如何存储。通过合理的设置可以减少lightmap的总数。</p>
+<p><strong>这部分的参数和uv分布有关系，暂时略过。</strong></p>
+<p><img src="/../../images/img/lightmap_objectsetting.jpg" alt="lightmap_objectsetting"></p>
+<h3 id="可以选择的全局配置文件：LightMapParameter"><a href="#可以选择的全局配置文件：LightMapParameter" class="headerlink" title="可以选择的全局配置文件：LightMapParameter"></a>可以选择的全局配置文件：LightMapParameter</h3><p>详细解释见：<a target="_blank" rel="noopener" href="https://docs.unity3d.com/Manual/class-LightmapParameters.html">官方文档</a></p>
+<p><strong>Resolution</strong>： 直接和全局的Indrection Resolution和Lightmap Resolution相乘。 <strong>越小越快，默认为1</strong></p>
+<p><strong>Cluster Resolution</strong> ：Indrection Resolution和Lightmap Resolution的比例。这个只会方法Cluster的大小，默认0.5，也就是Cluster当中包括了4个texel。<strong>越小越快，默认0.5</strong></p>
+<p><strong>Irradiance Quality</strong> ：描述了在预计算阶段，针对每一个lightmap texel 要发射多少条ray，来计算有多少个cluster对这个texelhui产生影响。数量越多，找到的cluster越精确，<strong>只影响预计算效率。不影响运行时效率。</strong> <strong>越小越快</strong></p>
+<p><strong>Irradiance budget</strong> ：通过发射ray找到每一个lightmap texel关联的cluster之后，记录form fractor的数量。如果太小可能遗漏应该计算的光线。<strong>对bake时间没有影响</strong></p>
+<p>其他内容见文档。</p>
+<p><img src="/../../images/img/lightmap_lightparamtersetting.jpg" alt="lightmap_lightparamtersetting"></p>
+<h3 id="重要说明"><a href="#重要说明" class="headerlink" title="重要说明"></a>重要说明</h3><ol>
+<li><p>和Enlighten相关的内容，除了Culster计算光照、System之间可以并行、Pixel计算可见性之外。还有一部分是uv相关的设置，这部分对性能影响不大之后再分析。</p>
+</li>
+<li><p>对于树叶、草等有零碎的cluster和uv chart的物体，一定要特殊处理，使用实时光。或者重分uv。不然会产生极大的烘焙开销。</p>
+</li>
+<li><p>要合理使用lightmapping paramter对不同类型的物体的进行设置，尤其是cluster和pixel的大小。</p>
+</li>
+</ol>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p><a target="_blank" rel="noopener" href="https://blogs.unity3d.com/2016/09/28/in-development-progressive-lightmapper/">https://blogs.unity3d.com/2016/09/28/in-development-progressive-lightmapper/</a></p>
+<p><a target="_blank" rel="noopener" href="https://enlighten.atlassian.net/wiki/spaces/UEF309/pages/525467659/How+Enlighten+works">https://enlighten.atlassian.net/wiki/spaces/UEF309/pages/525467659/How+Enlighten+works</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.siliconstudio.co.jp/middleware/enlighten/en/blog/2018/20180406/pdf/gdc2018-enlighten-global-illumination-that-scales.pdf">https://www.siliconstudio.co.jp/middleware/enlighten/en/blog/2018/20180406/pdf/gdc2018-enlighten-global-illumination-that-scales.pdf</a></p>
+<p><a target="_blank" rel="noopener" href="https://docs.unity3d.com/uploads/ExpertGuides/Using_Enlighten_with_Unity.pdf">https://docs.unity3d.com/uploads/ExpertGuides/Using_Enlighten_with_Unity.pdf</a></p>
+
+    </main>
+    <footer class="post-footer">
+      
+    </footer>
+  </article>
+  
+  
+  <nav class="page-nav">
+    <div class="page-nav-next page-nav-item">
+      
+      <a href="/2023/06/02/Unity/HDRPShader%E5%BD%93%E4%B8%AD%E7%9A%84%E5%9D%90%E6%A0%87%E7%B3%BB%E5%8F%98%E6%8D%A2%E7%9F%A9%E9%98%B5/" rel="next" title="Light Loop"><i class="fas fa-angle-left"></i><span class="nav-title">Light Loop</span></a>
+      
+    </div>
+    <div class="page-nav-prev page-nav-item">
+      
+      <a href="/2023/06/02/UnityEffect/%E4%BF%AE%E6%94%B9UnityHDRP%E7%AE%A1%E7%BA%BF%E6%9D%A5%E5%AE%9E%E7%8E%B0%E6%80%AA%E7%89%A9%E7%8C%8E%E4%BA%BA%E4%B8%96%E7%95%8C%E4%B8%AD%E5%AE%A0%E7%89%A9%E6%AF%9B%E5%8F%91%E6%95%88%E6%9E%9C/" rel="prev" title="修改UnityHDRP管线来实现怪物猎人世界中宠物毛发效果"><span class="nav-title">修改UnityHDRP管线来实现怪物猎人世界中宠物毛发效果</span><i class="fas fa-angle-right"></i></a>
+      
+    </div>
+  </nav>
+  
+  
+  
+
+<div class="comments" id="comments">
+  
+  
+  <div class="commentjs" id="comment-thread"></div>
+  <link rel="stylesheet" href="/css/commentjs.css">
+  <script defer type="text/javascript" src="/js/marked.min.js"></script>
+  <script defer type="text/javascript" src="/js/timeago.min.js"></script>
+  <script defer type="text/javascript" src="/js/highlight.min.js"></script>
+  <script defer type="text/javascript" src="/js/commentjs.js"></script>
+  <script type="text/javascript">
+  $(document).ready(function () {
+    getComments({
+      "type": "github",
+      "user": "leinlin",
+      "repo": "leinlin.github.io",
+      "client_id": "aee134bdfb54c4ef5826",
+      "client_secret": "4af1d3f2b82dccc028c49715becc01e611afbe43",
+      "no_comment": "这个页面还没有评论，现在就去评论吧！",
+      "go_to_comment": "去评论",
+      "issue_title": "Enlighten",
+      "btn_class": "button",
+      "comments_target": "#comment-thread"
+    });
+    marked.setOptions({
+      "highlight": function (code, lang) {
+        return hljs.highlightAuto(code).value;
+      }
+    });
+    function mark() {
+      var markdowns = document.getElementsByClassName("markdown");
+      for (var i = 0; i < markdowns.length; ++i){
+        if (markdowns[i].innerHTML) {
+          markdowns[i].innerHTML = marked(markdowns[i].innerHTML);
+        }
+      }
+    }
+    window.addEventListener("DOMContentLoaded", mark, false);
+    window.addEventListener("load", mark, false);
+  });
+  </script>
+  
+  
+</div>
+
+
+
+  
+</div>
+
+          </div>
+          
+          
+          
+<aside class="sidebar" id="sidebar" style="background: url(/images/background.png);">
+  
+  <div class="search">
+    <div class="form-group">
+      <i class="fas fa-search"></i><input type="search" id="search-input" name="q" results="0" placeholder="搜索" class="form-control"/>
+    </div>
+  </div>
+  <div class="search-result-box" id="search-result"></div>
+  
+  
+<div class="info sidebar-item" id="info">
+  
+  <img class="author-avatar" src="/images/avatar.jpg" alt="leinlin">
+  
+  <h1 class="author-name">leinlin</h1>
+  <h2 class="author-description"></h2>
+  <div class="site-count">
+    
+    
+    
+    
+    <div class="categories-count count-block">
+      <div class="site-count-title">分类</div>
+      <div><a href="/categories/">20</a></div>
+    </div>
+    
+    
+  </div>
+  
+  <div class="rss">
+    <a class="rss-link button sidebar-item" href="/atom.xml"><i class="fas fa-rss"></i>RSS</a>
+  </div>
+  
+</div>
+
+
+  <div class="sidebar-sticky">
+    
+    
+    
+    
+    
+    <hr>
+    <div class="post-toc sidebar-item" id="toc-div">
+      <div><i class="fas fa-list-ol"></i>文章目录</div>
+      <div class="post-toc-content"><ol class="list-group toc"><li class="toc-item toc-level-1"><a class="list-group-item toc-link" href="#Enlighten"><span class="toc-text">Enlighten</span></a><ol class="list-group toc-child"><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#Enlighten%E5%92%8CPrograssive%E7%9B%B4%E8%A7%82%E5%AF%B9%E6%AF%94"><span class="toc-text">Enlighten和Prograssive直观对比</span></a></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#%E5%9F%BA%E6%9C%AC%E5%8A%9F%E8%83%BD%EF%BC%88%E8%BF%99%E9%83%A8%E5%88%86%E5%86%85%E5%AE%B9%E5%92%8CUnity%E6%9C%89%E5%B7%AE%E5%BC%82%EF%BC%89"><span class="toc-text">基本功能（这部分内容和Unity有差异）</span></a></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#Cluster%E7%83%98%E7%84%99%E5%8E%9F%E7%90%86%E8%AF%B4%E6%98%8E"><span class="toc-text">Cluster烘焙原理说明</span></a><ol class="list-group toc-child"><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#Enlighten%E7%9A%84%E5%A5%BD%E5%A4%84"><span class="toc-text">Enlighten的好处</span></a></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#%E5%B7%A5%E4%BD%9C%E6%B5%81"><span class="toc-text">工作流</span></a></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#%E6%B8%B2%E6%9F%93"><span class="toc-text">渲染</span></a></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#Example"><span class="toc-text">Example</span></a></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#Culster%E5%92%8CSystem"><span class="toc-text">Culster和System</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#%E7%83%98%E7%84%99%E5%8F%82%E6%95%B0"><span class="toc-text">烘焙参数</span></a><ol class="list-group toc-child"><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#%E9%92%88%E5%AF%B9%E5%9C%BA%E6%99%AF%E7%9A%84%E6%80%BB%E4%BD%93%E8%AE%BE%E7%BD%AE%EF%BC%9ALightMapping-Setting"><span class="toc-text">针对场景的总体设置：LightMapping Setting</span></a></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#%E9%92%88%E5%AF%B9GameObject%E7%9A%84%E8%AE%BE%E7%BD%AE%EF%BC%9ALightMapping"><span class="toc-text">针对GameObject的设置：LightMapping</span></a></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#%E5%8F%AF%E4%BB%A5%E9%80%89%E6%8B%A9%E7%9A%84%E5%85%A8%E5%B1%80%E9%85%8D%E7%BD%AE%E6%96%87%E4%BB%B6%EF%BC%9ALightMapParameter"><span class="toc-text">可以选择的全局配置文件：LightMapParameter</span></a></li><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#%E9%87%8D%E8%A6%81%E8%AF%B4%E6%98%8E"><span class="toc-text">重要说明</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="toc-text">参考资料</span></a></li></ol></li></ol></div>
+    </div>
+    
+    
+    
+    <hr>
+    <div class="social-link sidebar-item">
+      <div><i class="far fa-address-card"></i>社交链接</p></div>
+      <ul>
+        
+        <li><i class="fab fa-github"></i><a href="https://leinlin.github.com/" target="_blank">GitHub</a></li>
+        
+      </ul>
+    </div>
+    
+    
+  </div>
+</aside>
+
+
+          
+        </div>
+      </div>
+    </main>
+    
+<footer id="footer" class="footer" style="background: #33363b;">
+  <div class="container">
+    <div class="back-to-top">
+      <button id="back-to-top"><i class="fas fa-angle-double-up" aria-label="回到顶部"></i></button>
+    </div>
+    <div class="footer-container">
+      <div class="footer-left">
+        <div class="copyright">
+          <span class="author">leinlin</span><span class="year"><i class="far fa-copyright"></i>2023</span>
+        </div>
+        
+        <div class="busuanzi">
+          <span id="busuanzi_container_site_pv"><i class="fas fa-eye" aria-label="站点点击量" aria-hidden="false"></i><span id="busuanzi_value_site_pv"></span></span><span id="busuanzi_container_site_uv"><i class="fas fa-user" aria-label="站点用户数" aria-hidden="false"></i><span id="busuanzi_value_site_uv"></span></span><span id="busuanzi_container_page_pv"><i class="far fa-file-alt"></i><span id="busuanzi_value_page_pv" aria-label="页面点击量" aria-hidden="false"></span></span>
+        </div>
+        
+      </div>
+      <div class="footer-right">
+        <div class="custom-info">
+          
+          托管于<i class="fab fa-github-alt"></i><a href="https://pages.github.com/" target="_blank">GitHub Pages</a>
+          
+        </div>
+        <div class="powered-by">
+          由 <a href="https://hexo.io/" target="_blank">Hexo</a> 强力驱动 | 主题 <a href="https://github.com/AlynxZhou/hexo-theme-aria/" target="_blank">ARIA</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+  <script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>

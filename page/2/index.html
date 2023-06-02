@@ -204,7 +204,7 @@
   
   <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
     <div class="post-block">
-      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/09/19/Unity/Shader%E5%BD%93%E4%B8%AD%E7%9A%84%E5%9D%90%E6%A0%87%E5%8F%98%E5%8C%96/">
+      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2023/06/02/Unity/HDRP%E4%B8%ADHairShader%E4%BB%A3%E7%A0%81%E7%BB%93%E6%9E%842/">
       <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
         <meta itemprop="name" content="leinlin">
         <meta itemprop="description" content="">
@@ -216,541 +216,22 @@
     </div>
     <header class="post-header">
       <h1 class="post-title" itemprop="name headline">
-        <a class="post-title-link post-title-link-external" href="/2022/09/19/Unity/Shader%E5%BD%93%E4%B8%AD%E7%9A%84%E5%9D%90%E6%A0%87%E5%8F%98%E5%8C%96/" itemprop="url"></a>
+        <a class="post-title-link post-title-link-external" href="/2023/06/02/Unity/HDRP%E4%B8%ADHairShader%E4%BB%A3%E7%A0%81%E7%BB%93%E6%9E%842/" itemprop="url">HairShader光照模型</a>
       </h1>
       <div class="post-meta">
         
         <span class="post-date">
-          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2022-09-19T19:53:47+08:00">2022-09-19 19:53:47</time></span>
+          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2023-06-02T12:00:14+08:00">2023-06-02 12:00:14</time></span>
         </span>
         
         
         
+        <span class="post-meta-divider divider">|</span>
         
-        
-      </div>
-    </header>
-    <main class="post-main" itemprop="articleBody">
-      
-      <h2 id="1-旋向性"><a href="#1-旋向性" class="headerlink" title="1 旋向性"></a>1 旋向性</h2><p>两个坐标轴有相同的旋向性：可以通过旋转让两个坐标轴重合。</p>
-<p>左右手坐标系有不同的选项性。</p>
-<h2 id="2-左右手坐标系"><a href="#2-左右手坐标系" class="headerlink" title="2 左右手坐标系"></a>2 左右手坐标系</h2><p>拇指、食指、中指分别代表，+x +y +z轴。由此左右手会产生两个不同的坐标系。</p>
-<h2 id="3-左右手法则"><a href="#3-左右手法则" class="headerlink" title="3 左右手法则"></a>3 左右手法则</h2><p>在cross叉乘中，需要通过正旋向来确定结果轴的指向：</p>
-<p><strong>在左右坐标系中，用左手，在右手坐标系中用右手。</strong></p>
-<h2 id="4-unity的坐标系"><a href="#4-unity的坐标系" class="headerlink" title="4 unity的坐标系"></a>4 unity的坐标系</h2><p>模型空间和世界空间是左手坐标系。</p>
-<p>相机空间是右手坐标系。这相机对准了z轴负方向。也就是说z轴坐标的减少意味着场景深度的增加。</p>
-<h2 id="5-矩阵操作："><a href="#5-矩阵操作：" class="headerlink" title="5. 矩阵操作："></a>5. 矩阵操作：</h2><p>UNITY_MATRIX_P 等价于 <a target="_blank" rel="noopener" href="http://resetoter.cn/UnityDoc/ScriptReference/GL.html">GL</a>.GetGPUProjectionMatrix</p>
-<p>Camera.worldToCameraMatrix  ：Note that camera space matches OpenGL convention: camera’s forward is the negative Z axis. This is different from Unity’s convention, where forward is the positive Z axis.</p>
-<p>Camera.cameraToWorldMatrix：Note that camera space matches OpenGL convention: camera’s forward is the negative Z axis. This is different from Unity’s convention, where forward is the positive Z axis.</p>
-<figure class="hljs highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">UNITY_MATRIX_M<br></code></pre></td></tr></table></figure>
-
-<ul>
-<li>This is identical to <code>unity_ObjectToWorld</code>, also called the Model transform</li>
-</ul>
-<h2 id="6-unity-XX矩阵"><a href="#6-unity-XX矩阵" class="headerlink" title="6. unity_XX矩阵"></a>6. unity_XX矩阵</h2><p>shader当中unity_XX（Camera相关）开头的矩阵不一定是当前摄像机矩阵，在官方文档当中也没有提到。</p>
-<ol>
-<li><p>根据实验unity_WorldToCamera 和 UNITY_MATRIX_V 的区别在于：</p>
-<p>而UNITY_MATRIX_V改变了旋向性，第三行z值取反了。</p>
-<p>也就是说unity_WorldToCamera 没有改变旋向性。</p>
-</li>
-<li><p>这个时候UNITY_MATRIX_P（glstate_matrix_projection）是根据平台特殊处理的矩阵。</p>
-</li>
-</ol>
-<p>而unity_CameraProjcetion是按照正常的流程的的矩阵。</p>
-<p>unity c#的代码中通过 GL.get…接口的到的矩阵等价于UNITY_MATRIX_P（glstate_matrix_projection）：省略旋向性改变。约束y方向、约束z方向。更加复杂。</p>
-<p>通过Camera.projectionMatrix得到的是一般投影矩阵unity_CamearaProjection。</p>
-
-      
-      <p align="right"><a class="morebtn" href="/2022/09/19/Unity/Shader%E5%BD%93%E4%B8%AD%E7%9A%84%E5%9D%90%E6%A0%87%E5%8F%98%E5%8C%96/" title="">阅读全文</a></p>
-    </main>
-    <footer class="post-footer">
-      
-    </footer>
-  </article>
-  
-  <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
-    <div class="post-block">
-      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/09/19/Unity/SetRenderTarget/">
-      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-        <meta itemprop="name" content="leinlin">
-        <meta itemprop="description" content="">
-        <meta itemprop="image" content="/images/avatar.jpg">
-      </span>
-      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-        <meta itemprop="name" content="leinlin的小笔记">
-      </span>
-    </div>
-    <header class="post-header">
-      <h1 class="post-title" itemprop="name headline">
-        <a class="post-title-link post-title-link-external" href="/2022/09/19/Unity/SetRenderTarget/" itemprop="url"></a>
-      </h1>
-      <div class="post-meta">
-        
-        <span class="post-date">
-          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2022-09-19T19:53:46+08:00">2022-09-19 19:53:46</time></span>
+        <span class="post-categories">
+          
+          <i class="far fa-folder-open"></i><span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Unity/" itemprop="url" rel="index"><span itemprop="name">Unity</span></a></span>
         </span>
-        
-        
-        
-        
-        
-      </div>
-    </header>
-    <main class="post-main" itemprop="articleBody">
-      
-      <p>在Unity官方文档的介绍中，SetRenderTarget可以设置渲染目标。</p>
-<ol>
-<li>屏幕的渲染目标可以通过Graphics.activeColorBuffer和Graphics.activeDepthBuffer获取。</li>
-</ol>
-<p>其中Graphics.activeDepthBuffer当中包括了stencilbuffer和depthbuffer。</p>
-<ol start="2">
-<li>commandbuffer当中同样可以使用BuiltinRenderTextureType.Color和BuiltinRenderTextureType.depth来访问对应的渲染目标，但是<strong>BuiltinRenderTextureType.depth是不包括stencilbuffer</strong>的。</li>
-<li>如果想要复用包含stencilbuffer的Graphics.activeDepthBuffer，是不能通过SetRenderTarget和自定义的ColorBuffer组合的，会报错。<strong>因为screen的buffer和rendertarget的buffer不能混合使用</strong>。</li>
-<li>如果只需要复用同一张depth，只需要使用BuiltinRenderTextureType.depth和自定义的colorbuffer即可。</li>
-<li>如果需要复用同一张depth&#x2F;stencil，必须要在一开始修改渲染目标为自定义的RenderTarget，例如：SetRenderTarget(selfColorBuffer, selfDepthBuffer) ,同时selfDepthBuffer的深度位数<strong>必须为24或32</strong>.  如果是16 则不支持stencilbuffer。</li>
-</ol>
-<p>关于延迟渲染（deferred）渲染目标（RenderTexture）的问题</p>
-<ol>
-<li>延迟渲染的RenderTarget目前没有找到方法设置。</li>
-<li>延迟渲染的内容可以通过commandbuffer通过BuiltinRenderTextureType.Gbuffer获取出来。</li>
-<li>BuiltinRenderTextureType.Gbuffer3当中保存了整个渲染流程的结果，包括了Forwardpass。</li>
-<li>在渲染结束后，会将BuiltinRenderTextureType.Gbuffer3当中的内容拷贝到最终渲染目标当中。</li>
-<li>SetRenderBuffers()中的多个渲染目标并不是Gbuffer，而是从shader直接输出的内容。</li>
-<li>CameraEvent.beforelighting可以看到Gbuffer3组合了无光照内容和自发光内容和全局光照，还没有环境反射，不过在AfterGbuffer时还没有自发光内容。</li>
-<li>延迟渲染的环境反射是在完成渲染目标切换之后，才进行渲染的，比天空球还晚。（前向渲染是伴随物体光照同时计算的）</li>
-</ol>
-<p>延迟渲染过程中的深度提取</p>
-<ol>
-<li>如果使用BuiltinRenderTextureType.Depth无法获取到stencil纹理，在deferred当中无存在，如果使用会报错：built-in renderTexture type3 not found…</li>
-<li>deferred过程需要使用BuiltinRenderTextureType.ReolvedDepth，不过使用默认深度和自定义 深度大小很容易不匹配</li>
-<li>在ResolvedDepth中存在完整的深度信息。在deferred第一步先计算延迟物体深度（也就是Gbuffer填充阶段），然后计算前向物体深度，当在延迟渲染中设置depthbuffer时，代替的就是ResolvedDepth。</li>
-<li>ResolvedDepth中的Stencil，延迟光照阶段最多会使用高四位，并且进入前向阶段后不会清零。</li>
-<li>在延迟渲染阶段，前向物体深度计算时会在stencilbuffer当中以207为mask写入内容。这表示高两位和第四位是都可以用的。并且Stencil写入和深度写入在同一个阶段。</li>
-</ol>
-<p>*注：当使用commandbuffer绘制一般的物体时，目前的CameraEvent都是不包含光照信息的，所以绘制出来的内容始终是黑色的。</p>
-
-      
-      <p align="right"><a class="morebtn" href="/2022/09/19/Unity/SetRenderTarget/" title="">阅读全文</a></p>
-    </main>
-    <footer class="post-footer">
-      
-    </footer>
-  </article>
-  
-  <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
-    <div class="post-block">
-      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/09/19/Unity/Occluded%20Culling/">
-      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-        <meta itemprop="name" content="leinlin">
-        <meta itemprop="description" content="">
-        <meta itemprop="image" content="/images/avatar.jpg">
-      </span>
-      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-        <meta itemprop="name" content="leinlin的小笔记">
-      </span>
-    </div>
-    <header class="post-header">
-      <h1 class="post-title" itemprop="name headline">
-        <a class="post-title-link post-title-link-external" href="/2022/09/19/Unity/Occluded%20Culling/" itemprop="url"></a>
-      </h1>
-      <div class="post-meta">
-        
-        <span class="post-date">
-          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2022-09-19T19:53:46+08:00">2022-09-19 19:53:46</time></span>
-        </span>
-        
-        
-        
-        
-        
-      </div>
-    </header>
-    <main class="post-main" itemprop="articleBody">
-      
-      <p>主要介绍unity遮挡剔除功能</p>
-<p>#1.Unity build-in插件：Umbra</p>
-<p>##1.1具体原理</p>
-<p><a target="_blank" rel="noopener" href="https://blogs.unity3d.com/cn/2013/12/02/occlusion-culling-in-unity-4-3-the-basics/">原文链接</a>：</p>
-<p>​	Umbra’s occlusion culling process can be roughly divided into two distinct stages. In the editor, Umbra processes the game scene so that visibility queries can be performed in the game runtime, in the player. So first, Umbra needs to take the game scene as its input and <strong>bake</strong> it into a lightweight data structure. During the bake, Umbra first <strong>voxelizes</strong> the scene, then groups the voxels into cells and combines these cells with <strong>portals</strong>. This data, in addition to a few other important bits is referred to as <strong>occlusion data</strong> in Unity.</p>
-<p>​	In the runtime, Umbra then performs <strong>software portal rasterization</strong> into a <strong>depth buffer</strong>, against which <strong>object visibility</strong> can be tested. In practice, Unity gives Umbra a camera position, and Umbra gives back a list of visible objects. The visibility queries are always <strong>conservative</strong>, which means that false negatives are never returned. On the other hand, some objects may be deemed visible by Umbra even though in reality they appear not to be.	</p>
-<h2 id="1-1-编辑阶段"><a href="#1-1-编辑阶段" class="headerlink" title="1.1 编辑阶段"></a>1.1 编辑阶段</h2><h3 id="1-1-1-voxelizes-the-scene："><a href="#1-1-1-voxelizes-the-scene：" class="headerlink" title="1.1.1 voxelizes the scene："></a>1.1.1 <strong>voxelizes</strong> the scene：</h3><p>​	使用八叉树将整个场景体素化。每一个正方体体素顶点都会对齐到世界坐标。根据场景中所有需要进行剔除的物体（被Culling Area包裹和被设置为Occlude或（和）Occluder的物体）会计算整个八叉树对场景的覆盖范围，然后细分，。</p>
-<h3 id="1-1-2-groups-the-voxels-into-cells："><a href="#1-1-2-groups-the-voxels-into-cells：" class="headerlink" title="1.1.2 groups the voxels into cells："></a>1.1.2 groups the voxels into cells：</h3><p>​	将空的体素Cell合并成一个大的空的正方体。</p>
-<h3 id="1-1-3-combines-these-cells-with-portals"><a href="#1-1-3-combines-these-cells-with-portals" class="headerlink" title="1.1.3 combines these cells with portals"></a>1.1.3 combines these cells with <strong>portals</strong></h3><p>​	将所有的Cell合并成一portals，根据Occlusion Culling视图可以看出来，portal实际上是包裹各个Cell边界的长方体。只是包裹Cell正方体的一个面的长方体，而不是包裹整个Cells。现在得到的只是一个场景的划分数据。</p>
-<h3 id="1-1-4-摄像机"><a href="#1-1-4-摄像机" class="headerlink" title="1.1.4 摄像机"></a>1.1.4 摄像机</h3><p>​	前面完成了场景划分，接下来需要进行摄像机可行区域设置，也就是需要接一下occlusion area把所有的摄像机可行区域覆盖，同时需要标记为is view area。只有这些区域才会得到正确的摄像机剪裁结果，同时只会为这些区域计算遮挡。通过实验可以看到结果：设置一个场景，和唯一一个oa，并且标记为is view Volume随着这个取悦变大生成的数据也会越来越大。</p>
-<p>​	其他区域一般情况下也可能进行遮挡剔除。当时查询数据还是不准确的，很可能产生不能确定的结果。</p>
-<h3 id="1-1-5-区域划分：occlusion-portal-和occlusion-area"><a href="#1-1-5-区域划分：occlusion-portal-和occlusion-area" class="headerlink" title="1.1.5 区域划分：occlusion portal 和occlusion area"></a>1.1.5 区域划分：occlusion portal 和occlusion area</h3><p>op有一个用处，就是统一的控制其包裹的所有occlusion static 物体是否显示。不会印象内部的动态物体。</p>
-<p>oa有两个用处：</p>
-<ol>
-<li>勾选了 is view area 用来标记是否是摄像机可行区域。</li>
-<li>没有勾选is view area 用来包裹一个区域内的非occlusion static 物体，如果这个area被完全遮挡，内部的物体也会被隐藏。</li>
-</ol>
-<h3 id="1-1-6-异常情况"><a href="#1-1-6-异常情况" class="headerlink" title="1.1.6 异常情况"></a>1.1.6 异常情况</h3><p>静态物体和摄像机之间 不能隔着 关闭的op 不然会出错。</p>
-<p>编辑阶段就会产生上述内容。</p>
-<h2 id="1-2-运行阶段"><a href="#1-2-运行阶段" class="headerlink" title="1.2 运行阶段"></a>1.2 运行阶段</h2><p>游戏运行阶段就是直接根据portal来计算这个Cell当中有没有内容被遮挡。</p>
-<p>具体方法就是计算渲染所有portal后的深度，和每一个cell的深度。判断cell当中的物体是否需要被去掉。</p>
-
-      
-      <p align="right"><a class="morebtn" href="/2022/09/19/Unity/Occluded%20Culling/" title="">阅读全文</a></p>
-    </main>
-    <footer class="post-footer">
-      
-    </footer>
-  </article>
-  
-  <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
-    <div class="post-block">
-      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/09/19/Unity/Linear%20And%20Gamma/">
-      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-        <meta itemprop="name" content="leinlin">
-        <meta itemprop="description" content="">
-        <meta itemprop="image" content="/images/avatar.jpg">
-      </span>
-      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-        <meta itemprop="name" content="leinlin的小笔记">
-      </span>
-    </div>
-    <header class="post-header">
-      <h1 class="post-title" itemprop="name headline">
-        <a class="post-title-link post-title-link-external" href="/2022/09/19/Unity/Linear%20And%20Gamma/" itemprop="url"></a>
-      </h1>
-      <div class="post-meta">
-        
-        <span class="post-date">
-          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2022-09-19T19:53:46+08:00">2022-09-19 19:53:46</time></span>
-        </span>
-        
-        
-        
-        
-        
-      </div>
-    </header>
-    <main class="post-main" itemprop="articleBody">
-      
-      <p>##线性空间、GAMMA空间和HDR、纹理</p>
-<h3 id="sRGB"><a href="#sRGB" class="headerlink" title="sRGB"></a>sRGB</h3><p>sRGB是一个纹理的标记，也是一种<strong>数据保存格式</strong>。在对纹理采样和写入纹理内容时产生作用。如果开启sRGB，那么在采样时会自动的对采样得到的值进行sRGB解码，写入时会对写入的值进行sRGB编码，然后再写入。</p>
-<p>(When calculating lighting on older hardware restricted to 8 bits per channel for the framebuffer format, using a gamma curve provides more precision in the human-perceivable range. More bits are used in the range where the human eye is the most sensitive.</p>
-<p>Even though monitors today are digital, they still take a gamma-encoded signal as input. Image files and video files are explicitly encoded to be in gamma space (meaning they carry gamma-encoded values, not linear intensities). This is the standard; everything is in gamma space.) 所以视频的录制结果，PS，SP制作内容的保存一般应该都是sRGB格式。</p>
-<p>unity中如果使用<strong>Gamma空间</strong>，sRGB的<strong>设置失效</strong>。</p>
-<p>(When using Gamma color space, no conversions are done of any kind, and this setting is not used.)</p>
-<p>sRGB (Color Texture)设置的意义：Check this box to specify that the Texture is stored in gamma space. This should always be checked for non-HDR color Textures (such as Albedo and Specular Color)（只有UI和Default会有这个选项, 至于HDR color Textures应该是PS输出的浮点格式纹理）. If the Texture stores information that has a specific meaning, and you need the exact values in the Shader (for example, the smoothness or the metalness), uncheck this box. This box is checked by default.</p>
-<h3 id="Gamma矫正"><a href="#Gamma矫正" class="headerlink" title="Gamma矫正"></a>Gamma矫正</h3><p>如果显示设备按照线性亮度显示内容，人眼的感受会觉得很奇怪。</p>
-<p>所以显示设备需要显示进过Gamma矫正的内容，以符合人眼感受习惯（More bits are used in the range where the human eye is the most sensitive.）。录制设置完成录制后保存的也是经过Gamma矫正的内容。</p>
-<p><strong>目前，各种设备的输入、保存、输出格式都是在Gamma空间的。</strong></p>
-<p>目前sRGB格式就是Gamma空间的标准。(The accepted standard for gamma space is called sRGB )</p>
-<p>**This is the standard; everything is in gamma space.**也就是说一般情况（录制、显示、保存）下都不存在Linear空间。</p>
-<p>所以根据纹理内容需要合理的设置纹理的sRGB标记。（如果是法线或者Mask）则Unity 不会进行任何编码解码操作，直接作为数据来处理。针对的只是颜色纹理（Color RenderTexture）.</p>
-<h3 id="线性空间和Gamma空间"><a href="#线性空间和Gamma空间" class="headerlink" title="线性空间和Gamma空间"></a>线性空间和Gamma空间</h3><p>显示、录制、保存都是Gamma空间，但是当纹理颜色参与计算时，为了精确度，需要在线性空间计算。</p>
-<p>Unity提供了线性空间处理选项:在每一个渲染过程中，<strong>输入需要进行sRGB的解码，输出时在进行sRGB编码</strong>。（To overcome this, you can set Unity to use an RGB sampler to cross over from gamma to linear sampling. This ensures a linear workflow with all inputs and outputs of a Shader in the correct color space, resulting in a correct outcome.）</p>
-<p>设置线性空间方法（go to <strong>Edit</strong> &gt; <strong>Project Settings</strong> &gt; <strong>Player</strong> and open <strong>Player Settings</strong>. Go to <strong>Other Settings</strong> &gt; <strong>Rendering</strong> and change the <strong>Color Space</strong> to <strong>Linear</strong> or <strong>Gamma</strong>, depending on your preference.）</p>
-<p><strong>如果不进行上述设置，Unity就不会进行格式的转化，采样到的就是保存值，输出的内容也会直接写入到纹理上。</strong></p>
-<p><em><strong>特例1</strong>:当使用</em><em>HDR<strong>的时候颜色校正的时机（只在linear空间有效），Shader结果输出到帧缓存中时并未进行Gamma矫正，而是在更晚的时候进行（这一帧完全渲染结束进行一次Gamma矫正）。如果</strong>Non-HDR*</em> 输出到帧缓存的结果就是Gamma矫正的结果。（When using HDR, rendering is performed in linear space into floating point buffers. These buffers have enough precision not to require conversion to and from gamma space whenever the buffer is accessed. This means that when rendering in linear mode, the framebuffers you use store the colors in linear space. Therefore, all blending and post process effects are implicitly performed in linear space. When the final backbuffer is written to, gamma correction is applied.）</p>
-<p><em><strong>特例2</strong>:光照贴图，无论颜色空间的设置，光照贴图永远执行的都是</em>*Linear Space的工作流**：The lighting <strong>calculations in the lightmapper are always done in linear space</strong> (see documentation on the <a target="_blank" rel="noopener" href="https://docs.unity3d.com/Manual/GlobalIllumination.html">Lighting Window</a> for more information). <strong>The lightmaps are always stored in gamma space</strong>. This means that the lightmap textures are identical no matter whether you’re in gamma or linear color space.</p>
-<p>*<strong>特例3</strong>:HDR中帧缓存的内容和颜色空间的关系. <strong>When linear color space is enabled and HDR is not enabled</strong>, a special framebuffer type is used that supports sRGB read and sRGB write (convert from gamma to linear when reading, convert from linear to gamma when writing). When this framebuffer is used for blending or it is bound as a Texture, the values are converted to linear space before being used. When these buffers are written to, the value that is being written is converted from linear space to gamma space. <strong>If you are rendering in linear mode and non-HDR mode</strong>, all post-process effects have their source and target buffers created with sRGB read and write enabled so that post-processing and post-process blending occur in linear space.</p>
-<p><em><strong>注</strong>：</em>*Gamma工作流**：读入、写出内容时都不进行Gamma矫正：Even though these values are in gamma space, all the Unity Editor’s Shader calculations still treat their inputs as if they were in linear space. To ensure an acceptable final result, the Editor makes an adjustment to deal with the mismatched formats when it writes the Shader outputs to a framebuffer and does not apply gamma correction to the final result.</p>
-<p>*<strong>注：</strong>一旦打开HDR所有的帧缓存就会从ARGB32(255的整型RGBA)变成ARGBHalf(16位的浮点数)。原本没有HDR时每次帧缓存的读写都会经历sRGB的解码编码。打开HDR后帧缓存的读写不再进行sRGB的编解码，而是在这一帧完全处理完成之后，从HDR转回正常颜色空间后在进行sRGB的编解码，ReadPixel也就是从这里读取纹理的。实际上我们可以在渲染过程中读取colorbuffer，例如渲染到RT当中，这个使用可以读取到没有经过编码颜色数据。</p>
-<h3 id="纹理颜色空间-sRGB选项控制"><a href="#纹理颜色空间-sRGB选项控制" class="headerlink" title="纹理颜色空间(sRGB选项控制)"></a>纹理颜色空间(sRGB选项控制)</h3><p>不同颜色空间的工作流只针对Non-Hdr的Color Texture 在Texture的Inspector当中可以看到。sprite和Default有sRGB的选项，其他没有的不会受到颜色空间设置的影响。</p>
-
-      
-      <p align="right"><a class="morebtn" href="/2022/09/19/Unity/Linear%20And%20Gamma/" title="">阅读全文</a></p>
-    </main>
-    <footer class="post-footer">
-      
-    </footer>
-  </article>
-  
-  <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
-    <div class="post-block">
-      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/09/19/Unity/Houdini%E5%AF%BC%E5%87%BAfbxUVz%E9%80%9A%E9%81%93/">
-      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-        <meta itemprop="name" content="leinlin">
-        <meta itemprop="description" content="">
-        <meta itemprop="image" content="/images/avatar.jpg">
-      </span>
-      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-        <meta itemprop="name" content="leinlin的小笔记">
-      </span>
-    </div>
-    <header class="post-header">
-      <h1 class="post-title" itemprop="name headline">
-        <a class="post-title-link post-title-link-external" href="/2022/09/19/Unity/Houdini%E5%AF%BC%E5%87%BAfbxUVz%E9%80%9A%E9%81%93/" itemprop="url"></a>
-      </h1>
-      <div class="post-meta">
-        
-        <span class="post-date">
-          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2022-09-19T19:53:46+08:00">2022-09-19 19:53:46</time></span>
-        </span>
-        
-        
-        
-        
-        
-      </div>
-    </header>
-    <main class="post-main" itemprop="articleBody">
-      
-      <h1 id="Houdini无法导出UV-z通道"><a href="#Houdini无法导出UV-z通道" class="headerlink" title="Houdini无法导出UV.z通道"></a>Houdini无法导出UV.z通道</h1><p>目前希望在Houdini当中写入一些控制参数，在Unity中读取出来进行一些操作。</p>
-<p>法线当在Houdini中给uv的z通道写入数据时，在Unity当中无法读取出来。</p>
-<p>通过检查Houdini的输出FBX文件，发现Houdini的ROP FBXexport导出结点无法导出uv的z通道。</p>
-<p>目前的解决方案就是不适用。</p>
-<p>之后的方案可以考虑使用Houdini的API进行修改导出设置。</p>
-
-      
-      <p align="right"><a class="morebtn" href="/2022/09/19/Unity/Houdini%E5%AF%BC%E5%87%BAfbxUVz%E9%80%9A%E9%81%93/" title="">阅读全文</a></p>
-    </main>
-    <footer class="post-footer">
-      
-    </footer>
-  </article>
-  
-  <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
-    <div class="post-block">
-      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/09/19/Unity/HDRP%E6%B7%B1%E5%BA%A6%E7%BA%B9%E7%90%86/">
-      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-        <meta itemprop="name" content="leinlin">
-        <meta itemprop="description" content="">
-        <meta itemprop="image" content="/images/avatar.jpg">
-      </span>
-      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-        <meta itemprop="name" content="leinlin的小笔记">
-      </span>
-    </div>
-    <header class="post-header">
-      <h1 class="post-title" itemprop="name headline">
-        <a class="post-title-link post-title-link-external" href="/2022/09/19/Unity/HDRP%E6%B7%B1%E5%BA%A6%E7%BA%B9%E7%90%86/" itemprop="url"></a>
-      </h1>
-      <div class="post-meta">
-        
-        <span class="post-date">
-          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2022-09-19T19:53:46+08:00">2022-09-19 19:53:46</time></span>
-        </span>
-        
-        
-        
-        
-        
-      </div>
-    </header>
-    <main class="post-main" itemprop="articleBody">
-      
-      <h1 id="HDRP深度纹理"><a href="#HDRP深度纹理" class="headerlink" title="HDRP深度纹理"></a>HDRP深度纹理</h1><figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">/**</span><br><span class="hljs-comment">Auther : LZ</span><br><span class="hljs-comment">Date   : 2018</span><br><span class="hljs-comment">Description</span><br><span class="hljs-comment">*/</span><br></code></pre></td></tr></table></figure>
-
-<h2 id="引子"><a href="#引子" class="headerlink" title="引子"></a>引子</h2><p>HDPR在内置纹理采样上使用了新的方式，网上并没有给出正确答案。并HDRP使用了HLSL语法和以往CG不同，所以资料很少。</p>
-<p>这里主要讲解一下HDRP的内置深度纹理采样和相关的HLSL语法。</p>
-<h2 id="DepthPyramid"><a href="#DepthPyramid" class="headerlink" title="DepthPyramid"></a>DepthPyramid</h2><p>HDRP的沿用了Legacy的_CameraDepthTexture之类的内置纹理名字，方便我们进行迁移，但是和原本采样方法产生了很大出入，下面详细解释。</p>
-<p> <strong>为了支持新的渲染效果，HDRP生成了多分辨率版本的深度图（DepthPyramid）</strong> 。即为Depth生成一个DepthPyramid。</p>
-<p>这张DepthPayermid并不是类似mip的多分辨率版本纹理（类似通过lod参数对mip采样,如下<em>代码1</em>），而是<strong>直接扩展了DepthBuffer的像素大小，把多个分辨率版本放在一张图中</strong>。例如：原本Detph是1024 * 533，为了在DepthPayermid当中保存多个分辨率版本，需要把DepthPayermid扩展到 1024 * 1024。下图是完整的DepthPayermid，最下面的绿框就是真正的depthtexture。</p>
-<p><img src="/../../images/img/depthp.bmp"></p>
-<figure class="hljs highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs hlsl">tex2D（tex,float4(texcoord.xy,0,lod）；//代码1 ： 对mip采样<br></code></pre></td></tr></table></figure>
-
-<p><strong>HDRP的_CameraDepthTexture指的是DepthPyramid而非DepthTexture</strong>  ，这样会需要一个很严重的问题。我们按照Legacy版本计算的 **屏幕纹理坐标[0,1] 对应的是整个DepthPyramid **。如何从DepthPyramid拿出最高层的Depth。</p>
-<p>根据HDRP的Decal源代码和DepthPyramid生成代码可以发现两个地方。</p>
-<ol>
-<li><p>DepthPyramid的最高层（DepthTexture）保存在左下角</p>
-</li>
-<li><p>DepthPyramid中最高层的分辨率和原本DepthTexture是一样的</p>
-<p> 所以我们可以 ** 通过像素位置进行采样 ** 而不是纹理坐标，也就是说：Depth中[12,12]这个像素，刚好在DepthPyramid[12,12]这个位置上。</p>
-<p> HLSL语法为我们提供了这个采样函数，而CG是做不到的（当然也可以想办法计算一个比例）：</p>
-</li>
-</ol>
-<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs C">tex.load(texcoord);	<span class="hljs-comment">//代码2 ： 对使用像素位置采样</span><br></code></pre></td></tr></table></figure>
-
-<p><a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/windows/desktop/direct3dhlsl/t2d-load-float-int-uint-">Load的hlslAPI链接</a></p>
-<p>下面就是计算屏幕的像素位置（而不是纹理坐标），又刚好SV_POSITION语意，就是我们要的。</p>
-<p>所以深度图的采样方式就是：</p>
-<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c">_CameraDepthTexture.Load(sampler2D_CameraDepthTexture,positionSV);<br><span class="hljs-comment">//使用HDRP提供的宏就是：</span><br>LOAD_TEXTURE2D(_CameraDetphTexture, positionSV).x;<br><span class="hljs-comment">//其中positionSV就是的SV_POSITION对呀的值。</span><br></code></pre></td></tr></table></figure>
-
-<p>注：这种采样方式有个好处就是在Computeshader中可以很方便的和线程ID对应。整数计算效率更高。</p>
-<h2 id="关于HLSL语法"><a href="#关于HLSL语法" class="headerlink" title="关于HLSL语法"></a>关于HLSL语法</h2><p>很多渲染语法是CG不支持的，其中有两点比较重要：</p>
-<ol>
-<li><p>cg语法中sampler和texture无法分离，而一般GPU支持128个texture，只支持16个sampler，如果无法分离就导致我们只能最多用16个纹理。</p>
-</li>
-<li><p>无法用整数采样器，就是上面的DepthPyramid的问题。</p>
-</li>
-</ol>
-<p>最重要的不同就是采样语法：</p>
-<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">//========cg==========</span><br>sampler2D tex1;<br>sampler2D tex2;<br><span class="hljs-comment">// 采样</span><br>tex2D(tex1,coord);<br>tex2D(tex2,coord);<br><span class="hljs-comment">//=========hlsl========</span><br>SamplerState sampler_tex;<br>Texture2D tex；<br>Texture2D tex1；<br><span class="hljs-comment">// 采样</span><br>tex.sample(sampler_tex,coord);<br>tex1.sample(sampler_tex,coord); <span class="hljs-comment">//复用采样器</span><br><span class="hljs-comment">//</span><br>tex1.load(coord); <span class="hljs-comment">// 直接读取像素</span><br><br></code></pre></td></tr></table></figure>
-
-<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><p>关于深度金字塔似乎是一种叫做 Interleaved Sampling的技术。</p>
-
-      
-      <p align="right"><a class="morebtn" href="/2022/09/19/Unity/HDRP%E6%B7%B1%E5%BA%A6%E7%BA%B9%E7%90%86/" title="">阅读全文</a></p>
-    </main>
-    <footer class="post-footer">
-      
-    </footer>
-  </article>
-  
-  <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
-    <div class="post-block">
-      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/09/19/Unity/hdrp%E5%B0%8F%E9%97%AE%E9%A2%98/">
-      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-        <meta itemprop="name" content="leinlin">
-        <meta itemprop="description" content="">
-        <meta itemprop="image" content="/images/avatar.jpg">
-      </span>
-      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-        <meta itemprop="name" content="leinlin的小笔记">
-      </span>
-    </div>
-    <header class="post-header">
-      <h1 class="post-title" itemprop="name headline">
-        <a class="post-title-link post-title-link-external" href="/2022/09/19/Unity/hdrp%E5%B0%8F%E9%97%AE%E9%A2%98/" itemprop="url"></a>
-      </h1>
-      <div class="post-meta">
-        
-        <span class="post-date">
-          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2022-09-19T19:53:46+08:00">2022-09-19 19:53:46</time></span>
-        </span>
-        
-        
-        
-        
-        
-      </div>
-    </header>
-    <main class="post-main" itemprop="articleBody">
-      
-      <h1 id="1-UnlitShader使用"><a href="#1-UnlitShader使用" class="headerlink" title="1.UnlitShader使用"></a>1.UnlitShader使用</h1><ol>
-<li><p>目前UnlitGraph支持主要的纹理、向量、颜色、顶点色、屏幕空间位置等各种基础参数的计算。</p>
-</li>
-<li><p>通过宏来切换不同效果的部分需要手写谢。</p>
-</li>
-<li><p>同时支持透明和不透明两种模式。</p>
-</li>
-<li><p><strong>扭曲distort，默认的Unlit shader已经可以使用</strong>，但是UnlitGraph没有提供，LitGraph有这个功能，所以未来应该会提供。</p>
-</li>
-</ol>
-<p>使用方式：HDRP创建er默认材质，Shader改成Hdrp&#x2F;Unlit，材质选项中Surface Type改成Transparent。此时材质下方出现了新的选项Transprency Input。打开Distortion，给出一张扭曲纹理，然后调节参数就可以看到扭曲效果。</p>
-<p><strong>注意</strong>：扭曲和渲染顺序无关，所有和扭曲材质重叠切没有渲染深度的材质，都会被扭曲。</p>
-<h1 id="2-LitShader"><a href="#2-LitShader" class="headerlink" title="2.LitShader"></a>2.LitShader</h1><ol>
-<li><p>Lit一共有两种扭曲方式：Refraction折射和Distortion变形。LitGraph也可以使用这两个功能</p>
-</li>
-<li><p>支持折射、扭曲，但是会带上光照。</p>
-</li>
-<li><p>Refraction：透明的Lit物体可以用折射功能（Unlit物体只可以选择是否被折射）。Lit物体如果要折射其他物体就不能被其他的物体折射。不透明物体可以选择是否被折射。可以用来实现类似冰冻怪物的效果。</p>
-</li>
-<li><p>Distortion：Unlit和透明的Lit都可以用。有扭曲的Unlit材质会扭曲任何和他重叠的无深度物体。</p>
-</li>
-</ol>
-<h1 id="3-Unlit贴花"><a href="#3-Unlit贴花" class="headerlink" title="3.Unlit贴花"></a>3.Unlit贴花</h1><ol>
-<li><p>默认的功能无法实现Unlit效果。我们需要自己实现Unlit Decal，理论上只要能够正确读取深度就可以渲染，不过需要研究一下渲染输出的buffer、渲染队列、已经新的深度读取方式。</p>
-</li>
-<li><p><strong>内置贴花支持模型贴花</strong>，一个Decal模型可以贴附在另一个模型上，可以有自己的UV。</p>
-</li>
-</ol>
-<h1 id="4-天空球编程"><a href="#4-天空球编程" class="headerlink" title="4.天空球编程"></a>4.天空球编程</h1><p>参考链接：<a target="_blank" rel="noopener" href="https://github.com/Unity-Technologies/ScriptableRenderPipeline/wiki/Writing-A-Custom-Sky-Renderer">天空球编程</a>，可以自由实现想要的天空球。</p>
-<p>#5.HDRP 自带天空球混合</p>
-<p>Unity Volume源代码中有实现HDRI插值的计划，见：TODO注释：</p>
-<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs c">public <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">CubemapParameter</span> :</span> VolumeParameter&lt;Cubemap&gt;<br>&#123;<br>     public <span class="hljs-title function_">CubemapParameter</span><span class="hljs-params">(Cubemap value, <span class="hljs-type">bool</span> overrideState = <span class="hljs-literal">false</span>)</span><br>     : <span class="hljs-title function_">base</span><span class="hljs-params">(value, overrideState)</span> &#123;&#125;<br>     <span class="hljs-comment">// <span class="hljs-doctag">TODO:</span> Cubemap interpolation</span><br>&#125;<br><br>public <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">NoInterpCubemapParameter</span> :</span> VolumeParameter&lt;Cubemap&gt;<br>&#123;<br>    public <span class="hljs-title function_">NoInterpCubemapParameter</span><span class="hljs-params">(Cubemap value, <span class="hljs-type">bool</span> overrideState = <span class="hljs-literal">false</span>)</span><br>    : <span class="hljs-title function_">base</span><span class="hljs-params">(value, overrideState)</span> &#123;&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<p>Volume当中的不同天空球都可以实现各自的混合效果，不过Hdri目前没有实现完（如果是其他两种类型的天空球，当前版本已经可以实现插值）。cubemap在混合时实时计算插值，有一部分开销需要考虑。在HDRP6.0.0当中也还是没有实现，不知道Unity是出于什么考虑，一直没有给出Cubemap混合的代码。</p>
-<p>目前，<strong>我们实现这部分代码就可以直接使用Volume当中的天空球插值</strong>。</p>
-<p>#6.关于特效和渲染队列</p>
-<p>之前美术手动调节了材质上的渲染队列来实现不同的特效。现在渲染队列的机制有一些改动，在不熟悉之前最好不要手动设置队列（默认材质都是不能调节的，只能修改<strong>渲染优先级Sort Priority</strong>），通过Shader Graph创建的可以手动设置。</p>
-<p>现在，在不透明物体渲染阶段，不会渲染2650以上的物体（看源代码得到的结果，在以前只要有队列，就会按照队列顺序渲染），反之亦然。</p>
-<p>HDRP理论上不建议手动调整材质顺序，因为这个顺序不在单纯的是顺序，还涉及到各种特殊的效果。</p>
-<p>2650-2850用来渲染被折射的透明物体，这个都是通过设置自动配置的，在不熟悉引擎之前不要修改材质队列。</p>
-<p>2900-3100是一把透明物体。</p>
-<p>2850到2900之间会出现奇怪的变化，Unity没有给出这部分渲染的是什么。</p>
-<p>2000到2500是不透明物体。这个队列以外的不透明物体不会渲染。</p>
-<p>2000以下什么都不会渲染（以前都是可以渲染的）。</p>
-<p><strong>现在的状态就是：如果没有把队列和物体类型匹配就会出现不可预知的结果。</strong></p>
-<p>下面是控制渲染队列的代码。</p>
-<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><code class="hljs c">public <span class="hljs-class"><span class="hljs-keyword">enum</span> <span class="hljs-title">Priority</span></span><br><span class="hljs-class">        &#123;</span><br>            Background = UnityEngine.Rendering.RenderQueue.Background,<br>            Opaque = UnityEngine.Rendering.RenderQueue.Geometry,<br>            OpaqueAlphaTest = UnityEngine.Rendering.RenderQueue.AlphaTest,<br>            <span class="hljs-comment">// Warning: we must not change Geometry last value to stay compatible with occlusion</span><br>            OpaqueLast = UnityEngine.Rendering.RenderQueue.GeometryLast,<br>            <span class="hljs-comment">// For transparent pass we define a range of 200 value to define the priority</span><br>            <span class="hljs-comment">// Warning: Be sure no range are overlapping</span><br>            PreRefractionFirst = <span class="hljs-number">2750</span> - k_TransparentPriorityQueueRange,<br>            PreRefraction = <span class="hljs-number">2750</span>,<br>            PreRefractionLast = <span class="hljs-number">2750</span> + k_TransparentPriorityQueueRange,<br>            TransparentFirst = UnityEngine.Rendering.RenderQueue.Transparent - k_TransparentPriorityQueueRange,<br>            Transparent = UnityEngine.Rendering.RenderQueue.Transparent,<br>            TransparentLast = UnityEngine.Rendering.RenderQueue.Transparent + k_TransparentPriorityQueueRange,<br>            Overlay = UnityEngine.Rendering.RenderQueue.Overlay<br>        &#125;<br><br>RenderQueueRange k_RenderQueue_OpaqueNoAlphaTest = <br>    new RenderQueueRange &#123; min = (<span class="hljs-type">int</span>)Priority.Opaque, <br>                          max = (<span class="hljs-type">int</span>)Priority.OpaqueAlphaTest - <span class="hljs-number">1</span> &#125;;<br><br>RenderQueueRange k_RenderQueue_OpaqueAlphaTest = <br>    new RenderQueueRange &#123; min = (<span class="hljs-type">int</span>)Priority.OpaqueAlphaTest, <br>                          max = (<span class="hljs-type">int</span>)Priority.OpaqueLast &#125;;<br><br>RenderQueueRange k_RenderQueue_AllOpaque = new RenderQueueRange &#123; <br>    min = (<span class="hljs-type">int</span>)Priority.Opaque,<br>    max = (<span class="hljs-type">int</span>)Priority.OpaqueLast &#125;;<br><br>RenderQueueRange k_RenderQueue_PreRefraction = new RenderQueueRange &#123; <br>    min = (<span class="hljs-type">int</span>)Priority.PreRefractionFirst, <br>    max = (<span class="hljs-type">int</span>)Priority.PreRefractionLast &#125;;<br><br>RenderQueueRange k_RenderQueue_Transparent = new RenderQueueRange &#123; <br>    min = (<span class="hljs-type">int</span>)Priority.TransparentFirst, <br>    max = (<span class="hljs-type">int</span>)Priority.TransparentLast &#125;;<br><br>RenderQueueRange k_RenderQueue_AllTransparent = new RenderQueueRange &#123; <br>    min = (<span class="hljs-type">int</span>)Priority.PreRefractionFirst, <br>    max = (<span class="hljs-type">int</span>)Priority.TransparentLast &#125;;<br><br>RenderQueueRange k_RenderQueue_All = new RenderQueueRange &#123; min = <span class="hljs-number">0</span>, max = <span class="hljs-number">5000</span> &#125;;<br>    &#125;<br></code></pre></td></tr></table></figure>
-
-
-      
-      <p align="right"><a class="morebtn" href="/2022/09/19/Unity/hdrp%E5%B0%8F%E9%97%AE%E9%A2%98/" title="">阅读全文</a></p>
-    </main>
-    <footer class="post-footer">
-      
-    </footer>
-  </article>
-  
-  <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
-    <div class="post-block">
-      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/09/19/Unity/HDRP%E4%B8%ADShaderGraph%E7%94%9F%E6%88%90%E7%9A%84UnlitTransparent%E4%B8%8D%E6%8E%A5%E5%8F%97%E9%9B%BE/">
-      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-        <meta itemprop="name" content="leinlin">
-        <meta itemprop="description" content="">
-        <meta itemprop="image" content="/images/avatar.jpg">
-      </span>
-      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-        <meta itemprop="name" content="leinlin的小笔记">
-      </span>
-    </div>
-    <header class="post-header">
-      <h1 class="post-title" itemprop="name headline">
-        <a class="post-title-link post-title-link-external" href="/2022/09/19/Unity/HDRP%E4%B8%ADShaderGraph%E7%94%9F%E6%88%90%E7%9A%84UnlitTransparent%E4%B8%8D%E6%8E%A5%E5%8F%97%E9%9B%BE/" itemprop="url"></a>
-      </h1>
-      <div class="post-meta">
-        
-        <span class="post-date">
-          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2022-09-19T19:53:46+08:00">2022-09-19 19:53:46</time></span>
-        </span>
-        
-        
-        
-        
-        
-      </div>
-    </header>
-    <main class="post-main" itemprop="articleBody">
-      
-      <h1 id="HDRP中ShaderGraph生成的UnlitTransparent不接受雾"><a href="#HDRP中ShaderGraph生成的UnlitTransparent不接受雾" class="headerlink" title="HDRP中ShaderGraph生成的UnlitTransparent不接受雾"></a>HDRP中ShaderGraph生成的UnlitTransparent不接受雾</h1><h2 id="问题："><a href="#问题：" class="headerlink" title="问题："></a>问题：</h2><p>在开发UV云的过程中，使用了ShaderGraph来创建Shader。</p>
-<p>发现使用Unlit节点的Transparent模式，会出现物体不接收雾的情况（即使打开了Recive Fog）。</p>
-<p>但是Lit节点的Transparent模式是正常的。</p>
-<h2 id="解决方案："><a href="#解决方案：" class="headerlink" title="解决方案："></a>解决方案：</h2><p>通过阅读代码发现：</p>
-<p>雾的计算在文件AtmosphericScattering.hlsl中：</p>
-<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs c">float4 <span class="hljs-title function_">EvaluateAtmosphericScattering</span><span class="hljs-params">(PositionInputs posInput, float3 V)</span><br>&#123;<br>    <span class="hljs-comment">// <span class="hljs-doctag">TODO:</span> do not recompute this, but rather pass it directly.</span><br>    <span class="hljs-type">float</span> fragDist = distance(posInput.positionWS, GetCurrentViewPosition());<br><br>    ...<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<p>这里最重要的内容是posInput.positionWS。出错的原因就是posInput.positionWS当中没有值。</p>
-<p>所以导致计算雾深度的时候结果是0。</p>
-<p>ShaderGraph生成的代码当中，在Vertex片段中VertMesh函数（所有的HDRP内置shader都走这个shader函数计算vertex信息）已经计算了世界坐标，但是没有被传递到Fragment当中。因为ShaderGraph当中判断他不需要世界坐标。</p>
-<p>VertMesh函数位于VertMesh.hlsl当中：</p>
-<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs c"><br>VaryingsMeshType <span class="hljs-title function_">VertMesh</span><span class="hljs-params">(AttributesMesh input)</span><br>&#123;<br>    VaryingsMeshType output;<br>	...<br>    <span class="hljs-comment">// This return the camera relative position (if enable)</span><br>    float3 positionRWS = TransformObjectToWorld(input.positionOS);<br>    ...<br>    <br><span class="hljs-meta">#<span class="hljs-keyword">ifdef</span> TESSELLATION_ON</span><br>    output.positionRWS = positionRWS;<br>	...<br><span class="hljs-meta">#<span class="hljs-keyword">else</span></span><br>    <span class="hljs-meta">#<span class="hljs-keyword">ifdef</span> VARYINGS_NEED_POSITION_WS</span><br>    output.positionRWS = positionRWS;<br>    <span class="hljs-meta">#<span class="hljs-keyword">endif</span></span><br>    output.positionCS = TransformWorldToHClip(positionRWS);<br>	...<br><span class="hljs-meta">#<span class="hljs-keyword">endif</span></span><br>&#125;<br></code></pre></td></tr></table></figure>
-
-<p>下面是ShaderGraph生成的传递函数和结构体，法线并没有世界坐标：</p>
-<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// Generated Type: VaryingsMeshToPS</span><br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">VaryingsMeshToPS</span> &#123;</span><br>    float4 positionCS : SV_Position;<br>    <span class="hljs-meta">#<span class="hljs-keyword">if</span> UNITY_ANY_INSTANCING_ENABLED</span><br>    uint instanceID : CUSTOM_INSTANCE_ID;<br>    <span class="hljs-meta">#<span class="hljs-keyword">endif</span> <span class="hljs-comment">// UNITY_ANY_INSTANCING_ENABLED</span></span><br>&#125;;<br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">PackedVaryingsMeshToPS</span> &#123;</span><br>    float4 positionCS : SV_Position; <span class="hljs-comment">// unpacked</span><br>    <span class="hljs-meta">#<span class="hljs-keyword">if</span> UNITY_ANY_INSTANCING_ENABLED</span><br>    uint instanceID : CUSTOM_INSTANCE_ID; <span class="hljs-comment">// unpacked</span><br>    <span class="hljs-meta">#<span class="hljs-keyword">endif</span> <span class="hljs-comment">// UNITY_ANY_INSTANCING_ENABLED</span></span><br>&#125;;<br>PackedVaryingsMeshToPS <span class="hljs-title function_">PackVaryingsMeshToPS</span><span class="hljs-params">(VaryingsMeshToPS input)</span><br>&#123;<br>    PackedVaryingsMeshToPS output;<br>    output.positionCS = input.positionCS;<br>    <span class="hljs-meta">#<span class="hljs-keyword">if</span> UNITY_ANY_INSTANCING_ENABLED</span><br>    output.instanceID = input.instanceID;<br>    <span class="hljs-meta">#<span class="hljs-keyword">endif</span> <span class="hljs-comment">// UNITY_ANY_INSTANCING_ENABLED</span></span><br>    <span class="hljs-keyword">return</span> output;<br>&#125;<br>VaryingsMeshToPS <span class="hljs-title function_">UnpackVaryingsMeshToPS</span><span class="hljs-params">(PackedVaryingsMeshToPS input)</span><br>&#123;<br>    VaryingsMeshToPS output;<br>    output.positionCS = input.positionCS;<br>    <span class="hljs-meta">#<span class="hljs-keyword">if</span> UNITY_ANY_INSTANCING_ENABLED</span><br>    output.instanceID = input.instanceID;<br>    <span class="hljs-meta">#<span class="hljs-keyword">endif</span> <span class="hljs-comment">// UNITY_ANY_INSTANCING_ENABLED</span></span><br>    <span class="hljs-keyword">return</span> output;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<p>在ShaderGraph当中使用一次世界坐标：</p>
-<p><img src="/img/201975-114401.jpg" alt="201975-114401"></p>
-<p>然后在观察生成的代码，出现了世界坐标，再看场景雾就正常了：</p>
-<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// Generated Type: VaryingsMeshToPS</span><br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">VaryingsMeshToPS</span> &#123;</span><br>    float4 positionCS : SV_Position;<br>    float3 positionRWS; <span class="hljs-comment">// optional</span><br>    <span class="hljs-meta">#<span class="hljs-keyword">if</span> UNITY_ANY_INSTANCING_ENABLED</span><br>    uint instanceID : CUSTOM_INSTANCE_ID;<br>    <span class="hljs-meta">#<span class="hljs-keyword">endif</span> <span class="hljs-comment">// UNITY_ANY_INSTANCING_ENABLED</span></span><br>&#125;;<br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">PackedVaryingsMeshToPS</span> &#123;</span><br>    float3 interp00 : TEXCOORD0; <span class="hljs-comment">// auto-packed</span><br>    float4 positionCS : SV_Position; <span class="hljs-comment">// unpacked</span><br>    <span class="hljs-meta">#<span class="hljs-keyword">if</span> UNITY_ANY_INSTANCING_ENABLED</span><br>    uint instanceID : CUSTOM_INSTANCE_ID; <span class="hljs-comment">// unpacked</span><br>    <span class="hljs-meta">#<span class="hljs-keyword">endif</span> <span class="hljs-comment">// UNITY_ANY_INSTANCING_ENABLED</span></span><br>&#125;;<br>PackedVaryingsMeshToPS <span class="hljs-title function_">PackVaryingsMeshToPS</span><span class="hljs-params">(VaryingsMeshToPS input)</span><br>&#123;<br>    PackedVaryingsMeshToPS output;<br>    output.positionCS = input.positionCS;<br>    output.interp00.xyz = input.positionRWS;<br>    <span class="hljs-meta">#<span class="hljs-keyword">if</span> UNITY_ANY_INSTANCING_ENABLED</span><br>    output.instanceID = input.instanceID;<br>    <span class="hljs-meta">#<span class="hljs-keyword">endif</span> <span class="hljs-comment">// UNITY_ANY_INSTANCING_ENABLED</span></span><br>    <span class="hljs-keyword">return</span> output;<br>&#125;<br>VaryingsMeshToPS <span class="hljs-title function_">UnpackVaryingsMeshToPS</span><span class="hljs-params">(PackedVaryingsMeshToPS input)</span><br>&#123;<br>    VaryingsMeshToPS output;<br>    output.positionCS = input.positionCS;<br>    output.positionRWS = input.interp00.xyz;<br>    <span class="hljs-meta">#<span class="hljs-keyword">if</span> UNITY_ANY_INSTANCING_ENABLED</span><br>    output.instanceID = input.instanceID;<br>    <span class="hljs-meta">#<span class="hljs-keyword">endif</span> <span class="hljs-comment">// UNITY_ANY_INSTANCING_ENABLED</span></span><br>    <span class="hljs-keyword">return</span> output;<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<h2 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h2><p>shader代码hlsl的包含调用关系比较复杂。</p>
-
-      
-      <p align="right"><a class="morebtn" href="/2022/09/19/Unity/HDRP%E4%B8%ADShaderGraph%E7%94%9F%E6%88%90%E7%9A%84UnlitTransparent%E4%B8%8D%E6%8E%A5%E5%8F%97%E9%9B%BE/" title="">阅读全文</a></p>
-    </main>
-    <footer class="post-footer">
-      
-    </footer>
-  </article>
-  
-  <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
-    <div class="post-block">
-      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/09/19/Unity/HDRP%E4%B8%ADHairShader%E4%BB%A3%E7%A0%81%E7%BB%93%E6%9E%842/">
-      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-        <meta itemprop="name" content="leinlin">
-        <meta itemprop="description" content="">
-        <meta itemprop="image" content="/images/avatar.jpg">
-      </span>
-      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-        <meta itemprop="name" content="leinlin的小笔记">
-      </span>
-    </div>
-    <header class="post-header">
-      <h1 class="post-title" itemprop="name headline">
-        <a class="post-title-link post-title-link-external" href="/2022/09/19/Unity/HDRP%E4%B8%ADHairShader%E4%BB%A3%E7%A0%81%E7%BB%93%E6%9E%842/" itemprop="url"></a>
-      </h1>
-      <div class="post-meta">
-        
-        <span class="post-date">
-          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2022-09-19T19:53:46+08:00">2022-09-19 19:53:46</time></span>
-        </span>
-        
         
         
         
@@ -815,7 +296,7 @@
 
 
       
-      <p align="right"><a class="morebtn" href="/2022/09/19/Unity/HDRP%E4%B8%ADHairShader%E4%BB%A3%E7%A0%81%E7%BB%93%E6%9E%842/" title="">阅读全文</a></p>
+      <p align="right"><a class="morebtn" href="/2023/06/02/Unity/HDRP%E4%B8%ADHairShader%E4%BB%A3%E7%A0%81%E7%BB%93%E6%9E%842/" title="HairShader光照模型">阅读全文</a></p>
     </main>
     <footer class="post-footer">
       
@@ -824,7 +305,7 @@
   
   <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
     <div class="post-block">
-      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2022/09/19/Unity/HDRP%E4%B8%ADHairShader%E4%BB%A3%E7%A0%81%E7%BB%93%E6%9E%84/">
+      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2023/06/02/Unity/HDRP%E4%B8%ADShaderGraph%E7%94%9F%E6%88%90%E7%9A%84UnlitTransparent%E4%B8%8D%E6%8E%A5%E5%8F%97%E9%9B%BE/">
       <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
         <meta itemprop="name" content="leinlin">
         <meta itemprop="description" content="">
@@ -836,14 +317,22 @@
     </div>
     <header class="post-header">
       <h1 class="post-title" itemprop="name headline">
-        <a class="post-title-link post-title-link-external" href="/2022/09/19/Unity/HDRP%E4%B8%ADHairShader%E4%BB%A3%E7%A0%81%E7%BB%93%E6%9E%84/" itemprop="url"></a>
+        <a class="post-title-link post-title-link-external" href="/2023/06/02/Unity/HDRP%E4%B8%ADShaderGraph%E7%94%9F%E6%88%90%E7%9A%84UnlitTransparent%E4%B8%8D%E6%8E%A5%E5%8F%97%E9%9B%BE/" itemprop="url">HDRP中ShaderGraph生成的UnlitTransparent不接受雾</a>
       </h1>
       <div class="post-meta">
         
         <span class="post-date">
-          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2022-09-19T19:53:46+08:00">2022-09-19 19:53:46</time></span>
+          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2023-06-02T12:00:14+08:00">2023-06-02 12:00:14</time></span>
         </span>
         
+        
+        
+        <span class="post-meta-divider divider">|</span>
+        
+        <span class="post-categories">
+          
+          <i class="far fa-folder-open"></i><span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Unity/" itemprop="url" rel="index"><span itemprop="name">Unity</span></a></span>
+        </span>
         
         
         
@@ -852,42 +341,688 @@
     </header>
     <main class="post-main" itemprop="articleBody">
       
-      <h1 id="HDRP-HairShader代码结构"><a href="#HDRP-HairShader代码结构" class="headerlink" title="HDRP HairShader代码结构"></a>HDRP HairShader代码结构</h1><p>Hair只能在前向渲染阶段渲染，使用下面两个Pass：</p>
-<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c">&#123;<br>    LightMode = DepthForwardOnly<br>    LightMode = ForwardOnly<br>&#125;<br></code></pre></td></tr></table></figure>
+      <h1 id="HDRP中ShaderGraph生成的UnlitTransparent不接受雾"><a href="#HDRP中ShaderGraph生成的UnlitTransparent不接受雾" class="headerlink" title="HDRP中ShaderGraph生成的UnlitTransparent不接受雾"></a>HDRP中ShaderGraph生成的UnlitTransparent不接受雾</h1><h2 id="问题："><a href="#问题：" class="headerlink" title="问题："></a>问题：</h2><p>在开发UV云的过程中，使用了ShaderGraph来创建Shader。</p>
+<p>发现使用Unlit节点的Transparent模式，会出现物体不接收雾的情况（即使打开了Recive Fog）。</p>
+<p>但是Lit节点的Transparent模式是正常的。</p>
+<h2 id="解决方案："><a href="#解决方案：" class="headerlink" title="解决方案："></a>解决方案：</h2><p>通过阅读代码发现：</p>
+<p>雾的计算在文件AtmosphericScattering.hlsl中：</p>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs c">float4 <span class="hljs-title function_">EvaluateAtmosphericScattering</span><span class="hljs-params">(PositionInputs posInput, float3 V)</span><br>&#123;<br>    <span class="hljs-comment">// <span class="hljs-doctag">TODO:</span> do not recompute this, but rather pass it directly.</span><br>    <span class="hljs-type">float</span> fragDist = distance(posInput.positionWS, GetCurrentViewPosition());<br><br>    ...<br>&#125;<br></code></pre></td></tr></table></figure>
 
-<p>头发有一个特殊的Stencil</p>
-<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs c">Stencil<br>&#123;<br>   WriteMask <span class="hljs-number">7</span><br>   Ref  <span class="hljs-number">2</span><br>   Comp Always<br>   Pass Replace<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>这里最重要的内容是posInput.positionWS。出错的原因就是posInput.positionWS当中没有值。</p>
+<p>所以导致计算雾深度的时候结果是0。</p>
+<p>ShaderGraph生成的代码当中，在Vertex片段中VertMesh函数（所有的HDRP内置shader都走这个shader函数计算vertex信息）已经计算了世界坐标，但是没有被传递到Fragment当中。因为ShaderGraph当中判断他不需要世界坐标。</p>
+<p>VertMesh函数位于VertMesh.hlsl当中：</p>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs c"><br>VaryingsMeshType <span class="hljs-title function_">VertMesh</span><span class="hljs-params">(AttributesMesh input)</span><br>&#123;<br>    VaryingsMeshType output;<br>	...<br>    <span class="hljs-comment">// This return the camera relative position (if enable)</span><br>    float3 positionRWS = TransformObjectToWorld(input.positionOS);<br>    ...<br>    <br><span class="hljs-meta">#<span class="hljs-keyword">ifdef</span> TESSELLATION_ON</span><br>    output.positionRWS = positionRWS;<br>	...<br><span class="hljs-meta">#<span class="hljs-keyword">else</span></span><br>    <span class="hljs-meta">#<span class="hljs-keyword">ifdef</span> VARYINGS_NEED_POSITION_WS</span><br>    output.positionRWS = positionRWS;<br>    <span class="hljs-meta">#<span class="hljs-keyword">endif</span></span><br>    output.positionCS = TransformWorldToHClip(positionRWS);<br>	...<br><span class="hljs-meta">#<span class="hljs-keyword">endif</span></span><br>&#125;<br></code></pre></td></tr></table></figure>
 
-<p>##透明和不透明有所区别</p>
-<p>混合方式上的区别</p>
-<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">//透明</span><br>            Blend One OneMinusSrcAlpha <br>            ZTest LEqual <span class="hljs-comment">// 正常的深度渲染，注意这个时候也可以提前绘制深度。</span><br>            ZWrite Off<br><span class="hljs-comment">//不透明</span><br>            Blend One Zero  <span class="hljs-comment">// 直接覆盖</span><br>            ZTest Equal  <span class="hljs-comment">// 因为会提前绘制深度，所以需要和原本深度值相等才能绘制</span><br>            ZWrite On<br><span class="hljs-comment">// 在原本的shader当中如果开启blend默认编程了透明？</span><br></code></pre></td></tr></table></figure>
+<p>下面是ShaderGraph生成的传递函数和结构体，法线并没有世界坐标：</p>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// Generated Type: VaryingsMeshToPS</span><br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">VaryingsMeshToPS</span> &#123;</span><br>    float4 positionCS : SV_Position;<br>    <span class="hljs-meta">#<span class="hljs-keyword">if</span> UNITY_ANY_INSTANCING_ENABLED</span><br>    uint instanceID : CUSTOM_INSTANCE_ID;<br>    <span class="hljs-meta">#<span class="hljs-keyword">endif</span> <span class="hljs-comment">// UNITY_ANY_INSTANCING_ENABLED</span></span><br>&#125;;<br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">PackedVaryingsMeshToPS</span> &#123;</span><br>    float4 positionCS : SV_Position; <span class="hljs-comment">// unpacked</span><br>    <span class="hljs-meta">#<span class="hljs-keyword">if</span> UNITY_ANY_INSTANCING_ENABLED</span><br>    uint instanceID : CUSTOM_INSTANCE_ID; <span class="hljs-comment">// unpacked</span><br>    <span class="hljs-meta">#<span class="hljs-keyword">endif</span> <span class="hljs-comment">// UNITY_ANY_INSTANCING_ENABLED</span></span><br>&#125;;<br>PackedVaryingsMeshToPS <span class="hljs-title function_">PackVaryingsMeshToPS</span><span class="hljs-params">(VaryingsMeshToPS input)</span><br>&#123;<br>    PackedVaryingsMeshToPS output;<br>    output.positionCS = input.positionCS;<br>    <span class="hljs-meta">#<span class="hljs-keyword">if</span> UNITY_ANY_INSTANCING_ENABLED</span><br>    output.instanceID = input.instanceID;<br>    <span class="hljs-meta">#<span class="hljs-keyword">endif</span> <span class="hljs-comment">// UNITY_ANY_INSTANCING_ENABLED</span></span><br>    <span class="hljs-keyword">return</span> output;<br>&#125;<br>VaryingsMeshToPS <span class="hljs-title function_">UnpackVaryingsMeshToPS</span><span class="hljs-params">(PackedVaryingsMeshToPS input)</span><br>&#123;<br>    VaryingsMeshToPS output;<br>    output.positionCS = input.positionCS;<br>    <span class="hljs-meta">#<span class="hljs-keyword">if</span> UNITY_ANY_INSTANCING_ENABLED</span><br>    output.instanceID = input.instanceID;<br>    <span class="hljs-meta">#<span class="hljs-keyword">endif</span> <span class="hljs-comment">// UNITY_ANY_INSTANCING_ENABLED</span></span><br>    <span class="hljs-keyword">return</span> output;<br>&#125;<br></code></pre></td></tr></table></figure>
 
-<p>透明不透明的宏定义区别</p>
-<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// 透明加不透明</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> _MATERIAL_FEATURE_HAIR_KAJIYA_KAY 1</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> _SURFACE_TYPE_TRANSPARENT 1</span><br><span class="hljs-comment">// 透明部分</span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> _BLENDMODE_ALPHA 1   <span class="hljs-comment">// 开启 混合</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> _BLENDMODE_PRESERVE_SPECULAR_LIGHTING 1  <span class="hljs-comment">// ??</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> _ENABLE_FOG_ON_TRANSPARENT 1  <span class="hljs-comment">// 开启透明物体上的雾</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> _SPECULAR_OCCLUSION_FROM_AO 1 <span class="hljs-comment">// AO 对高光生效</span></span><br></code></pre></td></tr></table></figure>
+<p>在ShaderGraph当中使用一次世界坐标：</p>
+<p><img src="/img/201975-114401.jpg" alt="201975-114401"></p>
+<p>然后在观察生成的代码，出现了世界坐标，再看场景雾就正常了：</p>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// Generated Type: VaryingsMeshToPS</span><br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">VaryingsMeshToPS</span> &#123;</span><br>    float4 positionCS : SV_Position;<br>    float3 positionRWS; <span class="hljs-comment">// optional</span><br>    <span class="hljs-meta">#<span class="hljs-keyword">if</span> UNITY_ANY_INSTANCING_ENABLED</span><br>    uint instanceID : CUSTOM_INSTANCE_ID;<br>    <span class="hljs-meta">#<span class="hljs-keyword">endif</span> <span class="hljs-comment">// UNITY_ANY_INSTANCING_ENABLED</span></span><br>&#125;;<br><span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">PackedVaryingsMeshToPS</span> &#123;</span><br>    float3 interp00 : TEXCOORD0; <span class="hljs-comment">// auto-packed</span><br>    float4 positionCS : SV_Position; <span class="hljs-comment">// unpacked</span><br>    <span class="hljs-meta">#<span class="hljs-keyword">if</span> UNITY_ANY_INSTANCING_ENABLED</span><br>    uint instanceID : CUSTOM_INSTANCE_ID; <span class="hljs-comment">// unpacked</span><br>    <span class="hljs-meta">#<span class="hljs-keyword">endif</span> <span class="hljs-comment">// UNITY_ANY_INSTANCING_ENABLED</span></span><br>&#125;;<br>PackedVaryingsMeshToPS <span class="hljs-title function_">PackVaryingsMeshToPS</span><span class="hljs-params">(VaryingsMeshToPS input)</span><br>&#123;<br>    PackedVaryingsMeshToPS output;<br>    output.positionCS = input.positionCS;<br>    output.interp00.xyz = input.positionRWS;<br>    <span class="hljs-meta">#<span class="hljs-keyword">if</span> UNITY_ANY_INSTANCING_ENABLED</span><br>    output.instanceID = input.instanceID;<br>    <span class="hljs-meta">#<span class="hljs-keyword">endif</span> <span class="hljs-comment">// UNITY_ANY_INSTANCING_ENABLED</span></span><br>    <span class="hljs-keyword">return</span> output;<br>&#125;<br>VaryingsMeshToPS <span class="hljs-title function_">UnpackVaryingsMeshToPS</span><span class="hljs-params">(PackedVaryingsMeshToPS input)</span><br>&#123;<br>    VaryingsMeshToPS output;<br>    output.positionCS = input.positionCS;<br>    output.positionRWS = input.interp00.xyz;<br>    <span class="hljs-meta">#<span class="hljs-keyword">if</span> UNITY_ANY_INSTANCING_ENABLED</span><br>    output.instanceID = input.instanceID;<br>    <span class="hljs-meta">#<span class="hljs-keyword">endif</span> <span class="hljs-comment">// UNITY_ANY_INSTANCING_ENABLED</span></span><br>    <span class="hljs-keyword">return</span> output;<br>&#125;<br></code></pre></td></tr></table></figure>
 
-<p>下面是关于分割光线的 split Lighting 是什么</p>
-<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">// If we use subsurface scattering, enable output split lighting (for forward pass)</span><br><span class="hljs-meta">#<span class="hljs-keyword">if</span> defined(_MATERIAL_FEATURE_SUBSURFACE_SCATTERING) &amp;&amp; !defined(_SURFACE_TYPE_TRANSPARENT) <span class="hljs-comment">// 子表面散射 并且不是半透明物体</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">define</span> OUTPUT_SPLIT_LIGHTING  <span class="hljs-comment">// 分割光线？？？</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">endif</span></span><br></code></pre></td></tr></table></figure>
-
-<h2 id="头发渲染部分代码"><a href="#头发渲染部分代码" class="headerlink" title="头发渲染部分代码"></a>头发渲染部分代码</h2><h3 id="Shader-Pass-Forward"><a href="#Shader-Pass-Forward" class="headerlink" title="Shader Pass Forward"></a>Shader Pass Forward</h3><p>头发的Pass文件：</p>
-<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;Packages/com.unity.render-pipelines.high-definition/Runtime/RenderPipeline/ShaderPass/ShaderPassForward.hlsl&quot;</span></span><br></code></pre></td></tr></table></figure>
-
-<p>也就是说头发使用的事一般的前向渲染的Pass描述。</p>
-<p>####Vert</p>
-<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">//这部分是通用的代码</span><br>PackedVaryingsType <span class="hljs-title function_">Vert</span><span class="hljs-params">(AttributesMesh inputMesh)</span><br>&#123;<br>    VaryingsType varyingsType;<br>    varyingsType.vmesh = VertMesh(inputMesh);<br>    <span class="hljs-keyword">return</span> PackVaryingsType(varyingsType);<br>&#125;<br></code></pre></td></tr></table></figure>
-
-<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&quot;Packages/com.unity.render-pipelines.high-definition/Runtime/RenderPipeline/ShaderPass/VertMesh.hlsl&quot;</span></span><br><span class="hljs-comment">//使用的上面的内容用来计算Vert当中的参数。</span><br></code></pre></td></tr></table></figure>
-
-<p>####Frag</p>
-<p>下面是去掉了debug信息的Frag代码：</p>
-<p>如果使用了SSS效果并且没有使用半透则会进入OUTPUT_SPLIT_LIGHTING的部分，看起来是分开了高光和漫反射颜色，以及SSS的某个特殊buffer。</p>
-<p>否则就是用一个单独的颜色。</p>
-<p>这里有个_DEPTHOFFSET_ON，暂时不考虑。</p>
-<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-type">void</span> <span class="hljs-title function_">Frag</span><span class="hljs-params">(PackedVaryingsToPS packedInput,</span><br><span class="hljs-params">        #ifdef OUTPUT_SPLIT_LIGHTING  <span class="hljs-comment">//使用分割光线</span></span><br><span class="hljs-params">            out float4 outColor : SV_Target0,  <span class="hljs-comment">// outSpecularLighting</span></span><br><span class="hljs-params">            out float4 outDiffuseLighting : SV_Target1,</span><br><span class="hljs-params">            OUTPUT_SSSBUFFER(outSSSBuffer)</span><br><span class="hljs-params">        #<span class="hljs-keyword">else</span></span><br><span class="hljs-params">            out float4 outColor : SV_Target0  <span class="hljs-comment">// 没有SSS效果的一个输出颜色。</span></span><br><span class="hljs-params">        #endif</span><br><span class="hljs-params">        #ifdef _DEPTHOFFSET_ON</span><br><span class="hljs-params">            , out <span class="hljs-type">float</span> outputDepth : SV_Depth</span><br><span class="hljs-params">        #endif</span><br><span class="hljs-params">          )</span><br>&#123;<br>    UNITY_SETUP_STEREO_EYE_INDEX_POST_VERTEX(packedInput);<br>    FragInputs input = UnpackVaryingsMeshToFragInputs(packedInput.vmesh);<br><br>    uint2 tileIndex = uint2(input.positionSS.xy) / GetTileSize();<br><span class="hljs-meta">#<span class="hljs-keyword">if</span> defined(UNITY_SINGLE_PASS_STEREO)</span><br>    tileIndex.x -= unity_StereoEyeIndex * _NumTileClusteredX;<br><span class="hljs-meta">#<span class="hljs-keyword">endif</span></span><br><br>    <span class="hljs-comment">// input.positionSS is SV_Position</span><br>    PositionInputs posInput = GetPositionInput_Stereo(input.positionSS.xy, _ScreenSize.zw, input.positionSS.z, input.positionSS.w, input.positionRWS.xyz, tileIndex, unity_StereoEyeIndex); <span class="hljs-comment">// 计算屏幕坐标 视口坐标 纹理坐标等内容（ComputeShader也会用这个函数）。</span><br><br><span class="hljs-meta">#<span class="hljs-keyword">ifdef</span> VARYINGS_NEED_POSITION_WS</span><br>    float3 V = GetWorldSpaceNormalizeViewDir(input.positionRWS);<br><span class="hljs-meta">#<span class="hljs-keyword">else</span></span><br>    <span class="hljs-comment">// Unused</span><br>    float3 V = float3(<span class="hljs-number">1.0</span>, <span class="hljs-number">1.0</span>, <span class="hljs-number">1.0</span>); <span class="hljs-comment">// Avoid the division by 0</span><br><span class="hljs-meta">#<span class="hljs-keyword">endif</span></span><br><br>    SurfaceData surfaceData;<br>    BuiltinData builtinData;<br>    <br>    <span class="hljs-comment">// 纹理属性的计算</span><br>    GetSurfaceAndBuiltinData(input, V, posInput, surfaceData, builtinData);<br>	<span class="hljs-comment">// 材质参数计算</span><br>    BSDFData bsdfData = ConvertSurfaceDataToBSDFData(input.positionSS.xy, surfaceData);<br><br>    PreLightData preLightData = GetPreLightData(V, posInput, bsdfData);<br>	<span class="hljs-comment">// 定义输出颜色</span><br>    outColor = float4(<span class="hljs-number">0.0</span>, <span class="hljs-number">0.0</span>, <span class="hljs-number">0.0</span>, <span class="hljs-number">0.0</span>);<br><br><br>    &#123;<br>    <span class="hljs-comment">//透明和不透明物体单独处理</span><br><span class="hljs-meta">#<span class="hljs-keyword">ifdef</span> _SURFACE_TYPE_TRANSPARENT</span><br>        uint featureFlags = LIGHT_FEATURE_MASK_FLAGS_TRANSPARENT;<br><span class="hljs-meta">#<span class="hljs-keyword">else</span></span><br>        uint featureFlags = LIGHT_FEATURE_MASK_FLAGS_OPAQUE;<br><span class="hljs-meta">#<span class="hljs-keyword">endif</span></span><br>	<span class="hljs-comment">// 将要分别计算的高光和漫反射光</span><br>        float3 diffuseLighting;<br>        float3 specularLighting;<br>	<br>	<span class="hljs-comment">// 进入光照循环计算光照</span><br>        LightLoop(V, posInput, preLightData, bsdfData, builtinData, featureFlags, diffuseLighting, specularLighting);<br>	<span class="hljs-comment">// 此时就返回了计算好的高光和 漫反射光</span><br>	<span class="hljs-comment">// 进行全局的缩放</span><br>        diffuseLighting *= GetCurrentExposureMultiplier();<br>        specularLighting *= GetCurrentExposureMultiplier();<br>	<br><span class="hljs-meta">#<span class="hljs-keyword">ifdef</span> OUTPUT_SPLIT_LIGHTING</span><br>	<span class="hljs-comment">// 如果开启SSS 并且需要分割光照（通过参数判断），则把两个光照分开。</span><br>        <span class="hljs-keyword">if</span> (_EnableSubsurfaceScattering != <span class="hljs-number">0</span> &amp;&amp; ShouldOutputSplitLighting(bsdfData))<br>        &#123;<br>            outColor = float4(specularLighting, <span class="hljs-number">1.0</span>);<br>            outDiffuseLighting = float4(TagLightingForSSS(diffuseLighting), <span class="hljs-number">1.0</span>);<br>        &#125;<br>        <span class="hljs-keyword">else</span><br>        &#123;<br>        	<span class="hljs-comment">//如果不需要SSS，或者不需要分割光照，就把两个颜色都合并到Specular里面。</span><br>            outColor = float4(diffuseLighting + specularLighting, <span class="hljs-number">1.0</span>);<br>            outDiffuseLighting = <span class="hljs-number">0</span>;<br>        &#125;<br>        <span class="hljs-comment">// 这里面写入一些 SSS需要用到的属性。</span><br>        ENCODE_INTO_SSSBUFFER(surfaceData, posInput.positionSS, outSSSBuffer);<br>        <span class="hljs-comment">// 如果分割颜色就，在Gbuffer结束时统一计算大气散射。</span><br><span class="hljs-meta">#<span class="hljs-keyword">else</span></span><br>        outColor = ApplyBlendMode(diffuseLighting, specularLighting, builtinData.opacity);<br>        <br>        <span class="hljs-comment">// 如果不分割颜色 就直接计算大气散射。</span><br>        outColor = EvaluateAtmosphericScattering(posInput, V, outColor);<br><span class="hljs-meta">#<span class="hljs-keyword">endif</span></span><br>    &#125;<br><br><span class="hljs-comment">// 忽略</span><br><span class="hljs-meta">#<span class="hljs-keyword">ifdef</span> _DEPTHOFFSET_ON</span><br>    outputDepth = posInput.deviceDepth;<br><span class="hljs-meta">#<span class="hljs-keyword">endif</span></span><br>&#125;<br></code></pre></td></tr></table></figure>
-
-<h4 id="LightLoop"><a href="#LightLoop" class="headerlink" title="LightLoop"></a>LightLoop</h4><p>具体Shader的光照循环部分，参见光照循环文档</p>
+<h2 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h2><p>shader代码hlsl的包含调用关系比较复杂。</p>
 
       
-      <p align="right"><a class="morebtn" href="/2022/09/19/Unity/HDRP%E4%B8%ADHairShader%E4%BB%A3%E7%A0%81%E7%BB%93%E6%9E%84/" title="">阅读全文</a></p>
+      <p align="right"><a class="morebtn" href="/2023/06/02/Unity/HDRP%E4%B8%ADShaderGraph%E7%94%9F%E6%88%90%E7%9A%84UnlitTransparent%E4%B8%8D%E6%8E%A5%E5%8F%97%E9%9B%BE/" title="HDRP中ShaderGraph生成的UnlitTransparent不接受雾">阅读全文</a></p>
+    </main>
+    <footer class="post-footer">
+      
+    </footer>
+  </article>
+  
+  <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
+    <div class="post-block">
+      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2023/06/02/Unity/Hdrp%E4%B8%80%E4%BA%9B%E7%89%B9%E6%AE%8A%E5%8A%9F%E8%83%BD/">
+      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <meta itemprop="name" content="leinlin">
+        <meta itemprop="description" content="">
+        <meta itemprop="image" content="/images/avatar.jpg">
+      </span>
+      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+        <meta itemprop="name" content="leinlin的小笔记">
+      </span>
+    </div>
+    <header class="post-header">
+      <h1 class="post-title" itemprop="name headline">
+        <a class="post-title-link post-title-link-external" href="/2023/06/02/Unity/Hdrp%E4%B8%80%E4%BA%9B%E7%89%B9%E6%AE%8A%E5%8A%9F%E8%83%BD/" itemprop="url">UnlitShader使用</a>
+      </h1>
+      <div class="post-meta">
+        
+        <span class="post-date">
+          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2023-06-02T12:00:14+08:00">2023-06-02 12:00:14</time></span>
+        </span>
+        
+        
+        
+        <span class="post-meta-divider divider">|</span>
+        
+        <span class="post-categories">
+          
+          <i class="far fa-folder-open"></i><span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Unity/" itemprop="url" rel="index"><span itemprop="name">Unity</span></a></span>
+        </span>
+        
+        
+        
+        
+      </div>
+    </header>
+    <main class="post-main" itemprop="articleBody">
+      
+      <h1 id="1-UnlitShader使用"><a href="#1-UnlitShader使用" class="headerlink" title="1.UnlitShader使用"></a>1.UnlitShader使用</h1><ol>
+<li><p>目前UnlitGraph支持主要的纹理、向量、颜色、顶点色、屏幕空间位置等各种基础参数的计算。</p>
+</li>
+<li><p>通过宏来切换不同效果的部分需要手写谢。</p>
+</li>
+<li><p>同时支持透明和不透明两种模式。</p>
+</li>
+<li><p><strong>扭曲distort，默认的Unlit shader已经可以使用</strong>，但是UnlitGraph没有提供，LitGraph有这个功能，所以未来应该会提供。</p>
+</li>
+</ol>
+<p>使用方式：HDRP创建默认材质，Shader改成Hdrp&#x2F;Unlit，材质选项中Surface Type改成Transparent。此时材质下方出现了新的选项Transprency Input。打开Distortion，给出一张扭曲纹理，然后调节参数就可以看到扭曲效果。</p>
+<p><strong>注意</strong>：扭曲和渲染顺序无关，所有和扭曲材质重叠切没有渲染深度的材质，都会被扭曲。</p>
+<h1 id="2-LitShader"><a href="#2-LitShader" class="headerlink" title="2.LitShader"></a>2.LitShader</h1><ol>
+<li><p>Lit一共有两种扭曲方式：Refraction折射和Distortion变形。LitGraph也可以使用这两个功能</p>
+</li>
+<li><p>支持折射、扭曲，但是会带上光照。</p>
+</li>
+<li><p>Refraction：透明的Lit物体可以用折射功能（Unlit物体只可以选择是否被折射）。Lit物体如果要折射其他物体就不能被其他的物体折射。不透明物体可以选择是否被折射。可以用来实现类似冰冻怪物的效果。</p>
+</li>
+<li><p>Distortion：Unlit和透明的Lit都可以用。有扭曲的Unlit材质会扭曲任何和他重叠的无深度物体。</p>
+</li>
+</ol>
+<h1 id="3-Unlit贴花"><a href="#3-Unlit贴花" class="headerlink" title="3.Unlit贴花"></a>3.Unlit贴花</h1><ol>
+<li><p>默认的功能无法实现Unlit效果。我们需要自己实现Unlit Decal，理论上只要能够正确读取深度就可以渲染，不过需要研究一下渲染输出的buffer、渲染队列、已经新的深度读取方式。</p>
+</li>
+<li><p><strong>内置贴花支持模型贴花</strong>，一个Decal模型可以贴附在另一个模型上，可以有自己的UV。</p>
+</li>
+</ol>
+<h1 id="4-天空球编程"><a href="#4-天空球编程" class="headerlink" title="4.天空球编程"></a>4.天空球编程</h1><p>参考链接：<a target="_blank" rel="noopener" href="https://github.com/Unity-Technologies/ScriptableRenderPipeline/wiki/Writing-A-Custom-Sky-Renderer">天空球编程</a>，可以自由实现想要的天空球。</p>
+<p>#5.HDRP 自带天空球混合</p>
+<p>Unity Volume源代码中有实现HDRI插值的计划，见：TODO注释：</p>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs c">public <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">CubemapParameter</span> :</span> VolumeParameter&lt;Cubemap&gt;<br>&#123;<br>     public <span class="hljs-title function_">CubemapParameter</span><span class="hljs-params">(Cubemap value, <span class="hljs-type">bool</span> overrideState = <span class="hljs-literal">false</span>)</span><br>     : <span class="hljs-title function_">base</span><span class="hljs-params">(value, overrideState)</span> &#123;&#125;<br>     <span class="hljs-comment">// <span class="hljs-doctag">TODO:</span> Cubemap interpolation</span><br>&#125;<br><br>public <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">NoInterpCubemapParameter</span> :</span> VolumeParameter&lt;Cubemap&gt;<br>&#123;<br>    public <span class="hljs-title function_">NoInterpCubemapParameter</span><span class="hljs-params">(Cubemap value, <span class="hljs-type">bool</span> overrideState = <span class="hljs-literal">false</span>)</span><br>    : <span class="hljs-title function_">base</span><span class="hljs-params">(value, overrideState)</span> &#123;&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>Volume当中的不同天空球都可以实现各自的混合效果，不过Hdri目前没有实现完（如果是其他两种类型的天空球，当前版本已经可以实现插值）。cubemap在混合时实时计算插值，有一部分开销需要考虑。在HDRP6.0.0当中也还是没有实现，不知道Unity是出于什么考虑，一直没有给出Cubemap混合的代码。</p>
+<p>目前，<strong>我们实现这部分代码就可以直接使用Volume当中的天空球插值</strong>。</p>
+<p>#6.关于特效和渲染队列</p>
+<p>之前美术手动调节了材质上的渲染队列来实现不同的特效。现在渲染队列的机制有一些改动，在不熟悉之前最好不要手动设置队列（默认材质都是不能调节的，只能修改<strong>渲染优先级Sort Priority</strong>），通过Shader Graph创建的可以手动设置。</p>
+<p>现在，在不透明物体渲染阶段，不会渲染2650以上的物体（看源代码得到的结果，在以前只要有队列，就会按照队列顺序渲染），反之亦然。</p>
+<p>HDRP理论上不建议手动调整材质顺序，因为这个顺序不在单纯的是顺序，还涉及到各种特殊的效果。</p>
+<p>2650-2850用来渲染被折射的透明物体，这个都是通过设置自动配置的，在不熟悉引擎之前不要修改材质队列。</p>
+<p>2900-3100是一把透明物体。</p>
+<p>2850到2900之间会出现奇怪的变化，Unity没有给出这部分渲染的是什么。</p>
+<p>2000到2500是不透明物体。这个队列以外的不透明物体不会渲染。</p>
+<p>2000以下什么都不会渲染（以前都是可以渲染的）。</p>
+<p><strong>现在的状态就是：如果没有把队列和物体类型匹配就会出现不可预知的结果。</strong></p>
+<p>下面是控制渲染队列的代码。</p>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><code class="hljs c">public <span class="hljs-class"><span class="hljs-keyword">enum</span> <span class="hljs-title">Priority</span></span><br><span class="hljs-class">        &#123;</span><br>            Background = UnityEngine.Rendering.RenderQueue.Background,<br>            Opaque = UnityEngine.Rendering.RenderQueue.Geometry,<br>            OpaqueAlphaTest = UnityEngine.Rendering.RenderQueue.AlphaTest,<br>            <span class="hljs-comment">// Warning: we must not change Geometry last value to stay compatible with occlusion</span><br>            OpaqueLast = UnityEngine.Rendering.RenderQueue.GeometryLast,<br>            <span class="hljs-comment">// For transparent pass we define a range of 200 value to define the priority</span><br>            <span class="hljs-comment">// Warning: Be sure no range are overlapping</span><br>            PreRefractionFirst = <span class="hljs-number">2750</span> - k_TransparentPriorityQueueRange,<br>            PreRefraction = <span class="hljs-number">2750</span>,<br>            PreRefractionLast = <span class="hljs-number">2750</span> + k_TransparentPriorityQueueRange,<br>            TransparentFirst = UnityEngine.Rendering.RenderQueue.Transparent - k_TransparentPriorityQueueRange,<br>            Transparent = UnityEngine.Rendering.RenderQueue.Transparent,<br>            TransparentLast = UnityEngine.Rendering.RenderQueue.Transparent + k_TransparentPriorityQueueRange,<br>            Overlay = UnityEngine.Rendering.RenderQueue.Overlay<br>        &#125;<br><br>RenderQueueRange k_RenderQueue_OpaqueNoAlphaTest = <br>    new RenderQueueRange &#123; min = (<span class="hljs-type">int</span>)Priority.Opaque, <br>                          max = (<span class="hljs-type">int</span>)Priority.OpaqueAlphaTest - <span class="hljs-number">1</span> &#125;;<br><br>RenderQueueRange k_RenderQueue_OpaqueAlphaTest = <br>    new RenderQueueRange &#123; min = (<span class="hljs-type">int</span>)Priority.OpaqueAlphaTest, <br>                          max = (<span class="hljs-type">int</span>)Priority.OpaqueLast &#125;;<br><br>RenderQueueRange k_RenderQueue_AllOpaque = new RenderQueueRange &#123; <br>    min = (<span class="hljs-type">int</span>)Priority.Opaque,<br>    max = (<span class="hljs-type">int</span>)Priority.OpaqueLast &#125;;<br><br>RenderQueueRange k_RenderQueue_PreRefraction = new RenderQueueRange &#123; <br>    min = (<span class="hljs-type">int</span>)Priority.PreRefractionFirst, <br>    max = (<span class="hljs-type">int</span>)Priority.PreRefractionLast &#125;;<br><br>RenderQueueRange k_RenderQueue_Transparent = new RenderQueueRange &#123; <br>    min = (<span class="hljs-type">int</span>)Priority.TransparentFirst, <br>    max = (<span class="hljs-type">int</span>)Priority.TransparentLast &#125;;<br><br>RenderQueueRange k_RenderQueue_AllTransparent = new RenderQueueRange &#123; <br>    min = (<span class="hljs-type">int</span>)Priority.PreRefractionFirst, <br>    max = (<span class="hljs-type">int</span>)Priority.TransparentLast &#125;;<br><br>RenderQueueRange k_RenderQueue_All = new RenderQueueRange &#123; min = <span class="hljs-number">0</span>, max = <span class="hljs-number">5000</span> &#125;;<br>    &#125;<br></code></pre></td></tr></table></figure>
+
+
+      
+      <p align="right"><a class="morebtn" href="/2023/06/02/Unity/Hdrp%E4%B8%80%E4%BA%9B%E7%89%B9%E6%AE%8A%E5%8A%9F%E8%83%BD/" title="UnlitShader使用">阅读全文</a></p>
+    </main>
+    <footer class="post-footer">
+      
+    </footer>
+  </article>
+  
+  <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
+    <div class="post-block">
+      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2023/06/02/Unity/HDRP%E6%B7%B1%E5%BA%A6%E7%BA%B9%E7%90%86/">
+      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <meta itemprop="name" content="leinlin">
+        <meta itemprop="description" content="">
+        <meta itemprop="image" content="/images/avatar.jpg">
+      </span>
+      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+        <meta itemprop="name" content="leinlin的小笔记">
+      </span>
+    </div>
+    <header class="post-header">
+      <h1 class="post-title" itemprop="name headline">
+        <a class="post-title-link post-title-link-external" href="/2023/06/02/Unity/HDRP%E6%B7%B1%E5%BA%A6%E7%BA%B9%E7%90%86/" itemprop="url">HDRP深度纹理</a>
+      </h1>
+      <div class="post-meta">
+        
+        <span class="post-date">
+          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2023-06-02T12:00:14+08:00">2023-06-02 12:00:14</time></span>
+        </span>
+        
+        
+        
+        <span class="post-meta-divider divider">|</span>
+        
+        <span class="post-categories">
+          
+          <i class="far fa-folder-open"></i><span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Unity/" itemprop="url" rel="index"><span itemprop="name">Unity</span></a></span>
+        </span>
+        
+        
+        
+        
+      </div>
+    </header>
+    <main class="post-main" itemprop="articleBody">
+      
+      <h1 id="HDRP深度纹理"><a href="#HDRP深度纹理" class="headerlink" title="HDRP深度纹理"></a>HDRP深度纹理</h1><figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">/**</span><br><span class="hljs-comment">Auther : LZ</span><br><span class="hljs-comment">Date   : 2018</span><br><span class="hljs-comment">Description</span><br><span class="hljs-comment">*/</span><br></code></pre></td></tr></table></figure>
+
+<h2 id="引子"><a href="#引子" class="headerlink" title="引子"></a>引子</h2><p>HDPR在内置纹理采样上使用了新的方式，网上并没有给出正确答案。并HDRP使用了HLSL语法和以往CG不同，所以资料很少。</p>
+<p>这里主要讲解一下HDRP的内置深度纹理采样和相关的HLSL语法。</p>
+<h2 id="DepthPyramid"><a href="#DepthPyramid" class="headerlink" title="DepthPyramid"></a>DepthPyramid</h2><p>HDRP的沿用了Legacy的_CameraDepthTexture之类的内置纹理名字，方便我们进行迁移，但是和原本采样方法产生了很大出入，下面详细解释。</p>
+<p> <strong>为了支持新的渲染效果，HDRP生成了多分辨率版本的深度图（DepthPyramid）</strong> 。即为Depth生成一个DepthPyramid。</p>
+<p>这张DepthPayermid并不是类似mip的多分辨率版本纹理（类似通过lod参数对mip采样,如下<em>代码1</em>），而是<strong>直接扩展了DepthBuffer的像素大小，把多个分辨率版本放在一张图中</strong>。例如：原本Detph是1024 * 533，为了在DepthPayermid当中保存多个分辨率版本，需要把DepthPayermid扩展到 1024 * 1024。下图是完整的DepthPayermid，最下面的绿框就是真正的depthtexture。</p>
+<p><img src="/../../images/img/depthp.bmp"></p>
+<figure class="hljs highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs hlsl">tex2D（tex,float4(texcoord.xy,0,lod）；//代码1 ： 对mip采样<br></code></pre></td></tr></table></figure>
+
+<p><strong>HDRP的_CameraDepthTexture指的是DepthPyramid而非DepthTexture</strong>  ，这样会需要一个很严重的问题。我们按照Legacy版本计算的 **屏幕纹理坐标[0,1] 对应的是整个DepthPyramid **。如何从DepthPyramid拿出最高层的Depth。</p>
+<p>根据HDRP的Decal源代码和DepthPyramid生成代码可以发现两个地方。</p>
+<ol>
+<li><p>DepthPyramid的最高层（DepthTexture）保存在左下角</p>
+</li>
+<li><p>DepthPyramid中最高层的分辨率和原本DepthTexture是一样的</p>
+<p> 所以我们可以 ** 通过像素位置进行采样 ** 而不是纹理坐标，也就是说：Depth中[12,12]这个像素，刚好在DepthPyramid[12,12]这个位置上。</p>
+<p> HLSL语法为我们提供了这个采样函数，而CG是做不到的（当然也可以想办法计算一个比例）：</p>
+</li>
+</ol>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs C">tex.load(texcoord);	<span class="hljs-comment">//代码2 ： 对使用像素位置采样</span><br></code></pre></td></tr></table></figure>
+
+<p><a target="_blank" rel="noopener" href="https://docs.microsoft.com/en-us/windows/desktop/direct3dhlsl/t2d-load-float-int-uint-">Load的hlslAPI链接</a></p>
+<p>下面就是计算屏幕的像素位置（而不是纹理坐标），又刚好SV_POSITION语意，就是我们要的。</p>
+<p>所以深度图的采样方式就是：</p>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs c">_CameraDepthTexture.Load(sampler2D_CameraDepthTexture,positionSV);<br><span class="hljs-comment">//使用HDRP提供的宏就是：</span><br>LOAD_TEXTURE2D(_CameraDetphTexture, positionSV).x;<br><span class="hljs-comment">//其中positionSV就是的SV_POSITION对呀的值。</span><br></code></pre></td></tr></table></figure>
+
+<p>注：这种采样方式有个好处就是在Computeshader中可以很方便的和线程ID对应。整数计算效率更高。</p>
+<h2 id="关于HLSL语法"><a href="#关于HLSL语法" class="headerlink" title="关于HLSL语法"></a>关于HLSL语法</h2><p>很多渲染语法是CG不支持的，其中有两点比较重要：</p>
+<ol>
+<li><p>cg语法中sampler和texture无法分离，而一般GPU支持128个texture，只支持16个sampler，如果无法分离就导致我们只能最多用16个纹理。</p>
+</li>
+<li><p>无法用整数采样器，就是上面的DepthPyramid的问题。</p>
+</li>
+</ol>
+<p>最重要的不同就是采样语法：</p>
+<figure class="hljs highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs c"><span class="hljs-comment">//========cg==========</span><br>sampler2D tex1;<br>sampler2D tex2;<br><span class="hljs-comment">// 采样</span><br>tex2D(tex1,coord);<br>tex2D(tex2,coord);<br><span class="hljs-comment">//=========hlsl========</span><br>SamplerState sampler_tex;<br>Texture2D tex；<br>Texture2D tex1；<br><span class="hljs-comment">// 采样</span><br>tex.sample(sampler_tex,coord);<br>tex1.sample(sampler_tex,coord); <span class="hljs-comment">//复用采样器</span><br><span class="hljs-comment">//</span><br>tex1.load(coord); <span class="hljs-comment">// 直接读取像素</span><br><br></code></pre></td></tr></table></figure>
+
+<h2 id="其他"><a href="#其他" class="headerlink" title="其他"></a>其他</h2><p>关于深度金字塔似乎是一种叫做 Interleaved Sampling的技术。</p>
+
+      
+      <p align="right"><a class="morebtn" href="/2023/06/02/Unity/HDRP%E6%B7%B1%E5%BA%A6%E7%BA%B9%E7%90%86/" title="HDRP深度纹理">阅读全文</a></p>
+    </main>
+    <footer class="post-footer">
+      
+    </footer>
+  </article>
+  
+  <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
+    <div class="post-block">
+      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2023/06/02/Unity/Linear%20And%20Gamma/">
+      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <meta itemprop="name" content="leinlin">
+        <meta itemprop="description" content="">
+        <meta itemprop="image" content="/images/avatar.jpg">
+      </span>
+      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+        <meta itemprop="name" content="leinlin的小笔记">
+      </span>
+    </div>
+    <header class="post-header">
+      <h1 class="post-title" itemprop="name headline">
+        <a class="post-title-link post-title-link-external" href="/2023/06/02/Unity/Linear%20And%20Gamma/" itemprop="url">线性空间、GAMMA空间和HDR、纹理</a>
+      </h1>
+      <div class="post-meta">
+        
+        <span class="post-date">
+          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2023-06-02T12:00:14+08:00">2023-06-02 12:00:14</time></span>
+        </span>
+        
+        
+        
+        <span class="post-meta-divider divider">|</span>
+        
+        <span class="post-categories">
+          
+          <i class="far fa-folder-open"></i><span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Unity/" itemprop="url" rel="index"><span itemprop="name">Unity</span></a></span>
+        </span>
+        
+        
+        
+        
+      </div>
+    </header>
+    <main class="post-main" itemprop="articleBody">
+      
+      <h2 id="线性空间、GAMMA空间和HDR、纹理"><a href="#线性空间、GAMMA空间和HDR、纹理" class="headerlink" title="线性空间、GAMMA空间和HDR、纹理"></a>线性空间、GAMMA空间和HDR、纹理</h2><h3 id="sRGB"><a href="#sRGB" class="headerlink" title="sRGB"></a>sRGB</h3><p>sRGB是一个纹理的标记，也是一种<strong>数据保存格式</strong>。在对纹理采样和写入纹理内容时产生作用。如果开启sRGB，那么在采样时会自动的对采样得到的值进行sRGB解码，写入时会对写入的值进行sRGB编码，然后再写入。</p>
+<p>(When calculating lighting on older hardware restricted to 8 bits per channel for the framebuffer format, using a gamma curve provides more precision in the human-perceivable range. More bits are used in the range where the human eye is the most sensitive.</p>
+<p>Even though monitors today are digital, they still take a gamma-encoded signal as input. Image files and video files are explicitly encoded to be in gamma space (meaning they carry gamma-encoded values, not linear intensities). This is the standard; everything is in gamma space.) 所以视频的录制结果，PS，SP制作内容的保存一般应该都是sRGB格式。</p>
+<p>unity中如果使用<strong>Gamma空间</strong>，sRGB的<strong>设置失效</strong>。</p>
+<p>(When using Gamma color space, no conversions are done of any kind, and this setting is not used.)</p>
+<p>sRGB (Color Texture)设置的意义：Check this box to specify that the Texture is stored in gamma space. This should always be checked for non-HDR color Textures (such as Albedo and Specular Color)（只有UI和Default会有这个选项, 至于HDR color Textures应该是PS输出的浮点格式纹理）. If the Texture stores information that has a specific meaning, and you need the exact values in the Shader (for example, the smoothness or the metalness), uncheck this box. This box is checked by default.</p>
+<h3 id="Gamma矫正"><a href="#Gamma矫正" class="headerlink" title="Gamma矫正"></a>Gamma矫正</h3><p>如果显示设备按照线性亮度显示内容，人眼的感受会觉得很奇怪。</p>
+<p>所以显示设备需要显示进过Gamma矫正的内容，以符合人眼感受习惯（More bits are used in the range where the human eye is the most sensitive.）。录制设置完成录制后保存的也是经过Gamma矫正的内容。</p>
+<p><strong>目前，各种设备的输入、保存、输出格式都是在Gamma空间的。</strong></p>
+<p>目前sRGB格式就是Gamma空间的标准。(The accepted standard for gamma space is called sRGB )</p>
+<p>**This is the standard; everything is in gamma space.**也就是说一般情况（录制、显示、保存）下都不存在Linear空间。</p>
+<p>所以根据纹理内容需要合理的设置纹理的sRGB标记。（如果是法线或者Mask）则Unity 不会进行任何编码解码操作，直接作为数据来处理。针对的只是颜色纹理（Color RenderTexture）.</p>
+<h3 id="线性空间和Gamma空间"><a href="#线性空间和Gamma空间" class="headerlink" title="线性空间和Gamma空间"></a>线性空间和Gamma空间</h3><p>显示、录制、保存都是Gamma空间，但是当纹理颜色参与计算时，为了精确度，需要在线性空间计算。</p>
+<p>Unity提供了线性空间处理选项:在每一个渲染过程中，<strong>输入需要进行sRGB的解码，输出时在进行sRGB编码</strong>。（To overcome this, you can set Unity to use an RGB sampler to cross over from gamma to linear sampling. This ensures a linear workflow with all inputs and outputs of a Shader in the correct color space, resulting in a correct outcome.）</p>
+<p>设置线性空间方法（go to <strong>Edit</strong> &gt; <strong>Project Settings</strong> &gt; <strong>Player</strong> and open <strong>Player Settings</strong>. Go to <strong>Other Settings</strong> &gt; <strong>Rendering</strong> and change the <strong>Color Space</strong> to <strong>Linear</strong> or <strong>Gamma</strong>, depending on your preference.）</p>
+<p><strong>如果不进行上述设置，Unity就不会进行格式的转化，采样到的就是保存值，输出的内容也会直接写入到纹理上。</strong></p>
+<p><em><strong>特例1</strong>:当使用</em><em>HDR<strong>的时候颜色校正的时机（只在linear空间有效），Shader结果输出到帧缓存中时并未进行Gamma矫正，而是在更晚的时候进行（这一帧完全渲染结束进行一次Gamma矫正）。如果</strong>Non-HDR*</em> 输出到帧缓存的结果就是Gamma矫正的结果。（When using HDR, rendering is performed in linear space into floating point buffers. These buffers have enough precision not to require conversion to and from gamma space whenever the buffer is accessed. This means that when rendering in linear mode, the framebuffers you use store the colors in linear space. Therefore, all blending and post process effects are implicitly performed in linear space. When the final backbuffer is written to, gamma correction is applied.）</p>
+<p><em><strong>特例2</strong>:光照贴图，无论颜色空间的设置，光照贴图永远执行的都是</em>*Linear Space的工作流**：The lighting <strong>calculations in the lightmapper are always done in linear space</strong> (see documentation on the <a target="_blank" rel="noopener" href="https://docs.unity3d.com/Manual/GlobalIllumination.html">Lighting Window</a> for more information). <strong>The lightmaps are always stored in gamma space</strong>. This means that the lightmap textures are identical no matter whether you’re in gamma or linear color space.</p>
+<p>*<strong>特例3</strong>:HDR中帧缓存的内容和颜色空间的关系. <strong>When linear color space is enabled and HDR is not enabled</strong>, a special framebuffer type is used that supports sRGB read and sRGB write (convert from gamma to linear when reading, convert from linear to gamma when writing). When this framebuffer is used for blending or it is bound as a Texture, the values are converted to linear space before being used. When these buffers are written to, the value that is being written is converted from linear space to gamma space. <strong>If you are rendering in linear mode and non-HDR mode</strong>, all post-process effects have their source and target buffers created with sRGB read and write enabled so that post-processing and post-process blending occur in linear space.</p>
+<p><em><strong>注</strong>：</em>*Gamma工作流**：读入、写出内容时都不进行Gamma矫正：Even though these values are in gamma space, all the Unity Editor’s Shader calculations still treat their inputs as if they were in linear space. To ensure an acceptable final result, the Editor makes an adjustment to deal with the mismatched formats when it writes the Shader outputs to a framebuffer and does not apply gamma correction to the final result.</p>
+<p>*<strong>注：</strong>一旦打开HDR所有的帧缓存就会从ARGB32(255的整型RGBA)变成ARGBHalf(16位的浮点数)。原本没有HDR时每次帧缓存的读写都会经历sRGB的解码编码。打开HDR后帧缓存的读写不再进行sRGB的编解码，而是在这一帧完全处理完成之后，从HDR转回正常颜色空间后在进行sRGB的编解码，ReadPixel也就是从这里读取纹理的。实际上我们可以在渲染过程中读取colorbuffer，例如渲染到RT当中，这个使用可以读取到没有经过编码颜色数据。</p>
+<h3 id="纹理颜色空间-sRGB选项控制"><a href="#纹理颜色空间-sRGB选项控制" class="headerlink" title="纹理颜色空间(sRGB选项控制)"></a>纹理颜色空间(sRGB选项控制)</h3><p>不同颜色空间的工作流只针对Non-Hdr的Color Texture 在Texture的Inspector当中可以看到。sprite和Default有sRGB的选项，其他没有的不会受到颜色空间设置的影响。</p>
+
+      
+      <p align="right"><a class="morebtn" href="/2023/06/02/Unity/Linear%20And%20Gamma/" title="线性空间、GAMMA空间和HDR、纹理">阅读全文</a></p>
+    </main>
+    <footer class="post-footer">
+      
+    </footer>
+  </article>
+  
+  <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
+    <div class="post-block">
+      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2023/06/02/Unity/Houdini%E5%AF%BC%E5%87%BAfbxUVz%E9%80%9A%E9%81%93/">
+      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <meta itemprop="name" content="leinlin">
+        <meta itemprop="description" content="">
+        <meta itemprop="image" content="/images/avatar.jpg">
+      </span>
+      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+        <meta itemprop="name" content="leinlin的小笔记">
+      </span>
+    </div>
+    <header class="post-header">
+      <h1 class="post-title" itemprop="name headline">
+        <a class="post-title-link post-title-link-external" href="/2023/06/02/Unity/Houdini%E5%AF%BC%E5%87%BAfbxUVz%E9%80%9A%E9%81%93/" itemprop="url">Houdini无法导出UV.z通道</a>
+      </h1>
+      <div class="post-meta">
+        
+        <span class="post-date">
+          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2023-06-02T12:00:14+08:00">2023-06-02 12:00:14</time></span>
+        </span>
+        
+        
+        
+        <span class="post-meta-divider divider">|</span>
+        
+        <span class="post-categories">
+          
+          <i class="far fa-folder-open"></i><span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Unity/" itemprop="url" rel="index"><span itemprop="name">Unity</span></a></span>
+        </span>
+        
+        
+        
+        
+      </div>
+    </header>
+    <main class="post-main" itemprop="articleBody">
+      
+      <h1 id="Houdini无法导出UV-z通道"><a href="#Houdini无法导出UV-z通道" class="headerlink" title="Houdini无法导出UV.z通道"></a>Houdini无法导出UV.z通道</h1><p>目前希望在Houdini当中写入一些控制参数，在Unity中读取出来进行一些操作。</p>
+<p>法线当在Houdini中给uv的z通道写入数据时，在Unity当中无法读取出来。</p>
+<p>通过检查Houdini的输出FBX文件，发现Houdini的ROP FBXexport导出结点无法导出uv的z通道。</p>
+<p>目前的解决方案就是不适用。</p>
+<p>之后的方案可以考虑使用Houdini的API进行修改导出设置。</p>
+
+      
+      <p align="right"><a class="morebtn" href="/2023/06/02/Unity/Houdini%E5%AF%BC%E5%87%BAfbxUVz%E9%80%9A%E9%81%93/" title="Houdini无法导出UV.z通道">阅读全文</a></p>
+    </main>
+    <footer class="post-footer">
+      
+    </footer>
+  </article>
+  
+  <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
+    <div class="post-block">
+      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2023/06/02/Unity/Occluded%20Culling/">
+      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <meta itemprop="name" content="leinlin">
+        <meta itemprop="description" content="">
+        <meta itemprop="image" content="/images/avatar.jpg">
+      </span>
+      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+        <meta itemprop="name" content="leinlin的小笔记">
+      </span>
+    </div>
+    <header class="post-header">
+      <h1 class="post-title" itemprop="name headline">
+        <a class="post-title-link post-title-link-external" href="/2023/06/02/Unity/Occluded%20Culling/" itemprop="url">介绍unity遮挡剔除功能</a>
+      </h1>
+      <div class="post-meta">
+        
+        <span class="post-date">
+          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2023-06-02T12:00:14+08:00">2023-06-02 12:00:14</time></span>
+        </span>
+        
+        
+        
+        <span class="post-meta-divider divider">|</span>
+        
+        <span class="post-categories">
+          
+          <i class="far fa-folder-open"></i><span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Unity/" itemprop="url" rel="index"><span itemprop="name">Unity</span></a></span>
+        </span>
+        
+        
+        
+        
+      </div>
+    </header>
+    <main class="post-main" itemprop="articleBody">
+      
+      <p>#1.Unity build-in插件：Umbra</p>
+<p>##1.1具体原理</p>
+<p><a target="_blank" rel="noopener" href="https://blogs.unity3d.com/cn/2013/12/02/occlusion-culling-in-unity-4-3-the-basics/">原文链接</a>：</p>
+<p>​	Umbra’s occlusion culling process can be roughly divided into two distinct stages. In the editor, Umbra processes the game scene so that visibility queries can be performed in the game runtime, in the player. So first, Umbra needs to take the game scene as its input and <strong>bake</strong> it into a lightweight data structure. During the bake, Umbra first <strong>voxelizes</strong> the scene, then groups the voxels into cells and combines these cells with <strong>portals</strong>. This data, in addition to a few other important bits is referred to as <strong>occlusion data</strong> in Unity.</p>
+<p>​	In the runtime, Umbra then performs <strong>software portal rasterization</strong> into a <strong>depth buffer</strong>, against which <strong>object visibility</strong> can be tested. In practice, Unity gives Umbra a camera position, and Umbra gives back a list of visible objects. The visibility queries are always <strong>conservative</strong>, which means that false negatives are never returned. On the other hand, some objects may be deemed visible by Umbra even though in reality they appear not to be.	</p>
+<h2 id="1-1-编辑阶段"><a href="#1-1-编辑阶段" class="headerlink" title="1.1 编辑阶段"></a>1.1 编辑阶段</h2><h3 id="1-1-1-voxelizes-the-scene："><a href="#1-1-1-voxelizes-the-scene：" class="headerlink" title="1.1.1 voxelizes the scene："></a>1.1.1 <strong>voxelizes</strong> the scene：</h3><p>​	使用八叉树将整个场景体素化。每一个正方体体素顶点都会对齐到世界坐标。根据场景中所有需要进行剔除的物体（被Culling Area包裹和被设置为Occlude或（和）Occluder的物体）会计算整个八叉树对场景的覆盖范围，然后细分，。</p>
+<h3 id="1-1-2-groups-the-voxels-into-cells："><a href="#1-1-2-groups-the-voxels-into-cells：" class="headerlink" title="1.1.2 groups the voxels into cells："></a>1.1.2 groups the voxels into cells：</h3><p>​	将空的体素Cell合并成一个大的空的正方体。</p>
+<h3 id="1-1-3-combines-these-cells-with-portals"><a href="#1-1-3-combines-these-cells-with-portals" class="headerlink" title="1.1.3 combines these cells with portals"></a>1.1.3 combines these cells with <strong>portals</strong></h3><p>​	将所有的Cell合并成一portals，根据Occlusion Culling视图可以看出来，portal实际上是包裹各个Cell边界的长方体。只是包裹Cell正方体的一个面的长方体，而不是包裹整个Cells。现在得到的只是一个场景的划分数据。</p>
+<h3 id="1-1-4-摄像机"><a href="#1-1-4-摄像机" class="headerlink" title="1.1.4 摄像机"></a>1.1.4 摄像机</h3><p>​	前面完成了场景划分，接下来需要进行摄像机可行区域设置，也就是需要接一下occlusion area把所有的摄像机可行区域覆盖，同时需要标记为is view area。只有这些区域才会得到正确的摄像机剪裁结果，同时只会为这些区域计算遮挡。通过实验可以看到结果：设置一个场景，和唯一一个oa，并且标记为is view Volume随着这个取悦变大生成的数据也会越来越大。</p>
+<p>​	其他区域一般情况下也可能进行遮挡剔除。当时查询数据还是不准确的，很可能产生不能确定的结果。</p>
+<h3 id="1-1-5-区域划分：occlusion-portal-和occlusion-area"><a href="#1-1-5-区域划分：occlusion-portal-和occlusion-area" class="headerlink" title="1.1.5 区域划分：occlusion portal 和occlusion area"></a>1.1.5 区域划分：occlusion portal 和occlusion area</h3><p>op有一个用处，就是统一的控制其包裹的所有occlusion static 物体是否显示。不会印象内部的动态物体。</p>
+<p>oa有两个用处：</p>
+<ol>
+<li>勾选了 is view area 用来标记是否是摄像机可行区域。</li>
+<li>没有勾选is view area 用来包裹一个区域内的非occlusion static 物体，如果这个area被完全遮挡，内部的物体也会被隐藏。</li>
+</ol>
+<h3 id="1-1-6-异常情况"><a href="#1-1-6-异常情况" class="headerlink" title="1.1.6 异常情况"></a>1.1.6 异常情况</h3><p>静态物体和摄像机之间 不能隔着 关闭的op 不然会出错。</p>
+<p>编辑阶段就会产生上述内容。</p>
+<h2 id="1-2-运行阶段"><a href="#1-2-运行阶段" class="headerlink" title="1.2 运行阶段"></a>1.2 运行阶段</h2><p>游戏运行阶段就是直接根据portal来计算这个Cell当中有没有内容被遮挡。</p>
+<p>具体方法就是计算渲染所有portal后的深度，和每一个cell的深度。判断cell当中的物体是否需要被去掉。</p>
+
+      
+      <p align="right"><a class="morebtn" href="/2023/06/02/Unity/Occluded%20Culling/" title="介绍unity遮挡剔除功能">阅读全文</a></p>
+    </main>
+    <footer class="post-footer">
+      
+    </footer>
+  </article>
+  
+  <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
+    <div class="post-block">
+      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2023/06/02/Unity/SPR%E5%AE%98%E6%96%B9%E4%BB%8B%E7%BB%8D/">
+      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <meta itemprop="name" content="leinlin">
+        <meta itemprop="description" content="">
+        <meta itemprop="image" content="/images/avatar.jpg">
+      </span>
+      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+        <meta itemprop="name" content="leinlin的小笔记">
+      </span>
+    </div>
+    <header class="post-header">
+      <h1 class="post-title" itemprop="name headline">
+        <a class="post-title-link post-title-link-external" href="/2023/06/02/Unity/SPR%E5%AE%98%E6%96%B9%E4%BB%8B%E7%BB%8D/" itemprop="url">Scriptable Render Pipeline Overview</a>
+      </h1>
+      <div class="post-meta">
+        
+        <span class="post-date">
+          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2023-06-02T12:00:14+08:00">2023-06-02 12:00:14</time></span>
+        </span>
+        
+        
+        
+        <span class="post-meta-divider divider">|</span>
+        
+        <span class="post-categories">
+          
+          <i class="far fa-folder-open"></i><span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Unity/" itemprop="url" rel="index"><span itemprop="name">Unity</span></a></span>
+        </span>
+        
+        
+        
+        
+      </div>
+    </header>
+    <main class="post-main" itemprop="articleBody">
+      
+      <p>链接：<a target="_blank" rel="noopener" href="https://blogs.unity3d.com/cn/2018/01/31/srp-overview/">Scriptable Render Pipeline Overview</a></p>
+<h1 id="Scriptable-Render-Pipeline-Overview"><a href="#Scriptable-Render-Pipeline-Overview" class="headerlink" title="Scriptable Render Pipeline Overview"></a>Scriptable Render Pipeline Overview</h1><pre><code>&gt;unity2018当中介绍了可编程的渲染管线（SRP）。SPR可以通过c#来控制unity中渲染的配置和实现。在了解用户可以定制的渲染管线之前，需要先知道我们所谈论的渲染管线是什么。
+</code></pre>
+<p>##什么是渲染管线</p>
+<p>​	渲染管线是一个概括性的术语，用来概括将对象（Object）绘制到屏幕上的一系列的技术。这是一个高度概括的概念，包括了：</p>
+<ul>
+<li><p>剪裁 </p>
+</li>
+<li><p>对象渲染</p>
+</li>
+<li><p>后处理</p>
+<p>​除了这些抽象的概念之外，他们本身的功能还可以根据用户的需求进一步划分。</p>
+<p>​例如渲染对象可以通过以下方式实现：</p>
+</li>
+<li><p>Multi-pass rendering：每个pass渲染一个对象一个光照</p>
+</li>
+<li><p>Single-pass：每个对象使用一个pass</p>
+</li>
+<li><p>Deffered：将表面属性渲染到G-buffer，然后在屏幕空间实现光照</p>
+<p>当我们使用SRP的时候，就需要决定使用哪一种。不同的方式有不同的优缺点。</p>
+</li>
+</ul>
+<h2 id="渲染入口点（Rendering-entry-point）"><a href="#渲染入口点（Rendering-entry-point）" class="headerlink" title="渲染入口点（Rendering entry point）"></a>渲染入口点（Rendering entry point）</h2><p>​	使用SRP时，你需要定义一个类用来控制渲染；渲染管线就是通过这个类来创建的。入口点是对”Render”方法的一次调用，每一次渲染都有不同的渲染上下文（Render Context，下文解释）和需要渲染的摄像机。</p>
+<figure class="hljs highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs c#"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title">BasicPipeInstance</span> : <span class="hljs-title">RenderPipeline</span><br>&#123;<br><span class="hljs-comment">//context 渲染上下文 ，cameras 摄像机列表</span><br>   <span class="hljs-function"><span class="hljs-keyword">public</span> <span class="hljs-keyword">override</span> <span class="hljs-keyword">void</span> <span class="hljs-title">Render</span>(<span class="hljs-params">ScriptableRenderContext context, Camera[] cameras</span>)</span>&#123;&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<h2 id="渲染管线上下文（Render-Pipeline-Context）"><a href="#渲染管线上下文（Render-Pipeline-Context）" class="headerlink" title="渲染管线上下文（Render Pipeline Context）"></a>渲染管线上下文（Render Pipeline Context）</h2><p>​	SPR（脚本化渲染管线）渲染使用了延迟执行的概念。首先建立一系列的命令，然后统一执行。通过ScriptableRenderContext类来建立这一系列命令。当用一系列操作填充了这个上下文对象之后，可以 通过“submit”方法，来一次性提交所有drawcall。</p>
+<p>​	例子：使用CommandBuffer清空渲染目标：</p>
+<figure class="hljs highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs c#"><span class="hljs-comment">// Create a new command buffer that can be used</span><br><span class="hljs-comment">// to issue commands to the render context</span><br><span class="hljs-keyword">var</span> cmd = <span class="hljs-keyword">new</span> CommandBuffer();<br><br><span class="hljs-comment">// issue a clear render target command</span><br>cmd.ClearRenderTarget(<span class="hljs-literal">true</span>, <span class="hljs-literal">false</span>, Color.green);<br><br><span class="hljs-comment">// queue the command buffer</span><br>context.ExecuteCommandBuffer(cmd);<br></code></pre></td></tr></table></figure>
+
+<h2 id="剪裁Culling"><a href="#剪裁Culling" class="headerlink" title="剪裁Culling"></a>剪裁Culling</h2><p>剪裁用来确定哪些内容需要渲染的屏幕上。</p>
+<p>Unity中剪裁包含：</p>
+<ul>
+<li>视锥体剪裁：用摄像机的剪裁平面。</li>
+<li>遮挡剪裁：物体遮挡关系</li>
+</ul>
+<p>渲染开始时，需要决定哪些内容需要被渲染。这需要使用摄像机的透视图执行剪裁操作。剪裁结果是一个对象列表和光照列表。这些内容在接下来的渲染管线当中使用。</p>
+<h3 id="在SRP当中执行剪裁"><a href="#在SRP当中执行剪裁" class="headerlink" title="在SRP当中执行剪裁"></a>在SRP当中执行剪裁</h3><p>在SRP当中你通常需要摄像机的透视来完成渲染。unity内置的渲染也是使用同一个摄像机。SRP提供了一系列剪裁API。</p>
+<p>一般的剪裁流程：</p>
+<figure class="hljs highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs c#"><span class="hljs-comment">// Create an structure to hold the culling paramaters</span><br>ScriptableCullingParameters cullingParams;<br><br><span class="hljs-comment">//Populate the culling paramaters from the camera</span><br><span class="hljs-keyword">if</span> (!CullResults.GetCullingParameters(camera, stereoEnabled, <span class="hljs-keyword">out</span> cullingParams))<br>    <span class="hljs-keyword">continue</span>;<br><br><span class="hljs-comment">// if you like you can modify the culling paramaters here</span><br>cullingParams.isOrthographic = <span class="hljs-literal">true</span>;<br><br><span class="hljs-comment">// Create a structure to hold the cull results</span><br>CullResults cullResults = <span class="hljs-keyword">new</span> CullResults();<br><br><span class="hljs-comment">// Perform the culling operation</span><br>CullResults.Cull(<span class="hljs-keyword">ref</span> cullingParams, context, <span class="hljs-keyword">ref</span> cullResults);<br></code></pre></td></tr></table></figure>
+
+<p>之后可以进行下一步渲染。</p>
+<h2 id="Drawing-绘制"><a href="#Drawing-绘制" class="headerlink" title="Drawing 绘制"></a>Drawing 绘制</h2><p>现在的到了剪裁结果，可以进行进一步渲染。</p>
+<p>这里有很多种配置方法，有下面内容决定：</p>
+<ul>
+<li><p>目标平台</p>
+</li>
+<li><p>特殊的效果</p>
+</li>
+<li><p>项目类型</p>
+<p>具体的例子。</p>
+</li>
+<li><p>HDR和LDR</p>
+</li>
+<li><p>Linear和Gamma</p>
+</li>
+<li><p>MSAA和后处理AA</p>
+</li>
+<li><p>PBR材质和一般材质</p>
+</li>
+<li><p>有无光照</p>
+</li>
+<li><p>光照技术</p>
+</li>
+<li><p>阴影基础</p>
+</li>
+</ul>
+<h3 id="过滤：桶和层"><a href="#过滤：桶和层" class="headerlink" title="过滤：桶和层"></a>过滤：桶和层</h3><p>不同的对象有不同的类型，可以是透明不透明等。Unity使用队列的概念来决定对象渲染的时机。这些队列构成了桶，渲染对象将会保存在桶中（类似桶排序）。当我们使用SRP时，我们可以决定哪个范围的桶可以被渲染。</p>
+<p>除了桶之外，标准的分层也可以用于过滤。</p>
+<p>例子：</p>
+<figure class="hljs highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs c#"><span class="hljs-comment">// Get the opaque rendering filter settings</span><br><span class="hljs-keyword">var</span> opaqueRange = <span class="hljs-keyword">new</span> FilterRenderersSettings();<br><br><span class="hljs-comment">//Set the range to be the opaque queues</span><br>opaqueRange.renderQueueRange = <span class="hljs-keyword">new</span> RenderQueueRange()<br>&#123;<br>    min = <span class="hljs-number">0</span>,<br>    max = (<span class="hljs-built_in">int</span>)UnityEngine.Rendering.RenderQueue.GeometryLast,<br>&#125;;<br><br><span class="hljs-comment">//Include all layers</span><br>opaqueRange.layerMask = ~<span class="hljs-number">0</span>;<br></code></pre></td></tr></table></figure>
+
+<h3 id="绘制设置：物体如何被绘制"><a href="#绘制设置：物体如何被绘制" class="headerlink" title="绘制设置：物体如何被绘制"></a>绘制设置：物体如何被绘制</h3><p>之前的过滤和剪裁都是决定了哪些内容需要被渲染。接下来决定这些物体如何被渲染。SRP提供了一系列的操作，对通过过滤的物体进行渲染配置。配置这些数据的结构是：DrawRenderSettings。这个结构允许以下内容的配置：</p>
+<ul>
+<li>Sorting - 物体绘制顺序。</li>
+<li>每个渲染标志 - 传递内部参数。</li>
+<li>渲染标志 - 动态合并实例化技术等等算法</li>
+<li>Shander Pass -当前的draw使用哪一个pass</li>
+</ul>
+<figure class="hljs highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs c#"><span class="hljs-comment">// Create the draw render settings</span><br><span class="hljs-comment">// note that it takes a shader pass name</span><br><span class="hljs-keyword">var</span> drs = <span class="hljs-keyword">new</span> DrawRendererSettings(Camera.current, <span class="hljs-keyword">new</span> ShaderPassName(<span class="hljs-string">&quot;Opaque&quot;</span>));<br> <br><span class="hljs-comment">// enable instancing for the draw call</span><br>drs.flags = DrawRendererFlags.EnableInstancing;<br> <br><span class="hljs-comment">// pass light probe and lightmap data to each renderer</span><br>drs.rendererConfiguration = RendererConfiguration.PerObjectLightProbe | RendererConfiguration.PerObjectLightmaps;<br> <br><span class="hljs-comment">// sort the objects like normal opaque objects</span><br>drs.sorting.flags = SortFlags.CommonOpaque;<br></code></pre></td></tr></table></figure>
+
+<h3 id="绘制"><a href="#绘制" class="headerlink" title="绘制"></a>绘制</h3><p>现在完成了：</p>
+<ul>
+<li>剪裁规则</li>
+<li>过滤规则</li>
+<li>绘制规则</li>
+</ul>
+<p>我们需要执行一个draw call。一个draw call就是对上下文的一次调用。在SRP中通常不渲染独立的网格，除非你需要一次性绘制很多。这减小了开销，同时保证了CPU的快速执行。</p>
+<p>发布draw call</p>
+<figure class="hljs highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs c#"><span class="hljs-comment">// draw all of the renderers</span><br>context.DrawRenderers(cullResults.visibleRenderers, <span class="hljs-keyword">ref</span> drs, opaqueRange);<br> <br><span class="hljs-comment">// submit the context, this will execute all of the queued up commands.</span><br>context.Submit();<br></code></pre></td></tr></table></figure>
+
+<p>这会把对象渲染到当前绑定的渲染目标。你可以使用一个command buffer来切换渲染目标。</p>
+
+      
+      <p align="right"><a class="morebtn" href="/2023/06/02/Unity/SPR%E5%AE%98%E6%96%B9%E4%BB%8B%E7%BB%8D/" title="Scriptable Render Pipeline Overview">阅读全文</a></p>
+    </main>
+    <footer class="post-footer">
+      
+    </footer>
+  </article>
+  
+  <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
+    <div class="post-block">
+      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2023/06/02/Unity/SetRenderTarget/">
+      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <meta itemprop="name" content="leinlin">
+        <meta itemprop="description" content="">
+        <meta itemprop="image" content="/images/avatar.jpg">
+      </span>
+      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+        <meta itemprop="name" content="leinlin的小笔记">
+      </span>
+    </div>
+    <header class="post-header">
+      <h1 class="post-title" itemprop="name headline">
+        <a class="post-title-link post-title-link-external" href="/2023/06/02/Unity/SetRenderTarget/" itemprop="url">在Unity官方文档的介绍中，SetRenderTarget可以设置渲染目标</a>
+      </h1>
+      <div class="post-meta">
+        
+        <span class="post-date">
+          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2023-06-02T12:00:14+08:00">2023-06-02 12:00:14</time></span>
+        </span>
+        
+        
+        
+        <span class="post-meta-divider divider">|</span>
+        
+        <span class="post-categories">
+          
+          <i class="far fa-folder-open"></i><span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Unity/" itemprop="url" rel="index"><span itemprop="name">Unity</span></a></span>
+        </span>
+        
+        
+        
+        
+      </div>
+    </header>
+    <main class="post-main" itemprop="articleBody">
+      
+      <h2 id="在Unity官方文档的介绍中，SetRenderTarget可以设置渲染目标。"><a href="#在Unity官方文档的介绍中，SetRenderTarget可以设置渲染目标。" class="headerlink" title="在Unity官方文档的介绍中，SetRenderTarget可以设置渲染目标。"></a>在Unity官方文档的介绍中，SetRenderTarget可以设置渲染目标。</h2><ol>
+<li>屏幕的渲染目标可以通过Graphics.activeColorBuffer和Graphics.activeDepthBuffer获取。</li>
+</ol>
+<p>其中Graphics.activeDepthBuffer当中包括了stencilbuffer和depthbuffer。</p>
+<ol start="2">
+<li>commandbuffer当中同样可以使用BuiltinRenderTextureType.Color和BuiltinRenderTextureType.depth来访问对应的渲染目标，但是<strong>BuiltinRenderTextureType.depth是不包括stencilbuffer</strong>的。</li>
+<li>如果想要复用包含stencilbuffer的Graphics.activeDepthBuffer，是不能通过SetRenderTarget和自定义的ColorBuffer组合的，会报错。<strong>因为screen的buffer和rendertarget的buffer不能混合使用</strong>。</li>
+<li>如果只需要复用同一张depth，只需要使用BuiltinRenderTextureType.depth和自定义的colorbuffer即可。</li>
+<li>如果需要复用同一张depth&#x2F;stencil，必须要在一开始修改渲染目标为自定义的RenderTarget，例如：SetRenderTarget(selfColorBuffer, selfDepthBuffer) ,同时selfDepthBuffer的深度位数<strong>必须为24或32</strong>.  如果是16 则不支持stencilbuffer。</li>
+</ol>
+<p>关于延迟渲染（deferred）渲染目标（RenderTexture）的问题</p>
+<ol>
+<li>延迟渲染的RenderTarget目前没有找到方法设置。</li>
+<li>延迟渲染的内容可以通过commandbuffer通过BuiltinRenderTextureType.Gbuffer获取出来。</li>
+<li>BuiltinRenderTextureType.Gbuffer3当中保存了整个渲染流程的结果，包括了Forwardpass。</li>
+<li>在渲染结束后，会将BuiltinRenderTextureType.Gbuffer3当中的内容拷贝到最终渲染目标当中。</li>
+<li>SetRenderBuffers()中的多个渲染目标并不是Gbuffer，而是从shader直接输出的内容。</li>
+<li>CameraEvent.beforelighting可以看到Gbuffer3组合了无光照内容和自发光内容和全局光照，还没有环境反射，不过在AfterGbuffer时还没有自发光内容。</li>
+<li>延迟渲染的环境反射是在完成渲染目标切换之后，才进行渲染的，比天空球还晚。（前向渲染是伴随物体光照同时计算的）</li>
+</ol>
+<p>延迟渲染过程中的深度提取</p>
+<ol>
+<li>如果使用BuiltinRenderTextureType.Depth无法获取到stencil纹理，在deferred当中无存在，如果使用会报错：built-in renderTexture type3 not found…</li>
+<li>deferred过程需要使用BuiltinRenderTextureType.ReolvedDepth，不过使用默认深度和自定义 深度大小很容易不匹配</li>
+<li>在ResolvedDepth中存在完整的深度信息。在deferred第一步先计算延迟物体深度（也就是Gbuffer填充阶段），然后计算前向物体深度，当在延迟渲染中设置depthbuffer时，代替的就是ResolvedDepth。</li>
+<li>ResolvedDepth中的Stencil，延迟光照阶段最多会使用高四位，并且进入前向阶段后不会清零。</li>
+<li>在延迟渲染阶段，前向物体深度计算时会在stencilbuffer当中以207为mask写入内容。这表示高两位和第四位是都可以用的。并且Stencil写入和深度写入在同一个阶段。</li>
+</ol>
+<p>*注：当使用commandbuffer绘制一般的物体时，目前的CameraEvent都是不包含光照信息的，所以绘制出来的内容始终是黑色的。</p>
+
+      
+      <p align="right"><a class="morebtn" href="/2023/06/02/Unity/SetRenderTarget/" title="在Unity官方文档的介绍中，SetRenderTarget可以设置渲染目标">阅读全文</a></p>
+    </main>
+    <footer class="post-footer">
+      
+    </footer>
+  </article>
+  
+  <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
+    <div class="post-block">
+      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2023/06/02/Unity/Shader%E5%BD%93%E4%B8%AD%E7%9A%84%E5%9D%90%E6%A0%87%E5%8F%98%E5%8C%96/">
+      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <meta itemprop="name" content="leinlin">
+        <meta itemprop="description" content="">
+        <meta itemprop="image" content="/images/avatar.jpg">
+      </span>
+      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+        <meta itemprop="name" content="leinlin的小笔记">
+      </span>
+    </div>
+    <header class="post-header">
+      <h1 class="post-title" itemprop="name headline">
+        <a class="post-title-link post-title-link-external" href="/2023/06/02/Unity/Shader%E5%BD%93%E4%B8%AD%E7%9A%84%E5%9D%90%E6%A0%87%E5%8F%98%E5%8C%96/" itemprop="url">旋向性</a>
+      </h1>
+      <div class="post-meta">
+        
+        <span class="post-date">
+          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2023-06-02T12:00:14+08:00">2023-06-02 12:00:14</time></span>
+        </span>
+        
+        
+        
+        <span class="post-meta-divider divider">|</span>
+        
+        <span class="post-categories">
+          
+          <i class="far fa-folder-open"></i><span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/Unity/" itemprop="url" rel="index"><span itemprop="name">Unity</span></a></span>
+        </span>
+        
+        
+        
+        
+      </div>
+    </header>
+    <main class="post-main" itemprop="articleBody">
+      
+      <h2 id="1-旋向性"><a href="#1-旋向性" class="headerlink" title="1 旋向性"></a>1 旋向性</h2><p>两个坐标轴有相同的旋向性：可以通过旋转让两个坐标轴重合。</p>
+<p>左右手坐标系有不同的选项性。</p>
+<h2 id="2-左右手坐标系"><a href="#2-左右手坐标系" class="headerlink" title="2 左右手坐标系"></a>2 左右手坐标系</h2><p>拇指、食指、中指分别代表，+x +y +z轴。由此左右手会产生两个不同的坐标系。</p>
+<h2 id="3-左右手法则"><a href="#3-左右手法则" class="headerlink" title="3 左右手法则"></a>3 左右手法则</h2><p>在cross叉乘中，需要通过正旋向来确定结果轴的指向：</p>
+<p><strong>在左右坐标系中，用左手，在右手坐标系中用右手。</strong></p>
+<h2 id="4-unity的坐标系"><a href="#4-unity的坐标系" class="headerlink" title="4 unity的坐标系"></a>4 unity的坐标系</h2><p>模型空间和世界空间是左手坐标系。</p>
+<p>相机空间是右手坐标系。这相机对准了z轴负方向。也就是说z轴坐标的减少意味着场景深度的增加。</p>
+<h2 id="5-矩阵操作："><a href="#5-矩阵操作：" class="headerlink" title="5. 矩阵操作："></a>5. 矩阵操作：</h2><p>UNITY_MATRIX_P 等价于 <a target="_blank" rel="noopener" href="http://resetoter.cn/UnityDoc/ScriptReference/GL.html">GL</a>.GetGPUProjectionMatrix</p>
+<p>Camera.worldToCameraMatrix  ：Note that camera space matches OpenGL convention: camera’s forward is the negative Z axis. This is different from Unity’s convention, where forward is the positive Z axis.</p>
+<p>Camera.cameraToWorldMatrix：Note that camera space matches OpenGL convention: camera’s forward is the negative Z axis. This is different from Unity’s convention, where forward is the positive Z axis.</p>
+<figure class="hljs highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs plaintext">UNITY_MATRIX_M<br></code></pre></td></tr></table></figure>
+
+<ul>
+<li>This is identical to <code>unity_ObjectToWorld</code>, also called the Model transform</li>
+</ul>
+<h2 id="6-unity-XX矩阵"><a href="#6-unity-XX矩阵" class="headerlink" title="6. unity_XX矩阵"></a>6. unity_XX矩阵</h2><p>shader当中unity_XX（Camera相关）开头的矩阵不一定是当前摄像机矩阵，在官方文档当中也没有提到。</p>
+<ol>
+<li><p>根据实验unity_WorldToCamera 和 UNITY_MATRIX_V 的区别在于：</p>
+<p>而UNITY_MATRIX_V改变了旋向性，第三行z值取反了。</p>
+<p>也就是说unity_WorldToCamera 没有改变旋向性。</p>
+</li>
+<li><p>这个时候UNITY_MATRIX_P（glstate_matrix_projection）是根据平台特殊处理的矩阵。</p>
+</li>
+</ol>
+<p>而unity_CameraProjcetion是按照正常的流程的的矩阵。</p>
+<p>unity c#的代码中通过 GL.get…接口的到的矩阵等价于UNITY_MATRIX_P（glstate_matrix_projection）：省略旋向性改变。约束y方向、约束z方向。更加复杂。</p>
+<p>通过Camera.projectionMatrix得到的是一般投影矩阵unity_CamearaProjection。</p>
+
+      
+      <p align="right"><a class="morebtn" href="/2023/06/02/Unity/Shader%E5%BD%93%E4%B8%AD%E7%9A%84%E5%9D%90%E6%A0%87%E5%8F%98%E5%8C%96/" title="旋向性">阅读全文</a></p>
     </main>
     <footer class="post-footer">
       
@@ -940,7 +1075,7 @@
     
     <div class="categories-count count-block">
       <div class="site-count-title">分类</div>
-      <div><a href="/categories/">17</a></div>
+      <div><a href="/categories/">20</a></div>
     </div>
     
     
@@ -984,7 +1119,7 @@
     <div class="footer-container">
       <div class="footer-left">
         <div class="copyright">
-          <span class="author">leinlin</span><span class="year"><i class="far fa-copyright"></i>2022</span>
+          <span class="author">leinlin</span><span class="year"><i class="far fa-copyright"></i>2023</span>
         </div>
         
         <div class="busuanzi">

@@ -1,0 +1,469 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    
+    <meta name="theme-color" content="#33363b">
+    <meta name="msapplication-TileColor" content="#33363b">
+    
+    
+    
+    
+    <meta name="keywords" content="leinlin, ARIA, Hexo">
+    
+    
+    <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png">
+    
+    
+    <link rel="icon" type="image/png" sizes="192x192" href="/favicons/android-chrome-192x192.png">
+    
+    
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicons/favicon-32x32.png">
+    
+    
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicons/favicon-16x16.png">
+    
+    
+    <link rel="mask-icon" href="/favicons/safari-pinned-tab.svg" color="#33363b">
+    
+    
+    <link rel="manifest" href="/favicons/site.webmanifest">
+    
+    
+    <meta name="msapplication-config" content="/favicons/browserconfig.xml">
+    
+    
+    <link rel="alternate" href="/atom.xml" title="leinlin的小笔记" type="application/atom+xml" />
+    
+    
+    <link rel="shortcut icon" type="image/x-icon" href="/favicons/favicon.ico">
+    
+    
+    <link rel="stylesheet" type="text/css" href="/css/normalize.css">
+    <link rel="stylesheet" type="text/css" href="/css/index.css">
+    
+    <link rel="stylesheet" type="text/css" href="/css/sidebar.css">
+    
+    
+<link rel="stylesheet" type="text/css" href="/css/page.css">
+<link rel="stylesheet" type="text/css" href="/css/post.css">
+
+    <link rel="stylesheet" type="text/css" href="/css/custom.css">
+    <link rel="stylesheet" type="text/css" href="/css/atom-one-light.css">
+    <link rel="stylesheet" type="text/css" href="/css/lightgallery.min.css">
+    <script type="text/javascript" src="/js/jquery.min.js"></script>
+    <script defer type="text/javascript" src="/js/util.js"></script>
+    <script defer type="text/javascript" src="/js/clipboard.min.js"></script>
+    <script defer type="text/javascript" src="/js/scrollspy.js"></script>
+    <script defer type="text/javascript" src="/js/fontawesome-all.min.js"></script>
+    <script defer type="text/javascript" src="/js/lightgallery.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-fullscreen.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-hash.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-pager.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-thumbnail.min.js"></script>
+    <script defer type="text/javascript" src="/js/lg-zoom.min.js"></script>
+    
+    <script defer src="/js/busuanzi.pure.mini.js"></script>
+    
+    
+    <script defer type="text/javascript" src="/js/search.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function () {
+      var searchPath = "search.xml";
+      if (searchPath.length === 0) {
+        searchPath = "search.xml";
+      }
+      var path = "/" + searchPath;
+      searchFunc(path, "search-input", "search-result");
+    });
+    </script>
+    
+    
+    
+    <script defer type="text/javascript" src="https://cdn.staticfile.org/MathJax/MathJax-2.6-latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+      tex2jax: {
+        inlineMath: [ ["$","$"], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ["script", "noscript", "style", "textarea", "pre", "code"]
+      }
+    });
+    </script>
+    <script type="text/x-mathjax-config">
+    MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for (i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += " has-jax";
+      }
+    });
+    </script>
+    
+    
+    <script defer type="text/javascript" src="/js/index.js"></script>
+    <script type="text/javascript">
+    $(document).ready(function () {
+      var cb = null;
+      var els = $(".post figure.highlight");
+      if (els.length) {
+        // Enabled Hexo highlight line number.
+        $(els).each(function (i, e) {
+          // $(e).before("<button class=\"copy button\">复制</button>");
+          $(e).before([
+            "<div class=\"code-titlebar\">",
+              "<div class=\"titlebar-left\">",
+                "<button class=\"copy\">复制</button>",
+              "</div>",
+            "</div>"
+          ].join(""));
+        });
+        cb = new ClipboardJS("button.copy", {
+          "target": function (trigger) {
+              // Get target element by DOM API.
+              return trigger.parentNode.parentNode.nextElementSibling.firstChild.firstChild.firstChild.lastChild.firstChild.firstChild;
+          }
+        });
+      } else {
+        // Disabled Hexo highlight line number.
+        els = $(".post pre code");
+        $(els).each(function (i, e) {
+          // Add button before pre, not code.
+          // $(e).parent().before("<button class=\"copy button\">复制</button>");
+          $(e).before([
+            "<div class=\"code-titlebar\">",
+              "<div class=\"titlebar-left\">",
+                "<button class=\"copy\" >复制</button>",
+              "</div>",
+              "<div class=\"titlebar-right\">",
+                "<button class=\"button-dot dot-minimize\" aria-label=\"Decoration\"></button>",
+                "<button class=\"button-dot dot-maximize\" aria-label=\"Decoration\"></button>",
+                "<button class=\"button-dot dot-close\" aria-label=\"Decoration\"></button>",
+              "</div>",
+            "</div>"
+          ].join(""));
+        });
+        cb = new ClipboardJS("button.copy", {
+          "target": function (trigger) {
+              // Get target element by DOM API.
+              return trigger.parentNode.parentNode.nextElementSibling;
+          }
+        });
+      }
+      cb.on("success", function (e) {
+        e.clearSelection();
+        var trigger = e.trigger;
+        // Change button text as a user tip.
+        trigger.innerHTML = "已复制";
+        $(trigger).addClass("copied");
+        // Change button text back;
+        setTimeout(function () {
+          trigger.innerHTML = "复制";
+          $(trigger).removeClass("copied");
+        }, 1500);
+      });
+    });
+    </script>
+    
+    <script defer type="text/javascript" src="/js/custom.js"></script>
+    <title>Vulkan Translate Chapter2 Fundamentals 基础功能 | leinlin的小笔记</title>
+  <meta name="generator" content="Hexo 6.2.0"></head>
+  <body itemscope itemtype="http://schema.org/WebPage" lang="zh_CN"  data-spy="scroll" data-target=".list-group">
+    
+<header id="header" class="header" style="background: #33363b;">
+  <div class="container">
+    <div class="header-container">
+      <div class="header-title">
+        <h1 class="title"><a href="/">leinlin的小笔记</a></h1>
+        <h2 class="subtitle"></h2>
+      </div>
+      
+    </div>
+    <nav id="nav" class="nav">
+      <a id="nav-toggle" class="nav-toggle" aria-hidden="true"><i class="fas fa-bars" aria-label="切换导航栏"></i></a>
+      <ul id="menu" role="menubar" aria-hidden="false">
+        
+        <li role="menuitem"><a href="/"><i class="fas fa-home"></i><span class="menu-text">首页</span></a></li>
+        
+        <li role="menuitem"><a href="/categories/"><i class="fas fa-th-list"></i><span class="menu-text">分类</span></a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</header>
+
+
+    <main id="main" class="main">
+      <div class="container">
+        <div class="main-container">
+          <div class="content">
+            
+<div id="post" class="page">
+  
+  <article class="article post card animate" itemscope itemtype="http://schema.org/Article">
+    <div class="post-block">
+      <link itemprop="mainEntityOfPage" href="http://leinlin.github.io/2023/06/02/VulkanTranslate/Chapter2-Fundamentals-%E5%9F%BA%E7%A1%80%E5%8A%9F%E8%83%BD/">
+      <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+       <meta itemprop="name" content="leinlin">
+       <meta itemprop="description" content="">
+       <meta itemprop="image" content="/images/avatar.jpg">
+      </span>
+      <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+       <meta itemprop="name" content="leinlin的小笔记">
+      </span>
+    </div>
+    <header class="post-header">
+      <h1 class="post-title" itemprop="name headline">Vulkan Translate Chapter2 Fundamentals 基础功能</h1>
+      <div class="post-meta">
+        
+        <span class="post-date">
+          <i class="far fa-calendar-plus"></i><span><time title="post-date" itemprop="dateCreated datePublished" datetime="2023-06-02T12:00:14+08:00">2023-06-02 12:00:14</time></span>
+        </span>
+        
+        
+        
+        <span class="post-meta-divider divider">|</span>
+        
+        <span class="post-categories">
+          
+          <i class="far fa-folder-open"></i><span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/VulkanTranslate/" itemprop="url" rel="index"><span itemprop="name">VulkanTranslate</span></a></span>
+        </span>
+        
+        
+        
+        
+      </div>
+    </header>
+    <main class="post-main" itemprop="articleBody">
+      <h1 id="Chapter2-Fundamentals-基础功能"><a href="#Chapter2-Fundamentals-基础功能" class="headerlink" title="Chapter2 Fundamentals 基础功能"></a>Chapter2 Fundamentals 基础功能</h1><p>​	这个章节主要介绍了基础概念：包括Vulkan架构、扩展模型、API语法、管线配置、数字表示方法、状态和状态查询、以及不同类型的对象和Shader。这部分提供了一个框架用于解释说明文档剩下部分中更加具体的命令和表现。</p>
+<h2 id="2-1-主机和设备环境"><a href="#2-1-主机和设备环境" class="headerlink" title="2.1 主机和设备环境"></a>2.1 主机和设备环境</h2><p>Vulkan说明文件假设并且需要：主机设备满足下面的要求以支持Vulkan的实现：</p>
+<ul>
+<li><p>主机必须支持8,16,32,64位的有符号以及无符号整型，并且可以按照字节（byte）寻址。</p>
+</li>
+<li><p>主机必须支持32-和64-位的浮点数类型，并且满足后续章节的范围和精度的要求。</p>
+</li>
+<li><p>这些数据的字节顺序和表示方式必须和物理设备一致。</p>
+</li>
+</ul>
+<blockquote>
+<p>Note</p>
+<p>因为各种类型的数据和结构体主机和物理设备都需要访问，所以两端都需要高效的访问以便保证灵活写入和高性能。</p>
+</blockquote>
+<h2 id="2-2-Execution-Model-执行模式"><a href="#2-2-Execution-Model-执行模式" class="headerlink" title="2.2 Execution Model 执行模式"></a>2.2 Execution Model 执行模式</h2><p>这一节说明了Vulkan系统的执行模式。</p>
+<p>​	Vulkan会暴露出一个或者多个device，每个device会暴露出一个或多个能够异步工作的queue。同一个device支持的各个队列会划分到不同的family。每一个family支持一种或多种功能，并且应该包含一个或多个有相同特性的queue。同一个family当中queue可以认为是互相兼容的。为某个queue所生产的任务，可以在其所属family中的任何一个queue上执行。本说明文档定义了queue可能具备的四个类型的功能：Graphic，Compute，Transfer 和Sparse memory management。</p>
+<blockquote>
+<p>Note</p>
+<p>一个device可能报告出多个相似queue的family，而不是报告出这些fafmily的一个或多个的多个成员。这表明，虽然这些family的queue具有类似的能力，但他们之间并不直接相容。（没有很明白。）</p>
+</blockquote>
+<p>设备内存是通过应用程序明确的管理的。每一个设备都可以声明一个或者多个堆用于区分不同区域的内存。内存堆要么是设备的本地内存要么是主机的本地内存，但是对于设备总是可见的。进一步的内存堆的细节是通过在堆上的可用内存类型暴露出来的。例如可用的内存类型有：</p>
+<ul>
+<li>device local：和device直接物理连接的设备内存。</li>
+<li>device local, host visible: 设备的local内存对于主机可见。</li>
+<li>host local ,host  visible : 是在主机的内存对设备和主机都可见。</li>
+</ul>
+<p>在其它的架构上，可能有一种堆满足各种用处。</p>
+<p>一个Vulkan 应用程序通过提交command buffer来控制所有设备，command buffer能够通过Vulkan库函数的调用记录设备命令。Command buffer的内容依赖与具体的实现和应用程序无关。一旦构造了Comman buffer，就可以进行提交一次或者多次到队列中来执行。多个Command buffer能够通过多线程并行的构建。</p>
+<p>Command buffer 提交到不同的队列能够并行的执行，执行顺序彼此没有关联。Command buffer提交到同一个队列表示了一个提交顺序。Command buffer在设备中执行的结果也是异步返回到主机的。一旦Command buffer提交到一个队列，控制流会立即返回到应用程序。应用程序需要关注同步设备和主机、同步各个队列。</p>
+<h3 id="2-2-1-队列操作-Queue-Operation"><a href="#2-2-1-队列操作-Queue-Operation" class="headerlink" title="2.2.1 队列操作 Queue Operation"></a>2.2.1 队列操作 Queue Operation</h3><p>Vulkan队列提供了一个执行设备引擎的接口。引擎执行的命令在运行之前记录到Command Buffer当中。这些命令伴随queue submission命令提交到一个队列中，进行批量(batches)执行。一旦命令提交到队列，这些命令将会开始并在脱离程序控制的状态下完整的执行，执行的顺序依赖于一些隐式和显式的排序约束。</p>
+<p>任务一般会通过队列提交命令提交到队列，这些命令一般形如<code>vkQueue*</code>(例如：<code>vkQueueSubmit</code>, <code>vkQueueBindSparse</code>)，并且可以接受一组等待信号量（信号被激活时才会开始执行）和一组激发的信号量（人物完成或会激活对应的信号）。信号量的处理和任务本身都属于队列操作。</p>
+<p>在不同队列上的队列操作并没有隐式的顺序限制，可能以任何顺序执行。不同队列间同步可以通过semaphores（通常用于GPU-GPU指令同步）和fences（通常用语CPU-GPU同步）控制。</p>
+<p>提交到一个队列中的Command buffer的执行顺序遵循提交顺序和隐式顺序的约束，其他情况则可能同时执行或者乱序执行。针对单个队列的其他类型的批处理和队列提交（例如：稀疏内存绑定），彼此之间没有隐式顺序约束。附加的批处理和队列提交显式顺序约束可以通过信号量semaphores（通常用于GPU-GPU指令同步）和fences（通常用语CPU-GPU同步）控制。</p>
+<p>在semaphores或fences被激发之前，可以确定的是：之前被提交的队列操作已经完成了，且随后的队列操作可以继续进行内存的写入。等待一个被激活的semaphore或 fence可以保证之前的写入的内容是可用的，并且是对之后的命令可见（也就是说等待的semaphore或 fence完成后，接下来就能获取之前写入的内容。）</p>
+<p>对于Command Buffer是没有顺序约束的，包括相同或者不同类型的Primary Command Buffer的batches或者submissions，以及Primary Command Buffer和Second Command Buffer之间。也就是说，在任何的 semaphore或者fence操作之间，提交一系列的Command Buffer（包括Second Command Buffer） 和在一个单独的Primary Command Buffer中记录这些命令然后提交是一样的（除非当前的状态被重置了）。想要显示的控制这些顺序，可以通过显示信号量。</p>
+<p>在同一个Command Buffer当中的命令遵循一些隐式的顺序约束，但是只约束了一部分操作。</p>
+<blockquote>
+<p>​	Note</p>
+<p>提交到一个队列当中的任务有很大的自由度进行重叠执行。这是由于Vulkan本身的管线和并行策略决定的。</p>
+</blockquote>
+<p>记录在Command Buffer当中的命令包括：执行操作（例如：draw，dispatch，clear，copy，query&#x2F;timestamp， begin&#x2F;end subpass，）状态设置操作（例如：bind pipeline，descriptor sets, buffer, set dynamic state,push constants, set render pass），同步操作（例如：set&#x2F;wait events, pipeline barrier, render pass&#x2F;subpass dependencies）一些命令执行多次。状态设置会更新CommandBuffer当前的状态。一些命令的执行基于当前的状态。</p>
+<p>设备端的队列执行和主机端队列提交是异步执行的。当命令缓冲区被提交到队列后控制流马上就退回到应用程序了。 应用程序必须按需求在主机端和设备端进行同步操作。</p>
+<h2 id="2-3-对象模型-Object-Model"><a href="#2-3-对象模型-Object-Model" class="headerlink" title="2.3 对象模型 Object Model"></a>2.3 对象模型 Object Model</h2><p>devices，queue和其他的实例都是通过Vulkan object表示的。在API级别，所有的对象都通过handle来引用。有两种类型的handle：可分发的与不可分发的。<em>可分发的</em> handle是不可见类型数据的指针。这个指针可被layers使用，被当作拦截API命令的一部分， 每一个API命令都接受一个可分发类型的handle作为第一参数。 每一个不可分发类型的对象必须在其生命周期内有唯一一个handle值。</p>
+<p>_不可分发的_handle类型是64位整型类型，其含义是Vulkan实现决定的，他可能会把对象信息直接包含到handle里，而非通过指向一个数据结构。不可分发类型的对象，对于不同的类型或者同一个类型可能没有唯一的handle值（handle可能重复）。 如果handle值不唯一，那么销毁任何一个handle时：要保证不能造成其他类型的、相同handle值的对象变得无效，也要保证如果用同一个handle创建了多个对象，并且创建次数多余销毁次数，也不能让这个销毁操作导致有相同handle值的对象失效。</p>
+<p>所有通过<code>VkDevice</code> （用 <code>VkDevice</code>作为第一个参数 )的命令创建的对象都是该设备私有的，必须不能被其他设备使用。</p>
+<h3 id="2-3-1-对象的生命周期Object-Lifetime"><a href="#2-3-1-对象的生命周期Object-Lifetime" class="headerlink" title="2.3.1 对象的生命周期Object Lifetime"></a>2.3.1 对象的生命周期Object Lifetime</h3><p>对象都是通过形如<code>vkCreate*</code> and <code>vkAllocate*</code> 的命令创建或者分配的。 一旦一个对象被创建或者分配，它的结构就被认为是不变的，即使对象的内容可以自由改动。 对象通过形如<code>vkDestroy*</code> 和 <code>vkFree</code>* 的命令来销毁或释放。</p>
+<p>被分配（而不是创建）的对象从一个已存在的池子对象或者内存堆中获取资源，当被释放时会把资源归还给该池子或者堆。对象的创建和销毁在运行时通常是低频操作， 对象的分配或者释放可能是高频的。对象池帮助调节分配和释放的性能提升。</p>
+<p>应用程序有责任跟踪Vulkan对象的生命周期，并且不能销毁正在被使用的对象。</p>
+<p>属于应用程序端的内存在提交给Vulkan命令的时候会即刻被接管。在Vulkan命令执行结束之后一定会返还给应用程序。应用程序可以在需要占用这些内存的命令返回之后，再修改和释放这些内存。</p>
+<p>下面的对象会在传递给Vulkan命令之后被消耗掉，并且不能再被由它创建的对象访问。这种对象在任何用到他们的API命令执行期间不能被销毁。</p>
+<p>• VkShaderModule<br>• VkPipelineCache</p>
+
+    </main>
+    <footer class="post-footer">
+      
+    </footer>
+  </article>
+  
+  
+  <nav class="page-nav">
+    <div class="page-nav-next page-nav-item">
+      
+      <a href="/2022/09/19/Unity/Unity%E8%B4%B4%E5%9B%BE%E5%8E%8B%E7%BC%A9/" rel="next" title=""><i class="fas fa-angle-left"></i><span class="nav-title"></span></a>
+      
+    </div>
+    <div class="page-nav-prev page-nav-item">
+      
+      <a href="/2023/06/02/VulkanTranslate/Vulkan-A-Specification%E4%B8%AD%E6%96%87%E7%BF%BB%E8%AF%91%E7%89%88/" rel="prev" title="Vulkan-A-Specification中文翻译版"><span class="nav-title">Vulkan-A-Specification中文翻译版</span><i class="fas fa-angle-right"></i></a>
+      
+    </div>
+  </nav>
+  
+  
+  
+
+<div class="comments" id="comments">
+  
+  
+  <div class="commentjs" id="comment-thread"></div>
+  <link rel="stylesheet" href="/css/commentjs.css">
+  <script defer type="text/javascript" src="/js/marked.min.js"></script>
+  <script defer type="text/javascript" src="/js/timeago.min.js"></script>
+  <script defer type="text/javascript" src="/js/highlight.min.js"></script>
+  <script defer type="text/javascript" src="/js/commentjs.js"></script>
+  <script type="text/javascript">
+  $(document).ready(function () {
+    getComments({
+      "type": "github",
+      "user": "leinlin",
+      "repo": "leinlin.github.io",
+      "client_id": "aee134bdfb54c4ef5826",
+      "client_secret": "4af1d3f2b82dccc028c49715becc01e611afbe43",
+      "no_comment": "这个页面还没有评论，现在就去评论吧！",
+      "go_to_comment": "去评论",
+      "issue_title": "Vulkan Translate Chapter2 Fundamentals 基础功能",
+      "btn_class": "button",
+      "comments_target": "#comment-thread"
+    });
+    marked.setOptions({
+      "highlight": function (code, lang) {
+        return hljs.highlightAuto(code).value;
+      }
+    });
+    function mark() {
+      var markdowns = document.getElementsByClassName("markdown");
+      for (var i = 0; i < markdowns.length; ++i){
+        if (markdowns[i].innerHTML) {
+          markdowns[i].innerHTML = marked(markdowns[i].innerHTML);
+        }
+      }
+    }
+    window.addEventListener("DOMContentLoaded", mark, false);
+    window.addEventListener("load", mark, false);
+  });
+  </script>
+  
+  
+</div>
+
+
+
+  
+</div>
+
+          </div>
+          
+          
+          
+<aside class="sidebar" id="sidebar" style="background: url(/images/background.png);">
+  
+  <div class="search">
+    <div class="form-group">
+      <i class="fas fa-search"></i><input type="search" id="search-input" name="q" results="0" placeholder="搜索" class="form-control"/>
+    </div>
+  </div>
+  <div class="search-result-box" id="search-result"></div>
+  
+  
+<div class="info sidebar-item" id="info">
+  
+  <img class="author-avatar" src="/images/avatar.jpg" alt="leinlin">
+  
+  <h1 class="author-name">leinlin</h1>
+  <h2 class="author-description"></h2>
+  <div class="site-count">
+    
+    
+    
+    
+    <div class="categories-count count-block">
+      <div class="site-count-title">分类</div>
+      <div><a href="/categories/">20</a></div>
+    </div>
+    
+    
+  </div>
+  
+  <div class="rss">
+    <a class="rss-link button sidebar-item" href="/atom.xml"><i class="fas fa-rss"></i>RSS</a>
+  </div>
+  
+</div>
+
+
+  <div class="sidebar-sticky">
+    
+    
+    
+    
+    
+    <hr>
+    <div class="post-toc sidebar-item" id="toc-div">
+      <div><i class="fas fa-list-ol"></i>文章目录</div>
+      <div class="post-toc-content"><ol class="list-group toc"><li class="toc-item toc-level-1"><a class="list-group-item toc-link" href="#Chapter2-Fundamentals-%E5%9F%BA%E7%A1%80%E5%8A%9F%E8%83%BD"><span class="toc-text">Chapter2 Fundamentals 基础功能</span></a><ol class="list-group toc-child"><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#2-1-%E4%B8%BB%E6%9C%BA%E5%92%8C%E8%AE%BE%E5%A4%87%E7%8E%AF%E5%A2%83"><span class="toc-text">2.1 主机和设备环境</span></a></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#2-2-Execution-Model-%E6%89%A7%E8%A1%8C%E6%A8%A1%E5%BC%8F"><span class="toc-text">2.2 Execution Model 执行模式</span></a><ol class="list-group toc-child"><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#2-2-1-%E9%98%9F%E5%88%97%E6%93%8D%E4%BD%9C-Queue-Operation"><span class="toc-text">2.2.1 队列操作 Queue Operation</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="list-group-item toc-link" href="#2-3-%E5%AF%B9%E8%B1%A1%E6%A8%A1%E5%9E%8B-Object-Model"><span class="toc-text">2.3 对象模型 Object Model</span></a><ol class="list-group toc-child"><li class="toc-item toc-level-3"><a class="list-group-item toc-link" href="#2-3-1-%E5%AF%B9%E8%B1%A1%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9FObject-Lifetime"><span class="toc-text">2.3.1 对象的生命周期Object Lifetime</span></a></li></ol></li></ol></li></ol></div>
+    </div>
+    
+    
+    
+    <hr>
+    <div class="social-link sidebar-item">
+      <div><i class="far fa-address-card"></i>社交链接</p></div>
+      <ul>
+        
+        <li><i class="fab fa-github"></i><a href="https://leinlin.github.com/" target="_blank">GitHub</a></li>
+        
+      </ul>
+    </div>
+    
+    
+  </div>
+</aside>
+
+
+          
+        </div>
+      </div>
+    </main>
+    
+<footer id="footer" class="footer" style="background: #33363b;">
+  <div class="container">
+    <div class="back-to-top">
+      <button id="back-to-top"><i class="fas fa-angle-double-up" aria-label="回到顶部"></i></button>
+    </div>
+    <div class="footer-container">
+      <div class="footer-left">
+        <div class="copyright">
+          <span class="author">leinlin</span><span class="year"><i class="far fa-copyright"></i>2023</span>
+        </div>
+        
+        <div class="busuanzi">
+          <span id="busuanzi_container_site_pv"><i class="fas fa-eye" aria-label="站点点击量" aria-hidden="false"></i><span id="busuanzi_value_site_pv"></span></span><span id="busuanzi_container_site_uv"><i class="fas fa-user" aria-label="站点用户数" aria-hidden="false"></i><span id="busuanzi_value_site_uv"></span></span><span id="busuanzi_container_page_pv"><i class="far fa-file-alt"></i><span id="busuanzi_value_page_pv" aria-label="页面点击量" aria-hidden="false"></span></span>
+        </div>
+        
+      </div>
+      <div class="footer-right">
+        <div class="custom-info">
+          
+          托管于<i class="fab fa-github-alt"></i><a href="https://pages.github.com/" target="_blank">GitHub Pages</a>
+          
+        </div>
+        <div class="powered-by">
+          由 <a href="https://hexo.io/" target="_blank">Hexo</a> 强力驱动 | 主题 <a href="https://github.com/AlynxZhou/hexo-theme-aria/" target="_blank">ARIA</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+
+  <script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"log":false,"pluginJsPath":"lib/","pluginModelPath":"assets/","pluginRootPath":"live2dw/","tagMode":false});</script></body>
+</html>
